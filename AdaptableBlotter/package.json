@@ -1,0 +1,20 @@
+{
+  "name": "AdaptableBlotter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "jquery-popup-overlay": "^1.7.4",
+    "jquery-contextmenu": "^2.2.3",
+    "jquery-ui": "^1.12.0",
+    "typescript": "^1.8.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
