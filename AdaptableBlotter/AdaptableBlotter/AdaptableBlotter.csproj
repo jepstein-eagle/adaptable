@@ -28,7 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="App_Scripts\AdaptableBlotter.ts" />
+    <TypeScriptCompile Include="App_Scripts\DevExpress\AdaptableBlotter.ts" />
+    <TypeScriptCompile Include="App_Scripts\Kendo\AdaptableBlotter.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
