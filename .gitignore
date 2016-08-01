@@ -243,3 +243,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Ignores compiled TypeScript files
+/AdaptableBlotter/AdaptableBlotter/App_Scripts/*.js
+/AdaptableBlotter/AdaptableBlotter/App_Scripts/*.js.map
