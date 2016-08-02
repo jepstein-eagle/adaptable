@@ -3,13 +3,90 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
-    <link rel="stylesheet" href="app.css" type="text/css" />
-    <script src="app.js"></script>
+    <title>DX Harness</title>
+    <script src="../DataGenerator.js"></script>
+    <link href="StyleSheet.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://cdn3.devexpress.com/jslib/16.1.4/css/dx.common.css" />
+    <link rel="dx-theme" data-theme="generic.light" href="http://cdn3.devexpress.com/jslib/16.1.4/css/dx.light.css" />
+    <!--<link rel="dx-theme" data-theme="ios.default" href="http://cdn3.devexpress.com/jslib/16.1.4/css/dx.ios7.default.css" />-->
+    <!--Globalize libraries-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.4.5/cldr.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.4.5/cldr/event.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.4.5/cldr/supplemental.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.1.1/globalize.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.1.1/globalize/message.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.1.1/globalize/number.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.1.1/globalize/currency.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.1.1/globalize/date.js"></script>
+    <!--jzip library-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.6.0/jszip.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="http://cdn3.devexpress.com/jslib/16.1.4/js/dx.all.js"></script>
+
 </head>
 <body>
-    <h1>TypeScript HTML App</h1>
+    <h1>DX Harness</h1>
 
-    <div id="content"></div>
+    <div id="grid"></div>
+    <script>
+    var dataGen = new Harness.DataGenerator();
+    var trades = dataGen.getTrades();
+    $("#grid")
+        .dxDataGrid({
+            dataSource: trades,
+            allowColumnReordering: true,
+            allowColumnResizing: true,
+            columnAutoWidth: true,
+            headerFilter: {
+                visible: true
+            },
+            columnChooser: {
+                enabled: false
+            },
+            columnFixing: {
+                enabled: true
+            },
+            columns: [
+                { dataField: 'tradeId', dataType: 'number', caption: "ID" },
+                { dataField: 'notional', dataType: 'number', caption: "Notional", format: "currency", precision: 2 },
+                { dataField: 'deskId', dataType: 'number', caption: "DeskId" },
+                { dataField: 'counterparty', dataType: 'string', caption: "Counterparty" },
+                { dataField: 'currency', dataType: 'string', caption: "Currency" },
+                { dataField: 'country', dataType: 'string', caption: "Country" },
+                { dataField: 'marketPrice', dataType: 'number', caption: "Market Price" },
+                { dataField: 'bid', dataType: 'number', caption: "Bid" },
+                { dataField: 'ask', dataType: 'number', caption: "Ask" },
+                { dataField: 'isLive', dataType: 'boolean', caption: "Is Live" },
+                { dataField: 'fitchRating', dataType: 'string', caption: "FitchRating" },
+                { dataField: 'moodysRating', dataType: 'string', caption: "moodysRating" },
+                { dataField: 'tradeDate', dataType: 'date', caption: "TradeDate", format: "F" },
+                { dataField: 'settlementDate', dataType: 'date', caption: "SettlementDate", format: "D" },
+                { dataField: 'bloombergBid', dataType: 'number', caption: "Bloomberg Bid" },
+                { dataField: 'bloombergAsk', dataType: 'number', caption: "Bloomberg Ask" },
+                { dataField: 'indicativeBid', dataType: 'number', caption: "Indicative Bid" },
+                { dataField: 'indicativeAsk', dataType: 'number', caption: "Indicative Ask" },
+                { dataField: 'delta', dataType: 'number', caption: "Delta", format: "n2" },
+                { dataField: 'occasionalPrice', dataType: 'number', caption: "OccasionalPrice" },
+                { dataField: 'bookingGuid', dataType: 'string', caption: "BookingGuid" },
+                { dataField: 'lastUpdated', dataType: 'date', caption: "LastUpdated", format: "F" },
+                { dataField: 'lastUpdatedBy', dataType: 'string', caption: "LastUpdatedBy" }
+            ],
+            paging: { enabled: false },
+            editing: {
+                mode: 'cell',
+                allowUpdating: true
+            },
+            selection: {
+                mode: 'multiple',
+                showCheckBoxesMode: 'none'
+            },
+            scrolling: {
+                mode: "virtual"
+            },
+
+            loadPanel: true
+        });
+
+    </script>
 </body>
 </html>

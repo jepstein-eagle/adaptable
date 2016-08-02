@@ -23,7 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Harness\DevExpress\index.html" />
+    <Content Include="Harness\DevExpress\StyleSheet.css" />
     <Content Include="Harness\Kendo\index.html" />
+    <Content Include="Harness\Kendo\StyleSheet.css" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

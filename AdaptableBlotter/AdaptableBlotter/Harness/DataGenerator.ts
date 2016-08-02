@@ -1,5 +1,5 @@
 ﻿/// <reference path="trade.ts" />
-module HarnessKendo {
+module Harness {
     export class DataGenerator {
 
         getTrades(): ITrade[] {

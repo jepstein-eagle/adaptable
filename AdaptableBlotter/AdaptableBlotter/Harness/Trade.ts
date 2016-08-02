@@ -1,4 +1,4 @@
-﻿module HarnessKendo {
+﻿module Harness {
     export interface ITrade {
         tradeId: number;
         notional: number;
