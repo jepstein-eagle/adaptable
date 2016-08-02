@@ -22,12 +22,11 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
-    <Content Include="index.html" />
+    <Content Include="Harness\DevExpress\index.html" />
+    <Content Include="Harness\Kendo\index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="App_Scripts\DevExpress\AdaptableBlotter.ts" />
     <TypeScriptCompile Include="App_Scripts\Kendo\AdaptableBlotter.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
