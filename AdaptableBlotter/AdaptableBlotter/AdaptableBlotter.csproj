@@ -29,6 +29,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="App_Scripts\DevExpress\AdaptableBlotter.ts" />
     <TypeScriptCompile Include="App_Scripts\Kendo\AdaptableBlotter.ts" />
+    <TypeScriptCompile Include="Harness\DataGenerator.ts" />
+    <TypeScriptCompile Include="Harness\Trade.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
