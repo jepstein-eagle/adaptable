@@ -1,4 +1,4 @@
-﻿module Harness {
+﻿namespace Harness {
     export interface ITrade {
         tradeId: number;
         notional: number;

@@ -1,5 +1,5 @@
 ﻿/// <reference path="trade.ts" />
-module Harness {
+namespace  Harness {
     export class DataGenerator {
 
         getTrades(): ITrade[] {
