@@ -3,7 +3,7 @@ namespace  Harness {
     export class DataGenerator {
 
         getTrades(): ITrade[] {
-            var trades = [];
+            var trades: ITrade[] = [];
             for (var i = 1; i < 101; i++) {
                 var trade = this.createTrade(i);
                 trades.push(trade);
@@ -11,7 +11,7 @@ namespace  Harness {
             return trades;
         }
 
-        createTrade(i): ITrade {
+        createTrade(i:number): ITrade {
             var bid = this.getMeaningfulDouble();
             var trade =
             {
@@ -131,7 +131,7 @@ namespace  Harness {
             //return toDateTimeString(date);
         }
 
-        protected toDateTimeString(date) {
+        protected toDateTimeString(date: Date) {
             var options = {
                 weekday: "long",
                 year: "numeric",
