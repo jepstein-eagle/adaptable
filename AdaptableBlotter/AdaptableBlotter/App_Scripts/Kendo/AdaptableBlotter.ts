@@ -1,3 +1,3 @@
-﻿module AdaptableBlotterKendo {
+﻿namespace  AdaptableBlotterKendo {
     
 }
