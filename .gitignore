@@ -249,3 +249,5 @@ ModelManifest.xml
 /AdaptableBlotter/AdaptableBlotter/App_Scripts/**/*.js.map
 /AdaptableBlotter/AdaptableBlotter/Harness/**/*.js
 /AdaptableBlotter/AdaptableBlotter/Harness/**/*.js.map
+/AdaptableBlotter/AdaptableBlotter/typings/globals/**/*.*
+/AdaptableBlotter/AdaptableBlotter/typings/modules/**/*.*
