@@ -1,0 +1,9 @@
+{
+  "name": "adaptableblotter",
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "kendo-ui": "registry:dt/kendo-ui#2016.1.314+20160724063859",
+    "react": "registry:dt/react#0.14.0+20160802191555",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+  }
+}
