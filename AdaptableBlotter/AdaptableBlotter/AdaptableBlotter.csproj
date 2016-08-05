@@ -22,6 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dist\adaptableblotter-bundle.js" />
     <Content Include="Harness\DevExpress\index.html" />
     <Content Include="Harness\DevExpress\StyleSheet.css" />
     <Content Include="Harness\Kendo\index.html" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="typings.json" />
+    <Content Include="dist\adaptableblotter-bundle.js.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -80,10 +82,10 @@
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
-    <TypeScriptOutFile>
-    </TypeScriptOutFile>
-    <TypeScriptOutDir />
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptOutFile>$(ProjectDir)\dist\adaptableblotter-bundle.js</TypeScriptOutFile>
+    <TypeScriptOutDir>
+    </TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
