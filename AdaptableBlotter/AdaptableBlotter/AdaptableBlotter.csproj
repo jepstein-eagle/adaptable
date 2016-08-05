@@ -22,7 +22,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dist\adaptableblotter-bundle.js" />
     <Content Include="dist\bundle-webpack.js" />
     <Content Include="Harness\DevExpress\index.html" />
     <Content Include="Harness\DevExpress\StyleSheet.css" />
@@ -42,7 +41,6 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="typings.json" />
-    <Content Include="dist\adaptableblotter-bundle.js.map" />
     <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>

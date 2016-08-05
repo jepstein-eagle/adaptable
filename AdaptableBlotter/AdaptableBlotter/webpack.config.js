@@ -24,6 +24,8 @@ module.exports = {
         path: __dirname + '/dist/',
         filename: "bundle-webpack.js"
     },
+    // Turn on sourcemaps
+    devtool: 'source-map',
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
