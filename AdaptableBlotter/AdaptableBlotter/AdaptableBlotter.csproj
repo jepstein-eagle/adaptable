@@ -23,11 +23,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dist\adaptableblotter-bundle.js" />
+    <Content Include="dist\bundle-webpack.js" />
     <Content Include="Harness\DevExpress\index.html" />
     <Content Include="Harness\DevExpress\StyleSheet.css" />
     <Content Include="Harness\Kendo\index.html" />
     <Content Include="Harness\Kendo\StyleSheet.css" />
     <Content Include="web.config" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App_Scripts\DevExpress\AdaptableBlotter.ts" />
@@ -41,6 +43,7 @@
     <Content Include="package.json" />
     <Content Include="typings.json" />
     <Content Include="dist\adaptableblotter-bundle.js.map" />
+    <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -83,7 +86,8 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-    <TypeScriptOutFile>$(ProjectDir)\dist\adaptableblotter-bundle.js</TypeScriptOutFile>
+    <TypeScriptOutFile>
+    </TypeScriptOutFile>
     <TypeScriptOutDir>
     </TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
