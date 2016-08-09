@@ -7,7 +7,6 @@ export class DataGenerator {
                 var trade = this.createTrade(i);
                 trades.push(trade);
             }
-            let x=1;
             return trades;
         }
 
