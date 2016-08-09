@@ -1,9 +1,11 @@
 /// <reference path="../typings/index.d.ts" />
+/// <reference path="MyReactComponent.tsx" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { Modal, Button } from 'react-bootstrap';
+import HelloWorld from './MyReactComponent.tsx'
 
 interface PopupProps {
     name: number;
@@ -22,7 +24,7 @@ export default class AdaptableBlotterPopup extends React.Component<{}, {}> {
                     </Modal.Header>
 
                     <Modal.Body>
-                        Show me your body
+                        <HelloWorld name="World From React" />
                     </Modal.Body>
 
                     <Modal.Footer>

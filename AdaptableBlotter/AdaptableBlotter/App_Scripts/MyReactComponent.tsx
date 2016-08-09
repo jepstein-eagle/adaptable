@@ -12,7 +12,7 @@ interface MyProps {
     name: string;
 }
 
-class HelloWorld extends React.Component<MyProps, {}> {
+export default class HelloWorld extends React.Component<MyProps, {}> {
     constructor(props: MyProps) {
         super(props);
     }
