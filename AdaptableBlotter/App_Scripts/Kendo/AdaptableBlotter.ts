@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
-/// <reference path="../AdaptableBlotterPopup.tsx" />
 
 import AdaptableBlotterPopup from '../AdaptableBlotterPopup';
 
