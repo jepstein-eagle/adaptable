@@ -1,6 +1,5 @@
-﻿/// <reference path="trade.ts" />
-namespace  Harness {
-    export class DataGenerator {
+﻿/// <reference path="trade.d.ts" />
+export class DataGenerator {
 
         getTrades(): ITrade[] {
             var trades: ITrade[] = [];
@@ -345,4 +344,3 @@ namespace  Harness {
             return names;
         }
     }
-}

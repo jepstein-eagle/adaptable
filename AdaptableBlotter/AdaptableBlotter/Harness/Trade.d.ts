@@ -1,5 +1,5 @@
-﻿namespace Harness {
-    export interface ITrade {
+﻿
+ interface ITrade {
         tradeId: number;
         notional: number;
         deskId: number;
@@ -24,4 +24,3 @@
         lastUpdated: Date;
         lastUpdatedBy: string;
     }
-}

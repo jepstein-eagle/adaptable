@@ -3,9 +3,10 @@
 // A '.tsx' file enables JSX support in the TypeScript compiler, 
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
+import { Button } from 'react-bootstrap';
 
 interface MyProps {
     name: string;
@@ -20,4 +21,4 @@ class HelloWorld extends React.Component<MyProps, {}> {
     }
 }
 
-ReactDOM.render(<HelloWorld name="World From React" />, document.getElementById('content'));
+//ReactDOM.render(<HelloWorld name="World From React" />, document.getElementById('content'));
