@@ -6,34 +6,42 @@ import * as ReactDOM from "react-dom";
 import { Modal, Button } from 'react-bootstrap';
 import HelloWorld from './MyReactComponent.tsx'
 
-interface PopupProps {
-    name: number;
+interface IAdaptableBlotterPopupState {
+    showModal: boolean;
 }
 
-export default class AdaptableBlotterPopup extends React.Component<{}, {}> {
+export default class AdaptableBlotterPopup extends React.Component<{}, IAdaptableBlotterPopupState> {
         constructor() {
             super();
-            this.state = {show: false};
+            this.state = {showModal: false};
+        }
+        open() {
+            this.setState({ showModal: true });
+        }
+        close() {
+            this.setState({ showModal: false });
         }
         render() {
-            return (<div className="static-modal">
-                <Modal.Dialog>
-                    <Modal.Header>
-                        <Modal.Title>The Magic Adaptable Blotter!!!</Modal.Title>
-                    </Modal.Header>
+            return ( 
+                     <div>
+        <Button onClick={e=>this.open()}>
+          Launch modal
+        </Button>
 
-                    <Modal.Body>
-                        <HelloWorld name="World From React" />
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button>Close</Button>
-                        <Button bsStyle="primary">Save changes</Button>
-                    </Modal.Footer>
-
-                </Modal.Dialog>
-            </div>);
-        }
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>The amazing Adaptable Blotter!!!!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+             <HelloWorld name="World from React for the Adaptable Blotter!" />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={e=>this.close()}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      );
+      }
     }
 
     ReactDOM.render(<AdaptableBlotterPopup  />, document.getElementById('content'));
