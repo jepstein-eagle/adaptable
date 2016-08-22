@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <title>Kendo Harness</title>
+    <title>Adaptable Blotter Kendo Demo</title>
 
     <!--we use the JS and CSS CDN so we do no need to d/l or store them locally and maintain versions.... Quite cool!!-->
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
@@ -15,24 +16,25 @@
     <link href="StyleSheet.css" rel="stylesheet" />
 
     <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
     <!--<script src="../../App_Scripts/MyReactComponent.js"></script>-->
     <script src="../../dist/harness-bundle.js"></script>
 </head>
+
 <body>
-<h1>Kendo Harness</h1>
-<div id="content"></div>
+    <h1>Adaptable Blotter Kendo Demo</h1>
+    <div id="content"></div>
 
     <script src="../../dist/adaptableblotter-bundle.js"></script>
 
-        <!--<script src="main.js"></script>-->
+    <!--<script src="main.js"></script>-->
 
-<div id="grid"></div>
-    
-<script>
+    <div id="grid"></div>
+
+    <script>
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
     $("#grid")
@@ -108,6 +110,11 @@
     editable : true
         });
 
+    var grid = $("#grid").data("kendoGrid");
+    var container = document.getElementById('content');
+    var blotter = new adaptableblotter.AdaptableBlotter(grid,container);
+
 </script>
 </body>
+
 </html>

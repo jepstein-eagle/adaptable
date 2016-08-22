@@ -19,7 +19,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        adaptableblotter : ["./App_Scripts/MyReactComponent.tsx", "./App_Scripts/AdaptableBlotterPopup.tsx"],
+        adaptableblotter : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         //adaptableblotterkendo : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         harness : "./harness/DataGenerator.ts"
     },
