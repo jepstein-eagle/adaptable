@@ -1,5 +1,5 @@
-import {MenuItemShowPopup} from './MenuItem'
-import {AdaptableStrategyBase} from './AdaptableStrategyBase'
+import {MenuItemShowPopup} from '../../Core/MenuItem'
+import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase'
 import {SmartEditAction} from '../../View/SmartEditAction'
 
 

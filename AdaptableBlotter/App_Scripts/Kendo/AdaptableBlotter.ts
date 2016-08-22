@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
-/// <reference path="../Interface/IStrategy.d.ts" />
+/// <reference path="../Core/Interface/IStrategy.d.ts" />
 
 
 import * as React from "react";
