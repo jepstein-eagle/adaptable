@@ -19,20 +19,20 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        adaptableblotter : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
+        adaptableblotter: ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         //adaptableblotterkendo : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
-        harness : "./harness/DataGenerator.ts"
+        harness: "./harness/DataGenerator.ts"
     },
     output: {
         path: __dirname + '/dist/',
         filename: "[name]-bundle.js",
-            library: "[name]",
-    libraryTarget: 'var',
-    umdNamedDefine: true
+        library: "[name]",
+        libraryTarget: 'var',
+        umdNamedDefine: true
     },
     // Turn on sourcemaps
     devtool: 'source-map',
-    
+
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
@@ -45,7 +45,8 @@ module.exports = {
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-            { test: /\.tsx?$/, loader: 'ts-loader' }
+            // note that babel-loader is configured to run after ts-loader
+            { test: /\.ts(x?)$/, loader: 'babel-loader!ts-loader' }
         ]
     }
 }
