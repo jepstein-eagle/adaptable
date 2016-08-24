@@ -1,16 +1,119 @@
 import {MenuItemShowPopup} from '../../Core/MenuItem'
 import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase'
-import {SmartEditAction} from '../../View/SmartEditAction'
+import {AdaptableViewFactory} from '../../View/AdaptableViewFactory'
+import * as StrategyIds from '../../Core/StrategyIds'
+//TODO : need to move the interface
+import {IAdaptableBlotter, ColumnType} from '../AdaptableBlotter'
+import {SmartEditOperation} from '../../Core/Enums'
 
+export interface ISmartEditStrategy extends IStragegy {
+    BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
+    ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void;
+}
+export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
+    private menuItemConfig: IMenuItem;
+    constructor(blotter: IAdaptableBlotter) {
+        super(StrategyIds.SmartEditStrategyId, blotter)
+        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction');
+    }
 
-export class SmartEditStrategy extends AdaptableStrategyBase {
-    private menuItemConfig : IMenuItem;
-	constructor() {
-        super("SmartEditStrategy")
-        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id,  SmartEditAction.name );
-	}
+    public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void{
+        let selectedCells = this.blotter.getSelectedCells();
+        let values: ISmartEditValueTuple[] = [];
+        let columnId: string;
 
-    getMenuItems() : IMenuItem[] { 
+        for (let pair of selectedCells.Selection) {
+            for (var columnValuePair of pair[1]) {
+                let newValue: number;
+                switch (smartEditOperation) {
+                    case SmartEditOperation.Sum:
+                        newValue = Number(columnValuePair.value) + smartEditValue
+                        break;
+                    case SmartEditOperation.Ratio:
+                        newValue = Number(columnValuePair.value) * smartEditValue
+                        break;
+                    case SmartEditOperation.Absolute:
+                        newValue = smartEditValue
+                        break;
+                }
+                this.blotter.setValue(pair[0], columnValuePair.columnID, newValue)
+
+                columnId = columnValuePair.columnID;
+            }
+        }
+    }
+
+    public BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn {
+        let selectedCells = this.blotter.getSelectedCells();
+        let values: ISmartEditValueTuple[] = [];
+        let columnId: string;
+        //if no cells are selected
+        if (selectedCells.Selection.size == 0) {
+            return {
+                Error: {
+                    ErrorMsg: "You need to select some Cells"
+                }
+            }
+        }
+        //if no cells are selected
+        if (selectedCells.Selection.size == 0) {
+            return {
+                Error: {
+                    ErrorMsg: "You need to select some Cells"
+                }
+            }
+        }
+        for (let pair of selectedCells.Selection) {
+            if (pair[1].length > 1) {
+                return {
+                    Error: {
+                        ErrorMsg: "You need to select Cells from one column only"
+                    }
+                }
+            }
+            for (var columnValuePair of pair[1]) {
+                if (this.blotter.getColumnType(columnValuePair.columnID) != ColumnType.Number) {
+                    return {
+                        Error: {
+                            ErrorMsg: "You need to select Cells from numeric columns"
+                        }
+                    }
+
+                }
+                let newValue: number;
+                switch (smartEditOperation) {
+                    case SmartEditOperation.Sum:
+                        newValue = Number(columnValuePair.value) + smartEditValue
+                        break;
+                    case SmartEditOperation.Ratio:
+                        newValue = Number(columnValuePair.value) * smartEditValue
+                        break;
+                    case SmartEditOperation.Absolute:
+                        newValue = smartEditValue
+                        break;
+                }
+                values.push({ Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue })
+
+                columnId = columnValuePair.columnID;
+            }
+        }
+
+        return {
+            ActionReturn: {
+                ColumnId: columnId,
+                InitialValueLabel: this.blotter.getColumnHeader(columnId) + " Initial Value",
+                ComputedValueLabel: this.blotter.getColumnHeader(columnId) + " Computed Value",
+                Values: values
+            }
+        }
+    }
+
+    getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
+}
+
+
+interface ISmartEditPreviewReturn extends IStrategyActionReturn<ISmartEditPreview> {
+
 }

@@ -4,6 +4,7 @@ import * as Redux from 'redux';
 
 const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';
+const ERROR_POPUP = 'ERROR_POPUP';
 
 export interface ShowPopupAction extends Redux.Action {
     ComponentClassName: string
@@ -11,6 +12,10 @@ export interface ShowPopupAction extends Redux.Action {
 
 export interface HidePopupAction extends Redux.Action {
 
+}
+
+export interface ErrorPopupAction extends Redux.Action {
+    Error: IUIError
 }
 
 // export const showPopup: Redux.ActionCreator<ShowPopupAction> = (text: string) => ({
@@ -28,22 +33,35 @@ export const HidePopup = (): HidePopupAction => ({
     type: HIDE_POPUP
 })
 
+export const ErrorPopup = (Error: IUIError): ErrorPopupAction => ({
+    type: ERROR_POPUP,
+    Error
+})
+
 export interface PopupState {
     ShowPopup: boolean;
+    ShowErrorPopup: boolean;
     ComponentClassName: string;
+    ErrorMsg: string;
 };
 
 const initialPopupState: PopupState = {
     ShowPopup: false,
-    ComponentClassName: ""
+    ShowErrorPopup: false,
+    ComponentClassName: "",
+    ErrorMsg: ""
 }
 
 export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = initialPopupState, action: Redux.Action): PopupState => {
     switch (action.type) {
         case SHOW_POPUP:
-            return { ShowPopup: true, ComponentClassName: (<ShowPopupAction>action).ComponentClassName }
+            //first {} is important as we need to clone the state and not amend it
+            return  Object.assign({}, state, { ShowPopup: true, ComponentClassName: (<ShowPopupAction>action).ComponentClassName })
         case HIDE_POPUP:
             return initialPopupState
+        case ERROR_POPUP:
+            //first {} is important as we need to clone the state and not amend it
+            return  Object.assign({}, initialPopupState, {  ShowErrorPopup: true, ErrorMsg: (<ErrorPopupAction>action).Error.ErrorMsg })
         default:
             return state
     }

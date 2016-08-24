@@ -19,8 +19,8 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        'adaptableblotter-kendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
-        'adaptableblotter-dx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
+        'adaptableblotterkendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
+        'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
         //adaptableblotterkendo : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },

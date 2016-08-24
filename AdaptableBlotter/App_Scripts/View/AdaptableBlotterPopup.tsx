@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 
-import {CustomSortConfig} from '../View/CustomSortConfig'
 import {AdaptableViewFactory} from './AdaptableViewFactory'
 
 interface IAdaptableBlotterPopupProps {
@@ -24,7 +23,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           <Modal.Header closeButton>
             <Modal.Title>SmartEdit</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={divStyle}>
             {body}
           </Modal.Body>
           <Modal.Footer>
@@ -34,3 +33,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     );
   }
 }
+
+var divStyle = {
+    maxHeight: '600px'
+};

@@ -8,3 +8,12 @@ interface IMenuItem{
     StrategyId : string;
     Action : string;
 }
+
+interface IUIError {
+    ErrorMsg: string;
+}
+
+interface IStrategyActionReturn<T> {
+    ActionReturn?: T,
+    Error?: IUIError
+}

@@ -4,15 +4,18 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import * as ReactBootstrap from 'react-bootstrap';
+import {Modal, SplitButton, Button, MenuItem, Alert} from 'react-bootstrap';
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
+//TODO : need to move the interface
 import {IAdaptableBlotter} from '../Kendo/AdaptableBlotter'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
-    State: AdaptableBlotterStore.AdaptableBlotterState;
+    PopupState: PopupRedux.PopupState;
+    MenuState: MenuRedux.MenuState;
     AdaptableBlotter: IAdaptableBlotter;
     onClose: () => PopupRedux.HidePopupAction;
     showPopup: (ComponentClassName: string) => PopupRedux.ShowPopupAction;
@@ -20,16 +23,29 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
-        var menuItems = this.props.State.Menu.MenuItems.map((menuItem: IMenuItem) => {
-            return <ReactBootstrap.MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem) }>{menuItem.Label}</ReactBootstrap.MenuItem>
-        });
+        if (this.props.MenuState.MenuItems) {
+            var menuItems = this.props.MenuState.MenuItems.map((menuItem: IMenuItem) => {
+                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem) }>{menuItem.Label}</MenuItem>
+            });
+        }
         return (
             <div>
-                <ReactBootstrap.SplitButton bsStyle="primary" title="Adaptable Blotter" id="Adaptable_Blotter_Menu">
+                <SplitButton bsStyle="primary" title="Adaptable Blotter" id="Adaptable_Blotter_Menu">
                     {menuItems}
-                </ReactBootstrap.SplitButton>
-                <AdaptableBlotterPopup showModal={this.props.State.Popup.ShowPopup}
-                    ComponentClassName={this.props.State.Popup.ComponentClassName}
+                </SplitButton>
+                <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
+                    <Modal.Body>
+                        <Alert bsStyle="danger" onDismiss={this.props.onClose}>
+                            <h4>Error</h4>
+                            <p>{this.props.PopupState.ErrorMsg}</p>
+                            <p>
+                                <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
+                            </p>
+                        </Alert>
+                    </Modal.Body>
+                </Modal>
+                <AdaptableBlotterPopup showModal={this.props.PopupState.ShowPopup}
+                    ComponentClassName={this.props.PopupState.ComponentClassName}
                     onHide={this.props.onClose} />
 
             </div>
@@ -43,7 +59,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
 function mapStateToProps(state: AdaptableBlotterStore.AdaptableBlotterState, ownProps: any) {
     return {
-        State: state,
+        MenuState: state.Menu,
+        PopupState: state.Popup,
         AdaptableBlotter: ownProps.Blotter
     };
 }
