@@ -1,4 +1,7 @@
-interface IAdaptableBlotter {
+import {ColumnType} from '../Enums'
+import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
+
+export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
     getSelectedCells(): ISelectedCells
@@ -7,11 +10,11 @@ interface IAdaptableBlotter {
      setValue(id: any, columnId:string, value: any) : void
 }
 
-interface ISelectedCells {
+export interface ISelectedCells {
     //map of UUID with their associated values/columns
     Selection: Map<any, { columnID: string, value: any }[]>
 }
 
-interface IAdaptableStrategyCollection extends Map<string, IStragegy> {
+export interface IAdaptableStrategyCollection extends Map<string, IStragegy> {
 
 }

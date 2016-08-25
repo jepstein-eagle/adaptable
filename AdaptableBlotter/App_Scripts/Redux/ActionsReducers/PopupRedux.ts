@@ -1,6 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Redux from 'redux';
+import { PopupState} from './Interface/IState';
 
 const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';

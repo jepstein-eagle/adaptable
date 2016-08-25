@@ -7,7 +7,11 @@ import { Provider, connect } from 'react-redux';
 import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem} from 'react-bootstrap';
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
+import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
+
+import {SmartEditOperation} from '../Core/Enums'
+import {ISmartEditPreview, ISmartEditValueTuple} from '../Core/Interface/ISmartEditStrategy'
 
 interface SmartEditActionProps extends React.ClassAttributes<SmartEditActionComponent> {
     SmartEditValue: number,

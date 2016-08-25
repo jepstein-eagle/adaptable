@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Redux from 'redux';
-
+import {MenuState} from './interface/IState'
 const SET_MENUITEMS = 'SET_MENUITEMS';
 const MENUITEM_CLICKED = 'MENUITEM_CLICKED';
 

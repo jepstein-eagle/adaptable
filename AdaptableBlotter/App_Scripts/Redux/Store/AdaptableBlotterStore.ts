@@ -9,6 +9,9 @@ import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
+import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
+import {ISmartEditStrategy} from '../../Core/Interface/ISmartEditStrategy'
+import {AdaptableBlotterState,IAdaptableBlotterStore} from './Interface/IAdaptableStore'
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,

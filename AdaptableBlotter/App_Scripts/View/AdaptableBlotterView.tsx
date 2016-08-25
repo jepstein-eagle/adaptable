@@ -10,6 +10,9 @@ import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
+import {PopupState,MenuState,SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
+import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
+import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;

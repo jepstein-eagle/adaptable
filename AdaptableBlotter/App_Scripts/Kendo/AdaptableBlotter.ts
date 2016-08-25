@@ -4,9 +4,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AdaptableBlotterApp} from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
 import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
 import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
+
+import {ColumnType} from '../Core/Enums'
+
+import {IAdaptableBlotter,IAdaptableStrategyCollection,ISelectedCells} from '../Core/Interface/IAdaptableBlotter'
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
