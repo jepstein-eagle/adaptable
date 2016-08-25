@@ -28,12 +28,11 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     SmartEdit: SmartEditRedux.SmartEditReducer
 });
 
-//export const Store: Redux.Store<AdaptableBlotterState> = Redux.createStore<AdaptableBlotterState>(rootReducer);
-
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
-        this.TheStore = Redux.createStore<AdaptableBlotterState>(rootReducer, Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter)));
+        this.TheStore = Redux.createStore<AdaptableBlotterState>(rootReducer,
+            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter)));
     }
 }
 
@@ -53,32 +52,20 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
-                //TODO : Need to refactor this :)
-                case SmartEditRedux.SMARTEDIT_SETOPERATION: {
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues(middlewareAPI.getState().SmartEdit.SmartEditValue, (<SmartEditRedux.SmartEditSetOperationAction>action).SmartEditOperation);
-                    if (apiReturn.Error) {
-                        middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
-                    }
-                    else {
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn.ActionReturn));
-                    }
-                    return next(action);
-                }
-                case SmartEditRedux.SMARTEDIT_SETVALUE: {
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues((<SmartEditRedux.SmartEditSetValueAction>action).value, middlewareAPI.getState().SmartEdit.SmartEditOperation);
-                    if (apiReturn.Error) {
-                        middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
-                    }
-                    else {
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn.ActionReturn));
-                    }
-                    return next(action);
-                }
+                //here we have all actions that triggers a refresh of the SmartEditPreview
+                case SmartEditRedux.SMARTEDIT_SETOPERATION:
+                case SmartEditRedux.SMARTEDIT_SETVALUE:
                 case SmartEditRedux.SMARTEDIT_FETCHPREVIEW: {
+                    //all our logic needs to be executed AFTER the main reducers 
+                    //so our state is up to date which allow us not to care about the data within each different action
+                    let returnAction = next(action);
+
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues(middlewareAPI.getState().SmartEdit.SmartEditValue, middlewareAPI.getState().SmartEdit.SmartEditOperation);
+                    let state = middlewareAPI.getState();
+
+                    let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue,
+                        state.SmartEdit.SmartEditOperation);
+
                     if (apiReturn.Error) {
                         middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
                     }
