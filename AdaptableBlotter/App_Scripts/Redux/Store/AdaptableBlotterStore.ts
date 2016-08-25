@@ -1,10 +1,12 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Redux from "redux";
+import * as ReduxStorage from 'redux-storage'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
+import createEngine from 'redux-storage-engine-localstorage';
 
 //TODO : need to move the interface
 import {IAdaptableBlotter} from '../../Kendo/AdaptableBlotter'
@@ -28,11 +30,25 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     SmartEdit: SmartEditRedux.SmartEditReducer
 });
 
+//TODO: need to make this members of AdaptableBlotterStore so we can have mutiple instances
+const engineReduxStorage = createEngine('my-adaptable-blotter-key');
+//TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
+const middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
+const reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducer);
+const loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
-        this.TheStore = Redux.createStore<AdaptableBlotterState>(rootReducer,
-            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter)));
+        //TODO: need to check if we want the storage to be done before or after 
+        //we enrich the state with the AB middleware
+        this.TheStore = Redux.createStore<AdaptableBlotterState>(reducerWithStorage,
+            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter), middlewareReduxStorage));
+
+        //We load the previous saved session. Redux is pretty awesome in its simplicity!
+        loadStorage(this.TheStore)
+            .then((newState) => console.log('Loaded state:', newState))
+            .catch(() => console.log('Failed to load previous state'));
     }
 }
 
