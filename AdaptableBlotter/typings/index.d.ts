@@ -5,3 +5,5 @@
 /// <reference path="globals/react-redux/index.d.ts" />
 /// <reference path="globals/react/index.d.ts" />
 /// <reference path="globals/redux/index.d.ts" />
+/// <reference path="modules/redux-storage-engine-localstorage/index.d.ts" />
+/// <reference path="modules/redux-storage/index.d.ts" />
