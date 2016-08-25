@@ -30,10 +30,6 @@ export const MenuItemClicked = (MenuItem: IMenuItem): MenuItemClickedAction => (
 })
 
 
-export interface MenuState {
-    MenuItems: IMenuItem[];
-};
-
 const initialMenuState: MenuState = {
     MenuItems: []
 }

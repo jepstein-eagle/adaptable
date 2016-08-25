@@ -2,14 +2,7 @@ import {MenuItemShowPopup} from '../../Core/MenuItem'
 import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase'
 import {AdaptableViewFactory} from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
-//TODO : need to move the interface
-import {IAdaptableBlotter, ColumnType} from '../AdaptableBlotter'
-import {SmartEditOperation} from '../../Core/Enums'
 
-export interface ISmartEditStrategy extends IStragegy {
-    BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
-    ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void;
-}
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
@@ -111,9 +104,4 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
-}
-
-
-interface ISmartEditPreviewReturn extends IStrategyActionReturn<ISmartEditPreview> {
-
 }

@@ -10,12 +10,10 @@ import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
-//TODO : need to move the interface
-import {IAdaptableBlotter} from '../Kendo/AdaptableBlotter'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
-    PopupState: PopupRedux.PopupState;
-    MenuState: MenuRedux.MenuState;
+    PopupState: PopupState;
+    MenuState: MenuState;
     AdaptableBlotter: IAdaptableBlotter;
     onClose: () => PopupRedux.HidePopupAction;
     showPopup: (ComponentClassName: string) => PopupRedux.ShowPopupAction;
@@ -57,7 +55,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     }
 }
 
-function mapStateToProps(state: AdaptableBlotterStore.AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         MenuState: state.Menu,
         PopupState: state.Popup,
@@ -66,7 +64,7 @@ function mapStateToProps(state: AdaptableBlotterStore.AdaptableBlotterState, own
 }
 
 // Which action creators does it want to receive by props?
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterStore.AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClose: () => dispatch(PopupRedux.HidePopup()),
         showPopup: (ComponentClassName: string) => dispatch(PopupRedux.ShowPopup(ComponentClassName, null))

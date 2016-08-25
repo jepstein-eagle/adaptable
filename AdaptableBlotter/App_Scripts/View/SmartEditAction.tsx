@@ -8,7 +8,6 @@ import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, Menu
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
-import {SmartEditOperation} from '../Core/Enums'
 
 interface SmartEditActionProps extends React.ClassAttributes<SmartEditActionComponent> {
     SmartEditValue: number,
@@ -72,7 +71,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     }
 }
 
-function mapStateToProps(state: AdaptableBlotterStore.AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
@@ -81,7 +80,7 @@ function mapStateToProps(state: AdaptableBlotterStore.AdaptableBlotterState, own
 }
 
 // Which action creators does it want to receive by props?
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterStore.AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),

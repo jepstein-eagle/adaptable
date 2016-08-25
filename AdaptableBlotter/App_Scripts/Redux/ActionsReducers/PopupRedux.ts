@@ -38,13 +38,6 @@ export const ErrorPopup = (Error: IUIError): ErrorPopupAction => ({
     Error
 })
 
-export interface PopupState {
-    ShowPopup: boolean;
-    ShowErrorPopup: boolean;
-    ComponentClassName: string;
-    ErrorMsg: string;
-};
-
 const initialPopupState: PopupState = {
     ShowPopup: false,
     ShowErrorPopup: false,

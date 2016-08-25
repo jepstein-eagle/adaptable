@@ -8,21 +8,7 @@ import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
-//TODO : need to move the interface
-import {IAdaptableBlotter} from '../../Kendo/AdaptableBlotter'
 import * as StrategyIds from '../../Core/StrategyIds'
-//TODO : need to move the interface
-import {ISmartEditStrategy} from '../../Kendo/Strategy/SmartEditStrategy'
-
-export interface AdaptableBlotterState {
-    Popup: PopupRedux.PopupState;
-    Menu: MenuRedux.MenuState;
-    SmartEdit: SmartEditRedux.SmartEditState;
-}
-
-export interface IAdaptableBlotterStore {
-    TheStore: Redux.Store<AdaptableBlotterState>
-}
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,

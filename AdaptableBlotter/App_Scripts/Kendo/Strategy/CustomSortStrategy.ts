@@ -2,8 +2,6 @@ import {MenuItemShowPopup} from '../../Core/MenuItem'
 import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase'
 import {CustomSortConfig} from '../../View/CustomSortConfig'
 import * as StrategyIds from '../../Core/StrategyIds'
-//TODO : need to move the interface
-import {IAdaptableBlotter} from '../AdaptableBlotter'
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private menuItemConfig : IMenuItem;

@@ -1,8 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
+/// <reference path="./Interface/IState.d.ts" />
 
 import * as Redux from 'redux';
-
-import {SmartEditOperation} from '../../Core/Enums'
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_SETVALUE = 'SMARTEDIT_SETVALUE';
@@ -52,12 +51,6 @@ export const SmartEditSetPreview = (Preview: ISmartEditPreview): SmartEditSetPre
     type: SMARTEDIT_SETPREVIEW,
     Preview
 })
-
-export interface SmartEditState {
-    SmartEditValue: number
-    SmartEditOperation: SmartEditOperation
-    Preview: ISmartEditPreview
-};
 
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: 1,

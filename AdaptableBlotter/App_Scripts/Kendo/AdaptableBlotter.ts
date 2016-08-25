@@ -1,33 +1,12 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
-/// <reference path="../Core/Interface/IStrategy.d.ts" />
-/// <reference path="../Core/Interface/IAdaptableBlotter.d.ts" />
-
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AdaptableBlotterApp} from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import {IAdaptableBlotterStore, AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
+import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
 import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
-
-export interface IAdaptableBlotter {
-    AdaptableBlotterStore: IAdaptableBlotterStore;
-    Strategies: IAdaptableStrategyCollection
-    getSelectedCells(): ISelectedCells
-    getColumnType(columnId: string): ColumnType
-    getColumnHeader(columnId: string): string
-     setValue(id: any, columnId:string, value: any) : void
-}
-
-interface ISelectedCells {
-    //map of UUID with their associated values/columns
-    Selection: Map<any, { columnID: string, value: any }[]>
-}
-
-export interface IAdaptableStrategyCollection extends Map<string, IStragegy> {
-
-}
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -112,10 +91,3 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 }
 
-export enum ColumnType {
-    String,
-    Number,
-    Boolean,
-    Date,
-    Object
-}
