@@ -19,11 +19,26 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     SmartEdit: SmartEditRedux.SmartEditReducer
 });
 
+const RESET_STATE = 'RESET_STATE';
+export interface ResetUserDataAction extends Redux.Action {
+}
+export const ResetUserData = (): ResetUserDataAction => ({
+    type: RESET_STATE
+})
+const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
+  if (action.type === RESET_STATE) {
+      //This trigger the persist of the state with fuck all as well
+    state = undefined
+  }
+
+  return rootReducer(state, action)
+}
+
 //TODO: need to make this members of AdaptableBlotterStore so we can have mutiple instances
 const engineReduxStorage = createEngine('my-adaptable-blotter-key');
 //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
 const middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
-const reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducer);
+const reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
 const loadStorage = ReduxStorage.createLoader(engineReduxStorage);
 
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
@@ -85,6 +100,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
+                //We rebuild the menu from scratch
+                //TODO: This give me the feeling menu should not be managed from strategies..... need thinking
+                case RESET_STATE:{
+                    let returnAction = next(action);
+                    adaptableBlotter.CreateMenu();
+                    return returnAction;
+                }
+
                 default:
                     return next(action);
             }

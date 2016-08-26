@@ -1,4 +1,6 @@
-﻿/// <reference path="../../typings/index.d.ts" />
+﻿import {MenuItemShowPopup} from '../Core/MenuItem';
+import {AdaptableBlotter} from '../Kendo/AdaptableBlotter';
+/// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -10,9 +12,10 @@ import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
-import {PopupState,MenuState,SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
+import {PopupState, MenuState} from '../Redux/ActionsReducers/Interface/IState';
 import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
+import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore';
+
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -53,8 +56,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         );
     }
     onClick(menuItem: IMenuItem) {
-        //this.props.AdaptableBlotter.ClickedMenu(menuItem, this.props.State.);
-        this.props.showPopup(menuItem.Action);
+        if (menuItem instanceof MenuItemShowPopup) {
+            this.props.showPopup(menuItem.Action);
+        }
+        else {
+            this.props.AdaptableBlotter.onMenuClicked(menuItem)
+        };
     }
 }
 

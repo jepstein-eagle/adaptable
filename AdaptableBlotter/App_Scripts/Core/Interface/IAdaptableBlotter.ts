@@ -7,7 +7,9 @@ export interface IAdaptableBlotter {
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
-     setValue(id: any, columnId:string, value: any) : void
+    setValue(id: any, columnId: string, value: any): void
+    onMenuClicked(menuItem: IMenuItem): void
+    CreateMenu(): void
 }
 
 export interface ISelectedCells {

@@ -1,6 +1,7 @@
 interface IStragegy{
     Id : string
     getMenuItems() : IMenuItem[]
+    onAction(action: string) : void
 }
 
 interface IMenuItem{

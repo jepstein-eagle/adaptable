@@ -8,10 +8,12 @@ import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
 import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
 import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
+import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
+import * as StrategyIds from '../Core/StrategyIds'
 
 import {ColumnType} from '../Core/Enums'
 
-import {IAdaptableBlotter,IAdaptableStrategyCollection,ISelectedCells} from '../Core/Interface/IAdaptableBlotter'
+import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells} from '../Core/Interface/IAdaptableBlotter'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -21,9 +23,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         //we build the list of strategies
+        //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStragegy>();
-        this.Strategies.set('CustomSort', new CustomSortStrategy(this))
-        this.Strategies.set('SmartEdit', new SmartEditStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
 
 
         //we build the menus from all strategies and update redux store
@@ -31,12 +35,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
     }
 
-    private CreateMenu() {
+    public CreateMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
         //let menuItems = [].concat(this.strategies.values.(strat: IStragegy => strat.getMenuItems()[0]));
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
+    }
+
+    public onMenuClicked(menuItem: IMenuItem): void {
+        this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
     }
 
     public getSelectedCells(): ISelectedCells {
@@ -83,13 +91,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public setValue(id: any, columnId:string, value: any) : void{
+    public setValue(id: any, columnId: string, value: any): void {
         this.grid.dataSource.getByUid(id).set(columnId, value);
     }
 
-    
+
     public getColumnHeader(columnId: string): string {
-        return this.grid.columns.find(x=>x.field == columnId).title;
+        return this.grid.columns.find(x => x.field == columnId).title;
     }
 
     destroy() {

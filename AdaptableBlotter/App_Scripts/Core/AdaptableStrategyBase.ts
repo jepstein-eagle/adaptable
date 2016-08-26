@@ -7,5 +7,8 @@ export abstract class AdaptableStrategyBase implements IStragegy {
     }
 
     abstract getMenuItems() : IMenuItem[];
+    public onAction(action:string){
+        
+    }
 }
 
