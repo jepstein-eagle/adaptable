@@ -7,6 +7,7 @@ interface IMenuItem{
     Label : string;
     StrategyId : string;
     Action : string;
+    IsEnabled : boolean;
 }
 
 interface IUIError {
