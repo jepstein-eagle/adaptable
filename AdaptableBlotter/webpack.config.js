@@ -27,6 +27,7 @@ module.exports = {
     output: {
         path: __dirname + '/dist/',
         filename: "[name]-bundle.js",
+        publicPath: "/adaptableblotter/",
         library: "[name]",
         libraryTarget: 'var',
         umdNamedDefine: true
