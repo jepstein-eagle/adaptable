@@ -16,6 +16,7 @@
 //};
 
 var webpack = require('webpack');
+var failPlugin = require('webpack-fail-plugin');
 
 module.exports = {
     entry: {
@@ -39,11 +40,13 @@ module.exports = {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
-    //jo will be added later
+
+    plugins: [
+        failPlugin
+            //jo will be added later
     // Add minification
-    //plugins: [
     //  new webpack.optimize.UglifyJsPlugin()
-    //],
+    ],
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`

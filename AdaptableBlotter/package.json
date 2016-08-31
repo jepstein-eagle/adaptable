@@ -18,13 +18,14 @@
     "ts-loader": "0.8.2",
     "typings": "^1.3.2",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.15.0"
+    "webpack-dev-server": "^1.15.0",
+    "webpack-fail-plugin": "^1.0.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install",
     "build-adaptableblotter": "node_modules/.bin/webpack",
-    "dev-kendo" : "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/"
+    "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/"
   },
   "keywords": [],
   "author": "",
