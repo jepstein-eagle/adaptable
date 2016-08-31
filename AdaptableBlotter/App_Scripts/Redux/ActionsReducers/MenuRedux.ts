@@ -29,7 +29,7 @@ export const MenuItemClicked = (MenuItem: IMenuItem): MenuItemClickedAction => (
     MenuItem
 })
 
-
+breaking the build on purpose
 const initialMenuState: MenuState = {
     MenuItems: []
 }
