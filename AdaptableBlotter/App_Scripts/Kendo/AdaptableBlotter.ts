@@ -13,7 +13,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 
 import {ColumnType} from '../Core/Enums'
 
-import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells} from '../Core/Interface/IAdaptableBlotter'
+import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn} from '../Core/Interface/IAdaptableBlotter'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -97,8 +97,49 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getColumnHeader(columnId: string): string {
-        return this.grid.columns.find(x => x.field == columnId).title;
+        let column = this.grid.columns.find(x => x.field == columnId);
+        if (column) {
+            return column.title
+        }
+        else {
+            return "";
+        }
     }
+
+    public setCustomSort(columnId: string, comparer: Function): void {
+        let column = this.grid.columns.find(x => x.field == columnId);
+
+        if (column) {
+            column.sortable = { compare: comparer }
+        }
+        //TODO : Check if we can optimize that since we will call it for all custom sort
+        this.ReInitGrid();
+    }
+
+    public removeCustomSort(columnId: string): void {
+        let column = this.grid.columns.find(x => x.field == columnId);
+
+        if (column) {
+            column.sortable = {}
+        }
+
+        //TODO : Check if we can optimize that since we will call it for all custom sort
+        this.ReInitGrid();
+    }
+
+    private ReInitGrid() {
+        this.grid.setDataSource(this.grid.dataSource);
+
+    }
+
+    public getColumnValueString(columnId: string): Array<string> {
+        return this.grid.dataSource.data().map(x => (<any>x)[columnId]);
+    }
+
+    public getColumns(): Array<IColumn>{
+        return this.grid.columns.map(x => { return {ColumnId: x.field, ColumnFriendlyName: x.title}});
+    }
+
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);

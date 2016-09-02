@@ -6,7 +6,6 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem} from 'react-bootstrap';
 
-import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
 
@@ -93,7 +92,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let SmartEditAction: React.ComponentClass<any> = connect(mapStateToProps, mapDispatchToProps)(SmartEditActionComponent);
+export let SmartEditAction = connect(mapStateToProps, mapDispatchToProps)(SmartEditActionComponent);
 
 var divStyle = {
     overflowY: 'auto',

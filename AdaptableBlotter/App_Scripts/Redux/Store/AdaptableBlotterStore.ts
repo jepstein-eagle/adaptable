@@ -6,6 +6,7 @@ import * as ReduxStorage from 'redux-storage'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
+import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -16,7 +17,8 @@ import {AdaptableBlotterState,IAdaptableBlotterStore} from './Interface/IAdaptab
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
-    SmartEdit: SmartEditRedux.SmartEditReducer
+    SmartEdit: SmartEditRedux.SmartEditReducer,
+    CustomSort: CustomSortRedux.CustomSortReducer
 });
 
 const RESET_STATE = 'RESET_STATE';

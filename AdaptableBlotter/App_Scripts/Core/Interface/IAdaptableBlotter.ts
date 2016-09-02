@@ -10,6 +10,10 @@ export interface IAdaptableBlotter {
     setValue(id: any, columnId: string, value: any): void
     onMenuClicked(menuItem: IMenuItem): void
     CreateMenu(): void
+    setCustomSort(columnId: string, comparer: Function ) : void
+    getColumnValueString(columnId: string) : Array<string>
+    removeCustomSort(columnId: string): void
+    getColumns(): Array<IColumn>
 }
 
 export interface ISelectedCells {
@@ -19,4 +23,9 @@ export interface ISelectedCells {
 
 export interface IAdaptableStrategyCollection extends Map<string, IStragegy> {
 
+}
+
+export interface IColumn{
+    ColumnId: string,
+    ColumnFriendlyName : string
 }

@@ -1,5 +1,5 @@
 
 export interface ICustomSort {
-    ColumnId: any;
+    ColumnId: string;
     CustomSortItems: Array<string>
 }
