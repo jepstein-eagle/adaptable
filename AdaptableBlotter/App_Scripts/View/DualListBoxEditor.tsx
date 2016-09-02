@@ -53,10 +53,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
 
         return (
-            //we use a container instead of the Grid as we do not want a full width table
-            //<Grid >
             <Row>
-                <Col xs={4}>
+                <Col xs={4} xsOffset={1}>
                     <Panel header={this.props.HeaderAvailable} >
                         <ListGroup fill style={listGroupStyle}>
                             {columnValuesElements}
@@ -65,8 +63,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
                 <Col xs={2}>
                     <ListGroup>
-                        <Button disabled={this.state.UiSelectedAvailableValues.length == 0} onClick={() => this.Add() } >Add</Button>
-                        <Button disabled={this.state.UiSelectedSelectedValues.length == 0} onClick={() => this.Remove() } >Remove</Button>
+                        <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
+                            onClick={() => this.Add() } >Add</Button>
+                        <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
+                            onClick={() => this.Remove() } >Remove</Button>
                         <Button >Top</Button>
                         <Button >Bottom</Button>
                     </ListGroup>
@@ -80,7 +80,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
 
             </Row>
-            //</Grid>
         );
     }
 
@@ -93,7 +92,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             newSelectedValues.push(x)
         })
         //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
-        this.setState({UiSelectedAvailableValues: [],
+        this.setState({
+            UiSelectedAvailableValues: [],
             SelectedValues: newSelectedValues,
             AvailableValues: newAvailableValues
         } as DualListBoxEditorState, () => this.raiseOnChange());
@@ -108,9 +108,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             newAvailableValues.push(x)
         })
         //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
-        this.setState({ UiSelectedSelectedValues: [], 
-            SelectedValues: newSelectedValues, 
-            AvailableValues: newAvailableValues } as DualListBoxEditorState, () => this.raiseOnChange());
+        this.setState({
+            UiSelectedSelectedValues: [],
+            SelectedValues: newSelectedValues,
+            AvailableValues: newAvailableValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
     }
 
     raiseOnChange() {

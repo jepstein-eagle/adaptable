@@ -16,7 +16,7 @@ interface CustomSortEditorProps extends React.ClassAttributes<CustomSortEditor> 
 export class CustomSortEditor extends React.Component<CustomSortEditorProps, {}> {
     render() {
         return (
-            <Panel header={"Custom Sort " + this.props.CustomSort.ColumnId }>
+            <Panel header={"Custom Sort " + this.props.CustomSort.ColumnId } bsStyle="primary">
             <DualListBoxEditor AvailableValues={this.props.ColumnValues}
             SelectedValues={this.props.CustomSort.CustomSortItems}
             HeaderAvailable="Column Values"
