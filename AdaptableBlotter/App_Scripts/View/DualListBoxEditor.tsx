@@ -38,17 +38,20 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         };
     }
     render() {
-        let index = 0;
         let itemsElements = this.state.SelectedValues.map(x => {
-            index++;
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
-            return <ListGroupItem key={index} draggable={true} onClick={() => this.onClickCustomSortItem(x) } active={isActive}>{x}</ListGroupItem>
+            return <ListGroupItem key={x}
+                draggable={true}
+                onClick={() => this.onClickCustomSortItem(x) }
+                active={isActive}>{x}</ListGroupItem>
         })
 
         let columnValuesElements = this.state.AvailableValues.map(x => {
-            index++;
             let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
-            return <ListGroupItem active={isActive}  draggable={true} onClick={() => this.onClickColumnValuesItem(x) } key={index}>{x}</ListGroupItem>
+            return <ListGroupItem active={isActive}
+                draggable={true}
+                onClick={() => this.onClickColumnValuesItem(x) }
+                key={x}>{x}</ListGroupItem>
         })
 
 

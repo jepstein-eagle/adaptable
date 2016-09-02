@@ -4,7 +4,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps,Panel} from 'react-bootstrap';
+import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel} from 'react-bootstrap';
 import {DualListBoxEditor} from './DualListBoxEditor'
 
 interface CustomSortEditorProps extends React.ClassAttributes<CustomSortEditor> {
@@ -17,12 +17,12 @@ export class CustomSortEditor extends React.Component<CustomSortEditorProps, {}>
     render() {
         return (
             <Panel header={"Custom Sort " + this.props.CustomSort.ColumnId } bsStyle="primary">
-            <DualListBoxEditor AvailableValues={this.props.ColumnValues}
-            SelectedValues={this.props.CustomSort.CustomSortItems}
-            HeaderAvailable="Column Values"
-            HeaderSelected="Custom Sort Values"
-            onChange={(SelectedValues) => this.props.onChange(SelectedValues)}></DualListBoxEditor>       
-        </Panel>
+                <DualListBoxEditor AvailableValues={this.props.ColumnValues}
+                    SelectedValues={this.props.CustomSort.CustomSortItems}
+                    HeaderAvailable="Column Values"
+                    HeaderSelected="Custom Sort Values"
+                    onChange={(SelectedValues) => this.props.onChange(SelectedValues) }></DualListBoxEditor>
+            </Panel>
         );
     }
 }
