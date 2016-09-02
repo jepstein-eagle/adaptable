@@ -36,7 +36,9 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }></CustomSortConfigItem>
         });
         var menuColItems = this.props.AdaptableBlotter.getColumns().map((col: IColumn) => {
-            return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
+            if (!this.props.CustomSorts.find(x => x.ColumnId == col.ColumnId)) {
+                return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
+            }
         });
 
         let header = <Form horizontal>
