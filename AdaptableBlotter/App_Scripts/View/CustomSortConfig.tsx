@@ -60,8 +60,10 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             <Modal.Title>{}</Modal.Title>
           </Modal.Header>*/}
                 <Modal.Body style={divStyle}>
-                    <CustomSortEditor CustomSort={this._editedCustomSort} ColumnValues={this._columnValues} onChange={(selectedValues) => this.onCustomSortChange(selectedValues) }
-                        HeaderAvailable="Column Values" HeaderSelected="Sorted Values"></CustomSortEditor>
+                    <CustomSortEditor CustomSort={this._editedCustomSort}
+                        ColumnValues={this._columnValues}
+                        onChange={(selectedValues) => this.onCustomSortChange(selectedValues) }
+                        ></CustomSortEditor>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={() => this.closeEditing() }>Close</Button>
