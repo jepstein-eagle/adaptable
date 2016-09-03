@@ -20,6 +20,10 @@ interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor
     UiSelectedAvailableValues: Array<string>
     UiSelectedSelectedValues: Array<string>
 }
+var placeholder = document.createElement("button");
+placeholder.className = "placeholder"
+placeholder.classList.add("list-group-item")
+placeholder.type = "button"
 
 export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, DualListBoxEditorState> {
     constructor(props: DualListBoxEditorProps) {
@@ -40,15 +44,17 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     render() {
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
-            return <ListGroupItem key={x}
+            return <ListGroupItem key={x} className="Selected"
                 draggable={true}
                 onClick={() => this.onClickCustomSortItem(x) }
-                active={isActive}>{x}</ListGroupItem>
+                active={isActive}
+                onDragStart={(event) => this.DragStart(event) }
+                onDragEnd={ (event) => this.DragEnd(event) }>{x}</ListGroupItem>
         })
 
         let columnValuesElements = this.state.AvailableValues.map(x => {
             let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
-            return <ListGroupItem active={isActive}
+            return <ListGroupItem active={isActive} className="Available"
                 draggable={true}
                 onClick={() => this.onClickColumnValuesItem(x) }
                 key={x}>{x}</ListGroupItem>
@@ -59,7 +65,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             <Row>
                 <Col xs={4} xsOffset={1}>
                     <Panel header={this.props.HeaderAvailable} >
-                        <ListGroup fill style={listGroupStyle}>
+                        <ListGroup fill style={listGroupStyle}
+                            onDragEnter={(event) => this.DragEnterAvailable(event) }
+                            onDragOver={(event) => this.DragOverAvailable(event) }
+                            onDragLeave={(event) => this.DragLeaveAvailable(event) }>
                             {columnValuesElements}
                         </ListGroup>
                     </Panel>
@@ -116,6 +125,65 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             SelectedValues: newSelectedValues,
             AvailableValues: newAvailableValues
         } as DualListBoxEditorState, () => this.raiseOnChange());
+    }
+    private dragged: HTMLElement;
+    private over: HTMLElement;
+    DragStart(e: React.DragEvent) {
+        this.dragged = e.currentTarget as HTMLElement;
+        e.dataTransfer.dropEffect = 'move'
+        e.dataTransfer.effectAllowed = 'move';
+    }
+    DragEnd(e: React.DragEvent) {
+        this.dragged.style.display = "block";
+        if (this.over) {
+            this.over.parentNode.removeChild(placeholder);
+
+            // Update state
+            var from = this.state.SelectedValues.indexOf(this.dragged.innerText);
+            var to = this.state.AvailableValues.indexOf(this.over.innerText);;
+
+            let newSelectedArray = [...this.state.SelectedValues];
+            newSelectedArray.splice(from, 1);
+            let newAvailableValues = [...this.state.AvailableValues];
+            newAvailableValues.splice(to, 0, this.dragged.innerText)
+            this.setState({
+                SelectedValues: newSelectedArray,
+                AvailableValues: newAvailableValues
+            } as DualListBoxEditorState
+                , () => this.raiseOnChange());
+        }
+    }
+    DragEnterAvailable(e: React.DragEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+            // let targetElement = (e.target) as HTMLElement;
+            // this.dragged.style.display = "none";
+            // if (targetElement.classList.contains("placeholder")) return;
+            // this.over = targetElement;
+            // targetElement.parentNode.insertBefore(placeholder, targetElement);
+    }
+    DragOverAvailable(e: React.DragEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+        let targetElement = (e.target) as HTMLElement;
+    this.dragged.style.display = "none";
+    if(targetElement.className == "placeholder") return;
+    this.over = targetElement;
+    targetElement.parentNode.insertBefore(placeholder, targetElement);
+    }
+    DragLeaveAvailable(e: React.DragEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+        // let targetElement = (e.target) as HTMLElement;
+        // if (targetElement != this.over) {
+        //     //if (targetElement.classList.contains("placeholder")) return;
+        //     //if (targetElement.classList.contains("Available")) return;
+        //     console.log(targetElement)
+        //     console.log(this.over)
+        //     this.over.parentNode.removeChild(placeholder);
+        //     this.over = null;
+        // }
+        console.log(e.target)
     }
 
     raiseOnChange() {

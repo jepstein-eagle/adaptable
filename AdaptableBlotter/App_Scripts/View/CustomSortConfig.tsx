@@ -81,9 +81,9 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         else {
             this.props.onAddCustomSort(this._editedCustomSort)
         }
-        this._editedCustomSort = null;
-        this._columnValues = [];
-        this.setState({ isEditing: false });
+
+
+        this.setState({ isEditing: false }, () => { this._editedCustomSort = null;this._columnValues = [];});
     }
 
     private onEditCustomSort(customSort: ICustomSort) {
