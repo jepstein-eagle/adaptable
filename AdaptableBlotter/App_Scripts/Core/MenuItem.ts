@@ -1,3 +1,5 @@
+import {IMenuItem} from './Interface/IStrategy';
+
 //Just a normal menuitem class. if user click on it we 
 //will pass back the action to the strategy and it will decide what to do
 export class MenuItem implements IMenuItem {

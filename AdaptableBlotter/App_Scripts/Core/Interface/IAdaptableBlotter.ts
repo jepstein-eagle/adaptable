@@ -1,4 +1,5 @@
 import {ColumnType} from '../Enums'
+import {IMenuItem, IStragegy} from './IStrategy'
 import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
 
 export interface IAdaptableBlotter {

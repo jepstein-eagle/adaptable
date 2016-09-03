@@ -1,4 +1,5 @@
-import {SmartEditOperation} from '../Enums'
+import {IStrategyActionReturn,IStragegy} from './IStrategy';
+import {SmartEditOperation} from '../Enums';
 
 export interface ISmartEditPreview{
     ColumnId: string,

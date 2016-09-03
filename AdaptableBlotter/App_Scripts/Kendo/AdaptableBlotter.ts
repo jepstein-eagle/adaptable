@@ -10,6 +10,7 @@ import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
+import {IMenuItem,IStragegy} from '../Core/Interface/IStrategy';
 
 import {ColumnType} from '../Core/Enums'
 

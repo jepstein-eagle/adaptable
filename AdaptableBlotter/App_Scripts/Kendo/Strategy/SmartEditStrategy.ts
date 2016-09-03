@@ -3,6 +3,7 @@ import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase'
 import {AdaptableViewFactory} from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
 import {SmartEditOperation, ColumnType} from '../../Core/Enums'
+import {IMenuItem} from '../../Core/Interface/IStrategy';
 
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy,ISmartEditValueTuple,ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'

@@ -15,6 +15,7 @@ import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
 import {PopupState, MenuState} from '../Redux/ActionsReducers/Interface/IState';
 import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore';
+import {IMenuItem} from '../Core/interface/IStrategy'
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {

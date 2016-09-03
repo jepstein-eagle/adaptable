@@ -2,6 +2,7 @@
 
 import * as Redux from 'redux';
 import { PopupState} from './Interface/IState';
+import {IUIError} from '../../Core/Interface/IStrategy';
 
 const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';

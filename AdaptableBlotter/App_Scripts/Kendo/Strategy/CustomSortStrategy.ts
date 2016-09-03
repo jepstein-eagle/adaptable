@@ -2,6 +2,7 @@ import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
 import {MenuItemShowPopup} from '../../Core/MenuItem';
 import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
+import {IMenuItem} from '../../Core/Interface/IStrategy';
 
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 

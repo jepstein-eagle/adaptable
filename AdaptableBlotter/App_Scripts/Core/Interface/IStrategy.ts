@@ -1,21 +1,21 @@
-interface IStragegy{
+export interface IStragegy{
     Id : string
     getMenuItems() : IMenuItem[]
     onAction(action: string) : void
 }
 
-interface IMenuItem{
+export interface IMenuItem{
     Label : string;
     StrategyId : string;
     Action : string;
     IsEnabled : boolean;
 }
 
-interface IUIError {
+export interface IUIError {
     ErrorMsg: string;
 }
 
-interface IStrategyActionReturn<T> {
+export interface IStrategyActionReturn<T> {
     ActionReturn?: T,
     Error?: IUIError
 }
