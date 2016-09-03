@@ -1,6 +1,12 @@
 import {SmartEditOperation} from '../../../Core/Enums'
 import {ISmartEditPreview} from '../../../Core/interface/ISmartEditStrategy'
 import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
+import {IMenuItem} from '../../../Core/interface/IStrategy'
+import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
+
+export interface GridState {
+    Columns: IColumn[];
+}
 
 export interface MenuState {
     MenuItems: IMenuItem[];

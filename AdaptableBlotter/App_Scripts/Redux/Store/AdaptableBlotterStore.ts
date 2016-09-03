@@ -7,18 +7,21 @@ import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
+import * as GridRedux from '../ActionsReducers/GridRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
-import {ISmartEditStrategy} from '../../Core/Interface/ISmartEditStrategy'
+import {ISmartEditStrategy,ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
 import {AdaptableBlotterState,IAdaptableBlotterStore} from './Interface/IAdaptableStore'
+import {IUIError} from '../../Core/interface/IStrategy'
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
-    CustomSort: CustomSortRedux.CustomSortReducer
+    CustomSort: CustomSortRedux.CustomSortReducer,
+    Grid: GridRedux.GridReducer
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -107,6 +110,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case RESET_STATE:{
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
+                    adaptableBlotter.SetColumnIntoStore();
                     return returnAction;
                 }
 

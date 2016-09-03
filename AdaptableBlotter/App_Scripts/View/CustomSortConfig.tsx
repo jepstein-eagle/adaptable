@@ -18,6 +18,7 @@ interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfig
     onDeleteCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortDeleteAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
     CustomSorts: Array<ICustomSort>
+    Columns: Array<IColumn>
 }
 
 interface CustomSortConfigInternalState {
@@ -35,7 +36,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 onEdit={(customSort) => this.onEditCustomSort(customSort) }
                 onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }></CustomSortConfigItem>
         });
-        var menuColItems = this.props.AdaptableBlotter.getColumns().map((col: IColumn) => {
+        var menuColItems = this.props.Columns.map((col: IColumn) => {
             if (!this.props.CustomSorts.find(x => x.ColumnId == col.ColumnId)) {
                 return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
             }
@@ -134,7 +135,8 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CustomSorts: state.CustomSort.CustomSorts,
-        AdaptableBlotter: ownProps.AdaptableBlotter
+        AdaptableBlotter: ownProps.AdaptableBlotter,
+        Columns: state.Grid.Columns
     };
 }
 

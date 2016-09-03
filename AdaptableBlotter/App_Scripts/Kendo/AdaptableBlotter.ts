@@ -4,13 +4,14 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AdaptableBlotterApp} from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
 import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
 import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
-import {IMenuItem,IStragegy} from '../Core/Interface/IStrategy';
+import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
 
 import {ColumnType} from '../Core/Enums'
 
@@ -33,8 +34,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //we build the menus from all strategies and update redux store
         this.CreateMenu();
+        this.SetColumnIntoStore();
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
     }
+
+    public SetColumnIntoStore() {
+        let columns: IColumn[] = this.grid.columns.map(x => {
+            return {
+                ColumnId: x.field,
+                ColumnFriendlyName: x.title,
+                ColumnType: this.getColumnType(x.field)
+            }
+        });
+
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+    }
+
 
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];
@@ -136,11 +151,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueString(columnId: string): Array<string> {
         return this.grid.dataSource.data().map(x => (<any>x)[columnId]);
     }
-
-    public getColumns(): Array<IColumn>{
-        return this.grid.columns.map(x => { return {ColumnId: x.field, ColumnFriendlyName: x.title}});
-    }
-
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
