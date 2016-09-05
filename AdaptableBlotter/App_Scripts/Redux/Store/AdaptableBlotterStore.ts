@@ -7,6 +7,7 @@ import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
+import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
@@ -21,6 +22,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Menu: MenuRedux.MenuReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
+    Shortcut: ShortcutRedux.ShortcutReducer,
     Grid: GridRedux.GridReducer
 });
 
@@ -38,7 +40,6 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 
   return rootReducer(state, action)
 }
-
 //TODO: need to make this members of AdaptableBlotterStore so we can have mutiple instances
 const engineReduxStorage = createEngine('my-adaptable-blotter-key');
 //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that

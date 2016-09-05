@@ -1,6 +1,7 @@
 import {SmartEditOperation} from '../../../Core/Enums'
 import {ISmartEditPreview} from '../../../Core/interface/ISmartEditStrategy'
 import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
+import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
 import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 
@@ -27,4 +28,8 @@ export interface SmartEditState {
 
 export interface CustomSortState {
     CustomSorts: Array<ICustomSort>;
+}
+
+export interface ShortcutState {
+    Shortcuts: Array<IShortcut>;
 }

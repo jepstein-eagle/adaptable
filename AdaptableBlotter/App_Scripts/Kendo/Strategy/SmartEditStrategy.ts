@@ -41,6 +41,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         }
     }
 
+
     public BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn {
         let selectedCells = this.blotter.getSelectedCells();
         let values: ISmartEditValueTuple[] = [];

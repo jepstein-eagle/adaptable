@@ -1,9 +1,10 @@
-import {PopupState,MenuState,SmartEditState,CustomSortState,GridState } from '../../ActionsReducers/Interface/IState';
+import {PopupState,MenuState,SmartEditState,CustomSortState,ShortcutState, GridState } from '../../ActionsReducers/Interface/IState';
 export interface AdaptableBlotterState {
     Popup: PopupState;
     Menu: MenuState;
     SmartEdit: SmartEditState;
     CustomSort: CustomSortState;
+    Shortcut: ShortcutState;
     Grid: GridState;
 }
 

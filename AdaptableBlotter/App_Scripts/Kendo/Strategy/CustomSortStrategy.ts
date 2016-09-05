@@ -15,6 +15,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         this.InitCustomSort();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitCustomSort())
     }
+    
 
     InitCustomSort() {
         if (this.CustomSorts != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {

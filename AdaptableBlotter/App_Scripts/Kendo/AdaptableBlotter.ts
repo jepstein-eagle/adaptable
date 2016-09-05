@@ -9,6 +9,7 @@ import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
 import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
 import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
+import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
 import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
@@ -29,6 +30,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStragegy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
 
 
