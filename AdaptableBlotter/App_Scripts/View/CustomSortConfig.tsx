@@ -56,8 +56,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             </Row>
         </Form>;
         let columnNameEdited: string;
-        if (this._editedCustomSort != null)
-        { columnNameEdited = this.props.Columns.find(x => x.ColumnId == this._editedCustomSort.ColumnId).ColumnFriendlyName; }
+        if (this._editedCustomSort != null) { columnNameEdited = this.props.Columns.find(x => x.ColumnId == this._editedCustomSort.ColumnId).ColumnFriendlyName; }
         return <Panel header={header} bsStyle="primary">
             <ListGroup>
                 {customSorts}
