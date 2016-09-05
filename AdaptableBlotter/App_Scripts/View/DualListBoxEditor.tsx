@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel} from 'react-bootstrap';
+import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid} from 'react-bootstrap';
 
 
 interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
@@ -64,39 +64,41 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
 
         return (
-            <Row>
-                <Col xs={4} xsOffset={1}>
-                    <Panel header={this.props.HeaderAvailable} >
-                        <ListGroup fill className="AvailableDropZone" style={listGroupStyle}
-                            onDragEnter={(event) => this.DragEnterAvailable(event) }
-                            onDragOver={(event) => this.DragOverAvailable(event) }
-                            onDragLeave={(event) => this.DragLeaveAvailable(event) }>
-                            {columnValuesElements}
+            //<Grid>
+                <Row>
+                    <Col xs={4} xsOffset={1}>
+                        <Panel header={this.props.HeaderAvailable} >
+                            <ListGroup fill className="AvailableDropZone" style={listGroupStyle}
+                                onDragEnter={(event) => this.DragEnterAvailable(event) }
+                                onDragOver={(event) => this.DragOverAvailable(event) }
+                                onDragLeave={(event) => this.DragLeaveAvailable(event) }>
+                                {columnValuesElements}
+                            </ListGroup>
+                        </Panel>
+                    </Col>
+                    <Col xs={2}>
+                        <ListGroup>
+                            <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
+                                onClick={() => this.Add() } >Add</Button>
+                            <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
+                                onClick={() => this.Remove() } >Remove</Button>
+                            <Button >Top</Button>
+                            <Button >Bottom</Button>
                         </ListGroup>
-                    </Panel>
-                </Col>
-                <Col xs={2}>
-                    <ListGroup>
-                        <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
-                            onClick={() => this.Add() } >Add</Button>
-                        <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
-                            onClick={() => this.Remove() } >Remove</Button>
-                        <Button >Top</Button>
-                        <Button >Bottom</Button>
-                    </ListGroup>
-                </Col>
-                <Col xs={4} >
-                    <Panel header={this.props.HeaderSelected}>
-                        <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
-                            onDragEnter={(event) => this.DragEnterSelected(event) }
-                            onDragOver={(event) => this.DragOverSelected(event) }
-                            onDragLeave={(event) => this.DragLeaveSelected(event) }>
-                            {itemsElements}
-                        </ListGroup>
-                    </Panel>
-                </Col>
+                    </Col>
+                    <Col xs={4} >
+                        <Panel header={this.props.HeaderSelected}>
+                            <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
+                                onDragEnter={(event) => this.DragEnterSelected(event) }
+                                onDragOver={(event) => this.DragOverSelected(event) }
+                                onDragLeave={(event) => this.DragLeaveSelected(event) }>
+                                {itemsElements}
+                            </ListGroup>
+                        </Panel>
+                    </Col>
 
-            </Row>
+                </Row>
+            //</Grid>
         );
     }
 
@@ -138,8 +140,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
     DragSelectedEnd(e: React.DragEvent) {
         if (this.over) {
-            //We remove our awesome placeholder 
-            this.over.parentNode.removeChild(placeholder);
+
             //now we need to check in which drop area we dropped the selected item
             let to: number;
             let from = this.state.SelectedValues.indexOf(this.dragged.innerText);
@@ -160,6 +161,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newSelectedArray.splice(to, 0, this.dragged.innerText);
                 newAvailableValues = [...this.state.AvailableValues];
             }
+            //We remove our awesome placeholder 
+            this.over.parentNode.removeChild(placeholder);
+            this.over = null;
+            this.dragged = null;
             // Update state
 
             this.setState({
@@ -174,8 +179,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
     DragAvailableEnd(e: React.DragEvent) {
         if (this.over) {
-            //We remove our awesome placeholder 
-            this.over.parentNode.removeChild(placeholder);
             //always from Available to selected area
             let from = this.state.AvailableValues.indexOf(this.dragged.innerText);
             let to = this.state.SelectedValues.indexOf(this.over.innerText);;
@@ -183,6 +186,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             newSelectedArray.splice(to, 0, this.dragged.innerText)
             let newAvailableValues = [...this.state.AvailableValues];
             newAvailableValues.splice(from, 1);
+
+            //We remove our awesome placeholder 
+            this.over.parentNode.removeChild(placeholder);
+            this.over = null;
+            this.dragged = null;
 
             // Update state
             this.setState({
@@ -217,10 +225,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("AvailableDropZone")) {
             if (this.over) {
-                if (this.over.parentNode.contains(placeholder)) {
-                    this.over.parentNode.removeChild(placeholder);
-                }
+                this.over.parentNode.removeChild(placeholder);
                 this.over = null;
+
             }
         }
     }
@@ -244,9 +251,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("SelectedDropZone")) {
             if (this.over) {
-                if (this.over.parentNode.contains(placeholder)) {
-                    this.over.parentNode.removeChild(placeholder);
-                }
+                this.over.parentNode.removeChild(placeholder);
                 this.over = null;
             }
         }
