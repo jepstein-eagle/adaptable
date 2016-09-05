@@ -4,7 +4,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton} from 'react-bootstrap';
+import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
@@ -121,11 +121,11 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                 <Col xs={6} style={divStyle}>
                     {this.props.CustomSort.CustomSortItems.join() }
                 </Col>
-                <Col xs={2}>
+                <Col xs={4}>
+                <ButtonGroup>
                     <Button onClick={() => this.props.onEdit(this.props.CustomSort) }>Edit</Button>
-                </Col>
-                <Col xs={2}>
                     <Button onClick={() => this.props.onDelete(this.props.CustomSort) }>Delete</Button>
+                    </ButtonGroup>
                 </Col>
             </Row>
         </li>
