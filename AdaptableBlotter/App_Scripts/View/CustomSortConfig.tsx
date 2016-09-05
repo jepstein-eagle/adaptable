@@ -4,7 +4,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup} from 'react-bootstrap';
+import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup,Jumbotron} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
@@ -39,6 +39,13 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }
                 ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
         });
+        let jumbotron: JSX.Element;
+        if(this.props.CustomSorts.length == 0)
+        {
+            jumbotron  =   <Jumbotron>
+                <p>Click 'Add' to create a new bespoke sort for a column of your choosing.</p>
+            </Jumbotron>;
+        }
         var menuColItems = this.props.Columns.map((col: IColumn) => {
             if (!this.props.CustomSorts.find(x => x.ColumnId == col.ColumnId)) {
                 return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
@@ -58,6 +65,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         let columnNameEdited: string;
         if (this._editedCustomSort != null) { columnNameEdited = this.props.Columns.find(x => x.ColumnId == this._editedCustomSort.ColumnId).ColumnFriendlyName; }
         return <Panel header={header} bsStyle="primary">
+        {jumbotron}
             <ListGroup>
                 {customSorts}
             </ListGroup>
