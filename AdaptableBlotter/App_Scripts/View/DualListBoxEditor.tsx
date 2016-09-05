@@ -217,7 +217,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("AvailableDropZone")) {
             if (this.over) {
-                this.over.parentNode.removeChild(placeholder);
+                if (this.over.parentNode.contains(placeholder)) {
+                    this.over.parentNode.removeChild(placeholder);
+                }
                 this.over = null;
             }
         }
@@ -242,7 +244,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("SelectedDropZone")) {
             if (this.over) {
-                this.over.parentNode.removeChild(placeholder);
+                if (this.over.parentNode.contains(placeholder)) {
+                    this.over.parentNode.removeChild(placeholder);
+                }
                 this.over = null;
             }
         }
