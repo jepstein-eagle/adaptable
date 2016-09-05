@@ -81,10 +81,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
     private onSelectShortcut(shortcut: IShortcut) {
         //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
-     //  alert("in select function")
         this._editedShortcut = shortcut;
         this._editedShortcut.IsLive = !this._editedShortcut.IsLive;
-     //   alert(this._editedShortcut.IsLive);     
          this.props.onSelectShortcut(this._editedShortcut) 
     }
 
