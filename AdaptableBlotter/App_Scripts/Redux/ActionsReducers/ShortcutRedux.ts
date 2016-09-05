@@ -46,6 +46,7 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 })
 
 const initialShortcutState: ShortcutState = {
+    // creating 2 shortcuts one of which we will not make ispredefined to test
     Shortcuts: [{ ShortcutId: 1, ShortcutName: "First", IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutName: "Second", IsLive: false, IsPredefined: false}]
 }
 
@@ -66,9 +67,17 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         }
 
 case SHORTCUT_DELETE:
-        // TODO: Some way of warning before delete and also only able to delete some shortcuts...  
+      let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut; 
+       
+       // Should not be able to click delete button on predefined shortcuts but seems older browsers might not play ball so will add the check here as well....
+        if (deletedShortcut.IsPredefined) {
+           alert("You cannot delete this shortcut");
+           return state;
+        }
+       
+        // TODO: Some way of warning before delete 
             var items: Array<IShortcut> = [].concat(state.Shortcuts);
-            let index = items.findIndex(x => x.ShortcutId == (<ShortcutDeleteAction>action).Shortcut.ShortcutId)
+            let index = items.findIndex(x => x.ShortcutId == deletedShortcut.ShortcutId)
             items.splice(index, 1);
 
             return Object.assign({}, state, {

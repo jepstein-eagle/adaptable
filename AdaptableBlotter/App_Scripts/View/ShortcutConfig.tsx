@@ -41,9 +41,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             <Row>
                 <Col xs={7}>Shortcuts</Col>
                 <Col xs={5}>
-                    <Button title="Create Shortcut" id="Create_Shortcut" content="Create Shortcut">Create Shortcut
-
-                    </Button>
+                    <Button title="Create Shortcut" id="Create_Shortcut" content="Create Shortcut">Create Shortcut</Button>
                 </Col>
             </Row>
         </Form>;
@@ -51,6 +49,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             <ListGroup>
                 {shortcuts}
             </ListGroup>
+
             <Modal show={this.state.isEditing} onHide={() => this.closeEditing() }  >
                 {/*<Modal.Header closeButton>
             <Modal.Title>{}</Modal.Title>
@@ -64,6 +63,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                     <Button onClick={() => this.closeEditing() }>Close</Button>
                 </Modal.Footer>
             </Modal>
+            
         </Panel>
     }
 

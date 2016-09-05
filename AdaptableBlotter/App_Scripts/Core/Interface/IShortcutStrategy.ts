@@ -7,4 +7,5 @@ export interface IShortcut {
     IsPredefined : Boolean
 }
 
+
 // here we will do the apply shortcut
