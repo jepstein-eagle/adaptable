@@ -32,7 +32,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     render() {
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut) => {
             return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutId}
-                onSelect={(shortcut) => this.onSelectShortcut(shortcut) }
+                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
                 onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
             </ShortcutConfigItem>
@@ -77,13 +77,6 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             this.props.onEditShortcut(this._editedShortcut)
         }
         this.setState({ isEditing: false }, () => { this._editedShortcut = null; });
-    }
-
-    private onSelectShortcut(shortcut: IShortcut) {
-        //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
-        this._editedShortcut = shortcut;
-        this._editedShortcut.IsLive = !this._editedShortcut.IsLive;
-         this.props.onSelectShortcut(this._editedShortcut) 
     }
 
     private onEditShortcut(shortcut: IShortcut) {
