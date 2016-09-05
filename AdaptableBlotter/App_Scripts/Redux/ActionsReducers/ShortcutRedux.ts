@@ -46,7 +46,7 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 })
 
 const initialShortcutState: ShortcutState = {
-    Shortcuts: [{ ShortcutId: 1, ShortcutName: "First", IsLive: false }, { ShortcutId: 2, ShortcutName: "Second", IsLive: false}]
+    Shortcuts: [{ ShortcutId: 1, ShortcutName: "First", IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutName: "Second", IsLive: false, IsPredefined: false}]
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
@@ -64,6 +64,15 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             });
         }
 
+case SHORTCUT_DELETE:
+        // TODO: Some way of warning before delete and also only able to delete some shortcuts...  
+            var items: Array<IShortcut> = [].concat(state.Shortcuts);
+            let index = items.findIndex(x => x.ShortcutId == (<ShortcutDeleteAction>action).Shortcut.ShortcutId)
+            items.splice(index, 1);
+
+            return Object.assign({}, state, {
+                Shortcuts: items
+            });
 
         default:
             return state
