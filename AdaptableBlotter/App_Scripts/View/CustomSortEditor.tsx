@@ -9,6 +9,7 @@ import {DualListBoxEditor} from './DualListBoxEditor'
 
 interface CustomSortEditorProps extends React.ClassAttributes<CustomSortEditor> {
     CustomSort: ICustomSort
+    ColumnLabel : string
     ColumnValues: Array<string>
     onChange: (SelectedValues: Array<string>) => void
 }
@@ -16,7 +17,7 @@ interface CustomSortEditorProps extends React.ClassAttributes<CustomSortEditor> 
 export class CustomSortEditor extends React.Component<CustomSortEditorProps, {}> {
     render() {
         return (
-            <Panel header={"Custom Sort " + this.props.CustomSort.ColumnId } bsStyle="primary">
+            <Panel header={"Custom Sort " + this.props.ColumnLabel } bsStyle="primary">
                 <DualListBoxEditor AvailableValues={this.props.ColumnValues}
                     SelectedValues={this.props.CustomSort.CustomSortItems}
                     HeaderAvailable="Column Values"

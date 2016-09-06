@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid} from 'react-bootstrap';
+import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup} from 'react-bootstrap';
 
 
 interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
@@ -64,9 +64,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
 
         return (
-            //<Grid>
-                <Row>
-                    <Col xs={4} xsOffset={1}>
+            <Grid>
+                <Row> 
+                    <Col xs={4}>
                         <Panel header={this.props.HeaderAvailable} >
                             <ListGroup fill className="AvailableDropZone" style={listGroupStyle}
                                 onDragEnter={(event) => this.DragEnterAvailable(event) }
@@ -77,14 +77,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         </Panel>
                     </Col>
                     <Col xs={2}>
-                        <ListGroup>
-                            <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
-                                onClick={() => this.Add() } >Add</Button>
-                            <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
-                                onClick={() => this.Remove() } >Remove</Button>
-                            <Button >Top</Button>
-                            <Button >Bottom</Button>
-                        </ListGroup>
+                    <ButtonGroup>
+                        <Button disabled={this.state.AvailableValues.length == 0}
+                            onClick={() => this.AddAll() } block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
+                        <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
+                            onClick={() => this.Add() } block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
+                        <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
+                            onClick={() => this.Remove() } block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
+                        <Button disabled={this.state.SelectedValues.length == 0}
+                            onClick={() => this.RemoveAll() } block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
+                            </ButtonGroup>
                     </Col>
                     <Col xs={4} >
                         <Panel header={this.props.HeaderSelected}>
@@ -96,9 +98,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             </ListGroup>
                         </Panel>
                     </Col>
-
+                    <Col xs={2}>
+                        <Button block disabled>Top</Button>
+                        <Button block disabled>Up</Button>
+                        <Button block disabled>Down</Button>
+                        <Button block disabled>Bottom</Button>
+                    </Col>
                 </Row>
-            //</Grid>
+            </Grid>
         );
     }
 
@@ -118,6 +125,27 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         } as DualListBoxEditorState, () => this.raiseOnChange());
     }
 
+    AddAll() {
+        let newSelectedValues = [].concat(this.state.SelectedValues, this.state.AvailableValues);
+        let newAvailableValues: string[] = [];
+        this.setState({
+            UiSelectedSelectedValues: [],
+            UiSelectedAvailableValues: [],
+            SelectedValues: newSelectedValues,
+            AvailableValues: newAvailableValues
+        }, () => this.raiseOnChange());
+    }
+
+    RemoveAll() {
+        let newSelectedValues: string[] = [];
+        let newAvailableValues = [].concat(this.state.SelectedValues, this.state.AvailableValues);
+        this.setState({
+            UiSelectedSelectedValues: [],
+            UiSelectedAvailableValues: [],
+            SelectedValues: newSelectedValues,
+            AvailableValues: newAvailableValues
+        }, () => this.raiseOnChange());
+    }
     Remove() {
         let newSelectedValues = [...this.state.SelectedValues];
         let newAvailableValues = [...this.state.AvailableValues];
@@ -303,3 +331,4 @@ var panelStyle = {
     'maxHeight': '300px',
     'height': '300px'
 };
+

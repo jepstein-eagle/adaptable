@@ -4,7 +4,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton} from 'react-bootstrap';
+import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup,Jumbotron} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
@@ -32,10 +32,20 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
     }
     render() {
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
+            let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
+            if (column == null) return;
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
                 onEdit={(customSort) => this.onEditCustomSort(customSort) }
-                onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }></CustomSortConfigItem>
+                onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }
+                ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
         });
+        let jumbotron: JSX.Element;
+        if(this.props.CustomSorts.length == 0)
+        {
+            jumbotron  =   <Jumbotron>
+                <p>Click 'Add' to create a new bespoke sort for a column of your choosing.</p>
+            </Jumbotron>;
+        }
         var menuColItems = this.props.Columns.map((col: IColumn) => {
             if (!this.props.CustomSorts.find(x => x.ColumnId == col.ColumnId)) {
                 return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
@@ -52,7 +62,10 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 </Col>
             </Row>
         </Form>;
+        let columnNameEdited: string;
+        if (this._editedCustomSort != null) { columnNameEdited = this.props.Columns.find(x => x.ColumnId == this._editedCustomSort.ColumnId).ColumnFriendlyName; }
         return <Panel header={header} bsStyle="primary">
+        {jumbotron}
             <ListGroup>
                 {customSorts}
             </ListGroup>
@@ -64,7 +77,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                     <CustomSortEditor CustomSort={this._editedCustomSort}
                         ColumnValues={this._columnValues}
                         onChange={(selectedValues) => this.onCustomSortChange(selectedValues) }
-                        ></CustomSortEditor>
+                        ColumnLabel={ columnNameEdited}></CustomSortEditor>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={() => this.closeEditing() }>Close</Button>
@@ -84,7 +97,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         }
 
 
-        this.setState({ isEditing: false }, () => { this._editedCustomSort = null;this._columnValues = [];});
+        this.setState({ isEditing: false }, () => { this._editedCustomSort = null; this._columnValues = []; });
     }
 
     private onEditCustomSort(customSort: ICustomSort) {
@@ -108,6 +121,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
+    ColumnLabel: string
     onEdit: (CustomSort: ICustomSort) => void;
     onDelete: (CustomSort: ICustomSort) => void;
 }
@@ -117,15 +131,15 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             className="list-group-item"
             onClick={() => { } }>
             <Row>
-                <Col xs={2}>{this.props.CustomSort.ColumnId}</Col>
+                <Col xs={2}>{this.props.ColumnLabel}</Col>
                 <Col xs={6} style={divStyle}>
                     {this.props.CustomSort.CustomSortItems.join() }
                 </Col>
-                <Col xs={2}>
-                    <Button onClick={() => this.props.onEdit(this.props.CustomSort) }>Edit</Button>
-                </Col>
-                <Col xs={2}>
-                    <Button onClick={() => this.props.onDelete(this.props.CustomSort) }>Delete</Button>
+                <Col xs={4}>
+                    <ButtonGroup>
+                        <Button onClick={() => this.props.onEdit(this.props.CustomSort) }>Edit</Button>
+                        <Button onClick={() => this.props.onDelete(this.props.CustomSort) }>Delete</Button>
+                    </ButtonGroup>
                 </Col>
             </Row>
         </li>

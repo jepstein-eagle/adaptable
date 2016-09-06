@@ -35,7 +35,7 @@ export const DeleteCustomSort = (CustomSort: ICustomSort): CustomSortDeleteActio
 })
 
 const initialCustomSortState: CustomSortState = {
-    CustomSorts: [{ ColumnId: "fitchRating", CustomSortItems: ["B", "A"] }, { ColumnId: "ColumnB", CustomSortItems: ["A", "TOfdwsfsdfdsfdsfdddddddddddddddddddddddddsdfsdfsdfdsfdsfsdfdsfdTO", "B"] }, { ColumnId: "ColumnC", CustomSortItems: ["A", "TOTO", "B"] }]
+    CustomSorts: []
 }
 
 export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomSortState = initialCustomSortState, action: Redux.Action): CustomSortState => {
