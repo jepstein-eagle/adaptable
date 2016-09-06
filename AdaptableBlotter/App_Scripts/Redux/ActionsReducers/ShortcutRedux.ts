@@ -47,7 +47,7 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 
 const initialShortcutState: ShortcutState = {
     // creating 2 shortcuts one of which we will not make ispredefined to test
-    Shortcuts: [{ ShortcutId: 1, ShortcutName: "First", IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutName: "Second", IsLive: false, IsPredefined: false}]
+    Shortcuts: [{ ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, IsLive: false, IsPredefined: false}]
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
@@ -59,8 +59,8 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             var items: Array<IShortcut> = [].concat(state.Shortcuts);
             let updatedShortcut = (<ShortcutSelectAction>action).Shortcut;
              updatedShortcut.IsLive = !updatedShortcut.IsLive;
-            let index = items.findIndex(x => x.ShortcutId == (<ShortcutSelectAction>action).Shortcut.ShortcutId)
-            items[index] = (<ShortcutSelectAction>action).Shortcut;
+            let index = items.findIndex(x => x.ShortcutId == updatedShortcut.ShortcutId)
+            items[index] = updatedShortcut;
  return Object.assign({}, state, {
                 Shortcuts: items
             });

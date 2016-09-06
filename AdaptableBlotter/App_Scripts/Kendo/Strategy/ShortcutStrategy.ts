@@ -10,7 +10,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
     private Shortcuts: IShortcut[]
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ShortcutId, blotter)
+        super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Configure Shortcut", this.Id, 'ShortcutConfig');
         this.InitShortcut();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitShortcut())
@@ -18,20 +18,16 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
 
     InitShortcut() {
         if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {
-          //  this.removeCustomSorts();
             this.Shortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
-          //  this.applyCustomSorts();
-        }
+          }
     }
-/*
-    removeCustomSorts() {
-        if (this.Shortcuts) {
-            this.Shortcuts.forEach(shortcut => {
-                this.blotter.removeCustomSort(customSort.ColumnId)
-            });
-        }
+
+
+public ApplyShortcut(keyPressed: string) : void{
+       // TODO: After we do plus / minus and we have the ability to "know" what cell has been clicked and which cell
+        
     }
-*/
+
    
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
