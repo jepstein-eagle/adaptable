@@ -11,6 +11,7 @@ import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
 import {CustomSortEditor} from './CustomSortEditor'
 import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn} from '../Core/Interface/IAdaptableBlotter';
+import {Step1,Step2,Step3,MyData,AdaptableWizard} from './Wizard/AdaptableWizard'
 
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
@@ -23,12 +24,15 @@ interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfig
 
 interface CustomSortConfigInternalState {
     isEditing: boolean;
+    isPoc:boolean
 }
 
 class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, CustomSortConfigInternalState> {
+    Data = new MyData();
     constructor() {
         super();
-        this.state = { isEditing: false }
+        this.state = { isEditing: false, isPoc:false }
+        
     }
     render() {
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
@@ -49,12 +53,16 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             <Row>
                 <Col xs={7}>Custom Sorts</Col>
                 <Col xs={5}>
-                    <SplitButton title="Create Custom Sort" id="Create_Custom_Sort">
-                        {menuColItems}
-                    </SplitButton>
+                    <ButtonGroup>
+            <Button onClick={() => this.POCStart()}>Start Wizard POC</Button>
+                        <SplitButton title="Create Custom Sort" id="Create_Custom_Sort">
+                            {menuColItems}
+                        </SplitButton>
+                    </ButtonGroup>
                 </Col>
             </Row>
         </Form>;
+        let steps = [<Step1 />,<Step2 />,<Step3  />]
         return <Panel header={header} bsStyle="primary">
             {this.props.CustomSorts.length == 0 ? <Jumbotron>
                 <p>Click 'Add' to create a new bespoke sort for a column of your choosing.</p>
@@ -77,6 +85,8 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                         <Button onClick={() => this.closeEditing() }>Close</Button>
                     </Modal.Footer>
                 </Modal> : null}
+                            {this.state.isPoc ?
+                <AdaptableWizard Steps={steps} Data={this.Data} onHide={()=>this.closeWizard()} onFinish={() => this.WizardFinish()} ></AdaptableWizard> : null}
         </Panel>
     }
     private _columnValues: any[];
@@ -91,20 +101,30 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         }
 
 
-        this.setState({ isEditing: false }, () => { this._editedCustomSort = null; this._columnValues = []; });
+        this.setState({ isEditing: false, isPoc : false }, () => { this._editedCustomSort = null; this._columnValues = []; });
+    }
+
+    closeWizard(){
+        this.setState({ isEditing: false, isPoc : false });
+    }
+    POCStart(){
+        this.setState({ isEditing: false, isPoc : true });
+    }
+    WizardFinish(){
+        alert("Wizard Finish with :" + this.Data.toto)
     }
 
     private onEditCustomSort(customSort: ICustomSort) {
         //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
         this._editedCustomSort = customSort;
         this._columnValues = Array.from(new Set(this.props.AdaptableBlotter.getColumnValueString(customSort.ColumnId)));
-        this.setState({ isEditing: true });
+        this.setState({ isEditing: true, isPoc : false });
     }
 
     CreateCustomSort(ColumnId: string) {
         this._editedCustomSort = { ColumnId: ColumnId, CustomSortItems: [] };
         this._columnValues = Array.from(new Set(this.props.AdaptableBlotter.getColumnValueString(ColumnId)));
-        this.setState({ isEditing: true });
+        this.setState({ isEditing: true, isPoc : false });
     }
 
     onCustomSortChange(selectedValues: Array<string>) {
