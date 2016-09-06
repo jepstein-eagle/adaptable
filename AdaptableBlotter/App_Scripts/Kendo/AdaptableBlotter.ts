@@ -30,17 +30,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStragegy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
 
 
         //we build the menus from all strategies and update redux store
         this.CreateMenu();
         this.SetColumnIntoStore();
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        ReactDOM.render(AdaptableBlotterApp(this), this.container);      
     }
 
-    public SetColumnIntoStore() {
+      public SetColumnIntoStore() {
         let columns: IColumn[] = this.grid.columns.map(x => {
             return {
                 ColumnId: x.field,
@@ -50,6 +50,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+    }
+
+    public OnKeyPressed(){
+        let ShortcutStrategy = this.Strategies.get(StrategyIds.ShortcutStrategyId);
     }
 
 

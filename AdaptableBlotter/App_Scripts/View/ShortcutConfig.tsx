@@ -63,7 +63,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                     <Button onClick={() => this.closeEditing() }>Close</Button>
                 </Modal.Footer>
             </Modal>
-            
+
         </Panel>
     }
 
@@ -111,9 +111,11 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                         </Checkbox>
                     </FormGroup>
                 </Col>
-                <Col sm={6} md={3}>{this.props.Shortcut.ShortcutId}</Col>
                 <Col sm={6} md={3} style={divStyle}>
-                    {this.props.Shortcut.ShortcutName }
+                    {this.props.Shortcut.ShortcutKey }
+                    </Col>
+                    <Col sm={6} md={3} style={divStyle}>
+                    {this.props.Shortcut.ShortcutResult }
                 </Col>
                 <Col sm={6} md={3}>
                     <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
