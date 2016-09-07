@@ -23,49 +23,12 @@ export interface AdaptableWizardStep {
     canBack(): boolean
     Next(): void
     Back(): void
+    Enter(): void
     StepName: string
 }
 
-interface AdaptableWizardStepProps<T> {
+export interface AdaptableWizardStepProps<T> {
     Data?: T
-}
-
-
-export class Step1 extends React.Component<AdaptableWizardStepProps<MyData>, any> implements AdaptableWizardStep {
-    public canNext(): boolean { return true; }
-    public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.toto = "After Next from Step1" }
-    public Back(): void { this.props.Data.toto = "After Back from Step1"}
-    public StepName = "Step1"
-    render() {
-        return <h1>{this.StepName + " " + this.props.Data.toto}</h1>
-    }
-}
-
-export class MyData {
-    public toto: string = "Toto"
-}
-
-export class Step2 extends React.Component<AdaptableWizardStepProps<MyData>, any> implements AdaptableWizardStep {
-    public canNext(): boolean { return true; }
-    public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.toto = "After Next from Step2" }
-    public Back(): void {this.props.Data.toto = "After Back from Step2" }
-    public StepName = "Step2"
-    render() {
-        return <h1>{this.StepName + " " + this.props.Data.toto}</h1>
-    }
-}
-
-export class Step3 extends React.Component<AdaptableWizardStepProps<MyData>, any> implements AdaptableWizardStep {
-    public canNext(): boolean { return true; }
-    public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.toto = "After Next from Step3" }
-    public Back(): void { this.props.Data.toto = "After BAck from Step3"}
-    public StepName = "Step3"
-    render() {
-        return <h1>{this.StepName + " " + this.props.Data.toto}</h1>
-    }
 }
 
 class DummyActiveStep implements AdaptableWizardStep {
@@ -73,6 +36,7 @@ class DummyActiveStep implements AdaptableWizardStep {
     public canBack(): boolean { return false; }
     public Next(): void { }
     public Back(): void { }
+    public Enter(): void { }
     public StepName = ""
 }
 
@@ -120,7 +84,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             this.ActiveStep.Back();
             let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
             let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 })
+            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 }, () => this.ActiveStep.Enter())
         }
     }
 
@@ -129,7 +93,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             this.ActiveStep.Next();
             let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
             let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 })
+            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 }, () => this.ActiveStep.Enter())
         }
         else {
             this.ActiveStep.Next();
