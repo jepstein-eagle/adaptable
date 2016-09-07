@@ -24,18 +24,15 @@ interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfig
 }
 
 interface CustomSortConfigInternalState {
-    isEditing: boolean;
-    isPoc: boolean
+    isEditing: boolean
+    WizardStartIndex: number
 }
 
 class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, CustomSortConfigInternalState> {
     constructor() {
         super();
-        this.state = { isEditing: false, isPoc: false }
+        this.state = { isEditing: false, WizardStartIndex: 0 }
 
-    }
-    componentWillMount() {
-        this.wizardSteps = [<CustomSortColumnWizard Columns={this.props.Columns} />, <CustomSortValuesWizard Blotter={this.props.AdaptableBlotter} />]
     }
     render() {
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
@@ -46,22 +43,13 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 onDelete={(customSort) => this.props.onDeleteCustomSort(customSort) }
                 ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
         });
-        var menuColItems = this.props.Columns.map((col: IColumn) => {
-            if (!this.props.CustomSorts.find(x => x.ColumnId == col.ColumnId)) {
-                return <MenuItem key={col.ColumnId} onClick={() => this.CreateCustomSort(col.ColumnId) }>{col.ColumnFriendlyName}</MenuItem>
-            }
-        });
-
         let header = <Form horizontal>
             <Row>
                 <Col xs={7}>Custom Sorts</Col>
                 <Col xs={5}>
-                    <ButtonGroup>
-                        <Button onClick={() => this.POCStart() }>Start Wizard POC</Button>
-                        <SplitButton title="Create Custom Sort" id="Create_Custom_Sort">
-                            {menuColItems}
-                        </SplitButton>
-                    </ButtonGroup>
+                    <Button onClick={() => this.CreateCustomSort() }>
+                        Create Custom Sort
+                    </Button>
                 </Col>
             </Row>
         </Form>;
@@ -73,29 +61,22 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 {customSorts}
             </ListGroup>
             {this.state.isEditing ?
-                <Modal show={this.state.isEditing} onHide={() => this.closeEditing() }  >
-                    {/*<Modal.Header closeButton>
-            <Modal.Title>{}</Modal.Title>
-          </Modal.Header>*/}
-                    <Modal.Body style={divStyle}>
-                        <CustomSortEditor CustomSort={this._editedCustomSort}
-                            ColumnValues={this._columnValues}
-                            onChange={(selectedValues) => this.onCustomSortChange(selectedValues) }
-                            ColumnLabel={ this.props.Columns.find(x => x.ColumnId == this._editedCustomSort.ColumnId).ColumnFriendlyName}></CustomSortEditor>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={() => this.closeEditing() }>Close</Button>
-                    </Modal.Footer>
-                </Modal> : null}
-            {this.state.isPoc ?
-                <AdaptableWizard Steps={this.wizardSteps} Data={this._editedCustomSort} onHide={() => this.closeWizard() } onFinish={() => this.WizardFinish() } ></AdaptableWizard> : null}
+                <AdaptableWizard Steps={[<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId)) } />,
+                    <CustomSortValuesWizard Blotter={this.props.AdaptableBlotter} />]}
+                    Data={this._editedCustomSort}
+                    StepStartIndex={this.state.WizardStartIndex}
+                    onHide={() => this.closeWizard() }
+                    onFinish={() => this.WizardFinish() } ></AdaptableWizard> : null}
         </Panel>
     }
     private _columnValues: any[];
     private _editedCustomSort: ICustomSort;
     private wizardSteps: JSX.Element[]
 
-    closeEditing() {
+    closeWizard() {
+        this.setState({ isEditing: false, WizardStartIndex: 0 });
+    }
+    WizardFinish() {
         if (this.props.CustomSorts.find(x => x.ColumnId == this._editedCustomSort.ColumnId)) {
             this.props.onEditCustomSort(this._editedCustomSort)
         }
@@ -104,32 +85,17 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         }
 
 
-        this.setState({ isEditing: false, isPoc: false }, () => { this._editedCustomSort = null; this._columnValues = []; });
-    }
-
-    closeWizard() {
-        this.setState({ isEditing: false, isPoc: false });
-    }
-    POCStart() {
-        this._editedCustomSort = { ColumnId: "", CustomSortItems: [] };
-        this.setState({ isEditing: false, isPoc: true });
-    }
-    WizardFinish() {
-        this.props.onAddCustomSort(this._editedCustomSort)
-        this._editedCustomSort = null
+        this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedCustomSort = null; this._columnValues = []; });
     }
 
     private onEditCustomSort(customSort: ICustomSort) {
-        //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
         this._editedCustomSort = customSort;
-        this._columnValues = Array.from(new Set(this.props.AdaptableBlotter.getColumnValueString(customSort.ColumnId)));
-        this.setState({ isEditing: true, isPoc: false });
+        this.setState({ isEditing: true, WizardStartIndex: 1 });
     }
 
-    CreateCustomSort(ColumnId: string) {
-        this._editedCustomSort = { ColumnId: ColumnId, CustomSortItems: [] };
-        this._columnValues = Array.from(new Set(this.props.AdaptableBlotter.getColumnValueString(ColumnId)));
-        this.setState({ isEditing: true, isPoc: false });
+    CreateCustomSort() {
+        this._editedCustomSort = { ColumnId: "", CustomSortItems: [] };
+        this.setState({ isEditing: true, WizardStartIndex: 0 });
     }
 
     onCustomSortChange(selectedValues: Array<string>) {
@@ -175,10 +141,14 @@ interface CustomSortColumnWizardState {
 }
 
 class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps, CustomSortColumnWizardState> implements AdaptableWizardStep {
-    constructor(props: CustomSortColumnWizardProps)
-    {
+    constructor(props: CustomSortColumnWizardProps) {
         super(props);
-        this.state = {SelectedColumn : null}
+        if (this.props.Data.ColumnId != "") {
+            this.state = { SelectedColumn: this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId) }
+        }
+        else {
+            this.state = { SelectedColumn: null }
+        }
     }
     render(): any {
         var columnsItems = this.props.Columns.map((Column: IColumn) => {
@@ -198,7 +168,9 @@ class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
-    public Enter(): void { console.log("2");}
+    public Enter(): void {
+        console.log("2");
+    }
     public StepName = "Column Select"
 }
 
@@ -214,7 +186,7 @@ class CustomSortValuesWizard extends React.Component<CustomSortValuesWizardProps
     private internalSelectedValues: Array<string>
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
-        this.state = { ColumnValues: [] }
+        this.state = { ColumnValues: Array.from(new Set(this.props.Blotter.getColumnValueString(this.props.Data.ColumnId))) }
     }
     render(): any {
         return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
@@ -231,7 +203,7 @@ class CustomSortValuesWizard extends React.Component<CustomSortValuesWizardProps
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.CustomSortItems = this.internalSelectedValues }
     public Back(): void { }
-    public Enter(): void { console.log("1"); this.setState({ ColumnValues: Array.from(new Set(this.props.Blotter.getColumnValueString(this.props.Data.ColumnId)))} ) }
+    public Enter(): void { }
     public StepName = "Column Select"
 }
 
