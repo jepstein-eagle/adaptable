@@ -161,10 +161,9 @@ class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps
         </ListGroup>
     }
     onClickColum(column: IColumn) {
-        this.setState({ SelectedColumn: column })
-
+        this.setState({ SelectedColumn: column }, () =>this.props.UpdateGoBackState())
     }
-    public canNext(): boolean { return true; }
+    public canNext(): boolean { return this.state.SelectedColumn!=null; }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
@@ -173,32 +172,36 @@ class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Blotter: IAdaptableBlotter
-
 }
 interface CustomSortValuesWizardState {
-    ColumnValues: any[]
+    ColumnValues: any[],
+    SelectedValues: Array<string>
+    IsEdit:boolean
 }
 
 class CustomSortValuesWizard extends React.Component<CustomSortValuesWizardProps, CustomSortValuesWizardState> implements AdaptableWizardStep {
-    private internalSelectedValues: Array<string>
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
-        this.state = { ColumnValues: Array.from(new Set(this.props.Blotter.getColumnValueString(this.props.Data.ColumnId))) }
+        this.state = {
+            ColumnValues: Array.from(new Set(this.props.Blotter.getColumnValueString(this.props.Data.ColumnId))),
+            SelectedValues: this.props.Data.CustomSortItems,
+            IsEdit: this.props.Data.CustomSortItems.length > 0
+        }
     }
     render(): any {
         return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
-            SelectedValues={this.props.Data.CustomSortItems}
+            SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
             HeaderSelected="Custom Sort Values"
             onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues) }></DualListBoxEditor>
     }
-    OnSelectedValuesChange(SelectedValues: Array<string>) {
-        this.internalSelectedValues = SelectedValues;
+    OnSelectedValuesChange(newValues: Array<string>) {
+        this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () =>this.props.UpdateGoBackState())
     }
 
-    public canNext(): boolean { return true; }
-    public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.CustomSortItems = this.internalSelectedValues }
+    public canNext(): boolean { return this.state.SelectedValues.length>0; }
+    public canBack(): boolean { return !this.state.IsEdit; }
+    public Next(): void { this.props.Data.CustomSortItems = this.state.SelectedValues }
     public Back(): void { }
     public StepName = "Column Select"
 }
