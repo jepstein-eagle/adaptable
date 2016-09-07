@@ -41,6 +41,18 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             UiSelectedAvailableValues: []
         };
     }
+    componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
+        let availableValues = new Array<string>();
+        nextProps.AvailableValues.forEach(x => {
+            if (nextProps.SelectedValues.indexOf(x) < 0) {
+                availableValues.push(x);
+            }
+        })
+        this.setState({
+            SelectedValues: nextProps.SelectedValues,
+            AvailableValues: availableValues.sort()
+        } as DualListBoxEditorState);
+    }
     render() {
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
@@ -65,7 +77,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
         return (
             <Grid>
-                <Row> 
+                <Row>
                     <Col xs={4}>
                         <Panel header={this.props.HeaderAvailable} >
                             <ListGroup fill className="AvailableDropZone" style={listGroupStyle}
@@ -77,16 +89,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         </Panel>
                     </Col>
                     <Col xs={2}>
-                    <ButtonGroup>
-                        <Button disabled={this.state.AvailableValues.length == 0}
-                            onClick={() => this.AddAll() } block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
-                        <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
-                            onClick={() => this.Add() } block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
-                        <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
-                            onClick={() => this.Remove() } block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
-                        <Button disabled={this.state.SelectedValues.length == 0}
-                            onClick={() => this.RemoveAll() } block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
-                            </ButtonGroup>
+                        <ButtonGroup>
+                            <Button disabled={this.state.AvailableValues.length == 0}
+                                onClick={() => this.AddAll() } block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
+                            <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
+                                onClick={() => this.Add() } block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
+                            <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
+                                onClick={() => this.Remove() } block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
+                            <Button disabled={this.state.SelectedValues.length == 0}
+                                onClick={() => this.RemoveAll() } block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
+                        </ButtonGroup>
                     </Col>
                     <Col xs={4} >
                         <Panel header={this.props.HeaderSelected}>
