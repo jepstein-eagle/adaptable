@@ -160,23 +160,21 @@ export class DataGenerator {
         protected getCounterparties(): string[] {
             var counterparties = [
                 "Goldman Sachs",
-                "SocGen",
+                "Societe Generale",
                 "Bank of America",
-                "RBS",
+                "Royal Bank of Scotland",
                 "Barcap",
                 "JP Morgan",
                 "Morgan Stanley",
                 "BNP",
-                "Bank of Canada",
+                "Royal Bank of Canada",
                 "Lloyds TSB",
                 "MUFJ",
                 "Rabobank",
-                "DeutscheBank",
+                "Deutsche Bank",
                 "Credit Suisse",
-                "Nomura",
-                "Westminster",
-                "Unknown"
-            ];
+                "Nomura"
+               ];
             return counterparties;
         }
 
@@ -196,31 +194,26 @@ export class DataGenerator {
             var countries = [
                 "Australia",
                 "Belgium",
+                "Brazil",
                 "Canada",
+                "China",
                 "Denmark",
                 "Egypt",
                 "France",
-                "West Germany",
+                "Germany",
                 "Hungary",
+                "India",
                 "Ireland",
+                "Italy",
                 "Japan",
-                "Kenya West",
-                "Lapland",
-                "Mauritius",
-                "Nepal",
-                "East and West Oman",
+                "Kenya",
                 "Portugal",
                 "Qatar",
                 "Russia",
+                "South Korea",
                 "Spain",
-                "Thailand",
-                "The West Indies",
-                "Uruguay",
-                "Venezuela",
-                "West Africa",
-                "Xamarin",
-                "Yemen",
-                "Zululand"
+                "United Kingdom",
+                "United States"
             ];
             return countries;
         }
