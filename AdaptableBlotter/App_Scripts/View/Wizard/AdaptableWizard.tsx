@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import {ButtonGroup, Button, ListGroupItemProps, Modal} from 'react-bootstrap';
 import {AdaptableViewFactory} from '../AdaptableViewFactory';
+import {AdaptableWizardStep, AdaptableWizardStepProps} from './Interface/IAdaptableWizard'
 
 interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -17,19 +18,6 @@ interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
 interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
     ActiveState: any
     IndexState: number
-}
-
-export interface AdaptableWizardStep {
-    canNext(): boolean
-    canBack(): boolean
-    Next(): void
-    Back(): void
-    StepName: string
-}
-
-export interface AdaptableWizardStepProps<T> {
-    Data?: T
-    UpdateGoBackState?(): void
 }
 
 class DummyActiveStep implements AdaptableWizardStep {

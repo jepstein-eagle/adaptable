@@ -10,7 +10,8 @@ import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
 import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn, IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
-import {AdaptableWizard, AdaptableWizardStepProps, AdaptableWizardStep} from './Wizard/AdaptableWizard'
+import {AdaptableWizardStep, AdaptableWizardStepProps} from './Wizard/Interface/IAdaptableWizard'
+import {AdaptableWizard} from './Wizard/AdaptableWizard'
 import {DualListBoxEditor} from './DualListBoxEditor'
 
 
