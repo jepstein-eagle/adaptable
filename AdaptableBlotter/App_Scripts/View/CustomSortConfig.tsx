@@ -166,7 +166,7 @@ class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
-    public StepName = "Column Select"
+    public StepName = "Pick a Column"
 }
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -202,7 +202,7 @@ class CustomSortValuesWizard extends React.Component<CustomSortValuesWizardProps
     public canBack(): boolean { return !this.state.IsEdit; }
     public Next(): void { this.props.Data.CustomSortItems = this.state.SelectedValues }
     public Back(): void { }
-    public StepName = "Column Select"
+    public StepName = "Select Custom Sort Values"
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
