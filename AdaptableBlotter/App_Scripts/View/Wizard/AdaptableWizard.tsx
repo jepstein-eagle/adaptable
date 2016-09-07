@@ -29,6 +29,7 @@ export interface AdaptableWizardStep {
 
 export interface AdaptableWizardStepProps<T> {
     Data?: T
+    UpdateGoBackState?(): void
 }
 
 class DummyActiveStep implements AdaptableWizardStep {
@@ -49,13 +50,20 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     constructor(props: AdaptableWizardProps) {
         super(props);
         let indexStart = 0
-        if(this.props.StepStartIndex)
-        {
+        if (this.props.StepStartIndex) {
             indexStart = this.props.StepStartIndex
         }
-        let BodyElement: any = this.props.Steps[indexStart];
-        let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate();  }, Data: this.props.Data })
+        let BodyElement: JSX.Element = this.props.Steps[indexStart];
+        let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart }
+    }
+    //So we inject everything needed for the Wizard
+    private cloneWizardStep(step: JSX.Element) : JSX.Element {
+        return React.cloneElement(step, {
+            ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
+            Data: this.props.Data,
+            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+        })
     }
     render() {
         return (
@@ -69,11 +77,15 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 <Modal.Footer>
                     <ButtonGroup>
                         <Button bsStyle="primary" disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
-                        <Button bsStyle="primary"   onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"}</Button>
+                        <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"}</Button>
                     </ButtonGroup>
                 </Modal.Footer>
             </Modal>
         );
+    }
+    ForceUpdateGoBackState() {
+        //to force back/next. We'll see if that needs to be optimised'
+        this.forceUpdate();
     }
 
     isLastStep(): boolean {
@@ -87,26 +99,32 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
     handleClickBack() {
         if (!this.isFirstStep()) {
-            this.ActiveStep.Back();
-            let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
-            let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 })
+            if (this.ActiveStep.canBack()) {
+                this.ActiveStep.Back();
+                let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
+                let newElement = this.cloneWizardStep(BodyElement)
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 })
+            }
         }
     }
 
     handleClickNext() {
         if (!this.isLastStep()) {
-            this.ActiveStep.Next();
-            let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
-            let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 })
+            if (this.ActiveStep.canNext()) {
+                this.ActiveStep.Next();
+                let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
+                let newElement = this.cloneWizardStep(BodyElement)
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 })
+            }
         }
         else {
-            this.ActiveStep.Next();
-            if (this.props.onFinish) {
-                this.props.onFinish();
+            if (this.ActiveStep.canNext()) {
+                this.ActiveStep.Next();
+                if (this.props.onFinish) {
+                    this.props.onFinish();
+                }
+                this.props.onHide();
             }
-            this.props.onHide();
         }
     }
 }
