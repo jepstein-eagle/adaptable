@@ -184,8 +184,9 @@ export class DataGenerator {
                 "USD",
                 "GBP",
                 "CHF",
-                "NIS",
-                "AUD"
+                "CAD",
+                "AUD",
+                "ZAR"
             ];
             return currencies;
         }
