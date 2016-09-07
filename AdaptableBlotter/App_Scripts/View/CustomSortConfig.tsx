@@ -168,9 +168,6 @@ class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
-    public Enter(): void {
-        console.log("2");
-    }
     public StepName = "Column Select"
 }
 
@@ -203,7 +200,6 @@ class CustomSortValuesWizard extends React.Component<CustomSortValuesWizardProps
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.CustomSortItems = this.internalSelectedValues }
     public Back(): void { }
-    public Enter(): void { }
     public StepName = "Column Select"
 }
 

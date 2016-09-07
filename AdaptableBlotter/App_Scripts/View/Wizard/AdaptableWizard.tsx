@@ -24,7 +24,6 @@ export interface AdaptableWizardStep {
     canBack(): boolean
     Next(): void
     Back(): void
-    Enter(): void
     StepName: string
 }
 
@@ -37,7 +36,6 @@ class DummyActiveStep implements AdaptableWizardStep {
     public canBack(): boolean { return false; }
     public Next(): void { }
     public Back(): void { }
-    public Enter(): void { }
     public StepName = ""
 }
 
