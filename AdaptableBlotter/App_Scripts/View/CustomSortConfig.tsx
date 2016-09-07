@@ -8,7 +8,6 @@ import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
-import {CustomSortEditor} from './CustomSortEditor'
 import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn, IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
 import {AdaptableWizard, AdaptableWizardStepProps, AdaptableWizardStep} from './Wizard/AdaptableWizard'
