@@ -11,6 +11,7 @@ interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Data: any
     onHide: Function;
     onFinish?: Function;
+    StepStartIndex?: number
 }
 
 interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -40,16 +41,23 @@ class DummyActiveStep implements AdaptableWizardStep {
     public StepName = ""
 }
 
+//Remark : the component doesnt handle the change of props once displayed... It's easy to do but not sure it's needed
+//as in the top component we do the render with a ternary expression so we add/remove the element from the render instead of having a property
+//Show/hide. 
 export class AdaptableWizard extends React.Component<AdaptableWizardProps, AdaptableWizardState> {
     //we need to init with a dummy one as Ref is a callback once the component is rendered. So once set we force Re render.... 
     //I have no idea so far how to do it differently
     private ActiveStep: AdaptableWizardStep = new DummyActiveStep();
     constructor(props: AdaptableWizardProps) {
         super(props);
-        let BodyElement: any = this.props.Steps[0];
-        let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-        this.state = { ActiveState: newElement, IndexState: 0 }
-        // this.state = { ActiveState: <BodyElement ref={(ref: AdaptableWizardStep) => {this.ActiveStep = ref;this.forceUpdate();}}></BodyElement>}
+        let indexStart = 0
+        if(this.props.StepStartIndex)
+        {
+            indexStart = this.props.StepStartIndex
+        }
+        let BodyElement: any = this.props.Steps[indexStart];
+        let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate();  }, Data: this.props.Data })
+        this.state = { ActiveState: newElement, IndexState: indexStart }
     }
     render() {
         return (
@@ -84,7 +92,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             this.ActiveStep.Back();
             let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
             let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 }, () => this.ActiveStep.Enter())
+            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 })
         }
     }
 
@@ -93,7 +101,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             this.ActiveStep.Next();
             let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
             let newElement = React.cloneElement(BodyElement, { ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); }, Data: this.props.Data })
-            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 }, () => this.ActiveStep.Enter())
+            this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 })
         }
         else {
             this.ActiveStep.Next();
