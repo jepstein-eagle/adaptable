@@ -5,6 +5,10 @@ import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
 import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 
+export interface PlusMinusState {
+    DefaultNudge: number
+}
+
 export interface GridState {
     Columns: IColumn[];
 }

@@ -9,6 +9,7 @@ import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
+import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -23,7 +24,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     SmartEdit: SmartEditRedux.SmartEditReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
     Shortcut: ShortcutRedux.ShortcutReducer,
-    Grid: GridRedux.GridReducer
+    Grid: GridRedux.GridReducer,
+    PlusMinus: PlusMinusRedux.PlusMinusReducer
 });
 
 const RESET_STATE = 'RESET_STATE';

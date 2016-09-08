@@ -1,6 +1,7 @@
 import {ColumnType} from '../Enums'
 import {IMenuItem, IStragegy} from './IStrategy'
 import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
+import {IEvent} from './IEvent'
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -16,6 +17,7 @@ export interface IAdaptableBlotter {
     getColumnValueString(columnId: string) : Array<string>
     removeCustomSort(columnId: string): void
     
+    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }
 
 export interface ISelectedCells {
