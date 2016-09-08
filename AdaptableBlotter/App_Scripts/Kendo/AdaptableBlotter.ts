@@ -11,8 +11,11 @@ import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
 import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
 import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
+import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
 import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
+import {IEvent} from '../Core/Interface/IEvent';
+import {EventDispatcher} from '../Core/EventDispatcher'
 
 import {ColumnType} from '../Core/Enums'
 
@@ -32,15 +35,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
 
 
         //we build the menus from all strategies and update redux store
         this.CreateMenu();
         this.SetColumnIntoStore();
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);      
+        ReactDOM.render(AdaptableBlotterApp(this), this.container);
     }
 
-      public SetColumnIntoStore() {
+    public SetColumnIntoStore() {
         let columns: IColumn[] = this.grid.columns.map(x => {
             return {
                 ColumnId: x.field,
@@ -52,8 +56,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
-    public OnKeyPressed(){
-        let ShortcutStrategy = this.Strategies.get(StrategyIds.ShortcutStrategyId);
+    private _onKeyDown: EventDispatcher<IAdaptableBlotter, string> = new EventDispatcher<IAdaptableBlotter, string>();
+    OnKeyDown(): IEvent<IAdaptableBlotter, string> {
+        return this._onKeyDown;
     }
 
 
