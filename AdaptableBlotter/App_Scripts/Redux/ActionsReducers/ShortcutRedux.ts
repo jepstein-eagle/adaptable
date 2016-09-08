@@ -3,6 +3,7 @@
 import * as Redux from 'redux';
 import {ShortcutState} from './Interface/IState';
 import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
+import { ColumnType} from '../../Core/Enums';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
@@ -47,7 +48,7 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 
 const initialShortcutState: ShortcutState = {
     // creating 2 shortcuts one of which we will not make ispredefined to test
-    Shortcuts: [{ ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, IsLive: false, IsPredefined: false}]
+    Shortcuts: [{ ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number,  IsLive: false, IsPredefined: true }, { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, IsLive: false, IsPredefined: false}]
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
