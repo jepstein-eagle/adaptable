@@ -33,7 +33,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
                 onClick={() => this.onClickColum(Column) }
                 active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.ColumnFriendlyName}</ListGroupItem>
         })
-        return <ListGroup>
+        return <ListGroup style={listGroupStyle}>
             {columnsItems}
         </ListGroup>
     }
@@ -46,3 +46,8 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public Back(): void { }
     public StepName = "Pick a Column"
 }
+var listGroupStyle = {
+    'overflowY': 'auto',
+    'maxHeight': '300px',
+    'height': '300px'
+};
