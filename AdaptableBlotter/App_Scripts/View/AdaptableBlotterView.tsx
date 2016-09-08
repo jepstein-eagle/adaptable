@@ -35,7 +35,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         }
         return (
             <div>
-                <SplitButton bsStyle="primary" title="Adaptable Blotter" id="Adaptable_Blotter_Menu">
+                <SplitButton bsStyle="primary" title="Blotter Functions" id="Adaptable_Blotter_Menu">
                     {menuItems}
                 </SplitButton>
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
