@@ -17,8 +17,9 @@ export interface IAdaptableBlotter {
     getColumnValueString(columnId: string) : Array<string>
     removeCustomSort(columnId: string): void
     
-    OnKeyDown(): IEvent<IAdaptableBlotter, string>;
+    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }
+
 export interface ISelectedCells {
     //map of UUID with their associated values/columns
     Selection: Map<any, { columnID: string, value: any }[]>

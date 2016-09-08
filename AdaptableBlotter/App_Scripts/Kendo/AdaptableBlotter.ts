@@ -16,7 +16,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
 import {IEvent} from '../Core/Interface/IEvent';
 import {EventDispatcher} from '../Core/EventDispatcher'
-
+import {Helper} from '../Core/Helper';
 import {ColumnType} from '../Core/Enums'
 
 import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn} from '../Core/Interface/IAdaptableBlotter'
@@ -42,6 +42,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CreateMenu();
         this.SetColumnIntoStore();
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
+
+        //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
+        //grid.table.bind("keydown",
+        grid.table.keydown((event) =>  {
+            this._onKeyDown.Dispatch(this, event)
+        })        
     }
 
     public SetColumnIntoStore() {
@@ -56,8 +62,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
-    private _onKeyDown: EventDispatcher<IAdaptableBlotter, string> = new EventDispatcher<IAdaptableBlotter, string>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, string> {
+    private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
+    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
