@@ -88,7 +88,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             </ListGroup>
                         </Panel>
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={2} style={colButtonStyle} >
                         <ButtonGroup>
                             <Button disabled={this.state.AvailableValues.length == 0}
                                 onClick={() => this.AddAll() } block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
@@ -110,7 +110,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             </ListGroup>
                         </Panel>
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={2} style={colButtonStyle} >
                         <Button block disabled>Top</Button>
                         <Button block disabled>Up</Button>
                         <Button block disabled>Down</Button>
@@ -344,3 +344,6 @@ var panelStyle = {
     'height': '300px'
 };
 
+var colButtonStyle = {
+    transform : 'translateY(100px)'
+}
