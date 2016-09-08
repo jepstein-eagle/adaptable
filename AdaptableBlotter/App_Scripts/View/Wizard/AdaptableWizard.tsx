@@ -63,7 +63,8 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     {this.state.ActiveState}
                 </Modal.Body>
                 <Modal.Footer>
-                        <Button bsStyle="primary" disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
+                        <Button style={buttonLeftStyle} onClick={this.props.onHide}>Cancel</Button>
+                        <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
                         <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"}</Button>
                 </Modal.Footer>
             </Modal>
@@ -114,3 +115,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         }
     }
 }
+
+var buttonLeftStyle = {
+    float: 'left'
+};
