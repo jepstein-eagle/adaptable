@@ -31,7 +31,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
         return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
             SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
-            HeaderSelected="Custom Sort Values"
+            HeaderSelected="Custom Sort Order"
             onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues) }></DualListBoxEditor>
     }
     OnSelectedValuesChange(newValues: Array<string>) {
