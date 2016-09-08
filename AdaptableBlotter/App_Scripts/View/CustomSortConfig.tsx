@@ -63,7 +63,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             </ListGroup>
             {this.state.isEditing ?
                 <AdaptableWizard Steps={[<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId)) } />,
-                    <CustomSortValuesWizard Blotter={this.props.AdaptableBlotter} />]}
+                    <CustomSortValuesWizard Blotter={this.props.AdaptableBlotter} Columns={this.props.Columns} />]}
                     Data={this._editedCustomSort}
                     StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard() }
