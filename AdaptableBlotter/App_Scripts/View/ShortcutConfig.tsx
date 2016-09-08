@@ -45,7 +45,17 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                 </Col>
             </Row>
         </Form>;
+
+        let row = <Row>
+            <Col md={2} style={headerStyle}>Active</Col>
+            <Col md={2} style={headerStyle}>Key</Col>
+            <Col md={3} style={headerStyle}>Result</Col>
+            <Col md={5} style={headerStyle}>Actions</Col>
+        </Row>
+
+
         return <Panel header={header} bsStyle="primary">
+            {row}
             <ListGroup>
                 {shortcuts}
             </ListGroup>
@@ -104,20 +114,18 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             className="list-group-item"
             onClick={() => { } }>
             <Row>
-                <Col sm={6} md={3}>
+                <Col md={2}>
                     <FormGroup>
-                        <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}>
-                            Active
-                        </Checkbox>
+                        <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                     </FormGroup>
                 </Col>
-                <Col sm={6} md={3} style={divStyle}>
+                <Col md={2} style={divStyle}>
                     {this.props.Shortcut.ShortcutKey }
-                    </Col>
-                    <Col sm={6} md={3} style={divStyle}>
+                </Col>
+                <Col md={3} style={divStyle}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
-                <Col sm={6} md={3}>
+                <Col md={5}>
                     <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
                     <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
                 </Col>
@@ -145,6 +153,11 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ShortcutConfig = connect(mapStateToProps, mapDispatchToProps)(ShortcutConfigComponent);
+
+var headerStyle = {
+    wordWrap: 'break-word',
+    fontWeight: 'bold'
+};
 
 var divStyle = {
     wordWrap: 'break-word'
