@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import {ButtonGroup, Button, ListGroupItemProps, Modal} from 'react-bootstrap';
+import { Button, ListGroupItemProps, Modal} from 'react-bootstrap';
 import {AdaptableViewFactory} from '../AdaptableViewFactory';
 import {AdaptableWizardStep, AdaptableWizardStepProps} from './Interface/IAdaptableWizard'
 
@@ -63,10 +63,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     {this.state.ActiveState}
                 </Modal.Body>
                 <Modal.Footer>
-                    <ButtonGroup>
-                        <Button bsStyle="primary" disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
+                        <Button style={buttonLeftStyle} onClick={this.props.onHide}>Cancel</Button>
+                        <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
                         <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"}</Button>
-                    </ButtonGroup>
                 </Modal.Footer>
             </Modal>
         );
@@ -116,3 +115,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         }
     }
 }
+
+var buttonLeftStyle = {
+    float: 'left'
+};

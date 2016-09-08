@@ -41,11 +41,12 @@ const initialCustomSortState: CustomSortState = {
 export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomSortState = initialCustomSortState, action: Redux.Action): CustomSortState => {
     switch (action.type) {
         case CUSTOMSORT_ADD:
-            var newState = Object.assign({}, state);
+            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
 
-            newState.CustomSorts.push((<CustomSortAddAction>action).CustomSort);
-
-            return newState;
+            items.push((<CustomSortAddAction>action).CustomSort);
+            return Object.assign({}, state, {
+                CustomSorts: items
+            });
         case CUSTOMSORT_EDIT: {
             var items: Array<ICustomSort> = [].concat(state.CustomSorts);
             let index = items.findIndex(x => x.ColumnId == (<CustomSortAddAction>action).CustomSort.ColumnId)

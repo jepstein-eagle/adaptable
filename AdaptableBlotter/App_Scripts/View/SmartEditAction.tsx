@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem} from 'react-bootstrap';
+import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
@@ -17,7 +17,7 @@ interface SmartEditActionProps extends React.ClassAttributes<SmartEditActionComp
     SmartEditOperation: SmartEditOperation,
     Preview: ISmartEditPreview,
     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditSetValueAction;
-    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation)=> SmartEditRedux.SmartEditSetOperationAction;
+    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
     onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction,
 }
@@ -50,15 +50,17 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                 <Panel header="Edit Details" bsStyle="primary">
                     <Form inline>
                         <FormGroup controlId="formInlineName">
-                            <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation">
-                                <MenuItem eventKey="1" onClick={()=> this.props.onSmartEditOperationChange(SmartEditOperation.Sum)}>{SmartEditOperation[SmartEditOperation.Sum]}</MenuItem>
-                                <MenuItem eventKey="2" onClick={()=> this.props.onSmartEditOperationChange(SmartEditOperation.Ratio)}>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
-                                <MenuItem eventKey="2" onClick={()=> this.props.onSmartEditOperationChange(SmartEditOperation.Absolute)}>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
-                            </DropdownButton>
-                            <FormControl value={this.props.SmartEditValue} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleSmartEditValueChange(e) }/>
+                            <InputGroup>
+                                <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
+                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Sum) }>{SmartEditOperation[SmartEditOperation.Sum]}</MenuItem>
+                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Ratio) }>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
+                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute) }>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
+                                </DropdownButton>
+                                <FormControl value={this.props.SmartEditValue} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleSmartEditValueChange(e) }/>
+                            </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle="primary" disabled={isNaN(this.props.SmartEditValue)} onClick={() => this.props.onApplySmartEdit()} >Apply to Grid</Button>
+                        <Button bsStyle="primary" disabled={isNaN(this.props.SmartEditValue) } onClick={() => this.props.onApplySmartEdit() } >Apply to Grid</Button>
                     </Form>
                 </Panel>
                 <Panel header="Preview Results" bsStyle="success" style={divStyle}>
