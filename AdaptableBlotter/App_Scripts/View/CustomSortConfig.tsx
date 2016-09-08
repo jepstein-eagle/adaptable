@@ -4,7 +4,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {  Button, Form, Col, Panel, ListGroup, Row, Jumbotron} from 'react-bootstrap';
+import {  Button, Form, Col, Panel, ListGroup, Row, Well} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
@@ -55,9 +55,9 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             </Row>
         </Form>;
         return <Panel header={header} bsStyle="primary">
-            {this.props.CustomSorts.length == 0 ? <Jumbotron>
-                <p>Click 'Add' to create a new bespoke sort for a column of your choosing.</p>
-            </Jumbotron> : null}
+            {this.props.CustomSorts.length == 0 ? 
+                <Well bsSize="large">Click 'Add' to create a new bespoke sort for a column of your choosing.</Well>
+             : null}
             <ListGroup>
                 {customSorts}
             </ListGroup>
