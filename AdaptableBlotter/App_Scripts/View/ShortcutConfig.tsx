@@ -116,7 +116,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             className="list-group-item"
             onClick={() => { } }>
             <Row>
-                <Col md={2}>
+                <Col md={2} style={divStyle}> 
                     <FormGroup>
                         <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                     </FormGroup>
