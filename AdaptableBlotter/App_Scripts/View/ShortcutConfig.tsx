@@ -10,6 +10,7 @@ import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn} from '../Core/Interface/IAdaptableBlotter';
+import {ColumnType} from '../Core/Enums'
 
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
@@ -39,8 +40,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         });
         let header = <Form horizontal>
             <Row>
-                <Col xs={7}>Shortcuts</Col>
-                <Col xs={5}>
+                <Col xs={9}>Shortcuts</Col>
+                <Col xs={3}>
                     <Button title="Create Shortcut" id="Create_Shortcut" content="Create Shortcut">Create Shortcut</Button>
                 </Col>
             </Row>
@@ -49,8 +50,9 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         let row = <Row>
             <Col md={2} style={headerStyle}>Active</Col>
             <Col md={2} style={headerStyle}>Key</Col>
-            <Col md={3} style={headerStyle}>Result</Col>
-            <Col md={5} style={headerStyle}>Actions</Col>
+            <Col md={2} style={headerStyle}>Result</Col>
+            <Col md={2} style={headerStyle}>Columns</Col>
+             <Col md={4} style={headerStyle}></Col>
         </Row>
 
 
@@ -108,13 +110,14 @@ interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigIt
     onEdit: (Shortcut: IShortcut) => void;
     onDelete: (Shortcut: IShortcut) => void;
 }
+
 export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps, {}> {
     render(): any {
         return <li
             className="list-group-item"
             onClick={() => { } }>
             <Row>
-                <Col md={2}>
+                <Col md={2} style={divStyle}> 
                     <FormGroup>
                         <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                     </FormGroup>
@@ -122,11 +125,16 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={2} style={divStyle}>
                     {this.props.Shortcut.ShortcutKey }
                 </Col>
-                <Col md={3} style={divStyle}>
+                <Col md={2} style={divStyle}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
-                <Col md={5}>
+                 <Col md={2} style={divStyle}>
+                    {ColumnType[this.props.Shortcut.ColumnType] }
+                </Col>
+                <Col md={2}>
                     <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
+                </Col>
+                 <Col md={2}>
                     <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
                 </Col>
 

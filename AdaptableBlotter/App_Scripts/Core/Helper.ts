@@ -16,5 +16,6 @@ export module Helper {
             return event.char // IE
         } else
             return event.key
+
     }
 }
