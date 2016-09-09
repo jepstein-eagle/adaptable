@@ -128,6 +128,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.dataSource.getByUid(id).set(columnId, value);
     }
 
+    public setValueBatch(batchValues:{id: any, columnId: string, value: any}[]): void{
+        for (var item of batchValues) {
+            let model:any = this.grid.dataSource.getByUid(item.id);
+            model[item.columnId] = item.value;
+        }
+        this.grid.dataSource.sync();
+    }
+
 
     public getColumnHeader(columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);

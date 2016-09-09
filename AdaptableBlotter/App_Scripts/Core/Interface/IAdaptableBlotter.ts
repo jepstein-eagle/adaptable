@@ -10,6 +10,7 @@ export interface IAdaptableBlotter {
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
     setValue(id: any, columnId: string, value: any): void
+    setValueBatch(batchValues:{id: any, columnId: string, value: any}[]): void
     onMenuClicked(menuItem: IMenuItem): void
     CreateMenu(): void
     SetColumnIntoStore(): void
