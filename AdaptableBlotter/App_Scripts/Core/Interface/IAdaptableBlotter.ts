@@ -10,6 +10,7 @@ export interface IAdaptableBlotter {
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
     setValue(id: any, columnId: string, value: any): void
+    setValueBatch(batchValues:{id: any, columnId: string, value: any}[]): void
     onMenuClicked(menuItem: IMenuItem): void
     CreateMenu(): void
     SetColumnIntoStore(): void
@@ -18,6 +19,7 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
     getCurrentCellEditValue(): any
     gridHasCurrentEditValue():boolean
+    selectCells(cells: {id: any, columnId: string}[]):void
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }

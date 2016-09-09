@@ -110,10 +110,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return $(".k-edit-cell .k-input");
     }
 
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
 
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        var selected = this.grid.select();
+        var selected = this.grid.select().not("tr");
         selected.each((i, element) => {
             var row = $(element).closest("tr");
             var item = this.grid.dataItem(row);
@@ -158,6 +159,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.dataSource.getByUid(id).set(columnId, value);
     }
 
+    public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+        for (var item of batchValues) {
+            let model: any = this.grid.dataSource.getByUid(item.id);
+            model[item.columnId] = item.value;
+        }
+        this.grid.dataSource.sync();
+    }
+
+    public selectCells(cells: { id: any, columnId: string }[]): void {
+        let selectorQuery: JQuery
+        for (let cell of cells) {
+            var foundrow = this.grid.table.find("tr[data-uid='" + cell.id + "']"); //use that to find the row
+            let columnIndex = this.grid.columns.findIndex(x => x.field == cell.columnId);
+            let tdIndex = columnIndex + 1;
+            //we use the context of Jquery instead of parent/children so we improve performance drastically!
+            let cellSelect = $("td:nth-child(" + tdIndex + ")", foundrow);
+            if (selectorQuery == null) {
+                selectorQuery = cellSelect
+            }
+            else {
+                selectorQuery = selectorQuery.add(cellSelect)
+            }
+        }
+        this.grid.select(selectorQuery);
+    }
 
     public getColumnHeader(columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);
