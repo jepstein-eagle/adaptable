@@ -92,10 +92,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return value;
     }
 
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
 
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        var selected = this.grid.select();
+        var selected = this.grid.select().not("tr");
         selected.each((i, element) => {
             var row = $(element).closest("tr");
             var item = this.grid.dataItem(row);
