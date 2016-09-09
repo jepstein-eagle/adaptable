@@ -18,8 +18,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void{
         let selectedCells = this.blotter.getSelectedCells();
         let values: ISmartEditValueTuple[] = [];
-        let columnId: string;
-
+        let newValues : {id: any, columnId: string, value: any}[] = [];
         for (let pair of selectedCells.Selection) {
             for (var columnValuePair of pair[1]) {
                 let newValue: number;
@@ -34,11 +33,11 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                         newValue = smartEditValue
                         break;
                 }
-                this.blotter.setValue(pair[0], columnValuePair.columnID, newValue)
-
-                columnId = columnValuePair.columnID;
+                newValues.push({id: pair[0], columnId: columnValuePair.columnID, value: newValue})
+                //this.blotter.setValue(pair[0], columnValuePair.columnID, newValue)
             }
         }
+        this.blotter.setValueBatch(newValues)
     }
 
 
