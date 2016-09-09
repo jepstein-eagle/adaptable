@@ -45,9 +45,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
-        grid.table.keydown((event) =>  {
+        grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
-        })        
+        })
     }
 
     public SetColumnIntoStore() {
@@ -78,6 +78,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public onMenuClicked(menuItem: IMenuItem): void {
         this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
+    }
+
+    public getCurrentCellEditValue(): any {
+        // this function does NOT WORK!!!!!
+        var selected = this.grid.select()[0];
+        var row = $(selected).closest("tr");
+        var test = $(this.grid).find("k-edit-cell.k-input");
+        var item = this.grid.dataItem(row);
+        var idx = $(selected).index();
+        var col = <string>(this.grid.options.columns[idx].field);
+        var value = item.get(col);
+        return value;
     }
 
     public getSelectedCells(): ISelectedCells {

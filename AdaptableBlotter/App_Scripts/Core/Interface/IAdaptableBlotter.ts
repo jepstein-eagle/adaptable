@@ -16,6 +16,7 @@ export interface IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function ) : void
     getColumnValueString(columnId: string) : Array<string>
     removeCustomSort(columnId: string): void
+    getCurrentCellEditValue(): any
     
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }

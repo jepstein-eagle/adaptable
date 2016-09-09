@@ -110,6 +110,7 @@ interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigIt
     onEdit: (Shortcut: IShortcut) => void;
     onDelete: (Shortcut: IShortcut) => void;
 }
+
 export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps, {}> {
     render(): any {
         return <li
