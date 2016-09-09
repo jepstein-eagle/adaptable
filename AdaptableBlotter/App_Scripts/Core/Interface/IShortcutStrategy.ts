@@ -11,7 +11,3 @@ export interface IShortcut {
 }
 
 
-// here we will do the apply shortcut
-export interface IShortcutStrategy extends IStragegy {
-    ApplyShortcut(keyPressed: string) : void;
-}

@@ -17,7 +17,8 @@ export interface IAdaptableBlotter {
     getColumnValueString(columnId: string) : Array<string>
     removeCustomSort(columnId: string): void
     getCurrentCellEditValue(): any
-    
+    gridHasCurrentEditValue():boolean
+
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }
 
