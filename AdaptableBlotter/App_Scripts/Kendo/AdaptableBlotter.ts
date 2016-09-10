@@ -86,28 +86,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getCurrentCellEditValue(): any {
-        // not a nice function by any means - there HAS to be a better way to get the current edited cell.
-        // I will post to the forum to ask...
-
-        var currentEditCell = this.getcurrentEditedCell();
-
-        // var jqueryTest = $(test).closest('input.k-input');
-
-        // Need to work out a JQuery way of getting the elemetnt we need. we know its second but dont want to use ordinal 
-        // doing it not with jquery until I can work out how to do it properly
-        var inputElement: HTMLInputElement = currentEditCell.toArray().find(x => x.className == 'k-input');
-
-        // yet another complication (and another reason why this is horribly flaky) if we are doing a second edit then the classname is slighty different :()
-        if (inputElement == undefined) {
-            inputElement = currentEditCell.toArray().find(x => x.className == 'k-input k-valid');
-        }
-
-        return inputElement.value;
+        return this.getcurrentEditedCell().val();
     }
 
     private getcurrentEditedCell(): JQuery {
         // hopefully there is a way to do this without using jquery, or which is less brittle
-        return $(".k-edit-cell .k-input");
+        return $(".k-edit-cell .k-input").not(".k-formatted-value");
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all

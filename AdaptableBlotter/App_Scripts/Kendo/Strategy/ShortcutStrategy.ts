@@ -49,7 +49,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                                     break;
                                 case ColumnType.Date:
                                     // Date we ONLY replace so dont need to worry about editing values
-                                    this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, shortcut.ShortcutResult)
+                                    // need to work out a way of getting the date value and also to deal with "dynamic / expression dates"
+                                    this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, new Date())
                                     break;
                             }
                         }
