@@ -1,4 +1,4 @@
-import {IShortcut} from '../Core/Interface/IShortcutStrategy';
+import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
@@ -6,13 +6,19 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox} from 'react-bootstrap';
 
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
-import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
-import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
-import {IColumn} from '../Core/Interface/IAdaptableBlotter';
-import {ColumnType} from '../Core/Enums'
+import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
+import {IStrategyViewPopupProps} from '../../Core/Interface/IStrategyView'
+import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
+import {ColumnType} from '../../Core/Enums'
+import {ShortcutAction} from '../../Core/Enums'
 import {ShortcutConfigItem} from './ShortcutConfigItem'
 import {ShortcutConfigHeader} from './ShortcutConfigItem'
+
+import {AdaptableWizard} from './../Wizard/AdaptableWizard'
+import {ShortcutColumnTypeWizard} from './ShortcutColumnTypeWizard'
+import {ShortcutKeyWizard} from './ShortcutKeyWizard'
+import {ShortcutResultWizard} from './ShortcutResultWizard'
 
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
@@ -25,13 +31,20 @@ interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComp
 
 interface ShortcutConfigInternalState {
     isEditing: boolean;
+    WizardStartIndex: number
 }
 
 class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, ShortcutConfigInternalState> {
+
+    testColumnTypes: Array<ColumnType>;
     constructor() {
         super();
-        this.state = { isEditing: false }
+        this.state = { isEditing: false, WizardStartIndex: 0 }
+        //   this.testColumnTypes = new Array<ColumnType> [{ ColumnType.Date}, {ColumnType.Number}];
     }
+
+
+
     render() {
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut) => {
             return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutId}
@@ -44,58 +57,56 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             <Row>
                 <Col xs={9}>Shortcuts</Col>
                 <Col xs={3}>
-                    <Button title="Create Shortcut" id="Create_Shortcut" content="Create Shortcut">Create Shortcut</Button>
+                    <Button onClick={() => this.CreateShortcut() }> Create Shortcut</Button>
                 </Col>
             </Row>
         </Form>;
 
-        
-
-
         return <Panel header={header} bsStyle="primary">
-           <ShortcutConfigHeader/>
+            <ShortcutConfigHeader/>
             <ListGroup>
                 {shortcuts}
             </ListGroup>
 
-            <Modal show={this.state.isEditing} onHide={() => this.closeEditing() }  >
-                {/*<Modal.Header closeButton>
-            <Modal.Title>{}</Modal.Title>
-          </Modal.Header>*/}
-                <Modal.Body >
-
-
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={() => this.closeEditing() }>Close</Button>
-                </Modal.Footer>
-            </Modal>
-
+            {this.state.isEditing ?
+                <AdaptableWizard Steps={
+                    [
+                        <ShortcutColumnTypeWizard  />,
+                        <ShortcutKeyWizard Shortcuts = {this.props.Shortcuts} />,
+                        <ShortcutResultWizard Shortcuts = {this.props.Shortcuts} />
+                    ]}
+                    Data={this._editedShortcut}
+                    StepStartIndex={this.state.WizardStartIndex}
+                    onHide={() => this.closeWizard() }
+                    onFinish={() => this.WizardFinish() } ></AdaptableWizard> : null}
         </Panel>
     }
 
     private _editedShortcut: IShortcut;
 
-    closeEditing() {
+    closeWizard() {
+        this.setState({ isEditing: false, WizardStartIndex: 0 });
+    }
+    WizardFinish() {
         if (this.props.Shortcuts.find(x => x.ShortcutId == this._editedShortcut.ShortcutId)) {
             this.props.onEditShortcut(this._editedShortcut)
         }
         else {
-            this.props.onEditShortcut(this._editedShortcut)
+            this.props.onAddShortcut(this._editedShortcut)
         }
-        this.setState({ isEditing: false }, () => { this._editedShortcut = null; });
+        this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedShortcut = null; });
     }
 
     private onEditShortcut(shortcut: IShortcut) {
         //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
         this._editedShortcut = shortcut;
-        this.setState({ isEditing: true });
+        this.setState({ isEditing: true, WizardStartIndex: 1 }); // should be 1 or 0???
     }
 
-    CreateShortcut(ShortcutId: string) {
-        this._editedShortcut = null; // probably rubbish
-        this.setState({ isEditing: true });
+    CreateShortcut() {
+        let shortcutLength: number = (this.props.Shortcuts.length + 1); // wont work if things have been deleted
+        this._editedShortcut = { ShortcutId: shortcutLength, ShortcutKey: null, ShortcutResult: null, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: false, IsDynamic: false };
+        this.setState({ isEditing: true, WizardStartIndex: 0 });
     }
 
 }

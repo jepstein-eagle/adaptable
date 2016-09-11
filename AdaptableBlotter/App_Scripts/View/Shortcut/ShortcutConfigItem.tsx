@@ -1,11 +1,12 @@
-import {IShortcut} from '../Core/Interface/IShortcutStrategy';
+import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox} from 'react-bootstrap';
-import {ColumnType} from '../Core/Enums'
+import {ColumnType} from '../../Core/Enums'
+import {ShortcutAction} from '../../Core/Enums'
 
 
 interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
@@ -29,11 +30,14 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={1} style={divStyle}>
                     {this.props.Shortcut.ShortcutKey }
                 </Col>
-                <Col md={3} style={divStyle}>
+                <Col md={2} style={divStyle}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
-                <Col md={3} style={divStyle}>
+                <Col md={2} style={divStyle}>
                     {ColumnType[this.props.Shortcut.ColumnType]}
+                </Col>
+                <Col md={2} style={divStyle}>
+                    {ShortcutAction[this.props.Shortcut.ShortcutAction]}
                 </Col>
                 <Col md={2}>
                     <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
@@ -57,8 +61,9 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
             <Row>
                 <Col md={1} style={headerStyle}>Live</Col>
                 <Col md={1} style={headerStyle}>Key</Col>
-                <Col md={3} style={headerStyle}>Result</Col>
-                <Col md={3} style={headerStyle}>Columns</Col>
+                <Col md={2} style={headerStyle}>Result</Col>
+                <Col md={2} style={headerStyle}>Columns</Col>
+                <Col md={2} style={headerStyle}>Action</Col>
                 <Col md={4} style={headerStyle}></Col>
             </Row>
         </Panel>

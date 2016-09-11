@@ -1,6 +1,6 @@
 import {CustomSortConfig} from './CustomSortConfig'
 import {SmartEditAction} from './SmartEditAction'
-import {ShortcutConfig} from './ShortcutConfig'
+import {ShortcutConfig} from './Shortcut/ShortcutConfig'
 import {PlusMinusConfig} from './PlusMinusConfig'
 import * as React from "react";
 

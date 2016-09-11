@@ -5,6 +5,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import {IMenuItem} from '../../Core/Interface/IStrategy';
 import {Helper} from '../../Core/Helper';
 import {ColumnType} from '../../Core/Enums'
+import {ShortcutAction} from '../../Core/Enums'
 import {ICalendarService} from '../../Core/Services/Interface/ICalendarService'
 
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
@@ -23,12 +24,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
+
     InitShortcut() {
         if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {
             this.Shortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
         }
     }
-
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
         for (var shortcut of this.Shortcuts) {
@@ -45,10 +46,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
                                         if (this.blotter.gridHasCurrentEditValue()) {
                                             let currentCellValue = this.blotter.getCurrentCellEditValue()
-                                            NumberToReplace = currentCellValue * shortcut.ShortcutResult;
+                                            NumberToReplace = this.CalculateShortcut(currentCellValue, shortcut.ShortcutResult, shortcut.ShortcutAction);
                                         }
                                         else {
-                                            NumberToReplace = columnValuePair.value * shortcut.ShortcutResult;
+                                            NumberToReplace = this.CalculateShortcut(columnValuePair.value, shortcut.ShortcutResult, shortcut.ShortcutAction);
                                         }
                                         this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, NumberToReplace);
                                         // useful feature - prevents the main thing happening you want to on the keypress.
@@ -60,7 +61,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                                     if (shortcut.ColumnType == ColumnType.Date) {
                                         var DateToReplace: Date;
                                         if (shortcut.IsDynamic) {
-                                             DateToReplace = this.calendarService.GetDynamicDate(shortcut.ShortcutResult);
+                                            DateToReplace = this.calendarService.GetDynamicDate(shortcut.ShortcutResult);
                                         } else {
                                             DateToReplace = shortcut.ShortcutResult;
                                         }
@@ -78,6 +79,25 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
             }
         }
     }
+
+    private CalculateShortcut(first: number, second: number, shortcutAction: ShortcutAction): number {
+        let firstNumber: number = Number(first);
+        let secondNumber: number = Number(second);
+
+        switch (shortcutAction) {
+            case ShortcutAction.Add:
+                return firstNumber + secondNumber;
+            case ShortcutAction.Subtract:
+                return (firstNumber - secondNumber);
+            case ShortcutAction.Multiply:
+                return (firstNumber * secondNumber);
+            case ShortcutAction.Divide:
+                return (firstNumber / secondNumber);
+            case ShortcutAction.Replace:
+                return secondNumber;
+        }
+    }
+
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
