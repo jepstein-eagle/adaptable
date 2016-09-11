@@ -48,7 +48,13 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 
 const initialShortcutState: ShortcutState = {
     // creating 2 shortcuts one of which we will not make ispredefined to test
-    Shortcuts: [{ ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number,  IsLive: true, IsPredefined: true }, { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, IsLive: false, IsPredefined: false}]
+    Shortcuts: [
+        { ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number,  IsLive: true, IsPredefined: true , IsDynamic: false }, 
+        { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, IsLive: false, IsPredefined: false, IsDynamic: false },
+        { ShortcutId: 3, ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, IsLive: true, IsPredefined: false, IsDynamic: true },
+        { ShortcutId: 4, ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, IsLive: true, IsPredefined: false, IsDynamic: true },
+        { ShortcutId: 5, ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, IsLive: true, IsPredefined: false, IsDynamic: true },
+        ]
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {

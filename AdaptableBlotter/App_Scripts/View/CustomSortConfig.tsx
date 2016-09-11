@@ -12,6 +12,7 @@ import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn} from '../Core/Interface/IAdaptableBlotter';
 import {AdaptableWizard} from './Wizard/AdaptableWizard'
 import {CustomSortConfigItem} from './CustomSortConfigItem'
+import {CustomSortConfigHeader} from './CustomSortConfigItem'
 import {CustomSortColumnWizard} from './CustomSortColumnWizard'
 import {CustomSortValuesWizard} from './CustomSortValuesWizard'
 
@@ -46,19 +47,22 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         });
         let header = <Form horizontal>
             <Row>
-                <Col xs={7}>Custom Sorts</Col>
-                <Col xs={5}>
+                <Col xs={8}>Custom Sorts</Col>
+                <Col xs={4}>
                     <Button onClick={() => this.CreateCustomSort() }>
                         Create Custom Sort
                     </Button>
                 </Col>
             </Row>
         </Form>;
+
         return <Panel header={header} bsStyle="primary">
-            {this.props.CustomSorts.length == 0 ? 
-                <Well bsSize="large">Click 'Add' to create a new bespoke sort for a column of your choosing.</Well>
-             : null}
-            <ListGroup>
+            {this.props.CustomSorts.length == 0 ?
+                <Well bsSize="large">Click 'Create Custom Sort' to create a new bespoke sort for a column of your choosing.</Well>
+                : <CustomSortConfigHeader/>
+           }
+        
+           <ListGroup>
                 {customSorts}
             </ListGroup>
             {this.state.isEditing ?

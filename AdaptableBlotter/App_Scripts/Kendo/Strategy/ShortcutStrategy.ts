@@ -5,15 +5,19 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import {IMenuItem} from '../../Core/Interface/IStrategy';
 import {Helper} from '../../Core/Helper';
 import {ColumnType} from '../../Core/Enums'
+import {ICalendarService} from '../../Core/Services/Interface/ICalendarService'
 
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 
 export class ShortcutStrategy extends AdaptableStrategyBase {
     private Shortcuts: IShortcut[]
     private menuItemConfig: IMenuItem;
-    constructor(blotter: IAdaptableBlotter) {
+    private calendarService: ICalendarService; // is there some singleton pattern we need?
+
+    constructor(blotter: IAdaptableBlotter, calendarService: ICalendarService) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Configure Shortcut", this.Id, 'ShortcutConfig');
+        this.calendarService = calendarService;
         this.InitShortcut();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitShortcut())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
@@ -36,23 +40,38 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                             let columnType: ColumnType = this.blotter.getColumnType(columnValuePair.columnID);
                             switch (columnType) {
                                 case ColumnType.Number:
-
-                                    // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
-                                    var isEditing = this.blotter.gridHasCurrentEditValue();
-                                    if (isEditing) {
-                                        let currentCellValue = this.blotter.getCurrentCellEditValue()
-                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, currentCellValue * shortcut.ShortcutResult)
-                                    }
-                                    else {
-                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, columnValuePair.value * shortcut.ShortcutResult)
+                                    if (shortcut.ColumnType == ColumnType.Number) {
+                                        var NumberToReplace: Number;
+                                        // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
+                                        if (this.blotter.gridHasCurrentEditValue()) {
+                                            let currentCellValue = this.blotter.getCurrentCellEditValue()
+                                            NumberToReplace = currentCellValue * shortcut.ShortcutResult;
+                                        }
+                                        else {
+                                            NumberToReplace = columnValuePair.value * shortcut.ShortcutResult;
+                                        }
+                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, NumberToReplace);
+                                        // useful feature - prevents the main thing happening you want to on the keypress.
+                                        keyEvent.preventDefault();
                                     }
                                     break;
                                 case ColumnType.Date:
                                     // Date we ONLY replace so dont need to worry about editing values
-                                    // need to work out a way of getting the date value and also to deal with "dynamic / expression dates"
-                                    this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, new Date())
+                                    if (shortcut.ColumnType == ColumnType.Date) {
+                                        var DateToReplace: Date;
+                                        if (shortcut.IsDynamic) {
+                                             DateToReplace = this.calendarService.GetDynamicDate(shortcut.ShortcutResult);
+                                        } else {
+                                            DateToReplace = shortcut.ShortcutResult;
+                                        }
+                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, DateToReplace);
+                                        // useful feature - prevents the main thing happening you want to on the keypress.
+                                        keyEvent.preventDefault();
+
+                                    }
                                     break;
                             }
+
                         }
                     }
                 }

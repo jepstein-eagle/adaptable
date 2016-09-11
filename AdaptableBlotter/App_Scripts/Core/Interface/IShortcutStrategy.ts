@@ -7,7 +7,8 @@ export interface IShortcut {
     ShortcutResult: any;
     ColumnType: ColumnType;
     IsLive : Boolean,
-    IsPredefined : Boolean
+    IsPredefined : Boolean,
+    IsDynamic: Boolean
 }
 
 

@@ -18,6 +18,8 @@ import {IEvent} from '../Core/Interface/IEvent';
 import {EventDispatcher} from '../Core/EventDispatcher'
 import {Helper} from '../Core/Helper';
 import {ColumnType} from '../Core/Enums'
+import {ICalendarService} from '../Core/Services/Interface/ICalendarService'
+import {CalendarService} from '../Core/Services/CalendarService'
 
 import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn} from '../Core/Interface/IAdaptableBlotter'
 
@@ -33,7 +35,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStragegy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+
+        // need a concept of CoreServices...  so for now going to hardcode service injection...
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this, new CalendarService()))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
 

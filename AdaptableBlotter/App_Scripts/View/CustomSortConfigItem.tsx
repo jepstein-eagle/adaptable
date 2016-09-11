@@ -2,7 +2,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Button, Col, Row, ButtonGroup} from 'react-bootstrap';
+import { Button, Col, Row, ButtonGroup, Panel} from 'react-bootstrap';
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
@@ -10,6 +10,7 @@ interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConf
     onEdit: (CustomSort: ICustomSort) => void;
     onDelete: (CustomSort: ICustomSort) => void;
 }
+
 
 export class CustomSortConfigItem extends React.Component<CustomSortConfigItemProps, {}> {
     render(): any {
@@ -31,6 +32,26 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
         </li>
     }
 }
+
+interface CustomSortConfigHeaderProps extends React.ClassAttributes<CustomSortConfigHeader> {
+}
+
+export class CustomSortConfigHeader extends React.Component<CustomSortConfigHeaderProps, {}> {
+    render(): any {
+        return <Panel>
+            <Row>
+                <Col md={2} style={headerStyle}>Column</Col>
+                <Col md={6} style={headerStyle}>Sort Order</Col>
+                <Col md={4}></Col>
+            </Row>
+        </Panel>
+    }
+}
+
+var headerStyle = {
+    wordWrap: 'break-word',
+    fontWeight: 'bold'
+};
 
 var divStyle = {
     wordWrap: 'break-word'
