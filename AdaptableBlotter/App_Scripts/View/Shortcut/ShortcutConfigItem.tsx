@@ -4,7 +4,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox} from 'react-bootstrap';
+import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
 import {ColumnType} from '../../Core/Enums'
 import {ShortcutAction} from '../../Core/Enums'
 
@@ -22,26 +22,28 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             className="list-group-item"
             onClick={() => { } }>
             <Row>
-                <Col md={1} style={divStyle}>
+                <Col md={1} >
                     <FormGroup>
                         <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                     </FormGroup>
                 </Col>
-                <Col md={1} style={divStyle}>
+                <Col md={1} style={rowElementStyle}>
                     {this.props.Shortcut.ShortcutKey }
                 </Col>
-                <Col md={3} style={divStyle}>
+                <Col md={3} style={rowElementStyle}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
-                <Col md={2} style={divStyle}>
+                <Col md={2} style={rowElementStyle}>
                     {ColumnType[this.props.Shortcut.ColumnType]}
                 </Col>
-                <Col md={2} style={divStyle}>
+                <Col md={2} style={rowElementStyle}>
                     {ShortcutAction[this.props.Shortcut.ShortcutAction]}
                 </Col>
                 <Col md={3} >
-                    <Button style={buttonDivStyle} onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
-                    <Button style={buttonDivStyle} disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
+                    <ButtonGroup>
+                        <Button style={buttonStyle} onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
+                        <Button style={buttonStyle} disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
+                    </ButtonGroup>
                 </Col>
 
             </Row>
@@ -73,10 +75,11 @@ var headerStyle = {
     fontWeight: 'bold'
 };
 
-var divStyle = {
-    wordWrap: 'break-word'
+var rowElementStyle = {
+    wordWrap: 'break-word',
+    marginTop: '10px'
 };
 
-var buttonDivStyle = {
-   margin: '4px'    
+var buttonStyle = {
+    margin: '4px'
 };
