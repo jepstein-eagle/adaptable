@@ -29,10 +29,16 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 });
 
 const RESET_STATE = 'RESET_STATE';
+const INIT_STATE = 'INIT_STATE';
 export interface ResetUserDataAction extends Redux.Action {
+}
+export interface InitStateAction extends Redux.Action {
 }
 export const ResetUserData = (): ResetUserDataAction => ({
     type: RESET_STATE
+})
+export const InitState = (): ResetUserDataAction => ({
+    type: INIT_STATE
 })
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
@@ -69,7 +75,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
-            .then((newState) => console.log('Loaded state:', newState))
+            .then((newState) => {console.log('Loaded state:', newState);this.TheStore.dispatch(InitState());})
             .catch(() => console.log('Failed to load previous state'));
     }
 }
@@ -119,14 +125,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     return next(action);
                 }
                 //We rebuild the menu from scratch
-                //TODO: This give me the feeling menu should not be managed from strategies..... need thinking
+                //the difference between the two is that RESET_STATE is handled before and set the state to undefined
+                case INIT_STATE:
                 case RESET_STATE: {
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
                     adaptableBlotter.SetColumnIntoStore();
                     return returnAction;
                 }
-
                 default:
                     return next(action);
             }

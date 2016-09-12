@@ -48,10 +48,6 @@ this.CalendarService = new CalendarService();
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
 
-
-        //we build the menus from all strategies and update redux store
-        this.CreateMenu();
-        this.SetColumnIntoStore();
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
