@@ -75,8 +75,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
-            .then((newState) => {console.log('Loaded state:', newState);this.TheStore.dispatch(InitState());})
-            .catch(() => console.log('Failed to load previous state'));
+            .then(() => this.TheStore.dispatch(InitState()))
+            .catch(() => console.log('Failed to load previous adaptable blotter state'));
     }
 }
 
