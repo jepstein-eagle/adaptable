@@ -12,7 +12,6 @@ import {ShortcutAction} from '../../Core/Enums';
 
 interface ShortcutResultWizardProps extends AdaptableWizardStepProps<IShortcut> {
     Shortcuts: Array<IShortcut>
-
 }
 interface ShortcutResultWizardState {
     ShortcutResult: any;
@@ -28,7 +27,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
     constructor(props: ShortcutResultWizardProps) {
         super(props);
         if (this.props.Data.ColumnType == ColumnType.Date) {
-            //   this.props.Data.ShortcutAction = ShortcutAction.Replace;
+               this.props.Data.ShortcutAction = ShortcutAction.Replace;
         }
         this.state = { ShortcutResult: this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
     }
@@ -37,9 +36,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
         this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutResultWizardState, () => this.props.UpdateGoBackState())
     }
 
-
     render(): any {
-
         var shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide, ShortcutAction.Replace];
 
         var shortcutActions = shortcutActionList.map((shortcutAction: ShortcutAction) => {
@@ -57,7 +54,6 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
                         </ListGroup>
                     </Panel>
 
-
                     <Panel header="Enter Shortcut Number Result">
                         <FormControl
                             type="number"
@@ -72,8 +68,6 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
             }
         </div>
     }
-
-
 
     public canNext(): boolean {
         return this.state.ShortcutResult != null

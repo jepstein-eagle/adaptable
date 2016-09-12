@@ -51,10 +51,10 @@ const initialShortcutState: ShortcutState = {
     // creating 2 shortcuts one of which we will not make ispredefined to test
     Shortcuts: [
         { ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
-        { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
-        { ShortcutId: 3, ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: true, IsPredefined: true, IsDynamic: true },
-        { ShortcutId: 4, ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: true, IsPredefined: true, IsDynamic: true },
-        { ShortcutId: 5, ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: true, IsPredefined: true, IsDynamic: true },
+        { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
+        { ShortcutId: 3, ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutId: 4, ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutId: 5, ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }
 

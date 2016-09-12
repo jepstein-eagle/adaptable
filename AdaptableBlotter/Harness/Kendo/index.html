@@ -25,17 +25,24 @@
 
 <body>
     <div>
-    <h2>Adaptable Blotter</h2>
+        <!--<h3>Adaptable Blotter</h3> -->
+          <div id="content"></div>
     </div>
-    <div id="content"></div>
+   
+  
+<script>
+document.getElementById("content").style.margin = "15px";
+</script>
 
     <script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
-<p/>
+    <p/>
     <div id="grid"></div>
 
     <script>
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
+
+
     $("#grid")
         .kendoGrid({
             dataSource: {
@@ -45,23 +52,23 @@
                         field: {
                             tradeId: { type: "number" },
                             notional: { type: "number" },
-                            deskId: { type: "number" },
                             counterparty: { type: "string" },
                             currency: { type: "string" },
                             country: { type: "string" },
                             marketPrice: { type: "number" },
                             bid: { type: "number" },
                             ask: { type: "number" },
+                            tradeDate: { type: "date" },
                             isLive: { type: "boolean" },
                             fitchRating: { type: "string" },
                             moodysRating: { type: "string" },
-                            tradeDate: { type: "date" },
                             settlementDate: { type: "date" },
                             bloombergAsk: { type: "number" },
                             bloombergBid: { type: "number" },
                             indicativeAsk: { type: "number" },
                             indicativeBid: { type: "number" },
                             delta: { type: "number" },
+                            deskId: { type: "number" },
                             occasionalPrice: { type: "number" },
                             bookingGuid: { type: "string" },
                             lastUpdated: { type: "date" },
@@ -74,27 +81,27 @@
             [
                 { field: "tradeId", title: "ID" },
                 { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
-                { field: "deskId", title: "Desk ID" },
                 { field: "counterparty", title: "Counterparty" },
                 { field: "currency", title: "Currency" },
                 { field: "country", title: "Country" },
                 { field: "marketPrice", title: "Market Price" },
                 { field: "bid", title: "Bid" },
                 { field: "ask", title: "Ask" },
+                { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                 {
                     field: "isLive", title: "Is Live",
                     template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>'
                 },
                 { field: "fitchRating", title: "Fitch Rating"},
                 { field: "moodysRating", title: "Moodys Rating" },
-                { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" },
-                { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
+                { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: "350px" },
                 { field: "bloombergAsk", title: "Bloomberg Ask" },
                 { field: "bloombergBid", title: "Bloomberg Bid" },
                 { field: "indicativeAsk", title: "Indicative Ask" },
                 { field: "indicativeBid", title: "Indicative Bid" },
                 { field: "delta", format: "{0:n4}", title: "Delta" },
                 { field: "occasionalPrice", title: "Occasional Price" },
+                { field: "deskId", title: "Desk ID" },
                 { field: "bookingGuid", title: "Booking Guid" },
                 { field: "lastUpdated", title: "Last Update", format: "{0:G}" },
                 { field: "lastUpdatedBy", title: "Last Updated By" }
@@ -112,6 +119,8 @@
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
     var blotter = new adaptableblotterkendo.AdaptableBlotter(grid,container);
+
+
 
 </script>
 </body>

@@ -109,7 +109,6 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 }
 
-
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Shortcuts: state.Shortcut.Shortcuts,

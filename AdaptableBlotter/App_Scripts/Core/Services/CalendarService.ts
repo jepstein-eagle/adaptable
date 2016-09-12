@@ -9,9 +9,9 @@ export class CalendarService implements ICalendarService {
         // for now hardcode the holidays
         // adding 3 dummy holidays to test if last and next is working - and it seems to be...
         this.holidays = [
-            { name: "Test Day", holidayDate: new Date("September 12, 2016") },
-            { name: "Test Day", holidayDate: new Date("September 13, 2016") },
-            { name: "Test Day", holidayDate: new Date("September 9, 2016") },
+           // { name: "Test Day", holidayDate: new Date("September 12, 2016") },
+           // { name: "Test Day", holidayDate: new Date("September 13, 2016") },
+          //  { name: "Test Day", holidayDate: new Date("September 9, 2016") },
             { name: "Boxing Day", holidayDate: new Date("December 26, 2016") },
             { name: "Christmas Day (substitute)", holidayDate: new Date("December 27, 2017") },
             { name: "New Year's Day (substitute)", holidayDate: new Date("January 02, 2017") },
