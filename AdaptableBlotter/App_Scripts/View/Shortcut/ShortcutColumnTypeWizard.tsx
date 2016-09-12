@@ -11,9 +11,8 @@ import {ColumnType} from '../../Core/Enums';
 
 
 interface ShortcutColumnTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
-    // ColumnTypes: Array<ColumnType>
-
 }
+
 interface ShortcutColumnTypeWizardState {
     ColumnType: ColumnType
 }
@@ -30,7 +29,8 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
         var columnTypes = columnTypeList.map((columnType: ColumnType) => {
             return <ListGroupItem key={columnType}
                 onClick={() => this.onClickColum(columnType) }
-                active={this.state.ColumnType == null ? false : columnType == this.state.ColumnType}>{ColumnType[columnType]}</ListGroupItem>
+                active={this.state.ColumnType == null ? false : columnType == this.state.ColumnType}>{ColumnType[columnType]}
+            </ListGroupItem>
         })
 
         return <ListGroup style={listGroupStyle}>
@@ -48,6 +48,7 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
     public Back(): void { }
     public StepName = "Choose Column Type"
 }
+
 var listGroupStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px',

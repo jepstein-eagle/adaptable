@@ -98,9 +98,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 
     private onEditShortcut(shortcut: IShortcut) {
-        //I'm unsure if we should do it like that or do the whole Redux roundtrip,.......
         this._editedShortcut = shortcut;
-        this.setState({ isEditing: true, WizardStartIndex: 1 }); // should be 1 or 0???
+        this.setState({ isEditing: true, WizardStartIndex: 0 }); 
     }
 
     CreateShortcut() {
@@ -108,7 +107,6 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         this._editedShortcut = { ShortcutId: shortcutLength, ShortcutKey: null, ShortcutResult: null, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: false, IsDynamic: false };
         this.setState({ isEditing: true, WizardStartIndex: 0 });
     }
-
 }
 
 

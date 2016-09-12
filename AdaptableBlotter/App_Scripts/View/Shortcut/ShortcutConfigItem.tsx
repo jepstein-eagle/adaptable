@@ -30,7 +30,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={1} style={divStyle}>
                     {this.props.Shortcut.ShortcutKey }
                 </Col>
-                <Col md={2} style={divStyle}>
+                <Col md={3} style={divStyle}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
                 <Col md={2} style={divStyle}>
@@ -39,11 +39,9 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={2} style={divStyle}>
                     {ShortcutAction[this.props.Shortcut.ShortcutAction]}
                 </Col>
-                <Col md={2}>
-                    <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
-                </Col>
-                <Col md={2}>
-                    <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
+                <Col md={3} >
+                    <Button style={buttonDivStyle} onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
+                    <Button style={buttonDivStyle} disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
                 </Col>
 
             </Row>
@@ -61,10 +59,10 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
             <Row>
                 <Col md={1} style={headerStyle}>Live</Col>
                 <Col md={1} style={headerStyle}>Key</Col>
-                <Col md={2} style={headerStyle}>Result</Col>
+                <Col md={3} style={headerStyle}>Result</Col>
                 <Col md={2} style={headerStyle}>Columns</Col>
                 <Col md={2} style={headerStyle}>Action</Col>
-                <Col md={4} style={headerStyle}></Col>
+                <Col md={3} style={headerStyle}></Col>
             </Row>
         </Panel>
     }
@@ -77,4 +75,8 @@ var headerStyle = {
 
 var divStyle = {
     wordWrap: 'break-word'
+};
+
+var buttonDivStyle = {
+   margin: '4px'    
 };
