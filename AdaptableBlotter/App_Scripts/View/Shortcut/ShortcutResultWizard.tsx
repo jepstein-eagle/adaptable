@@ -51,14 +51,14 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
         return <div>
             {this.props.Data.ColumnType == ColumnType.Number ?
                 <div>
-                    <Panel header="Select A Shortcut Action">
+                    <Panel header="Select a Shortcut Action">
                         <ListGroup style={listGroupStyle}  >
                             {shortcutActions}
                         </ListGroup>
                     </Panel>
 
 
-                    <Panel header="Enter Shortcut Result Number">
+                    <Panel header="Enter Shortcut Number Result">
                         <FormControl
                             type="number"
                             placeholder="Shortcut Result"
@@ -68,7 +68,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
                     </Panel>
                 </div>
                 :
-                <Panel header="Enter Shortcut Date">Going to have a date thing here </Panel>
+                <Panel header="Enter Shortcut Date Result">Going to have a date thing here </Panel>
             }
         </div>
     }
@@ -84,7 +84,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
         this.props.Data.ShortcutAction = this.state.ShortcutAction
     }
     public Back(): void { }
-    public StepName = "Enter the Shortcut Result"
+    public StepName = "Shortcut Result"
 }
 var listGroupStyle = {
     'overflowY': 'auto',

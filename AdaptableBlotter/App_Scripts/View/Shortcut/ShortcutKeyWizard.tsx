@@ -43,9 +43,11 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
                 active={this.state.ShortcutKey == null ? false : key == this.state.ShortcutKey}>{key}</ListGroupItem>
         })
 
-        return <ListGroup style={listGroupStyle}>
-            {keys}
-        </ListGroup>
+        return <Panel header="Select a Key for the Shortcut">
+            <ListGroup style={listGroupStyle}>
+                {keys}
+            </ListGroup>
+        </Panel>
     }
 
     onClickColum(key: string) {
@@ -56,7 +58,7 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ShortcutKey = this.state.ShortcutKey; }
     public Back(): void { }
-    public StepName = "Choose the Shortcut Key"
+    public StepName = "Shortcut Key"
 }
 var listGroupStyle = {
     'overflowY': 'auto',

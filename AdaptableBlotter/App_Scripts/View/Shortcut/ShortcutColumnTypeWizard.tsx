@@ -33,9 +33,11 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
             </ListGroupItem>
         })
 
-        return <ListGroup style={listGroupStyle}>
-            {columnTypes}
-        </ListGroup>
+        return <Panel header="Select the Type of Column for the Shortcut">
+            <ListGroup style={listGroupStyle}>
+                {columnTypes}
+            </ListGroup>
+        </Panel>
     }
 
     onClickColum(columnType: ColumnType) {
@@ -46,7 +48,7 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnType = this.state.ColumnType }
     public Back(): void { }
-    public StepName = "Choose Column Type"
+    public StepName = "Column Type"
 }
 
 var listGroupStyle = {
