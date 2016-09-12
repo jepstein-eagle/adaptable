@@ -1,15 +1,19 @@
 import {IAdaptableBlotter} from './Interface/IAdaptableBlotter';
-import {IStragegy,IMenuItem} from './Interface/IStrategy';
+import {IStragegy, IMenuItem} from './Interface/IStrategy';
+import {ICalendarService} from '../Core/Services/Interface/ICalendarService'
+import {CalendarService} from '../Core/Services/CalendarService'
+
 
 export abstract class AdaptableStrategyBase implements IStragegy {
-    constructor(public Id : string, protected blotter: IAdaptableBlotter)
-    {
-
+    constructor(public Id: string, protected blotter: IAdaptableBlotter) {
+        this.CalendarService = blotter.CalendarService;
     }
 
-    abstract getMenuItems() : IMenuItem[];
-    public onAction(action:string){
-        
+    protected CalendarService: ICalendarService; 
+
+    abstract getMenuItems(): IMenuItem[];
+    public onAction(action: string) {
+
     }
 }
 

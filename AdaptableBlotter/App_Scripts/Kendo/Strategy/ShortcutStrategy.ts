@@ -13,12 +13,11 @@ import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 export class ShortcutStrategy extends AdaptableStrategyBase {
     private Shortcuts: IShortcut[]
     private menuItemConfig: IMenuItem;
-    private calendarService: ICalendarService; // is there some singleton pattern we need?
+    
 
-    constructor(blotter: IAdaptableBlotter, calendarService: ICalendarService) {
+    constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Configure Shortcut", this.Id, 'ShortcutConfig');
-        this.calendarService = calendarService;
         this.InitShortcut();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitShortcut())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
@@ -61,7 +60,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                                     if (shortcut.ColumnType == ColumnType.Date) {
                                         var DateToReplace: Date;
                                         if (shortcut.IsDynamic) {
-                                            DateToReplace = this.calendarService.GetDynamicDate(shortcut.ShortcutResult);
+                                            DateToReplace = this.CalendarService.GetDynamicDate(shortcut.ShortcutResult);
                                         } else {
                                             DateToReplace = shortcut.ShortcutResult;
                                         }

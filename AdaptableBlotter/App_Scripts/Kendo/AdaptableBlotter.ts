@@ -27,8 +27,15 @@ import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+
+    public CalendarService: ICalendarService 
+
+
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+
+// create the services
+this.CalendarService = new CalendarService();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -37,7 +44,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
 
         // need a concept of CoreServices...  so for now going to hardcode service injection...
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this, new CalendarService()))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
 

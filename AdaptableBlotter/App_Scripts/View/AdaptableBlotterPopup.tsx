@@ -38,5 +38,5 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
 var divStyle = {
     maxHeight: '600px',
-    minWidth: '600px'
+    minWidth: '800px'
 };
