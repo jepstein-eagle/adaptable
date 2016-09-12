@@ -21,7 +21,7 @@ const initialGridState: GridState = {
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
     switch (action.type) {
         case SET_GRIDCOLUMNS:
-            return { Columns: (<SetColumnsAction>action).Columns }
+            return { Columns: [].concat((<SetColumnsAction>action).Columns) }
         default:
             return state
     }
