@@ -14,8 +14,8 @@ import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
-import {ISmartEditStrategy,ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
-import {AdaptableBlotterState,IAdaptableBlotterStore} from './Interface/IAdaptableStore'
+import {ISmartEditStrategy, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
+import {AdaptableBlotterState, IAdaptableBlotterStore} from './Interface/IAdaptableStore'
 import {IUIError} from '../../Core/interface/IStrategy'
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -35,13 +35,16 @@ export const ResetUserData = (): ResetUserDataAction => ({
     type: RESET_STATE
 })
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
-  if (action.type === RESET_STATE) {
-      //This trigger the persist of the state with fuck all as well
-    state = undefined
-  }
+    if (action.type === RESET_STATE) {
+        //This trigger the persist of the state with fuck all as well
+        state = undefined
+    }
 
-  return rootReducer(state, action)
+    return rootReducer(state, action)
 }
+
+
+
 //TODO: need to make this members of AdaptableBlotterStore so we can have mutiple instances
 const engineReduxStorage = createEngine('my-adaptable-blotter-key');
 //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
@@ -49,13 +52,20 @@ const middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage)
 const reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
 const loadStorage = ReduxStorage.createLoader(engineReduxStorage);
 
+
+
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
+        //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
+        let finalCreateStore = Redux.compose(
+            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
+            (<any>window).devToolsExtension ? (<any>window).devToolsExtension() : f => f
+        )(Redux.createStore);
+        
         //TODO: need to check if we want the storage to be done before or after 
         //we enrich the state with the AB middleware
-        this.TheStore = Redux.createStore<AdaptableBlotterState>(reducerWithStorage,
-            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter), middlewareReduxStorage));
+        this.TheStore = <Redux.Store<AdaptableBlotterState>>(finalCreateStore(reducerWithStorage));
 
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
@@ -110,7 +120,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 }
                 //We rebuild the menu from scratch
                 //TODO: This give me the feeling menu should not be managed from strategies..... need thinking
-                case RESET_STATE:{
+                case RESET_STATE: {
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
                     adaptableBlotter.SetColumnIntoStore();
