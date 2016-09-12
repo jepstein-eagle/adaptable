@@ -65,7 +65,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     constructor(private blotter: IAdaptableBlotter) {
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
-            Redux.applyMiddleware(snooper, adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
+            Redux.applyMiddleware(/*snooper,*/ adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
             (<any>window).devToolsExtension ? (<any>window).devToolsExtension() : f => f
         )(Redux.createStore);
         
@@ -80,17 +80,17 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     }
 }
 
-//TODO : this is just used for debugging for now until we/I setup proper build with dev http server
-var snooper: Redux.Middleware = function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-    return function (next: Redux.Dispatch<AdaptableBlotterState>) {
-        return function (action: Redux.Action) {
-            console.log("snooping at `action`: " + action.type);
-            let ret = next(action);
-            console.log(middlewareAPI.getState())
-            return ret;
-        }
-    }
-}
+//not needed anymore since Redux DevToolsExtension is working
+// var snooper: Redux.Middleware = function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+//     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
+//         return function (action: Redux.Action) {
+//             console.log("snooping at `action`: " + action.type);
+//             let ret = next(action);
+//             console.log(middlewareAPI.getState())
+//             return ret;
+//         }
+//     }
+// }
 
 var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
