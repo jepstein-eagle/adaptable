@@ -7,6 +7,7 @@ import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 
 export interface PlusMinusState {
     DefaultNudge: number
+    ColumnsDefaultNudge: {ColumnId: string, DefaultNudge:number}[]
 }
 
 export interface GridState {

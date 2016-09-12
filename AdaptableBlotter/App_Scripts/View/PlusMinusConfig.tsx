@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {  Button, Form, FormGroup, Panel, ControlLabel, FormControl} from 'react-bootstrap';
+import {  Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col} from 'react-bootstrap';
 
 import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
@@ -13,12 +13,44 @@ import {IColumn} from '../Core/Interface/IAdaptableBlotter';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
+    Columns: IColumn[],
+    ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
+    onSetColumnDefaultNudgeValue: (ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]) => PlusMinusRedux.PlusMinusSetColumnsDefaultNudgeAction
 }
 
 
 class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}> {
+
     render() {
+        let header = <Form horizontal>
+            <Row>
+                <Col xs={7}>Column Nudge Values</Col>
+                <Col xs={5}>
+                    <Button onClick={() => this.AddColumnNudgeValue() } disabled={this.props.ColumnsDefaultNudge.findIndex(x=>x.ColumnId == "select")>=0}>
+                        Add Column Nudge Value
+                    </Button>
+                </Col>
+            </Row>
+        </Form>;
+
+        let optionColumnsItems = this.props.ColumnsDefaultNudge.map((x, index) => {
+            let optionColumns = this.props.Columns.filter(column => { return this.props.ColumnsDefaultNudge.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
+                return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            })
+            return <Form inline key={x.ColumnId}>
+                <FormGroup controlId={x.ColumnId}>
+                    <FormControl componentClass="select" placeholder="select" value={x.ColumnId} onChange={(x) => this.onColumnSelectChange(index, x) } >
+                        <option value="select" key="select">Select a column</option>
+                        {optionColumns}
+                    </FormControl>
+                    {' '}
+                    <FormControl value={x.DefaultNudge} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e) }/>
+                    {' '}
+                    <Button onClick={() => this.onDeleteColumnDefaultNudge(index) } >Delete</Button>
+                </FormGroup>
+            </Form>
+        })
         return <Panel header="Plus/Minus Configuration" bsStyle="primary">
             <Form inline>
                 <FormGroup controlId="formInlineName">
@@ -27,11 +59,42 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
                     <FormControl value={this.props.DefaultNudgeValue} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e) }/>
                 </FormGroup>
             </Form>
+            <p/>
+            <Panel header={header} >
+                <div style={panelColumNudge}>
+                {optionColumnsItems}
+                </div>
+            </Panel>
         </Panel>
     }
 
+    AddColumnNudgeValue() {
+        this.props.ColumnsDefaultNudge.push({ ColumnId: "select", DefaultNudge: this.props.DefaultNudgeValue })
+        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
+    }
+
+    private onColumnSelectChange(index: number, event: React.FormEvent) {
+        //we update props directly but we know it's going to get overriden once action is performed and state updated
+        let e = event.target as HTMLInputElement;
+        this.props.ColumnsDefaultNudge[index].ColumnId = e.value
+        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
+
+    }
+
+    onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent) {
+        //we update props directly but we know it's going to get overriden once action is performed and state updated
+        let e = event.target as HTMLInputElement;
+        this.props.ColumnsDefaultNudge[index].DefaultNudge = parseFloat(e.value)
+        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
+    }
+
+    private onDeleteColumnDefaultNudge(index: number) {
+        this.props.ColumnsDefaultNudge.splice(index, 1)
+        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
+    }
+
     handleDefaultNudgeValueChange(event: React.FormEvent) {
-        const e = event.target as HTMLInputElement;
+        let e = event.target as HTMLInputElement;
         this.props.onSetDefaultNudgeValue(parseFloat(e.value));
     }
 }
@@ -39,16 +102,24 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DefaultNudgeValue: state.PlusMinus.DefaultNudge
+        DefaultNudgeValue: state.PlusMinus.DefaultNudge,
+        ColumnsDefaultNudge: state.PlusMinus.ColumnsDefaultNudge,
+        Columns: state.Grid.Columns
     };
 }
 
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSetDefaultNudgeValue: (value: number) => dispatch(PlusMinusRedux.PlusMinusSetDefaultNudge(value))
+        onSetDefaultNudgeValue: (value: number) => dispatch(PlusMinusRedux.PlusMinusSetDefaultNudge(value)),
+        onSetColumnDefaultNudgeValue: (ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]) => dispatch(PlusMinusRedux.PlusMinusSetColumnsDefaultNudge(ColumnsDefaultNudge))
     };
 }
 
 export let PlusMinusConfig = connect(mapStateToProps, mapDispatchToProps)(PlusMinusConfigComponent);
 
+let panelColumNudge = {
+    overflowY: 'auto',
+    minHeight: '100px',
+    maxHeight: '300px'
+};

@@ -28,7 +28,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
         //it's a speacial key so we handle the string representation of the key '
         if (Helper.getStringRepresentionFromKey(keyEvent) == "-" || Helper.getStringRepresentionFromKey(keyEvent) == "+") {
-            let newValues : {id: any, columnId: string, value: any}[] = [];
+            let newValues: { id: any, columnId: string, value: any }[] = [];
             let side = 1
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
@@ -37,7 +37,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
                     if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number) {
-                        newValues.push({id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + ( this.PlusMinusState.DefaultNudge * side)})
+                        let columnNudge = this.PlusMinusState.ColumnsDefaultNudge.find(x => x.ColumnId == columnValuePair.columnID)
+                        if (columnNudge != null) {
+                            newValues.push({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
+                        }
+                        else {
+                            newValues.push({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (this.PlusMinusState.DefaultNudge * side) })
+                        }
+
                         //this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, columnValuePair.value + ( this.PlusMinusState.DefaultNudge * side))
                     }
                 }
