@@ -47,7 +47,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         }
         return (
             <div >
-                <Panel header="Edit Details" bsStyle="primary">
+                <Panel header="Smart Edit Details" bsStyle="primary">
                     <Form inline>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
