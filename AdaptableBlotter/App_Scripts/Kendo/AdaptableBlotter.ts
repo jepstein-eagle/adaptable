@@ -127,7 +127,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
-        if (!this.grid.dataSource.options.schema.hasOwnProperty('fields')) {
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
             return ColumnType.String;
         }
@@ -189,7 +189,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isColumnReadonly(columnId: string): boolean {
-        if (!this.grid.dataSource.options.schema.hasOwnProperty('fields')) {
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             //field cannot be readonly in that scenario
             return false;
         }
