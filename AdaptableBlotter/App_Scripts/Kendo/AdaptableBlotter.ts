@@ -127,6 +127,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('fields')) {
+            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
+            return ColumnType.String;
+        }
         let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
@@ -185,10 +189,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isColumnReadonly(columnId: string): boolean {
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('fields')) {
+            //field cannot be readonly in that scenario
+            return false;
+        }
         let column = this.grid.dataSource.options.schema.model.fields[columnId];
         if (column) {
-            if (column.hasOwnProperty('editable')) { 
-                return !column.editable }
+            if (column.hasOwnProperty('editable')) {
+                return !column.editable
+            }
             else {
                 return false
             }
