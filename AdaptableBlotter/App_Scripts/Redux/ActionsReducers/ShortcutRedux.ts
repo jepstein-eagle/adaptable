@@ -71,7 +71,9 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         case SHORTCUT_SELECT: {
             var items: Array<IShortcut> = [].concat(state.Shortcuts);
             let updatedShortcut = (<ShortcutSelectAction>action).Shortcut;
-            updatedShortcut.IsLive = !updatedShortcut.IsLive;
+            updatedShortcut = Object.assign({}, updatedShortcut, {
+                IsLive: !updatedShortcut.IsLive
+            });
             let index = items.findIndex(x => x.ShortcutId == updatedShortcut.ShortcutId)
             items[index] = updatedShortcut;
             return Object.assign({}, state, {

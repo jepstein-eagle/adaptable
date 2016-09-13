@@ -57,8 +57,8 @@ interface ShortcutConfigHeaderProps extends React.ClassAttributes<ShortcutConfig
 
 export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderProps, {}> {
     render(): any {
-        return <Panel>
-            <Row>
+        return <Panel >
+            <Row >
                 <Col md={1} style={headerStyle}>Live</Col>
                 <Col md={1} style={headerStyle}>Key</Col>
                 <Col md={2} style={headerStyle}>Columns</Col>
