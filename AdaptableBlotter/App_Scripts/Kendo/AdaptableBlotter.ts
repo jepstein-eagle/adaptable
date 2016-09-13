@@ -113,7 +113,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var idx = $(element).index();
             var col = <string>(this.grid.options.columns[idx].field);
             var value = item.get(col);
-            this.grid.dataSource.options.schema.model.id
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {
                 valueArray = []
@@ -128,8 +127,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
-        //WARNING: in the doc the member is called fields not field 
-        let type = this.grid.dataSource.options.schema.model.field[columnId].type;
+        let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
                 return ColumnType.String;
@@ -187,7 +185,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isColumnReadonly(columnId: string): boolean {
-        let column = this.grid.dataSource.options.schema.model.field[columnId];
+        let column = this.grid.dataSource.options.schema.model.fields[columnId];
         if (column) {
             if (column.hasOwnProperty('editable')) { 
                 return !column.editable }
