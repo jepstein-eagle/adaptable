@@ -6,7 +6,7 @@ import {SmartEditOperation, ColumnType} from '../../Core/Enums'
 import {IMenuItem} from '../../Core/Interface/IStrategy';
 
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
-import {ISmartEditStrategy,ISmartEditValueTuple,ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
+import {ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private menuItemConfig: IMenuItem;
@@ -15,10 +15,10 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction');
     }
 
-    public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void{
+    public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation): void {
         let selectedCells = this.blotter.getSelectedCells();
         let values: ISmartEditValueTuple[] = [];
-        let newValues : {id: any, columnId: string, value: any}[] = [];
+        let newValues: { id: any, columnId: string, value: any }[] = [];
         for (let pair of selectedCells.Selection) {
             for (var columnValuePair of pair[1]) {
                 let newValue: number;
@@ -33,7 +33,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                         newValue = smartEditValue
                         break;
                 }
-                newValues.push({id: pair[0], columnId: columnValuePair.columnID, value: newValue})
+                newValues.push({ id: pair[0], columnId: columnValuePair.columnID, value: newValue })
                 //this.blotter.setValue(pair[0], columnValuePair.columnID, newValue)
             }
         }
@@ -49,15 +49,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
-                    ErrorMsg: "You need to select some Cells"
-                }
-            }
-        }
-        //if no cells are selected
-        if (selectedCells.Selection.size == 0) {
-            return {
-                Error: {
-                    ErrorMsg: "You need to select some Cells"
+                    ErrorMsg: "Please select some Cells.\nThat might be caused by the selection mode of the blotter not being Cell or MultiCell"
                 }
             }
         }
@@ -65,7 +57,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             if (pair[1].length > 1) {
                 return {
                     Error: {
-                        ErrorMsg: "You need to select Cells from one column only"
+                        ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
             }
@@ -73,7 +65,15 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 if (this.blotter.getColumnType(columnValuePair.columnID) != ColumnType.Number) {
                     return {
                         Error: {
-                            ErrorMsg: "You need to select Cells from numeric columns"
+                            ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
+                        }
+                    }
+
+                }
+                if (this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                    return {
+                        Error: {
+                            ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
                         }
                     }
 

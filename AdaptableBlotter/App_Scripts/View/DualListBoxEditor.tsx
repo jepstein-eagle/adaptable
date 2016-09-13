@@ -202,7 +202,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newAvailableValues = [...this.state.AvailableValues];
             }
             //We remove our awesome placeholder 
-            this.over.parentNode.removeChild(placeholder);
+            if (this.over.classList.contains('SelectedDropZone') || this.over.classList.contains('AvailableDropZone')) {
+                this.over.removeChild(placeholder);
+            }
+            else {
+                this.over.parentNode.removeChild(placeholder);
+            }
             this.over = null;
             this.dragged = null;
             // Update state
@@ -228,7 +233,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             newAvailableValues.splice(from, 1);
 
             //We remove our awesome placeholder 
-            this.over.parentNode.removeChild(placeholder);
+            if (this.over.classList.contains('SelectedDropZone')) {
+                this.over.removeChild(placeholder);
+            }
+            else {
+                this.over.parentNode.removeChild(placeholder);
+            }
             this.over = null;
             this.dragged = null;
 
@@ -257,7 +267,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         //we want to keep the reference of the last intem we were over to
         if (targetElement.classList.contains("placeholder")) return;
         this.over = targetElement;
-        targetElement.parentNode.insertBefore(placeholder, targetElement);
+        if (this.over.classList.contains('AvailableDropZone')) {
+            targetElement.appendChild(placeholder);
+        }
+        else {
+            targetElement.parentNode.insertBefore(placeholder, targetElement);
+        }
     }
     DragLeaveAvailable(e: React.DragEvent) {
         e.preventDefault();
@@ -265,7 +280,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("AvailableDropZone") || targetElement.classList.contains("placeholder")) {
             if (this.over) {
-                this.over.parentNode.removeChild(placeholder);
+                if (this.over.classList.contains('AvailableDropZone')) {
+                    this.over.removeChild(placeholder);
+                }
+                else {
+                    this.over.parentNode.removeChild(placeholder);
+                }
                 this.over = null;
 
             }
@@ -283,7 +303,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         //we want to keep the reference of the last intem we were over to
         if (targetElement.classList.contains("placeholder")) return;
         this.over = targetElement;
-        targetElement.parentNode.insertBefore(placeholder, targetElement);
+        if (this.over.classList.contains('SelectedDropZone')) {
+            targetElement.appendChild(placeholder);
+        }
+        else {
+            targetElement.parentNode.insertBefore(placeholder, targetElement);
+        }
     }
     DragLeaveSelected(e: React.DragEvent) {
         e.preventDefault();
@@ -291,7 +316,12 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("SelectedDropZone") || targetElement.classList.contains("placeholder")) {
             if (this.over) {
-                this.over.parentNode.removeChild(placeholder);
+                if (this.over.classList.contains('SelectedDropZone')) {
+                    this.over.removeChild(placeholder);
+                }
+                else {
+                    this.over.parentNode.removeChild(placeholder);
+                }
                 this.over = null;
             }
         }
@@ -345,5 +375,5 @@ var panelStyle = {
 };
 
 var colButtonStyle = {
-    transform : 'translateY(100px)'
+    transform: 'translateY(100px)'
 }

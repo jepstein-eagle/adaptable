@@ -28,14 +28,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
-    public CalendarService: ICalendarService 
+    public CalendarService: ICalendarService
 
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
-// create the services
-this.CalendarService = new CalendarService();
+        // create the services
+        this.CalendarService = new CalendarService();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -113,7 +113,6 @@ this.CalendarService = new CalendarService();
             var idx = $(element).index();
             var col = <string>(this.grid.options.columns[idx].field);
             var value = item.get(col);
-            this.grid.dataSource.options.schema.model.id
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {
                 valueArray = []
@@ -128,8 +127,11 @@ this.CalendarService = new CalendarService();
     }
 
     public getColumnType(columnId: string): ColumnType {
-        //WARNING: in the doc the member is called fields not field 
-        let type = this.grid.dataSource.options.schema.model.field[columnId].type;
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
+            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
+            return ColumnType.String;
+        }
+        let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
                 return ColumnType.String;
@@ -183,6 +185,25 @@ this.CalendarService = new CalendarService();
         }
         else {
             return "";
+        }
+    }
+
+    public isColumnReadonly(columnId: string): boolean {
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
+            //field cannot be readonly in that scenario
+            return false;
+        }
+        let column = this.grid.dataSource.options.schema.model.fields[columnId];
+        if (column) {
+            if (column.hasOwnProperty('editable')) {
+                return !column.editable
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return true;
         }
     }
 
