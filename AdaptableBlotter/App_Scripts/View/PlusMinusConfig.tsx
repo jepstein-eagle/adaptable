@@ -16,7 +16,9 @@ interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigCo
     Columns: IColumn[],
     ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
-    onSetColumnDefaultNudgeValue: (ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]) => PlusMinusRedux.PlusMinusSetColumnsDefaultNudgeAction
+    onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditColumnsDefaultNudgeAction
+    onDeleteColumnDefaultNudgeValue: (Index: number) => PlusMinusRedux.PlusMinusDeleteColumnsDefaultNudgeAction
+    onAddColumnDefaultNudgeValue: () => PlusMinusRedux.PlusMinusAddColumnsDefaultNudgeAction
 }
 
 
@@ -27,7 +29,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
             <Row>
                 <Col xs={7}>Column Nudge Values</Col>
                 <Col xs={5}>
-                    <Button onClick={() => this.AddColumnNudgeValue() } disabled={this.props.ColumnsDefaultNudge.findIndex(x=>x.ColumnId == "select")>=0}>
+                    <Button onClick={() => this.props.onAddColumnDefaultNudgeValue() } disabled={this.props.ColumnsDefaultNudge.findIndex(x => x.ColumnId == "select") >= 0}>
                         Add Column Nudge Value
                     </Button>
                 </Col>
@@ -47,7 +49,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
                     {' '}
                     <FormControl value={x.DefaultNudge} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e) }/>
                     {' '}
-                    <Button onClick={() => this.onDeleteColumnDefaultNudge(index) } >Delete</Button>
+                    <Button onClick={() => this.props.onDeleteColumnDefaultNudgeValue(index) } >Delete</Button>
                 </FormGroup>
             </Form>
         })
@@ -62,35 +64,20 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
             <p/>
             <Panel header={header} >
                 <div style={panelColumNudge}>
-                {optionColumnsItems}
+                    {optionColumnsItems}
                 </div>
             </Panel>
         </Panel>
     }
 
-    AddColumnNudgeValue() {
-        this.props.ColumnsDefaultNudge.push({ ColumnId: "select", DefaultNudge: this.props.DefaultNudgeValue })
-        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
-    }
-
     private onColumnSelectChange(index: number, event: React.FormEvent) {
-        //we update props directly but we know it's going to get overriden once action is performed and state updated
         let e = event.target as HTMLInputElement;
-        this.props.ColumnsDefaultNudge[index].ColumnId = e.value
-        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
-
+        this.props.onEditColumnDefaultNudgeValue(index, {ColumnId: e.value, DefaultNudge: this.props.ColumnsDefaultNudge[index].DefaultNudge} );
     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent) {
-        //we update props directly but we know it's going to get overriden once action is performed and state updated
         let e = event.target as HTMLInputElement;
-        this.props.ColumnsDefaultNudge[index].DefaultNudge = parseFloat(e.value)
-        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
-    }
-
-    private onDeleteColumnDefaultNudge(index: number) {
-        this.props.ColumnsDefaultNudge.splice(index, 1)
-        this.props.onSetColumnDefaultNudgeValue(this.props.ColumnsDefaultNudge);
+        this.props.onEditColumnDefaultNudgeValue(index, {ColumnId: this.props.ColumnsDefaultNudge[index].ColumnId, DefaultNudge: parseFloat(e.value) });
     }
 
     handleDefaultNudgeValueChange(event: React.FormEvent) {
@@ -98,7 +85,6 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
         this.props.onSetDefaultNudgeValue(parseFloat(e.value));
     }
 }
-
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -112,7 +98,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetDefaultNudgeValue: (value: number) => dispatch(PlusMinusRedux.PlusMinusSetDefaultNudge(value)),
-        onSetColumnDefaultNudgeValue: (ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]) => dispatch(PlusMinusRedux.PlusMinusSetColumnsDefaultNudge(ColumnsDefaultNudge))
+        onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => dispatch(PlusMinusRedux.PlusMinusEditColumnsDefaultNudge(Index, ColumnDefaultNudge)),
+        onDeleteColumnDefaultNudgeValue: (Index: number) => dispatch(PlusMinusRedux.PlusMinusDeleteColumnsDefaultNudge(Index)),
+        onAddColumnDefaultNudgeValue: () => dispatch(PlusMinusRedux.PlusMinusAddColumnsDefaultNudge())
     };
 }
 
