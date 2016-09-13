@@ -26,6 +26,7 @@ export interface IAdaptableBlotter {
     getCurrentCellEditValue(): any
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
+    isColumnReadonly(columnId:string):boolean
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
 }

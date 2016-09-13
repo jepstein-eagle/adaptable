@@ -28,14 +28,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
-    public CalendarService: ICalendarService 
+    public CalendarService: ICalendarService
 
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
-// create the services
-this.CalendarService = new CalendarService();
+        // create the services
+        this.CalendarService = new CalendarService();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -183,6 +183,20 @@ this.CalendarService = new CalendarService();
         }
         else {
             return "";
+        }
+    }
+
+    public isColumnReadonly(columnId: string): boolean {
+        let column = this.grid.dataSource.options.schema.model.field[columnId];
+        if (column) {
+            if (column.hasOwnProperty('editable')) { 
+                return !column.editable }
+            else {
+                return false
+            }
+        }
+        else {
+            return true;
         }
     }
 
