@@ -49,15 +49,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
-                    ErrorMsg: "You need to select some Cells"
-                }
-            }
-        }
-        //if no cells are selected
-        if (selectedCells.Selection.size == 0) {
-            return {
-                Error: {
-                    ErrorMsg: "You need to select some Cells"
+                    ErrorMsg: "Please select some Cells.\nThat might be caused by the selection mode of the blotter not being Cell or MultiCell"
                 }
             }
         }
@@ -65,7 +57,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             if (pair[1].length > 1) {
                 return {
                     Error: {
-                        ErrorMsg: "You need to select Cells from one column only"
+                        ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
             }
@@ -73,7 +65,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 if (this.blotter.getColumnType(columnValuePair.columnID) != ColumnType.Number) {
                     return {
                         Error: {
-                            ErrorMsg: "You need to select Cells from numeric columns"
+                            ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
                         }
                     }
 
