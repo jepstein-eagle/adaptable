@@ -12,8 +12,9 @@ import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
 import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
+import {ColumnChooserStrategy} from './Strategy/ColumnChooserStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
-import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
+import {IMenuItem, IStrategy} from '../Core/Interface/IStrategy';
 import {IEvent} from '../Core/Interface/IEvent';
 import {EventDispatcher} from '../Core/EventDispatcher'
 import {Helper} from '../Core/Helper';
@@ -39,14 +40,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
-        this.Strategies = new Map<string, IStragegy>();
+        this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-
-        // need a concept of CoreServices...  so for now going to hardcode service injection...
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -55,6 +55,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
         })
+        //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
+        grid.bind("columnReorder", () => {
+            // we want to fire this after the DOM manipulation. 
+            // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
+            // http://www.telerik.com/forums/column-reorder-event-delay
+            setTimeout(() => this.SetColumnIntoStore(), 5);
+        });
     }
 
     public SetColumnIntoStore() {
@@ -62,7 +69,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.field,
                 ColumnFriendlyName: x.title,
-                ColumnType: this.getColumnType(x.field)
+                ColumnType: this.getColumnType(x.field),
+                Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
             }
         });
 
@@ -79,7 +87,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
-        //let menuItems = [].concat(this.strategies.values.(strat: IStragegy => strat.getMenuItems()[0]));
+        //let menuItems = [].concat(this.strategies.values.(strat: IStrategy => strat.getMenuItems()[0]));
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
@@ -235,6 +243,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueString(columnId: string): Array<string> {
         return this.grid.dataSource.data().map(x => (<any>x)[columnId]);
+    }
+
+    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+        VisibleColumnList.forEach((column, index) => {
+            let col = this.grid.columns.find(x => x.field == column.ColumnId)
+            //if not then not need to set it because it was already visible.........
+            if (col.hasOwnProperty('hidden')) {
+                this.grid.showColumn(col)
+            }
+            this.grid.reorderColumn(index, col);
+        })
+        this.grid.columns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.field) < 0).forEach((col => {
+            this.grid.hideColumn(col)
+        }))
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.SetColumnIntoStore();
     }
 
     destroy() {

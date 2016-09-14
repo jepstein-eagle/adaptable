@@ -1,4 +1,4 @@
-import {IStrategyActionReturn,IStragegy} from './IStrategy';
+import {IStrategyActionReturn,IStrategy} from './IStrategy';
 import {ColumnType} from '../Enums';
 import {ShortcutAction} from '../Enums';
 

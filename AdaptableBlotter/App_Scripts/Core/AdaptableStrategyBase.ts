@@ -1,10 +1,10 @@
 import {IAdaptableBlotter} from './Interface/IAdaptableBlotter';
-import {IStragegy, IMenuItem} from './Interface/IStrategy';
+import {IStrategy, IMenuItem} from './Interface/IStrategy';
 import {ICalendarService} from '../Core/Services/Interface/ICalendarService'
 import {CalendarService} from '../Core/Services/CalendarService'
 
 
-export abstract class AdaptableStrategyBase implements IStragegy {
+export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
         this.CalendarService = blotter.CalendarService;
     }
