@@ -15,7 +15,7 @@ export class DataGenerator {
             var trade =
             {
                 "tradeId": i,
-                "notional": this.generateRandomInt(0, 500),
+                "notional": this.getRandomItem(this.getNotionals()),
                 "deskId": this.generateRandomInt(0, 250),
                 "counterparty": this.getRandomItem(this.getCounterparties()),
                 "currency": this.getRandomItem(this.getCurrencies()),
@@ -157,6 +157,16 @@ export class DataGenerator {
             return ary[this.generateRandomInt(0, ary.length - 1)];
         }
 
+ protected getNotionals(): number[] {
+            var notionals = [
+                1000000,
+                2000000,
+                5000000,
+                7500000,
+                10000000
+            ];
+            return notionals;
+        }
         protected getCounterparties(): string[] {
             var counterparties = [
                 "Goldman Sachs",
