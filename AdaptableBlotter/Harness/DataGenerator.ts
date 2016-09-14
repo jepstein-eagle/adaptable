@@ -9,6 +9,7 @@ export class DataGenerator {
             }
             return trades;
         }
+        
 
         createTrade(i:number): ITrade {
             var bid = this.getMeaningfulDouble();
