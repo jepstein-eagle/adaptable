@@ -12,6 +12,7 @@ import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
 import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
+import {ColumnChooserStrategy} from './Strategy/ColumnChooserStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
 import {IMenuItem, IStragegy} from '../Core/Interface/IStrategy';
 import {IEvent} from '../Core/Interface/IEvent';
@@ -42,11 +43,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStragegy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-
-        // need a concept of CoreServices...  so for now going to hardcode service injection...
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
