@@ -4,7 +4,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
+import {ButtonToolbar,ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
 import {ColumnType} from '../../Core/Enums'
 import {ShortcutAction} from '../../Core/Enums'
 
@@ -40,10 +40,10 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
                 <Col md={3} >
-                    <ButtonGroup>
-                        <Button style={buttonStyle} onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
-                        <Button style={buttonStyle} disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
-                    </ButtonGroup>
+                    <ButtonToolbar>
+                        <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
+                        <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
+                    </ButtonToolbar>
                 </Col>
 
             </Row>
@@ -57,7 +57,7 @@ interface ShortcutConfigHeaderProps extends React.ClassAttributes<ShortcutConfig
 
 export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderProps, {}> {
     render(): any {
-        return <Panel >
+        return <Panel style={panelHeaderStyle} >
             <Row >
                 <Col md={1} style={headerStyle}>Live</Col>
                 <Col md={1} style={headerStyle}>Key</Col>
@@ -80,6 +80,6 @@ var rowElementStyle = {
     marginTop: '10px'
 };
 
-var buttonStyle = {
-    margin: '4px'
-};
+let panelHeaderStyle = {
+    marginBottom: '0px'
+}

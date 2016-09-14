@@ -62,7 +62,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 : <CustomSortConfigHeader/>
            }
         
-           <ListGroup>
+           <ListGroup style={divStyle}>
                 {customSorts}
             </ListGroup>
             {this.state.isEditing ?
@@ -128,3 +128,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CustomSortConfig = connect(mapStateToProps, mapDispatchToProps)(CustomSortConfigComponent);
 
+let divStyle = {
+    'overflowY': 'auto',
+    'maxHeight': '300px'
+}
