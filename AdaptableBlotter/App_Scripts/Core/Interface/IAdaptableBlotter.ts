@@ -1,5 +1,5 @@
 import {ColumnType} from '../Enums'
-import {IMenuItem, IStragegy} from './IStrategy'
+import {IMenuItem, IStrategy} from './IStrategy'
 import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
 import {IEvent} from './IEvent'
 import {ICalendarService} from '../Services/Interface/ICalendarService'
@@ -29,6 +29,8 @@ export interface IAdaptableBlotter {
     isColumnReadonly(columnId:string):boolean
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    SetNewColumnListOrder(VisibleColumnList : Array<IColumn>) : void
+
 }
 
 export interface ISelectedCells {
@@ -36,7 +38,7 @@ export interface ISelectedCells {
     Selection: Map<any, { columnID: string, value: any }[]>
 }
 
-export interface IAdaptableStrategyCollection extends Map<string, IStragegy> {
+export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 
 }
 
@@ -44,4 +46,5 @@ export interface IColumn {
     ColumnId: string,
     ColumnFriendlyName: string
     ColumnType: ColumnType
+    Visible: boolean
 }

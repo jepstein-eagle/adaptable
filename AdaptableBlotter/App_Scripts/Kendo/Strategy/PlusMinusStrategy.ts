@@ -38,7 +38,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 for (var columnValuePair of keyValuePair[1]) {
                     if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number) {
                         let columnNudge = this.PlusMinusState.ColumnsDefaultNudge.find(x => x.ColumnId == columnValuePair.columnID)
-                        if (columnNudge != null) {
+                        if (columnNudge) {
                             newValues.push({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
                         }
                         else {

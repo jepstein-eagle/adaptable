@@ -1,4 +1,4 @@
-import {IStrategyActionReturn,IStragegy} from './IStrategy';
+import {IStrategyActionReturn,IStrategy} from './IStrategy';
 import {SmartEditOperation} from '../Enums';
 
 export interface ISmartEditPreview{
@@ -12,7 +12,7 @@ export interface ISmartEditValueTuple{
     Id: any, InitialValue: number, ComputedValue:number
 }
 
-export interface ISmartEditStrategy extends IStragegy {
+export interface ISmartEditStrategy extends IStrategy {
     BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
     ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void;
 }

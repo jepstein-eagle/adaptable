@@ -10,11 +10,13 @@ import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
+import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
+import {IColumnChooserStrategy} from '../../Core/Interface/IColumnChooserStrategy'
 import {AdaptableBlotterState, IAdaptableBlotterStore} from './Interface/IAdaptableStore'
 import {IUIError} from '../../Core/interface/IStrategy'
 
@@ -68,7 +70,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             Redux.applyMiddleware(/*snooper,*/ adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
             (<any>window).devToolsExtension ? (<any>window).devToolsExtension() : f => f
         )(Redux.createStore);
-        
+
         //TODO: need to check if we want the storage to be done before or after 
         //we enrich the state with the AB middleware
         this.TheStore = <Redux.Store<AdaptableBlotterState>>(finalCreateStore(reducerWithStorage));
@@ -133,6 +135,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     adaptableBlotter.SetColumnIntoStore();
                     return returnAction;
                 }
+                case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
+                    let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
+                    //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
+                    //Time will tell I guess
+                    adaptableBlotter.SetNewColumnListOrder(actionTyped.VisibleColumnList)
+                    return next(action);
                 default:
                     return next(action);
             }

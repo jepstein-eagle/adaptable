@@ -1,4 +1,4 @@
-export interface IStragegy{
+export interface IStrategy{
     Id : string
     getMenuItems() : IMenuItem[]
     onAction(action: string) : void

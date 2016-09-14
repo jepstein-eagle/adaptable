@@ -9,27 +9,26 @@ import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
 import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
 import {IColumn} from '../Core/Interface/IAdaptableBlotter';
 import {DualListBoxEditor} from './DualListBoxEditor'
+import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
 
 
 interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {
     Columns: Array<IColumn>
+    onNewColumnListOrder : (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
 class ColumnChooserActionComponent extends React.Component<ColumnChooserActionProps, {}> {
     render() {
 
         return <Panel header="Column Chooser" bsStyle="primary">
-            <DualListBoxEditor AvailableValues={[]}
-                SelectedValues={this.props.Columns}
+            <DualListBoxEditor AvailableValues={this.props.Columns.filter(x=>!x.Visible)}
+                SelectedValues={this.props.Columns.filter(x=>x.Visible)}
                 HeaderAvailable="Hidden Columns"
                 HeaderSelected="Visible Columns"
                 DisplayMember="ColumnFriendlyName"
                 ValueMember="ColumnId"
-                onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues) }></DualListBoxEditor>
+                onChange={(SelectedValues) => this.props.onNewColumnListOrder(SelectedValues) }></DualListBoxEditor>
         </Panel>
-    }
-    OnSelectedValuesChange(ColumnList: string[]){
-
     }
 }
 
@@ -43,7 +42,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-
+        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList))
     };
 }
 
