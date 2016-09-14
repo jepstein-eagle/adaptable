@@ -38,7 +38,7 @@ interface CustomSortConfigHeaderProps extends React.ClassAttributes<CustomSortCo
 
 export class CustomSortConfigHeader extends React.Component<CustomSortConfigHeaderProps, {}> {
     render(): any {
-        return <Panel>
+        return <Panel style={panelHeaderStyle}>
             <Row>
                 <Col xs={2} style={headerStyle}>Column</Col>
                 <Col xs={6} style={headerStyle}>Sort Order</Col>
@@ -56,3 +56,7 @@ var headerStyle = {
 var divStyle = {
     wordWrap: 'break-word'
 };
+
+let panelHeaderStyle= {
+    marginBottom: '0px'
+}

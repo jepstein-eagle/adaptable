@@ -57,7 +57,7 @@ interface ShortcutConfigHeaderProps extends React.ClassAttributes<ShortcutConfig
 
 export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderProps, {}> {
     render(): any {
-        return <Panel >
+        return <Panel style={panelHeaderStyle} >
             <Row >
                 <Col md={1} style={headerStyle}>Live</Col>
                 <Col md={1} style={headerStyle}>Key</Col>
@@ -83,3 +83,7 @@ var rowElementStyle = {
 var buttonStyle = {
     margin: '4px'
 };
+
+let panelHeaderStyle= {
+    marginBottom: '0px'
+}
