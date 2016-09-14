@@ -7,18 +7,21 @@ import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, G
 
 
 interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
-    SelectedValues: Array<string>
-    AvailableValues: Array<string>
-    onChange: (SelectedValues: Array<string>) => void
+    SelectedValues: Array<any>
+    AvailableValues: Array<any>
+    onChange: (SelectedValues: Array<any>) => void
     HeaderAvailable: string
     HeaderSelected: string
+    //if not primitive objects both DisplayMember and ValueMember need to be used
+    DisplayMember?: string
+    ValueMember?: string
 }
 
 interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
-    SelectedValues: Array<string>
-    AvailableValues: Array<string>
-    UiSelectedAvailableValues: Array<string>
-    UiSelectedSelectedValues: Array<string>
+    SelectedValues: Array<any>
+    AvailableValues: Array<any>
+    UiSelectedAvailableValues: Array<any>
+    UiSelectedSelectedValues: Array<any>
 }
 var placeholder = document.createElement("button");
 placeholder.className = "placeholder"
@@ -28,52 +31,71 @@ placeholder.type = "button"
 export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, DualListBoxEditorState> {
     constructor(props: DualListBoxEditorProps) {
         super(props);
-        let availableValues = new Array<string>();
+        let availableValues = new Array<any>();
         this.props.AvailableValues.forEach(x => {
-            if (this.props.SelectedValues.indexOf(x) < 0) {
-                availableValues.push(x);
+            if (this.props.ValueMember) {
+                if (this.props.SelectedValues.findIndex(y => y[this.props.ValueMember] == x[this.props.ValueMember]) < 0) {
+                    availableValues.push(x);
+                }
+            }
+            else {
+                if (this.props.SelectedValues.indexOf(x) < 0) {
+                    availableValues.push(x);
+                }
             }
         })
         this.state = {
             SelectedValues: this.props.SelectedValues,
-            AvailableValues: availableValues.sort(),
+            AvailableValues: this.props.DisplayMember ? availableValues.sort((a, b) => (a[this.props.DisplayMember] < b[this.props.DisplayMember]) ? -1 : (a[this.props.DisplayMember] > b[this.props.DisplayMember]) ? 1 : 0) : availableValues.sort(),
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: []
         };
     }
     componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
-        let availableValues = new Array<string>();
+        let availableValues = new Array<any>();
         nextProps.AvailableValues.forEach(x => {
-            if (nextProps.SelectedValues.indexOf(x) < 0) {
-                availableValues.push(x);
+            if (nextProps.ValueMember) {
+                if (nextProps.SelectedValues.findIndex(y => y[nextProps.ValueMember] == x[nextProps.ValueMember]) < 0) {
+                    availableValues.push(x);
+                }
+            }
+            else {
+                if (nextProps.SelectedValues.indexOf(x) < 0) {
+                    availableValues.push(x);
+                }
             }
         })
         this.setState({
             SelectedValues: nextProps.SelectedValues,
-            AvailableValues: availableValues.sort()
+            AvailableValues: nextProps ? availableValues.sort((a, b) => (a[nextProps.DisplayMember] < b[nextProps.DisplayMember]) ? -1 : (a[nextProps.DisplayMember] > b[nextProps.DisplayMember]) ? 1 : 0) : availableValues.sort(),
         } as DualListBoxEditorState);
     }
     render() {
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
-            return <ListGroupItem key={x} className="Selected"
+            let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
+            let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
+            return <ListGroupItem key={value} className="Selected"
                 draggable={true}
                 onClick={() => this.onClickCustomSortItem(x) }
                 active={isActive}
-                onDragStart={(event) => this.DragSelectedStart(event) }
-                onDragEnd={ (event) => this.DragSelectedEnd(event) }>{x}</ListGroupItem>
+                onDragStart={(event) => this.DragSelectedStart(event, x) }
+                onDragEnd={ () => this.DragSelectedEnd() }
+                value={value}>{display}</ListGroupItem>
         })
 
         let columnValuesElements = this.state.AvailableValues.map(x => {
             let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
+            let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
+            let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
             return <ListGroupItem active={isActive} className="Available"
                 draggable={true}
                 onClick={() => this.onClickColumnValuesItem(x) }
-                key={x}
-                onDragStart={(event) => this.DragAvailableStart(event) }
-                onDragEnd={ (event) => this.DragAvailableEnd(event) }>{x}</ListGroupItem>
+                key={value}
+                onDragStart={(event) => this.DragAvailableStart(event, x) }
+                onDragEnd={ () => this.DragAvailableEnd() }
+                value={value}>{display}</ListGroupItem>
         })
-
 
         return (
             <Grid>
@@ -173,43 +195,66 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             AvailableValues: newAvailableValues
         } as DualListBoxEditorState, () => this.raiseOnChange());
     }
-    private dragged: HTMLElement;
-    private over: HTMLElement;
-    DragSelectedStart(e: React.DragEvent) {
-        this.dragged = e.currentTarget as HTMLElement;
+    private draggedHTMLElement: HTMLElement;
+    private draggedElement: any;
+    private overHTMLElement: HTMLElement;
+    DragSelectedStart(e: React.DragEvent, listElement: any) {
+        this.draggedHTMLElement = e.currentTarget as HTMLElement;
+        this.draggedElement = listElement;
     }
-    DragSelectedEnd(e: React.DragEvent) {
-        if (this.over) {
-
+    DragSelectedEnd() {
+        if (this.overHTMLElement && this.draggedElement) {
             //now we need to check in which drop area we dropped the selected item
             let to: number;
-            let from = this.state.SelectedValues.indexOf(this.dragged.innerText);
-            let newSelectedArray: Array<string>
-            let newAvailableValues: Array<string>
-            if (this.over.classList.contains("Available")) {
-                to = this.state.AvailableValues.indexOf(this.over.innerText);
+            let from = this.state.SelectedValues.indexOf(this.draggedElement);
+            let newSelectedArray: Array<any>
+            let newAvailableValues: Array<any>
+            if (this.overHTMLElement.classList.contains("Available")) {
+                if (this.props.DisplayMember) {
+                    to = this.state.AvailableValues.findIndex(x => x[this.props.DisplayMember] == this.overHTMLElement.innerText);
+                }
+                else {
+                    to = this.state.AvailableValues.indexOf(this.overHTMLElement.innerText);
+                }
                 newSelectedArray = [...this.state.SelectedValues];
                 newSelectedArray.splice(from, 1);
                 newAvailableValues = [...this.state.AvailableValues];
-                newAvailableValues.splice(to, 0, this.dragged.innerText)
-
+                newAvailableValues.splice(to, 0, this.draggedElement)
             }
-            else if (this.over.classList.contains("Selected")) {
-                to = this.state.SelectedValues.indexOf(this.over.innerText);
+            else if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
                 newSelectedArray = [...this.state.SelectedValues];
                 newSelectedArray.splice(from, 1);
-                newSelectedArray.splice(to, 0, this.dragged.innerText);
+                newAvailableValues = [...this.state.AvailableValues];
+                newAvailableValues.push(this.draggedElement)
+            }
+            else if (this.overHTMLElement.classList.contains("Selected")) {
+                if (this.props.DisplayMember) {
+                    to = this.state.SelectedValues.findIndex(x => x[this.props.DisplayMember] == this.overHTMLElement.innerText);
+                }
+                else {
+                    to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
+                }
+                newSelectedArray = [...this.state.SelectedValues];
+                newSelectedArray.splice(from, 1);
+                newSelectedArray.splice(to, 0, this.draggedElement);
+                newAvailableValues = [...this.state.AvailableValues];
+            }
+            else if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+                newSelectedArray = [...this.state.SelectedValues];
+                newSelectedArray.splice(from, 1);
+                newSelectedArray.push(this.draggedElement);
                 newAvailableValues = [...this.state.AvailableValues];
             }
             //We remove our awesome placeholder 
-            if (this.over.classList.contains('SelectedDropZone') || this.over.classList.contains('AvailableDropZone')) {
-                this.over.removeChild(placeholder);
+            if (this.overHTMLElement.classList.contains('SelectedDropZone') || this.overHTMLElement.classList.contains('AvailableDropZone')) {
+                this.overHTMLElement.removeChild(placeholder);
             }
             else {
-                this.over.parentNode.removeChild(placeholder);
+                this.overHTMLElement.parentNode.removeChild(placeholder);
             }
-            this.over = null;
-            this.dragged = null;
+            this.overHTMLElement = null;
+            this.draggedHTMLElement = null;
+            this.draggedElement = null
             // Update state
 
             this.setState({
@@ -219,28 +264,47 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 , () => this.raiseOnChange());
         }
     }
-    DragAvailableStart(e: React.DragEvent) {
-        this.dragged = e.currentTarget as HTMLElement;
+    DragAvailableStart(e: React.DragEvent, listElement: any) {
+        this.draggedHTMLElement = e.currentTarget as HTMLElement;
+        this.draggedElement = listElement
     }
-    DragAvailableEnd(e: React.DragEvent) {
-        if (this.over) {
-            //always from Available to selected area
-            let from = this.state.AvailableValues.indexOf(this.dragged.innerText);
-            let to = this.state.SelectedValues.indexOf(this.over.innerText);;
-            let newSelectedArray = [...this.state.SelectedValues];
-            newSelectedArray.splice(to, 0, this.dragged.innerText)
-            let newAvailableValues = [...this.state.AvailableValues];
-            newAvailableValues.splice(from, 1);
+    DragAvailableEnd() {
+        if (this.overHTMLElement && this.draggedElement) {
+            let to: number;
+            let from = this.state.AvailableValues.indexOf(this.draggedElement);
+            let newSelectedArray: Array<any>
+            let newAvailableValues: Array<any>
+
+            if (this.overHTMLElement.classList.contains("Selected")) {
+                from = this.state.AvailableValues.indexOf(this.draggedElement);
+                if (this.props.DisplayMember) {
+                    to = this.state.SelectedValues.findIndex(x => x[this.props.DisplayMember] == this.overHTMLElement.innerText);
+                }
+                else {
+                    to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
+                }
+                newSelectedArray = [...this.state.SelectedValues];
+                newSelectedArray.splice(to, 0, this.draggedElement)
+                newAvailableValues = [...this.state.AvailableValues];
+                newAvailableValues.splice(from, 1);
+            }
+            else if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+                newSelectedArray = [...this.state.SelectedValues];
+                newSelectedArray.push(this.draggedElement)
+                newAvailableValues = [...this.state.AvailableValues];
+                newAvailableValues.splice(from, 1);
+            }
 
             //We remove our awesome placeholder 
-            if (this.over.classList.contains('SelectedDropZone')) {
-                this.over.removeChild(placeholder);
+            if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+                this.overHTMLElement.removeChild(placeholder);
             }
             else {
-                this.over.parentNode.removeChild(placeholder);
+                this.overHTMLElement.parentNode.removeChild(placeholder);
             }
-            this.over = null;
-            this.dragged = null;
+            this.overHTMLElement = null;
+            this.draggedHTMLElement = null;
+            this.draggedElement = null;
 
             // Update state
             this.setState({
@@ -259,15 +323,15 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         e.preventDefault();
         e.stopPropagation();
         //we can only drop selected data into available
-        if (!this.dragged.classList.contains("Selected")) {
+        if (!this.draggedHTMLElement.classList.contains("Selected")) {
             e.dataTransfer.dropEffect = 'none';
             return;
         }
         let targetElement = (e.target) as HTMLElement;
         //we want to keep the reference of the last intem we were over to
         if (targetElement.classList.contains("placeholder")) return;
-        this.over = targetElement;
-        if (this.over.classList.contains('AvailableDropZone')) {
+        this.overHTMLElement = targetElement;
+        if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
             targetElement.appendChild(placeholder);
         }
         else {
@@ -279,14 +343,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("AvailableDropZone") || targetElement.classList.contains("placeholder")) {
-            if (this.over) {
-                if (this.over.classList.contains('AvailableDropZone')) {
-                    this.over.removeChild(placeholder);
+            if (this.overHTMLElement) {
+                if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
+                    this.overHTMLElement.removeChild(placeholder);
                 }
                 else {
-                    this.over.parentNode.removeChild(placeholder);
+                    this.overHTMLElement.parentNode.removeChild(placeholder);
                 }
-                this.over = null;
+                this.overHTMLElement = null;
 
             }
         }
@@ -302,8 +366,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let targetElement = (e.target) as HTMLElement;
         //we want to keep the reference of the last intem we were over to
         if (targetElement.classList.contains("placeholder")) return;
-        this.over = targetElement;
-        if (this.over.classList.contains('SelectedDropZone')) {
+        this.overHTMLElement = targetElement;
+        if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
             targetElement.appendChild(placeholder);
         }
         else {
@@ -315,14 +379,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
         if (targetElement.classList.contains("SelectedDropZone") || targetElement.classList.contains("placeholder")) {
-            if (this.over) {
-                if (this.over.classList.contains('SelectedDropZone')) {
-                    this.over.removeChild(placeholder);
+            if (this.overHTMLElement) {
+                if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+                    this.overHTMLElement.removeChild(placeholder);
                 }
                 else {
-                    this.over.parentNode.removeChild(placeholder);
+                    this.overHTMLElement.parentNode.removeChild(placeholder);
                 }
-                this.over = null;
+                this.overHTMLElement = null;
             }
         }
     }
