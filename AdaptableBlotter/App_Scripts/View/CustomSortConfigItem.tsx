@@ -40,9 +40,9 @@ export class CustomSortConfigHeader extends React.Component<CustomSortConfigHead
     render(): any {
         return <Panel>
             <Row>
-                <Col md={2} style={headerStyle}>Column</Col>
-                <Col md={6} style={headerStyle}>Sort Order</Col>
-                <Col md={4}></Col>
+                <Col xs={2} style={headerStyle}>Column</Col>
+                <Col xs={6} style={headerStyle}>Sort Order</Col>
+                <Col xs={4}></Col>
             </Row>
         </Panel>
     }
