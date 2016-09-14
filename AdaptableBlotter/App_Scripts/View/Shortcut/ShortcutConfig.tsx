@@ -62,7 +62,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             </Row>
         </Form>;
 
-        return <Panel header={header} bsStyle="primary">
+        return <Panel header={header} bsStyle="primary" style={panelStyle}>
             <ShortcutConfigHeader/>
             <ListGroup>
                 {shortcuts}
@@ -128,3 +128,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ShortcutConfig = connect(mapStateToProps, mapDispatchToProps)(ShortcutConfigComponent);
 
+let panelStyle = {
+    width: '800px'
+}
