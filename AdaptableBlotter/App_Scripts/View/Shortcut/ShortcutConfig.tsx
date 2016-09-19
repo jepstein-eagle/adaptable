@@ -71,7 +71,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
             <ShortcutConfigHeader/>
-            <ListGroup>
+            <ListGroup style={divStyle}>
                 {numericShortcuts}
                 {dateShortcuts}
             </ListGroup>
@@ -157,3 +157,8 @@ let panelStyle = {
 }
 
 const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+let divStyle = {
+    'overflowY': 'auto',
+    'maxHeight': '300px'
+}
