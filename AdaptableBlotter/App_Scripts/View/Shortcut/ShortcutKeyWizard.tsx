@@ -16,12 +16,13 @@ interface ShortcutKeyWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
 interface ShortcutKeyWizardState {
     ShortcutKey: string;
+    IsEdit : boolean
 }
 
 export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, ShortcutKeyWizardState> implements AdaptableWizardStep {
     constructor(props: ShortcutKeyWizardProps) {
         super(props);
-        this.state = { ShortcutKey: this.props.Data.ShortcutKey }
+        this.state = { ShortcutKey: this.props.Data.ShortcutKey, IsEdit: this.props.Data.ShortcutKey!=null }
     }
     render(): any {
 
@@ -47,11 +48,11 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
     }
 
     onClickColum(key: string) {
-        this.setState({ ShortcutKey: key }, () => this.props.UpdateGoBackState())
+        this.setState({ ShortcutKey: key } as ShortcutKeyWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean { return this.state.ShortcutKey != null }
-    public canBack(): boolean { return true; }
+    public canBack(): boolean { return !this.state.IsEdit; }
     public Next(): void { this.props.Data.ShortcutKey = this.state.ShortcutKey; }
     public Back(): void { }
     public StepName = "Shortcut Key"
