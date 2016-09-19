@@ -61,7 +61,27 @@ const initialShortcutState: ShortcutState = {
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
     switch (action.type) {
-        //  have take all the otehr actions out of here for now; need to add back when we do add / edit / delete
+        case SHORTCUT_EDIT: {
+            let editShortcut = (<ShortcutEditAction>action).Shortcut
+            if (editShortcut.ColumnType == ColumnType.Number) {
+                let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                let index = items.findIndex(x=>x.ShortcutKey == editShortcut.ShortcutKey)
+                //we create a new instance since we are mutating the object in ShortcutConfig
+                items[index] = Object.assign({},editShortcut)
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
+            }
+            else if (editShortcut.ColumnType == ColumnType.Date) {
+                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let index = items.findIndex(x=>x.ShortcutKey == editShortcut.ShortcutKey)
+                //we create a new instance since we are mutating the object in ShortcutConfig
+                items[index] = Object.assign({},editShortcut)
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
+        }
         case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
             if (newShortcut.ColumnType == ColumnType.Number) {
@@ -105,7 +125,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             }
         }
 
-        case SHORTCUT_DELETE:{
+        case SHORTCUT_DELETE: {
             let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
 
             // Should not be able to click delete button on predefined shortcuts but seems older browsers might not play ball so will add the check here as well....
