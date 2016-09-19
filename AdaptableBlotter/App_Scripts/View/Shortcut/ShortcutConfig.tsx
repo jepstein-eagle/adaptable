@@ -44,20 +44,27 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 
     render() {
+         
         let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
-            return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
+            let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+            return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric"+shortcut.ShortcutKey}
+                AvailableKeys={availableNumericKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
+                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
+                onEdited={(shortcut)=> this.props.onEditShortcut(shortcut)}>
             </ShortcutConfigItem>
         });
         let sortedDateShortcut = this.props.DateShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let dateShortcuts = sortedDateShortcut.map((shortcut: IShortcut) => {
-            return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
+            let availableDateKeys = keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+            return <ShortcutConfigItem Shortcut={shortcut} key={"Date"+shortcut.ShortcutKey}
+            AvailableKeys={availableDateKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
+                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
+                onEdited={(shortcut)=> this.props.onEditShortcut(shortcut)}>
             </ShortcutConfigItem>
         });
         let header = <Form horizontal>
@@ -110,7 +117,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             }
         }
         else if (this._editedShortcut.ColumnType == ColumnType.Date) {
-            if (this.props.NumericShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
+            if (this.props.DateShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
                 this.props.onEditShortcut(this._editedShortcut)
             }
             else {

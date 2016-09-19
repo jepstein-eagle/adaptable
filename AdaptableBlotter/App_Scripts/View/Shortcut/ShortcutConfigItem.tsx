@@ -4,7 +4,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
+import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl} from 'react-bootstrap';
 import {ColumnType} from '../../Core/Enums'
 import {ShortcutAction} from '../../Core/Enums'
 
@@ -14,6 +14,8 @@ interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigIt
     onSelect: (Shortcut: IShortcut) => void;
     onEdit: (Shortcut: IShortcut) => void;
     onDelete: (Shortcut: IShortcut) => void;
+    onEdited: (Shortcut: IShortcut) => void;
+    AvailableKeys: Array<string>
 }
 
 export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps, {}> {
@@ -25,16 +27,24 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={1} >
                     <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
-                <Col md={1} style={rowElementStyle}>
-                    {this.props.Shortcut.ShortcutKey }
+                <Col md={2} >
+                    <Form inline key={this.props.Shortcut.ShortcutKey}>
+                        <FormGroup  controlId={this.props.Shortcut.ShortcutKey}>
+                            <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x) } >
+                                {this.props.AvailableKeys.map(x => {
+                                    return <option value={x} key={x}>{x}</option>
+                                }) }
+                            </FormControl>
+                        </FormGroup>
+                    </Form>
                 </Col>
-                <Col md={2} style={rowElementStyle}>
+                <Col md={2} >
                     {ColumnType[this.props.Shortcut.ColumnType]}
                 </Col>
-                <Col md={2} style={rowElementStyle}>
+                <Col md={2} >
                     {ShortcutAction[this.props.Shortcut.ShortcutAction]}
                 </Col>
-                <Col md={3} style={rowElementStyle}>
+                <Col md={2}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
                 <Col md={3} >
@@ -47,6 +57,11 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             </Row>
         </li>
     }
+
+    onKeySelectChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onEdited(Object.assign(this.props.Shortcut, { ShortcutKey: e.value }));
+    }
 }
 
 
@@ -58,10 +73,10 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
         return <Panel style={panelHeaderStyle} >
             <Row >
                 <Col md={1} style={headerStyle}>Live</Col>
-                <Col md={1} style={headerStyle}>Key</Col>
+                <Col md={2} style={headerStyle}>Key</Col>
                 <Col md={2} style={headerStyle}>Columns</Col>
                 <Col md={2} style={headerStyle}>Action</Col>
-                <Col md={3} style={headerStyle}>Result</Col>
+                <Col md={2} style={headerStyle}>Result</Col>
                 <Col md={3} style={headerStyle}></Col>
             </Row>
         </Panel>
@@ -71,11 +86,6 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
 var headerStyle = {
     wordWrap: 'break-word',
     fontWeight: 'bold'
-};
-
-var rowElementStyle = {
-    wordWrap: 'break-word',
-    marginTop: '10px'
 };
 
 let panelHeaderStyle = {

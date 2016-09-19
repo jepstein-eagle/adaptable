@@ -28,7 +28,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
         if (this.props.Data.ColumnType == ColumnType.Date) {
             this.props.Data.ShortcutAction = ShortcutAction.Replace;
         }
-        this.state = { ShortcutResult: this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
+        this.state = { ShortcutResult: this.props.Data.ShortcutResult==null?"":this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
     }
 
     onClickShortcutAction(shortcutAction: ShortcutAction) {
