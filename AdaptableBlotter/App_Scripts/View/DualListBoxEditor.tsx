@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
+import {Helper} from '../Core/Helper'
 import {ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup} from 'react-bootstrap';
 
 
@@ -133,14 +134,72 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         </Panel>
                     </Col>
                     <Col xs={2} style={colButtonStyle} >
-                        <Button block disabled>Top</Button>
-                        <Button block disabled>Up</Button>
-                        <Button block disabled>Down</Button>
-                        <Button block disabled>Bottom</Button>
+                        <Button block disabled={!this.canGoTopOrUp() }
+                            onClick={() => this.Top() }>Top</Button>
+                        <Button block disabled={!this.canGoTopOrUp() }
+                            onClick={() => this.Up() }>Up</Button>
+                        <Button block disabled={!this.canGoDownOrBottom() }
+                            onClick={() => this.Down() }>Down</Button>
+                        <Button block disabled={!this.canGoDownOrBottom() }
+                            onClick={() => this.Bottom() }>Bottom</Button>
                     </Col>
                 </Row>
             </Grid>
         );
+    }
+
+    canGoTopOrUp(): boolean {
+        return this.state.UiSelectedSelectedValues.length != 0
+            && this.state.UiSelectedSelectedValues.every(x => this.state.SelectedValues.indexOf(x) > 0);
+    }
+
+    canGoDownOrBottom(): boolean {
+        return this.state.UiSelectedSelectedValues.length != 0
+            && this.state.UiSelectedSelectedValues.every(x => this.state.SelectedValues.indexOf(x) < (this.state.SelectedValues.length - 1));
+    }
+
+    Top(): void {
+        let newSelectedValues = [].concat(this.state.UiSelectedSelectedValues,
+            this.state.SelectedValues.filter(x => this.state.UiSelectedSelectedValues.indexOf(x) < 0));
+
+        this.setState({
+            SelectedValues: newSelectedValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+    }
+
+    Up(): void {
+        let newSelectedValues = [...this.state.SelectedValues]
+        for (let selElement of this.state.UiSelectedSelectedValues) {
+            let index = newSelectedValues.indexOf(selElement)
+            Helper.moveArray(newSelectedValues, index, index - 1)
+        }
+
+        this.setState({
+            SelectedValues: newSelectedValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+    }
+
+    Bottom(): void {
+        let newSelectedValues = [].concat(this.state.SelectedValues.filter(x => this.state.UiSelectedSelectedValues.indexOf(x) < 0),
+            this.state.UiSelectedSelectedValues);
+
+        this.setState({
+            SelectedValues: newSelectedValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+
+    }
+
+    Down(): void {
+        let newSelectedValues = [...this.state.SelectedValues]
+        for (var index = this.state.UiSelectedSelectedValues.length -1; index >= 0; index--) {
+            let indexglob = newSelectedValues.indexOf(this.state.UiSelectedSelectedValues[index])
+            Helper.moveArray(newSelectedValues, indexglob, indexglob + 1)
+        }
+
+        this.setState({
+            SelectedValues: newSelectedValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+
     }
 
     Add() {

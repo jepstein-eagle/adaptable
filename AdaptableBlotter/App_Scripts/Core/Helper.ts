@@ -18,4 +18,8 @@ export module Helper {
             return event.key
 
     }
+
+    export function moveArray(array: any[], from: number, to: number) {
+        array.splice(to, 0, array.splice(from, 1)[0]);
+    }
 }
