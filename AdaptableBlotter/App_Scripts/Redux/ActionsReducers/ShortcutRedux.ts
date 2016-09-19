@@ -62,7 +62,7 @@ const initialShortcutState: ShortcutState = {
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
     switch (action.type) {
         //  have take all the otehr actions out of here for now; need to add back when we do add / edit / delete
-        case SHORTCUT_ADD:
+        case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
             if (newShortcut.ColumnType == ColumnType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
@@ -78,10 +78,10 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     DateShortcuts: items
                 });
             }
-
+        }
         case SHORTCUT_SELECT: {
             let updatedShortcut = (<ShortcutSelectAction>action).Shortcut
-            if (newShortcut.ColumnType == ColumnType.Number) {
+            if (updatedShortcut.ColumnType == ColumnType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 updatedShortcut = Object.assign({}, updatedShortcut, {
                     IsLive: !updatedShortcut.IsLive
@@ -92,7 +92,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     NumericShortcuts: items
                 });
             }
-            else if (newShortcut.ColumnType == ColumnType.Date) {
+            else if (updatedShortcut.ColumnType == ColumnType.Date) {
                 var items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 updatedShortcut = Object.assign({}, updatedShortcut, {
                     IsLive: !updatedShortcut.IsLive
@@ -105,7 +105,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             }
         }
 
-        case SHORTCUT_DELETE:
+        case SHORTCUT_DELETE:{
             let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
 
             // Should not be able to click delete button on predefined shortcuts but seems older browsers might not play ball so will add the check here as well....
@@ -114,7 +114,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 return state;
             }
 
-            if (newShortcut.ColumnType == ColumnType.Number) {
+            if (deletedShortcut.ColumnType == ColumnType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
                 items.splice(index, 1);
@@ -124,7 +124,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 });
 
             }
-            else if (newShortcut.ColumnType == ColumnType.Date) {
+            else if (deletedShortcut.ColumnType == ColumnType.Date) {
                 var items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
                 items.splice(index, 1);
@@ -133,6 +133,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     DateShortcuts: items
                 });
             }
+        }
         default:
             return state
     }

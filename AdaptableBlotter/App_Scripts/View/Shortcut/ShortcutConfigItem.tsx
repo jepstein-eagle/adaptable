@@ -4,7 +4,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ButtonToolbar,ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
+import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox, ButtonGroup} from 'react-bootstrap';
 import {ColumnType} from '../../Core/Enums'
 import {ShortcutAction} from '../../Core/Enums'
 
@@ -23,9 +23,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             onClick={() => { } }>
             <Row>
                 <Col md={1} >
-                    <FormGroup>
-                        <Checkbox inline onClick={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
-                    </FormGroup>
+                    <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
                 <Col md={1} style={rowElementStyle}>
                     {this.props.Shortcut.ShortcutKey }

@@ -41,7 +41,6 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     constructor() {
         super();
         this.state = { isEditing: false, WizardStartIndex: 0 }
-        //   this.testColumnTypes = new Array<ColumnType> [{ ColumnType.Date}, {ColumnType.Number}];
     }
 
 
