@@ -135,13 +135,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     </Col>
                     <Col xs={2} style={colButtonStyle} >
                         <Button block disabled={!this.canGoTopOrUp() }
-                            onClick={() => this.Top() }>Top</Button>
+                            onClick={() => this.Top() }><Glyphicon glyph="triangle-top"/> Top</Button>
                         <Button block disabled={!this.canGoTopOrUp() }
-                            onClick={() => this.Up() }>Up</Button>
+                            onClick={() => this.Up() }><Glyphicon glyph="menu-up"/> Up</Button>
                         <Button block disabled={!this.canGoDownOrBottom() }
-                            onClick={() => this.Down() }>Down</Button>
+                            onClick={() => this.Down() }><Glyphicon glyph="menu-down"/> Down</Button>
                         <Button block disabled={!this.canGoDownOrBottom() }
-                            onClick={() => this.Bottom() }>Bottom</Button>
+                            onClick={() => this.Bottom() }><Glyphicon glyph="triangle-bottom"/> Bottom</Button>
                     </Col>
                 </Row>
             </Grid>
