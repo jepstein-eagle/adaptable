@@ -48,13 +48,14 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 })
 
 const initialShortcutState: ShortcutState = {
-    // creating 2 shortcuts one of which we will not make ispredefined to test
-    Shortcuts: [
-        { ShortcutId: 1, ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
-        { ShortcutId: 2, ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
-        { ShortcutId: 3, ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutId: 4, ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutId: 5, ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+    NumericShortcuts: [
+        { ShortcutKey: "M", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
+    ],
+    DateShortcuts: [
+        { ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }
 
@@ -62,23 +63,46 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
     switch (action.type) {
         //  have take all the otehr actions out of here for now; need to add back when we do add / edit / delete
         case SHORTCUT_ADD:
-            var items: Array<IShortcut> = [].concat(state.Shortcuts);
-            items.push((<ShortcutAddAction>action).Shortcut);
-            return Object.assign({}, state, {
-                Shortcuts: items
-            });
+            let newShortcut = (<ShortcutAddAction>action).Shortcut
+            if (newShortcut.ColumnType == ColumnType.Number) {
+                var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                items.push(newShortcut);
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
+            }
+            else if (newShortcut.ColumnType == ColumnType.Date) {
+                var items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                items.push(newShortcut);
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
 
         case SHORTCUT_SELECT: {
-            var items: Array<IShortcut> = [].concat(state.Shortcuts);
-            let updatedShortcut = (<ShortcutSelectAction>action).Shortcut;
-            updatedShortcut = Object.assign({}, updatedShortcut, {
-                IsLive: !updatedShortcut.IsLive
-            });
-            let index = items.findIndex(x => x.ShortcutId == updatedShortcut.ShortcutId)
-            items[index] = updatedShortcut;
-            return Object.assign({}, state, {
-                Shortcuts: items
-            });
+            let updatedShortcut = (<ShortcutSelectAction>action).Shortcut
+            if (newShortcut.ColumnType == ColumnType.Number) {
+                var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                updatedShortcut = Object.assign({}, updatedShortcut, {
+                    IsLive: !updatedShortcut.IsLive
+                });
+                let index = items.findIndex(x => x.ShortcutKey == updatedShortcut.ShortcutKey)
+                items[index] = updatedShortcut;
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
+            }
+            else if (newShortcut.ColumnType == ColumnType.Date) {
+                var items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                updatedShortcut = Object.assign({}, updatedShortcut, {
+                    IsLive: !updatedShortcut.IsLive
+                });
+                let index = items.findIndex(x => x.ShortcutKey == updatedShortcut.ShortcutKey)
+                items[index] = updatedShortcut;
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
         }
 
         case SHORTCUT_DELETE:
@@ -90,15 +114,25 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 return state;
             }
 
-            // TODO: Some way of warning before delete 
-            var items: Array<IShortcut> = [].concat(state.Shortcuts);
-            let index = items.findIndex(x => x.ShortcutId == deletedShortcut.ShortcutId)
-            items.splice(index, 1);
+            if (newShortcut.ColumnType == ColumnType.Number) {
+                var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
+                items.splice(index, 1);
 
-            return Object.assign({}, state, {
-                Shortcuts: items
-            });
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
 
+            }
+            else if (newShortcut.ColumnType == ColumnType.Date) {
+                var items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
+                items.splice(index, 1);
+
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
         default:
             return state
     }

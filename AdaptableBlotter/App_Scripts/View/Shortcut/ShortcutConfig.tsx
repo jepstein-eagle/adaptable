@@ -26,7 +26,8 @@ interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComp
     onDeleteShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutDeleteAction
     onEditShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction
     onSelectShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutSelectAction
-    Shortcuts: Array<IShortcut>
+    NumericShortcuts: Array<IShortcut>,
+    DateShortcuts: Array<IShortcut>,
 }
 
 interface ShortcutConfigInternalState {
@@ -46,8 +47,15 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
 
     render() {
-        let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut) => {
-            return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutId}
+        let numericShortcuts = this.props.NumericShortcuts.map((shortcut: IShortcut) => {
+            return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
+                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
+                onEdit={(shortcut) => this.onEditShortcut(shortcut) }
+                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
+            </ShortcutConfigItem>
+        });
+        let dateShortcuts = this.props.DateShortcuts.map((shortcut: IShortcut) => {
+            return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
                 onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
@@ -65,15 +73,16 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
             <ShortcutConfigHeader/>
             <ListGroup>
-                {shortcuts}
+                {numericShortcuts}
+                {dateShortcuts}
             </ListGroup>
 
             {this.state.isEditing ?
                 <AdaptableWizard Steps={
                     [
                         <ShortcutColumnTypeWizard  />,
-                        <ShortcutKeyWizard Shortcuts = {this.props.Shortcuts} />,
-                        <ShortcutResultWizard Shortcuts = {this.props.Shortcuts} />
+                        <ShortcutKeyWizard Shortcuts = {this.props.NumericShortcuts.concat(this.props.DateShortcuts) } />,
+                        <ShortcutResultWizard Shortcuts = {this.props.NumericShortcuts.concat(this.props.DateShortcuts) } />
                     ]}
                     Data={this._editedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
@@ -88,30 +97,41 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         this.setState({ isEditing: false, WizardStartIndex: 0 });
     }
     WizardFinish() {
-        if (this.props.Shortcuts.find(x => x.ShortcutId == this._editedShortcut.ShortcutId)) {
-            this.props.onEditShortcut(this._editedShortcut)
+        if (this._editedShortcut.ColumnType == ColumnType.Number) {
+            if (this.props.NumericShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
+                this.props.onEditShortcut(this._editedShortcut)
+            }
+            else {
+                this.props.onAddShortcut(this._editedShortcut)
+            }
         }
-        else {
-            this.props.onAddShortcut(this._editedShortcut)
+        else if (this._editedShortcut.ColumnType == ColumnType.Date) {
+            if (this.props.NumericShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
+                this.props.onEditShortcut(this._editedShortcut)
+            }
+            else {
+                this.props.onAddShortcut(this._editedShortcut)
+            }
         }
+
         this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedShortcut = null; });
     }
 
     private onEditShortcut(shortcut: IShortcut) {
         this._editedShortcut = shortcut;
-        this.setState({ isEditing: true, WizardStartIndex: 0 }); 
+        this.setState({ isEditing: true, WizardStartIndex: 0 });
     }
 
     CreateShortcut() {
-        let shortcutLength: number = (this.props.Shortcuts.length + 1); // wont work if things have been deleted
-        this._editedShortcut = { ShortcutId: shortcutLength, ShortcutKey: null, ShortcutResult: null, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: false, IsDynamic: false };
+        this._editedShortcut = { ShortcutKey: null, ShortcutResult: null, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: false, IsDynamic: false };
         this.setState({ isEditing: true, WizardStartIndex: 0 });
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Shortcuts: state.Shortcut.Shortcuts,
+        NumericShortcuts: state.Shortcut.NumericShortcuts,
+        DateShortcuts: state.Shortcut.DateShortcuts,
         AdaptableBlotter: ownProps.AdaptableBlotter
     };
 }

@@ -11,9 +11,10 @@ import {ICalendarService} from '../../Core/Services/Interface/ICalendarService'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 
 export class ShortcutStrategy extends AdaptableStrategyBase {
-    private Shortcuts: IShortcut[]
+    private NumericShortcuts: IShortcut[]
+    private DateShortcuts: IShortcut[]
     private menuItemConfig: IMenuItem;
-    
+
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
@@ -25,13 +26,16 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
 
 
     InitShortcut() {
-        if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {
-            this.Shortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+        if (this.NumericShortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts) {
+            this.NumericShortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts;
+        }
+        if (this.DateShortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.DateShortcuts) {
+            this.DateShortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.DateShortcuts;
         }
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
-        for (var shortcut of this.Shortcuts) {
+        for (var shortcut of this.NumericShortcuts.concat(this.DateShortcuts)) {
             if (shortcut.IsLive) {
                 if (Helper.getStringRepresentionFromKey(keyEvent) == shortcut.ShortcutKey.toLowerCase()) {
                     let selectedCell = this.blotter.getSelectedCells()

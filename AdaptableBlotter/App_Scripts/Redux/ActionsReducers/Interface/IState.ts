@@ -36,5 +36,6 @@ export interface CustomSortState {
 }
 
 export interface ShortcutState {
-    Shortcuts: Array<IShortcut>;
+    NumericShortcuts : Array<IShortcut>;
+    DateShortcuts : Array<IShortcut>; 
 }
