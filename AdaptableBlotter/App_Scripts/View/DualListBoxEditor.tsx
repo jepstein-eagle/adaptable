@@ -78,7 +78,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
             return <ListGroupItem key={value} className="Selected"
                 draggable={true}
-                onClick={() => this.onClickCustomSortItem(x) }
+                onClick={() => this.onClickSelectedItem(x) }
                 active={isActive}
                 onDragStart={(event) => this.DragSelectedStart(event, x) }
                 onDragEnd={ () => this.DragSelectedEnd() }
@@ -91,7 +91,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
             return <ListGroupItem active={isActive} className="Available"
                 draggable={true}
-                onClick={() => this.onClickColumnValuesItem(x) }
+                onClick={() => this.onClickAvailableValuesItem(x) }
                 key={value}
                 onDragStart={(event) => this.DragAvailableStart(event, x) }
                 onDragEnd={ () => this.DragAvailableEnd() }
@@ -191,7 +191,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
     Down(): void {
         let newSelectedValues = [...this.state.SelectedValues]
-        for (var index = this.state.UiSelectedSelectedValues.length -1; index >= 0; index--) {
+        for (var index = this.state.UiSelectedSelectedValues.length - 1; index >= 0; index--) {
             let indexglob = newSelectedValues.indexOf(this.state.UiSelectedSelectedValues[index])
             Helper.moveArray(newSelectedValues, indexglob, indexglob + 1)
         }
@@ -457,30 +457,34 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     isSelected(item: string) {
         return true;
     }
-    onClickCustomSortItem(item: string) {
+    onClickSelectedItem(item: string) {
         let index = this.state.UiSelectedSelectedValues.indexOf(item);
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedSelectedValues];
             newArray.splice(index, 1);
-            //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
             this.setState({ UiSelectedSelectedValues: newArray } as DualListBoxEditorState)
         }
         else {
-            //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
-            this.setState({ UiSelectedSelectedValues: this.state.UiSelectedSelectedValues.concat(item) } as DualListBoxEditorState)
+            let newArray = [...this.state.UiSelectedSelectedValues];
+            newArray.push(item)
+            //we reorder the array so UiSelectedSelectedValues hass the same order as the list displayed on screen
+            newArray.sort((a, b) => (this.state.SelectedValues.indexOf(a) < this.state.SelectedValues.indexOf(b)) ? -1 : (this.state.SelectedValues.indexOf(a) > this.state.SelectedValues.indexOf(b)) ? 1 : 0)
+            this.setState({ UiSelectedSelectedValues: newArray } as DualListBoxEditorState)
         }
     }
-    onClickColumnValuesItem(item: string) {
+    onClickAvailableValuesItem(item: string) {
         let index = this.state.UiSelectedAvailableValues.indexOf(item);
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedAvailableValues];
             newArray.splice(index, 1);
-            //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
             this.setState({ UiSelectedAvailableValues: newArray } as DualListBoxEditorState)
         }
         else {
-            //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
-            this.setState({ UiSelectedAvailableValues: this.state.UiSelectedAvailableValues.concat(item) } as DualListBoxEditorState)
+            let newArray = [...this.state.UiSelectedAvailableValues];
+            newArray.push(item)
+            //we reorder the array so UiSelectedAvailableValues hass the same order as the list displayed on screen
+            newArray.sort((a, b) => (this.state.AvailableValues.indexOf(a) < this.state.AvailableValues.indexOf(b)) ? -1 : (this.state.AvailableValues.indexOf(a) > this.state.AvailableValues.indexOf(b)) ? 1 : 0)
+            this.setState({ UiSelectedAvailableValues: newArray } as DualListBoxEditorState)
         }
     }
 
