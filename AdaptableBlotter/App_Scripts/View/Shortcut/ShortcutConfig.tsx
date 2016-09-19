@@ -123,7 +123,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
     private onEditShortcut(shortcut: IShortcut) {
         this._editedShortcut = shortcut;
-        this.setState({ isEditing: true, WizardStartIndex: 0 });
+        this.setState({ isEditing: true, WizardStartIndex: 1 });
     }
 
     CreateShortcut() {
