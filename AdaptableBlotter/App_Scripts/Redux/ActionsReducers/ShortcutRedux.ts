@@ -65,7 +65,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             let editShortcut = (<ShortcutEditAction>action).Shortcut
             if (editShortcut.ColumnType == ColumnType.Number) {
                 let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
-                let index = items.findIndex(x=>x.ShortcutKey == editShortcut.ShortcutKey)
+                let index = items.indexOf(editShortcut)
                 //we create a new instance since we are mutating the object in ShortcutConfig
                 items[index] = Object.assign({},editShortcut)
                 return Object.assign({}, state, {
@@ -74,7 +74,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             }
             else if (editShortcut.ColumnType == ColumnType.Date) {
                 let items: Array<IShortcut> = [].concat(state.DateShortcuts);
-                let index = items.findIndex(x=>x.ShortcutKey == editShortcut.ShortcutKey)
+                let index = items.indexOf(editShortcut)
                 //we create a new instance since we are mutating the object in ShortcutConfig
                 items[index] = Object.assign({},editShortcut)
                 return Object.assign({}, state, {
