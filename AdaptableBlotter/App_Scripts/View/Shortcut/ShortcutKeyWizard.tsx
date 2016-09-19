@@ -11,8 +11,8 @@ import {ColumnType} from '../../Core/Enums';
 
 
 interface ShortcutKeyWizardProps extends AdaptableWizardStepProps<IShortcut> {
-    Shortcuts: Array<IShortcut>
-
+    NumericKeysAvailable: Array<string>
+    DateKeysAvailable: Array<string>
 }
 interface ShortcutKeyWizardState {
     ShortcutKey: string;
@@ -24,17 +24,13 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
         this.state = { ShortcutKey: this.props.Data.ShortcutKey }
     }
     render(): any {
-        // prevent any keys from appearing in the list which are already taken...
-        // (this is causing a bug for Edit as it leaves out the current key!)
-        var keyList: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-        for (var shortcut of this.props.Shortcuts) {
-            if (shortcut.ColumnType == this.props.Data.ColumnType) {
-                var index = keyList.indexOf(shortcut.ShortcutKey, 0);
-                if (index > -1 && this.state.ShortcutKey != shortcut.ShortcutKey) {
-                    keyList.splice(index, 1);
-                }
-            }
+        var keyList: Array<string>
+        if (this.props.Data.ColumnType == ColumnType.Number) {
+            keyList = this.props.NumericKeysAvailable
+        }
+        else if (this.props.Data.ColumnType == ColumnType.Date) {
+            keyList = this.props.DateKeysAvailable
         }
 
         var keys = keyList.map((key: string) => {

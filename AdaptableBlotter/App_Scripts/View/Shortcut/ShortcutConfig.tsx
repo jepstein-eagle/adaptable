@@ -80,7 +80,12 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                 <AdaptableWizard Steps={
                     [
                         <ShortcutColumnTypeWizard  />,
-                        <ShortcutKeyWizard Shortcuts = {this.props.NumericShortcuts.concat(this.props.DateShortcuts) } />,
+                        <ShortcutKeyWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
+                            keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1) }
+                            NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
+                                keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
+                                : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1) }/>,
                         <ShortcutResultWizard Shortcuts = {this.props.NumericShortcuts.concat(this.props.DateShortcuts) } />
                     ]}
                     Data={this._editedShortcut}
@@ -150,3 +155,5 @@ export let ShortcutConfig = connect(mapStateToProps, mapDispatchToProps)(Shortcu
 let panelStyle = {
     width: '800px'
 }
+
+const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
