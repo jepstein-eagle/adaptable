@@ -11,7 +11,6 @@ import {ColumnType} from '../../Core/Enums';
 import {ShortcutAction} from '../../Core/Enums';
 
 interface ShortcutResultWizardProps extends AdaptableWizardStepProps<IShortcut> {
-    Shortcuts: Array<IShortcut>
 }
 interface ShortcutResultWizardState {
     ShortcutResult: any;

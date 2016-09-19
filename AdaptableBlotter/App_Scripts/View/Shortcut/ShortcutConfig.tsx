@@ -86,7 +86,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                             NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
                                 keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
                                 : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1) }/>,
-                        <ShortcutResultWizard Shortcuts = {this.props.NumericShortcuts.concat(this.props.DateShortcuts) } />
+                        <ShortcutResultWizard  />
                     ]}
                     Data={this._editedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
