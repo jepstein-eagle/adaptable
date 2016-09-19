@@ -39,7 +39,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 </Col>
                 <Col md={3} >
                     <ButtonToolbar>
-                        <Button onClick={() => this.props.onEdit(this.props.Shortcut) }>Edit</Button>
+                        <Button onClick={() => this.props.onEdit(this.props.Shortcut) } disabled={this.props.Shortcut.IsDynamic}>Edit</Button>
                         <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
                     </ButtonToolbar>
                 </Col>
