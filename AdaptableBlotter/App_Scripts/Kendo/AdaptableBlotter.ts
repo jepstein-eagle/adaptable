@@ -104,6 +104,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.getcurrentEditedCell().val();
     }
 
+    getActiveCell(): { Id: any, ColumnId: string, Value:any } {
+        let activeCell = $('#grid_active_cell')
+        let row = activeCell.closest("tr");
+        let item = this.grid.dataItem(row);
+        let uuid = item.uid;
+        let idx = activeCell.index();
+        let col = <string>(this.grid.options.columns[idx].field);
+        return {
+            Id: uuid, ColumnId: col, Value: item.get(col)
+        };
+    }
+
     private getcurrentEditedCell(): JQuery {
         // hopefully there is a way to do this without using jquery, or which is less brittle
         return $(".k-edit-cell .k-input").not(".k-formatted-value");

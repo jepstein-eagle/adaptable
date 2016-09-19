@@ -35,51 +35,45 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
-        
-        for (var shortcut of this.NumericShortcuts.concat(this.DateShortcuts)) {
-            if (shortcut.IsLive) {
-                if (Helper.getStringRepresentionFromKey(keyEvent) == shortcut.ShortcutKey.toLowerCase()) {
-                    let selectedCell = this.blotter.getSelectedCells()
-                    for (var keyValuePair of selectedCell.Selection) {
-                        for (var columnValuePair of keyValuePair[1]) {
-                            let columnType: ColumnType = this.blotter.getColumnType(columnValuePair.columnID);
-                            switch (columnType) {
-                                case ColumnType.Number:
-                                    if (shortcut.ColumnType == ColumnType.Number) {
-                                        var NumberToReplace: Number;
-                                        // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
-                                        if (this.blotter.gridHasCurrentEditValue()) {
-                                            let currentCellValue = this.blotter.getCurrentCellEditValue()
-                                            NumberToReplace = this.CalculateShortcut(currentCellValue, shortcut.ShortcutResult, shortcut.ShortcutAction);
-                                        }
-                                        else {
-                                            NumberToReplace = this.CalculateShortcut(columnValuePair.value, shortcut.ShortcutResult, shortcut.ShortcutAction);
-                                        }
-                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, NumberToReplace);
-                                        // useful feature - prevents the main thing happening you want to on the keypress.
-                                        keyEvent.preventDefault();
-                                    }
-                                    break;
-                                case ColumnType.Date:
-                                    // Date we ONLY replace so dont need to worry about editing values
-                                    if (shortcut.ColumnType == ColumnType.Date) {
-                                        var DateToReplace: Date;
-                                        if (shortcut.IsDynamic) {
-                                            DateToReplace = this.CalendarService.GetDynamicDate(shortcut.ShortcutResult);
-                                        } else {
-                                            DateToReplace = shortcut.ShortcutResult;
-                                        }
-                                        this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, DateToReplace);
-                                        // useful feature - prevents the main thing happening you want to on the keypress.
-                                        keyEvent.preventDefault();
 
-                                    }
-                                    break;
-                            }
-
-                        }
+        let activeCell = this.blotter.getActiveCell();
+        let columnType: ColumnType = this.blotter.getColumnType(activeCell.ColumnId);
+        switch (columnType) {
+            case ColumnType.Number: {
+                //Find Shortcut
+                let shortcut = this.NumericShortcuts.find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                if (shortcut) {
+                    var NumberToReplace: Number;
+                    // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
+                    if (this.blotter.gridHasCurrentEditValue()) {
+                        let currentCellValue = this.blotter.getCurrentCellEditValue()
+                        NumberToReplace = this.CalculateShortcut(currentCellValue, shortcut.ShortcutResult, shortcut.ShortcutAction);
                     }
+                    else {
+                        NumberToReplace = this.CalculateShortcut(activeCell.Value, shortcut.ShortcutResult, shortcut.ShortcutAction);
+                    }
+                    this.blotter.setValue(activeCell.Id, activeCell.ColumnId, NumberToReplace);
+                    // useful feature - prevents the main thing happening you want to on the keypress.
+                    keyEvent.preventDefault();
                 }
+                break;
+            }
+            case ColumnType.Date: {
+                //Find Shortcut
+                let shortcut = this.DateShortcuts.find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                if (shortcut) {
+                    // Date we ONLY replace so dont need to worry about editing values
+                    var DateToReplace: Date;
+                    if (shortcut.IsDynamic) {
+                        DateToReplace = this.CalendarService.GetDynamicDate(shortcut.ShortcutResult);
+                    } else {
+                        DateToReplace = shortcut.ShortcutResult;
+                    }
+                    this.blotter.setValue(activeCell.Id, activeCell.ColumnId, DateToReplace);
+                    // useful feature - prevents the main thing happening you want to on the keypress.
+                    keyEvent.preventDefault();
+                }
+                break;
             }
         }
     }

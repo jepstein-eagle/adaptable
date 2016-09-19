@@ -30,6 +30,7 @@ export interface IAdaptableBlotter {
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     SetNewColumnListOrder(VisibleColumnList : Array<IColumn>) : void
+    getActiveCell(): {Id: any, ColumnId: string, Value: any}
 
 }
 
