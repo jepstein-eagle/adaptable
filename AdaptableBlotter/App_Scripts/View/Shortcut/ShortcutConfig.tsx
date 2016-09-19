@@ -43,17 +43,17 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         this.state = { isEditing: false, WizardStartIndex: 0 }
     }
 
-
-
     render() {
-        let numericShortcuts = this.props.NumericShortcuts.map((shortcut: IShortcut) => {
+        let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
+        let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
             return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
                 onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }>
             </ShortcutConfigItem>
         });
-        let dateShortcuts = this.props.DateShortcuts.map((shortcut: IShortcut) => {
+        let sortedDateShortcut = this.props.DateShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
+        let dateShortcuts = sortedDateShortcut.map((shortcut: IShortcut) => {
             return <ShortcutConfigItem Shortcut={shortcut} key={shortcut.ShortcutKey}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
                 onEdit={(shortcut) => this.onEditShortcut(shortcut) }
