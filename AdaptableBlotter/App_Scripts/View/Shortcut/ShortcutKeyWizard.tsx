@@ -31,7 +31,7 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
         for (var shortcut of this.props.Shortcuts) {
             if (shortcut.ColumnType == this.props.Data.ColumnType) {
                 var index = keyList.indexOf(shortcut.ShortcutKey, 0);
-                if (index > -1) {
+                if (index > -1 && this.state.ShortcutKey != shortcut.ShortcutKey) {
                     keyList.splice(index, 1);
                 }
             }
