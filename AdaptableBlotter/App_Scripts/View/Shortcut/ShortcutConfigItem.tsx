@@ -4,7 +4,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl} from 'react-bootstrap';
+import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon} from 'react-bootstrap';
 import {ColumnType} from '../../Core/Enums'
 import {ShortcutAction} from '../../Core/Enums'
 
@@ -44,13 +44,17 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={2} >
                     {ShortcutAction[this.props.Shortcut.ShortcutAction]}
                 </Col>
-                <Col md={2}>
+                <Col md={3}>
                     {this.props.Shortcut.ShortcutResult }
                 </Col>
-                <Col md={3} >
+                <Col md={2} >
                     <ButtonToolbar>
-                        <Button onClick={() => this.props.onEdit(this.props.Shortcut) } disabled={this.props.Shortcut.IsDynamic}>Edit</Button>
-                        <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }>Delete</Button>
+                        <OverlayTrigger  overlay={ <Tooltip id="tooltipEdit"><strong>Edit</strong></Tooltip>}>
+                            <Button onClick={() => this.props.onEdit(this.props.Shortcut) } disabled={this.props.Shortcut.IsDynamic}><Glyphicon glyph="pencil"></Glyphicon></Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger  overlay={ <Tooltip id="tooltipDelete">Delete</Tooltip>}>
+                            <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }><Glyphicon glyph="trash"/></Button>
+                        </OverlayTrigger>
                     </ButtonToolbar>
                 </Col>
 
@@ -76,8 +80,8 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
                 <Col md={2} style={headerStyle}>Key</Col>
                 <Col md={2} style={headerStyle}>Columns</Col>
                 <Col md={2} style={headerStyle}>Action</Col>
-                <Col md={2} style={headerStyle}>Result</Col>
-                <Col md={3} style={headerStyle}></Col>
+                <Col md={3} style={headerStyle}>Result</Col>
+                <Col md={2} style={headerStyle}></Col>
             </Row>
         </Panel>
     }

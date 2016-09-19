@@ -2,7 +2,7 @@ import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Button, Col, Row, ButtonGroup, Panel} from 'react-bootstrap';
+import { Button, Col, Row, ButtonGroup, Panel, Glyphicon, OverlayTrigger,Tooltip} from 'react-bootstrap';
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
@@ -19,13 +19,17 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             onClick={() => { } }>
             <Row>
                 <Col xs={2}>{this.props.ColumnLabel}</Col>
-                <Col xs={6} style={divStyle}>
+                <Col xs={7} style={divStyle}>
                     {this.props.CustomSort.CustomSortItems.join() }
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <ButtonGroup>
-                        <Button onClick={() => this.props.onEdit(this.props.CustomSort) }>Edit</Button>
-                        <Button onClick={() => this.props.onDelete(this.props.CustomSort) }>Delete</Button>
+                        <OverlayTrigger  overlay={ <Tooltip id="tooltipEdit"><strong>Edit</strong></Tooltip>}>
+                            <Button onClick={() => this.props.onEdit(this.props.CustomSort) }><Glyphicon glyph="pencil"></Glyphicon></Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger  overlay={ <Tooltip id="tooltipDelete">Delete</Tooltip>}>
+                            <Button onClick={() => this.props.onDelete(this.props.CustomSort) }><Glyphicon glyph="trash"/></Button>
+                        </OverlayTrigger>
                     </ButtonGroup>
                 </Col>
             </Row>
@@ -57,6 +61,6 @@ var divStyle = {
     wordWrap: 'break-word'
 };
 
-let panelHeaderStyle= {
+let panelHeaderStyle = {
     marginBottom: '0px'
 }
