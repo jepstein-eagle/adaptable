@@ -26,7 +26,7 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
     constructor(props: ShortcutResultWizardProps) {
         super(props);
         if (this.props.Data.ColumnType == ColumnType.Date) {
-               this.props.Data.ShortcutAction = ShortcutAction.Replace;
+            this.props.Data.ShortcutAction = ShortcutAction.Replace;
         }
         this.state = { ShortcutResult: this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
     }
@@ -63,7 +63,14 @@ export class ShortcutResultWizard extends React.Component<ShortcutResultWizardPr
                     </Panel>
                 </div>
                 :
-                <Panel header="Enter Shortcut Date Result">Going to have a date thing here </Panel>
+                <Panel header="Enter Shortcut Date Result">
+                    <FormControl
+                        type="date"
+                        placeholder="Shortcut Result"
+                        onChange={this.changeContent}
+                        value={this.state.ShortcutResult}
+                        />
+                </Panel>
             }
         </div>
     }

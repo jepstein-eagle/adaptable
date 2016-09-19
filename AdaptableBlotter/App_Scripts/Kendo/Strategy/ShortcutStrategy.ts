@@ -35,6 +35,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
+        
         for (var shortcut of this.NumericShortcuts.concat(this.DateShortcuts)) {
             if (shortcut.IsLive) {
                 if (Helper.getStringRepresentionFromKey(keyEvent) == shortcut.ShortcutKey.toLowerCase()) {
