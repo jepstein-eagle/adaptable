@@ -46,7 +46,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
         });
         let header = <Form horizontal>
-            <Row>
+            <Row style={{display: "flex", alignItems: "center"}}>
                 <Col xs={8}>Custom Sorts</Col>
                 <Col xs={4}>
                     <Button onClick={() => this.CreateCustomSort() }>

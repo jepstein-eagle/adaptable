@@ -26,7 +26,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
 
     render() {
         let header = <Form horizontal>
-            <Row>
+            <Row style={{display: "flex", alignItems: "center"}}>
                 <Col xs={7}>Column Nudge Values</Col>
                 <Col xs={5}>
                     <Button onClick={() => this.props.onAddColumnDefaultNudgeValue() } disabled={this.props.ColumnsDefaultNudge.findIndex(x => x.ColumnId == "select") >= 0}>

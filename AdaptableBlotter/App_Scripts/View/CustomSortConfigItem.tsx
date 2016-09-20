@@ -17,7 +17,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
         return <li
             className="list-group-item"
             onClick={() => { } }>
-            <Row>
+            <Row style={{display: "flex", alignItems: "center"}}>
                 <Col xs={2}>{this.props.ColumnLabel}</Col>
                 <Col xs={7} style={divStyle}>
                     {this.props.CustomSort.CustomSortItems.join() }

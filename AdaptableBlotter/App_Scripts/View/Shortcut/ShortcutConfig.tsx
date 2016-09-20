@@ -68,7 +68,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             </ShortcutConfigItem>
         });
         let header = <Form horizontal>
-            <Row>
+            <Row style={{display: "flex", alignItems: "center"}}>
                 <Col xs={9}>Shortcuts</Col>
                 <Col xs={3}>
                     <Button onClick={() => this.CreateShortcut() }> Create Shortcut</Button>
