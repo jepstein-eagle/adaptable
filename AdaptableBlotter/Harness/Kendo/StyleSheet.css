@@ -7,8 +7,8 @@
     min-width: 300px;  
 }
 
-button.placeholder {background: rgb(255,240,120);}
+button.placeholder {background: #87D0FA;}
 button.placeholder:before {
   content: "Drop here";
-  color: rgb(225,210,90);
+  color: White;
 }
