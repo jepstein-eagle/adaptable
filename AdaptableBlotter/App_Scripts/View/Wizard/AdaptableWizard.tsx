@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Button, ListGroupItemProps, Modal} from 'react-bootstrap';
+import { Button, ListGroupItemProps, Modal, Glyphicon} from 'react-bootstrap';
 import {AdaptableViewFactory} from '../AdaptableViewFactory';
 import {AdaptableWizardStep, AdaptableWizardStepProps} from './Interface/IAdaptableWizard'
 
@@ -46,7 +46,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         this.state = { ActiveState: newElement, IndexState: indexStart }
     }
     //So we inject everything needed for the Wizard
-    private cloneWizardStep(step: JSX.Element) : JSX.Element {
+    private cloneWizardStep(step: JSX.Element): JSX.Element {
         return React.cloneElement(step, {
             ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
@@ -63,9 +63,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     {this.state.ActiveState}
                 </Modal.Body>
                 <Modal.Footer>
-                        <Button style={buttonLeftStyle} onClick={this.props.onHide}>Cancel</Button>
-                        <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }>Back</Button>
-                        <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"}</Button>
+                    <Button style={buttonLeftStyle} onClick={this.props.onHide}>Cancel <Glyphicon glyph="remove"/></Button>
+                    <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }><Glyphicon glyph="chevron-left"/> Back</Button>
+                    <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"}/></Button>
                 </Modal.Footer>
             </Modal>
         );
