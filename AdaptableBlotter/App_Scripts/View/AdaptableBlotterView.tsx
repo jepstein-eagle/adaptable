@@ -6,7 +6,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {Modal, SplitButton, Button, MenuItem, Alert, Glyphicon} from 'react-bootstrap';
+import {Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon} from 'react-bootstrap';
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
@@ -35,21 +35,21 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         }
         return (
             <div>
-                <SplitButton bsStyle="primary" title="Adaptable Blotter Functions" id="Adaptable_Blotter_Menu">
+                <DropdownButton  bsStyle="primary" title="Adaptable Blotter Functions" id="Adaptable_Blotter_Menu">
                     {menuItems}
-                </SplitButton>
+                </DropdownButton >
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
                             <h4>Error</h4>
-                            {this.props.PopupState.ErrorMsg.split("\n").map(function(item,index) {
-                            return (
-                                <span key={index}>
-                                {item}
-                                <br/>
-                                </span>
-                            )
-                            })}
+                            {this.props.PopupState.ErrorMsg.split("\n").map(function (item, index) {
+                                return (
+                                    <span key={index}>
+                                        {item}
+                                        <br/>
+                                    </span>
+                                )
+                            }) }
                             <p>
                                 <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
                             </p>
@@ -58,7 +58,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 </Modal>
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ShowPopup}
                     ComponentClassName={this.props.PopupState.ComponentClassName}
-                    onHide={this.props.onClose} 
+                    onHide={this.props.onClose}
                     AdaptableBlotter={this.props.AdaptableBlotter}/>
 
             </div>
