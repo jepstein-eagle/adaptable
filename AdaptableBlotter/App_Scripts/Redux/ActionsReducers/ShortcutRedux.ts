@@ -8,8 +8,10 @@ import {ShortcutAction} from '../../Core/Enums';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
-export const SHORTCUT_EDIT = 'SHORTCUT_EDIT';
 export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
+export const SHORTCUT_CHANGE_KEY = 'SHORTCUT_CHANGE_KEY';
+export const SHORTCUT_CHANGE_OPERATION = 'SHORTCUT_CHANGE_OPERATION';
+export const SHORTCUT_CHANGE_RESULT = 'SHORTCUT_CHANGE_RESULT';
 
 export interface ShortcutSelectAction extends Redux.Action {
     Shortcut: IShortcut
@@ -19,12 +21,23 @@ export interface ShortcutAddAction extends Redux.Action {
     Shortcut: IShortcut
 }
 
-export interface ShortcutEditAction extends Redux.Action {
+export interface ShortcutDeleteAction extends Redux.Action {
     Shortcut: IShortcut
 }
 
-export interface ShortcutDeleteAction extends Redux.Action {
-    Shortcut: IShortcut
+export interface ShortcutChangeKeyAction extends Redux.Action {
+    Shortcut: IShortcut,
+    NewShortcutKey: string
+}
+
+export interface ShortcutChangeOperationAction extends Redux.Action {
+    Shortcut: IShortcut,
+    NewShortcutAction: ShortcutAction
+}
+
+export interface ShortcutChangeResultAction extends Redux.Action {
+    Shortcut: IShortcut,
+    NewShortcutResult: any;
 }
 
 export const SelectShortcut = (Shortcut: IShortcut): ShortcutSelectAction => ({
@@ -37,9 +50,22 @@ export const AddShortcut = (Shortcut: IShortcut): ShortcutAddAction => ({
     Shortcut
 })
 
-export const EditShortcut = (Shortcut: IShortcut): ShortcutEditAction => ({
-    type: SHORTCUT_EDIT,
-    Shortcut
+export const ShortcutChangeKey = (Shortcut: IShortcut, NewShortcutKey: string): ShortcutChangeKeyAction => ({
+    type: SHORTCUT_CHANGE_KEY,
+    Shortcut,
+    NewShortcutKey
+})
+
+export const ShortcutChangeOperation = (Shortcut: IShortcut, NewShortcutAction: ShortcutAction): ShortcutChangeOperationAction => ({
+    type: SHORTCUT_CHANGE_OPERATION,
+    Shortcut,
+    NewShortcutAction
+})
+
+export const ShortcutChangeResult = (Shortcut: IShortcut, NewShortcutResult: any): ShortcutChangeResultAction => ({
+    type: SHORTCUT_CHANGE_RESULT,
+    Shortcut,
+    NewShortcutResult
 })
 
 export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
@@ -61,22 +87,61 @@ const initialShortcutState: ShortcutState = {
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
     switch (action.type) {
-        case SHORTCUT_EDIT: {
-            let editShortcut = (<ShortcutEditAction>action).Shortcut
-            if (editShortcut.ColumnType == ColumnType.Number) {
+        case SHORTCUT_CHANGE_KEY: {
+            let actionTyped = <ShortcutChangeKeyAction>action
+            let shortcut = actionTyped.Shortcut
+            if (shortcut.ColumnType == ColumnType.Number) {
                 let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
-                let index = items.indexOf(editShortcut)
-                //we create a new instance since we are mutating the object in ShortcutConfig
-                items[index] = Object.assign({},editShortcut)
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey })
                 return Object.assign({}, state, {
                     NumericShortcuts: items
                 });
             }
-            else if (editShortcut.ColumnType == ColumnType.Date) {
+            else if (shortcut.ColumnType == ColumnType.Date) {
                 let items: Array<IShortcut> = [].concat(state.DateShortcuts);
-                let index = items.indexOf(editShortcut)
-                //we create a new instance since we are mutating the object in ShortcutConfig
-                items[index] = Object.assign({},editShortcut)
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey })
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
+        }
+        case SHORTCUT_CHANGE_OPERATION: {
+            let actionTyped = <ShortcutChangeOperationAction>action
+            let shortcut = actionTyped.Shortcut
+            if (shortcut.ColumnType == ColumnType.Number) {
+                let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutAction: actionTyped.NewShortcutAction })
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
+            }
+            else if (shortcut.ColumnType == ColumnType.Date) {
+                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutAction: actionTyped.NewShortcutAction })
+                return Object.assign({}, state, {
+                    DateShortcuts: items
+                });
+            }
+        }
+        case SHORTCUT_CHANGE_RESULT: {
+            let actionTyped = <ShortcutChangeResultAction>action
+            let shortcut = actionTyped.Shortcut
+            if (shortcut.ColumnType == ColumnType.Number) {
+                let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult })
+                return Object.assign({}, state, {
+                    NumericShortcuts: items
+                });
+            }
+            else if (shortcut.ColumnType == ColumnType.Date) {
+                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let index = items.indexOf(shortcut)
+                items[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult })
                 return Object.assign({}, state, {
                     DateShortcuts: items
                 });

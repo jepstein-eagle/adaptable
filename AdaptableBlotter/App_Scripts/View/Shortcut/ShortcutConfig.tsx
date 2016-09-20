@@ -24,7 +24,9 @@ import {ShortcutResultWizard} from './ShortcutResultWizard'
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
     onDeleteShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutDeleteAction
-    onEditShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction
+    onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => ShortcutRedux.ShortcutChangeKeyAction
+    onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => ShortcutRedux.ShortcutChangeOperationAction
+    onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
     onSelectShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutSelectAction
     NumericShortcuts: Array<IShortcut>,
     DateShortcuts: Array<IShortcut>,
@@ -44,31 +46,33 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 
     render() {
-         
+
         let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
             let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-            return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric"+shortcut.ShortcutKey}
+            return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
                 AvailableKeys={availableNumericKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
-                onEdit={(shortcut) => this.onEditShortcut(shortcut) }
                 onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
-                onEdited={(shortcut)=> this.props.onEditShortcut(shortcut)}>
+                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey) }
+                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation) }
+                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult) }>
             </ShortcutConfigItem>
         });
         let sortedDateShortcut = this.props.DateShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let dateShortcuts = sortedDateShortcut.map((shortcut: IShortcut) => {
             let availableDateKeys = keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-            return <ShortcutConfigItem Shortcut={shortcut} key={"Date"+shortcut.ShortcutKey}
-            AvailableKeys={availableDateKeys}
+            return <ShortcutConfigItem Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
+                AvailableKeys={availableDateKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
-                onEdit={(shortcut) => this.onEditShortcut(shortcut) }
                 onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
-                onEdited={(shortcut)=> this.props.onEditShortcut(shortcut)}>
+                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey) }
+                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation) }
+                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult) }>
             </ShortcutConfigItem>
         });
         let header = <Form horizontal>
-            <Row style={{display: "flex", alignItems: "center"}}>
+            <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={9}>Shortcuts</Col>
                 <Col xs={3}>
                     <Button onClick={() => this.CreateShortcut() }> Create Shortcut</Button>
@@ -109,28 +113,13 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
     WizardFinish() {
         if (this._editedShortcut.ColumnType == ColumnType.Number) {
-            if (this.props.NumericShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
-                this.props.onEditShortcut(this._editedShortcut)
-            }
-            else {
-                this.props.onAddShortcut(this._editedShortcut)
-            }
+            this.props.onAddShortcut(this._editedShortcut)
         }
         else if (this._editedShortcut.ColumnType == ColumnType.Date) {
-            if (this.props.DateShortcuts.find(x => x.ShortcutKey == this._editedShortcut.ShortcutKey)) {
-                this.props.onEditShortcut(this._editedShortcut)
-            }
-            else {
-                this.props.onAddShortcut(this._editedShortcut)
-            }
+            this.props.onAddShortcut(this._editedShortcut)
         }
 
         this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedShortcut = null; });
-    }
-
-    private onEditShortcut(shortcut: IShortcut) {
-        this._editedShortcut = shortcut;
-        this.setState({ isEditing: true, WizardStartIndex: 1 });
     }
 
     CreateShortcut() {
@@ -153,7 +142,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.SelectShortcut(shortcut)),
         onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.AddShortcut(shortcut)),
         onDeleteShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.DeleteShortcut(shortcut)),
-        onEditShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.EditShortcut(shortcut))
+        onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
+        onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewShortcutAction)),
+        onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
     };
 }
 
