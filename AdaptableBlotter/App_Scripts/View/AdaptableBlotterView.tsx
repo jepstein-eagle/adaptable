@@ -42,14 +42,16 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
                             <h4>Error</h4>
-                            {this.props.PopupState.ErrorMsg.split("\n").map(function (item, index) {
-                                return (
-                                    <span key={index}>
-                                        {item}
-                                        <br/>
-                                    </span>
-                                )
-                            }) }
+                            <p>
+                                {this.props.PopupState.ErrorMsg.split("\n").map(function (item, index) {
+                                    return (
+                                        <span key={index}>
+                                            {item}
+                                            <br/>
+                                        </span>
+                                    )
+                                }) }
+                            </p>
                             <p>
                                 <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
                             </p>
