@@ -39,7 +39,11 @@ export const MenuReducer: Redux.Reducer<MenuState> = (state: MenuState = initial
         case SET_MENUITEMS:
             //TODO: we need to merge with the existing set of menuitems instead of replacing it. 
             //it will be important we we ever allow show/hide on menus
-            return { MenuItems: ([].concat((<SetMenuItemsAction>action).MenuItems))}
+            return {
+                MenuItems: ([].concat((<SetMenuItemsAction>action).MenuItems).sort((a: IMenuItem, b: IMenuItem) =>
+                    (a.Label < b.Label) ? -1
+                        : (a.Label > b.Label) ? 1 : 0))
+            }
         default:
             return state
     }
