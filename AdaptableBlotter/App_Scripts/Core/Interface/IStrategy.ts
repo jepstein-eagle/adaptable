@@ -9,6 +9,7 @@ export interface IMenuItem{
     StrategyId : string;
     Action : string;
     IsEnabled : boolean;
+    GlyphIcon : string
 }
 
 export interface IUIError {

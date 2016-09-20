@@ -12,7 +12,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction');
+        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction',"pencil");
     }
 
     public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation): void {

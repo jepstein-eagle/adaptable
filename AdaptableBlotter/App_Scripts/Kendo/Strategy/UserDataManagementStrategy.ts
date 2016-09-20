@@ -13,7 +13,7 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserDataManagementStrategyId, blotter)
-        this.menuItemConfig = new MenuItem("Clean User Data", this.Id, cleanUserData);
+        this.menuItemConfig = new MenuItem("Clean User Data", this.Id, cleanUserData, "user");
     }
 
     getMenuItems(): IMenuItem[] {

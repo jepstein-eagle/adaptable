@@ -10,7 +10,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Column Chooser", this.Id, "ColumnChooserAction");
+        this.menuItemConfig = new MenuItemShowPopup("Column Chooser", this.Id, "ColumnChooserAction","list-alt");
     }
 
     getMenuItems(): IMenuItem[] {

@@ -6,7 +6,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {Modal, SplitButton, Button, MenuItem, Alert} from 'react-bootstrap';
+import {Modal, SplitButton, Button, MenuItem, Alert, Glyphicon} from 'react-bootstrap';
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
@@ -30,7 +30,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
         if (this.props.MenuState.MenuItems) {
             var menuItems = this.props.MenuState.MenuItems.map((menuItem: IMenuItem) => {
-                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem) }>{menuItem.Label}</MenuItem>
+                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem) }><Glyphicon glyph={menuItem.GlyphIcon}/> {menuItem.Label}</MenuItem>
             });
         }
         return (

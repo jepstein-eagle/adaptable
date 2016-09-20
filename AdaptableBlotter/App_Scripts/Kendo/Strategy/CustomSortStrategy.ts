@@ -11,7 +11,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Configure Custom Sort", this.Id, 'CustomSortConfig');
+        this.menuItemConfig = new MenuItemShowPopup("Configure Custom Sort", this.Id, 'CustomSortConfig',"sort-by-attributes");
         this.InitCustomSort();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitCustomSort())
     }
