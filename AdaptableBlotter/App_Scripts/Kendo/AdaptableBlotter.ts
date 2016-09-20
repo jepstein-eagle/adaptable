@@ -254,7 +254,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueString(columnId: string): Array<string> {
-        return this.grid.dataSource.data().map(x => (<any>x)[columnId]);
+        return this.grid.dataSource.data().map(x => (<any>x)[columnId].toString());
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
