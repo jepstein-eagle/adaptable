@@ -115,9 +115,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         <ButtonGroup>
                             <Button disabled={this.state.AvailableValues.length == 0}
                                 onClick={() => this.AddAll() } block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
-                            <Button disabled={this.state.UiSelectedAvailableValues.length == 0}
+                            <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
                                 onClick={() => this.Add() } block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
-                            <Button disabled={this.state.UiSelectedSelectedValues.length == 0}
+                            <Button style={{ marginTop: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
                                 onClick={() => this.Remove() } block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
                             <Button disabled={this.state.SelectedValues.length == 0}
                                 onClick={() => this.RemoveAll() } block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
@@ -134,14 +134,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         </Panel>
                     </Col>
                     <Col xs={2} style={colButtonStyle} >
-                        <Button block disabled={!this.canGoTopOrUp() }
-                            onClick={() => this.Top() }><Glyphicon glyph="triangle-top"/> Top</Button>
-                        <Button block disabled={!this.canGoTopOrUp() }
-                            onClick={() => this.Up() }><Glyphicon glyph="menu-up"/> Up</Button>
-                        <Button block disabled={!this.canGoDownOrBottom() }
-                            onClick={() => this.Down() }><Glyphicon glyph="menu-down"/> Down</Button>
-                        <Button block disabled={!this.canGoDownOrBottom() }
-                            onClick={() => this.Bottom() }><Glyphicon glyph="triangle-bottom"/> Bottom</Button>
+                        <ButtonGroup>
+                            <Button block disabled={!this.canGoTopOrUp() }
+                                onClick={() => this.Top() }><Glyphicon glyph="triangle-top"/> Top</Button>
+                            <Button style={{ marginBottom: "10px" }} block disabled={!this.canGoTopOrUp() }
+                                onClick={() => this.Up() }><Glyphicon glyph="menu-up"/> Up</Button>
+                            <Button style={{ marginTop: "10px" }} block disabled={!this.canGoDownOrBottom() }
+                                onClick={() => this.Down() }><Glyphicon glyph="menu-down"/> Down</Button>
+                            <Button block disabled={!this.canGoDownOrBottom() }
+                                onClick={() => this.Bottom() }><Glyphicon glyph="triangle-bottom"/> Bottom</Button>
+                        </ButtonGroup>
                     </Col>
                 </Row>
             </Grid>
