@@ -97,17 +97,31 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         });
     }
     render() {
+        let setRefFirstSelected = true
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
             let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-            return <ListGroupItem key={value} className="Selected"
-                draggable={true}
-                onClick={() => this.onClickSelectedItem(x) }
-                active={isActive}
-                onDragStart={(event) => this.DragSelectedStart(event, x) }
-                onDragEnd={ () => this.DragSelectedEnd() }
-                value={value}>{display}</ListGroupItem>
+            if (isActive && setRefFirstSelected) {
+                setRefFirstSelected = false
+                return <ListGroupItem key={value} className="Selected"
+                    draggable={true}
+                    onClick={() => this.onClickSelectedItem(x) }
+                    active={isActive}
+                    ref="FirstSelectedSelected"
+                    onDragStart={(event) => this.DragSelectedStart(event, x) }
+                    onDragEnd={ () => this.DragSelectedEnd() }
+                    value={value}>{display}</ListGroupItem>
+            }
+            else {
+                return <ListGroupItem key={value} className="Selected"
+                    draggable={true}
+                    onClick={() => this.onClickSelectedItem(x) }
+                    active={isActive}
+                    onDragStart={(event) => this.DragSelectedStart(event, x) }
+                    onDragEnd={ () => this.DragSelectedEnd() }
+                    value={value}>{display}</ListGroupItem>
+            }
         })
 
         let columnValuesElements = this.state.AvailableValues.map(x => {
@@ -185,13 +199,21 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             && this.state.UiSelectedSelectedValues.every(x => this.state.SelectedValues.indexOf(x) < (this.state.SelectedValues.length - 1));
     }
 
+    ensureFirstSelectedItemVisible(top:boolean) {
+        var itemComponent = this.refs['FirstSelectedSelected'];
+        if (itemComponent) {
+            var domNode = ReactDOM.findDOMNode(itemComponent) as HTMLElement;
+            domNode.scrollIntoView(top);
+        }
+    }
+
     Top(): void {
         let newSelectedValues = [].concat(this.state.UiSelectedSelectedValues,
             this.state.SelectedValues.filter(x => this.state.UiSelectedSelectedValues.indexOf(x) < 0));
 
         this.setState({
             SelectedValues: newSelectedValues
-        } as DualListBoxEditorState, () => this.raiseOnChange());
+        } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(true); });
     }
 
     Up(): void {
@@ -203,7 +225,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
         this.setState({
             SelectedValues: newSelectedValues
-        } as DualListBoxEditorState, () => this.raiseOnChange());
+        } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(false); });
     }
 
     Bottom(): void {
@@ -212,7 +234,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
         this.setState({
             SelectedValues: newSelectedValues
-        } as DualListBoxEditorState, () => this.raiseOnChange());
+        } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(true); });
 
     }
 
@@ -225,7 +247,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
         this.setState({
             SelectedValues: newSelectedValues
-        } as DualListBoxEditorState, () => this.raiseOnChange());
+        } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(false); });
 
     }
 
