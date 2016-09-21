@@ -66,10 +66,35 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 }
             }
         })
+        //we need to rebuild the list of UI Selected items in case we are managing non primitive objects as we compare stuff on instance rather than properties
+        let uiAvailableSelected: Array<any>
+        let uiSelectedSelected: Array<any>
+        if (nextProps.ValueMember) {
+            uiAvailableSelected = []
+            this.state.UiSelectedAvailableValues.forEach(x => {
+                let item = availableValues.find(y => y[nextProps.ValueMember] == x[nextProps.ValueMember])
+                if (item) {
+                    uiAvailableSelected.push(item)
+                }
+            })
+            uiSelectedSelected = []
+            this.state.UiSelectedSelectedValues.forEach(x => {
+                let item = nextProps.SelectedValues.find(y => y[nextProps.ValueMember] == x[nextProps.ValueMember])
+                if (item) {
+                    uiSelectedSelected.push(item)
+                }
+            })
+        }
+        else {
+            uiAvailableSelected = this.state.UiSelectedAvailableValues
+            uiSelectedSelected = this.state.UiSelectedSelectedValues
+        }
         this.setState({
             SelectedValues: nextProps.SelectedValues,
             AvailableValues: nextProps ? availableValues.sort((a, b) => (a[nextProps.DisplayMember] < b[nextProps.DisplayMember]) ? -1 : (a[nextProps.DisplayMember] > b[nextProps.DisplayMember]) ? 1 : 0) : availableValues.sort(),
-        } as DualListBoxEditorState);
+            UiSelectedAvailableValues: uiAvailableSelected,
+            UiSelectedSelectedValues: uiSelectedSelected
+        });
     }
     render() {
         let itemsElements = this.state.SelectedValues.map(x => {
@@ -456,10 +481,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         this.props.onChange(this.state.SelectedValues);
     }
 
-    isSelected(item: string) {
-        return true;
-    }
-    onClickSelectedItem(item: string) {
+    onClickSelectedItem(item: any) {
         let index = this.state.UiSelectedSelectedValues.indexOf(item);
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedSelectedValues];
@@ -474,7 +496,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.setState({ UiSelectedSelectedValues: newArray } as DualListBoxEditorState)
         }
     }
-    onClickAvailableValuesItem(item: string) {
+    onClickAvailableValuesItem(item: any) {
         let index = this.state.UiSelectedAvailableValues.indexOf(item);
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedAvailableValues];
