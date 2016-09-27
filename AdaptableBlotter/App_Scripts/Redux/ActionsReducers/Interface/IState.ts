@@ -39,3 +39,8 @@ export interface ShortcutState {
     NumericShortcuts : Array<IShortcut>;
     DateShortcuts : Array<IShortcut>; 
 }
+
+export interface ExcelExportState {
+    FileName: string;
+    AllPages: boolean;
+}

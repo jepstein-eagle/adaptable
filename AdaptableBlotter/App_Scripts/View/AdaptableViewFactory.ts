@@ -3,6 +3,7 @@ import {SmartEditAction} from './SmartEditAction'
 import {ShortcutConfig} from './Shortcut/ShortcutConfig'
 import {PlusMinusConfig} from './PlusMinusConfig'
 import {ColumnChooserAction} from './ColumnChooserAction'
+import {ExcelExportAction} from './ExcelExportAction'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -10,7 +11,9 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   SmartEditAction: SmartEditAction,
   ShortcutConfig: ShortcutConfig,
   PlusMinusConfig: PlusMinusConfig,
-  ColumnChooserAction: ColumnChooserAction
+  ColumnChooserAction: ColumnChooserAction,
+  ExcelExportAction: ExcelExportAction,
+
 }
 
 

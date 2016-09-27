@@ -11,11 +11,13 @@ import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
+import * as ExcelExportRedux from '../ActionsReducers/ExcelExportRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
+import {IExcelExportStrategy} from '../../Core/Interface/IExcelExportStrategy'
 import {IColumnChooserStrategy} from '../../Core/Interface/IColumnChooserStrategy'
 import {AdaptableBlotterState, IAdaptableBlotterStore} from './Interface/IAdaptableStore'
 import {IUIError} from '../../Core/interface/IStrategy'
@@ -27,7 +29,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CustomSort: CustomSortRedux.CustomSortReducer,
     Shortcut: ShortcutRedux.ShortcutReducer,
     Grid: GridRedux.GridReducer,
-    PlusMinus: PlusMinusRedux.PlusMinusReducer
+    PlusMinus: PlusMinusRedux.PlusMinusReducer,
+    Export: ExcelExportRedux.ExcelExportReducer,
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -123,6 +126,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     SmartEditStrategy.ApplySmartEdit(middlewareAPI.getState().SmartEdit.SmartEditValue, middlewareAPI.getState().SmartEdit.SmartEditOperation);
+                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    return next(action);
+                }
+                case ExcelExportRedux.EXPORT_APPLY: {
+                    let ExportStrategy = <IExcelExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExcelExportStrategyId));
+                    ExportStrategy.ExportToExcel(middlewareAPI.getState().Export.FileName, middlewareAPI.getState().Export.AllPages);
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }

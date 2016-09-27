@@ -7,6 +7,9 @@
     <title>Adaptable Blotter Kendo Demo</title>
 
     <!--we use the JS and CSS CDN so we do no need to d/l or store them locally and maintain versions.... Quite cool!!-->
+  
+  <!-- I've added this line so export to excel can work but not done anything else - is that enough? -->
+   <script src="http://kendo.cdn.telerik.com/2016.3.914/js/jszip.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" />
@@ -41,6 +44,7 @@
     $("#grid")
         .kendoGrid({
             dataSource: {
+              //  pageSize: 100,
                 data: trades,
                 schema: {
                     model: {
@@ -71,7 +75,7 @@
                         }
                     }
                 }
-            },
+           },
             columns:
             [
                 { field: "tradeId", title: "ID" },
@@ -97,7 +101,6 @@
                 { field: "delta", format: "{0:n4}", title: "Delta" },
                 { field: "occasionalPrice", title: "Occasional Price" },
                 { field: "deskId", title: "Desk ID" },
-                { field: "bookingGuid", title: "Booking Guid" },
                 { field: "lastUpdated", title: "Last Update", format: "{0:G}" },
                 { field: "lastUpdatedBy", title: "Last Updated By" }
             ],
@@ -108,13 +111,13 @@
             resizable: true,
             scrollable: false,
             filterable: true,
+            pageable: false,
     editable : true
         });
 
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
     var blotter = new adaptableblotterkendo.AdaptableBlotter(grid,container);
-
 
 
 </script>

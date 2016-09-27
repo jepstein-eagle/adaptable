@@ -13,6 +13,7 @@ import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
 import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
 import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
 import {ColumnChooserStrategy} from './Strategy/ColumnChooserStrategy'
+import {ExcelExportStrategy} from './Strategy/ExcelExportStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
 import {IMenuItem, IStrategy} from '../Core/Interface/IStrategy';
 import {IEvent} from '../Core/Interface/IEvent';
@@ -47,6 +48,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -104,7 +106,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.getcurrentEditedCell().val();
     }
 
-    getActiveCell(): { Id: any, ColumnId: string, Value:any } {
+    getActiveCell(): { Id: any, ColumnId: string, Value: any } {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
         let item = this.grid.dataItem(row);
@@ -147,10 +149,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
+
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
             return ColumnType.String;
         }
+
         let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
@@ -272,6 +276,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
         this.SetColumnIntoStore();
+    }
+
+    public saveAsExcel(fileName: string, allPages: boolean): void {
+        this.grid.options.excel.fileName = fileName + ".xls";
+        this.grid.options.excel.allPages = allPages;
+        this.grid.saveAsExcel();
+    }
+
+    public isGridPageable(): boolean{
+      if ( this.grid.options.pageable)
+      {
+          return true;
+      }
+      return false;
     }
 
     destroy() {

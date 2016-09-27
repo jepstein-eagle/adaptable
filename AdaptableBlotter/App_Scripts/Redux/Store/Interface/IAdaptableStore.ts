@@ -6,7 +6,8 @@ export interface AdaptableBlotterState {
     CustomSort: AdaptableBlotterStates.CustomSortState;
     Shortcut: AdaptableBlotterStates.ShortcutState;
     Grid: AdaptableBlotterStates.GridState;
-    PlusMinus: AdaptableBlotterStates.PlusMinusState
+    PlusMinus: AdaptableBlotterStates.PlusMinusState;
+    Export: AdaptableBlotterStates.ExcelExportState;
 }
 
 export interface IAdaptableBlotterStore {
