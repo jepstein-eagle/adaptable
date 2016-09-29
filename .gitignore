@@ -252,3 +252,4 @@ ModelManifest.xml
 /AdaptableBlotter/typings/globals/**/*.*
 /AdaptableBlotter/typings/modules/**/*.*
 /AdaptableBlotter/dist/**/*.*
+AdaptableBlotter/npm-debug.log.*
