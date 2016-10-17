@@ -52,15 +52,15 @@ export class CustomSortConfigHeader extends React.Component<CustomSortConfigHead
     }
 }
 
-var headerStyle = {
+var headerStyle : React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'bold'
 };
 
-var divStyle = {
+var divStyle: React.CSSProperties = {
     wordWrap: 'break-word'
 };
 
-let panelHeaderStyle = {
+let panelHeaderStyle: React.CSSProperties = {
     marginBottom: '0px'
 }

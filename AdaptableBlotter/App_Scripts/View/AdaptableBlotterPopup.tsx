@@ -29,7 +29,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
             {body}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.props.onHide}>Close</Button>
+            <Button onClick={() => this.props.onHide()}>Close</Button>
           </Modal.Footer>
         </Modal>
     );

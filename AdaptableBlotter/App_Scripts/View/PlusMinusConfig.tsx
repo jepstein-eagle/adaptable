@@ -47,7 +47,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
                         {optionColumns}
                     </FormControl>
                     {' '}
-                    <FormControl value={x.DefaultNudge} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e) }/>
+                    <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e) }/>
                     {' '}
                     <Button onClick={() => this.props.onDeleteColumnDefaultNudgeValue(index) } >Delete</Button>
                 </FormGroup>
@@ -58,7 +58,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, {}>
                 <FormGroup controlId="formInlineName">
                     <ControlLabel>Default Nudge Value for Blotter</ControlLabel>
                     {' '}
-                    <FormControl value={this.props.DefaultNudgeValue} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e) }/>
+                    <FormControl value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e) }/>
                 </FormGroup>
             </Form>
             <p/>

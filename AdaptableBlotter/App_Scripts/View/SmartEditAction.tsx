@@ -56,7 +56,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Ratio) }>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute) }>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
                                 </DropdownButton>
-                                <FormControl value={this.props.SmartEditValue} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleSmartEditValueChange(e) }/>
+                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleSmartEditValueChange(e) }/>
                             </InputGroup>
                         </FormGroup>
                         {' '}

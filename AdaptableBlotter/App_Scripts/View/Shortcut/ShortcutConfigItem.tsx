@@ -47,10 +47,10 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={3} >
                     {this.props.Shortcut.ColumnType == ColumnType.Date ?
                         ShortcutAction[this.props.Shortcut.ShortcutAction] :
-                        <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction} onChange={(x) => this.onActionChange(x) } >
+                        <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x) } >
                             {
                                 shortcutActionList.map((shortcutAction: ShortcutAction) => {
-                                    return <option key={ShortcutAction[shortcutAction]} value={shortcutAction}>{ShortcutAction[shortcutAction]}</option>
+                                    return <option key={ShortcutAction[shortcutAction]} value={shortcutAction.toString()}>{ShortcutAction[shortcutAction]}</option>
                                 })
                             }
                         </FormControl>
@@ -120,11 +120,11 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
     }
 }
 
-var headerStyle = {
+var headerStyle : React.CSSProperties= {
     wordWrap: 'break-word',
     fontWeight: 'bold'
 };
 
-let panelHeaderStyle = {
+let panelHeaderStyle : React.CSSProperties = {
     marginBottom: '0px'
 }
