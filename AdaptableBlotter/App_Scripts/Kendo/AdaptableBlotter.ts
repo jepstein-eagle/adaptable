@@ -2,28 +2,32 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {AdaptableBlotterApp} from '../View/AdaptableBlotterView';
+import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
-import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
-import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
-import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
-import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
-import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
-import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
-import {ColumnChooserStrategy} from './Strategy/ColumnChooserStrategy'
-import {ExcelExportStrategy} from './Strategy/ExcelExportStrategy'
+import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
+import { CustomSortStrategy } from './Strategy/CustomSortStrategy'
+import { SmartEditStrategy } from './Strategy/SmartEditStrategy'
+import { ShortcutStrategy } from './Strategy/ShortcutStrategy'
+import { UserDataManagementStrategy } from './Strategy/UserDataManagementStrategy'
+import { SimulateTickingDataStrategy } from './Strategy/SimulateTickingDataStrategy'
+import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
+import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
+import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
+import { FlashingCellsStrategy } from './Strategy/FlashingCellsStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
-import {IMenuItem, IStrategy} from '../Core/Interface/IStrategy';
-import {IEvent} from '../Core/Interface/IEvent';
-import {EventDispatcher} from '../Core/EventDispatcher'
-import {Helper} from '../Core/Helper';
-import {ColumnType} from '../Core/Enums'
-import {ICalendarService} from '../Core/Services/Interface/ICalendarService'
-import {CalendarService} from '../Core/Services/CalendarService'
+import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IEvent } from '../Core/Interface/IEvent';
+import { EventDispatcher } from '../Core/EventDispatcher'
+import { Helper } from '../Core/Helper';
+import { ColumnType } from '../Core/Enums'
+import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
+import { CalendarService } from '../Core/Services/CalendarService'
+import { IAuditService } from '../Core/Services/Interface/IAuditService'
+import { AuditService } from '../Core/Services/AuditService'
 
-import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn} from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -31,13 +35,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
-
+    public AuditService: IAuditService
+    public DataSource: any
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
+
+        // Set the DataSource
+        this.DataSource = grid.dataSource;
+
         // create the services
         this.CalendarService = new CalendarService();
+        this.AuditService = new AuditService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -46,9 +56,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.SimulateTickingDataStrategyId, new SimulateTickingDataStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -56,7 +68,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
+
         })
+
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
@@ -179,10 +193,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
         for (var item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.id);
+
             model[item.columnId] = item.value;
+            //  model.set(item.columnId, item.value)
+            // going to update the cell directly and then tell the Audit Services
+            // its not great but using .set doenst work and is slow and using .sync() on datasource only allows LAST item to flash
+            var cell = this.getCellByColumnNameAndRowIdentifier(item.id, item.columnId);
+            // proper function needed here to deal with templates - see: http://stackoverflow.com/questions/13613098/refresh-a-single-kendo-grid-row
+            this.addValueDirectlyToCell(cell, item.value);
         }
+
         this.grid.dataSource.sync();
+
+        for (var item of batchValues) {
+            let model: any = this.grid.dataSource.getByUid(item.id);
+            this.AuditService.CreateAuditEvent(item.id, item.value, item.columnId);
+
+        }
     }
+
 
     public selectCells(cells: { id: any, columnId: string }[]): void {
         let selectorQuery: JQuery
@@ -284,12 +313,61 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    public isGridPageable(): boolean{
-      if ( this.grid.options.pageable)
-      {
-          return true;
-      }
-      return false;
+    public getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any {
+        var dataItems = this.grid.dataSource.view();
+        for (var i = 0; i < dataItems.length; i++) {
+            if (dataItems[i].uid == rowIdentifierValue) {
+                var row = this.grid.table.find("tr[data-uid='" + dataItems[i].uid + "']");
+                var cell = row.children().eq(this.getColumnIndex(columnName));
+                return cell;
+            }
+        }
+        return null;
+    }
+
+    public addCellStyleWithTimeout(cell: any, styleName: string, timeout: number): void {
+        this.addCellStyle(cell, styleName);
+        setTimeout(() => this.removeCellStyle(cell, styleName), timeout);
+    }
+
+    public addCellStyle(cell: any, styleName: string): void {
+        if (cell != null) {
+            cell.addClass(styleName);
+        }
+    }
+
+    public removeCellStyle(cell: any, styleName: string): void {
+        if (cell != null) {
+            cell.removeClass(styleName);
+        }
+    }
+
+    public addValueDirectlyToCell(cell: any, valueToAdd: any): void {
+        // TODO: proper function needed here to deal with templates and other use cases
+        // for now just adding the value to the html but this needs to be "beefed up" - see: http://stackoverflow.com/questions/13613098/refresh-a-single-kendo-grid-row
+        cell.html(valueToAdd);
+    }
+
+    // must be a better way to do this!!! and not sure how it works if we move columns....
+    private getColumnIndex(columnName: string): number {
+        var index: number = -1;;
+        var columns = this.grid.options.columns;
+        if (columns.length > 0) {
+            for (var i = 0; i < columns.length; i++) {
+                if (columns[i].field == columnName) { // columns[i].title -- You can also use title property here but for this you have to assign title for all columns
+                    index = i;
+                }
+            }
+        }
+
+        return index;
+    }
+
+    public isGridPageable(): boolean {
+        if (this.grid.options.pageable) {
+            return true;
+        }
+        return false;
     }
 
     destroy() {

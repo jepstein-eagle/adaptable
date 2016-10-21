@@ -4,6 +4,7 @@ import {ShortcutConfig} from './Shortcut/ShortcutConfig'
 import {PlusMinusConfig} from './PlusMinusConfig'
 import {ColumnChooserAction} from './ColumnChooserAction'
 import {ExcelExportAction} from './ExcelExportAction'
+import {FlashingCellsConfig} from './FlashingCells/FlashingCellsConfig'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -13,6 +14,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   PlusMinusConfig: PlusMinusConfig,
   ColumnChooserAction: ColumnChooserAction,
   ExcelExportAction: ExcelExportAction,
+  FlashingCellsConfig: FlashingCellsConfig
 
 }
 

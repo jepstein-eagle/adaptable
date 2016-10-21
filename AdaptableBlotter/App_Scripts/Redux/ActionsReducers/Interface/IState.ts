@@ -2,6 +2,7 @@ import {SmartEditOperation} from '../../../Core/Enums'
 import {ISmartEditPreview} from '../../../Core/interface/ISmartEditStrategy'
 import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
 import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
+import {IFlashingColumn} from '../../../Core/interface/IFlashingCellsStrategy'
 import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 
@@ -43,4 +44,8 @@ export interface ShortcutState {
 export interface ExcelExportState {
     FileName: string;
     AllPages: boolean;
+}
+
+export interface FlashingCellState {
+    FlashingColumns: Array<IFlashingColumn>
 }

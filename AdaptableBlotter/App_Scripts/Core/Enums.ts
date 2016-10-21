@@ -21,4 +21,10 @@ export enum ShortcutAction {
     Divide,
     Replace
 }
-// }
+
+export enum FlashingCellDuration{
+    OneQuarterSecond,
+    HalfSecond,
+    ThreeQuarterSecond,
+    Second
+}

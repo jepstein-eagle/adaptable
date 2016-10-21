@@ -60,7 +60,7 @@ export class DataGenerator {
         // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
         // generates a value between 0 and 2 =[0, 2), adding 1 makes this
         // [1, 3) and Math.floor gives 1 or 2.
-        protected generateRandomInt(minValue: number, maxValue: number): number {
+        public generateRandomInt(minValue: number, maxValue: number): number {
             return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
         }
 
@@ -153,7 +153,7 @@ export class DataGenerator {
             return currencies[this.generateRandomInt(0, currencies.length - 1)];
         }
 
-        protected getRandomItem(ary: any[]) {
+        public getRandomItem(ary: any[]) {
             //debugger
             return ary[this.generateRandomInt(0, ary.length - 1)];
         }

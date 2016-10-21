@@ -1,8 +1,9 @@
-import {ColumnType} from '../Enums'
-import {IMenuItem, IStrategy} from './IStrategy'
-import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
-import {IEvent} from './IEvent'
-import {ICalendarService} from '../Services/Interface/ICalendarService'
+import { ColumnType } from '../Enums'
+import { IMenuItem, IStrategy } from './IStrategy'
+import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IEvent } from './IEvent'
+import { ICalendarService } from '../Services/Interface/ICalendarService'
+import { IAuditService } from '../Services/Interface/IAuditService'
 
 
 
@@ -11,6 +12,9 @@ export interface IAdaptableBlotter {
     Strategies: IAdaptableStrategyCollection
 
     CalendarService: ICalendarService
+    AuditService: IAuditService
+
+    DataSource: any
 
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
@@ -26,13 +30,21 @@ export interface IAdaptableBlotter {
     getCurrentCellEditValue(): any
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
-    isColumnReadonly(columnId:string):boolean
+    isColumnReadonly(columnId: string): boolean
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
-    SetNewColumnListOrder(VisibleColumnList : Array<IColumn>) : void
-    getActiveCell(): {Id: any, ColumnId: string, Value: any}
+    SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+    getActiveCell(): { Id: any, ColumnId: string, Value: any }
     saveAsExcel(fileName: string, allPages: boolean): void
     isGridPageable(): boolean
+
+    // cell styling methods
+    addCellStyleWithTimeout(cell: any, styleName: string, timeout: number): void
+    addCellStyle(cell: any, styleName: string): void
+    removeCellStyle(cell: any, styleName: string): void
+    addValueDirectlyToCell(cell: any, valueToAdd: any): void
+
+    getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any
 
 }
 
