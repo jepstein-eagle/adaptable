@@ -57,7 +57,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             let actionTyped = <FlashingColumnDurationChangeAction>action
             let flashingColumn = actionTyped.FlashingColumn
             let items: Array<IFlashingColumn> = [].concat(state.FlashingColumns);
-            let index = items.indexOf(flashingColumn)
+            let index = items.findIndex(i=> i==flashingColumn)
             if (index != -1) {  // it exists
                 items[index] = Object.assign({}, flashingColumn, { FlashingCellDuration: actionTyped.NewFlashDuration })
             } else {

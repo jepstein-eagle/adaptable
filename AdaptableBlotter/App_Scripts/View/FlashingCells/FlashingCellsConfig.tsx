@@ -37,7 +37,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FlashingCellConfigItem>
         });
 
-        let potentialFlashingColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number).filter(c => existingFlashingColumnNames.indexOf(c.ColumnId) <0 ).map((potentialColumn: IColumn) => {
+        let potentialFlashingColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number).filter(c => existingFlashingColumnNames.findIndex(e=>e== c.ColumnId) <0 ).map((potentialColumn: IColumn) => {
             return <FlashingCellConfigItem
                 FlashingColumn={{ IsLive: false, ColumnName: potentialColumn.ColumnId, FlashingCellDuration: FlashingCellDuration.HalfSecond }}
                 key={potentialColumn.ColumnId}
@@ -46,6 +46,9 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
                 onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}>
             </FlashingCellConfigItem>
         });
+
+        let allFlashingColumns = potentialFlashingColumns.concat(existingFlashingColumns);
+        allFlashingColumns.sort(compareFlashingCellConfigItems);
 
         let header = <Form horizontal>
             <Row style={{ display: "flex", alignItems: "center" }}>
@@ -56,15 +59,23 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </Row>
         </Form>;
 
+
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
             <FlashingCellConfigHeader />
             <ListGroup style={divStyle}>
-                {existingFlashingColumns}
-                {potentialFlashingColumns}
+                {allFlashingColumns}
             </ListGroup>
 
         </Panel>
     }
+}
+
+function compareFlashingCellConfigItems(a: any,b: any) {
+  if (a.props.FlashingColumn.ColumnName < b.props.FlashingColumn.ColumnName)
+    return -1;
+  if (a.props.FlashingColumn.ColumnName > b.props.FlashingColumn.ColumnName)
+    return 1;
+  return 0;
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

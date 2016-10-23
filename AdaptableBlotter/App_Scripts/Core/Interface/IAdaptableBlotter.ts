@@ -39,13 +39,11 @@ export interface IAdaptableBlotter {
     isGridPageable(): boolean
 
     // cell styling methods
-    addCellStyleWithTimeout(cell: any, styleName: string, timeout: number): void
-    addCellStyle(cell: any, styleName: string): void
-    removeCellStyle(cell: any, styleName: string): void
-    addValueDirectlyToCell(cell: any, valueToAdd: any): void
-
-    getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any
-
+    addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void
+    addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+    removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+    // removing this for now and seeing if we need it later...
+    //addValueDirectlyToCell(rowIdentifierValue: any, columnName: string, valueToAdd: any): void
 }
 
 export interface ISelectedCells {

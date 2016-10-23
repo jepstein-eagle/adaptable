@@ -47,16 +47,11 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     public FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn): void {
         if (dataChangedEvent.OldValue == null) return;
         //  alert("going to flash column: " + DataChangedEvent.ColumnName + " on row PK: " + DataChangedEvent.IdentifierValue)
-        let cell = this.blotter.getCellByColumnNameAndRowIdentifier(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnName);
-
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
-        this.blotter.addValueDirectlyToCell(cell, newValueNumber); // shouldnt need this = does it help?
-
-
-        this.blotter.addCellStyleWithTimeout(cell, cellStyle, this.getFlashDuration(flashingColumn.FlashingCellDuration))
+        this.blotter.addCellStyleWithTimeout(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnName, cellStyle, this.getFlashDuration(flashingColumn.FlashingCellDuration))
     }
 
     private getFlashDuration(flashingCellDuration: FlashingCellDuration): number {
@@ -71,6 +66,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
                 return 1000;
         }
     }
+
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
