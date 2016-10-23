@@ -17,17 +17,30 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
     FlashingColumns: Array<IFlashingColumn>,
     Columns: IColumn[],
     onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingColumnSelectAction,
+    onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingColumnSelectAllAction,
     onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: FlashingCellDuration) => FlashingCellsRedux.FlashingColumnDurationChangeAction
 }
 
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
+        let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
+
         let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return flashingColumn.ColumnName
         });
 
-        let existingFlashingColumns = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
+        let allPotentialFlashingColumns: IFlashingColumn[]=[];
+        this.props.FlashingColumns.forEach(fc => {
+            allPotentialFlashingColumns.push(fc);
+        });
+
+        numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc=>{
+            let flashingColumn: IFlashingColumn= { IsLive: false, ColumnName: nc.ColumnId, FlashingCellDuration: FlashingCellDuration.HalfSecond };
+             allPotentialFlashingColumns.push(flashingColumn);
+        })
+     
+     let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return <FlashingCellConfigItem
                 FlashingColumn={flashingColumn}
                 key={flashingColumn.ColumnName}
@@ -37,17 +50,6 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FlashingCellConfigItem>
         });
 
-        let potentialFlashingColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number).filter(c => existingFlashingColumnNames.findIndex(e=>e== c.ColumnId) <0 ).map((potentialColumn: IColumn) => {
-            return <FlashingCellConfigItem
-                FlashingColumn={{ IsLive: false, ColumnName: potentialColumn.ColumnId, FlashingCellDuration: FlashingCellDuration.HalfSecond }}
-                key={potentialColumn.ColumnId}
-                Columns={this.props.Columns}
-                onSelect={(flashingColumn) => this.props.onSelectFlashingColumn(flashingColumn)}
-                onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}>
-            </FlashingCellConfigItem>
-        });
-
-        let allFlashingColumns = potentialFlashingColumns.concat(existingFlashingColumns);
         allFlashingColumns.sort(compareFlashingCellConfigItems);
 
         let header = <Form horizontal>
@@ -59,8 +61,19 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </Row>
         </Form>;
 
+        let setAllOption = <Form horizontal>
+            <Row style={{ display: "flex", alignItems: "center" }}>
+                <Col xs={6}></Col>
+                <Col xs={6}>
+                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f=>f.IsLive)}>
+                        Set All Numeric Columns
+                    </Checkbox>
+                </Col>
+            </Row>
+        </Form>;
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
+            {setAllOption}
             <FlashingCellConfigHeader />
             <ListGroup style={divStyle}>
                 {allFlashingColumns}
@@ -70,12 +83,12 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
     }
 }
 
-function compareFlashingCellConfigItems(a: any,b: any) {
-  if (a.props.FlashingColumn.ColumnName < b.props.FlashingColumn.ColumnName)
-    return -1;
-  if (a.props.FlashingColumn.ColumnName > b.props.FlashingColumn.ColumnName)
-    return 1;
-  return 0;
+function compareFlashingCellConfigItems(a: any, b: any) {
+    if (a.props.FlashingColumn.ColumnName < b.props.FlashingColumn.ColumnName)
+        return -1;
+    if (a.props.FlashingColumn.ColumnName > b.props.FlashingColumn.ColumnName)
+        return 1;
+    return 0;
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -88,6 +101,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectFlashingColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.SelectFlashingCellColumn(flashingCell)),
+        onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.SelectAllFlashingCellColumn(numericColumns)),
         onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: FlashingCellDuration) => dispatch(FlashingCellsRedux.ChangeFlashingDuration(flashingCell, newFlashDuration))
     };
 }

@@ -31,7 +31,7 @@ export class SimulateTickingDataStrategy extends AdaptableStrategyBase implement
             var newValue: any;
             var row: any;
 
-/*
+
             var dataGen = new DataGenerator();
             var numericCols: string[] = ["bid", "ask", "marketPrice", "bloombergAsk", "bloombergBid", "indicativeAsk", "indicativeBid"];
 
@@ -47,7 +47,6 @@ export class SimulateTickingDataStrategy extends AdaptableStrategyBase implement
                 row[columnName] = newValue;
                 this.UpdateCell(identifierValue, columnName, newValue);
             }
-            */
         }
     }
 
