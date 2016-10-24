@@ -309,7 +309,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (var i = 0; i < dataItems.length; i++) {
             if (dataItems[i].uid == rowIdentifierValue) {
                 var row = this.grid.table.find("tr[data-uid='" + dataItems[i].uid + "']");
-                var cell = row.children().eq(this.getColumnIndex(columnName));
+                var cell = row.children().eq(this.grid.columns.findIndex(x=>x.field == columnName));
                 return cell;
             }
         }
@@ -333,21 +333,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (cell != null) {
             cell.removeClass(styleName);
         }
-    }
-
-    // must be a better way to do this!!! and not sure how it works if we move columns....
-    private getColumnIndex(columnName: string): number {
-        var index: number = -1;;
-        var columns = this.grid.columns;
-        if (columns.length > 0) {
-            for (var i = 0; i < columns.length; i++) {
-                if (columns[i].field == columnName) { // columns[i].title -- You can also use title property here but for this you have to assign title for all columns
-                    index = i;
-                }
-            }
-        }
-
-        return index;
     }
 
     public isGridPageable(): boolean {
