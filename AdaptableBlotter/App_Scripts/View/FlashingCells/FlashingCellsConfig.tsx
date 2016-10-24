@@ -62,11 +62,10 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         </Form>;
 
         let setAllOption = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={6}></Col>
-                <Col xs={6}>
+            <Row style={rowStyle}>
+                <Col xs={12}>
                     <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f=>f.IsLive)}>
-                        Set All Numeric Columns
+                        Turn On All Flashing Columns
                     </Checkbox>
                 </Col>
             </Row>
@@ -120,6 +119,10 @@ let panelStyle = {
     width: '800px'
 }
 
+let rowStyle = {
+    height: '50px',
+    margin: '2px'
+}
 
 let divStyle = {
     'overflowY': 'auto',
