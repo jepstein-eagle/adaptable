@@ -335,12 +335,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-  //  public addValueDirectlyToCell(rowIdentifierValue: any, columnName: string, valueToAdd: any): void {
-        // TODO: proper function needed here to deal with templates and other use case.  For now just adding the value to the html but this needs to be "beefed up" - see: http://stackoverflow.com/questions/13613098/refresh-a-single-kendo-grid-row
-  //      var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
-  //      cell.html(valueToAdd);
- //   }
-
     // must be a better way to do this!!! and not sure how it works if we move columns....
     private getColumnIndex(columnName: string): number {
         var index: number = -1;;
