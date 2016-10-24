@@ -11,7 +11,6 @@ import { CustomSortStrategy } from './Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from './Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from './Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from './Strategy/UserDataManagementStrategy'
-import { SimulateTickingDataStrategy } from './Strategy/SimulateTickingDataStrategy'
 import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
@@ -56,7 +55,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.SimulateTickingDataStrategyId, new SimulateTickingDataStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
@@ -311,7 +309,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (var i = 0; i < dataItems.length; i++) {
             if (dataItems[i].uid == rowIdentifierValue) {
                 var row = this.grid.table.find("tr[data-uid='" + dataItems[i].uid + "']");
-                var cell = row.children().eq(this.getColumnIndex(columnName));
+                var cell = row.children().eq(this.grid.columns.findIndex(x=>x.field == columnName));
                 return cell;
             }
         }
@@ -335,27 +333,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (cell != null) {
             cell.removeClass(styleName);
         }
-    }
-
-  //  public addValueDirectlyToCell(rowIdentifierValue: any, columnName: string, valueToAdd: any): void {
-        // TODO: proper function needed here to deal with templates and other use case.  For now just adding the value to the html but this needs to be "beefed up" - see: http://stackoverflow.com/questions/13613098/refresh-a-single-kendo-grid-row
-  //      var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
-  //      cell.html(valueToAdd);
- //   }
-
-    // must be a better way to do this!!! and not sure how it works if we move columns....
-    private getColumnIndex(columnName: string): number {
-        var index: number = -1;;
-        var columns = this.grid.columns;
-        if (columns.length > 0) {
-            for (var i = 0; i < columns.length; i++) {
-                if (columns[i].field == columnName) { // columns[i].title -- You can also use title property here but for this you have to assign title for all columns
-                    index = i;
-                }
-            }
-        }
-
-        return index;
     }
 
     public isGridPageable(): boolean {

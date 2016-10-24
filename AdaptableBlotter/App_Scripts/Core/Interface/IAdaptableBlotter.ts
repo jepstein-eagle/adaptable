@@ -42,8 +42,6 @@ export interface IAdaptableBlotter {
     addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void
     addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
     removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
-    // removing this for now and seeing if we need it later...
-    //addValueDirectlyToCell(rowIdentifierValue: any, columnName: string, valueToAdd: any): void
 }
 
 export interface ISelectedCells {
