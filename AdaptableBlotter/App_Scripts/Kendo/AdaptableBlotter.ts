@@ -11,7 +11,6 @@ import { CustomSortStrategy } from './Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from './Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from './Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from './Strategy/UserDataManagementStrategy'
-import { SimulateTickingDataStrategy } from './Strategy/SimulateTickingDataStrategy'
 import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
@@ -56,7 +55,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.SimulateTickingDataStrategyId, new SimulateTickingDataStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
