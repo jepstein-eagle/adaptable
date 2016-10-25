@@ -26,7 +26,11 @@ export class DataGenerator {
             //managing ticking data since the grid doesn't allow partial refresh... so if we keep calling sync on 
             //every tick the grid becomes unusable since we loose editing, cell selection etc......
             //also if people call sync then we don't have the "change" event
-            trade.set(columnName, newValue);
+
+            // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
+            // as that way at least we dont refresh anything etc and it has no impact.
+      //      trade.set(columnName, newValue);
+
             //trade[columnName] = newValue;
             //trade.dirty = true;
             //grid.dataSource.sync();

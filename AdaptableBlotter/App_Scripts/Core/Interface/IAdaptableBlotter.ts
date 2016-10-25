@@ -14,8 +14,6 @@ export interface IAdaptableBlotter {
     CalendarService: ICalendarService
     AuditService: IAuditService
 
-    DataSource: any
-
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
@@ -42,6 +40,9 @@ export interface IAdaptableBlotter {
     addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void
     addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
     removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+
+    // get dirty data
+      GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any
 }
 
 export interface ISelectedCells {

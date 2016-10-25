@@ -35,14 +35,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    public DataSource: any
+    
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
-
-
-        // Set the DataSource
-        this.DataSource = grid.dataSource;
 
         // create the services
         this.CalendarService = new CalendarService();
@@ -68,6 +64,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, event)
 
         })
+
+        grid.dataSource.bind("change", (e: any) => {
+            if (e.action == "itemchange") {
+                let itemsArray = e.items[0];
+                let changedValue = itemsArray[e.field];
+                let identifierValue = itemsArray["uid"];
+                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
+            }
+        });
 
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
@@ -334,6 +339,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             cell.removeClass(styleName);
         }
     }
+
+    public GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any{
+        // this is rather brittle... but its only required the first time we change a cell value
+          var dataSource = this.grid.dataSource;
+          var dataSourceCopy: any = dataSource;
+          var testarray: any =dataSourceCopy._data;
+            var currentRowIndex: number;
+            for (var i = 0; i < testarray.length; i++) {
+                var myRow: any = testarray[i];
+                var uidValue = myRow["uid"];
+                if (uidValue != null && uidValue == identifierValue) {
+                    currentRowIndex = i;
+                    break;
+                }
+            }
+            var oldRow = dataSourceCopy._pristineData[currentRowIndex];
+            var oldValue = oldRow[columnName];
+           return oldValue;
+    }
+
 
     public isGridPageable(): boolean {
         if (this.grid.options.pageable) {

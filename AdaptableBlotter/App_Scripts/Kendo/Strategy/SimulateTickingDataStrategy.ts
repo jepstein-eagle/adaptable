@@ -25,6 +25,7 @@ export class SimulateTickingDataStrategy extends AdaptableStrategyBase implement
     }
 
     public onAction(action: string) {
+        /*
         if (action == simulateTickingData) {
             var identifierValue: any = null;
             var columnName: string;
@@ -48,6 +49,7 @@ export class SimulateTickingDataStrategy extends AdaptableStrategyBase implement
                 this.UpdateCell(identifierValue, columnName, newValue);
             }
         }
+        */
     }
 
     private UpdateCell(identifierValue: any, columnName: string, newValue: any): void {

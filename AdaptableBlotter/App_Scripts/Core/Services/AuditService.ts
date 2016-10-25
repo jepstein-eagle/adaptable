@@ -18,16 +18,8 @@ export class AuditService implements IAuditService {
     constructor(private blotter: IAdaptableBlotter) {
 
         this._columnDataValueList = [];
-
-        blotter.DataSource.bind("change", (e: any) => {
-            if (e.action == "itemchange") {
-                let itemsArray = e.items[0];
-                let changedValue = itemsArray[e.field];
-                let identifierValue = itemsArray["uid"];
-                this.CreateAuditEvent(identifierValue, changedValue, e.field);
-            }
-        });
     }
+
 
     public CreateAuditEvent(identifierValue: any, newValue: any, columnName: string): void {
         var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnName: columnName, IdentifierValue: identifierValue };
@@ -59,19 +51,8 @@ export class AuditService implements IAuditService {
         }
         else {
             // this is the first time we have updated this so lets see if we can at least try to get the value...
-            var testarray: any[] = this.blotter.DataSource._data;
-            var currentRowIndex: number;
-            for (var i = 0; i < testarray.length; i++) {
-                var myRow: any = testarray[i];
-                var uidValue = myRow["uid"];
-                if(uidValue!= null && uidValue == dataChangedEvent.IdentifierValue) {
-                    currentRowIndex = i;
-                    break;
-                }
-            }
-            var oldRow = this.blotter.DataSource._pristineData[currentRowIndex];
-            var oldValue = oldRow[dataChangedEvent.ColumnName];
-            dataChangedEvent.OldValue = oldValue;
+            var dirtyValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnName, dataChangedEvent.IdentifierValue);
+            dataChangedEvent.OldValue = dirtyValue;
             myList.DataValues.push({ OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, IdentifierValue: dataChangedEvent.IdentifierValue })
         }
     }
