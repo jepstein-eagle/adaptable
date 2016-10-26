@@ -185,14 +185,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
-        let record: any = this.grid.dataSource.getByUid(id);
         if (type == "getColumnValue") {
+            let record: any = this.grid.dataSource.getByUid(id);
             return (columnName: string) => { return record[columnName]; }
         }
         else {
-            return (columnName: string) => { return String(record[columnName]); }
+            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
         }
-
     }
 
     public selectCells(cells: { id: any, columnId: string }[]): void {

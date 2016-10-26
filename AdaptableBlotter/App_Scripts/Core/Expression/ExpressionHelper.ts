@@ -27,8 +27,8 @@ export module ExpressionHelper {
     export function IsSatisfied(expressionString: ExpressionString, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string): boolean {
         //takes care of ColumnValues first
         for (let keyValuePair of expressionString.ColumnValuesExpression) {
-            let columnValue = getColumnValue(keyValuePair.ColumnName)
-            if(keyValuePair.Values.indexOf(columnValue) == -1){
+            let columnDisplayValue = getDisplayColumnValue(keyValuePair.ColumnName)
+            if(keyValuePair.Values.indexOf(columnDisplayValue) == -1){
                 return false;
             }
         }
