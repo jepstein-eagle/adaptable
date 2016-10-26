@@ -27,6 +27,7 @@ export interface IAdaptableBlotter {
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
     isColumnReadonly(columnId:string):boolean
+    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     SetNewColumnListOrder(VisibleColumnList : Array<IColumn>) : void

@@ -4,10 +4,12 @@ import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
 import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
 import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
+import { IExpression } from '../../../Core/interface/IExpression';
+import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
 
 export interface PlusMinusState {
     DefaultNudge: number
-    ColumnsDefaultNudge: {ColumnId: string, DefaultNudge:number}[]
+    ColumnsDefaultNudge: IPlusMinusCondition[]
 }
 
 export interface GridState {

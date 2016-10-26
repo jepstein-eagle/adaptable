@@ -1,5 +1,3 @@
-// export declare module Enums {
-
 export enum SmartEditOperation {
     Sum,
     Ratio,
@@ -21,4 +19,22 @@ export enum ShortcutAction {
     Divide,
     Replace
 }
-// }
+
+export enum BooleanOperator {
+    And,
+    Or,
+    Not
+}
+
+export enum LeafExpressionOperator {
+    Unknown,
+    GreaterThan,
+    LessThan,
+    Equals,
+    NotEquals,
+    GreaterThanOrEquals,
+    LessThanOrEquals,
+    Contains,
+    StartsWith,
+    Matches
+}

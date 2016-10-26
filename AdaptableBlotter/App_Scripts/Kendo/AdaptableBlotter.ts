@@ -2,28 +2,28 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {AdaptableBlotterApp} from '../View/AdaptableBlotterView';
+import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import {IAdaptableBlotterStore} from '../Redux/Store/Interface/IAdaptableStore'
-import {AdaptableBlotterStore} from '../Redux/Store/AdaptableBlotterStore'
-import {CustomSortStrategy} from './Strategy/CustomSortStrategy'
-import {SmartEditStrategy} from './Strategy/SmartEditStrategy'
-import {ShortcutStrategy} from './Strategy/ShortcutStrategy'
-import {UserDataManagementStrategy} from './Strategy/UserDataManagementStrategy'
-import {PlusMinusStrategy} from './Strategy/PlusMinusStrategy'
-import {ColumnChooserStrategy} from './Strategy/ColumnChooserStrategy'
-import {ExcelExportStrategy} from './Strategy/ExcelExportStrategy'
+import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
+import { CustomSortStrategy } from './Strategy/CustomSortStrategy'
+import { SmartEditStrategy } from './Strategy/SmartEditStrategy'
+import { ShortcutStrategy } from './Strategy/ShortcutStrategy'
+import { UserDataManagementStrategy } from './Strategy/UserDataManagementStrategy'
+import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
+import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
+import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
-import {IMenuItem, IStrategy} from '../Core/Interface/IStrategy';
-import {IEvent} from '../Core/Interface/IEvent';
-import {EventDispatcher} from '../Core/EventDispatcher'
-import {Helper} from '../Core/Helper';
-import {ColumnType} from '../Core/Enums'
-import {ICalendarService} from '../Core/Services/Interface/ICalendarService'
-import {CalendarService} from '../Core/Services/CalendarService'
+import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IEvent } from '../Core/Interface/IEvent';
+import { EventDispatcher } from '../Core/EventDispatcher'
+import { Helper } from '../Core/Helper';
+import { ColumnType } from '../Core/Enums'
+import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
+import { CalendarService } from '../Core/Services/CalendarService'
 
-import {IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn} from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -184,6 +184,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.dataSource.sync();
     }
 
+    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+        let record: any = this.grid.dataSource.getByUid(id);
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return record[columnName]; }
+        }
+        else {
+            return (columnName: string) => { return String(record[columnName]); }
+        }
+
+    }
+
     public selectCells(cells: { id: any, columnId: string }[]): void {
         let selectorQuery: JQuery
         for (let cell of cells) {
@@ -284,12 +295,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    public isGridPageable(): boolean{
-      if ( this.grid.options.pageable)
-      {
-          return true;
-      }
-      return false;
+    public isGridPageable(): boolean {
+        if (this.grid.options.pageable) {
+            return true;
+        }
+        return false;
     }
 
     destroy() {

@@ -1,12 +1,13 @@
-import {PlusMinusState} from '../../Redux/ActionsReducers/Interface/IState';
-import {IPlusMinusStrategy} from '../../Core/Interface/IPlusMinusStrategy';
-import {MenuItemShowPopup} from '../../Core/MenuItem';
-import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase';
+import { PlusMinusState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy';
+import { MenuItemShowPopup } from '../../Core/MenuItem';
+import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
-import {IMenuItem} from '../../Core/Interface/IStrategy';
-import {ColumnType} from '../../Core/Enums'
-import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
-import {Helper} from '../../Core/Helper';
+import { IMenuItem } from '../../Core/Interface/IStrategy';
+import { ColumnType } from '../../Core/Enums'
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helper';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private menuItemConfig: IMenuItem;
@@ -37,15 +38,28 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
                     if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number) {
-                        let columnNudge = this.PlusMinusState.ColumnsDefaultNudge.find(x => x.ColumnId == columnValuePair.columnID)
-                        if (columnNudge) {
-                            newValues.push({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
+                        let newValue: { id: any, columnId: string, value: any }
+                        //we try to find a condition with an expression for that column that matches the record
+                        let columnNudgesWithExpression = this.PlusMinusState.ColumnsDefaultNudge.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
+                        for (let columnNudge of columnNudgesWithExpression) {
+                            if (ExpressionHelper.IsSatisfied(columnNudge.Expression,
+                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getColumnValue"),
+                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getDisplayColumnValue"))) {
+                                newValue = { id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) }
+                            }
                         }
-                        else {
-                            newValues.push({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (this.PlusMinusState.DefaultNudge * side) })
+                        //we havent found any Condition with an Expression so we look for a general one for the column
+                        if (!newValue) {
+                            let columnNudge = this.PlusMinusState.ColumnsDefaultNudge.find(x => x.ColumnId == columnValuePair.columnID && x.Expression == null)
+                            if (columnNudge) {
+                                newValue = ({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
+                            }
+                            //we havent found a condition so we use the general nudge
+                            else {
+                                newValue = ({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (this.PlusMinusState.DefaultNudge * side) })
+                            }
                         }
-
-                        //this.blotter.setValue(keyValuePair[0], columnValuePair.columnID, columnValuePair.value + ( this.PlusMinusState.DefaultNudge * side))
+                        newValues.push(newValue)
                     }
                 }
             }

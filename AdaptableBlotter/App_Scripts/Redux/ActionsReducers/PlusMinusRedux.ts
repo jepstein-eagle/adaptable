@@ -2,10 +2,14 @@
 
 import * as Redux from 'redux';
 import * as React from 'react';
-import {PlusMinusState} from './Interface/IState';
+import { PlusMinusState } from './Interface/IState';
+import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
+import { IExpression } from '../../Core/interface/IExpression';
+
+import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 export const PLUSMINUS_SET_DEFAULT_NUDGE = 'PLUSMINUS_SET_DEFAULT_NUDGE';
-export const PLUSMINUS_ADD_COLUMNS_DEFAULT_NUDGE = 'PLUSMINUS_ADD_COLUMNS_DEFAULT_NUDGE';
+export const PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE = 'PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE';
 export const PLUSMINUS_EDIT_COLUMNS_DEFAULT_NUDGE = 'PLUSMINUS_EDIT_COLUMNS_DEFAULT_NUDGE';
 export const PLUSMINUS_DELETE_COLUMNS_DEFAULT_NUDGE = 'PLUSMINUS_DELETE_COLUMNS_DEFAULT_NUDGE';
 
@@ -17,7 +21,9 @@ export interface PlusMinusSetColumnsDefaultNudgeAction extends Redux.Action {
     ColumnsDefaultNudge: { ColumnId: string, DefaultNudge: number }[]
 }
 
-export interface PlusMinusAddColumnsDefaultNudgeAction extends Redux.Action {
+export interface PlusMinusAddOrUpdateColumnsDefaultNudgeAction extends Redux.Action {
+    Index: number,
+    ColumnsDefaultNudge: IPlusMinusCondition
 }
 
 export interface PlusMinusEditColumnsDefaultNudgeAction extends Redux.Action {
@@ -34,8 +40,10 @@ export const PlusMinusSetDefaultNudge = (value: number): PlusMinusSetDefaultNudg
     value
 })
 
-export const PlusMinusAddColumnsDefaultNudge = (): PlusMinusAddColumnsDefaultNudgeAction => ({
-    type: PLUSMINUS_ADD_COLUMNS_DEFAULT_NUDGE
+export const PlusMinusAddOrUpdateColumnsDefaultNudge = (Index: number, ColumnsDefaultNudge: IPlusMinusCondition): PlusMinusAddOrUpdateColumnsDefaultNudgeAction => ({
+    type: PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE,
+    Index,
+    ColumnsDefaultNudge
 })
 
 export const PlusMinusEditColumnsDefaultNudge = (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }): PlusMinusEditColumnsDefaultNudgeAction => ({
@@ -58,19 +66,26 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinus
     switch (action.type) {
         case PLUSMINUS_SET_DEFAULT_NUDGE:
             return Object.assign({}, state, { DefaultNudge: (<PlusMinusSetDefaultNudgeAction>action).value })
-        case PLUSMINUS_ADD_COLUMNS_DEFAULT_NUDGE: {
-            let newCol: { ColumnId: string, DefaultNudge: number }[] = [].concat(state.ColumnsDefaultNudge)
-            newCol.push({ ColumnId: "select", DefaultNudge: state.DefaultNudge })
+        case PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE: {
+            let actionTyped = (<PlusMinusAddOrUpdateColumnsDefaultNudgeAction>action)
+            let newCol: IPlusMinusCondition[] = [].concat(state.ColumnsDefaultNudge)
+            if (actionTyped.Index == -1) {
+                newCol.push(actionTyped.ColumnsDefaultNudge)
+            }
+            else {
+                newCol[actionTyped.Index] = actionTyped.ColumnsDefaultNudge
+            }
             return Object.assign({}, state, { ColumnsDefaultNudge: newCol })
         }
         case PLUSMINUS_EDIT_COLUMNS_DEFAULT_NUDGE: {
-            let newCol: { ColumnId: string, DefaultNudge: number }[] = [].concat(state.ColumnsDefaultNudge)
+            let newCol: IPlusMinusCondition[] = [].concat(state.ColumnsDefaultNudge)
             let actionTyped = (<PlusMinusEditColumnsDefaultNudgeAction>action)
-            newCol[actionTyped.Index] = { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, DefaultNudge: actionTyped.ColumnDefaultNudge.DefaultNudge }
+            let oldCondition = newCol[actionTyped.Index]
+            newCol[actionTyped.Index] = Object.assign({}, oldCondition, { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, DefaultNudge: actionTyped.ColumnDefaultNudge.DefaultNudge })
             return Object.assign({}, state, { ColumnsDefaultNudge: newCol })
         }
         case PLUSMINUS_DELETE_COLUMNS_DEFAULT_NUDGE: {
-            let newCol: { ColumnId: string, DefaultNudge: number }[] = [].concat(state.ColumnsDefaultNudge)
+            let newCol: IPlusMinusCondition[] = [].concat(state.ColumnsDefaultNudge)
             newCol.splice((<PlusMinusDeleteColumnsDefaultNudgeAction>action).Index, 1)
             return Object.assign({}, state, { ColumnsDefaultNudge: newCol })
         }
