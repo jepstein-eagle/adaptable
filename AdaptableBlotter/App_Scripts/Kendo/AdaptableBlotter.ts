@@ -268,11 +268,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
+    public getDisplayValue(id: any, columnId: string): string {
+        var foundrow = this.grid.table.find("tr[data-uid='" + id + "']"); //use that to find the row
+        let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
+        let tdIndex = columnIndex + 1;
+        //we use the context of Jquery instead of parent/children so we improve performance drastically!
+        let cell = $("td:nth-child(" + tdIndex + ")", foundrow);
+        return cell.text();
+    }
+
     public getColumnValueString(columnId: string): Array<string> {
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
         let tdIndex = columnIndex + 1;
         var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
-        return rows.map((index,element)=> $(element).text()).toArray();
+        return rows.map((index, element) => $(element).text()).toArray();
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {

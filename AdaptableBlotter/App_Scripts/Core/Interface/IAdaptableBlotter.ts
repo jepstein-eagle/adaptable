@@ -24,6 +24,7 @@ export interface IAdaptableBlotter {
     getColumnValueString(columnId: string): Array<string>
     removeCustomSort(columnId: string): void
     getCurrentCellEditValue(): any
+    getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
     isColumnReadonly(columnId:string):boolean
