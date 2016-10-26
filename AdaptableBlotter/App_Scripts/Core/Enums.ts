@@ -38,3 +38,11 @@ export enum LeafExpressionOperator {
     StartsWith,
     Matches
 }
+
+export enum FlashingCellDuration{
+    OneQuarterSecond,
+    HalfSecond,
+    ThreeQuarterSecond,
+    Second
+}
+

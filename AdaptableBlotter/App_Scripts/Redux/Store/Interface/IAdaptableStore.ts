@@ -8,6 +8,7 @@ export interface AdaptableBlotterState {
     Grid: AdaptableBlotterStates.GridState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     Export: AdaptableBlotterStates.ExcelExportState;
+    FlashingCells: AdaptableBlotterStates.FlashingCellState;
 }
 
 export interface IAdaptableBlotterStore {

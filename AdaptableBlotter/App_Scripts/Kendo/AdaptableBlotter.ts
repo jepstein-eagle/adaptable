@@ -14,6 +14,7 @@ import { UserDataManagementStrategy } from './Strategy/UserDataManagementStrateg
 import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
+import { FlashingCellsStrategy } from './Strategy/FlashingCellsStrategy'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
@@ -22,6 +23,8 @@ import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
+import { IAuditService } from '../Core/Services/Interface/IAuditService'
+import { AuditService } from '../Core/Services/AuditService'
 
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
@@ -31,13 +34,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
-
+    public AuditService: IAuditService
+    
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService();
+        this.AuditService = new AuditService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -49,6 +54,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -56,7 +62,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
+
         })
+
+        grid.dataSource.bind("change", (e: any) => {
+            if (e.action == "itemchange") {
+                let itemsArray = e.items[0];
+                let changedValue = itemsArray[e.field];
+                let identifierValue = itemsArray["uid"];
+                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
+            }
+        });
+
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
@@ -177,11 +194,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+        // first update the model, then sync the grid, then tell the AuditService (which will fire an event picked up by Flashing Cells)
         for (var item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.id);
             model[item.columnId] = item.value;
         }
+
         this.grid.dataSource.sync();
+
+        for (var item of batchValues) {
+            let model: any = this.grid.dataSource.getByUid(item.id);
+            this.AuditService.CreateAuditEvent(item.id, item.value, item.columnId);
+        }
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
@@ -304,6 +328,56 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.options.excel.fileName = fileName + ".xls";
         this.grid.options.excel.allPages = allPages;
         this.grid.saveAsExcel();
+    }
+
+    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any {
+        var dataItems = this.grid.dataSource.view();
+        for (var i = 0; i < dataItems.length; i++) {
+            if (dataItems[i].uid == rowIdentifierValue) {
+                var row = this.grid.table.find("tr[data-uid='" + dataItems[i].uid + "']");
+                var cell = row.children().eq(this.grid.columns.findIndex(x=>x.field == columnName));
+                return cell;
+            }
+        }
+        return null;
+    }
+
+    public addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void {
+        this.addCellStyle(rowIdentifierValue, columnName, styleName);
+        setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnName, styleName), timeout);
+    }
+
+    public addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void {
+        var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
+        if (cell != null) {
+            cell.addClass(styleName);
+        }
+    }
+
+    public removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void {
+        var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
+        if (cell != null) {
+            cell.removeClass(styleName);
+        }
+    }
+
+    public GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any{
+        // this is rather brittle... but its only required the first time we change a cell value
+          var dataSource = this.grid.dataSource;
+          var dataSourceCopy: any = dataSource;
+          var testarray: any =dataSourceCopy._data;
+            var currentRowIndex: number;
+            for (var i = 0; i < testarray.length; i++) {
+                var myRow: any = testarray[i];
+                var uidValue = myRow["uid"];
+                if (uidValue != null && uidValue == identifierValue) {
+                    currentRowIndex = i;
+                    break;
+                }
+            }
+            var oldRow = dataSourceCopy._pristineData[currentRowIndex];
+            var oldValue = oldRow[columnName];
+           return oldValue;
     }
 
     public isGridPageable(): boolean {

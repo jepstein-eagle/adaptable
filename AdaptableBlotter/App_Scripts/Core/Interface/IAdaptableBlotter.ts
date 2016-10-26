@@ -1,8 +1,9 @@
-import {ColumnType} from '../Enums'
-import {IMenuItem, IStrategy} from './IStrategy'
-import {IAdaptableBlotterStore} from '../../Redux/Store/Interface/IAdaptableStore'
-import {IEvent} from './IEvent'
-import {ICalendarService} from '../Services/Interface/ICalendarService'
+import { ColumnType } from '../Enums'
+import { IMenuItem, IStrategy } from './IStrategy'
+import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IEvent } from './IEvent'
+import { ICalendarService } from '../Services/Interface/ICalendarService'
+import { IAuditService } from '../Services/Interface/IAuditService'
 
 
 
@@ -11,6 +12,7 @@ export interface IAdaptableBlotter {
     Strategies: IAdaptableStrategyCollection
 
     CalendarService: ICalendarService
+    AuditService: IAuditService
 
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
@@ -27,15 +29,22 @@ export interface IAdaptableBlotter {
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
-    isColumnReadonly(columnId:string):boolean
+    isColumnReadonly(columnId: string):boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
 
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
-    SetNewColumnListOrder(VisibleColumnList : Array<IColumn>) : void
-    getActiveCell(): {Id: any, ColumnId: string, Value: any}
+    SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+    getActiveCell(): { Id: any, ColumnId: string, Value: any }
     saveAsExcel(fileName: string, allPages: boolean): void
     isGridPageable(): boolean
 
+    // cell styling methods
+    addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void
+    addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+    removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+
+    // get dirty data
+      GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any
 }
 
 export interface ISelectedCells {
