@@ -221,11 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public selectCells(cells: { id: any, columnId: string }[]): void {
         let selectorQuery: JQuery
         for (let cell of cells) {
-            var foundrow = this.grid.table.find("tr[data-uid='" + cell.id + "']"); //use that to find the row
-            let columnIndex = this.grid.columns.findIndex(x => x.field == cell.columnId);
-            let tdIndex = columnIndex + 1;
-            //we use the context of Jquery instead of parent/children so we improve performance drastically!
-            let cellSelect = $("td:nth-child(" + tdIndex + ")", foundrow);
+            let cellSelect = this.getCellByColumnNameAndRowIdentifier(cell.id, cell.columnId)
             if (selectorQuery == null) {
                 selectorQuery = cellSelect
             }
@@ -291,15 +287,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public getDisplayValue(id: any, columnId: string): string {
-        var foundrow = this.grid.table.find("tr[data-uid='" + id + "']"); //use that to find the row
-        let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
-        let tdIndex = columnIndex + 1;
-        //we use the context of Jquery instead of parent/children so we improve performance drastically!
-        let cell = $("td:nth-child(" + tdIndex + ")", foundrow);
-        return cell.text();
-    }
-
     public getColumnValueString(columnId: string): Array<string> {
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
         let tdIndex = columnIndex + 1;
@@ -330,13 +317,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any {
+    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): JQuery {
         var row = this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnName);
         let tdIndex = columnIndex + 1;
         //we use the context of Jquery instead of parent/children so we improve performance drastically!
         let cell = $("td:nth-child(" + tdIndex + ")", row);
         return cell;
+    }
+
+    public getDisplayValue(id: any, columnId: string): string {
+        let cell = this.getCellByColumnNameAndRowIdentifier(id, columnId)
+        return cell.text();
     }
 
     public addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void {
