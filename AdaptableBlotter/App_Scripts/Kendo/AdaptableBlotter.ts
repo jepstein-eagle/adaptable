@@ -269,7 +269,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueString(columnId: string): Array<string> {
-        return this.grid.dataSource.data().map(x => (<any>x)[columnId].toString());
+        let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
+        let tdIndex = columnIndex + 1;
+        var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
+        return rows.map((index,element)=> $(element).text()).toArray();
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
