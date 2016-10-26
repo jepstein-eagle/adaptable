@@ -39,8 +39,7 @@ export interface IAdaptableBlotter {
     isGridPageable(): boolean
 
     // cell styling methods
-    addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void
-    addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+    addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void
     removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
 
     // get dirty data

@@ -339,15 +339,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell;
     }
 
-    public addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void {
-        this.addCellStyle(rowIdentifierValue, columnName, styleName);
-        setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnName, styleName), timeout);
-    }
-
-    public addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void {
+    public addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void {
         var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
         if (cell != null) {
             cell.addClass(styleName);
+        }
+        if (timeout) {
+            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnName, styleName), timeout);
         }
     }
 

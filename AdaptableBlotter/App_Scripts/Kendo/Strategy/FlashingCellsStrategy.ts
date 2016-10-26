@@ -51,7 +51,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
-        this.blotter.addCellStyleWithTimeout(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnName, cellStyle, this.getFlashDuration(flashingColumn.FlashingCellDuration))
+        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnName, cellStyle, this.getFlashDuration(flashingColumn.FlashingCellDuration))
     }
 
     private getFlashDuration(flashingCellDuration: FlashingCellDuration): number {
