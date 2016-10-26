@@ -35,7 +35,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    
+
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -331,15 +331,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): any {
-        var dataItems = this.grid.dataSource.view();
-        for (var i = 0; i < dataItems.length; i++) {
-            if (dataItems[i].uid == rowIdentifierValue) {
-                var row = this.grid.table.find("tr[data-uid='" + dataItems[i].uid + "']");
-                var cell = row.children().eq(this.grid.columns.findIndex(x=>x.field == columnName));
-                return cell;
-            }
-        }
-        return null;
+        var row = this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
+        let columnIndex = this.grid.columns.findIndex(x => x.field == columnName);
+        let tdIndex = columnIndex + 1;
+        //we use the context of Jquery instead of parent/children so we improve performance drastically!
+        let cell = $("td:nth-child(" + tdIndex + ")", row);
+        return cell;
     }
 
     public addCellStyleWithTimeout(rowIdentifierValue: any, columnName: string, styleName: string, timeout: number): void {
@@ -361,23 +358,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any{
+    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
         // this is rather brittle... but its only required the first time we change a cell value
-          var dataSource = this.grid.dataSource;
-          var dataSourceCopy: any = dataSource;
-          var testarray: any =dataSourceCopy._data;
-            var currentRowIndex: number;
-            for (var i = 0; i < testarray.length; i++) {
-                var myRow: any = testarray[i];
-                var uidValue = myRow["uid"];
-                if (uidValue != null && uidValue == identifierValue) {
-                    currentRowIndex = i;
-                    break;
-                }
+        var dataSource = this.grid.dataSource;
+        var dataSourceCopy: any = dataSource;
+        var testarray: any = dataSourceCopy._data;
+        var currentRowIndex: number;
+        for (var i = 0; i < testarray.length; i++) {
+            var myRow: any = testarray[i];
+            var uidValue = myRow["uid"];
+            if (uidValue != null && uidValue == identifierValue) {
+                currentRowIndex = i;
+                break;
             }
-            var oldRow = dataSourceCopy._pristineData[currentRowIndex];
-            var oldValue = oldRow[columnName];
-           return oldValue;
+        }
+        var oldRow = dataSourceCopy._pristineData[currentRowIndex];
+        var oldValue = oldRow[columnName];
+        return oldValue;
     }
 
     public isGridPageable(): boolean {
