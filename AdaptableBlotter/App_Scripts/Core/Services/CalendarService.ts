@@ -30,8 +30,8 @@ export class CalendarService implements ICalendarService {
                     { HolidayName: "Early May Bank Holiday", HolidayDate: new Date("May 1, 2017") },
                     { HolidayName: "Spring Bank Holiday", HolidayDate: new Date("May 29, 2017") },
                     { HolidayName: "Summer Bank Holiday", HolidayDate: new Date("August 28, 2017") },
-                    { HolidayName: "Christmas Day", HolidayDate: new Date("Decmeber 25, 2017") },
-                    { HolidayName: "Boxing Day", HolidayDate: new Date("Decmeber 26, 2017") },
+                    { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2017") },
+                    { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2017") },
                 ]
             },
             {
@@ -47,7 +47,7 @@ export class CalendarService implements ICalendarService {
                     { HolidayName: "Bastille Day", HolidayDate: new Date("July 14, 2017") },
                     { HolidayName: "Assumption Day", HolidayDate: new Date("August 15, 2017") },
                     { HolidayName: "All Saints Day", HolidayDate: new Date("November 01, 2017") },
-                    { HolidayName: "Armisitice Day", HolidayDate: new Date("Novmeber 11, 2017") },
+                    { HolidayName: "Armistice Day", HolidayDate: new Date("November 11, 2017") },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2017") },
 
 
@@ -60,7 +60,7 @@ export class CalendarService implements ICalendarService {
                     { HolidayName: "Bastille Day", HolidayDate: new Date("July 14, 2016") },
                     { HolidayName: "Assumption Day", HolidayDate: new Date("August 15, 2016") },
                     { HolidayName: "All Saints Day", HolidayDate: new Date("November 01, 2016") },
-                    { HolidayName: "Armisitice Day", HolidayDate: new Date("Novmeber 11, 2016") },
+                    { HolidayName: "Armistice Day", HolidayDate: new Date("November 11, 2016") },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2016") },
 
 
