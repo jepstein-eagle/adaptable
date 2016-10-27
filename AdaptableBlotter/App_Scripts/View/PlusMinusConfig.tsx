@@ -66,8 +66,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
             })
             return <li
-                className="list-group-item">
-                <Row key={x.ColumnId + index}>
+                className="list-group-item" key={x.ColumnId + index}>
+                <Row >
                     <Col xs={3}>
                         <FormControl componentClass="select" placeholder="select" value={x.ColumnId} onChange={(x) => this.onColumnSelectChange(index, x)} >
                             <option value="select" key="select">Select a column</option>

@@ -19,7 +19,8 @@ export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements 
     constructor(private props2: PlusMinusExpressionWizardProps) {
         super(props2)
         this.state = {
-            Expression : props2.Data.Expression
+            Expression : props2.Data.Expression,
+            SelectedColumnId : "select"
         }
     }
 

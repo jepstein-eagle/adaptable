@@ -7,6 +7,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 
 interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
@@ -15,6 +16,7 @@ interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBui
 
 export interface ExpressionBuilderPageState {
     Expression: ExpressionString
+    SelectedColumnId: string
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
@@ -25,19 +27,27 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                     <ExpressionBuilderConditionSelector ColumnsList={this.props.ColumnList}
                         Blotter={this.props.Blotter}
                         Expression={this.state.Expression}
-                        onExpressionChange={(expression) => this.onChangeExpression(expression)}>
+                        onExpressionChange={(expression) => this.onChangeExpression(expression)}
+                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                        SelectedColumnId={this.state.SelectedColumnId}>
                     </ExpressionBuilderConditionSelector>
                 </Col>
                 <Col xs={3}>
-                    <Panel header="Preview" bsStyle="primary">
-                    </Panel>
+                    <ExpressionBuilderPreview Expression={this.state.Expression}
+                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                        SelectedColumnId={this.state.SelectedColumnId}>
+                    </ExpressionBuilderPreview>
                 </Col>
             </Row>
         </Grid>
     }
 
     onChangeExpression(newExpression: ExpressionString) {
-        this.setState({ Expression: newExpression })
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState)
+    }
+
+    onSelectedColumnChange(columnName: string) {
+        this.setState({ SelectedColumnId: columnName } as ExpressionBuilderPageState)
     }
 
     OnSelectedValuesChange(newValues: Array<string>) {
