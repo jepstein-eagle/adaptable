@@ -38,6 +38,6 @@ export module ExpressionHelper {
 
     function ColumnValuesKeyValuePairToString(keyValuePair: { ColumnName: string, Values: Array<any> }): string {
         return "([" + keyValuePair.ColumnName + "]"
-            + " In (" + keyValuePair.Values.join() + ")"
+            + " In (" + keyValuePair.Values.join(", ") + ")"
     }
 }
