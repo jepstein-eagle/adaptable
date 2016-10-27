@@ -13,6 +13,7 @@ import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExcelExportRedux from '../ActionsReducers/ExcelExportRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
+import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -32,8 +33,10 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Grid: GridRedux.GridReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     Export: ExcelExportRedux.ExcelExportReducer,
-    FlashingCells: FlashingCellsRedux.FlashingCellReducer
+    FlashingCells: FlashingCellsRedux.FlashingCellReducer,
+    Calendars: CalendarRedux.CalendarReducer
 });
+
 
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';

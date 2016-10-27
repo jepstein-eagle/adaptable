@@ -1,14 +1,14 @@
-import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
-import {MenuItemShowPopup} from '../../Core/MenuItem';
-import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
+import { MenuItemShowPopup } from '../../Core/MenuItem';
+import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
-import {IMenuItem} from '../../Core/Interface/IStrategy';
-import {Helper} from '../../Core/Helper';
-import {ColumnType} from '../../Core/Enums'
-import {ShortcutAction} from '../../Core/Enums'
-import {ICalendarService} from '../../Core/Services/Interface/ICalendarService'
+import { IMenuItem } from '../../Core/Interface/IStrategy';
+import { Helper } from '../../Core/Helper';
+import { ColumnType } from '../../Core/Enums'
+import { ShortcutAction } from '../../Core/Enums'
+import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 
-import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 
 export class ShortcutStrategy extends AdaptableStrategyBase {
     private NumericShortcuts: IShortcut[]

@@ -92,7 +92,7 @@ function compareFlashingCellConfigItems(a: any, b: any) {
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FlashingColumns: state.FlashingCells.FlashingColumns,
+        FlashingColumns: state.FlashingCell.FlashingColumns,
         Columns: state.Grid.Columns
     };
 }

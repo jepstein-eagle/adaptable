@@ -10,7 +10,7 @@ export class DataGenerator {
         return trades;
     }
 
-    private _numericCols: string[] = ["bid", "ask", "marketPrice", "bloombergAsk", "bloombergBid", "indicativeAsk", "indicativeBid"];
+    private _numericCols: string[] = ["bid", "ask"];//, "marketPrice", "bloombergAsk", "bloombergBid", "indicativeAsk", "indicativeBid"];
 
     //Can't be bothered to create a ts file for kendo....
     startTickingDataKendo(grid: kendo.ui.Grid) {
@@ -29,12 +29,12 @@ export class DataGenerator {
 
             // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
             // as that way at least we dont refresh anything etc and it has no impact.
-      //      trade.set(columnName, newValue);
+         //   trade.set(columnName, newValue);
 
             //trade[columnName] = newValue;
             //trade.dirty = true;
             //grid.dataSource.sync();
-        }, 1000)
+        }, 5000)
     }
 
 

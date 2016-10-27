@@ -30,8 +30,8 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     }
 
     private InitFlashingCells() {
-        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCells) {
-            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCells;
+        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
+            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
         }
     }
 

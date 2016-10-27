@@ -7,6 +7,9 @@ import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 import { IExpression } from '../../../Core/interface/IExpression';
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
+import {ICalendar} from '../../../Core/interface/ICalendarStrategy'
+
+
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -50,4 +53,8 @@ export interface ExcelExportState {
 
 export interface FlashingCellState {
     FlashingColumns: Array<IFlashingColumn>
+}
+
+export interface CalendarState{
+  CurrentCalendar : string ;
 }

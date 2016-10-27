@@ -6,12 +6,8 @@ import { EventDispatcher } from '../EventDispatcher'
 
 
 /*
-For now this is a very rough and ready Audit Service which will listen to "itemchange" changes in the Grid's data source 
-and keep a record of the change.  
-This means that we are able to work out old and new values - though for the first pass its a bit brittle as we look at _pristineData...
-This event is only fired on itemchange which is fine for edits directly in the grid but not when we update the cells ourselves (e.g. through SmartEdit).
-For this reason we have a CreateAuditEvent method which we can call which will trigger the same workflow.
-
+For now this is a very rough and ready Audit Service which will recieve notifications of changes in data - either via an event fired in the blotter or through other strategies.
+This means that we are able to work out old and new values - though for the first pass its a bit brittle as we look at _pristineData via a method in the Blotter...
 */
 export class AuditService implements IAuditService {
 
@@ -51,8 +47,7 @@ export class AuditService implements IAuditService {
         }
         else {
             // this is the first time we have updated this so lets see if we can at least try to get the value...
-            var dirtyValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnName, dataChangedEvent.IdentifierValue);
-            dataChangedEvent.OldValue = dirtyValue;
+            dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnName, dataChangedEvent.IdentifierValue);;
             myList.DataValues.push({ OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, IdentifierValue: dataChangedEvent.IdentifierValue })
         }
     }

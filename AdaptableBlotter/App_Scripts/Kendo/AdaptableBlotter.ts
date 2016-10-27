@@ -25,6 +25,8 @@ import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
+import { CalendarStrategy } from './Strategy/CalendarStrategy'
+
 
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
@@ -41,7 +43,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
-        this.CalendarService = new CalendarService();
+        this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
 
         //we build the list of strategies
@@ -55,6 +57,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -190,7 +193,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(id: any, columnId: string, value: any): void {
+        // jw: i prefer this still despite the problems as it always works...... 
+       // this.setValueBatch([ {id, columnId, value}]);
+
+        // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!        
         this.grid.dataSource.getByUid(id).set(columnId, value);
+        
+        // this line helps a bit with some of the issues but not all of them sadly
+        //this.grid.dataSource.sync();
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
