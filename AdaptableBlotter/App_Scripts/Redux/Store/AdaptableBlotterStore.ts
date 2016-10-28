@@ -33,7 +33,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Grid: GridRedux.GridReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     Export: ExcelExportRedux.ExcelExportReducer,
-    FlashingCells: FlashingCellsRedux.FlashingCellReducer,
+    FlashingCell: FlashingCellsRedux.FlashingCellReducer,
     Calendars: CalendarRedux.CalendarReducer
 });
 
