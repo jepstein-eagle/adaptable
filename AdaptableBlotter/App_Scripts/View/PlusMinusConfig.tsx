@@ -46,7 +46,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             <Row style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
                 <Col xs={7}>Column Nudge Values</Col>
                 <Col xs={5}>
-                    <Button onClick={() => this.createColumnNudgeValue()}>
+                    <Button onClick={() => this.createColumnNudgeValue()} style={{ float: 'right' }}>
                         Create Column Nudge Value
                     </Button>
                 </Col>
@@ -94,15 +94,18 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             </li>
         })
         return <Panel header="Plus/Minus Configuration" bsStyle="primary" style={panelStyle}>
-            <Form inline>
+            <Form horizontal>
                 <FormGroup controlId="formInlineName">
-                    <ControlLabel>Default Nudge Value for Blotter</ControlLabel>
-                    {' '}
-                    <FormControl value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />
+                    <Col xs={4}>
+                        <ControlLabel>Default Nudge Value for Blotter</ControlLabel>
+                    </Col>
+                    <Col xs={8}>
+                        <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />
+                    </Col>
                 </FormGroup>
             </Form>
             <Panel header={header} >
-                {optionColumnsItems.length>0 && columnNudgesHeader}
+                {optionColumnsItems.length > 0 && columnNudgesHeader}
                 <ListGroup style={panelColumNudge}>
                     {optionColumnsItems}
                 </ListGroup>

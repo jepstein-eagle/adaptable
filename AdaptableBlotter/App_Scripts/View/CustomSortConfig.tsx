@@ -49,7 +49,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             <Row style={{display: "flex", alignItems: "center"}}>
                 <Col xs={8}>Custom Sorts</Col>
                 <Col xs={4}>
-                    <Button onClick={() => this.CreateCustomSort() }>
+                    <Button onClick={() => this.CreateCustomSort() } style={{float: 'right'}}>
                         Create Custom Sort
                     </Button>
                 </Col>
