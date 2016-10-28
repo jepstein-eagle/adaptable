@@ -7,11 +7,13 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 
 interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
+    UpdateGoBackState?(finish?: boolean): void
 }
 
 export interface ExpressionBuilderPageState {
@@ -43,18 +45,18 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     }
 
     onChangeExpression(newExpression: ExpressionString) {
-        this.setState({ Expression: newExpression } as ExpressionBuilderPageState)
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
     onSelectedColumnChange(columnName: string) {
-        this.setState({ SelectedColumnId: columnName } as ExpressionBuilderPageState)
+        this.setState({ SelectedColumnId: columnName } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
     OnSelectedValuesChange(newValues: Array<string>) {
         //this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () => this.props.UpdateGoBackState())
     }
 
-    public canNext(): boolean { return true; /*return this.state.SelectedValues.length > 0; */ }
+    public canNext(): boolean { return ExpressionHelper.ConvertExpressionToString(this.state.Expression) != "Any" }
     public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
     public Next(): void { /*this.props.Data.CustomSortItems = this.state.SelectedValues*/ }
     public Back(): void { }
