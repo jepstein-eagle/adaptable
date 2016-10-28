@@ -3,9 +3,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Button, ListGroupItemProps, Modal, Glyphicon} from 'react-bootstrap';
-import {AdaptableViewFactory} from '../AdaptableViewFactory';
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './Interface/IAdaptableWizard'
+import { Button, ListGroupItemProps, Modal, Glyphicon } from 'react-bootstrap';
+import { AdaptableViewFactory } from '../AdaptableViewFactory';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './Interface/IAdaptableWizard'
 
 interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -18,6 +18,7 @@ interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
 interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
     ActiveState: any
     IndexState: number
+    ForceFinish: boolean
 }
 
 class DummyActiveStep implements AdaptableWizardStep {
@@ -43,40 +44,41 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         }
         let BodyElement: JSX.Element = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement)
-        this.state = { ActiveState: newElement, IndexState: indexStart }
+        this.state = { ActiveState: newElement, IndexState: indexStart, ForceFinish: false }
     }
     //So we inject everything needed for the Wizard
     private cloneWizardStep(step: JSX.Element): JSX.Element {
         return React.cloneElement(step, {
             ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
-            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+            UpdateGoBackState: (finish: boolean = false) => this.ForceUpdateGoBackState(finish)
         })
     }
     render() {
         return (
             <Modal show={true} onHide={this.props.onHide}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Step {this.state.IndexState + 1 + "/" + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
+                    <Modal.Title>Step {this.state.IndexState + 1 + "/" + this.props.Steps.length}- {this.ActiveStep.StepName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                     {this.state.ActiveState}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button style={buttonLeftStyle} onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove"/></Button>
-                    <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep() } onClick={() => this.handleClickBack() }><Glyphicon glyph="chevron-left"/> Back</Button>
-                    <Button bsStyle="primary" disabled={!this.ActiveStep.canNext() }  onClick={() => this.handleClickNext() }>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"}/></Button>
+                    <Button style={buttonLeftStyle} onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
+                    <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
+                    <Button bsStyle="primary" disabled={!this.ActiveStep.canNext()} onClick={() => this.handleClickNext()}>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"} /></Button>
                 </Modal.Footer>
             </Modal>
         );
     }
-    ForceUpdateGoBackState() {
+    ForceUpdateGoBackState(forceFinish: boolean) {
         //to force back/next. We'll see if that needs to be optimised'
         this.forceUpdate();
+        this.setState({ ForceFinish: forceFinish } as AdaptableWizardState)
     }
 
     isLastStep(): boolean {
-        return this.state.IndexState == (this.props.Steps.length - 1);
+        return this.state.IndexState == (this.props.Steps.length - 1) || this.state.ForceFinish;
     }
 
     isFirstStep(): boolean {
@@ -90,7 +92,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 this.ActiveStep.Back();
                 let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
                 let newElement = this.cloneWizardStep(BodyElement)
-                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1 })
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1, ForceFinish: false })
             }
         }
     }
@@ -101,7 +103,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 this.ActiveStep.Next();
                 let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
                 let newElement = this.cloneWizardStep(BodyElement)
-                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1 })
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1, ForceFinish: false })
             }
         }
         else {

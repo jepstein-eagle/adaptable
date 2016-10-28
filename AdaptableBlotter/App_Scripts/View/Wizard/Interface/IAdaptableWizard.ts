@@ -8,5 +8,5 @@ export interface AdaptableWizardStep {
 
 export interface AdaptableWizardStepProps<T> {
     Data?: T
-    UpdateGoBackState?(): void
+    UpdateGoBackState?(finish?: boolean): void
 }
