@@ -5,7 +5,7 @@ import { IExpression } from '../../Core/Interface/IExpression'
 import { SingleListBox } from '../SingleListBox'
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
-import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col,Button } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button } from 'react-bootstrap';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -61,7 +61,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             <Row style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
                 <Col xs={7}>Build Expression</Col>
                 <Col xs={5}>
-                    <Button onClick={() => this.props.onSelectedColumnChange("select")} style={{float: 'right'}}>
+                    <Button onClick={() => this.props.onSelectedColumnChange("select")} style={{ float: 'right' }}>
                         Add Condition
                     </Button>
                 </Col>
@@ -118,7 +118,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let colValuesExpression = this.props.Expression.ColumnValuesExpression
         let keyValuePair = colValuesExpression.find(x => x.ColumnName == this.props.SelectedColumnId)
         if (keyValuePair) {
-            keyValuePair.Values = selectedValues
+            if (selectedValues.length == 0) {
+                let keyValuePairIndex = colValuesExpression.findIndex(x => x.ColumnName == this.props.SelectedColumnId)
+                colValuesExpression.splice(keyValuePairIndex, 1)
+            }
+            else {
+                keyValuePair.Values = selectedValues
+            }
         }
         else {
             colValuesExpression.push({ ColumnName: this.props.SelectedColumnId, Values: selectedValues })
