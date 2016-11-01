@@ -7,7 +7,7 @@ import { IColumn } from '../Interface/IAdaptableBlotter'
 import { ColumnType } from '../Enums'
 
 export module ExpressionHelper {
-    export function ConvertExpressionToString(expressionString: ExpressionString): string {
+    export function ConvertExpressionToString(expressionString: ExpressionString, columns: Array<IColumn>): string {
         let returnValue = ""
         if (IsExpressionEmpty(expressionString)) {
             return "Any";
@@ -15,17 +15,18 @@ export module ExpressionHelper {
 
         let columnList = GetColumnListFromExpression(expressionString)
         for (let columnId of columnList) {
+            let columnFriendlyName = columns.find(x => x.ColumnId == columnId).ColumnFriendlyName
             let columnToString = ""
             let columnValues = expressionString.ColumnValuesExpression.find(x => x.ColumnName == columnId)
             if (columnValues) {
-                columnToString = ColumnValuesKeyValuePairToString(columnValues)
+                columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
             let columnRanges = expressionString.RangeExpression.find(x => x.ColumnName == columnId)
             if (columnRanges) {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += RangesToString(columnRanges)
+                columnToString += RangesToString(columnRanges, columnFriendlyName)
             }
             if (returnValue != "") {
                 returnValue += " AND "
@@ -127,8 +128,8 @@ export module ExpressionHelper {
         return true;
     }
 
-    function ColumnValuesKeyValuePairToString(keyValuePair: { ColumnName: string, Values: Array<any> }): string {
-        return "[" + keyValuePair.ColumnName + "]"
+    function ColumnValuesKeyValuePairToString(keyValuePair: { ColumnName: string, Values: Array<any> }, columnFriendlyName: string): string {
+        return "[" + columnFriendlyName + "]"
             + " In (" + keyValuePair.Values.join(", ") + ")"
     }
 
@@ -161,17 +162,17 @@ export module ExpressionHelper {
         }
     }
 
-    function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IExpressionRange> }): string {
+    function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IExpressionRange> }, columnFriendlyName: string): string {
         let returnValue = ""
         for (let range of keyValuePair.Ranges) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
             if (range.Operator == LeafExpressionOperator.Between) {
-                returnValue += "[" + keyValuePair.ColumnName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1 + " AND " + range.Operand2
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1 + " AND " + range.Operand2
             }
             else {
-                returnValue += "[" + keyValuePair.ColumnName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1
             }
         }
         return returnValue
