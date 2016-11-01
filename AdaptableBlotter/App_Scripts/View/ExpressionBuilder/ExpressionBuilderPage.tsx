@@ -37,7 +37,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                 <Col xs={3}>
                     <ExpressionBuilderPreview Expression={this.state.Expression}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                        SelectedColumnId={this.state.SelectedColumnId}>
+                        SelectedColumnId={this.state.SelectedColumnId}
+                        ColumnsList={this.props.ColumnList}>
                     </ExpressionBuilderPreview>
                 </Col>
             </Row>

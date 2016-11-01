@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IExpression } from '../../Core/Interface/IExpression'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { SingleListBox } from '../SingleListBox'
 import { ListGroupItem, ListGroup, Panel, Button } from 'react-bootstrap';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
@@ -13,6 +14,7 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     Expression: ExpressionString
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
+    ColumnsList: Array<IColumn>
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
@@ -62,13 +64,14 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                 })
             }
+            let columnFriendlyName = this.props.ColumnsList.find(x=>x.ColumnId == columnId ).ColumnFriendlyName
             return <div key={columnId + "div"}>
                 <Button block style={panelHeaderStyle}
                     bsStyle="success"
                     key={columnId + "header"}
                     ref={columnId}
                     onClick={() => this.props.onSelectedColumnChange(columnId)} >
-                    {columnId}
+                    {columnFriendlyName}
                 </Button>
                 <ListGroup>
                     {columnValuesListgroupItems}
