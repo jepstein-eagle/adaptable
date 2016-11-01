@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import { IExpression } from '../../Core/Interface/IExpression'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { SingleListBox } from '../SingleListBox'
-import { ListGroupItem, ListGroup, Panel, Button } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
@@ -15,6 +15,8 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
+    DeleteRange: (ColumnId: string, index: number) => void
+    DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
@@ -29,7 +31,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             if (columnValues) {
                 columnValuesListgroupItems = columnValues.Values.map(y => {
                     return <ListGroupItem key={y}>
-                        {y}
+                        <Form inline>
+                            {y}
+                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)}><Glyphicon glyph="trash" /></Button>
+                            </OverlayTrigger>
+                        </Form>
                     </ListGroupItem>
                 })
             }
@@ -41,30 +48,50 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
                         if (y.Operand1 == "" || y.Operand2 == "") {
                             return <ListGroupItem key={columnId + index} bsStyle="danger">
-                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1} And {y.Operand2}
+                                <Form inline>
+                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </Form>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1} And {y.Operand2}
+                                <Form inline>
+                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </Form>
                             </ListGroupItem>
                         }
                     }
                     else {
                         if (y.Operand1 == "" || y.Operator == LeafExpressionOperator.Unknown) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger">
-                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1}
+                                <Form inline>
+                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </Form>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1}
+                                <Form inline>
+                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </Form>
                             </ListGroupItem>
                         }
                     }
                 })
             }
-            let columnFriendlyName = this.props.ColumnsList.find(x=>x.ColumnId == columnId ).ColumnFriendlyName
+            let columnFriendlyName = this.props.ColumnsList.find(x => x.ColumnId == columnId).ColumnFriendlyName
             return <div key={columnId + "div"}>
                 <Button block style={panelHeaderStyle}
                     bsStyle="success"

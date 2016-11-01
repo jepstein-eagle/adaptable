@@ -38,13 +38,39 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                     <ExpressionBuilderPreview Expression={this.state.Expression}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                         SelectedColumnId={this.state.SelectedColumnId}
-                        ColumnsList={this.props.ColumnList}>
+                        ColumnsList={this.props.ColumnList}
+                        DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
+                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}>
                     </ExpressionBuilderPreview>
                 </Col>
             </Row>
         </Grid>
     }
 
+    DeleteColumnValue(columnId: string, value: any) {
+        //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let columnValues = this.state.Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
+        let index = columnValues.Values.indexOf(value)
+        columnValues.Values.splice(index, 1)
+        if (columnValues.Values.length == 0) {
+            let columnValuesIndex = this.state.Expression.ColumnValuesExpression.findIndex(x => x.ColumnName == columnId)
+            this.state.Expression.ColumnValuesExpression.splice(columnValuesIndex, 1)
+        }
+        let newExpression: ExpressionString = Object.assign({}, this.state.Expression)
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+
+    }
+    DeleteRange(columnId: string, index: number) {
+        //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let columnRanges = this.state.Expression.RangeExpression.find(x => x.ColumnName == columnId)
+        columnRanges.Ranges.splice(index, 1)
+        if (columnRanges.Ranges.length == 0) {
+            let columnRangesIndex = this.state.Expression.RangeExpression.findIndex(x => x.ColumnName == columnId)
+            this.state.Expression.RangeExpression.splice(columnRangesIndex, 1)
+        }
+        let newExpression: ExpressionString = Object.assign({}, this.state.Expression)
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+    }
     onChangeExpression(newExpression: ExpressionString) {
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
