@@ -52,11 +52,10 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         this.setState({ SelectedColumnId: columnName } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
-    OnSelectedValuesChange(newValues: Array<string>) {
-        //this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () => this.props.UpdateGoBackState())
+    public canNext(): boolean {
+        return !ExpressionHelper.IsExpressionEmpty(this.state.Expression)
+            && ExpressionHelper.IsExpressionValid(this.state.Expression)
     }
-
-    public canNext(): boolean { return ExpressionHelper.ConvertExpressionToString(this.state.Expression) != "Any" }
     public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
     public Next(): void { /*this.props.Data.CustomSortItems = this.state.SelectedValues*/ }
     public Back(): void { }

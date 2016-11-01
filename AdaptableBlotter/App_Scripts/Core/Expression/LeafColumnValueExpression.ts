@@ -16,9 +16,9 @@ export class LeafColumnValueExpression implements IExpression {
                 return getColumnValue(this.columnIdentifier) == this.valueOperand;
             case LeafExpressionOperator.NotEquals:
                 return getColumnValue(this.columnIdentifier) != this.valueOperand;
-            case LeafExpressionOperator.GreaterThanOrEquals:
+            case LeafExpressionOperator.GreaterThanOrEqual:
                 return getColumnValue(this.columnIdentifier) >= this.valueOperand;
-            case LeafExpressionOperator.LessThanOrEquals:
+            case LeafExpressionOperator.LessThanOrEqual:
                 return getColumnValue(this.columnIdentifier) <= this.valueOperand;
             case LeafExpressionOperator.Contains:
                 return getColumnValue(this.columnIdentifier).indexOf(this.valueOperand) >= 0;

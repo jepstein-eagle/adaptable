@@ -124,7 +124,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         let _editedColumnNudgeValue = {
             ColumnId: "select",
             DefaultNudge: this.props.DefaultNudgeValue,
-            Expression: new ExpressionString([], "Any", "Any")
+            Expression: new ExpressionString([], "Any", [])
         }
         this.setState({ EditedColumnNudgeValue: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
     }

@@ -6,6 +6,8 @@ import { IExpression } from '../../Core/Interface/IExpression'
 import { SingleListBox } from '../SingleListBox'
 import { ListGroupItem, ListGroup, Panel, Button } from 'react-bootstrap';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { LeafExpressionOperator } from '../../Core/Enums';
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: ExpressionString
@@ -18,22 +20,59 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
     }
     render() {
-        let previewLists = this.props.Expression.ColumnValuesExpression.map(x => {
-            let listgroupItems = x.Values.map(y => {
-                return <ListGroupItem key={y}>
-                    {y}
-                </ListGroupItem>
-            })
-            return <div key={x.ColumnName + "div"}>
+        let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression)
+        let previewLists = columnList.map(columnId => {
+            let columnValues = this.props.Expression.ColumnValuesExpression.find(colValues => colValues.ColumnName == columnId)
+            let columnValuesListgroupItems: JSX.Element[]
+            if (columnValues) {
+                columnValuesListgroupItems = columnValues.Values.map(y => {
+                    return <ListGroupItem key={y}>
+                        {y}
+                    </ListGroupItem>
+                })
+            }
+            let columnRanges = this.props.Expression.RangeExpression.find(colValues => colValues.ColumnName == columnId)
+            let columnRangesListgroupItems: JSX.Element[]
+            if (columnRanges) {
+                columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
+                    if (y.Operator == LeafExpressionOperator.Between) {
+
+                        if (y.Operand1 == "" || y.Operand2 == "") {
+                            return <ListGroupItem key={columnId + index} bsStyle="danger">
+                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1} And {y.Operand2}
+                            </ListGroupItem>
+                        }
+                        else {
+                            return <ListGroupItem key={columnId + index}>
+                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1} And {y.Operand2}
+                            </ListGroupItem>
+                        }
+                    }
+                    else {
+                        if (y.Operand1 == "" || y.Operator == LeafExpressionOperator.Unknown) {
+                            return <ListGroupItem key={columnId + index} bsStyle="danger">
+                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1}
+                            </ListGroupItem>
+                        }
+                        else {
+                            return <ListGroupItem key={columnId + index}>
+                                {ExpressionHelper.OperatorToFriendlyString(y.Operator)} {y.Operand1}
+                            </ListGroupItem>
+                        }
+                    }
+                })
+            }
+            return <div key={columnId + "div"}>
                 <Button block style={panelHeaderStyle}
                     bsStyle="success"
-                    key={x.ColumnName + "header"}
-                    ref={x.ColumnName}
-                    onClick={() => this.props.onSelectedColumnChange(x.ColumnName)} >
-                    {x.ColumnName}
+                    key={columnId + "header"}
+                    ref={columnId}
+                    onClick={() => this.props.onSelectedColumnChange(columnId)} >
+                    {columnId}
                 </Button>
-                <ListGroup key={x.ColumnName} >
-                    {listgroupItems}
+                <ListGroup>
+                    {columnValuesListgroupItems}
+                    {columnRangesListgroupItems}
                 </ListGroup>
             </div>
         })

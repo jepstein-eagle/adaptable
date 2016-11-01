@@ -28,15 +28,19 @@ export enum BooleanOperator {
 
 export enum LeafExpressionOperator {
     Unknown,
+    //Numeric and Date
     GreaterThan,
     LessThan,
     Equals,
     NotEquals,
-    GreaterThanOrEquals,
-    LessThanOrEquals,
+    GreaterThanOrEqual,
+    LessThanOrEqual,
+    Between,
+    //String
     Contains,
     StartsWith,
-    Matches
+    EndWith,
+    MatchesRegex
 }
 
 export enum FlashingCellDuration{

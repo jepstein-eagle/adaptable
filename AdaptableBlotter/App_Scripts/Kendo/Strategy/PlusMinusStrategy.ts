@@ -44,7 +44,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.IsSatisfied(columnNudge.Expression,
                                 this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getColumnValue"),
-                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getDisplayColumnValue"))) {
+                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getDisplayColumnValue"),
+                                this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns)) {
                                 newValue = { id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) }
                             }
                         }
