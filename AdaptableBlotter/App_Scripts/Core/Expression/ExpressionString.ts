@@ -5,6 +5,8 @@ export class ExpressionString {
         public FilterExpressionString: string,
         public RangeExpression: Array<{ ColumnName: string, Ranges: Array<IExpressionRange> }>) {
     }
+
+    
 }
 
 

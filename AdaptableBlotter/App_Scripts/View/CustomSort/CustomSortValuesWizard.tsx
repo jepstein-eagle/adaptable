@@ -1,12 +1,12 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem} from 'react-bootstrap';
 
-import {IColumn, IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './Wizard/Interface/IAdaptableWizard'
-import {DualListBoxEditor} from './DualListBoxEditor'
-import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
+import {IColumn, IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
+import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
+import {DualListBoxEditor} from './../DualListBoxEditor'
+import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
 
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {

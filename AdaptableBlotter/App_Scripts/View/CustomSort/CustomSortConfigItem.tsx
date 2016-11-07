@@ -1,5 +1,5 @@
-import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
-/// <reference path="../../typings/index.d.ts" />
+import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import { Button, Col, Row, ButtonGroup, Panel, Glyphicon, OverlayTrigger,Tooltip} from 'react-bootstrap';

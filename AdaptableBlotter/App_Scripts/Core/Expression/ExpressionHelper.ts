@@ -44,7 +44,11 @@ export module ExpressionHelper {
             let columnValues = expressionString.ColumnValuesExpression.find(x => x.ColumnName == columnId)
             if (columnValues) {
                 let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
-                isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) ! > -1
+                // this line was checked in by Jo but my VS Code doesnt like the syntax
+                //  isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) ! > -1
+
+                // so Ive got rid of the "!" and just made it ' > -1' which seems to work but....
+                isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue)  > -1
             }
             if (!isColumnSatisfied) {
                 let columnRanges = expressionString.RangeExpression.find(x => x.ColumnName == columnId)
@@ -204,5 +208,9 @@ export module ExpressionHelper {
                 }
             })
         })
+    }
+
+    export function CreateEmptyExpression(): ExpressionString {
+        return new ExpressionString([], "Any", [])
     }
 }

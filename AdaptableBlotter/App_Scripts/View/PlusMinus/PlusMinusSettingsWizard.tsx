@@ -1,13 +1,13 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 
-import { IColumn, IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from './DualListBoxEditor'
-import { IPlusMinusCondition } from '../Core/interface/IPlusMinusStrategy';
-import { ColumnType } from '../Core/Enums';
+import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
+import { DualListBoxEditor } from './../DualListBoxEditor'
+import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
+import { ColumnType } from '../../Core/Enums';
 
 
 interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {

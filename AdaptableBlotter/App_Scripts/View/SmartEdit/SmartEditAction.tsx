@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -6,11 +6,11 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup} from 'react-bootstrap';
 
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
-import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
+import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 
-import {SmartEditOperation} from '../Core/Enums'
-import {ISmartEditPreview, ISmartEditValueTuple} from '../Core/Interface/ISmartEditStrategy'
+import {SmartEditOperation} from '../../Core/Enums'
+import {ISmartEditPreview, ISmartEditValueTuple} from '../../Core/Interface/ISmartEditStrategy'
 
 interface SmartEditActionProps extends React.ClassAttributes<SmartEditActionComponent> {
     SmartEditValue: number,

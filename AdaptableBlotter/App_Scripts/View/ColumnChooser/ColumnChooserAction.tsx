@@ -1,15 +1,15 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {  Button, Form, Col, Panel, ListGroup, Row, Well} from 'react-bootstrap';
 
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
-import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
-import {IColumn} from '../Core/Interface/IAdaptableBlotter';
-import {DualListBoxEditor} from './DualListBoxEditor'
-import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
+import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import {IStrategyViewPopupProps} from '../../Core/Interface/IStrategyView'
+import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
+import {DualListBoxEditor} from './../DualListBoxEditor'
+import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 
 
 interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {

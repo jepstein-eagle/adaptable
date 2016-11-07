@@ -7,7 +7,8 @@ import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 import { IExpression } from '../../../Core/interface/IExpression';
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
-import {ICalendar} from '../../../Core/interface/ICalendarStrategy'
+import {ICalendar} from '../../../Core/interface/ICalendarStrategy';
+import {IConditionalStyleCondition} from '../../../Core/interface/IConditionalStyleStrategy';
 
 
 
@@ -57,4 +58,8 @@ export interface FlashingCellState {
 
 export interface CalendarState{
   CurrentCalendar : string ;
+}
+
+export interface ConditionalStyleState{
+  ConditionalStyleConditions : Array<IConditionalStyleCondition> ;
 }

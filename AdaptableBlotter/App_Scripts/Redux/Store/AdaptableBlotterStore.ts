@@ -14,6 +14,7 @@ import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExcelExportRedux from '../ActionsReducers/ExcelExportRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
+import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -34,7 +35,9 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     Export: ExcelExportRedux.ExcelExportReducer,
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-    Calendars: CalendarRedux.CalendarReducer
+    Calendars: CalendarRedux.CalendarReducer,
+    ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
+
 });
 
 

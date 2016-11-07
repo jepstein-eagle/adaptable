@@ -1,16 +1,16 @@
-import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
-/// <reference path="../../typings/index.d.ts" />
+import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {  Button, Form, Col, Panel, ListGroup, Row, Well} from 'react-bootstrap';
 
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
-import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
-import {IStrategyViewPopupProps} from '../Core/Interface/IStrategyView'
-import {IColumn} from '../Core/Interface/IAdaptableBlotter';
-import {AdaptableWizard} from './Wizard/AdaptableWizard'
+import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
+import {IStrategyViewPopupProps} from '../../Core/Interface/IStrategyView'
+import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
+import {AdaptableWizard} from './../Wizard/AdaptableWizard'
 import {CustomSortConfigItem} from './CustomSortConfigItem'
 import {CustomSortConfigHeader} from './CustomSortConfigItem'
 import {CustomSortColumnWizard} from './CustomSortColumnWizard'

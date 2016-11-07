@@ -50,3 +50,8 @@ export enum FlashingCellDuration{
     Second
 }
 
+export enum ConditionalStyleScope{
+    Column,
+    Row
+}
+

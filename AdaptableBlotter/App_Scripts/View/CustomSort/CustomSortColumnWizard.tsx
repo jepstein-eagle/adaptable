@@ -1,12 +1,12 @@
-import {ICustomSort} from '../Core/Interface/ICustomSortStrategy';
-/// <reference path="../../typings/index.d.ts" />
+import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 import {   ListGroup, ListGroupItem} from 'react-bootstrap';
 
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './Wizard/Interface/IAdaptableWizard'
-import {AdaptableWizard} from './Wizard/AdaptableWizard'
-import {IColumn} from '../Core/Interface/IAdaptableBlotter';
+import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
+import {AdaptableWizard} from './../Wizard/AdaptableWizard'
+import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {

@@ -1,23 +1,23 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup } from 'react-bootstrap';
 
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
-import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
-import { IStrategyViewPopupProps } from '../Core/Interface/IStrategyView'
-import { IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { ExpressionString } from '../Core/Expression/ExpressionString';
-import { Expression } from '../Core/Expression/Expression';
-import { EmptyExpression } from '../Core/Expression/EmptyExpression';
-import { Helper } from '../Core/Helper';
-import { AdaptableWizard } from './Wizard/AdaptableWizard'
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
+import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
+import { EmptyExpression } from '../../Core/Expression/EmptyExpression';
+import { Helper } from '../../Core/Helper';
+import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
-import { IPlusMinusCondition } from '../Core/Interface/IPlusMinusStrategy'
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,

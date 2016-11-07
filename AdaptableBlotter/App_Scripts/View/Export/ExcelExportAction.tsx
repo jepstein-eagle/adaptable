@@ -1,14 +1,14 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLabel, Checkbox} from 'react-bootstrap';
-import {IColumn, IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
+import {IColumn, IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore'
-import * as ExcelExportRedux from '../Redux/ActionsReducers/ExcelExportRedux'
+import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import * as ExcelExportRedux from '../../Redux/ActionsReducers/ExcelExportRedux'
 
 interface ExcelExportActionProps extends React.ClassAttributes<ExcelExportActionComponent> {
     AdaptableBlotter: IAdaptableBlotter;
