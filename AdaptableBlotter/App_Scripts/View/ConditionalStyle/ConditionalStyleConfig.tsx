@@ -24,8 +24,9 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     // might need to update these with index number?
-    onDeleteConditionalStyle: (CondiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleDeleteAction
-    onAddEditConditionalStyle: (CondiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
+    onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleDeleteAction
+    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
+      onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string, index: number) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
 }
 
 interface ConditionalStyleConfigState {
@@ -48,7 +49,11 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 key={index}
                 Columns={this.props.Columns}
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition, index)}
-                onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition, index)}>
+                onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition, index)}
+                  onChangeColumn={(conditionalStyleCondition, newColumnId) => this.props.onChangeColumnConditionalStyle(conditionalStyleCondition, newColumnId, index) 
+                   
+                    
+                }>
             </ConditionalStyleConfigItem>
         });
 
@@ -131,6 +136,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition, index: number) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition, index)),
         onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition, index: number) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition, index)),
+         onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string, index: number) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId, index)),
     };
 }
 

@@ -16,20 +16,40 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     Columns: IColumn[];
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
+    onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
 
     render(): any {
+
+        let optionColumns = this.props.Columns.map(x => {
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+        })
+
         return <li
             className="list-group-item"
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
+
                 <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
                         this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnFriendlyName + " Column" :
                         "Whole Row"
                     }
+                </Col>
+
+                <Col xs={3}>
+
+
+
+                    <FormControl componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
+                        <option value="select" key="select">Select a column</option>
+                        {optionColumns}
+                    </FormControl>
+
+
+
                 </Col>
                 <Col md={3} >
                     {ConditionalStyleColour[this.props.ConditionalStyleCondition.ConditionalStyleColour]}
@@ -56,6 +76,12 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
             </Row>
         </li>
     }
+
+    private onColumnSelectChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
+    }
+
 }
 
 interface ConditionalStyleConfigHeaderProps extends React.ClassAttributes<ConditionalStyleConfigHeader> {

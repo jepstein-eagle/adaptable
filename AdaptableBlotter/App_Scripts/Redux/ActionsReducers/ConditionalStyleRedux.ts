@@ -10,18 +10,31 @@ import { ConditionalStyleScope } from '../../Core/Enums';
 
 
 export const CONDITIONAL_STYLE_ADD_OR_UPDATE = 'CONDITIONAL_STYLE_ADD_OR_UPDATE';
-export const CONDITIONAL_STYLE_EDIT = 'CONDITIONAL_STYLE_EDIT';
+export const CONDITIONAL_STYLE_EDIT_COLUMN = 'CONDITIONAL_STYLE_EDIT_COLUMN';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 
 export interface ConditionalStyleAddOrUpdateAction extends Redux.Action {
     conditionalStyleCondition: IConditionalStyleCondition,
-    Index: number
+    index: number
 }
 
-export const AddOrUpdateConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, Index: number): ConditionalStyleAddOrUpdateAction => ({
+export const AddOrUpdateConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, index: number): ConditionalStyleAddOrUpdateAction => ({
     type: CONDITIONAL_STYLE_ADD_OR_UPDATE,
     conditionalStyleCondition,
-    Index,
+    index,
+})
+
+export interface ConditionalStyleEditColumnAction extends Redux.Action {
+    conditionalStyleCondition: IConditionalStyleCondition,
+    columnId: string
+    index: number
+}
+
+export const EditColumnConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, columnId: string, index: number): ConditionalStyleEditColumnAction => ({
+    type: CONDITIONAL_STYLE_EDIT_COLUMN,
+    conditionalStyleCondition,
+    columnId,
+    index,
 })
 
 export interface ConditionalStyleDeleteAction extends Redux.Action {
@@ -37,8 +50,8 @@ export const DeleteConditionalStyle = (conditionalStyleCondition: IConditionalSt
 
 const initialCalendarState: ConditionalStyleState = {
     ConditionalStyleConditions: []
-      //  { ColumnId: "bid", StyleName: "Red", ConditionalStyleScope: ConditionalStyleScope.Column, Expression: ExpressionHelper.CreateEmptyExpression() },
-      //  { ColumnId: "ask", StyleName: "Blue", ConditionalStyleScope: ConditionalStyleScope.Row, Expression: ExpressionHelper.CreateEmptyExpression() }     ]
+    //  { ColumnId: "bid", StyleName: "Red", ConditionalStyleScope: ConditionalStyleScope.Column, Expression: ExpressionHelper.CreateEmptyExpression() },
+    //  { ColumnId: "ask", StyleName: "Blue", ConditionalStyleScope: ConditionalStyleScope.Row, Expression: ExpressionHelper.CreateEmptyExpression() }     ]
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {
@@ -46,13 +59,22 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
         case CONDITIONAL_STYLE_ADD_OR_UPDATE:
             let actionTyped = (<ConditionalStyleAddOrUpdateAction>action)
             let newCollection: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
-            if (actionTyped.Index == -1) {
+            if (actionTyped.index == -1) {
                 newCollection.push(actionTyped.conditionalStyleCondition)
             }
             else {
-                newCollection[actionTyped.Index] = actionTyped.conditionalStyleCondition
+                newCollection[actionTyped.index] = actionTyped.conditionalStyleCondition
             }
             return Object.assign({}, state, { ConditionalStyleConditions: newCollection })
+        case CONDITIONAL_STYLE_EDIT_COLUMN:
+            let actionTypedColumnAction = (<ConditionalStyleEditColumnAction>action)
+            let condition = actionTypedColumnAction.conditionalStyleCondition;
+            let newCollection2: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
+            newCollection2[actionTypedColumnAction.index] = Object.assign({}, condition, { ColumnId: actionTypedColumnAction.columnId })
+            return Object.assign({}, state, { ConditionalStyleConditions: newCollection2 })
+
+
+
         case CONDITIONAL_STYLE_DELETE:
             let newCol: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
             newCol.splice((<ConditionalStyleDeleteAction>action).Index, 1)
