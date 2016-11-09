@@ -8,6 +8,7 @@ export interface IConditionalStyleStrategy extends IStrategy {
 }
 
 export interface IConditionalStyleCondition {
+    Uid: string
     ColumnId: string
     ConditionalStyleColour: ConditionalStyleColour
     ConditionalStyleScope: ConditionalStyleScope

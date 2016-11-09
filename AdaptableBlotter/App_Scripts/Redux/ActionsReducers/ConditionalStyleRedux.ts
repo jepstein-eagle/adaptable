@@ -7,6 +7,7 @@ import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalSty
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ConditionalStyleScope, ConditionalStyleColour } from '../../Core/Enums';
+import { Helper, EnumEx } from '../../Core/Helper';
 
 
 export const CONDITIONAL_STYLE_ADD_OR_UPDATE = 'CONDITIONAL_STYLE_ADD_OR_UPDATE';
@@ -78,22 +79,24 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
                 collectionAddUpdate.push(actionTypedAddUpdate.conditionalStyleCondition)
             }
             else {
+                actionTypedAddUpdate.conditionalStyleCondition.Uid = Helper.generateUuid();
                 collectionAddUpdate[actionTypedAddUpdate.index] = actionTypedAddUpdate.conditionalStyleCondition
             }
             return Object.assign({}, state, { ConditionalStyleConditions: collectionAddUpdate })
-       
+
         case CONDITIONAL_STYLE_EDIT_COLUMN:
             let actionTypedColumn = (<ConditionalStyleEditColumnAction>action)
             let conditionColumn = actionTypedColumn.conditionalStyleCondition;
             let collectionColumn: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
-            collectionColumn[actionTypedColumn.index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId })
+            collectionColumn[actionTypedColumn.index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId, Uid: Helper.generateUuid() })
             return Object.assign({}, state, { ConditionalStyleConditions: collectionColumn })
 
-         case CONDITIONAL_STYLE_EDIT_COLOUR:
+        case CONDITIONAL_STYLE_EDIT_COLOUR:
             let actionTypedColour = (<ConditionalStyleEditColourAction>action)
             let conditionColour = actionTypedColour.conditionalStyleCondition;
             let collectionColour: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
-            collectionColour[actionTypedColour.index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.colour })
+            conditionColour.Uid = Helper.generateUuid();
+            collectionColour[actionTypedColour.index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.colour, Uid: Helper.generateUuid() })
             return Object.assign({}, state, { ConditionalStyleConditions: collectionColour })
 
         case CONDITIONAL_STYLE_DELETE:

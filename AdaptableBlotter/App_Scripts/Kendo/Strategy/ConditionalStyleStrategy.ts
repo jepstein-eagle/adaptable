@@ -31,51 +31,56 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
-            // only remove existing styles if we know there are some - this is still a bit rubbish and can be better and ideally we should only remove deleted or changed styles 
-            if (oldState != null && oldState.ConditionalStyleConditions.length > 0) {
-                this.removeExistingStyles(oldState.ConditionalStyleConditions);
+            // Need to remove only those conditions which have a guid in old state that is NOT in the new state
+            // Because we update the guid when we edit the condition, we just need to remove conditions that have been deleted or edited
+            if (oldState != null && oldState.ConditionalStyleConditions.length > 0 && oldState.ConditionalStyleConditions.length >= this.ConditionalStyleState.ConditionalStyleConditions.length) {
+                let conditionsToRemove: IConditionalStyleCondition[] = [];
+                oldState.ConditionalStyleConditions.forEach((c) => {
+                    if (!this.ConditionalStyleState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)) {
+                        conditionsToRemove.push(c)
+                    }
+                })
+                this.removeExistingStyles(conditionsToRemove);
             }
-            this.addNewStyles();
+
+            // Need to add only those conditions which have a guid that is not in the old state
+            if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+                let conditionsToAdd: IConditionalStyleCondition[] = [];
+                this.ConditionalStyleState.ConditionalStyleConditions.forEach((c) => {
+                    if (oldState==null || !oldState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)) {
+                        conditionsToAdd.push(c)
+                    }
+                })
+                this.addNewStyles(conditionsToAdd);
+            }
         }
     }
 
     private handleGridDataBound(blotter: IAdaptableBlotter) {
-        this.addNewStyles();
+        if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+            // not nice but not sure we have a choice other than to have to paint every condition again :(
+            this.addNewStyles(this.ConditionalStyleState.ConditionalStyleConditions);
+        }
     }
 
-    /*
-        This is the worst bit at the moment.  Painting the styles is very quick but removing them takes ages with a large row set
-        We only call this method now when updating Conditional Styles so its not the end of the world and we can have some sort of wait message
-        But it would clearly be better to avoid removing all the styles every time and instead remove just those which have changed.
-        So we would need to compare state with new state and then work out which ones are different
-        In the meantime its a bit better in that we only remove columns and styles that were in the previous state
-    */
-
-    private removeExistingStyles(oldConditions: IConditionalStyleCondition[]): void {
-       // alert("removing")
-        // get the styles and columns in the old state (though this should ideally look at changed or deleted conditions not all old conditions)
-
-
-
-
-        let existingStyles: string[] = oldConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
-        let existingColumns: string[] = oldConditions.map(c => c.ColumnId)
+   private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
+        alert("removing " + changedConditions.length + " conditions")
+        let existingStyles: string[] = changedConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
+        let existingColumns: string[] = changedConditions.map(c => c.ColumnId)
         // get the columns currently affected - doesnt work with row styles if we do them :(
         this.blotter.removeCellStylesFromGrid(existingStyles, existingColumns);
     }
 
-    private addNewStyles(): void {
-        if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-        //    alert("adding")
-            let rowIds: string[] = this.blotter.getAllRowIds();
-            rowIds.forEach(rowId => {
-                this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
-                    if (this.checkForExpression(c.Expression, rowId)) {
-                        this.blotter.addCellStyle(rowId, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
-                    }
-                })
+    private addNewStyles(newConditions: IConditionalStyleCondition[]): void {
+        alert("adding " + newConditions.length + " conditions")
+        let rowIds: string[] = this.blotter.getAllRowIds();
+        rowIds.forEach(rowId => {
+            newConditions.forEach(c => {
+                if (this.checkForExpression(c.Expression, rowId)) {
+                    this.blotter.addCellStyle(rowId, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
+                }
             })
-        }
+        })
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
