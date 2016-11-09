@@ -47,7 +47,7 @@ export interface IAdaptableBlotter {
 
       // playing around
        getAllRowIds():  string[] 
-         removeCellStylesFromGrid(styleNames: string[]): void 
+         removeCellStylesFromGrid(styleNames: string[], columnNames: string[]): void 
 
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
 }

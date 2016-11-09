@@ -374,12 +374,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public removeCellStylesFromGrid(styleNames: string[]): void {
+    public removeCellStylesFromGrid(styleNames: string[], columnNames: string[]): void {
         // loop through every row and then every condition and just clear?
         // seems expensive but on the other hand we only do it when we update the styles so its not often
 
         let rowIds: string[] = this.getAllRowIds();
-        let columnNames: string[] = this.grid.columns.map(x => x.field);
+       // let columnNames: string[] = this.grid.columns.map(x => x.field);
 
         rowIds.forEach(rowId => {
             columnNames.forEach(columnName => {

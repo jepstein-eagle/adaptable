@@ -26,12 +26,14 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private InitConditionalStyle() {
-     let hasPreviousState: Boolean = this.ConditionalStyleState != null;
+        let oldState: ConditionalStyleState = this.ConditionalStyleState;
 
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
-            if (hasPreviousState) {
-                this.removeExistingStyles();
+
+            // only remove existing styles if we know there are some - this is still a bit rubbish and can be better
+            if (oldState != null && oldState.ConditionalStyleConditions.length > 0) {
+                this.removeExistingStyles(oldState);
             }
             this.addNewStyles();
         }
@@ -41,24 +43,35 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         this.addNewStyles();
     }
 
-    // this gets called for two reasons
-    // 1.  If we have amended any conditional styles; rather than work out what has changed we remove all styles and then reapply
-    // 2.  If the databound event is caleld - usually after a sort or a smartedit; again we remove and reapply.  Need to see if this is practical with large datasets.
-    private removeExistingStyles(): void {
+    /*
+        This is the worst bit at the moment.  Painting the styles is very quick but removing them takes ages with a large row set
+        We only call this method now when updating Conditional Styles so its not the end of the world and we can have some sort of wait message
+        But it would clearly be better to avoid removing all the styles every time and instead remove just those which have changed.
+        So we would need to compare state with new state and then work out which ones are different
+        In the meantime its a bit better in that we only remove columns and styles that were in the previous state
+    */
+    
+    private removeExistingStyles(oldState: ConditionalStyleState): void {
         alert("removing")
-        this.blotter.removeCellStylesFromGrid(EnumEx.getNames(ConditionalStyleColour))
+        // get the styles currently in action
+        let existingStyles: string[] = oldState.ConditionalStyleConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
+        let existingColumns: string[] = oldState.ConditionalStyleConditions.map(c => c.ColumnId)
+        // get the columns currently affected - doesnt work with row styles if we do them :(
+        this.blotter.removeCellStylesFromGrid(existingStyles, existingColumns);
     }
 
     private addNewStyles(): void {
-        alert("adding")
-        let rowIds: string[] = this.blotter.getAllRowIds();
-        rowIds.forEach(rowId => {
-            this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
-                if (this.checkForExpression(c.Expression, rowId)) {
-                    this.blotter.addCellStyle(rowId, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
-                }
+        if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+            alert("adding")
+            let rowIds: string[] = this.blotter.getAllRowIds();
+            rowIds.forEach(rowId => {
+                this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
+                    if (this.checkForExpression(c.Expression, rowId)) {
+                        this.blotter.addCellStyle(rowId, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
+                    }
+                })
             })
-        })
+        }
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
