@@ -23,36 +23,33 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
-    // might need to update these with index number?
-    onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleDeleteAction
-    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, index: number) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
-    onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string, index: number) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
-    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour, index: number) => ConditionalStyleRedux.ConditionalStyleEditColourAction
+    onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
+    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
+    onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
+    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => ConditionalStyleRedux.ConditionalStyleEditColourAction
 }
 
 interface ConditionalStyleConfigState {
     EditedConditionalStyleCondition: IConditionalStyleCondition
-    EditedConditionIndex: number
-
 }
 
 class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleConfigProps, ConditionalStyleConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedConditionalStyleCondition: null, EditedConditionIndex: -1 }
+        this.state = { EditedConditionalStyleCondition: null }
     }
 
     render() {
-        let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition, index: number) => {
+        let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition) => {
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
-                key={index}
+                key={conditionalStyleCondition.Uid}
                 Columns={this.props.Columns}
-                onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition, index)}
-                onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition, index)}
-                onChangeColumn={(conditionalStyleCondition, newColumnId) => this.props.onChangeColumnConditionalStyle(conditionalStyleCondition, newColumnId, index)}
-                onChangeColour={(conditionalStyleCondition, newColour) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, newColour, index)} >
+                onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
+                onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition)}
+                onChangeColumn={(conditionalStyleCondition, newColumnId) => this.props.onChangeColumnConditionalStyle(conditionalStyleCondition, newColumnId)}
+                onChangeColour={(conditionalStyleCondition, newColour) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, newColour)} >
             </ConditionalStyleConfigItem>
         });
 
@@ -104,26 +101,24 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
-        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, EditedConditionIndex: -1 });
+        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
     }
 
-    onEdit(condition: IConditionalStyleCondition, index: number) {
+    onEdit(condition: IConditionalStyleCondition) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedConditionalStyleCondition: Helper.cloneObject(condition), EditedConditionIndex: index });
+        this.setState({ EditedConditionalStyleCondition: Helper.cloneObject(condition) });
     }
 
     closeWizard() {
-        this.setState({ EditedConditionalStyleCondition: null, EditedConditionIndex: -1 });
+        this.setState({ EditedConditionalStyleCondition: null });
     }
 
     WizardFinish() {
         // havent passed in the index - do we need to?
-        this.props.onAddEditConditionalStyle(this.state.EditedConditionalStyleCondition, this.state.EditedConditionIndex);
-        this.setState({ EditedConditionalStyleCondition: null, EditedConditionIndex: -1 });
+        this.props.onAddEditConditionalStyle(this.state.EditedConditionalStyleCondition);
+        this.setState({ EditedConditionalStyleCondition: null });
     }
 }
-
-
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -134,10 +129,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition, index: number) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition, index)),
-        onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition, index: number) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition, index)),
-        onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string, index: number) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId, index)),
-        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour, index: number) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, newColour, index)),
+        onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition)),
+        onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition)),
+        onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId)),
+        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, newColour)),
     };
 }
 

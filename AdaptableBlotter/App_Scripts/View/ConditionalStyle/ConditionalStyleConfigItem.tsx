@@ -1,5 +1,5 @@
 import * as React from "react";
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
