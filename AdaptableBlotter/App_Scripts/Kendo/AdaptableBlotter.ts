@@ -70,6 +70,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         })
 
+
+ grid.bind("dataBound", (e: any) => {
+           this._onGridDataBound.Dispatch(this, e)
+        });
+
         grid.dataSource.bind("change", (e: any) => {
             if (e.action == "itemchange") {
                 let itemsArray = e.items[0];
@@ -87,6 +92,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
     }
+
 
     public SetColumnIntoStore() {
         let columns: IColumn[] = this.grid.columns.map(x => {
@@ -107,6 +113,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
+ private _onGridDataBound: EventDispatcher<IAdaptableBlotter,IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onGridDataBound;
+    }
+
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
@@ -126,6 +137,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getCurrentCellEditValue(): any {
         return this.getcurrentEditedCell().val();
+    }
+
+    // Im sure this is wrong! But for now want to try it..
+    public getAllRowIds(): string[] {
+        var dataSource = this.grid.dataSource.data();
+        let uidList: string[] = [];
+        for (var i = 0; i < dataSource.length; i++) {
+            uidList.push(dataSource[i].uid);
+        }
+        return uidList;
     }
 
     getActiveCell(): { Id: any, ColumnId: string, Value: any } {
@@ -196,11 +217,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setValue(id: any, columnId: string, value: any): void {
         // jw: i prefer this still despite the problems as it always works...... 
-       // this.setValueBatch([ {id, columnId, value}]);
+        // this.setValueBatch([ {id, columnId, value}]);
 
         // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!        
         this.grid.dataSource.getByUid(id).set(columnId, value);
-        
+
         // this line helps a bit with some of the issues but not all of them sadly
         //this.grid.dataSource.sync();
     }
@@ -353,9 +374,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public removeCellStylesFromGrid(styleNames: string[]): void {
+        // loop through every row and then every condition and just clear?
+        // seems expensive but on the other hand we only do it when we update the styles so its not often
+
+        let rowIds: string[] = this.getAllRowIds();
+        let columnNames: string[] = this.grid.columns.map(x => x.field);
+
+        rowIds.forEach(rowId => {
+            columnNames.forEach(columnName => {
+                var cell = this.getCellByColumnNameAndRowIdentifier(rowId, columnName);
+                if (cell != null) {
+                    styleNames.forEach(styleName => {
+                        if (cell.hasClass(styleName)) {
+                            cell.removeClass(styleName)
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+
     public removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void {
         var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
-        if (cell != null) {
+        if (cell != null && cell.hasClass(styleName)) {
             cell.removeClass(styleName);
         }
     }

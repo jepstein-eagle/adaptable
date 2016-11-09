@@ -17,10 +17,47 @@
 			color: white;
 		}
 
+    	.Green {
+			background-color: green;
+			color: white;
+		}
+
+    	.Red {
+			background-color: red;
+			color: white;
+		}
+
+    	.Blue {
+			background-color: blue;
+			color: white;
+		}
+
+    	.Yellow {
+			background-color: yellow;
+			color: black;
+		}
+
+
+    	.Orange {
+			background-color: orange;
+			color: white;
+		}
+
+
+    	.Purple {
+			background-color: purple;
+			color: white;
+		}
+
+
+    	.Pink {
+			background-color: pink;
+			color: black;
+		}
+
 button.placeholder {background: #87D0FA;}
 button.placeholder:before {
   content: "Drop here";
   color: White;
 }
 
-	

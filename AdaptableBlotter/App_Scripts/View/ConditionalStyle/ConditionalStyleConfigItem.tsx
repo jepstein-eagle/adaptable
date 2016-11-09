@@ -5,7 +5,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
+import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -32,7 +32,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     }
                 </Col>
                 <Col md={3} >
-                    {this.props.ConditionalStyleCondition.StyleName}
+                    {ConditionalStyleColour[this.props.ConditionalStyleCondition.ConditionalStyleColour]}
                 </Col>
 
                 <Col xs={4}>

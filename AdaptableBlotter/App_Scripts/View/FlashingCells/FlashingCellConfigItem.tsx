@@ -9,7 +9,7 @@ import { ColumnType, FlashingCellDuration } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-
+import { Helper, EnumEx } from '../../Core/Helper';
 
 
 interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
@@ -19,10 +19,7 @@ interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCell
     onChangeFlashingDuration: (flashingColumn: IFlashingColumn, NewFlashDuration: any) => void;
 }
 
-const flashingCellDurationList: Array<FlashingCellDuration> = [FlashingCellDuration.OneQuarterSecond, FlashingCellDuration.HalfSecond, FlashingCellDuration.ThreeQuarterSecond, FlashingCellDuration.Second];
-
 export class FlashingCellConfigItem extends React.Component<FlashingCellConfigItemProps, {}> {
-
 
     render(): any {
         return <li
@@ -39,7 +36,7 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     {
                         <FormControl componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
-                                flashingCellDurationList.map((flashingCellDuration: FlashingCellDuration) => {
+                                EnumEx.getValues(FlashingCellDuration).map((flashingCellDuration: FlashingCellDuration) => {
                                     return <option key={FlashingCellDuration[flashingCellDuration]} value={flashingCellDuration.toString()}>{FlashingCellDuration[flashingCellDuration]}</option>
                                 })
                             }

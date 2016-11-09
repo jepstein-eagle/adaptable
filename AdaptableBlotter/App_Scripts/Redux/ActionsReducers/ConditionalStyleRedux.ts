@@ -36,10 +36,9 @@ export const DeleteConditionalStyle = (conditionalStyleCondition: IConditionalSt
 })
 
 const initialCalendarState: ConditionalStyleState = {
-    ConditionalStyleConditions: [
-        { ColumnId: "bid", StyleName: "Red", ConditionalStyleScope: ConditionalStyleScope.Column, Expression: ExpressionHelper.CreateEmptyExpression() },
-        { ColumnId: "ask", StyleName: "Blue", ConditionalStyleScope: ConditionalStyleScope.Row, Expression: ExpressionHelper.CreateEmptyExpression() }
-    ]
+    ConditionalStyleConditions: []
+      //  { ColumnId: "bid", StyleName: "Red", ConditionalStyleScope: ConditionalStyleScope.Column, Expression: ExpressionHelper.CreateEmptyExpression() },
+      //  { ColumnId: "ask", StyleName: "Blue", ConditionalStyleScope: ConditionalStyleScope.Row, Expression: ExpressionHelper.CreateEmptyExpression() }     ]
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {

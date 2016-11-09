@@ -55,3 +55,14 @@ export enum ConditionalStyleScope{
     Row
 }
 
+export enum ConditionalStyleColour{
+   None,
+    Red,
+    Green,
+    Blue,
+    Yellow,
+    Orange,
+    Purple,
+    Pink,
+}
+

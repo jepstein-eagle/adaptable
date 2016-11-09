@@ -9,7 +9,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon, Well } from 'react-bootstrap';
-import { ColumnType, ConditionalStyleScope } from '../../Core/Enums'
+import { ColumnType, ConditionalStyleScope, ConditionalStyleColour } from '../../Core/Enums'
 import { ConditionalStyleConfigItem, ConditionalStyleConfigHeader } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
@@ -45,7 +45,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition, index: number) => {
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
-                key={conditionalStyleCondition.ColumnId}
+                key={index}
                 Columns={this.props.Columns}
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition, index)}
                 onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition, index)}>
@@ -95,7 +95,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     onAdd() {
         let _editedConditionalStyle: IConditionalStyleCondition = {
             ColumnId: "select",
-            StyleName: "select",
+            ConditionalStyleColour: ConditionalStyleColour.None,
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }

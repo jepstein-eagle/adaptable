@@ -44,6 +44,12 @@ export interface IAdaptableBlotter {
 
     // get dirty data
       GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any
+
+      // playing around
+       getAllRowIds():  string[] 
+         removeCellStylesFromGrid(styleNames: string[]): void 
+
+    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
 }
 
 export interface ISelectedCells {

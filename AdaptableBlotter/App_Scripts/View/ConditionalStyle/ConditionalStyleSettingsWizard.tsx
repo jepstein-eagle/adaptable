@@ -6,7 +6,8 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
+import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
+import { Helper, EnumEx } from '../../Core/Helper';
 
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
@@ -16,7 +17,7 @@ interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<I
 
 interface ConditionalStyleSettingsWizardState {
     ColumnId: string,
-    StyleName: string,
+    ConditionalStyleColour: ConditionalStyleColour,
     ConditionalStyleScope: ConditionalStyleScope
 }
 
@@ -25,32 +26,30 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
-            StyleName: this.props.Data.StyleName,
+            ConditionalStyleColour: this.props.Data.ConditionalStyleColour,
             ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
         }
     }
 
+
     render(): any {
-        let optionColumns = this.props.Columns.filter(x => x.ColumnType == ColumnType.Number).map(x => {
+
+        let optionColumns = this.props.Columns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
-
-        let availableStyleOptions: string[] = ["Red", "Blue", "Green", "Yellow"];
-        let availableStyleOptionValues = availableStyleOptions.map(x => {
-            return <option value={x} key={x}>{x}</option>
-        })
-
-        let availableStyleScopes: Array<ConditionalStyleScope> = [ConditionalStyleScope.Row, ConditionalStyleScope.Column];
 
         return <Panel header="Conditional Style Settings" bsStyle="primary">
             <Form horizontal>
 
                 <FormGroup controlId="styleName">
-                    <Col xs={3} componentClass={ControlLabel}>Select Style: </Col>
+                    <Col xs={3} componentClass={ControlLabel}>Select Back Colour: </Col>
                     <Col xs={9}>
-                        <FormControl componentClass="select" placeholder="select" value={this.state.StyleName} onChange={(x) => this.onStyleSelectChange(x)} >
-                            <option value="select" key="select">Select a style</option>
-                            {availableStyleOptionValues}
+                        <FormControl componentClass="select" placeholder="select" value={this.state.ConditionalStyleColour.toString()} onChange={(x) => this.onColourSelectChange(x)} >
+                            {
+                                EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
+                                    return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
+                                })
+                            }
                         </FormControl>
                     </Col>
                 </FormGroup>
@@ -60,9 +59,10 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     <Col xs={9}>
                         <FormControl componentClass="select" placeholder="select" value={this.state.ConditionalStyleScope.toString()} onChange={(x) => this.onWhereAppliedSelectChange(x)} >
                             {
-                                availableStyleScopes.map((conditionalStyleScope: ConditionalStyleScope) => {
-                                    return <option key={ConditionalStyleScope[conditionalStyleScope]} value={conditionalStyleScope.toString()}>{ConditionalStyleScope[conditionalStyleScope]}</option>
+                                EnumEx.getNamesAndValues(ConditionalStyleScope).map((conditionalStyleScopeNameAndValue: any) => {
+                                    return <option key={conditionalStyleScopeNameAndValue.value} value={conditionalStyleScopeNameAndValue.value}>{conditionalStyleScopeNameAndValue.name}</option>
                                 })
+                            })
                             }
                         </FormControl>
                     </Col>
@@ -93,9 +93,9 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.setState({ ColumnId: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onStyleSelectChange(event: React.FormEvent) {
+    private onColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ StyleName: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ConditionalStyleColour: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onWhereAppliedSelectChange(event: React.FormEvent) {
@@ -104,7 +104,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     public canNext(): boolean {
-        if (this.state.StyleName == "select") {
+        if (this.state.ConditionalStyleColour == ConditionalStyleColour.None) {
             return false;
         }
         if (this.state.ConditionalStyleScope == null) {
@@ -119,7 +119,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     public canBack(): boolean { return false; }
     public Next(): void {
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.StyleName = this.state.StyleName;
+        this.props.Data.ConditionalStyleColour = this.state.ConditionalStyleColour;
         this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
     }
     public Back(): void { }
