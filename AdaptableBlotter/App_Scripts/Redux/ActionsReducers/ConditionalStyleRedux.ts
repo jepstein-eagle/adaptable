@@ -6,11 +6,12 @@ import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { ConditionalStyleScope } from '../../Core/Enums';
+import { ConditionalStyleScope, ConditionalStyleColour } from '../../Core/Enums';
 
 
 export const CONDITIONAL_STYLE_ADD_OR_UPDATE = 'CONDITIONAL_STYLE_ADD_OR_UPDATE';
 export const CONDITIONAL_STYLE_EDIT_COLUMN = 'CONDITIONAL_STYLE_EDIT_COLUMN';
+export const CONDITIONAL_STYLE_EDIT_COLOUR = 'CONDITIONAL_STYLE_EDIT_COLOUR';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 
 export interface ConditionalStyleAddOrUpdateAction extends Redux.Action {
@@ -37,6 +38,20 @@ export const EditColumnConditionalStyle = (conditionalStyleCondition: ICondition
     index,
 })
 
+
+export interface ConditionalStyleEditColourAction extends Redux.Action {
+    conditionalStyleCondition: IConditionalStyleCondition,
+    colour: ConditionalStyleColour
+    index: number
+}
+
+export const EditColourConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, colour: ConditionalStyleColour, index: number): ConditionalStyleEditColourAction => ({
+    type: CONDITIONAL_STYLE_EDIT_COLOUR,
+    conditionalStyleCondition,
+    colour,
+    index,
+})
+
 export interface ConditionalStyleDeleteAction extends Redux.Action {
     conditionalStyleCondition: IConditionalStyleCondition
     Index: number
@@ -57,23 +72,29 @@ const initialCalendarState: ConditionalStyleState = {
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {
     switch (action.type) {
         case CONDITIONAL_STYLE_ADD_OR_UPDATE:
-            let actionTyped = (<ConditionalStyleAddOrUpdateAction>action)
-            let newCollection: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
-            if (actionTyped.index == -1) {
-                newCollection.push(actionTyped.conditionalStyleCondition)
+            let actionTypedAddUpdate = (<ConditionalStyleAddOrUpdateAction>action)
+            let collectionAddUpdate: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
+            if (actionTypedAddUpdate.index == -1) {
+                collectionAddUpdate.push(actionTypedAddUpdate.conditionalStyleCondition)
             }
             else {
-                newCollection[actionTyped.index] = actionTyped.conditionalStyleCondition
+                collectionAddUpdate[actionTypedAddUpdate.index] = actionTypedAddUpdate.conditionalStyleCondition
             }
-            return Object.assign({}, state, { ConditionalStyleConditions: newCollection })
+            return Object.assign({}, state, { ConditionalStyleConditions: collectionAddUpdate })
+       
         case CONDITIONAL_STYLE_EDIT_COLUMN:
-            let actionTypedColumnAction = (<ConditionalStyleEditColumnAction>action)
-            let condition = actionTypedColumnAction.conditionalStyleCondition;
-            let newCollection2: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
-            newCollection2[actionTypedColumnAction.index] = Object.assign({}, condition, { ColumnId: actionTypedColumnAction.columnId })
-            return Object.assign({}, state, { ConditionalStyleConditions: newCollection2 })
+            let actionTypedColumn = (<ConditionalStyleEditColumnAction>action)
+            let conditionColumn = actionTypedColumn.conditionalStyleCondition;
+            let collectionColumn: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
+            collectionColumn[actionTypedColumn.index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId })
+            return Object.assign({}, state, { ConditionalStyleConditions: collectionColumn })
 
-
+         case CONDITIONAL_STYLE_EDIT_COLOUR:
+            let actionTypedColour = (<ConditionalStyleEditColourAction>action)
+            let conditionColour = actionTypedColour.conditionalStyleCondition;
+            let collectionColour: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)
+            collectionColour[actionTypedColour.index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.colour })
+            return Object.assign({}, state, { ConditionalStyleConditions: collectionColour })
 
         case CONDITIONAL_STYLE_DELETE:
             let newCol: IConditionalStyleCondition[] = [].concat(state.ConditionalStyleConditions)

@@ -1,7 +1,5 @@
-import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
+/// <reference path="../../typings/index.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
@@ -9,7 +7,7 @@ import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../..
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-
+import { EnumEx } from '../../Core/Helper';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
@@ -17,6 +15,7 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
+    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
@@ -34,25 +33,22 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                        this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnFriendlyName + " Column" :
+                        <FormControl componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
+                            <option value="select" key="select">Select a column</option>
+                            {optionColumns}
+                        </FormControl> :
                         "Whole Row"
                     }
                 </Col>
 
-                <Col xs={3}>
-
-
-
-                    <FormControl componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
-                        <option value="select" key="select">Select a column</option>
-                        {optionColumns}
-                    </FormControl>
-
-
-
-                </Col>
                 <Col md={3} >
-                    {ConditionalStyleColour[this.props.ConditionalStyleCondition.ConditionalStyleColour]}
+                    <FormControl componentClass="select" placeholder="select" value={this.props.ConditionalStyleCondition.ConditionalStyleColour.toString()} onChange={(x) => this.onColourSelectChange(x)} >
+                        {
+                            EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
+                                return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
+                            })
+                        }
+                    </FormControl>
                 </Col>
 
                 <Col xs={4}>
@@ -80,6 +76,11 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
     private onColumnSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
+    }
+
+    private onColourSelectChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onChangeColour(this.props.ConditionalStyleCondition, Number.parseInt(e.value));
     }
 
 }
