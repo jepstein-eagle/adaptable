@@ -4,7 +4,7 @@ import { EmptyExpression } from './EmptyExpression'
 import { BooleanOperatorExpression } from './BooleanOperatorExpression'
 import { LeafExpressionOperator } from '../Enums'
 import { IColumn } from '../Interface/IAdaptableBlotter'
-import { ColumnType } from '../Enums'
+import { ColumnType, PredefinedExpression } from '../Enums'
 
 export module ExpressionHelper {
     export function ConvertExpressionToString(expressionString: ExpressionString, columns: Array<IColumn>): string {
@@ -49,7 +49,7 @@ export module ExpressionHelper {
                 // not sure what the thinking is of doing one rather than the other...
                 let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
                 //let columnDisplayValue = getColumnValue(columnValues.ColumnName)
-               
+
                 // this line was checked in by Jo but my VS Code doesnt like the syntax
                 //  isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) ! > -1
                 // so Ive got rid of the "!" and just made it ' > -1' which seems to work but....
@@ -218,4 +218,34 @@ export module ExpressionHelper {
     export function CreateEmptyExpression(): ExpressionString {
         return new ExpressionString([], "Any", [])
     }
+
+    export function CreatePredefinedExpression(columnName: string, predefinedExpression: PredefinedExpression): ExpressionString {
+
+        let columnValuesExpression: Array<{ ColumnName: string, Values: Array<any> }> = [];
+
+        let operator: LeafExpressionOperator;
+        let operand1: string;
+        let operand2: string = "";
+        switch (predefinedExpression) {
+
+            case PredefinedExpression.PositiveNumber:
+                operator = LeafExpressionOperator.GreaterThanOrEqual;
+                operand1 = "0"
+                break;
+            case PredefinedExpression.NegativeNumber:
+                operator = LeafExpressionOperator.LessThan;
+                operand1 = "0"
+break;
+        }
+
+        let expressionRange: IExpressionRange = { Operand1: operand1, Operator: operator, Operand2: operand2 };
+        let expressionRanges: Array<IExpressionRange> = [];
+        expressionRanges.push(expressionRange);
+        let singleRangeExpression: { ColumnName: string, Ranges: Array<IExpressionRange> } = { ColumnName: columnName, Ranges: expressionRanges }
+        let rangeExpression: Array<{ ColumnName: string, Ranges: Array<IExpressionRange> }> = [];
+        rangeExpression.push(singleRangeExpression);
+        return new ExpressionString(columnValuesExpression, "Any", rangeExpression);
+    }
+
+    
 }

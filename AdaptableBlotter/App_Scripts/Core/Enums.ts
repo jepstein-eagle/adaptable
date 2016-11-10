@@ -67,3 +67,8 @@ export enum ConditionalStyleColour {
     RedFont
 }
 
+export enum PredefinedExpression {
+    PositiveNumber,
+    NegativeNumber
+}
+
