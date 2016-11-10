@@ -9,7 +9,6 @@ import { IConditionalStyleCondition } from '../../Core/interface/IConditionalSty
 import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
 import { Helper, EnumEx } from '../../Core/Helper';
 
-
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
@@ -42,25 +41,26 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
         })
 
+        let emptyStyle: string = "Select a style"
 
-        let currentColour = this.state.ConditionalStyleColour == null ? "Select a colour" : this.state.ConditionalStyleColour.toString();
+        let currentColour = this.state.ConditionalStyleColour == null ? emptyStyle : this.state.ConditionalStyleColour.toString();
 
         return <Panel header="Conditional Style Settings" bsStyle="primary">
             <Form horizontal>
 
                 <FormGroup controlId="styleName">
-                    <Col xs={3} componentClass={ControlLabel}>Select Back Colour: </Col>
-                    <Col xs={9}>
+                    <Col xs={4} componentClass={ControlLabel}>Select Style: </Col>
+                    <Col xs={8}>
                         <FormControl componentClass="select" placeholder="select" value={currentColour} onChange={(x) => this.onColourSelectChange(x)} >
-                            <option value="select" key="select">Select a colour</option>
+                            <option value="select" key="select">{emptyStyle}</option>
                             {optionColours}
                         </FormControl>
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId="whereApplied">
-                    <Col xs={3} componentClass={ControlLabel}>Apply To: </Col>
-                    <Col xs={9}>
+                    <Col xs={4} componentClass={ControlLabel}>Apply To: </Col>
+                    <Col xs={8}>
                         <FormControl componentClass="select" placeholder="select" value={this.state.ConditionalStyleScope.toString()} onChange={(x) => this.onWhereAppliedSelectChange(x)} >
                             {
                                 EnumEx.getNamesAndValues(ConditionalStyleScope).map((conditionalStyleScopeNameAndValue: any) => {
@@ -75,8 +75,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                 {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ?
 
                     <FormGroup controlId="formColumn">
-                        <Col componentClass={ControlLabel} xs={3}>Select Column: </Col>
-                        <Col xs={9}>
+                        <Col componentClass={ControlLabel} xs={4}>Select Column: </Col>
+                        <Col xs={8}>
                             <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
                                 <option value="select" key="select">Select a column</option>
                                 {optionColumns}

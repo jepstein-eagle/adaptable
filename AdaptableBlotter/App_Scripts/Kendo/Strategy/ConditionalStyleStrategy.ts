@@ -46,7 +46,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
             if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
                 let conditionsToAdd: IConditionalStyleCondition[] = [];
                 this.ConditionalStyleState.ConditionalStyleConditions.forEach((c) => {
-                    if (oldState==null || !oldState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)) {
+                    if (oldState == null || !oldState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)) {
                         conditionsToAdd.push(c)
                     }
                 })
@@ -62,8 +62,8 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-   private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
-       // alert("removing " + changedConditions.length + " conditions")
+    private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
+        // alert("removing " + changedConditions.length + " conditions")
         let existingStyles: string[] = changedConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
         let existingColumns: string[] = changedConditions.map(c => c.ColumnId)
         // get the columns currently affected - doesnt work with row styles if we do them :(
@@ -71,7 +71,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private addNewStyles(newConditions: IConditionalStyleCondition[]): void {
-       // alert("adding " + newConditions.length + " conditions")
+        // alert("adding " + newConditions.length + " conditions")
         let rowIds: string[] = this.blotter.getAllRowIds();
         rowIds.forEach(rowId => {
             newConditions.forEach(c => {
@@ -94,10 +94,14 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private checkForExpression(expressionString: ExpressionString, identifierValue: any): boolean {
-        return (ExpressionHelper.IsSatisfied(expressionString,
+        let returnVal: boolean = (ExpressionHelper.IsSatisfied(expressionString,
             this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
-            this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
+            // was getDisplayColumnValue but I've changed it for a momnet so we update immediately...
+            // obviously this is mad but it means I dont change IsInExpression until Jo gets back...
+            this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
             this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns))
+
+        return returnVal;
     }
 
     getMenuItems(): IMenuItem[] {
