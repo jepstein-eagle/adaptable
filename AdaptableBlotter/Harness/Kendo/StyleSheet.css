@@ -55,6 +55,18 @@
 			color: black;
 		}
 
+.GreenFont {
+			font-weight: bold;
+			color: green;
+		}
+
+		.RedFont {
+			font-weight: bold;
+			color: red;
+		}
+
+		
+
 button.placeholder {background: #87D0FA;}
 button.placeholder:before {
   content: "Drop here";

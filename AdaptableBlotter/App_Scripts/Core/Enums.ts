@@ -43,20 +43,20 @@ export enum LeafExpressionOperator {
     MatchesRegex
 }
 
-export enum FlashingCellDuration{
+export enum FlashingCellDuration {
     OneQuarterSecond,
     HalfSecond,
     ThreeQuarterSecond,
     Second
 }
 
-export enum ConditionalStyleScope{
+export enum ConditionalStyleScope {
     Column,
     Row
 }
 
-export enum ConditionalStyleColour{
-   None,
+export enum ConditionalStyleColour {
+    None,
     Red,
     Green,
     Blue,
@@ -64,5 +64,7 @@ export enum ConditionalStyleColour{
     Orange,
     Purple,
     Pink,
+    GreenFont,
+    RedFont
 }
 

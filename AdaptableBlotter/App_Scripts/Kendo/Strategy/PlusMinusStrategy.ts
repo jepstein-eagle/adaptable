@@ -64,7 +64,12 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     }
                 }
             }
+
+      //      newValues.forEach((v)=>{
+      //          this.blotter.setValue(v.id, v.columnId, v.value);
+      //      })
             this.blotter.setValueBatch(newValues);
+        
             //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
             this.blotter.selectCells(newValues);
         }

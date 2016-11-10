@@ -71,8 +71,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
 
 
- grid.bind("dataBound", (e: any) => {
-           this._onGridDataBound.Dispatch(this, e)
+        grid.bind("dataBound", (e: any) => {
+            this._onGridDataBound.Dispatch(this, e)
         });
 
         grid.dataSource.bind("change", (e: any) => {
@@ -113,7 +113,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
- private _onGridDataBound: EventDispatcher<IAdaptableBlotter,IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
@@ -137,16 +137,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getCurrentCellEditValue(): any {
         return this.getcurrentEditedCell().val();
-    }
-
-    // Im sure this is wrong! But for now want to try it..
-    public getAllRowIds(): string[] {
-        var dataSource = this.grid.dataSource.data();
-        let uidList: string[] = [];
-        for (var i = 0; i < dataSource.length; i++) {
-            uidList.push(dataSource[i].uid);
-        }
-        return uidList;
     }
 
     getActiveCell(): { Id: any, ColumnId: string, Value: any } {
@@ -219,7 +209,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // jw: i prefer this still despite the problems as it always works...... 
         // this.setValueBatch([ {id, columnId, value}]);
 
-        // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!        
+        // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!    
+        // this line triggers a Databound changed event but only if the cell is not in edit mode.    
+        this.grid.bind("dataBinding", function (e: any) { e.preventDefault(); });
         this.grid.dataSource.getByUid(id).set(columnId, value);
 
         // this line helps a bit with some of the issues but not all of them sadly
@@ -233,7 +225,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             model[item.columnId] = item.value;
         }
 
-        this.grid.dataSource.sync();
+        // this line triggers a Databound changed event 
+          this.grid.dataSource.sync();
+
+        //  this.grid.bind("dataBinding", function(e:any) { e.preventDefault(); });
+        //  this.grid.dataSource.getByUid(item.id).set(item.columnId, item.value);
+        //  this.grid.unbind("dataBinding");
+        //  this.grid.refresh();
 
         for (var item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.id);
@@ -379,7 +377,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // seems expensive but on the other hand we only do it when we update the styles so its not often
 
         let rowIds: string[] = this.getAllRowIds();
-       // let columnNames: string[] = this.grid.columns.map(x => x.field);
+        // let columnNames: string[] = this.grid.columns.map(x => x.field);
 
         rowIds.forEach(rowId => {
             columnNames.forEach(columnName => {
@@ -402,6 +400,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             cell.removeClass(styleName);
         }
     }
+
+    // Im sure this is wrong! But for now want to try it..
+    public getAllRowIds(): string[] {
+        var dataSource = this.grid.dataSource.data();
+        let uidList: string[] = [];
+        for (var i = 0; i < dataSource.length; i++) {
+            uidList.push(dataSource[i].uid);
+        }
+        return uidList;
+    }
+
+
 
     public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
         // this is rather brittle... but its only required the first time we change a cell value

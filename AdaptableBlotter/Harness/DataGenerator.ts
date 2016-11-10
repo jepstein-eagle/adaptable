@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 1001; i++) {
+        for (var i = 1; i < 501; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -48,7 +48,7 @@ export class DataGenerator {
                 "counterparty": this.getRandomItem(this.getCounterparties()),
                 "currency": this.getRandomItem(this.getCurrencies()),
                 "country": this.getRandomItem(this.getCountries()),
-                "marketPrice": this.getMeaningfulDouble(),
+                "marketPrice": this.getMeaningfulPositiveNegativeDouble(),
                 "bid": bid,
                 "ask": this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1)),
                 "isLive": this.generateRandomBool(),
@@ -127,6 +127,10 @@ export class DataGenerator {
 
     protected getMeaningfulDouble(): number {
         return this.roundTo4Dp(this.generateRandomInt(10, 150) + this.generateRandomDouble());
+    }
+
+    protected getMeaningfulPositiveNegativeDouble(): number {
+        return this.roundTo4Dp(this.generateRandomInt(-150, 150) + this.generateRandomDouble());
     }
 
     protected roundTo4Dp(val: number): number {
