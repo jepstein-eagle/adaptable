@@ -56,7 +56,6 @@ export enum ConditionalStyleScope {
 }
 
 export enum ConditionalStyleColour {
-    None,
     Red,
     Green,
     Blue,

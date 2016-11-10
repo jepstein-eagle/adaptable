@@ -38,18 +38,22 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
+        let optionColours = EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
+            return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
+        })
+
+
+        let currentColour = this.state.ConditionalStyleColour == null ? "Select a colour" : this.state.ConditionalStyleColour.toString();
+
         return <Panel header="Conditional Style Settings" bsStyle="primary">
             <Form horizontal>
 
                 <FormGroup controlId="styleName">
                     <Col xs={3} componentClass={ControlLabel}>Select Back Colour: </Col>
                     <Col xs={9}>
-                        <FormControl componentClass="select" placeholder="select" value={this.state.ConditionalStyleColour.toString()} onChange={(x) => this.onColourSelectChange(x)} >
-                            {
-                                EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
-                                    return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
-                                })
-                            }
+                        <FormControl componentClass="select" placeholder="select" value={currentColour} onChange={(x) => this.onColourSelectChange(x)} >
+                            <option value="select" key="select">Select a colour</option>
+                            {optionColours}
                         </FormControl>
                     </Col>
                 </FormGroup>
@@ -104,7 +108,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     public canNext(): boolean {
-        if (this.state.ConditionalStyleColour == ConditionalStyleColour.None) {
+        if (this.state.ConditionalStyleColour == null) {
             return false;
         }
         if (this.state.ConditionalStyleScope == null) {

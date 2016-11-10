@@ -26,6 +26,10 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
+        let optionColours =  EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
+                                return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
+                            })
+
         return <li
             className="list-group-item"
             onClick={() => { } }>
@@ -43,11 +47,8 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     <FormControl componentClass="select" placeholder="select" value={this.props.ConditionalStyleCondition.ConditionalStyleColour.toString()} onChange={(x) => this.onColourSelectChange(x)} >
-                        {
-                            EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
-                                return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
-                            })
-                        }
+                             <option value="select" key="select">Select a colour</option>
+                            {optionColours}                           
                     </FormControl>
                 </Col>
 

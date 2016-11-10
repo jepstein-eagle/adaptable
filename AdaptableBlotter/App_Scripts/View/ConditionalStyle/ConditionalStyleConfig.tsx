@@ -97,7 +97,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let _editedConditionalStyle: IConditionalStyleCondition = {
             Uid: Helper.generateUuid(),
             ColumnId: "select",
-            ConditionalStyleColour: ConditionalStyleColour.None,
+            ConditionalStyleColour: null,
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
