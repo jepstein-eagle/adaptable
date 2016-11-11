@@ -6,12 +6,12 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, ColumnType, ConditionalStyleColour,  LeafExpressionOperator } from '../../Core/Enums';
+import { ConditionalStyleScope, ColumnType, ConditionalStyleColour, LeafExpressionOperator } from '../../Core/Enums';
 import { Helper, EnumEx } from '../../Core/Helper';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
 import { IExpressionRange } from '../../Core/Interface/IExpression';
-import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpression';
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Blotter: IAdaptableBlotter
@@ -51,20 +51,17 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
         })
 
-
- let optionPredefinedExpressions = ExpressionHelper.GetPredefinedExpressions().map(pe=>{
-           return <option key={pe.Id} value={pe.Id}>{pe.FriendlyName}</option>
- })
+        let optionPredefinedExpressions = PredefinedExpressionHelper.GetPredefinedExpressions().map(pe => {
+            return <option key={pe.Id} value={pe.Id}>{pe.FriendlyName}</option>
+        })
 
         let emptyStyle: string = "Select a style"
         let currentColour = this.state.ConditionalStyleColour == null ? emptyStyle : this.state.ConditionalStyleColour.toString();
 
         let emptyPredefinedExpression: string = "Select an expression"
-        let currentPredefinedExpression = this.state.IsPredefinedExpression ?
-            (this.state.PredefinedExpressionInfo == null) ? emptyPredefinedExpression :
-                this.state.PredefinedExpressionInfo.Id :
+        let currentPredefinedExpression = (this.state.IsPredefinedExpression && this.state.PredefinedExpressionInfo != null) ?
+            this.state.PredefinedExpressionInfo.Id :
             emptyPredefinedExpression;
-
 
         return <Panel header="Conditional Style Settings" bsStyle="primary">
             <Form horizontal>
@@ -138,10 +135,10 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
-// this enum should really be a class and then its all in there...
-private mapPredefinedExpressionToText(conditionalStylePredefinedExpression: IPredefinedExpressionInfo): string {
- return conditionalStylePredefinedExpression.FriendlyName
-}
+    // this enum should really be a class and then its all in there...
+    private mapPredefinedExpressionToText(conditionalStylePredefinedExpression: IPredefinedExpressionInfo): string {
+        return conditionalStylePredefinedExpression.FriendlyName
+    }
     private onExpressionOptionChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let result: boolean = (e.value == "predefined")
@@ -155,7 +152,7 @@ private mapPredefinedExpressionToText(conditionalStylePredefinedExpression: IPre
 
     private onPredefinedExpressionSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ PredefinedExpressionInfo: ExpressionHelper.GetPredefinedExpressions().find(pe=>pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        this.setState({ PredefinedExpressionInfo: PredefinedExpressionHelper.GetPredefinedExpressions().find(pe => pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
     private onColourSelectChange(event: React.FormEvent) {
@@ -169,7 +166,7 @@ private mapPredefinedExpressionToText(conditionalStylePredefinedExpression: IPre
     }
 
     private onCreatePredefinedExpression() {
-        let testExpression: ExpressionString = ExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo);
+        let testExpression: ExpressionString = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo);
         //   this.setState({ Expression: testExpression } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
         //   this.setState({ ConditionalStyleColour: conditionalStyleColour } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))  
         this.state.ConditionalStyleColour = this.state.PredefinedExpressionInfo.ConditionalStyleColour;

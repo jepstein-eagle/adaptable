@@ -211,7 +211,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!    
         // this line triggers a Databound changed event but only if the cell is not in edit mode.    
-        this.grid.bind("dataBinding", function (e: any) { e.preventDefault(); });
+       // this.grid.bind("dataBinding", function (e: any) { e.preventDefault(); });
         this.grid.dataSource.getByUid(id).set(columnId, value);
 
         // this line helps a bit with some of the issues but not all of them sadly
