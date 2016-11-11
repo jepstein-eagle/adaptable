@@ -4,7 +4,9 @@ import { EmptyExpression } from './EmptyExpression'
 import { BooleanOperatorExpression } from './BooleanOperatorExpression'
 import { LeafExpressionOperator } from '../Enums'
 import { IColumn } from '../Interface/IAdaptableBlotter'
-import { ColumnType, PredefinedExpression } from '../Enums'
+import { ColumnType, ConditionalStyleColour } from '../Enums'
+import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpression';
+
 
 export module ExpressionHelper {
     export function ConvertExpressionToString(expressionString: ExpressionString, columns: Array<IColumn>): string {
@@ -219,26 +221,11 @@ export module ExpressionHelper {
         return new ExpressionString([], "Any", [])
     }
 
-    export function CreatePredefinedExpression(columnName: string, predefinedExpression: PredefinedExpression): ExpressionString {
+    export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): ExpressionString {
 
         let columnValuesExpression: Array<{ ColumnName: string, Values: Array<any> }> = [];
-
-        let operator: LeafExpressionOperator;
-        let operand1: string;
-        let operand2: string = "";
-        switch (predefinedExpression) {
-
-            case PredefinedExpression.PositiveNumber:
-                operator = LeafExpressionOperator.GreaterThanOrEqual;
-                operand1 = "0"
-                break;
-            case PredefinedExpression.NegativeNumber:
-                operator = LeafExpressionOperator.LessThan;
-                operand1 = "0"
-break;
-        }
-
-        let expressionRange: IExpressionRange = { Operand1: operand1, Operator: operator, Operand2: operand2 };
+       
+        let expressionRange: IExpressionRange = { Operand1: predefinedExpression.Operand1, Operator: predefinedExpression.Operator, Operand2: predefinedExpression.Operand2 };
         let expressionRanges: Array<IExpressionRange> = [];
         expressionRanges.push(expressionRange);
         let singleRangeExpression: { ColumnName: string, Ranges: Array<IExpressionRange> } = { ColumnName: columnName, Ranges: expressionRanges }
@@ -247,5 +234,13 @@ break;
         return new ExpressionString(columnValuesExpression, "Any", rangeExpression);
     }
 
+     export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
+        return   [
+        {Id: "PositiveGreen",  FriendlyName: "Positive numbers in green font", ConditionalStyleColour: ConditionalStyleColour.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: ""},
+        {Id: "NegativeRed", FriendlyName: "Negative numbers in red font", ConditionalStyleColour: ConditionalStyleColour.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: ""},
+        ]
+    }
+
+
     
-}
+} 

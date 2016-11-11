@@ -101,7 +101,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefinedExpression: false,
-            PredefinedExpression: null
+            PredefinedExpressionInfo: null
 
         }
         this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
