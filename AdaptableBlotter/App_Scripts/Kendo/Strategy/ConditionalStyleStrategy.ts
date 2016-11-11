@@ -5,7 +5,7 @@ import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy';
 import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
@@ -30,8 +30,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
-            // Need to remove only those conditions which have a guid in old state that is NOT in the new state
-            // Because we update the guid when we edit the condition, we just need to remove conditions that have been deleted or edited
+            // Remove conditions that have been deleted or edited
             if (oldState != null && oldState.ConditionalStyleConditions.length > 0 && oldState.ConditionalStyleConditions.length >= this.ConditionalStyleState.ConditionalStyleConditions.length) {
                 let conditionsToRemove: IConditionalStyleCondition[] = [];
                 oldState.ConditionalStyleConditions.forEach((c) => {
@@ -42,7 +41,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                 this.removeExistingStyles(conditionsToRemove);
             }
 
-            // Need to add only those conditions which have a guid that is not in the old state
+            // Add conditions that are new or changed (i.e. which have a guid that is not in the old state)
             if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
                 let conditionsToAdd: IConditionalStyleCondition[] = [];
                 this.ConditionalStyleState.ConditionalStyleConditions.forEach((c) => {
@@ -58,12 +57,13 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     private handleGridDataBound(blotter: IAdaptableBlotter) {
         if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
             // not nice but not sure we have a choice other than to have to paint every condition again :(
+            // not sure how to avoid this other than changing how we update data?
             this.addNewStyles(this.ConditionalStyleState.ConditionalStyleConditions);
         }
     }
 
     private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
-         alert("removing " + changedConditions.length + " conditions")
+        //  alert("removing " + changedConditions.length + " conditions")
         let existingStyles: string[] = changedConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
         let existingColumns: string[] = changedConditions.map(c => c.ColumnId)
         // get the columns currently affected - doesnt work with row styles if we do them :(
@@ -71,11 +71,12 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private addNewStyles(newConditions: IConditionalStyleCondition[]): void {
-         alert("adding " + newConditions.length + " conditions")
+        //  alert("adding " + newConditions.length + " conditions")
         let rowIds: string[] = this.blotter.getAllRowIds();
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         rowIds.forEach(rowId => {
             newConditions.forEach(c => {
-                if (this.checkForExpression(c.Expression, rowId)) {
+                if (this.checkForExpression(c.Expression, rowId, columns)) {
                     this.blotter.addCellStyle(rowId, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
                 }
             })
@@ -83,8 +84,9 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
-            if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue)) {
+            if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns)) {
                 this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, c.ColumnId, ConditionalStyleColour[c.ConditionalStyleColour])
             }
             else {
@@ -93,13 +95,14 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         })
     }
 
-    private checkForExpression(expressionString: ExpressionString, identifierValue: any): boolean {
+    private checkForExpression(expressionString: ExpressionString, identifierValue: any, columns: IColumn[]): boolean {
         let returnVal: boolean = (ExpressionHelper.IsSatisfied(expressionString,
             this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
             // was getDisplayColumnValue but I've changed it for a momnet so we update immediately...
             // obviously this is mad but it means I dont change IsInExpression until Jo gets back...
             this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
-            this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns))
+            columns
+           ))
 
         return returnVal;
     }
