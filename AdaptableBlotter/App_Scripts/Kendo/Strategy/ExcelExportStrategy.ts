@@ -16,7 +16,8 @@ export class ExcelExportStrategy extends AdaptableStrategyBase implements IExcel
     }
 
     public ExportToExcel(fileName: string, allPages: boolean): void {
-        this.blotter.saveAsExcel(fileName, allPages);
+        this.blotter.printGrid();
+        this.blotter.saveAsExcel(fileName, allPages     );
     }
 
 
