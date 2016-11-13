@@ -21,12 +21,24 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="Offline/css/bootstrap-theme.min.css">
     <script src="adaptableblotter/harness-bundle.js"></script>
+
+    <!-- putting this here as its not a style for the Blotter as such, merely to make dummy data look better -->
+     <style>
+        .numberColumn,
+        .k-numerictextbox .k-input {
+            text-align: right;
+        }
+        
+        .k-grid .k-alt {
+            background: aliceblue;
+        }
+    </style>
 </head>
 
 <body>
     <div>
         <!--<h3>Adaptable Blotter</h3> -->
-          <div id="content" style="margin:15px;"></div>
+        <div id="content" style="margin:15px;"></div>
     </div>
 
     <script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
@@ -74,12 +86,12 @@
             },
             columns:
             [
-                { field: "tradeId", title: "ID" },
+                 { field: "tradeId", title: "ID" },
                 { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
                 { field: "counterparty", title: "Counterparty" },
                 { field: "currency", title: "Currency" },
                 { field: "country", title: "Country"},
-                { field: "marketPrice", title: "Market Price" },
+                { field: "marketPrice", title: "Market Price", format:"{0:n4}" },
                 { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                 {
                     field: "isLive", title: "Is Live",
@@ -88,14 +100,14 @@
                 { field: "fitchRating", title: "Fitch Rating"},
                 { field: "moodysRating", title: "Moodys Rating" },
                 { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: "350px" },
-                { field: "bid", title: "Bid" },
-                { field: "ask", title: "Ask" },
-                { field: "bloombergAsk", title: "Bloomberg Ask" },
-                { field: "bloombergBid", title: "Bloomberg Bid" },
-                { field: "indicativeAsk", title: "Indicative Ask" },
-                { field: "indicativeBid", title: "Indicative Bid" },
-                { field: "delta", format: "{0:n4}", title: "Delta" },
-                { field: "occasionalPrice", title: "Occasional Price" },
+                { field: "bid", title: "Bid" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "ask", title: "Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "bloombergAsk", title: "Bloomberg Ask", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "bloombergBid", title: "Bloomberg Bid", format:"{0:n4}" , attributes:{class:"numberColumn"}},
+                { field: "indicativeAsk", title: "Indicative Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "indicativeBid", title: "Indicative Bid", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "delta", format: "{0:n4}", title: "Delta", attributes:{class:"numberColumn"}},
+                { field: "occasionalPrice", title: "Occasional Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
                 { field: "deskId", title: "Desk ID" },
                 { field: "lastUpdated", title: "Last Update", format: "{0:G}" },
                 { field: "lastUpdatedBy", title: "Last Updated By" }

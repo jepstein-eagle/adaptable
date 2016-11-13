@@ -62,9 +62,9 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         </Form>;
 
         let setAllOption = <Form horizontal>
-            <Row style={rowStyle}>
-                <Col xs={12}>
-                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f=>f.IsLive)}>
+            <Row style={topRowStyle}>
+                 <Col xs={12}>
+                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f=>f.IsLive)} >
                         Turn On All Flashing Columns
                     </Checkbox>
                 </Col>
@@ -118,6 +118,13 @@ var listGroupStyle = {
 
 let panelStyle = {
     width: '800px'
+}
+
+let topRowStyle = {
+    height: '50px',
+    margin: '0px',
+    fontSize: "larger",
+    alignItems: "right"
 }
 
 let rowStyle = {

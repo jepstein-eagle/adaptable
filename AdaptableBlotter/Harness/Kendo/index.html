@@ -3,47 +3,55 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<title>Adaptable Blotter Kendo Demo</title>
+    <meta charset="utf-8" />
+    <title>Adaptable Blotter Kendo Demo</title>
 
-	<!--we use the JS and CSS CDN so we do no need to d/l or store them locally and maintain versions.... Quite cool!!-->
+    <!--we use the JS and CSS CDN so we do no need to d/l or store them locally and maintain versions.... Quite cool!!-->
 
-	<!-- I've added this line so export to excel can work but not done anything else - is that enough? -->
-	<script src="http://kendo.cdn.telerik.com/2016.3.914/js/jszip.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
-	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" />
-	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.silver.min.css" />
-	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.mobile.all.min.css" />
-	<script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
-	<link href="StyleSheet.css" rel="stylesheet" />
+    <!-- I've added this line so export to excel can work but not done anything else - is that enough? -->
+    <script src="http://kendo.cdn.telerik.com/2016.3.914/js/jszip.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.silver.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.mobile.all.min.css" />
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
+    <link href="StyleSheet.css" rel="stylesheet" />
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
-	<script src="adaptableblotter/harness-bundle.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+    <script src="adaptableblotter/harness-bundle.js"></script>
 
-	
+    <!-- putting these here as not styles for the Blotter as such, merely to make dummy data look better -->
+    <style>
+        .numberColumn,
+        .k-numerictextbox .k-input {
+            text-align: right;
+        }
+        
+        .k-grid .k-alt {
+            background: aliceblue;
+        }
+    </style>
+
 </head>
 
 <body>
-	<div>
-		<!--<h3>Adaptable Blotter</h3> -->
-		<div id="content" style="margin:15px;"></div>
-	</div>
+    <div>
+        <!--<h3>Adaptable Blotter</h3> -->
+        <div id="content" style="margin:15px;"></div>
+    </div>
 
-	<script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
-	<p/>
-	<div id="grid"></div>
+    <script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
+    <p/>
+    <div id="grid"></div>
 
-	<script>
+    <script>
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
-
-
-
 
     $("#grid")
         .kendoGrid({
@@ -87,7 +95,7 @@
                 { field: "counterparty", title: "Counterparty" },
                 { field: "currency", title: "Currency" },
                 { field: "country", title: "Country"},
-                { field: "marketPrice", title: "Market Price" },
+                { field: "marketPrice", title: "Market Price", format:"{0:n4}" },
                 { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                 {
                     field: "isLive", title: "Is Live",
@@ -96,14 +104,14 @@
                 { field: "fitchRating", title: "Fitch Rating"},
                 { field: "moodysRating", title: "Moodys Rating" },
                 { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: "350px" },
-                { field: "bid", title: "Bid" },
-                { field: "ask", title: "Ask" },
-                { field: "bloombergAsk", title: "Bloomberg Ask" },
-                { field: "bloombergBid", title: "Bloomberg Bid" },
-                { field: "indicativeAsk", title: "Indicative Ask" },
-                { field: "indicativeBid", title: "Indicative Bid" },
-                { field: "delta", format: "{0:n4}", title: "Delta" },
-                { field: "occasionalPrice", title: "Occasional Price" },
+                { field: "bid", title: "Bid" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "ask", title: "Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "bloombergAsk", title: "Bloomberg Ask", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "bloombergBid", title: "Bloomberg Bid", format:"{0:n4}" , attributes:{class:"numberColumn"}},
+                { field: "indicativeAsk", title: "Indicative Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "indicativeBid", title: "Indicative Bid", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "delta", format: "{0:n4}", title: "Delta", attributes:{class:"numberColumn"}},
+                { field: "occasionalPrice", title: "Occasional Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
                 { field: "deskId", title: "Desk ID" },
                 { field: "lastUpdated", title: "Last Update", format: "{0:G}" },
                 { field: "lastUpdatedBy", title: "Last Updated By" }
@@ -116,7 +124,8 @@
             scrollable: false,
             filterable: true,
             pageable: false,
-    editable : true
+    editable : true,
+
         });
 
     var grid = $("#grid").data("kendoGrid");
