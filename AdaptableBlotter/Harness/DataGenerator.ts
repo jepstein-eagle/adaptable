@@ -208,7 +208,7 @@ export class DataGenerator {
             "Goldman Sachs",
             "Societe Generale",
             "Bank of America",
-            "Royal Bank of Scotland",
+            "RBS",
             "Barcap",
             "JP Morgan",
             "Morgan Stanley",

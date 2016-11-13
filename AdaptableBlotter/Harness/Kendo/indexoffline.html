@@ -50,9 +50,10 @@
     var trades = dataGen.getTrades();
 
 
-    $("#grid")
+   $("#grid")
         .kendoGrid({
             dataSource: {
+              //  pageSize: 100,
                 data: trades,
                 schema: {
                     model: {
@@ -75,7 +76,6 @@
                             indicativeAsk: { type: "number" },
                             indicativeBid: { type: "number" },
                             delta: { type: "number", editable: false },
-                            deskId: { type: "number" },
                             occasionalPrice: { type: "number" },
                             bookingGuid: { type: "string" },
                             lastUpdated: { type: "date" },
@@ -83,15 +83,15 @@
                         }
                     }
                 }
-            },
+           },
             columns:
             [
-                 { field: "tradeId", title: "ID" },
+                { field: "tradeId", title: "ID" },
                 { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
                 { field: "counterparty", title: "Counterparty" },
                 { field: "currency", title: "Currency" },
-                { field: "country", title: "Country"},
-                { field: "marketPrice", title: "Market Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                { field: "country", title: "Country", width: "350px" },
+                { field: "marketPrice", title: "Market Price", format:"{0:n4}" , attributes:{class:"numberColumn"}},
                 { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                 {
                     field: "isLive", title: "Is Live",
@@ -108,8 +108,7 @@
                 { field: "indicativeBid", title: "Indicative Bid", format:"{0:n4}", attributes:{class:"numberColumn"}},
                 { field: "delta", format: "{0:n4}", title: "Delta", attributes:{class:"numberColumn"}},
                 { field: "occasionalPrice", title: "Occasional Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
-                { field: "deskId", title: "Desk ID" },
-                { field: "lastUpdated", title: "Last Update", format: "{0:G}" },
+                { field: "lastUpdated", title: "Last Update", format: "{0:dd MMM yyyy}", width: "450px" },
                 { field: "lastUpdatedBy", title: "Last Updated By" }
             ],
             selectable: "multiple cell",
@@ -120,7 +119,8 @@
             scrollable: false,
             filterable: true,
             pageable: false,
-    editable : true
+    editable : true,
+
         });
 
     var grid = $("#grid").data("kendoGrid");
