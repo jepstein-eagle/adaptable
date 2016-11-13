@@ -30,36 +30,40 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
-                return <MenuItem eventKey={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon}  /> {menuItem.Label}</MenuItem>
             });
         }
 
         if (this.props.MenuState.MenuItems) {
             var configMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Configuration).map((menuItem: IMenuItem) => {
-                return <MenuItem eventKey={menuItem.Label} key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
             });
         }
 
+        // this NavBar is a temporary placeholder for our menu items until we build a proper, configurable Dashboard like with WPF version
+        // Its better than the previous dropdown but it needs to be replaced by something far more powerful, useful and configurable
         let navbar =
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">Adaptable Blotter</a>
+                        Adaptable Blotter
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
                     {actionMenuItems}
-                    <NavDropdown eventKey={3} title="Configure" id="basic-nav-dropdown">
+                    <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                         {configMenuItems}
                     </NavDropdown>
                 </Nav>
             </Navbar>
 
+
         return (
+
             <div>
+
                 {navbar}
 
-              
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
@@ -86,6 +90,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     AdaptableBlotter={this.props.AdaptableBlotter} />
 
             </div>
+
         );
     }
     onClick(menuItem: IMenuItem) {
@@ -121,3 +126,12 @@ let AdaptableBlotterReact: React.ComponentClass<any> = connect(mapStateToProps, 
 export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;
+
+let titleStyle: React.CSSProperties = {
+    fontSize: "18px"
+}
+
+let buttonStyle: React.CSSProperties = {
+    active: "none",
+    focus: "none"
+}
