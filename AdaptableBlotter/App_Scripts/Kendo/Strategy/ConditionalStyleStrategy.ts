@@ -11,6 +11,7 @@ import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalSty
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper, EnumEx } from '../../Core/Helper';
+import {MenuType} from '../../Core/Enums';
 
 
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
@@ -18,7 +19,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     private ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Configure Conditional Style", this.Id, 'ConditionalStyleConfig', "tint");
+        this.menuItemConfig = new MenuItemShowPopup("Conditional Styles", this.Id, 'ConditionalStyleConfig',MenuType.Configuration, "tint");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitConditionalStyle())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.OnGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))

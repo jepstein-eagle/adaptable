@@ -4,15 +4,15 @@ import {AdaptableViewFactory} from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
 import {SmartEditOperation, ColumnType} from '../../Core/Enums'
 import {IMenuItem} from '../../Core/Interface/IStrategy';
-
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
+import {MenuType} from '../../Core/Enums';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction',"pencil");
+        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction',MenuType.Action,"pencil");
     }
 
     public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation): void {

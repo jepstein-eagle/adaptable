@@ -8,6 +8,7 @@ import { IFlashingCellsStrategy, IFlashingColumn } from '../../Core/Interface/IF
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
 import { FlashingCellDuration } from '../../Core/Enums'
+import {MenuType} from '../../Core/Enums';
 
 /* First basic draft of FlashingCells Strategy. 
     A few assumptions at play here
@@ -24,7 +25,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Configure Flashing Cells", this.Id, 'FlashingCellsConfig', "flash");
+        this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig',MenuType.Configuration, "flash");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitFlashingCells())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }

@@ -1,3 +1,6 @@
+import {MenuType} from '../Enums';
+
+
 export interface IStrategy{
     Id : string
     getMenuItems() : IMenuItem[]
@@ -9,6 +12,7 @@ export interface IMenuItem{
     StrategyId : string;
     Action : string;
     IsEnabled : boolean;
+    MenuType: MenuType;
     GlyphIcon : string
 }
 

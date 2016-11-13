@@ -1,22 +1,22 @@
-﻿import {MenuItemShowPopup} from '../Core/MenuItem';
-import {AdaptableBlotter} from '../Kendo/AdaptableBlotter';
+﻿import { MenuItemShowPopup } from '../Core/MenuItem';
+import { AdaptableBlotter } from '../Kendo/AdaptableBlotter';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon} from 'react-bootstrap';
+import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown } from 'react-bootstrap';
 
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import {AdaptableBlotterPopup} from './AdaptableBlotterPopup';
-import {PopupState, MenuState} from '../Redux/ActionsReducers/Interface/IState';
-import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
-import {AdaptableBlotterState} from '../Redux/Store/Interface/IAdaptableStore';
-import {IMenuItem} from '../Core/interface/IStrategy'
-
+import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
+import { PopupState, MenuState } from '../Redux/ActionsReducers/Interface/IState';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
+import { IMenuItem } from '../Core/interface/IStrategy'
+import { MenuType } from '../Core/Enums';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -29,15 +29,37 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
         if (this.props.MenuState.MenuItems) {
-            var menuItems = this.props.MenuState.MenuItems.map((menuItem: IMenuItem) => {
-                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem) }><Glyphicon glyph={menuItem.GlyphIcon}/> {menuItem.Label}</MenuItem>
+            var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
+                return <MenuItem eventKey={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
             });
         }
+
+        if (this.props.MenuState.MenuItems) {
+            var configMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Configuration).map((menuItem: IMenuItem) => {
+                return <MenuItem eventKey={menuItem.Label} key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+            });
+        }
+
+        let navbar =
+            <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="#">Adaptable Blotter</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                    {actionMenuItems}
+                    <NavDropdown eventKey={3} title="Configure" id="basic-nav-dropdown">
+                        {configMenuItems}
+                    </NavDropdown>
+                </Nav>
+            </Navbar>
+
         return (
             <div>
-                <DropdownButton  bsStyle="primary" title="Adaptable Blotter Functions" id="Adaptable_Blotter_Menu">
-                    {menuItems}
-                </DropdownButton >
+                {navbar}
+
+              
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
@@ -47,10 +69,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                                     return (
                                         <span key={index}>
                                             {item}
-                                            <br/>
+                                            <br />
                                         </span>
                                     )
-                                }) }
+                                })}
                             </p>
                             <p>
                                 <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
@@ -61,7 +83,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ShowPopup}
                     ComponentClassName={this.props.PopupState.ComponentClassName}
                     onHide={this.props.onClose}
-                    AdaptableBlotter={this.props.AdaptableBlotter}/>
+                    AdaptableBlotter={this.props.AdaptableBlotter} />
 
             </div>
         );
@@ -97,5 +119,5 @@ let AdaptableBlotterReact: React.ComponentClass<any> = connect(mapStateToProps, 
 // export default AdaptableBlotterReact;
 
 export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
-    <AdaptableBlotterReact Blotter={AdaptableBlotter}/>
+    <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;

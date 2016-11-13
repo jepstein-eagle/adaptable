@@ -67,4 +67,9 @@ export enum ConditionalStyleColour {
     RedFont
 }
 
+export enum MenuType{
+    Configuration,
+    Action
+}
+
 

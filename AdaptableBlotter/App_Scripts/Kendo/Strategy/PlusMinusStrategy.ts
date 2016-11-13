@@ -8,13 +8,14 @@ import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
+import {MenuType} from '../../Core/Enums';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private menuItemConfig: IMenuItem;
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Configure Plus/Minus", this.Id, 'PlusMinusConfig', "plus-sign");
+        this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration,"plus-sign");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitPlusMinus())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }

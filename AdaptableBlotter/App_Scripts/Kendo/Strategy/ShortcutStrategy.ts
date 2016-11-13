@@ -7,7 +7,7 @@ import { Helper } from '../../Core/Helper';
 import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
-
+import {MenuType} from '../../Core/Enums';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 
 export class ShortcutStrategy extends AdaptableStrategyBase {
@@ -18,7 +18,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Configure Shortcut", this.Id, 'ShortcutConfig', "road");
+        this.menuItemConfig = new MenuItemShowPopup("Shortcut", this.Id, 'ShortcutConfig',MenuType.Configuration, "road");
         this.InitShortcut();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitShortcut())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
