@@ -119,7 +119,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={8}>{ColumnType[this.props.ColumnType] + " Entry"}</Col>
                 <Col xs={4}>
-                    <Button onClick={() => this.addRange()} style={{ float: 'right' }}>
+                    <Button bsSize='small'  onClick={() => this.addRange()} style={{ float: 'right' }}>
                         Add a range entry
                     </Button>
                 </Col>
