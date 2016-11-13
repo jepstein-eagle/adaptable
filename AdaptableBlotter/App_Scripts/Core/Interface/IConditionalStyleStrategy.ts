@@ -1,7 +1,7 @@
 import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { ExpressionString } from '../Expression/ExpressionString';
 import { ConditionalStyleScope, ConditionalStyleColour } from '../Enums';
-import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpression';
+import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpressionHelper';
 
 
 
