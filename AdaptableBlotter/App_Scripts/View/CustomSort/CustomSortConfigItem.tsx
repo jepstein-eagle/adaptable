@@ -25,7 +25,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                 <Col xs={3}>
                     <ButtonGroup>
                         <OverlayTrigger  overlay={ <Tooltip id="tooltipEdit"><strong>Edit</strong></Tooltip>}>
-                            <Button onClick={() => this.props.onEdit(this.props.CustomSort) }><Glyphicon glyph="pencil"></Glyphicon></Button>
+                            <Button onClick={() => this.props.onEdit(this.props.CustomSort) }><Glyphicon glyph="edit"></Glyphicon></Button>
                         </OverlayTrigger>
                         <OverlayTrigger  overlay={ <Tooltip id="tooltipDelete">Delete</Tooltip>}>
                             <Button onClick={() => this.props.onDelete(this.props.CustomSort) }><Glyphicon glyph="trash"/></Button>

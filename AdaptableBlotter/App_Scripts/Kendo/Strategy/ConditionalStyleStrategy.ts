@@ -56,7 +56,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private handleGridDataBound(blotter: IAdaptableBlotter) {
-        if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+        if (this.ConditionalStyleState!= null && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
             // not nice but not sure we have a choice other than to have to paint every condition again :(
             // not sure how to avoid this other than changing how we update data?
             this.addNewStyles(this.ConditionalStyleState.ConditionalStyleConditions);

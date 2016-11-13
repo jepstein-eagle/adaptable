@@ -213,7 +213,6 @@ export class DataGenerator {
             "JP Morgan",
             "Morgan Stanley",
             "BNP",
-            "Royal Bank of Canada",
             "Lloyds TSB",
             "MUFJ",
             "Rabobank",
