@@ -12,6 +12,7 @@ import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExcelExportRedux from '../ActionsReducers/ExcelExportRedux'
+import * as PrintPreviewRedux from '../ActionsReducers/PrintPreviewRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
@@ -21,6 +22,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
 import {IExcelExportStrategy} from '../../Core/Interface/IExcelExportStrategy'
+import {IPrintPreviewStrategy} from '../../Core/Interface/IPrintPreviewStrategy'
 import {IColumnChooserStrategy} from '../../Core/Interface/IColumnChooserStrategy'
 import {AdaptableBlotterState, IAdaptableBlotterStore} from './Interface/IAdaptableStore'
 import {IUIError} from '../../Core/interface/IStrategy'
@@ -37,6 +39,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
     Calendars: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
+    PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
 
 });
 
@@ -140,6 +143,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case ExcelExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExcelExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExcelExportStrategyId));
                     ExportStrategy.ExportToExcel(middlewareAPI.getState().Export.FileName, middlewareAPI.getState().Export.AllPages);
+                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    return next(action);
+                }
+                case PrintPreviewRedux.PRINT_PREVIEW_APPLY: {
+                    let PrintPreviewStrategy = <IPrintPreviewStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PrintPreviewStrategyId));
+                    PrintPreviewStrategy.ApplyPrintPreview();
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }

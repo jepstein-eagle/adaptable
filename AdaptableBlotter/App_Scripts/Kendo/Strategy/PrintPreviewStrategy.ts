@@ -5,18 +5,18 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import {IMenuItem} from '../../Core/Interface/IStrategy'
 import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import {ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
-import {IExcelExportStrategy} from '../../Core/Interface/IExcelExportStrategy'
+import {IPrintPreviewStrategy} from '../../Core/Interface/IPrintPreviewStrategy'
 
 
-export class ExcelExportStrategy extends AdaptableStrategyBase implements IExcelExportStrategy {
+export class PrintPreviewStrategy extends AdaptableStrategyBase implements IPrintPreviewStrategy {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ExcelExportStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Export To Excel", this.Id, 'ExcelExportAction', "export");
+        super(StrategyIds.PrintPreviewStrategyId, blotter)
+        this.menuItemConfig = new MenuItemShowPopup("Print Preview", this.Id, 'PrintPreviewAction', "print");
     }
 
-    public ExportToExcel(fileName: string, allPages: boolean): void {
-        this.blotter.saveAsExcel(fileName, allPages     );
+    public ApplyPrintPreview(): void {
+        this.blotter.printGrid();
     }
 
 

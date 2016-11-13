@@ -27,6 +27,7 @@ import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { CalendarStrategy } from './Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
+import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
 
 
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
@@ -60,6 +61,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
