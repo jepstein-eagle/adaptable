@@ -28,8 +28,6 @@ import { AuditService } from '../Core/Services/AuditService'
 import { CalendarStrategy } from './Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
-
-
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
 
@@ -350,10 +348,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string): JQuery {
+    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string, columnIndex?: number): JQuery {
         var row = this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
-        let columnIndex = this.grid.columns.findIndex(x => x.field == columnName);
-        let tdIndex = columnIndex + 1;
+       if(!columnIndex)
+       {
+         columnIndex = this.grid.columns.findIndex(x => x.field == columnName);
+    }
+    let tdIndex = columnIndex + 1;
         //we use the context of Jquery instead of parent/children so we improve performance drastically!
         let cell = $("td:nth-child(" + tdIndex + ")", row);
         return cell;
@@ -374,16 +375,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public removeCellStylesFromGrid(styleNames: string[], columnNames: string[]): void {
-        // loop through every row and then every condition and just clear?
-        // seems expensive but on the other hand we only do it when we update the styles so its not often
 
-        let rowIds: string[] = this.getAllRowIds();
-        // let columnNames: string[] = this.grid.columns.map(x => x.field);
-
-        rowIds.forEach(rowId => {
+    public removeCellStyles(rowIdentifierValues: any[], columnNames: string[], styleNames: string[], ): void {
+        // seems expensive to remove styles like this....
+        // but on the other hand we only do it when we update conditional styles through config so its not often
+        rowIdentifierValues.forEach(rowId => {
             columnNames.forEach(columnName => {
-                var cell = this.getCellByColumnNameAndRowIdentifier(rowId, columnName);
+                let columnIndex: number = this.grid.columns.findIndex(x => x.field == columnName);
+                var cell = this.getCellByColumnNameAndRowIdentifier(rowId, columnName, columnIndex);
                 if (cell != null) {
                     styleNames.forEach(styleName => {
                         if (cell.hasClass(styleName)) {

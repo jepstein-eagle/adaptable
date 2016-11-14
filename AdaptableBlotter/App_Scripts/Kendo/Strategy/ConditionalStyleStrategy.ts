@@ -68,7 +68,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         let existingStyles: string[] = changedConditions.map(c => ConditionalStyleColour[c.ConditionalStyleColour])
         let existingColumns: string[] = changedConditions.map(c => c.ColumnId)
         // get the columns currently affected - doesnt work with row styles if we do them :(
-        this.blotter.removeCellStylesFromGrid(existingStyles, existingColumns);
+        this.blotter.removeCellStyles(this.blotter.getAllRowIds(), existingColumns, existingStyles);
     }
 
     private addNewStyles(newConditions: IConditionalStyleCondition[]): void {

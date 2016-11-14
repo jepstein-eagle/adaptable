@@ -19,7 +19,6 @@ export interface IAdaptableBlotter {
     getColumnHeader(columnId: string): string
     setValue(id: any, columnId: string, value: any): void
     setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
-    onMenuClicked(menuItem: IMenuItem): void
     CreateMenu(): void
     SetColumnIntoStore(): void
     setCustomSort(columnId: string, comparer: Function): void
@@ -32,28 +31,29 @@ export interface IAdaptableBlotter {
     isColumnReadonly(columnId: string):boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
 
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
-    SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+   SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): { Id: any, ColumnId: string, Value: any }
     saveAsExcel(fileName: string, allPages: boolean): void
     isGridPageable(): boolean
+    printGrid(): void
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void
     removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
+removeCellStyles(rowIdentifierValues: any[], columnNames: string[], styleNames: string[]): void 
 
     // get dirty data
       GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any
 
       // playing around
        getAllRowIds():  string[] 
-      removeCellStylesFromGrid(styleNames: string[], columnNames: string[]): void 
+      
 
-      // printing
-printGrid(): void
 
-// needed to respond to grid databound which gets called every time we do an edit :()
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+// Grid Events
+ onMenuClicked(menuItem: IMenuItem): void
+    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 }
 
 export interface ISelectedCells {

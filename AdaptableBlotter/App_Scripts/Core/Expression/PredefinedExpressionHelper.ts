@@ -2,6 +2,12 @@ import { ExpressionString } from './ExpressionString'
 import {  IExpressionRange } from '../Interface/IExpression';
 import {  ConditionalStyleColour, LeafExpressionOperator } from '../Enums';
 
+/*  
+ Not sure about this still but I THINK its a good idea.
+ Basically we want to make it easy for uses to create common conditions; they can still edit them later if we want.
+ Once we have Filters working we should add "future" and "past" conditions to work on date columns where < or > "Today"
+It could be that the whole thing adds a layer of complexity that is not justified, because we need to create the condition on the fly... who knows?
+*/
 
 export interface IPredefinedExpressionInfo {
     Id: string
@@ -25,6 +31,7 @@ export module PredefinedExpressionHelper {
         rangeExpression.push(singleRangeExpression);
         return new ExpressionString(columnValuesExpression, "Any", rangeExpression);
     }
+
 
     export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
         return [
