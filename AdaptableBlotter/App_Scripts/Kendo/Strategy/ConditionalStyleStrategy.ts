@@ -74,7 +74,9 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     private addNewStyles(newConditions: IConditionalStyleCondition[]): void {
         //  alert("adding " + newConditions.length + " conditions")
         let rowIds: string[] = this.blotter.getAllRowIds();
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;  
+        // adding this check as things can get mixed up during 'clean user data'
+        if(columns.length >0){
         rowIds.forEach(rowId => {
             newConditions.forEach(c => {
                 if (this.checkForExpression(c.Expression, rowId, columns)) {
@@ -82,7 +84,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                 }
             })
         })
-    }
+    }}
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
