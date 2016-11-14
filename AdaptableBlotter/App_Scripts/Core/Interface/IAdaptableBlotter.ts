@@ -4,8 +4,14 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
+import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 
+export interface IColumnStyleMapping {
+    ColumnIndex: number
+    StyleName: string
+    Expression: ExpressionString
+}
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -17,6 +23,7 @@ export interface IAdaptableBlotter {
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
+    getColumnIndex(columnName: string): number
     setValue(id: any, columnId: string, value: any): void
     setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
     CreateMenu(): void
@@ -28,30 +35,31 @@ export interface IAdaptableBlotter {
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
-    isColumnReadonly(columnId: string):boolean
+    isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
 
-   SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+    SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): { Id: any, ColumnId: string, Value: any }
     saveAsExcel(fileName: string, allPages: boolean): void
     isGridPageable(): boolean
     printGrid(): void
 
     // cell styling methods
-    addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void
-    removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void
-removeCellStyles(rowIdentifierValues: any[], columnNames: string[], styleNames: string[]): void 
+    addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping, timeout?: number): void
+    addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnStyleMapping>): void
+    removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping): void
+    removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnStyleMapping>): void
 
     // get dirty data
-      GetDirtyValueForColumnFromDataSource( columnName: string, identifierValue: any): any
+    GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
 
-      // playing around
-       getAllRowIds():  string[] 
-      
+    // playing around
+    getAllRowIds(): string[]
 
 
-// Grid Events
- onMenuClicked(menuItem: IMenuItem): void
+
+    // Grid Events
+    onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 }

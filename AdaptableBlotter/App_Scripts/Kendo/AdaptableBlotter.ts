@@ -28,7 +28,8 @@ import { AuditService } from '../Core/Services/AuditService'
 import { CalendarStrategy } from './Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnStyleMapping } from '../Core/Interface/IAdaptableBlotter'
+
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -252,7 +253,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public selectCells(cells: { id: any, columnId: string }[]): void {
         let selectorQuery: JQuery
         for (let cell of cells) {
-            let cellSelect = this.getCellByColumnNameAndRowIdentifier(cell.id, cell.columnId)
+            let columnIndex = this.getColumnIndex(cell.columnId);
+            var row = this.getRowByRowIdentifier(cell.id);
+            let cellSelect = this.getCellByColumnIndexAndRow(row, columnIndex)
             if (selectorQuery == null) {
                 selectorQuery = cellSelect
             }
@@ -272,6 +275,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return "";
         }
     }
+
+    public getColumnIndex(columnName: string): number {
+        return this.grid.columns.findIndex(x => x.field == columnName);
+    }
+
 
     public isColumnReadonly(columnId: string): boolean {
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
@@ -348,57 +356,70 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    private getCellByColumnNameAndRowIdentifier(rowIdentifierValue: any, columnName: string, columnIndex?: number): JQuery {
-        var row = this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
-       if(!columnIndex)
-       {
-         columnIndex = this.grid.columns.findIndex(x => x.field == columnName);
+    private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
+        return this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
     }
-    let tdIndex = columnIndex + 1;
+
+    private getCellByColumnIndexAndRow(row: any, columnIndex: number): JQuery {
+        let tdIndex = columnIndex + 1;
         //we use the context of Jquery instead of parent/children so we improve performance drastically!
         let cell = $("td:nth-child(" + tdIndex + ")", row);
         return cell;
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let cell = this.getCellByColumnNameAndRowIdentifier(id, columnId)
+        let columnIndex = this.getColumnIndex(columnId)
+        let row = this.getRowByRowIdentifier(id)
+        let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
         return cell.text();
     }
 
-    public addCellStyle(rowIdentifierValue: any, columnName: string, styleName: string, timeout?: number): void {
-        var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
-        if (cell != null && !cell.hasClass(styleName)) {
-            cell.addClass(styleName);
+    public addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnStyleMapping>): void {
+        if (columnStyleMappings.length > 0) {
+            var row = this.getRowByRowIdentifier(rowIdentifierValue);
+            columnStyleMappings.forEach(csm => {
+                var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
+                if (cell != null && !cell.hasClass(csm.StyleName)) {
+                    cell.addClass(csm.StyleName);
+                }
+            })
+        }
+    }
+
+    public addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping, timeout?: number): void {
+        var row = this.getRowByRowIdentifier(rowIdentifierValue);
+        var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
+        if (cell != null && !cell.hasClass(columnStyleMapping.StyleName)) {
+            cell.addClass(columnStyleMapping.StyleName);
         }
         if (timeout) {
-            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnName, styleName), timeout);
+            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnStyleMapping), timeout);
         }
     }
 
 
-    public removeCellStyles(rowIdentifierValues: any[], columnNames: string[], styleNames: string[], ): void {
+    public removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnStyleMapping>): void {
         // seems expensive to remove styles like this....
         // but on the other hand we only do it when we update conditional styles through config so its not often
         rowIdentifierValues.forEach(rowId => {
-            columnNames.forEach(columnName => {
-                let columnIndex: number = this.grid.columns.findIndex(x => x.field == columnName);
-                var cell = this.getCellByColumnNameAndRowIdentifier(rowId, columnName, columnIndex);
+            var row = this.getRowByRowIdentifier(rowId);
+            columnStyleMappings.forEach(csm => {
+                var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
                 if (cell != null) {
-                    styleNames.forEach(styleName => {
-                        if (cell.hasClass(styleName)) {
-                            cell.removeClass(styleName)
-                        }
-                    })
+                    if (cell.hasClass(csm.StyleName)) {
+                        cell.removeClass(csm.StyleName)
+                    }
                 }
             })
         })
     }
 
 
-    public removeCellStyle(rowIdentifierValue: any, columnName: string, styleName: string): void {
-        var cell = this.getCellByColumnNameAndRowIdentifier(rowIdentifierValue, columnName);
-        if (cell != null && cell.hasClass(styleName)) {
-            cell.removeClass(styleName);
+    public removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping): void {
+        var row = this.getRowByRowIdentifier(rowIdentifierValue);
+        var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
+        if (cell != null && cell.hasClass(columnStyleMapping.StyleName)) {
+            cell.removeClass(columnStyleMapping.StyleName);
         }
     }
 

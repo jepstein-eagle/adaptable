@@ -3,12 +3,12 @@ import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IColumnStyleMapping } from '../../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
 import { FlashingCellDuration } from '../../Core/Enums'
-import {MenuType} from '../../Core/Enums';
+import { MenuType } from '../../Core/Enums';
 
 /* First basic draft of FlashingCells Strategy. 
     A few assumptions at play here
@@ -25,7 +25,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig',MenuType.Configuration, "flash");
+        this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig', MenuType.Configuration, "flash");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitFlashingCells())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
@@ -39,7 +39,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
         // TODO:  Need to fix this : make sure that we only flash if its the right column...
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
-        if (flashingColumn!=null && flashingColumn.IsLive) {
+        if (flashingColumn != null && flashingColumn.IsLive) {
 
             this.FlashCell(DataChangedEvent, flashingColumn);
         }
@@ -52,7 +52,10 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
-        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnName, cellStyle, this.getFlashDuration(flashingColumn.FlashingCellDuration))
+        let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
+        let columnMapping: IColumnStyleMapping = { ColumnIndex: columnIndex, StyleName: cellStyle, Expression: null }
+
+        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping, this.getFlashDuration(flashingColumn.FlashingCellDuration))
     }
 
     private getFlashDuration(flashingCellDuration: FlashingCellDuration): number {
