@@ -16,16 +16,17 @@ import * as PrintPreviewRedux from '../ActionsReducers/PrintPreviewRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
+import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
-import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
-import {ISmartEditStrategy, ISmartEditPreviewReturn} from '../../Core/Interface/ISmartEditStrategy'
-import {IExcelExportStrategy} from '../../Core/Interface/IExcelExportStrategy'
-import {IPrintPreviewStrategy} from '../../Core/Interface/IPrintPreviewStrategy'
-import {IColumnChooserStrategy} from '../../Core/Interface/IColumnChooserStrategy'
-import {AdaptableBlotterState, IAdaptableBlotterStore} from './Interface/IAdaptableStore'
-import {IUIError} from '../../Core/interface/IStrategy'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
+import { IExcelExportStrategy } from '../../Core/Interface/IExcelExportStrategy'
+import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
+import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
+import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
+import { IUIError } from '../../Core/interface/IStrategy'
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -40,6 +41,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Calendars: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
+    QuickSearch: QuickSearchRedux.QuickSearchReducer
 
 });
 
@@ -152,6 +154,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
+               // case QuickSearchRedux.QUICK_SEARCH_SET_SEARCH_TEXT: {
+               //     let mytext: string = middlewareAPI.getState().QuickSearch.QuickSearchText;
+               //     adaptableBlotter.applySearch(null, mytext);
+               //     return next(action);
+               // }
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:

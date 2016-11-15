@@ -19,13 +19,13 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Shortcut", this.Id, 'ShortcutConfig',MenuType.Configuration, "road");
-        this.InitShortcut();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitShortcut())
+        this.InitState();
+        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
 
-    InitShortcut() {
+    InitState() {
         if (this.NumericShortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts) {
             this.NumericShortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts;
         }
@@ -65,7 +65,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                     // Date we ONLY replace so dont need to worry about editing values
                     var DateToReplace: Date;
                     if (shortcut.IsDynamic) {
-                        DateToReplace = this.CalendarService.GetDynamicDate(shortcut.ShortcutResult);
+                        DateToReplace = this.blotter.CalendarService.GetDynamicDate(shortcut.ShortcutResult);
                     } else {
                         DateToReplace = shortcut.ShortcutResult;
                     }

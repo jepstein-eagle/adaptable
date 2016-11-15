@@ -6,10 +6,7 @@ import {CalendarService} from '../Core/Services/CalendarService'
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
-        this.CalendarService = blotter.CalendarService;
     }
-
-    protected CalendarService: ICalendarService; 
 
     abstract getMenuItems(): IMenuItem[];
     public onAction(action: string) {

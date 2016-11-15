@@ -14,10 +14,11 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalendarStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Calendars", this.Id, 'CalendarsConfig', MenuType.Configuration, "calendar");
-        this.InitCurrentCalendar();
+         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+       
     }    
 
-     InitCurrentCalendar() {
+     InitState() {
         if (this.CurrentCalendar != this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars.CurrentCalendar) {
             this.CurrentCalendar = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars.CurrentCalendar;
         }

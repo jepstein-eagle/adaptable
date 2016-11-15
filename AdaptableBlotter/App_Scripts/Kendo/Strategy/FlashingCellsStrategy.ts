@@ -25,11 +25,11 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig', MenuType.Configuration, "flash");
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitFlashingCells())
+        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
-    private InitFlashingCells() {
+    private InitState() {
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
         }

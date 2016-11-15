@@ -7,6 +7,14 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
+import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
+import { CalendarService } from '../Core/Services/CalendarService'
+import { IAuditService } from '../Core/Services/Interface/IAuditService'
+import { AuditService } from '../Core/Services/AuditService'
+import { ISearchService } from '../Core/Services/Interface/ISearchService'
+import { SearchService } from '../Core/Services/SearchService'
+import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from './Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from './Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from './Strategy/ShortcutStrategy'
@@ -15,20 +23,16 @@ import { PlusMinusStrategy } from './Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from './Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from './Strategy/ExcelExportStrategy'
 import { FlashingCellsStrategy } from './Strategy/FlashingCellsStrategy'
-import * as StrategyIds from '../Core/StrategyIds'
-import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { CalendarStrategy } from './Strategy/CalendarStrategy'
+import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
+import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
+import { QuickSearchStrategy } from './Strategy/QuickSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
-import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
-import { CalendarService } from '../Core/Services/CalendarService'
-import { IAuditService } from '../Core/Services/Interface/IAuditService'
-import { AuditService } from '../Core/Services/AuditService'
-import { CalendarStrategy } from './Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
-import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnCellStyleMapping } from '../Core/Interface/IAdaptableBlotter'
+import { ExpressionString } from '../Core/Expression/ExpressionString';
 
 
 
@@ -38,7 +42,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-
+    public SearchService: ISearchService
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -46,6 +50,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
+        this.SearchService = new SearchService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -61,6 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -68,9 +74,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
-
         })
-
 
         grid.bind("dataBound", (e: any) => {
             this._onGridDataBound.Dispatch(this, e)
@@ -94,7 +98,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-
     public SetColumnIntoStore() {
         let columns: IColumn[] = this.grid.columns.map(x => {
             return {
@@ -104,7 +107,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
             }
         });
-
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
@@ -112,7 +114,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
-
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
@@ -323,7 +324,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private ReInitGrid() {
         this.grid.setDataSource(this.grid.dataSource);
-
     }
 
     public getColumnValueString(columnId: string): Array<string> {
@@ -379,9 +379,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var row = this.getRowByRowIdentifier(rowIdentifierValue);
             columnStyleMappings.forEach(csm => {
                 var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
-                if (cell != null && !cell.hasClass(csm.CellStyle)) {
-                    cell.addClass(csm.CellStyle);
-                }
+                this.applyCellStyle(cell, csm.CellStyle);
             })
         }
     }
@@ -389,11 +387,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
         var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
-        if (cell != null && !cell.hasClass(columnStyleMapping.CellStyle)) {
-            cell.addClass(columnStyleMapping.CellStyle);
-        }
+        this.applyCellStyle(cell, columnStyleMapping.CellStyle);
         if (timeout) {
             setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnStyleMapping), timeout);
+        }
+    }
+
+    private applyCellStyle(cell: JQuery, cellStyle: string) {
+        if (cell != null && !cell.hasClass(cellStyle)) {
+            cell.addClass(cellStyle);
         }
     }
 
@@ -461,6 +463,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
+
+
+    public applySearch(ExpressionString: ExpressionString, tempString: string): void {
+        if (tempString != "") {
+            this.grid.dataSource.filter({ field: "country", operator: "eq", value: tempString });
+        }
+        else {
+            this.grid.dataSource.filter([]);
+        }
+    }
 
     // this is copied straight from Telerik website and needs a fair bit of work but is ok for now...
     public printGrid(): void {

@@ -86,7 +86,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             let conditionColour = actionTypedColour.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
             index = conditions.findIndex(i => i.Uid == actionTypedColour.conditionalStyleCondition.Uid)
-            conditions[index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.style, Uid: Helper.generateUid() })
+            conditions[index] = Object.assign({}, conditionColour, { CellStyle: actionTypedColour.style, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
         case CONDITIONAL_STYLE_DELETE:

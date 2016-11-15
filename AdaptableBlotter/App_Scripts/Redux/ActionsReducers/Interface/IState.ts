@@ -67,3 +67,7 @@ export interface ConditionalStyleState{
 export interface PrintPreviewState {
     
 }
+
+export interface QuickSearchState{
+    QuickSearchText: string
+}

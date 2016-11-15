@@ -4,6 +4,7 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
+import { ISearchService } from '../Services/Interface/ISearchService'
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 
@@ -14,6 +15,7 @@ export interface IAdaptableBlotter {
 
     CalendarService: ICalendarService
     AuditService: IAuditService
+    SearchService: ISearchService
 
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
@@ -50,7 +52,7 @@ export interface IAdaptableBlotter {
 
     // playing around
     getAllRowIds(): string[]
-
+    applySearch(ExpressionString: ExpressionString, tempString: string): void
 
 
     // Grid Events
