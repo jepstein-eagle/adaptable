@@ -83,6 +83,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
                             placeholder="Quick Search"
                             value={this.state.EditedQuickSearchText}
                             onChange={(x) => this.onUpdateQuickSearchText(x)}
+                            onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
                             />
                         <Button bsStyle='success' onClick={(x) => this.onApplyQuickSearch(x)} >Search</Button>
                     </Form>
@@ -144,7 +145,20 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
         this.setState({ EditedQuickSearchText: e.value });
     }
 
+    // doing 2 things here 
+    // 1. stopping strange effect of pressing enter in the input making the whole blotter reload - no fucking idea why it does that....
+    // 2.  triggering the apply quick search (in other words making it as though I pressed the button)
+    onKeyDownQuickSearch(event: React.KeyboardEvent) {
+        let e: any = event.keyCode;
+
+        if (e == 13) {
+            event.stopPropagation();
+            this.onApplyQuickSearch(null);
+        }
+    }
+
     onApplyQuickSearch(event: React.FormEvent) {
+
         this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
     }
 
