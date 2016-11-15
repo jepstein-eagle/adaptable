@@ -33,6 +33,7 @@ interface QuickSearchActionState {
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, QuickSearchActionState> {
 
+    // can we lose this constructor?
     constructor() {
         super();
         this.state = { EditedQuickSearchText: "" }
@@ -40,7 +41,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
 
     public componentDidMount() {
         this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.subscribe(() => this.onQuickSearchStateChanged())
-      }
+    }
 
     render() {
 
@@ -147,8 +148,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
         this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
     }
 
+    // is there a better way to keep them in sync?
     onQuickSearchStateChanged() {
-        if (this.state!=null && this.state.EditedQuickSearchText != this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
+        if (this.state != null && this.state.EditedQuickSearchText != this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
             this.setState({ EditedQuickSearchText: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
         }
     }

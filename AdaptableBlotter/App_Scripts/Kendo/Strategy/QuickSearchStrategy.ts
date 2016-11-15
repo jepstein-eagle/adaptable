@@ -26,6 +26,8 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         }
     }
 
+
+
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
