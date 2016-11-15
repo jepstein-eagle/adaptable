@@ -1,12 +1,11 @@
-import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 /// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
-import {   ListGroup, ListGroupItem} from 'react-bootstrap';
-
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
-import {AdaptableWizard} from './../Wizard/AdaptableWizard'
-import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
+import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizard } from './../Wizard/AdaptableWizard'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -30,12 +29,14 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     render(): any {
         var columnsItems = this.props.Columns.map((Column: IColumn) => {
             return <ListGroupItem key={Column.ColumnId}
-                onClick={() => this.onClickColum(Column) }
+                onClick={() => this.onClickColum(Column)}
                 active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.ColumnFriendlyName}</ListGroupItem>
         })
-        return <ListGroup style={listGroupStyle}>
-            {columnsItems}
-        </ListGroup>
+        return <Panel header="Select a Column">
+            <ListGroup style={listGroupStyle}>
+                {columnsItems}
+            </ListGroup>
+        </Panel>
     }
     onClickColum(column: IColumn) {
         this.setState({ SelectedColumn: column }, () => this.props.UpdateGoBackState())
@@ -44,7 +45,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
-    public StepName = "Pick a Column"
+    public StepName = "Column Picker"
 }
 var listGroupStyle = {
     'overflowY': 'auto',
