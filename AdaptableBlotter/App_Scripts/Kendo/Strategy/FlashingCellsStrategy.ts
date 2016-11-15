@@ -4,10 +4,9 @@ import { AdaptableViewFactory } from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumnCellStyleMapping } from '../../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
-import { FlashingCellDuration } from '../../Core/Enums'
 import { MenuType } from '../../Core/Enums';
 
 /* First basic draft of FlashingCells Strategy. 
@@ -40,7 +39,6 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         // TODO:  Need to fix this : make sure that we only flash if its the right column...
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
         if (flashingColumn != null && flashingColumn.IsLive) {
-
             this.FlashCell(DataChangedEvent, flashingColumn);
         }
     }
@@ -55,22 +53,8 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
         let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: cellStyle, Expression: null }
 
-        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping, this.getFlashDuration(flashingColumn.FlashingCellDuration))
+        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping, flashingColumn.FlashingCellDuration.Duration)
     }
-
-    private getFlashDuration(flashingCellDuration: FlashingCellDuration): number {
-        switch (flashingCellDuration) {
-            case FlashingCellDuration.OneQuarterSecond:
-                return 250;
-            case FlashingCellDuration.HalfSecond:
-                return 500;
-            case FlashingCellDuration.ThreeQuarterSecond:
-                return 750;
-            case FlashingCellDuration.Second:
-                return 1000;
-        }
-    }
-
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];

@@ -5,16 +5,17 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Col, Panel, Row,   Checkbox, FormControl } from 'react-bootstrap';
-import { ColumnType, FlashingCellDuration } from '../../Core/Enums'
-import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
+import { ColumnType } from '../../Core/Enums'
+import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
 
 interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
     Columns: IColumn[];
+    FlashingCellDurations: IFlashingCellDuration[];
     onSelect: (flashingColumn: IFlashingColumn) => void;
-    onChangeFlashingDuration: (flashingColumn: IFlashingColumn, NewFlashDuration: any) => void;
+    onChangeFlashingDuration: (flashingColumn: IFlashingColumn, NewFlashDuration: IFlashingCellDuration) => void;
 }
 
 export class FlashingCellConfigItem extends React.Component<FlashingCellConfigItemProps, {}> {
@@ -32,10 +33,10 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                 </Col>
                 <Col md={5} >
                     {
-                        <FormControl componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration.toString()} onChange={(x) => this.onActionChange(x)} >
+                        <FormControl componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration.Name} onChange={(x) => this.onActionChange(x)} >
                             {
-                                EnumExtensions.getValues(FlashingCellDuration).map((flashingCellDuration: FlashingCellDuration) => {
-                                    return <option key={FlashingCellDuration[flashingCellDuration]} value={flashingCellDuration.toString()}>{FlashingCellDuration[flashingCellDuration]}</option>
+                                this.props.FlashingCellDurations.map((flashingCellDuration: IFlashingCellDuration) => {
+                                    return <option key={flashingCellDuration.Name} value={flashingCellDuration.Name}>{flashingCellDuration.Name}</option>
                                 })
                             }
                         </FormControl>
@@ -49,7 +50,7 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
 
     onActionChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeFlashingDuration(this.props.FlashingColumn, Number.parseInt(e.value));
+        this.props.onChangeFlashingDuration(this.props.FlashingColumn, this.props.FlashingCellDurations.find(f=>f.Name==e.value));
     }
 }
 

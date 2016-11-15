@@ -2,8 +2,7 @@
 
 import * as Redux from 'redux';
 import { FlashingCellState } from './Interface/IState';
-import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
-import { FlashingCellDuration } from '../../Core/Enums';
+import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 
 
@@ -22,7 +21,7 @@ export interface FlashingColumnSelectAllAction extends Redux.Action {
 
 export interface FlashingColumnDurationChangeAction extends Redux.Action {
     FlashingColumn: IFlashingColumn,
-    NewFlashDuration: any;
+    NewFlashDuration: IFlashingCellDuration;
 }
 
 export const SelectFlashingCellColumn = (FlashingColumn: IFlashingColumn): FlashingColumnSelectAction => ({
@@ -35,7 +34,7 @@ export const SelectAllFlashingCellColumn = (NumericColumns: IFlashingColumn[]): 
     NumericColumns
 })
 
-export const ChangeFlashingDuration = (FlashingColumn: IFlashingColumn, NewFlashDuration: FlashingCellDuration): FlashingColumnDurationChangeAction => ({
+export const ChangeFlashingDuration = (FlashingColumn: IFlashingColumn, NewFlashDuration: IFlashingCellDuration): FlashingColumnDurationChangeAction => ({
     type: CHANGE_FLASHING_DURATION,
     FlashingColumn,
     NewFlashDuration

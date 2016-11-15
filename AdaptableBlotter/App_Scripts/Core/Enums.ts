@@ -51,13 +51,6 @@ export enum ShortcutAction {
     Replace
 }
 
-export enum FlashingCellDuration {
-    OneQuarterSecond,
-    HalfSecond,
-    ThreeQuarterSecond,
-    Second
-}
-
 export enum ConditionalStyleScope {
     Column,
     Row

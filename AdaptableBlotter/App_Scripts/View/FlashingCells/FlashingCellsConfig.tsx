@@ -1,15 +1,15 @@
 /// <reference path="../../../typings/index.d.ts" />
-import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
+import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ColumnType, FlashingCellDuration } from '../../Core/Enums'
+import { ColumnType } from '../../Core/Enums'
 import { FlashingCellConfigItem, FlashingCellConfigHeader } from './FlashingCellConfigItem'
 
 
@@ -18,12 +18,19 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
     Columns: IColumn[],
     onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingColumnSelectAction,
     onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingColumnSelectAllAction,
-    onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: FlashingCellDuration) => FlashingCellsRedux.FlashingColumnDurationChangeAction
+    onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => FlashingCellsRedux.FlashingColumnDurationChangeAction
 }
 
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
+       let flashingCellDurations : IFlashingCellDuration[] = [  
+           { Name: "1/4 Second", Duration: 250 },
+           { Name: "1/2 Second", Duration: 500 },
+           { Name: "3/4 Second", Duration: 250 },
+           { Name: "1 Second", Duration: 1000 },
+      ]
+       
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
 
         let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
@@ -36,7 +43,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         });
 
         numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc=>{
-            let flashingColumn: IFlashingColumn= { IsLive: false, ColumnName: nc.ColumnId, FlashingCellDuration: FlashingCellDuration.HalfSecond };
+            let flashingColumn: IFlashingColumn= { IsLive: false, ColumnName: nc.ColumnId, FlashingCellDuration: flashingCellDurations.find(f=>f.Name=="1/2 Second") };
              allPotentialFlashingColumns.push(flashingColumn);
         })
      
@@ -45,6 +52,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
                 FlashingColumn={flashingColumn}
                 key={flashingColumn.ColumnName}
                 Columns={this.props.Columns}
+                FlashingCellDurations={flashingCellDurations}
                 onSelect={(flashingColumn) => this.props.onSelectFlashingColumn(flashingColumn)}
                 onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}>
             </FlashingCellConfigItem>
@@ -101,7 +109,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectFlashingColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.SelectFlashingCellColumn(flashingCell)),
         onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.SelectAllFlashingCellColumn(numericColumns)),
-        onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: FlashingCellDuration) => dispatch(FlashingCellsRedux.ChangeFlashingDuration(flashingCell, newFlashDuration))
+        onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => dispatch(FlashingCellsRedux.ChangeFlashingDuration(flashingCell, newFlashDuration))
     };
 }
 
