@@ -1,10 +1,8 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Redux from 'redux';
 import {ShortcutState} from './Interface/IState';
 import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
-import { ColumnType} from '../../Core/Enums';
-import {ShortcutAction} from '../../Core/Enums';
+import {ColumnType, ShortcutAction} from '../../Core/Enums';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';

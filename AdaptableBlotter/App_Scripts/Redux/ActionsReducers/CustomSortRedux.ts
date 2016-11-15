@@ -1,6 +1,4 @@
 /// <reference path="../../../typings/index.d.ts" />
-
-import * as Redux from 'redux';
 import {CustomSortState} from './Interface/IState';
 import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
 

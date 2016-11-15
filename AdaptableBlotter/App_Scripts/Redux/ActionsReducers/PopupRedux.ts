@@ -50,12 +50,10 @@ const initialPopupState: PopupState = {
 export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = initialPopupState, action: Redux.Action): PopupState => {
     switch (action.type) {
         case SHOW_POPUP:
-            //first {} is important as we need to clone the state and not amend it
             return  Object.assign({}, state, { ShowPopup: true, ComponentClassName: (<ShowPopupAction>action).ComponentClassName })
         case HIDE_POPUP:
             return initialPopupState
         case ERROR_POPUP:
-            //first {} is important as we need to clone the state and not amend it
             return  Object.assign({}, initialPopupState, {  ShowErrorPopup: true, ErrorMsg: (<ErrorPopupAction>action).Error.ErrorMsg })
         default:
             return state

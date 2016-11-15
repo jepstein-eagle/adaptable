@@ -2,8 +2,7 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import {   ListGroup, ListGroupItem, Panel} from 'react-bootstrap';
-
+import {ListGroup, ListGroupItem, Panel} from 'react-bootstrap';
 import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
 import {AdaptableWizard} from './../Wizard/AdaptableWizard'
 import {IColumn} from '../../Core/Interface/IAdaptableBlotter';

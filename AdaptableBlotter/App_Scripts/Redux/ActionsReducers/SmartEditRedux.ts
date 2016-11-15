@@ -1,6 +1,4 @@
 /// <reference path="../../../typings/index.d.ts" />
-
-import * as Redux from 'redux';
 import {SmartEditState} from './Interface/IState';
 import { ISmartEditPreview} from '../../Core/Interface/ISmartEditStrategy';
 import { SmartEditOperation} from '../../Core/Enums';
@@ -9,7 +7,7 @@ export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_SETVALUE = 'SMARTEDIT_SETVALUE';
 export const SMARTEDIT_SETOPERATION = 'SMARTEDIT_SETOPERATION';
 export const SMARTEDIT_FETCHPREVIEW = 'SMARTEDIT_FETCHPREVIEW';
-const SMARTEDIT_SETPREVIEW = 'SMARTEDIT_SETPREVIEW';
+export const SMARTEDIT_SETPREVIEW = 'SMARTEDIT_SETPREVIEW';
 
 export interface ApplySmarteditAction extends Redux.Action {
 
@@ -65,16 +63,12 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEdit
         case SMARTEDIT_APPLY:
             return state
         case SMARTEDIT_SETVALUE:
-            //first {} is important as we need to clone the state and not amend it
             return Object.assign({}, state, { SmartEditValue: (<SmartEditSetValueAction>action).value })
         case SMARTEDIT_SETOPERATION:
-            //first {} is important as we need to clone the state and not amend it
             return Object.assign({}, state, { SmartEditOperation: (<SmartEditSetOperationAction>action).SmartEditOperation })
         case SMARTEDIT_FETCHPREVIEW:
-            //this is handled by Redux Middleware as it requires API calls
             return state
         case SMARTEDIT_SETPREVIEW:
-            //first {} is important as we need to clone the state and not amend it
             return Object.assign({}, state, { Preview: (<SmartEditSetPreviewAction>action).Preview })
         default:
             return state

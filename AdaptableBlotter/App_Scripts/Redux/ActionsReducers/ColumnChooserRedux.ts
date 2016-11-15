@@ -1,7 +1,5 @@
-import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
 /// <reference path="../../../typings/index.d.ts" />
-
-import * as Redux from 'redux';
+import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
 
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
 

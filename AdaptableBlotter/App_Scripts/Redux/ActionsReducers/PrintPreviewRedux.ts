@@ -1,6 +1,5 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Redux from 'redux';
 import {PrintPreviewState} from './Interface/IState';
 
 export const PRINT_PREVIEW_APPLY = 'PRINT_PREVIEW_APPLY';

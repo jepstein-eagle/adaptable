@@ -11,7 +11,6 @@ import {ICalendar} from '../../../Core/interface/ICalendarStrategy';
 import {IConditionalStyleCondition} from '../../../Core/interface/IConditionalStyleStrategy';
 
 
-
 export interface PlusMinusState {
     DefaultNudge: number
     ColumnsDefaultNudge: IPlusMinusCondition[]

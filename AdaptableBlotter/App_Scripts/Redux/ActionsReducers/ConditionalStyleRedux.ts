@@ -1,6 +1,4 @@
 /// <reference path="../../../typings/index.d.ts" />
-import * as Redux from 'redux';
-import * as React from 'react';
 import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
@@ -55,8 +53,6 @@ export const DeleteConditionalStyle = (conditionalStyleCondition: IConditionalSt
 
 const initialCalendarState: ConditionalStyleState = {
     ConditionalStyleConditions: []
-    //  { ColumnId: "bid", StyleName: "Red", ConditionalStyleScope: ConditionalStyleScope.Column, Expression: ExpressionHelper.CreateEmptyExpression() },
-    //  { ColumnId: "ask", StyleName: "Blue", ConditionalStyleScope: ConditionalStyleScope.Row, Expression: ExpressionHelper.CreateEmptyExpression() }     ]
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {

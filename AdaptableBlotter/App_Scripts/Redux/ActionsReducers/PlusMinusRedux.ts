@@ -1,11 +1,8 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Redux from 'redux';
-import * as React from 'react';
 import { PlusMinusState } from './Interface/IState';
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
 import { IExpression } from '../../Core/interface/IExpression';
-
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 export const PLUSMINUS_SET_DEFAULT_NUDGE = 'PLUSMINUS_SET_DEFAULT_NUDGE';

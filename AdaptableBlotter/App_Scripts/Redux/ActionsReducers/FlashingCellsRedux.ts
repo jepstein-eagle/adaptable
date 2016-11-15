@@ -1,10 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
-
-import * as Redux from 'redux';
 import { FlashingCellState } from './Interface/IState';
 import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 export const CHANGE_FLASHING_DURATION = 'CHANGE_FLASHING_DURATION';

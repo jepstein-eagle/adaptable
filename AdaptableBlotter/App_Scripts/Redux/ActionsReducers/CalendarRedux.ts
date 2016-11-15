@@ -1,7 +1,5 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import * as Redux from 'redux';
-import * as React from 'react';
 import {CalendarState} from './Interface/IState';
 
 export const CALENDAR_SET_DEFAULT_CALENDAR = 'CALENDAR_SET_DEFAULT_CALENDAR';
