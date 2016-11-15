@@ -4,13 +4,13 @@ import { MenuItemShowPopup } from '../../Core/MenuItem';
 import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy';
-import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
-import { IAdaptableBlotter, IColumn, IColumnStyleMapping } from '../../Core/Interface/IAdaptableBlotter';
+import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
+import { IAdaptableBlotter, IColumn, IColumnCellStyleMapping } from '../../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { Helper, EnumEx } from '../../Core/Helper';
+import { Helper } from '../../Core/Helper';
 import { MenuType } from '../../Core/Enums';
 
 
@@ -55,10 +55,10 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-            let columnMapping: IColumnStyleMapping = { ColumnIndex: columnIndex, StyleName: ConditionalStyleColour[c.ConditionalStyleColour], Expression: null }
+            let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: CellStyle[c.CellStyle], Expression: null }
 
             if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns)) {
-                let columnMapping: IColumnStyleMapping = { ColumnIndex: columnIndex, StyleName: ConditionalStyleColour[c.ConditionalStyleColour], Expression: null }
+                let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: CellStyle[c.CellStyle], Expression: null }
                 this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping)
             }
             else {
@@ -78,8 +78,8 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
 
     private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
        // alert("removing " + changedConditions.length + " conditions")
-        let columnStyleMappings: IColumnStyleMapping[] = changedConditions.map((nc: IConditionalStyleCondition) => {
-            return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), StyleName: ConditionalStyleColour[nc.ConditionalStyleColour], Expression: nc.Expression }
+        let columnStyleMappings: IColumnCellStyleMapping[] = changedConditions.map((nc: IConditionalStyleCondition) => {
+            return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: CellStyle[nc.CellStyle], Expression: nc.Expression }
         })
 
         // get the columns currently affected - doesnt work with row styles if we do them :(
@@ -97,12 +97,12 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
          //   alert("starting adding " + newConditions.length + " conditions")
             let rowIds: string[] = this.blotter.getAllRowIds();
 
-            let columnStyleMappings: IColumnStyleMapping[] = newConditions.map((nc: IConditionalStyleCondition) => {
-                return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), StyleName: ConditionalStyleColour[nc.ConditionalStyleColour], Expression: nc.Expression }
+            let columnStyleMappings: IColumnCellStyleMapping[] = newConditions.map((nc: IConditionalStyleCondition) => {
+                return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: CellStyle[nc.CellStyle], Expression: nc.Expression }
             })
 
             rowIds.forEach(rowId => {
-                let rowColumnStyleMappings: IColumnStyleMapping[] = []
+                let rowColumnStyleMappings: IColumnCellStyleMapping[] = []
                 columnStyleMappings.forEach(c => {
                     if (this.checkForExpression(c.Expression, rowId, columns)) {
                         rowColumnStyleMappings.push(c);

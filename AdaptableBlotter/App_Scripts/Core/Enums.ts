@@ -1,23 +1,11 @@
-export enum SmartEditOperation {
-    Sum,
-    Ratio,
-    Absolute
-}
 
+// General Enums
 export enum ColumnType {
     String,
     Number,
     Boolean,
     Date,
     Object
-}
-
-export enum ShortcutAction {
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    Replace
 }
 
 export enum BooleanOperator {
@@ -43,6 +31,26 @@ export enum LeafExpressionOperator {
     MatchesRegex
 }
 
+export enum MenuType{
+    Configuration,
+    Action
+}
+
+// Enums used in Strategies
+export enum SmartEditOperation {
+    Sum,
+    Ratio,
+    Absolute
+}
+
+export enum ShortcutAction {
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Replace
+}
+
 export enum FlashingCellDuration {
     OneQuarterSecond,
     HalfSecond,
@@ -55,7 +63,7 @@ export enum ConditionalStyleScope {
     Row
 }
 
-export enum ConditionalStyleColour {
+export enum CellStyle {
     Red,
     Green,
     Blue,
@@ -66,10 +74,3 @@ export enum ConditionalStyleColour {
     GreenFont,
     RedFont
 }
-
-export enum MenuType{
-    Configuration,
-    Action
-}
-
-

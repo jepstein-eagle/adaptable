@@ -2,12 +2,12 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ConditionalStyleScope, ColumnType, ConditionalStyleColour } from '../../Core/Enums';
+import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { EnumEx } from '../../Core/Helper';
+import { EnumExtensions } from '../../Core/Extensions';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
@@ -15,7 +15,7 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
-    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => void;
+    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, newColour: CellStyle) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
@@ -26,9 +26,9 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
-        let optionColours =  EnumEx.getNamesAndValues(ConditionalStyleColour).map((conditionalStyleColourNameAndValue: any) => {
-                                return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
-                            })
+        let optionColours = EnumExtensions.getNamesAndValues(CellStyle).map((cellStyleNameAndValue: any) => {
+            return <option key={cellStyleNameAndValue.value} value={cellStyleNameAndValue.value}>{cellStyleNameAndValue.name}</option>
+        })
 
         return <li
             className="list-group-item"
@@ -46,9 +46,9 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col md={3} >
-                    <FormControl componentClass="select" placeholder="select" value={this.props.ConditionalStyleCondition.ConditionalStyleColour.toString()} onChange={(x) => this.onColourSelectChange(x)} >
-                             <option value="select" key="select">Select a colour</option>
-                            {optionColours}                           
+                    <FormControl componentClass="select" placeholder="select" value={this.props.ConditionalStyleCondition.CellStyle.toString()} onChange={(x) => this.onColourSelectChange(x)} >
+                        <option value="select" key="select">Select a colour</option>
+                        {optionColours}
                     </FormControl>
                 </Col>
 

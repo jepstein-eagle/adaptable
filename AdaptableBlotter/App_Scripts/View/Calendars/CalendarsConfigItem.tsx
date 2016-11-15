@@ -5,21 +5,16 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ColumnType, FlashingCellDuration } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ICalendar } from '../../Core/Interface/ICalendarStrategy';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-
-
 
 interface CalendarsConfigItemProps extends React.ClassAttributes<CalendarsConfigItem> {
     Calendar: ICalendar;
     AdaptableBlotter: IAdaptableBlotter;
     onSelect: (calendar: ICalendar) => void;
      onShowInformation: (calendar: ICalendar) => void;
-   
 }
-
 
 export class CalendarsConfigItem extends React.Component<CalendarsConfigItemProps, {}> {
 

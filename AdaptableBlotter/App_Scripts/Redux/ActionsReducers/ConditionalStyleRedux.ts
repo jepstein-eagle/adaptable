@@ -5,8 +5,8 @@ import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { ConditionalStyleScope, ConditionalStyleColour } from '../../Core/Enums';
-import { Helper, EnumEx } from '../../Core/Helper';
+import { ConditionalStyleScope, CellStyle } from '../../Core/Enums';
+import { Helper } from '../../Core/Helper';
 
 export const CONDITIONAL_STYLE_ADD_OR_UPDATE = 'CONDITIONAL_STYLE_ADD_OR_UPDATE';
 export const CONDITIONAL_STYLE_EDIT_COLUMN = 'CONDITIONAL_STYLE_EDIT_COLUMN';
@@ -35,13 +35,13 @@ export const EditColumnConditionalStyle = (conditionalStyleCondition: ICondition
 
 export interface ConditionalStyleEditColourAction extends Redux.Action {
     conditionalStyleCondition: IConditionalStyleCondition,
-    colour: ConditionalStyleColour
+    style: CellStyle
 }
 
-export const EditColourConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, colour: ConditionalStyleColour): ConditionalStyleEditColourAction => ({
+export const EditColourConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, style: CellStyle): ConditionalStyleEditColourAction => ({
     type: CONDITIONAL_STYLE_EDIT_COLOUR,
     conditionalStyleCondition,
-    colour
+    style
 })
 
 export interface ConditionalStyleDeleteAction extends Redux.Action {
@@ -70,7 +70,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
 
             index = conditions.findIndex(i => i.Uid == actionTypedAddUpdate.conditionalStyleCondition.Uid)
             if (index != -1) {  // it exists
-                actionTypedAddUpdate.conditionalStyleCondition.Uid = Helper.generateUuid();
+                actionTypedAddUpdate.conditionalStyleCondition.Uid = Helper.generateUid();
                 conditions[index] = actionTypedAddUpdate.conditionalStyleCondition
             } else {
                 conditions.push(actionTypedAddUpdate.conditionalStyleCondition)
@@ -82,7 +82,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             let conditionColumn = actionTypedColumn.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
             index = conditions.findIndex(i => i.Uid == actionTypedColumn.conditionalStyleCondition.Uid)
-            conditions[index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId, Uid: Helper.generateUuid() })
+            conditions[index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
         case CONDITIONAL_STYLE_EDIT_COLOUR:
@@ -90,7 +90,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             let conditionColour = actionTypedColour.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
             index = conditions.findIndex(i => i.Uid == actionTypedColour.conditionalStyleCondition.Uid)
-            conditions[index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.colour, Uid: Helper.generateUuid() })
+            conditions[index] = Object.assign({}, conditionColour, { ConditionalStyleColour: actionTypedColour.style, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
         case CONDITIONAL_STYLE_DELETE:

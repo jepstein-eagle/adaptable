@@ -37,27 +37,23 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                 key={calendar.CalendarName}
                 AdaptableBlotter={this.props.AdaptableBlotter}
                 onSelect={(calendar) => this.props.onSelectCalendar(calendar)}
-                onShowInformation={(calendar) => this.onShowInformation(calendar)}
-                >
+                onShowInformation={(calendar) => this.onShowInformation(calendar)}>
             </CalendarsConfigItem>
         });
 
-let sortedCalendarEntries =(this._displayedCalendar != null) ? this._displayedCalendar.CalendarEntries.sort(compareCalendarEntries): null;
+        let sortedCalendarEntries = (this._displayedCalendar != null) ? this._displayedCalendar.CalendarEntries.sort(compareCalendarEntries) : null;
 
         let calendarEntryItems = (this._displayedCalendar != null) ? sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
             return <CalendarEntryItem
                 CalendarEntry={calendarEntry}
-                key={calendarEntry.HolidayName+calendarEntry.HolidayDate}
-                >
+                key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
             </CalendarEntryItem>
         }) : null;
 
         let header = <Form horizontal>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={9}>Calendars</Col>
-                <Col xs={3}>
-
-                </Col>
+                <Col xs={3}></Col>
             </Row>
         </Form>;
 
@@ -84,7 +80,6 @@ let sortedCalendarEntries =(this._displayedCalendar != null) ? this._displayedCa
                     </Modal.Footer>
                 </Modal>
                 : null}
-
         </Panel>
     }
 
@@ -95,12 +90,10 @@ let sortedCalendarEntries =(this._displayedCalendar != null) ? this._displayedCa
     }
 
     private onShowInformation(calendar: ICalendar) {
-        //     alert("Showing information here for :" + calendar.CalendarName)
-        this._displayedCalendar = calendar;
+       this._displayedCalendar = calendar;
         this.setState({ isShowingInformation: true });
     }
 
-    
 }
 
 function compareCalendarEntries(a: ICalendarEntry, b: ICalendarEntry) {

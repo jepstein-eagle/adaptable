@@ -28,7 +28,7 @@ import { AuditService } from '../Core/Services/AuditService'
 import { CalendarStrategy } from './Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from './Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from './Strategy/PrintPreviewStrategy'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnStyleMapping } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnCellStyleMapping } from '../Core/Interface/IAdaptableBlotter'
 
 
 
@@ -374,23 +374,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.text();
     }
 
-    public addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnStyleMapping>): void {
+    public addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnCellStyleMapping>): void {
         if (columnStyleMappings.length > 0) {
             var row = this.getRowByRowIdentifier(rowIdentifierValue);
             columnStyleMappings.forEach(csm => {
                 var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
-                if (cell != null && !cell.hasClass(csm.StyleName)) {
-                    cell.addClass(csm.StyleName);
+                if (cell != null && !cell.hasClass(csm.CellStyle)) {
+                    cell.addClass(csm.CellStyle);
                 }
             })
         }
     }
 
-    public addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping, timeout?: number): void {
+    public addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
         var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
-        if (cell != null && !cell.hasClass(columnStyleMapping.StyleName)) {
-            cell.addClass(columnStyleMapping.StyleName);
+        if (cell != null && !cell.hasClass(columnStyleMapping.CellStyle)) {
+            cell.addClass(columnStyleMapping.CellStyle);
         }
         if (timeout) {
             setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnStyleMapping), timeout);
@@ -398,7 +398,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnStyleMapping>): void {
+    public removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnCellStyleMapping>): void {
         // seems expensive to remove styles like this....
         // but on the other hand we only do it when we update conditional styles through config so its not often
         rowIdentifierValues.forEach(rowId => {
@@ -406,8 +406,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             columnStyleMappings.forEach(csm => {
                 var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
                 if (cell != null) {
-                    if (cell.hasClass(csm.StyleName)) {
-                        cell.removeClass(csm.StyleName)
+                    if (cell.hasClass(csm.CellStyle)) {
+                        cell.removeClass(csm.CellStyle)
                     }
                 }
             })
@@ -415,11 +415,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping): void {
+    public removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
         var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
-        if (cell != null && cell.hasClass(columnStyleMapping.StyleName)) {
-            cell.removeClass(columnStyleMapping.StyleName);
+        if (cell != null && cell.hasClass(columnStyleMapping.CellStyle)) {
+            cell.removeClass(columnStyleMapping.CellStyle);
         }
     }
 

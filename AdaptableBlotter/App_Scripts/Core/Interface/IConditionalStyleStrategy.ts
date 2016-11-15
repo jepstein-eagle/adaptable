@@ -1,6 +1,6 @@
 import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { ExpressionString } from '../Expression/ExpressionString';
-import { ConditionalStyleScope, ConditionalStyleColour } from '../Enums';
+import { ConditionalStyleScope, CellStyle } from '../Enums';
 import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpressionHelper';
 
 
@@ -11,7 +11,7 @@ export interface IConditionalStyleStrategy extends IStrategy {
 export interface IConditionalStyleCondition {
     Uid: string
     ColumnId: string
-    ConditionalStyleColour: ConditionalStyleColour
+    CellStyle: CellStyle
     ConditionalStyleScope: ConditionalStyleScope
     Expression: ExpressionString
     IsPredefinedExpression: boolean

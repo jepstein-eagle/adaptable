@@ -7,11 +7,6 @@ import { IAuditService } from '../Services/Interface/IAuditService'
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 
 
-export interface IColumnStyleMapping {
-    ColumnIndex: number
-    StyleName: string
-    Expression: ExpressionString
-}
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -45,10 +40,10 @@ export interface IAdaptableBlotter {
     printGrid(): void
 
     // cell styling methods
-    addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping, timeout?: number): void
-    addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnStyleMapping>): void
-    removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnStyleMapping): void
-    removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnStyleMapping>): void
+    addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void
+    addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnCellStyleMapping>): void
+    removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void
+    removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnCellStyleMapping>): void
 
     // get dirty data
     GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
@@ -78,4 +73,10 @@ export interface IColumn {
     ColumnFriendlyName: string
     ColumnType: ColumnType
     Visible: boolean
+}
+
+export interface IColumnCellStyleMapping {
+    ColumnIndex: number
+    CellStyle: string
+    Expression: ExpressionString
 }

@@ -8,8 +8,8 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon, Well } from 'react-bootstrap';
-import { ColumnType, ConditionalStyleScope, ConditionalStyleColour } from '../../Core/Enums'
+import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
+import { ConditionalStyleScope, CellStyle } from '../../Core/Enums'
 import { ConditionalStyleConfigItem, ConditionalStyleConfigHeader } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
@@ -18,15 +18,13 @@ import { Helper } from '../../Core/Helper';
 import { ExpressionString } from '../../Core/Expression/ExpressionString';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
-
-
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
     onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
     onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
-    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => ConditionalStyleRedux.ConditionalStyleEditColourAction
+    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, cellStyle: CellStyle) => ConditionalStyleRedux.ConditionalStyleEditColourAction
 }
 
 interface ConditionalStyleConfigState {
@@ -89,20 +87,17 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
 
         </Panel>
-
-
     }
 
     onAdd() {
         let _editedConditionalStyle: IConditionalStyleCondition = {
-            Uid: Helper.generateUuid(),
+            Uid: Helper.generateUid(),
             ColumnId: "select",
-            ConditionalStyleColour: null,
+            CellStyle: null,
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefinedExpression: false,
             PredefinedExpressionInfo: null
-
         }
         this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
     }
@@ -117,7 +112,6 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     WizardFinish() {
-        // havent passed in the index - do we need to?
         this.props.onAddEditConditionalStyle(this.state.EditedConditionalStyleCondition);
         this.setState({ EditedConditionalStyleCondition: null });
     }
@@ -135,7 +129,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition)),
         onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition)),
         onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId)),
-        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColour: ConditionalStyleColour) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, newColour)),
+        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, cellStyle: CellStyle) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, cellStyle)),
     };
 }
 

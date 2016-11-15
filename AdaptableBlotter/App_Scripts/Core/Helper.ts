@@ -27,7 +27,7 @@ export module Helper {
     }
 
 
-     export function generateUuid(): string {
+     export function generateUid(): string {
         var d = new Date().getTime();
         if (window.performance && typeof window.performance.now === "function") {
             d += performance.now(); //use high-precision timer if available
@@ -43,21 +43,3 @@ export module Helper {
 
 }
 
-export module EnumEx {
-
-    export function getNamesAndValues<T extends number>(e: any) {
-        return EnumEx.getNames(e).map(n => ({ name: n, value: e[n] as T }));
-    }
-
-    export function getNames(e: any) {
-        return EnumEx.getObjValues(e).filter(v => typeof v === "string") as string[];
-    }
-
-    export function getValues<T extends number>(e: any) {
-        return EnumEx.getObjValues(e).filter(v => typeof v === "number") as T[];
-    }
-
-    export function getObjValues(e: any): (number | string)[] {
-        return Object.keys(e).map(k => e[k]);
-    }
-}

@@ -7,7 +7,6 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown } from 'react-bootstrap';
-
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -28,9 +27,12 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
+
+        // a, rather basic, top menu. done for early demo purposes but needs to be replaced by a proper, configurable, 'dashboard' like in WPF version
+        // in this version all action items are buttons and all config screens go in a dropdown
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
-                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon}  /> {menuItem.Label}</MenuItem>
+                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
             });
         }
 
@@ -40,8 +42,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             });
         }
 
-        // this NavBar is a temporary placeholder for our menu items until we build a proper, configurable Dashboard like with WPF version
-        // Its better than the previous dropdown but it needs to be replaced by something far more powerful, useful and configurable
         let navbar =
             <Navbar>
                 <Navbar.Header>
@@ -64,6 +64,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
                 {navbar}
 
+                {/*  The error modal we show - e.g. in SmartEdit when no numeric columns are selected */}
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
@@ -84,6 +85,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         </Alert>
                     </Modal.Body>
                 </Modal>
+
+                {/*  The main model window where action and configuration screens are 'hosted' */}                
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ShowPopup}
                     ComponentClassName={this.props.PopupState.ComponentClassName}
                     onHide={this.props.onClose}
@@ -120,8 +123,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 let AdaptableBlotterReact: React.ComponentClass<any> = connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterView);
-
-// export default AdaptableBlotterReact;
 
 export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />

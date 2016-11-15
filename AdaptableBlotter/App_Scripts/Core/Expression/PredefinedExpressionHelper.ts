@@ -1,6 +1,6 @@
 import { ExpressionString } from './ExpressionString'
 import {  IExpressionRange } from '../Interface/IExpression';
-import {  ConditionalStyleColour, LeafExpressionOperator } from '../Enums';
+import {  CellStyle, LeafExpressionOperator } from '../Enums';
 
 /*  
  Not sure about this still but I THINK its a good idea.
@@ -12,7 +12,7 @@ It could be that the whole thing adds a layer of complexity that is not justifie
 export interface IPredefinedExpressionInfo {
     Id: string
     FriendlyName: string
-    ConditionalStyleColour: ConditionalStyleColour
+    CellStyle: CellStyle
     Operator: LeafExpressionOperator
     Operand1: string
     Operand2: string
@@ -35,8 +35,8 @@ export module PredefinedExpressionHelper {
 
     export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
         return [
-            { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", ConditionalStyleColour: ConditionalStyleColour.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
-            { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", ConditionalStyleColour: ConditionalStyleColour.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
+            { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", CellStyle: CellStyle.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
+            { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", CellStyle: CellStyle.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
         ]
     }
 

@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../../View/AdaptableViewFactory'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
-import { IAdaptableBlotter, IColumnStyleMapping } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IColumnCellStyleMapping } from '../../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -53,7 +53,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
-        let columnMapping: IColumnStyleMapping = { ColumnIndex: columnIndex, StyleName: cellStyle, Expression: null }
+        let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: cellStyle, Expression: null }
 
         this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping, this.getFlashDuration(flashingColumn.FlashingCellDuration))
     }
