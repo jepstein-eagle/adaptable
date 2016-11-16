@@ -59,8 +59,10 @@ export enum ConditionalStyleScope {
 export enum CellStyle {
     Red,
     Green,
+    LightGreen,
     Blue,
     Yellow,
+    LightYellow,
     Orange,
     Purple,
     Pink,

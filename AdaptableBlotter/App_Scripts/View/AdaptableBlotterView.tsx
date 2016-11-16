@@ -12,7 +12,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
-import { PopupState, MenuState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState, MenuState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IMenuItem } from '../Core/interface/IStrategy'
@@ -28,16 +28,13 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onSetQuickSearchText: (newQuickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
 }
 
-
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
-
-
 
     render() {
 
-        // a, rather basic, top menu. done for early demo purposes but needs to be replaced by a proper, configurable, 'dashboard' like in WPF version
+        // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
         // in this version all action items are buttons and all config screens go in a dropdown
-        // plus i've added a very noddy quick search control which runs a quick search of 'contains' across all string columns
+        // plus i've added a very simple quick search control which runs a quick search of 'contains' across all string columns
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
                 return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
@@ -50,25 +47,23 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             });
         }
 
-        let navbar =
-            <Navbar fluid  >
-                <Navbar.Header>
-                    {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onApplyQuickSearch(quickSearchText)} />}
-                </Navbar.Header>
-                <Nav>
-                    {actionMenuItems}
-                    <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
-                        {configMenuItems}
-                    </NavDropdown>
-                </Nav>
-
-            </Navbar>
 
         return (
 
             <div >
 
-                {navbar}
+                {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
+                <Navbar fluid  >
+                    <Navbar.Header>
+                        {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onSetQuickSearch(quickSearchText)} />}
+                    </Navbar.Header>
+                    <Nav>
+                        {actionMenuItems}
+                        <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
+                            {configMenuItems}
+                        </NavDropdown>
+                    </Nav>
+                </Navbar>
 
                 {/*  The error modal we show - e.g. in SmartEdit when no numeric columns are selected */}
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
@@ -111,7 +106,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         };
     }
 
-    onApplyQuickSearch(quickSearchText: string) {
+    // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
+    onSetQuickSearch(quickSearchText: string) {
         this.props.onSetQuickSearchText(quickSearchText);
     }
 

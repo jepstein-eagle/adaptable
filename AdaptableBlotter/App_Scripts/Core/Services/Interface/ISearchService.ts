@@ -1,5 +1,5 @@
 
 
 export interface ISearchService {
-  ApplySearch(searchText: string):void;
+  ApplySearch(quickSearchText: string): void 
 }

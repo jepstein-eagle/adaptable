@@ -25,21 +25,16 @@ export interface IAdaptableBlotter {
     setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
     CreateMenu(): void
     SetColumnIntoStore(): void
-    setCustomSort(columnId: string, comparer: Function): void
     getColumnValueString(columnId: string): Array<string>
-    removeCustomSort(columnId: string): void
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
     selectCells(cells: { id: any, columnId: string }[]): void
     isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
-
     SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): { Id: any, ColumnId: string, Value: any }
-    saveAsExcel(fileName: string, allPages: boolean): void
     isGridPageable(): boolean
-    printGrid(): void
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void
@@ -52,7 +47,19 @@ export interface IAdaptableBlotter {
 
     // playing around
     getAllRowIds(): string[]
-    applySearch(ExpressionString: ExpressionString, tempString: string): void
+
+    // Custom Sort
+    setCustomSort(columnId: string, comparer: Function): void
+    removeCustomSort(columnId: string): void
+
+    // Quick Search
+    applyQuickSearch(quickSearchText: string): void
+
+    // Export
+    saveAsExcel(fileName: string, allPages: boolean): void
+
+    // Print Preview
+    printGrid(): void
 
 
     // Grid Events
@@ -67,7 +74,6 @@ export interface ISelectedCells {
 }
 
 export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
-
 }
 
 export interface IColumn {

@@ -467,19 +467,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // this needs to be done properly with serious expressions etc and using a services
     // but for now just want to have a very rough quick search working for Accenture demo
     // n.b. we are just doing a startswith on string columns only -- not sure how to include other columns :(
-    public applySearch(ExpressionString: ExpressionString, tempString: string): void {
-        if (tempString != "") {
+    public applyQuickSearch(quickSearchText: string): void {
+        if (quickSearchText != "") {
             let filterItems: kendo.data.DataSourceFilterItem[] = [];
 
             this.grid.columns.filter(c=> this.getColumnType(c.field)==ColumnType.String).forEach(c => {
-                let filterItem: kendo.data.DataSourceFilterItem = { operator: "startswith",   field: c.field, value: tempString };
+                let filterItem: kendo.data.DataSourceFilterItem = { operator: "startswith",   field: c.field, value: quickSearchText };
                 filterItems.push(filterItem);
-
             })
-
             let filters: kendo.data.DataSourceFilters = { logic: "or", filters: filterItems };
-
-
             this.grid.dataSource.filter(filters);
         }
         else {

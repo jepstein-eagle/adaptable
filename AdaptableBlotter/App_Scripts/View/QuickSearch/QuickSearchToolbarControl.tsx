@@ -3,6 +3,7 @@ import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Form, FormControl, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+
 interface QuickSearchToolbarControlProps extends React.ClassAttributes<QuickSearchToolbarControl> {
     Blotter: IAdaptableBlotter
     onSetQuickSearchText: (quickSearchText: string) => void;
@@ -34,7 +35,7 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
                 />{' '}
 
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='success' onClick={() => this.onApplyQuickSearch()}>Search</Button>
+                <Button bsSize='small' bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
             </OverlayTrigger>
             {' '}
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
@@ -56,11 +57,11 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
     onKeyDownQuickSearch(event: React.KeyboardEvent) {
         if (event.keyCode == 13) {
             event.preventDefault();
-            this.onApplyQuickSearch();
+            this.onSetQuickSearch();
         }
     }
 
-    onApplyQuickSearch() {
+    onSetQuickSearch() {
         this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
     }
 
@@ -69,9 +70,6 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
         this.props.onSetQuickSearchText("");
     }
 
-
-    // is there a better way to keep them in sync?
-    // do I need this???
     onQuickSearchStateChanged() {
         if (this.state != null && this.state.EditedQuickSearchText != this.props.Blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
             this.setState({ EditedQuickSearchText: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
