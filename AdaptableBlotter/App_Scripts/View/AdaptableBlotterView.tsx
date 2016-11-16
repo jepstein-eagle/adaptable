@@ -17,6 +17,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IMenuItem } from '../Core/interface/IStrategy'
 import { MenuType } from '../Core/Enums';
+import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -27,26 +28,16 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onSetQuickSearchText: (newQuickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
 }
 
-interface QuickSearchActionState {
-    EditedQuickSearchText: string
-}
 
-class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, QuickSearchActionState> {
+class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
 
-    // can we lose this constructor?
-    constructor() {
-        super();
-        this.state = { EditedQuickSearchText: "" }
-    }
 
-    public componentDidMount() {
-        this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.subscribe(() => this.onQuickSearchStateChanged())
-    }
 
     render() {
 
         // a, rather basic, top menu. done for early demo purposes but needs to be replaced by a proper, configurable, 'dashboard' like in WPF version
         // in this version all action items are buttons and all config screens go in a dropdown
+        // plus i've added a very noddy quick search control which runs a quick search of 'contains' across all string columns
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
                 return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
@@ -60,11 +51,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
         }
 
         let navbar =
-            <Navbar  >
+            <Navbar fluid  >
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        Adaptable Blotter
-                    </Navbar.Brand>
+                    {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onApplyQuickSearch(quickSearchText)} />}
                 </Navbar.Header>
                 <Nav>
                     {actionMenuItems}
@@ -74,35 +63,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
                 </Nav>
 
             </Navbar>
-        let navbar2 =
-            <Navbar fluid>
-                <Nav>
-                    {/* this form is not really very good
-                    this Navbar.Form is in documentation and seems perfect but we dont have it? <Navbar.Form pullLeft>  */} 
-                 
-                    <Form className='navbar-form'>
-                        <FormControl
-                            type="text"
-                            placeholder="Quick Search"
-                            value={this.state.EditedQuickSearchText}
-                            onChange={(x) => this.onUpdateQuickSearchText(x)}
-                            onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
-                            />{' '}
-                            
-                        <Button bsSize='small' bsStyle='success' onClick={() => this.onApplyQuickSearch()} >Search</Button>{' '}
-                         <Button bsSize='small' onClick={() => this.onClearQuickSearch()} >Clear</Button>
-                    </Form>
-                </Nav>
-
-            </Navbar>
-
 
         return (
 
             <div >
 
                 {navbar}
-                {navbar2}
 
                 {/*  The error modal we show - e.g. in SmartEdit when no numeric columns are selected */}
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
@@ -145,36 +111,11 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
         };
     }
 
-    onUpdateQuickSearchText(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ EditedQuickSearchText: e.value });
+    onApplyQuickSearch(quickSearchText: string) {
+        this.props.onSetQuickSearchText(quickSearchText);
     }
 
-    // doing 2 things here 
-    // 1. stopping reload of blotter on pressing enter in form
-    // 2.  triggering the apply quick search (in other words making it as though I pressed the search button)
-    onKeyDownQuickSearch(event: React.KeyboardEvent) {
-        if (event.keyCode == 13) {
-           event.preventDefault();
-            this.onApplyQuickSearch();
-        }
-    }
 
-    onApplyQuickSearch() {
-        this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
-    }
-
-     onClearQuickSearch() {
-this.setState({ EditedQuickSearchText: ""});
-        this.props.onSetQuickSearchText("");
-    }
-
-    // is there a better way to keep them in sync?
-    onQuickSearchStateChanged() {
-        if (this.state != null && this.state.EditedQuickSearchText != this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
-            this.setState({ EditedQuickSearchText: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
-        }
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
