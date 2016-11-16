@@ -77,15 +77,20 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
         let navbar2 =
             <Navbar fluid>
                 <Nav>
-                    <Form className='navbar-form' action="">
+                    {/* this form is not really very good
+                    this Navbar.Form is in documentation and seems perfect but we dont have it? <Navbar.Form pullLeft>  */} 
+                 
+                    <Form className='navbar-form'>
                         <FormControl
                             type="text"
                             placeholder="Quick Search"
                             value={this.state.EditedQuickSearchText}
                             onChange={(x) => this.onUpdateQuickSearchText(x)}
                             onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
-                            />
-                        <Button bsStyle='success' onClick={(x) => this.onApplyQuickSearch(x)} >Search</Button>
+                            />{' '}
+                            
+                        <Button bsSize='small' bsStyle='success' onClick={() => this.onApplyQuickSearch()} >Search</Button>{' '}
+                         <Button bsSize='small' onClick={() => this.onClearQuickSearch()} >Clear</Button>
                     </Form>
                 </Nav>
 
@@ -146,20 +151,22 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, Qu
     }
 
     // doing 2 things here 
-    // 1. stopping strange effect of pressing enter in the input making the whole blotter reload - no fucking idea why it does that....
-    // 2.  triggering the apply quick search (in other words making it as though I pressed the button)
+    // 1. stopping reload of blotter on pressing enter in form
+    // 2.  triggering the apply quick search (in other words making it as though I pressed the search button)
     onKeyDownQuickSearch(event: React.KeyboardEvent) {
-        let e: any = event.keyCode;
-
-        if (e == 13) {
-            event.stopPropagation();
-            this.onApplyQuickSearch(null);
+        if (event.keyCode == 13) {
+           event.preventDefault();
+            this.onApplyQuickSearch();
         }
     }
 
-    onApplyQuickSearch(event: React.FormEvent) {
-
+    onApplyQuickSearch() {
         this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
+    }
+
+     onClearQuickSearch() {
+this.setState({ EditedQuickSearchText: ""});
+        this.props.onSetQuickSearchText("");
     }
 
     // is there a better way to keep them in sync?
