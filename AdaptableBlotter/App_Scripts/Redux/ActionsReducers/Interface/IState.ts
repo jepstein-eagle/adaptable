@@ -1,4 +1,4 @@
-import {SmartEditOperation} from '../../../Core/Enums'
+import {SmartEditOperation, SearchStringOperator} from '../../../Core/Enums'
 import {ISmartEditPreview} from '../../../Core/interface/ISmartEditStrategy'
 import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
 import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
@@ -70,4 +70,5 @@ export interface PrintPreviewState {
 
 export interface QuickSearchState{
     QuickSearchText: string
+    SearchStringOperator: SearchStringOperator // where will we get this list from?
 }

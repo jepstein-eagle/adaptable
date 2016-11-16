@@ -8,8 +8,8 @@ export class SearchService implements ISearchService {
 
  constructor(private blotter: IAdaptableBlotter) {
  }
-    public ApplySearch(quickSearchText: string): void {
-        this.blotter.applyQuickSearch(quickSearchText);
+    public ApplyQuickSearch(): void {
+        this.blotter.applyQuickSearch();
     }
 
 }

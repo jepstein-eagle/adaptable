@@ -53,7 +53,7 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
 
     // Quick Search
-    applyQuickSearch(quickSearchText: string): void
+    applyQuickSearch(): void
 
     // Export
     saveAsExcel(fileName: string, allPages: boolean): void

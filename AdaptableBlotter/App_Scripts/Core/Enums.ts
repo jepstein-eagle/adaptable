@@ -69,3 +69,10 @@ export enum CellStyle {
     GreenFont,
     RedFont
 }
+
+export enum SearchStringOperator{
+    Equals,
+    NotEquals,
+    Contains,
+    StartsWith
+}

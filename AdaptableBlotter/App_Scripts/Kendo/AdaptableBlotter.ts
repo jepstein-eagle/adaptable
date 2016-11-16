@@ -30,7 +30,7 @@ import { QuickSearchStrategy } from './Strategy/QuickSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType } from '../Core/Enums'
+import { ColumnType, SearchStringOperator } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnCellStyleMapping } from '../Core/Interface/IAdaptableBlotter'
 import { ExpressionString } from '../Core/Expression/ExpressionString';
 
@@ -464,18 +464,44 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    // this needs to be done properly with serious expressions etc and using a services
-    // but for now just want to have a very rough quick search working for Accenture demo
-    // n.b. we are just doing a startswith on string columns only -- not sure how to include other columns :(
-    public applyQuickSearch(quickSearchText: string): void {
+    // this needs to be done properly with serious expressions etc and using search service properly etc
+    // but for now just want to have a very rough quick search working for Accenture Fintech demo
+    // n.b. we are only searching on string columns  -- not sure how to include other columns :(  
+    public applyQuickSearch(): void {
+        let quickSearchText = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
         if (quickSearchText != "") {
             let filterItems: kendo.data.DataSourceFilterItem[] = [];
 
-            this.grid.columns.filter(c=> this.getColumnType(c.field)==ColumnType.String).forEach(c => {
-                let filterItem: kendo.data.DataSourceFilterItem = { operator: "startswith",   field: c.field, value: quickSearchText };
+            let stringOperator: SearchStringOperator = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator;
+
+            let kendoStringOperator: string;
+            let filterLogic: string;
+
+            switch (stringOperator) {
+                case SearchStringOperator.Contains:
+                    kendoStringOperator = "contains"   // ?
+                    filterLogic = "or"
+                    break;
+                case SearchStringOperator.Equals:
+                    kendoStringOperator = "eq"   // ?
+                    filterLogic = "or"
+                    break;
+                case SearchStringOperator.NotEquals:
+                    kendoStringOperator = "neq"   // ?
+                    filterLogic = "and"
+                    break;
+                case SearchStringOperator.StartsWith:
+                    kendoStringOperator = "startswith"   // ?
+                    filterLogic = "or"
+                    break;
+            }
+
+
+            this.grid.columns.filter(c => this.getColumnType(c.field) == ColumnType.String).forEach(c => {
+                let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: c.field, value: quickSearchText };
                 filterItems.push(filterItem);
             })
-            let filters: kendo.data.DataSourceFilters = { logic: "or", filters: filterItems };
+            let filters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
             this.grid.dataSource.filter(filters);
         }
         else {
