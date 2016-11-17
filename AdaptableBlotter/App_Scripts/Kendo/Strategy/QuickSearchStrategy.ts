@@ -16,6 +16,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         super(StrategyIds.QuickSearchStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("QuickSearch", this.Id, 'QuickSearchAction', MenuType.Action, "search");
         this.quickSearchText = "";
+        this.searchStringOperator = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator // still dont think this is quite right
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
@@ -29,6 +30,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         
         // Run search if the operator has changed and search is not empty
         let stateQuickSearchStringOperator: SearchStringOperator = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator;
+       
              if (this.searchStringOperator !=null && this.searchStringOperator != stateQuickSearchStringOperator && stateQuickSearchText!="") {
             this.searchStringOperator = stateQuickSearchStringOperator;
             this.blotter.SearchService.ApplyQuickSearch();

@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Accordion, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Accordion, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Col } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { SearchStringOperator } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -96,14 +96,20 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
                         <div style={divStyle}>
                             <Accordion style={accordionStyle}>
-                                <Panel header="Quick Search Options" style={accordionStyle} eventKey="1">
-
-
-                                    <ControlLabel>Operator for Text Columns:</ControlLabel>
-                                    <FormControl componentClass="select" placeholder="select" value={this.props.SearchStringOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
-                                        <option value="select" key="select">Select an operator</option>
-                                        {optionColours}
-                                    </FormControl>
+                                <Panel header="Quick Search Options" style={divStyle} eventKey="1">
+                                    <Form horizontal>
+                                        <FormGroup controlId="formInlineStringOperator" >
+                                            <Col xs={7}>
+                                                <ControlLabel style={inputStyle}>Operator for Text Columns:</ControlLabel>
+                                            </Col>
+                                            <Col xs={5}>
+                                                <FormControl componentClass="select" placeholder="select" value={this.props.SearchStringOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
+                                                    <option value="select" key="select">Select an operator</option>
+                                                    {optionColours}
+                                                </FormControl>
+                                            </Col>
+                                        </FormGroup>
+                                    </Form>
                                 </Panel>
                             </Accordion>
                         </div>
@@ -147,7 +153,7 @@ var headerStyle: React.CSSProperties = {
 var inputStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'normal',
-
+textAlign: 'left',
 };
 
 var accordionStyle: React.CSSProperties = {
