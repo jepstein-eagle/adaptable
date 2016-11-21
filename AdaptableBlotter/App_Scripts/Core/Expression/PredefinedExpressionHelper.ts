@@ -1,4 +1,4 @@
-import { ExpressionString } from './ExpressionString'
+import { Expression } from './Expression'
 import {  IExpressionRange } from '../Interface/IExpression';
 import {  CellStyle, LeafExpressionOperator } from '../Enums';
 
@@ -19,7 +19,7 @@ export interface IPredefinedExpressionInfo {
 }
 
 export module PredefinedExpressionHelper {
- export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): ExpressionString {
+ export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Expression {
 
         let columnValuesExpression: Array<{ ColumnName: string, Values: Array<any> }> = [];
 
@@ -29,7 +29,7 @@ export module PredefinedExpressionHelper {
         let singleRangeExpression: { ColumnName: string, Ranges: Array<IExpressionRange> } = { ColumnName: columnName, Ranges: expressionRanges }
         let rangeExpression: Array<{ ColumnName: string, Ranges: Array<IExpressionRange> }> = [];
         rangeExpression.push(singleRangeExpression);
-        return new ExpressionString(columnValuesExpression, "Any", rangeExpression);
+        return new Expression(columnValuesExpression, "Any", rangeExpression);
     }
 
 

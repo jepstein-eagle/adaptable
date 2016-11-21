@@ -32,7 +32,7 @@ import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType, SearchStringOperator } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnCellStyleMapping } from '../Core/Interface/IAdaptableBlotter'
-import { ExpressionString } from '../Core/Expression/ExpressionString';
+import { Expression } from '../Core/Expression/Expression';
 
 
 

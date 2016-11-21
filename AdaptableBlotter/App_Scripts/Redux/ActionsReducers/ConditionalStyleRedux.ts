@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ConditionalStyleScope, CellStyle } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';

@@ -7,7 +7,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage,ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 
 
 interface PlusMinusExpressionWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {

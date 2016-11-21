@@ -1,6 +1,6 @@
 import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { SmartEditOperation } from '../Enums';
-import { ExpressionString } from '../Expression/ExpressionString';
+import { Expression } from '../Expression/Expression';
 
 export interface IPlusMinusStrategy extends IStrategy {
 }
@@ -8,5 +8,5 @@ export interface IPlusMinusStrategy extends IStrategy {
 export interface IPlusMinusCondition {
     ColumnId: string
     DefaultNudge: number
-    Expression: ExpressionString
+    Expression: Expression
 }

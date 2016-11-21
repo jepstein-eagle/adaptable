@@ -8,7 +8,7 @@ import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
 import { IAdaptableBlotter, IColumn, IColumnCellStyleMapping } from '../../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper } from '../../Core/Helper';
 import { MenuType } from '../../Core/Enums';
@@ -114,10 +114,10 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-    private checkForExpression(expressionString: ExpressionString, identifierValue: any, columns: IColumn[]): boolean {
+    private checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[]): boolean {
         let returnVal: boolean = (
             ExpressionHelper.IsSatisfied(
-                expressionString,
+                Expression,
                 this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
                 // this was previouslly 'getDisplayColumnValue' but I've changed it for a momnet so we update immediately when changing a value in an 'In' expression...
                 // obviously this is mad and needs fixing but it means I dont change IsInExpression until Jo gets back...

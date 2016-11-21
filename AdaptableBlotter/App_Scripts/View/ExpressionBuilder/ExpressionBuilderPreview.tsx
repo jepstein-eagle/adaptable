@@ -5,12 +5,12 @@ import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { SingleListBox } from '../SingleListBox'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
-    Expression: ExpressionString
+    Expression: Expression
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>

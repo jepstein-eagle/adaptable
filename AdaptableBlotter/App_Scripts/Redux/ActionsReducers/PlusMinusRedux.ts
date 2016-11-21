@@ -2,7 +2,7 @@
 
 import { PlusMinusState } from './Interface/IState';
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 
 export const PLUSMINUS_SET_DEFAULT_NUDGE = 'PLUSMINUS_SET_DEFAULT_NUDGE';
 export const PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE = 'PLUSMINUS_ADD_OR_UPDATE_COLUMNS_DEFAULT_NUDGE';

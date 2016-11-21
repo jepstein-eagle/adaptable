@@ -7,7 +7,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage,ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 
 
 interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {

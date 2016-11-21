@@ -5,7 +5,7 @@ import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 
 
 
@@ -86,5 +86,5 @@ export interface IColumn {
 export interface IColumnCellStyleMapping {
     ColumnIndex: number
     CellStyle: string
-    Expression: ExpressionString
+    Expression: Expression
 }

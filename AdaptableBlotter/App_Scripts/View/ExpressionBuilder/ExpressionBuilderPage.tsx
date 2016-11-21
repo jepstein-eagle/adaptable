@@ -5,7 +5,7 @@ import { ExpressionBuilderConditionSelector } from './ExpressionBuilderCondition
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 
@@ -16,7 +16,7 @@ interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBui
 }
 
 export interface ExpressionBuilderPageState {
-    Expression: ExpressionString
+    Expression: Expression
     SelectedColumnId: string
 }
 
@@ -55,7 +55,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             let columnValuesIndex = this.state.Expression.ColumnValuesExpression.findIndex(x => x.ColumnName == columnId)
             this.state.Expression.ColumnValuesExpression.splice(columnValuesIndex, 1)
         }
-        let newExpression: ExpressionString = Object.assign({}, this.state.Expression)
+        let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
 
     }
@@ -67,10 +67,10 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             let columnRangesIndex = this.state.Expression.RangeExpression.findIndex(x => x.ColumnName == columnId)
             this.state.Expression.RangeExpression.splice(columnRangesIndex, 1)
         }
-        let newExpression: ExpressionString = Object.assign({}, this.state.Expression)
+        let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
-    onChangeExpression(newExpression: ExpressionString) {
+    onChangeExpression(newExpression: Expression) {
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 

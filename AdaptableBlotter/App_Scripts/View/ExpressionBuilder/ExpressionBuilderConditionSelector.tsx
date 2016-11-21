@@ -7,13 +7,13 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button } from 'react-bootstrap';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
     Blotter: IAdaptableBlotter
-    Expression: ExpressionString
-    onExpressionChange: (Expression: ExpressionString) => void
+    Expression: Expression
+    onExpressionChange: (Expression: Expression) => void
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
 }

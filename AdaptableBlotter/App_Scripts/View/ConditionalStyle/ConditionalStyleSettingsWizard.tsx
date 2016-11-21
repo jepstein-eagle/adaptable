@@ -8,7 +8,7 @@ import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, ColumnType, CellStyle, LeafExpressionOperator } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
@@ -25,7 +25,7 @@ interface ConditionalStyleSettingsWizardState {
     ConditionalStyleScope: ConditionalStyleScope,
     IsPredefinedExpression: boolean,
     PredefinedExpressionInfo: IPredefinedExpressionInfo,
-    Expression: ExpressionString
+    Expression: Expression
 }
 
 export class ConditionalStyleSettingsWizard extends React.Component<ConditionalStyleSettingsWizardProps, ConditionalStyleSettingsWizardState> implements AdaptableWizardStep {
@@ -167,7 +167,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     private onCreatePredefinedExpression() {
-        let testExpression: ExpressionString = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo);
+        let testExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo);
         //   this.setState({ Expression: testExpression } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
         //   this.setState({ ConditionalStyleColour: conditionalStyleColour } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))  
         this.state.CellStyle = this.state.PredefinedExpressionInfo.CellStyle;

@@ -15,7 +15,7 @@ import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
-import { ExpressionString } from '../../Core/Expression/ExpressionString';
+import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
