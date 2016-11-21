@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { IExpression } from '../../Core/Interface/IExpression'
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';

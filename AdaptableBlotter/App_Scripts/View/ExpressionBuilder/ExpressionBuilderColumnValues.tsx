@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { IExpression } from '../../Core/Interface/IExpression'
 import { SingleListBox } from '../SingleListBox'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
 

@@ -1,4 +1,4 @@
-import { IExpression,IExpressionRange } from '../Interface/IExpression';
+import { IExpressionRange } from '../Interface/IExpression';
 
 export class ExpressionString {
     constructor(
@@ -7,8 +7,6 @@ export class ExpressionString {
         public RangeExpression: Array<{ ColumnName: string, Ranges: Array<IExpressionRange> }>)
          {
     }
-
-    
 }
 
 

@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { IExpression, IExpressionRange } from '../../Core/Interface/IExpression'
+import {  IExpressionRange } from '../../Core/Interface/IExpression'
 import { SingleListBox } from '../SingleListBox'
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'

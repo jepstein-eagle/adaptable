@@ -5,7 +5,6 @@ import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
 import {IFlashingColumn} from '../../../Core/interface/IFlashingCellsStrategy'
 import {IMenuItem} from '../../../Core/interface/IStrategy'
 import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
-import { IExpression } from '../../../Core/interface/IExpression';
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
 import {ICalendar} from '../../../Core/interface/ICalendarStrategy';
 import {IConditionalStyleCondition} from '../../../Core/interface/IConditionalStyleStrategy';

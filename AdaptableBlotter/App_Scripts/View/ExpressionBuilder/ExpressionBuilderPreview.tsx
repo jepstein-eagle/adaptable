@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IExpression } from '../../Core/Interface/IExpression'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { SingleListBox } from '../SingleListBox'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
