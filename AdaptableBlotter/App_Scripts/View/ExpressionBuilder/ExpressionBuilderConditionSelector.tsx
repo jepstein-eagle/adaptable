@@ -1,8 +1,9 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import {  IExpressionRange } from '../../Core/Interface/IExpression'
+import { IExpressionRange } from '../../Core/Interface/IExpression'
 import { SingleListBox } from '../SingleListBox'
+import { PanelWithButton } from '../PanelWithButton'
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
@@ -69,17 +70,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let optionColumns = this.props.ColumnsList.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <Col xs={7}>Build Expression</Col>
-                <Col xs={5}>
-                    <Button onClick={() => this.props.onSelectedColumnChange("select")} style={{ float: 'right' }}>
-                        Add Condition
-                    </Button>
-                </Col>
-            </Row>
-        </Form>;
-        return <Panel header={header} bsStyle="primary" style={{ height: '575px' }}>
+        return <PanelWithButton headerText="Build Expression"
+            buttonClick={() => this.props.onSelectedColumnChange("select")}
+            buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={3}>
@@ -119,7 +112,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                     </Row>
                 </div>}
-        </Panel>
+        </PanelWithButton>
     }
     onSelectedColumnRangesChange(newRanges: Array<IExpressionRange>) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state

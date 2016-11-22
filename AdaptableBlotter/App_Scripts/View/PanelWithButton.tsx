@@ -13,7 +13,8 @@ interface PanelWithButtonProps extends PanelProps {
 }
 
 
-//We cannot destructure this.props using the react way in typescript which is a real pain
+//We cannot destructure this.props using the react way in typescript which is a real pain as you 
+//need to transfer props individually as a consequence
 //let { buttonContent, ...other } = this.props
 export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
     render() {
@@ -38,7 +39,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 </Col>
             </Row>
         </Form>;
-        return <Panel header={header} className={className}>
+        return <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;
     }

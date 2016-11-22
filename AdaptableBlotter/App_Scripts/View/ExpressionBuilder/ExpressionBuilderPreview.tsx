@@ -4,6 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { SingleListBox } from '../SingleListBox'
+import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -105,11 +106,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 </ListGroup>
             </div>
         })
-        return <Panel header="Preview" bsStyle="primary" style={{ height: '575px' }} >
+        return <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
             <div style={divStyle}>
                 {previewLists}
             </div>
-        </Panel>
+        </PanelWithButton>
 
     }
 
