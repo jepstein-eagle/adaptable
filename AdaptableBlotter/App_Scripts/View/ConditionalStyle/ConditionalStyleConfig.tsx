@@ -15,6 +15,7 @@ import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
+import { PanelWithButton } from '../PanelWithButton';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
@@ -51,20 +52,10 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             </ConditionalStyleConfigItem>
         });
 
-
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={9}>Conditional Styles</Col>
-                <Col xs={3}>
-                    <Button onClick={() => this.onAdd()} style={{ float: 'right' }}>
-                        Create Conditional Style
-                    </Button>
-                </Col>
-            </Row>
-        </Form>;
-
-
-        return <Panel header={header} bsStyle="primary" style={panelStyle}>
+        return <PanelWithButton headerText="Create Conditional Style"
+            buttonContent={"Create Conditional Style"}
+            buttonClick={() => this.onAdd()}
+            bsStyle="primary" style={panelStyle}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="large">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
@@ -86,7 +77,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
 
-        </Panel>
+        </PanelWithButton>
     }
 
     onAdd() {

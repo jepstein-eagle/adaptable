@@ -16,6 +16,7 @@ import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { PanelWithButton } from '../PanelWithButton';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -40,16 +41,6 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
     }
     render() {
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <Col xs={7}>Column Nudge Values</Col>
-                <Col xs={5}>
-                    <Button onClick={() => this.createColumnNudgeValue()} style={{ float: 'right' }}>
-                        Create Column Nudge Value
-                    </Button>
-                </Col>
-            </Row>
-        </Form>;
         let columnNudgesHeader = <Panel style={panelHeaderStyle} >
             <Row >
                 <Col xs={3} style={headerStyle}>Column</Col>
@@ -102,12 +93,14 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </Col>
                 </FormGroup>
             </Form>
-            <Panel header={header} >
+            <PanelWithButton headerText="Column Nudge Values"
+                buttonContent={"Create Column Nudge Value"}
+                buttonClick={() => this.createColumnNudgeValue()}  >
                 {optionColumnsItems.length > 0 && columnNudgesHeader}
                 <ListGroup style={panelColumNudge}>
                     {optionColumnsItems}
                 </ListGroup>
-            </Panel>
+            </PanelWithButton>
             {this.state.EditedColumnNudgeValue != null &&
                 <AdaptableWizard Steps={[<PlusMinusSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                 <PlusMinusExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} />]}

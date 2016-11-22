@@ -1,24 +1,25 @@
-import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox} from 'react-bootstrap';
+import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
 
-import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
-import {IStrategyViewPopupProps} from '../../Core/Interface/IStrategyView'
-import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
-import {ColumnType} from '../../Core/Enums'
-import {ShortcutAction} from '../../Core/Enums'
-import {ShortcutConfigItem} from './ShortcutConfigItem'
-import {ShortcutConfigHeader} from './ShortcutConfigItem'
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { ColumnType } from '../../Core/Enums'
+import { ShortcutAction } from '../../Core/Enums'
+import { ShortcutConfigItem } from './ShortcutConfigItem'
+import { ShortcutConfigHeader } from './ShortcutConfigItem'
 
-import {AdaptableWizard} from './../Wizard/AdaptableWizard'
-import {ShortcutColumnTypeWizard} from './ShortcutColumnTypeWizard'
-import {ShortcutKeyWizard} from './ShortcutKeyWizard'
-import {ShortcutResultWizard} from './ShortcutResultWizard'
+import { AdaptableWizard } from './../Wizard/AdaptableWizard'
+import { ShortcutColumnTypeWizard } from './ShortcutColumnTypeWizard'
+import { ShortcutKeyWizard } from './ShortcutKeyWizard'
+import { ShortcutResultWizard } from './ShortcutResultWizard'
+import { PanelWithButton } from '../PanelWithButton';
 
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
@@ -52,11 +53,11 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
             return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
                 AvailableKeys={availableNumericKeys}
-                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
-                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey) }
-                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation) }
-                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult) }>
+                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
+                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut)}
+                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
+                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
+                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
             </ShortcutConfigItem>
         });
         let sortedDateShortcut = this.props.DateShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
@@ -64,24 +65,18 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             let availableDateKeys = keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
             return <ShortcutConfigItem Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
                 AvailableKeys={availableDateKeys}
-                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut) }
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut) }
-                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey) }
-                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation) }
-                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult) }>
+                onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
+                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut)}
+                onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
+                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
+                onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
             </ShortcutConfigItem>
         });
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={9}>Shortcuts</Col>
-                <Col xs={3}>
-                    <Button onClick={() => this.CreateShortcut() }> Create Shortcut</Button>
-                </Col>
-            </Row>
-        </Form>;
 
-        return <Panel header={header} bsStyle="primary" style={panelStyle}>
-            <ShortcutConfigHeader/>
+        return <PanelWithButton headerText="Shortcuts"
+            buttonClick={() => this.CreateShortcut()}
+            buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle}>
+            <ShortcutConfigHeader />
             <ListGroup style={divStyle}>
                 {numericShortcuts}
                 {dateShortcuts}
@@ -90,20 +85,20 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             {this.state.isEditing ?
                 <AdaptableWizard Steps={
                     [
-                        <ShortcutColumnTypeWizard  />,
+                        <ShortcutColumnTypeWizard />,
                         <ShortcutKeyWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
                             keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
-                            : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1) }
+                            : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
                             NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
                                 keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
-                                : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1) }/>,
-                        <ShortcutResultWizard  />
+                                : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
+                        <ShortcutResultWizard />
                     ]}
                     Data={this._editedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard() }
-                    onFinish={() => this.WizardFinish() } ></AdaptableWizard> : null}
-        </Panel>
+                    onHide={() => this.closeWizard()}
+                    onFinish={() => this.WizardFinish()} ></AdaptableWizard> : null}
+        </PanelWithButton>
     }
 
     private _editedShortcut: IShortcut;
