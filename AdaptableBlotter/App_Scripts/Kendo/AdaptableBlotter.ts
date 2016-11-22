@@ -385,23 +385,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-
-    public removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnCellStyleMapping>): void {
-        // seems expensive to remove styles like this....
-        // but on the other hand we only do it when we update conditional styles through config so its not often
-        rowIdentifierValues.forEach(rowId => {
-            var row = this.getRowByRowIdentifier(rowId);
-            columnStyleMappings.forEach(csm => {
-                var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
-                if (cell != null) {
-                    if (cell.hasClass(csm.CellStyle)) {
-                        cell.removeClass(csm.CellStyle)
-                    }
-                }
-            })
+    public removeAllCellStylesWithRegex(regex: RegExp): void {
+        this.grid.table.find("td").removeClass((index, classes) => {
+            return classes.split(/\s+/).filter(c => {
+                return regex.test(c);
+            }).join(' ');
         })
     }
-
 
     public removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);

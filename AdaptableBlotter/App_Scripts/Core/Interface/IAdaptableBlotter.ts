@@ -40,7 +40,7 @@ export interface IAdaptableBlotter {
     addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void
     addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnCellStyleMapping>): void
     removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void
-    removeCellStyles(rowIdentifierValues: any[], columnStyleMappings: Array<IColumnCellStyleMapping>): void
+    removeAllCellStylesWithRegex(regex: RegExp): void
 
     // get dirty data
     GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
