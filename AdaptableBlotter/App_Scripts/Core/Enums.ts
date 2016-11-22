@@ -76,3 +76,9 @@ export enum SearchStringOperator{
     Contains,
     StartsWith
 }
+
+export enum SortOrder{
+    Unknown,
+    Ascending,
+    Descending
+}

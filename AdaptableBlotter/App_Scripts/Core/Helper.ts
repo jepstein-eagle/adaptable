@@ -1,3 +1,5 @@
+import { SortOrder } from '../Core/Enums'
+
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;
     export function getCharFromKey(event: KeyboardEvent): string;
@@ -27,7 +29,7 @@ export module Helper {
     }
 
 
-     export function generateUid(): string {
+    export function generateUid(): string {
         var d = new Date().getTime();
         if (window.performance && typeof window.performance.now === "function") {
             d += performance.now(); //use high-precision timer if available
@@ -39,6 +41,16 @@ export module Helper {
                 return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
             });
         return uuid;
+    }
+
+    export function sortArray(sortOrder: SortOrder, values: any[]): any[] {
+        if (sortOrder == SortOrder.Ascending) {
+            return values.sort()
+        }
+        else if (sortOrder == SortOrder.Descending) {
+            return values.sort().reverse()
+        }
+
     }
 
 }

@@ -3,7 +3,8 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup,ListGroupProps } from 'react-bootstrap';
+import { SortOrder } from '../Core/Enums'
+import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl } from 'react-bootstrap';
 
 
 interface SingleListBoxProps extends ListGroupProps {
@@ -18,6 +19,8 @@ interface SingleListBoxProps extends ListGroupProps {
 interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
     Values: Array<any>
     UiSelectedValues: Array<any>
+    FilterValue: string
+    SortOrder: SortOrder
 }
 
 export class SingleListBox extends React.Component<SingleListBoxProps, SingleListBoxState> {
@@ -36,9 +39,12 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
                 }
             }
         })
+        availableValues.sort()
         this.state = {
             Values: this.props.Values,
-            UiSelectedValues: this.props.UiSelectedValues
+            UiSelectedValues: this.props.UiSelectedValues,
+            FilterValue: "",
+            SortOrder: SortOrder.Ascending
         };
     }
     componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
@@ -57,26 +63,75 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
             uiSelectedValues = nextProps.UiSelectedValues
         }
         this.setState({
-            Values: nextProps.Values,
-            UiSelectedValues: uiSelectedValues
+            Values: Helper.sortArray(this.state.SortOrder, nextProps.Values),
+            UiSelectedValues: uiSelectedValues,
+            FilterValue: this.state.FilterValue,
+            SortOrder: this.state.SortOrder
         });
     }
     render() {
         let itemsElements = this.state.Values.map(x => {
             let isActive = this.state.UiSelectedValues.indexOf(x) >= 0;
-            let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
+            let display: string = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-            return <ListGroupItem key={value}
-                onClick={() => this.onClickItem(x)}
-                active={isActive}
-                value={value}>{display}</ListGroupItem>
+            if (this.state.FilterValue != "" && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+                return null;
+            }
+            else {
+                return <ListGroupItem key={value}
+                    onClick={() => this.onClickItem(x)}
+                    active={isActive}
+                    value={value} >{display}</ListGroupItem>
+            }
         })
 
-        return (
+        let header = <Form horizontal>
+            <Row style={{ display: "flex", alignItems: "center" }}>
+                <Col xs={10}>
+                    <FormControl
+                        type="text"
+                        value={this.state.FilterValue}
+                        placeholder="Enter text to filter list"
+                        onChange={(e) => this.handleChangeFilterValue(e)}
+                        />
+                </Col>
+                <Col xs={2}>
+                    {this.state.SortOrder == SortOrder.Ascending ?
+                        <Button onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon glyph="sort-by-alphabet" /></Button> :
+                        <Button onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
+                    }
+                </Col>
+            </Row>
+        </Form>
+
+        return <div>
+            {header}
             <ListGroup fill style={this.props.style}>
                 {itemsElements}
             </ListGroup>
-        );
+        </div>;
+    }
+
+    handleChangeFilterValue(x: React.FormEvent) {
+        let e = x.target as HTMLInputElement;
+        this.setState({
+            FilterValue: e.value
+        } as SingleListBoxState);
+    }
+
+    sortColumnValues() {
+        if (this.state.SortOrder == SortOrder.Ascending) {
+            this.setState({
+                Values: Helper.sortArray(SortOrder.Descending, this.state.Values),
+                SortOrder: SortOrder.Descending
+            } as SingleListBoxState);
+        }
+        else {
+            this.setState({
+                Values: Helper.sortArray(SortOrder.Ascending, this.state.Values),
+                SortOrder: SortOrder.Ascending
+            } as SingleListBoxState);
+        }
     }
 
     raiseOnChange() {
