@@ -16,6 +16,7 @@ import { MenuType } from '../../Core/Enums';
 
 
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
+    private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
     private menuItemConfig: IMenuItem;
     private ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
@@ -55,10 +56,9 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-            let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: CellStyle[c.CellStyle], Expression: null }
+            let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: this.ConsitionalStylePrefix + CellStyle[c.CellStyle], Expression: null }
 
             if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns)) {
-                let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: CellStyle[c.CellStyle], Expression: null }
                 this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping)
             }
             else {
@@ -79,7 +79,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
        // alert("removing " + changedConditions.length + " conditions")
         let columnStyleMappings: IColumnCellStyleMapping[] = changedConditions.map((nc: IConditionalStyleCondition) => {
-            return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: CellStyle[nc.CellStyle], Expression: nc.Expression }
+            return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: this.ConsitionalStylePrefix + CellStyle[nc.CellStyle], Expression: nc.Expression }
         })
 
         // get the columns currently affected - doesnt work with row styles if we do them :(
@@ -98,7 +98,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
             let rowIds: string[] = this.blotter.getAllRowIds();
 
             let columnStyleMappings: IColumnCellStyleMapping[] = newConditions.map((nc: IConditionalStyleCondition) => {
-                return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: CellStyle[nc.CellStyle], Expression: nc.Expression }
+                return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: this.ConsitionalStylePrefix + CellStyle[nc.CellStyle], Expression: nc.Expression }
             })
 
             rowIds.forEach(rowId => {

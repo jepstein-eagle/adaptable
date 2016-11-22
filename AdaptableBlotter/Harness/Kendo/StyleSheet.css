@@ -17,58 +17,58 @@
 			color: white;
 		}
 
-    	.Green {
+    	.Ab-ConditionalStyle-Green {
 			background-color: green;
 			color: white;
 		}
 
-		.LightGreen {
+		.Ab-ConditionalStyle-LightGreen {
 			background-color: lightgreen;
 			color: white;
 		}
 
-    	.Red {
+    	.Ab-ConditionalStyle-Red {
 			background-color: red;
 			color: white;
 		}
 
-    	.Blue {
+    	.Ab-ConditionalStyle-Blue {
 			background-color: blue;
 			color: white;
 		}
 
-    	.Yellow {
+    	.Ab-ConditionalStyle-Yellow {
 			background-color: yellow;
 			color: black;
 		}
 
-		.LightYellow {
+		.Ab-ConditionalStyle-LightYellow {
 			background-color: lightyellow;
 			color: black;
 		}
 
-    	.Orange {
+    	.Ab-ConditionalStyle-Orange {
 			background-color: orange;
 			color: white;
 		}
 
-    	.Purple {
+    	.Ab-ConditionalStyle-Purple {
 			background-color: purple;
 			color: white;
 		}
 
 
-    	.Pink {
+    	.Ab-ConditionalStyle-Pink {
 			background-color: pink;
 			color: black;
 		}
 
-		.GreenFont {
+		.Ab-ConditionalStyle-GreenFont {
 			font-weight: bold;
 			color: green;
 		}
 
-		.RedFont {
+		.Ab-ConditionalStyle-RedFont {
 			font-weight: bold;
 			color: red;
 		}
