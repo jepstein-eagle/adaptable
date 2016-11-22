@@ -105,8 +105,8 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
                 </Col>
                 <Col xs={2}>
                     {this.state.SortOrder == SortOrder.Ascending ?
-                        <Button onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon glyph="sort-by-alphabet" /></Button> :
-                        <Button onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
+                        <Button bsSize="small" onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon className="scale-lg" glyph="sort-by-alphabet" /></Button> :
+                        <Button bsSize="small" onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon className="scale-lg" glyph="sort-by-alphabet-alt" /></Button>
                     }
                 </Col>
             </Row>
