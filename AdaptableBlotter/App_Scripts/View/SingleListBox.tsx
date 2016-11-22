@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { SortOrder } from '../Core/Enums'
-import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl } from 'react-bootstrap';
+import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 
 
 interface SingleListBoxProps extends ListGroupProps {
@@ -88,12 +88,20 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         let header = <Form horizontal>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={10}>
-                    <FormControl
-                        type="text"
-                        value={this.state.FilterValue}
-                        placeholder="Enter text to filter list"
-                        onChange={(e) => this.handleChangeFilterValue(e)}
-                        />
+                    <FormGroup style={{margin:0}}>
+                        <InputGroup>
+                            <FormControl
+                                type="text"
+                                value={this.state.FilterValue}
+                                placeholder="Enter text to filter list"
+                                onChange={(e) => this.handleChangeFilterValue(e)}
+                                />
+                            <InputGroup.Button>
+                                <Button onClick={() => this.clearFilter()}><Glyphicon glyph="remove" /></Button>
+                            </InputGroup.Button>
+                        </InputGroup>
+                    </FormGroup>
+
                 </Col>
                 <Col xs={2}>
                     {this.state.SortOrder == SortOrder.Ascending ?
@@ -116,6 +124,12 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         let e = x.target as HTMLInputElement;
         this.setState({
             FilterValue: e.value
+        } as SingleListBoxState);
+    }
+
+    clearFilter() {
+        this.setState({
+            FilterValue: ""
         } as SingleListBoxState);
     }
 
