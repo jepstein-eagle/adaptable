@@ -27,7 +27,7 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
             </Row>
         </Form>;
 
-        return <Panel header={header}  >
+        return <Panel header={header} className="no-padding-panel"  >
             <SingleListBox style={divStyle} Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
                 onSelectedChange={(list) => this.props.onColumnValuesChange(list)}>
@@ -48,5 +48,5 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
 
 let divStyle = {
     'overflowY': 'auto',
-    'height': '300px'
+    'height': '290px'
 }

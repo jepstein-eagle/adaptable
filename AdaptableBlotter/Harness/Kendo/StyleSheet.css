@@ -81,3 +81,7 @@ button.placeholder:before {
   color: White;
 }
 
+.no-padding-panel > [class='panel-body'] {
+    padding:0;
+}
+
