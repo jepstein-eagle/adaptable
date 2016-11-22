@@ -37,7 +37,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         // plus i've added a very simple quick search control which runs a quick search of 'contains' across all string columns
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
-                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+                return <NavItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</NavItem>
             });
         }
 
