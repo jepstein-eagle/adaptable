@@ -208,16 +208,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(id: any, columnId: string, value: any): void {
-        // jw: i prefer this still despite the problems as it always works...... 
-        // this.setValueBatch([ {id, columnId, value}]);
-
-        // this line is apparently working for Jo but for JW it causes huge problems.  edits are either ignored or look like they have not worked but you see the new vlaue only when clicking back into the cell again!    
-        // this line triggers a Databound changed event but only if the cell is not in edit mode.    
-        // this.grid.bind("dataBinding", function (e: any) { e.preventDefault(); });
         this.grid.dataSource.getByUid(id).set(columnId, value);
-
-        // this line helps a bit with some of the issues but not all of them sadly
-        //this.grid.dataSource.sync();
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
@@ -229,11 +220,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // this line triggers a Databound changed event 
         this.grid.dataSource.sync();
-
-        //  this.grid.bind("dataBinding", function(e:any) { e.preventDefault(); });
-        //  this.grid.dataSource.getByUid(item.id).set(item.columnId, item.value);
-        //  this.grid.unbind("dataBinding");
-        //  this.grid.refresh();
 
         for (var item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.id);
