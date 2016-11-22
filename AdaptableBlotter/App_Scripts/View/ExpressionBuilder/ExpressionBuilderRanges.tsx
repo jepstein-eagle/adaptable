@@ -5,7 +5,8 @@ import { ColumnType } from '../../Core/Enums'
 import { IExpressionRange } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { SingleListBox } from '../SingleListBox'
-import {ExpressionHelper} from '../../Core/Expression/ExpressionHelper'
+import { PanelWithButton } from '../PanelWithButton'
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 
 
@@ -119,17 +120,19 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={8}>{ColumnType[this.props.ColumnType] + " Entry"}</Col>
                 <Col xs={4}>
-                    <Button bsSize='small'  onClick={() => this.addRange()} style={{ float: 'right' }}>
+                    <Button bsSize='small' onClick={() => this.addRange()} style={{ float: 'right' }}>
                         Add a range entry
                     </Button>
                 </Col>
             </Row>
         </Form>;
-        return <Panel header={header}  >
+        return <PanelWithButton headerText={ColumnType[this.props.ColumnType] + " Entry"}
+            buttonClick={() => this.addRange()}
+            buttonContent={"Add a range entry"}>
             <div style={divStyle}>
-            {rangesElement}
+                {rangesElement}
             </div>
-        </Panel>
+        </PanelWithButton>
     }
 
     onRangeDelete(index: number) {
@@ -168,6 +171,6 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
 let divStyle = {
     'overflowY': 'auto',
-    'overflowX' : 'hidden',
+    'overflowX': 'hidden',
     'height': '305px'
 }

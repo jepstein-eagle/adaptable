@@ -81,9 +81,22 @@ button.placeholder:before {
   color: White;
 }
 
-.no-padding-panel > [class='panel-body'] {
-    padding:0;
+.no-padding-panel > [class*='panel-body'] {
+    padding-right:0;
+	padding-left: 0;
+	padding-top: 5px;
+	padding-top: 5px;
 }
+
+.panel-with-button-reduce-header-padding > [class*='panel-heading'] {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.panel-with-button > [class*='panel-heading']  > [class*='panel-title'] {
+	font-size: 14px;
+}
+
 
 .scale-lg{font-size: 1.4em;}
 .scale-2x{font-size: 2em;}
