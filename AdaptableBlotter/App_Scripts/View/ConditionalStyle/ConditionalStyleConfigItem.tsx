@@ -8,6 +8,7 @@ import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalSty
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
+import { EntityListActionButtons } from '../EntityListActionButtons';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
@@ -56,19 +57,11 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns)}
                 </Col>
 
-                <Col md={1} >
-                    <ButtonToolbar>
-                        <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit</Tooltip>}>
-                            <Button onClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}><Glyphicon glyph="edit" /></Button>
-                        </OverlayTrigger>
-                    </ButtonToolbar>
-                </Col>
-                <Col md={1} >
-                    <ButtonToolbar>
-                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                            <Button onClick={() => this.props.onDelete(this.props.ConditionalStyleCondition)}><Glyphicon glyph="trash" /></Button>
-                        </OverlayTrigger>
-                    </ButtonToolbar>
+                <Col md={2} >
+                    <EntityListActionButtons
+                        deleteClick={() => this.props.onDelete(this.props.ConditionalStyleCondition)}
+                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}>
+                    </EntityListActionButtons>
                 </Col>
             </Row>
         </li>

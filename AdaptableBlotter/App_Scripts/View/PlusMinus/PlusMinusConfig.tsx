@@ -17,6 +17,7 @@ import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
+import { EntityListActionButtons } from '../EntityListActionButtons';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -70,14 +71,10 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns)}
                     </Col>
                     <Col xs={2}>
-                        <ButtonToolbar>
-                            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit</Tooltip>}>
-                                <Button onClick={() => this.onEdit(index, x)}><Glyphicon glyph="edit" /></Button>
-                            </OverlayTrigger>
-                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                <Button onClick={() => this.props.onDeleteColumnDefaultNudgeValue(index)}><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
-                        </ButtonToolbar>
+                        <EntityListActionButtons
+                            deleteClick={() => this.props.onDeleteColumnDefaultNudgeValue(index)}
+                            editClick={() => this.onEdit(index, x)}>
+                        </EntityListActionButtons>
                     </Col>
                 </Row>
             </li>

@@ -1,12 +1,13 @@
-import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon} from 'react-bootstrap';
-import {ColumnType} from '../../Core/Enums'
-import {ShortcutAction} from '../../Core/Enums'
+import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ColumnType } from '../../Core/Enums'
+import { ShortcutAction } from '../../Core/Enums'
+import { EntityListActionButtons } from '../EntityListActionButtons';
 
 
 interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
@@ -28,15 +29,15 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col md={1} >
-                    <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut) } checked={this.props.Shortcut.IsLive}></Checkbox>
+                    <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
                 <Col md={2} >
                     <Form inline key={this.props.Shortcut.ShortcutKey}>
-                        <FormGroup  controlId={this.props.Shortcut.ShortcutKey}>
-                            <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x) } >
+                        <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
+                            <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
                                 {this.props.AvailableKeys.map(x => {
                                     return <option value={x} key={x}>{x}</option>
-                                }) }
+                                })}
                             </FormControl>
                         </FormGroup>
                     </Form>
@@ -47,7 +48,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={3} >
                     {this.props.Shortcut.ColumnType == ColumnType.Date ?
                         ShortcutAction[this.props.Shortcut.ShortcutAction] :
-                        <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x) } >
+                        <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
                                 shortcutActionList.map((shortcutAction: ShortcutAction) => {
                                     return <option key={ShortcutAction[shortcutAction]} value={shortcutAction.toString()}>{ShortcutAction[shortcutAction]}</option>
@@ -74,11 +75,11 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 />}
                 </Col>
                 <Col md={1} >
-                    <ButtonToolbar>
-                        <OverlayTrigger  overlay={ <Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                            <Button disabled={this.props.Shortcut.IsPredefined} onClick={() => this.props.onDelete(this.props.Shortcut) }><Glyphicon glyph="trash"/></Button>
-                        </OverlayTrigger>
-                    </ButtonToolbar>
+                    <EntityListActionButtons
+                        deleteClick={() => this.props.onDelete(this.props.Shortcut)}
+                        showEdit={false}
+                        deleteDisabled={this.props.Shortcut.IsPredefined}>
+                    </EntityListActionButtons>
                 </Col>
 
             </Row>
@@ -120,11 +121,11 @@ export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderPr
     }
 }
 
-var headerStyle : React.CSSProperties= {
+var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'bold'
 };
 
-let panelHeaderStyle : React.CSSProperties = {
+let panelHeaderStyle: React.CSSProperties = {
     marginBottom: '0px'
 }

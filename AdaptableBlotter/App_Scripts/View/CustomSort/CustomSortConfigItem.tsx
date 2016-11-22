@@ -1,8 +1,9 @@
-import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Button, Col, Row, ButtonGroup, Panel, Glyphicon, OverlayTrigger,Tooltip} from 'react-bootstrap';
+import { Button, Col, Row, ButtonGroup, Panel, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { EntityListActionButtons } from '../EntityListActionButtons';
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
@@ -17,20 +18,16 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
         return <li
             className="list-group-item"
             onClick={() => { } }>
-            <Row style={{display: "flex", alignItems: "center"}}>
+            <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={2}>{this.props.ColumnLabel}</Col>
                 <Col xs={7} style={divStyle}>
-                    {this.props.CustomSort.CustomSortItems.join() }
+                    {this.props.CustomSort.CustomSortItems.join()}
                 </Col>
                 <Col xs={3}>
-                    <ButtonGroup>
-                        <OverlayTrigger  overlay={ <Tooltip id="tooltipEdit"><strong>Edit</strong></Tooltip>}>
-                            <Button onClick={() => this.props.onEdit(this.props.CustomSort) }><Glyphicon glyph="edit"></Glyphicon></Button>
-                        </OverlayTrigger>
-                        <OverlayTrigger  overlay={ <Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                            <Button onClick={() => this.props.onDelete(this.props.CustomSort) }><Glyphicon glyph="trash"/></Button>
-                        </OverlayTrigger>
-                    </ButtonGroup>
+                    <EntityListActionButtons
+                        deleteClick={() => this.props.onDelete(this.props.CustomSort)}
+                        editClick={() => this.props.onEdit(this.props.CustomSort)}>
+                    </EntityListActionButtons>
                 </Col>
             </Row>
         </li>
@@ -52,7 +49,7 @@ export class CustomSortConfigHeader extends React.Component<CustomSortConfigHead
     }
 }
 
-var headerStyle : React.CSSProperties = {
+var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'bold'
 };
