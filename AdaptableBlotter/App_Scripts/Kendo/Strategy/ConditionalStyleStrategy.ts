@@ -28,26 +28,11 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     private InitState() {
-        let oldState: ConditionalStyleState = this.ConditionalStyleState;
-
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
-            // Remove conditions that have been deleted or edited
-            if (oldState != null && oldState.ConditionalStyleConditions.length > 0 && oldState.ConditionalStyleConditions.length >= this.ConditionalStyleState.ConditionalStyleConditions.length) {
-                let conditionsToRemove: IConditionalStyleCondition[] = oldState.ConditionalStyleConditions.filter(c => !this.ConditionalStyleState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)).map((cs: IConditionalStyleCondition) => {
-                    return cs;
-                });
-                this.removeExistingStyles(conditionsToRemove);
-            }
-
-            // Add conditions that are new or changed (i.e. which have a guid that is not in the old state)
-            if (this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-                let conditionsToAdd: IConditionalStyleCondition[] = this.ConditionalStyleState.ConditionalStyleConditions.filter(c => oldState == null || !oldState.ConditionalStyleConditions.find(f => f.Uid == c.Uid)).map((cs: IConditionalStyleCondition) => {
-                    return cs;
-                });
-                this.addNewStyles(conditionsToAdd);
-            }
+            this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
+            this.InitStyles();
         }
     }
 
@@ -72,32 +57,22 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         if (this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
             // not nice but not sure we have a choice other than to have to paint every condition again :(
             // is there a way to avoid this other than changing how we update data?
-            this.addNewStyles(this.ConditionalStyleState.ConditionalStyleConditions);
+            this.InitStyles();
         }
     }
 
-    private removeExistingStyles(changedConditions: IConditionalStyleCondition[]): void {
-       // alert("removing " + changedConditions.length + " conditions")
-        let columnStyleMappings: IColumnCellStyleMapping[] = changedConditions.map((nc: IConditionalStyleCondition) => {
-            return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: this.ConsitionalStylePrefix + CellStyle[nc.CellStyle], Expression: nc.Expression }
-        })
-
-        // get the columns currently affected - doesnt work with row styles if we do them :(
-        this.blotter.removeCellStyles(this.blotter.getAllRowIds(), columnStyleMappings);
-    }
-
-    private addNewStyles(newConditions: IConditionalStyleCondition[]): void {
+    private InitStyles(): void {
         // ok, this seems a little mad but this method gets called A LOT - every time we do a plus / minus or smart edit or column sort
         // so I'm trying to improve performance by getting the rowId just once, the row object just once (if needed) and each column index just once
         // agree it looks messy but in a 1,0000 row grid with 5 conditions i could see the difference in performance after doing it below
 
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 0 && newConditions.length > 0) {
-         //   alert("starting adding " + newConditions.length + " conditions")
+        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+            //   alert("starting adding " + newConditions.length + " conditions")
             let rowIds: string[] = this.blotter.getAllRowIds();
 
-            let columnStyleMappings: IColumnCellStyleMapping[] = newConditions.map((nc: IConditionalStyleCondition) => {
+            let columnStyleMappings: IColumnCellStyleMapping[] = this.ConditionalStyleState.ConditionalStyleConditions.map((nc: IConditionalStyleCondition) => {
                 return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: this.ConsitionalStylePrefix + CellStyle[nc.CellStyle], Expression: nc.Expression }
             })
 
@@ -110,7 +85,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                 })
                 this.blotter.addCellStylesForRow(rowId, rowColumnStyleMappings)
             })
-           // alert("finishing adding " + newConditions.length + " conditions")
+            // alert("finishing adding " + newConditions.length + " conditions")
         }
     }
 
