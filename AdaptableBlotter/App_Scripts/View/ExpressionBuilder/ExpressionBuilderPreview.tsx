@@ -30,7 +30,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
                 columnValuesListgroupItems = columnValues.Values.map(y => {
-                    return <ListGroupItem key={y}>
+                    return <ListGroupItem key={y} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                         <Form inline>
                             {y}
                             <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -47,7 +47,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     if (y.Operator == LeafExpressionOperator.Between) {
 
                         if (y.Operand1 == "" || y.Operand2 == "") {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger">
+                            return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -57,7 +57,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index}>
+                            return <ListGroupItem key={columnId + index} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -69,7 +69,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                     else {
                         if (y.Operand1 == "" || y.Operator == LeafExpressionOperator.Unknown) {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger">
+                            return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -79,7 +79,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index}>
+                            return <ListGroupItem key={columnId + index} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
