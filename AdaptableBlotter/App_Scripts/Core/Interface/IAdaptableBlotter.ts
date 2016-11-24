@@ -37,9 +37,11 @@ export interface IAdaptableBlotter {
     isGridPageable(): boolean
 
     // cell styling methods
-    addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void
-    addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnCellStyleMapping>): void
-    removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void
+    addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void
+    removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void
+    addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void
+    removeRowStyle(rowIdentifierValue: any, style: string): void
+    removeAllRowStylesWithRegex(regex: RegExp): void
     removeAllCellStylesWithRegex(regex: RegExp): void
 
     // get dirty data
@@ -81,10 +83,4 @@ export interface IColumn {
     ColumnFriendlyName: string
     ColumnType: ColumnType
     Visible: boolean
-}
-
-export interface IColumnCellStyleMapping {
-    ColumnIndex: number
-    CellStyle: string
-    Expression: Expression
-}
+}  

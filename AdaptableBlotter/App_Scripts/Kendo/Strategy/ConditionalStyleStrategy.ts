@@ -5,7 +5,7 @@ import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy';
 import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
-import { IAdaptableBlotter, IColumn, IColumnCellStyleMapping } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
@@ -32,6 +32,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
             this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
+            this.blotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
             this.InitStyles();
         }
     }
@@ -41,13 +42,12 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-            let columnMapping: IColumnCellStyleMapping = { ColumnIndex: columnIndex, CellStyle: this.ConsitionalStylePrefix + CellStyle[c.CellStyle], Expression: null }
 
             if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns)) {
-                this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnMapping)
+                this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
             }
             else {
-                this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnMapping)
+                this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
             }
         })
     }
@@ -55,37 +55,41 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
     private handleGridDataBound(blotter: IAdaptableBlotter) {
         if (this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-            // not nice but not sure we have a choice other than to have to paint every condition again :(
-            // is there a way to avoid this other than changing how we update data?
             this.InitStyles();
         }
     }
 
     private InitStyles(): void {
-        // ok, this seems a little mad but this method gets called A LOT - every time we do a plus / minus or smart edit or column sort
-        // so I'm trying to improve performance by getting the rowId just once, the row object just once (if needed) and each column index just once
-        // agree it looks messy but in a 1,0000 row grid with 5 conditions i could see the difference in performance after doing it below
-
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-            //   alert("starting adding " + newConditions.length + " conditions")
             let rowIds: string[] = this.blotter.getAllRowIds();
 
-            let columnStyleMappings: IColumnCellStyleMapping[] = this.ConditionalStyleState.ConditionalStyleConditions.map((nc: IConditionalStyleCondition) => {
-                return { ColumnIndex: this.blotter.getColumnIndex(nc.ColumnId), CellStyle: this.ConsitionalStylePrefix + CellStyle[nc.CellStyle], Expression: nc.Expression }
-            })
+            let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+                .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
+
+            //we add the Index of the column to the list so we do not need to reevaluate every row
+            let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+                .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
+                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId) }))
 
             rowIds.forEach(rowId => {
-                let rowColumnStyleMappings: IColumnCellStyleMapping[] = []
-                columnStyleMappings.forEach(c => {
-                    if (this.checkForExpression(c.Expression, rowId, columns)) {
-                        rowColumnStyleMappings.push(c);
+
+                //we just need to find one that match....
+                for (let columnCS of columnConditionalStyles) {
+                    if (this.checkForExpression(columnCS.Expression, rowId, columns)) {
+                        this.blotter.addCellStyle(rowId, columnCS.columnIndex, this.ConsitionalStylePrefix + CellStyle[columnCS.CellStyle])
+                        break
                     }
-                })
-                this.blotter.addCellStylesForRow(rowId, rowColumnStyleMappings)
+                }
+                //we just need to find one that match....
+                for (let rowCS of rowConditionalStyles) {
+                    if (this.checkForExpression(rowCS.Expression, rowId, columns)) {
+                        this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + CellStyle[rowCS.CellStyle])
+                        break
+                    }
+                }
             })
-            // alert("finishing adding " + newConditions.length + " conditions")
         }
     }
 

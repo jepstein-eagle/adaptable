@@ -379,28 +379,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.text();
     }
 
-    public addCellStylesForRow(rowIdentifierValue: any, columnStyleMappings: Array<IColumnCellStyleMapping>): void {
-        if (columnStyleMappings.length > 0) {
-            var row = this.getRowByRowIdentifier(rowIdentifierValue);
-            columnStyleMappings.forEach(csm => {
-                var cell = this.getCellByColumnIndexAndRow(row, csm.ColumnIndex);
-                this.applyCellStyle(cell, csm.CellStyle);
-            })
-        }
-    }
-
-    public addCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping, timeout?: number): void {
+    public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
-        var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
-        this.applyCellStyle(cell, columnStyleMapping.CellStyle);
+        var cell = this.getCellByColumnIndexAndRow(row, columnIndex);
+        this.applyStyleToJQuerySelector(cell, style);
         if (timeout) {
-            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnStyleMapping), timeout);
+            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnIndex, style), timeout);
         }
     }
 
-    private applyCellStyle(cell: JQuery, cellStyle: string) {
-        if (cell != null && !cell.hasClass(cellStyle)) {
-            cell.addClass(cellStyle);
+    public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
+        var row = this.getRowByRowIdentifier(rowIdentifierValue);
+        this.applyStyleToJQuerySelector(row, style);
+        if (timeout) {
+            setTimeout(() => this.removeRowStyle(rowIdentifierValue, style), timeout);
+        }
+    }
+
+    private applyStyleToJQuerySelector(selector: JQuery, cellStyle: string) {
+        if (selector != null && !selector.hasClass(cellStyle)) {
+            selector.addClass(cellStyle);
         }
     }
 
@@ -412,11 +410,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
     }
 
-    public removeCellStyle(rowIdentifierValue: any, columnStyleMapping: IColumnCellStyleMapping): void {
+    public removeAllRowStylesWithRegex(regex: RegExp): void {
+        this.grid.table.find("tr").removeClass((index, classes) => {
+            return classes.split(/\s+/).filter(c => {
+                return regex.test(c);
+            }).join(' ');
+        })
+    }
+
+    public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
-        var cell = this.getCellByColumnIndexAndRow(row, columnStyleMapping.ColumnIndex);
-        if (cell != null && cell.hasClass(columnStyleMapping.CellStyle)) {
-            cell.removeClass(columnStyleMapping.CellStyle);
+        var cell = this.getCellByColumnIndexAndRow(row, columnIndex);
+        if (cell != null && cell.hasClass(style)) {
+            cell.removeClass(style);
+        }
+    }
+
+    public removeRowStyle(rowIdentifierValue: any, style: string): void {
+        var row = this.getRowByRowIdentifier(rowIdentifierValue);
+        if (row != null && row.hasClass(style)) {
+            row.removeClass(style);
         }
     }
 
