@@ -58,7 +58,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return (
             <Modal show={true} onHide={this.props.onHide}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Step {this.state.IndexState + 1 + "/" + this.props.Steps.length}- {this.ActiveStep.StepName}</Modal.Title>
+                    <Modal.Title>Step {this.state.IndexState + 1 + " of " + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                     {this.state.ActiveState}
