@@ -89,13 +89,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
 
-        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-        //     console.log(e);
-        // })
-
-        // grid.bind("edit", (e: kendo.ui.GridSaveEvent) => {
-        //     console.log(e);
-        // })
+        //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
+        //can reevaluate the record when the DisplayValue is now computed. i.e. $2.000.000 instead of 2000000
+        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+            setTimeout(() => {
+                //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
+                for (let valueField in e.values) {
+                    let changedValue = e.values[valueField];
+                    let identifierValue = e.model.uid;
+                    this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
+                }
+            }, 5)
+        })
 
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
