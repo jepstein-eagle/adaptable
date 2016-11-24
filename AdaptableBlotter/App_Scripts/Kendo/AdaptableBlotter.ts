@@ -89,6 +89,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
 
+        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+        //     console.log(e);
+        // })
+
+        // grid.bind("edit", (e: kendo.ui.GridSaveEvent) => {
+        //     console.log(e);
+        // })
+
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
@@ -99,10 +107,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SetColumnIntoStore() {
+        //Some columns can have no ID or Title. We set it to Unknown columns 
+        //but as of today it creates issues in all functions as we cannot identify the column....
         let columns: IColumn[] = this.grid.columns.map(x => {
             return {
-                ColumnId: x.field,
-                ColumnFriendlyName: x.title,
+                ColumnId: x.field ? x.field : "Unknown Column",
+                ColumnFriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
                 ColumnType: this.getColumnType(x.field),
                 Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
             }
@@ -184,7 +194,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
-
+        //Some columns can have no ID or Title. we return string as a consequence but it needs testing
+        if (!columnId) {
+            console.log('columnId is undefined returning String for Type')
+            return ColumnType.String;
+        }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
             return ColumnType.String;
