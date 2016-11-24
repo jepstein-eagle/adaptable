@@ -8,69 +8,70 @@
 }
 
 		.FlashUp {
-			background-color: green;
-			color: white;
+			background-color: green !important;
+			color: white!important;
+			
 		}
 		
 		.FlashDown {
-			background-color: red;
-			color: white;
+			background-color: red!important;
+			color: white!important;
 		}
 
     	.Ab-ConditionalStyle-Green {
-			background-color: green;
-			color: white;
+			background-color: green !important;
+			color: white !important;
 		}
 
 		.Ab-ConditionalStyle-LightGreen {
-			background-color: lightgreen;
-			color: white;
+			background-color: lightgreen !important;
+			color: white !important;
 		}
 
     	.Ab-ConditionalStyle-Red {
-			background-color: red;
-			color: white;
+			background-color: red !important;
+			color: white !important;
 		}
 
     	.Ab-ConditionalStyle-Blue {
-			background-color: blue;
-			color: white;
+			background-color: blue !important;
+			color: white !important;
 		}
 
     	.Ab-ConditionalStyle-Yellow {
-			background-color: yellow;
-			color: black;
+			background-color: yellow !important;
+			color: black !important;
 		}
 
 		.Ab-ConditionalStyle-LightYellow {
-			background-color: lightyellow;
-			color: black;
+			background-color: lightyellow !important;
+			color: black !important;
 		}
 
     	.Ab-ConditionalStyle-Orange {
-			background-color: orange;
-			color: white;
+			background-color: orange !important;
+			color: white !important;
 		}
 
     	.Ab-ConditionalStyle-Purple {
-			background-color: purple;
-			color: white;
+			background-color: purple !important;
+			color: white !important;
 		}
 
 
     	.Ab-ConditionalStyle-Pink {
-			background-color: pink;
-			color: black;
+			background-color: pink !important;
+			color: black !important;
 		}
 
 		.Ab-ConditionalStyle-GreenFont {
-			font-weight: bold;
-			color: green;
+			font-weight: bold !important;
+			color: green !important;
 		}
 
 		.Ab-ConditionalStyle-RedFont {
-			font-weight: bold;
-			color: red;
+			font-weight: bold !important;
+			color: red !important;
 		}
 
 		
