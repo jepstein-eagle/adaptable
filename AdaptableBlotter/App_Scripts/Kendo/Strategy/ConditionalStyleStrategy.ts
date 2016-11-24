@@ -42,10 +42,20 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
 
             if (this.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns)) {
-                this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    this.blotter.addRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                }
+                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                    this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                }
             }
             else {
-                this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    this.blotter.removeRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                }
+                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                    this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                }
             }
         })
     }
