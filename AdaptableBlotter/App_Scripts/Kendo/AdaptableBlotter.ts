@@ -31,7 +31,7 @@ import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType, SearchStringOperator } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IColumnCellStyleMapping } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 
 
