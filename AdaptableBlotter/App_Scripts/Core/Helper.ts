@@ -53,5 +53,14 @@ export module Helper {
 
     }
 
+    export function groupBy(array: Array<any>, prop: string): Array<any> {
+        return array.reduce((acc, item) => {
+            var key = item[prop];
+            acc[key] = acc[key] || [];
+            acc[key].push(item);
+            return acc;
+        }, {});
+    }
+
 }
 

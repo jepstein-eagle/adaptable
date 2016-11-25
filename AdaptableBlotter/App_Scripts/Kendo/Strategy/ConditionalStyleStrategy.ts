@@ -84,41 +84,47 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
                 .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId) }))
 
-            rowIds.forEach(rowId => {
+            let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
 
+        rowIds.forEach(rowId => {
+
+            //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
+            //an object with properties that have the name of the groupbykey
+            for (let column in columnConditionalStylesGroupedByColumn) {
                 //we just need to find one that match....
-                for (let columnCS of columnConditionalStyles) {
+                for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                     if (this.checkForExpression(columnCS.Expression, rowId, columns)) {
                         this.blotter.addCellStyle(rowId, columnCS.columnIndex, this.ConsitionalStylePrefix + CellStyle[columnCS.CellStyle])
                         break
                     }
                 }
-                //we just need to find one that match....
-                for (let rowCS of rowConditionalStyles) {
-                    if (this.checkForExpression(rowCS.Expression, rowId, columns)) {
-                        this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + CellStyle[rowCS.CellStyle])
-                        break
-                    }
+            }
+            //we just need to find one that match....
+            for (let rowCS of rowConditionalStyles) {
+                if (this.checkForExpression(rowCS.Expression, rowId, columns)) {
+                    this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + CellStyle[rowCS.CellStyle])
+                    break
                 }
-            })
-        }
+            }
+        })
     }
+}
 
     private checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[]): boolean {
-        let returnVal: boolean = (
-            ExpressionHelper.IsSatisfied(
-                Expression,
-                this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
-                this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
-                columns
-            ))
+    let returnVal: boolean = (
+        ExpressionHelper.IsSatisfied(
+            Expression,
+            this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
+            this.blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
+            columns
+        ))
 
-        return returnVal;
-    }
+    return returnVal;
+}
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+getMenuItems(): IMenuItem[] {
+    return [this.menuItemConfig];
+}
 }
 
 
