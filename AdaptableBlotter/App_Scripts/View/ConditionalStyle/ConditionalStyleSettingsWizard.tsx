@@ -98,12 +98,14 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                 <FormGroup controlId="applyTo">
                     <Col xs={4} componentClass={ControlLabel}>Expression Type: </Col>
                     <Col xs={8}>
-                        <Radio value="custom" checked={this.state.IsPredefinedExpression == false} onChange={(e) => this.onExpressionOptionChange(e)}>
+                        <Radio value="custom" checked={this.state.IsPredefinedExpression == false}
+                            onChange={(e) => this.onExpressionOptionChange(e)}>
                             Custom Expression (created in next step)
                         </Radio>
-                        <Radio value="predefined" checked={this.state.IsPredefinedExpression == true} onChange={(e) => this.onExpressionOptionChange(e)}>
+                        {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ? <Radio value="predefined"
+                            checked={this.state.IsPredefinedExpression == true} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Existing Expression
-                        </Radio>
+                        </Radio> : null}
                     </Col>
                 </FormGroup>
 
@@ -163,7 +165,14 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
     private onWhereAppliedSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ConditionalStyleScope: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        let conditionalScope = Number.parseInt(e.value)
+        if (conditionalScope == ConditionalStyleScope.Column) {
+            this.setState({ ConditionalStyleScope: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        }
+        else if (conditionalScope == ConditionalStyleScope.Row) {
+            this.setState({ ConditionalStyleScope: Number.parseInt(e.value), IsPredefinedExpression: false } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        }
+
     }
 
     private onCreatePredefinedExpression() {
