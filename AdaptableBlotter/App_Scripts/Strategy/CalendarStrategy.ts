@@ -1,10 +1,10 @@
-import {ICalendarStrategy, ICalendar, ICalendarEntry} from '../../Core/Interface/ICalendarStrategy';
-import {MenuItemShowPopup} from '../../Core/MenuItem';
-import {AdaptableStrategyBase} from '../../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../../Core/StrategyIds'
-import {IMenuItem} from '../../Core/Interface/IStrategy';
-import {IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
-import {MenuType} from '../../Core/Enums';
+import {ICalendarStrategy, ICalendar, ICalendarEntry} from '../Core/Interface/ICalendarStrategy';
+import {MenuItemShowPopup} from '../Core/MenuItem';
+import {AdaptableStrategyBase} from '../Core/AdaptableStrategyBase';
+import * as StrategyIds from '../Core/StrategyIds'
+import {IMenuItem} from '../Core/Interface/IStrategy';
+import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
+import {MenuType} from '../Core/Enums';
 
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {

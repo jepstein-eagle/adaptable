@@ -1,10 +1,10 @@
-import { IQuickSearchStrategy } from '../../Core/Interface/IQuickSearchStrategy';
-import { MenuItemShowPopup } from '../../Core/MenuItem';
-import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../../Core/StrategyIds'
-import { IMenuItem } from '../../Core/Interface/IStrategy';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { MenuType, SearchStringOperator } from '../../Core/Enums';
+import { IQuickSearchStrategy } from '../Core/Interface/IQuickSearchStrategy';
+import { MenuItemShowPopup } from '../Core/MenuItem';
+import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import * as StrategyIds from '../Core/StrategyIds'
+import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { MenuType, SearchStringOperator } from '../Core/Enums';
 
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {

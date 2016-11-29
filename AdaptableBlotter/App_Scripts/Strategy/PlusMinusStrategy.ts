@@ -1,14 +1,14 @@
-import { PlusMinusState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy';
-import { MenuItemShowPopup } from '../../Core/MenuItem';
-import { AdaptableStrategyBase } from '../../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../../Core/StrategyIds'
-import { IMenuItem } from '../../Core/Interface/IStrategy';
-import { ColumnType } from '../../Core/Enums'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../Core/Helper';
-import {MenuType} from '../../Core/Enums';
+import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
+import { IPlusMinusStrategy } from '../Core/Interface/IPlusMinusStrategy';
+import { MenuItemShowPopup } from '../Core/MenuItem';
+import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import * as StrategyIds from '../Core/StrategyIds'
+import { IMenuItem } from '../Core/Interface/IStrategy';
+import { ColumnType } from '../Core/Enums'
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../Core/Helper';
+import {MenuType} from '../Core/Enums';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private menuItemConfig: IMenuItem;
