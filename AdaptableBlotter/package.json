@@ -25,7 +25,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install",
     "build-adaptableblotter": "node_modules/.bin/webpack",
-    "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/"
+    "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/",
+    "dev-hypergrid": "node_modules/.bin/webpack-dev-server --content-base Harness/Hypergrid/"
   },
   "keywords": [],
   "author": "",
