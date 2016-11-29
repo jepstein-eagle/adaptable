@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Adaptable Blotter Hypergrid Demo</title>
+
+    <link href="StyleSheet.css" rel="stylesheet" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+    <script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
+    <script src="adaptableblotter/harness-bundle.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <!--<h3>Adaptable Blotter</h3> -->
+        <div id="content" style="margin:15px;"></div>
+    </div>
+
+    <script src="adaptableblotter/adaptableblotterhypergrid-bundle.js"></script>
+    <p/>
+    <div id="grid"></div>
+
+    <script>
+    InitBlotter()
+    function handleClickEdit() {
+        InitBlotter()
+    }
+    function InitBlotter() {
+    var dataGen = new harness.DataGenerator();
+        var trades = dataGen.getTrades();
+
+
+        var grid = new fin.Hypergrid('#grid', { data: trades });
+        var container = document.getElementById('content');
+        // var blotter = new adaptableblotterkendo.AdaptableBlotter(grid,container);
+        //dataGen.startTickingDataKendo(grid);
+    }
+  
+
+</script>
+</body>
+
+</html>
