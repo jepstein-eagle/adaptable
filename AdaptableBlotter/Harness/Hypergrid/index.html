@@ -32,12 +32,33 @@
     function handleClickEdit() {
         InitBlotter()
     }
+    function capitalize(string) {
+        return (/[a-z]/.test(string) ? string : string.toLowerCase())
+            .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
+            .replace(/[A-Z]/g, ' $&')
+            .trim();
+    }
+        function replacer(a, b, c) {
+        return b.toUpperCase() + c;
+    }
+    function getSchema(data){
+        var schema = [],
+            firstRow = Array.isArray(data) && data[0];
+
+        firstRow = (typeof firstRow === 'object') ? firstRow : {};
+        for (var p in firstRow) {
+            if (firstRow.hasOwnProperty(p)){
+                schema.push({name: p, header: capitalize(p)});
+            }
+        }
+        return schema;
+    }
     function InitBlotter() {
     var dataGen = new harness.DataGenerator();
         var trades = dataGen.getTrades();
 
 
-        var grid = new fin.Hypergrid('#grid', { data: trades });
+        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
         var container = document.getElementById('content');
         var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container);
         //dataGen.startTickingDataKendo(grid);
