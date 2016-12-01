@@ -76,9 +76,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     this._onKeyDown.Dispatch(this, event)
         // })
 
-        // grid.bind("dataBound", (e: any) => {
-        //     this._onGridDataBound.Dispatch(this, e)
-        // });
+        grid.addEventListener('fin-click', function (e: any) {
+            var cell = e.detail.gridCell;
+            console.log('fin-click cell:', cell);
+        });
+
+
+        grid.addEventListener("fin-keydown", (e: any) => {
+            console.log("+++++++++++++ The key down  ", e)
+        });
+
+        grid.addEventListener("fin-column-changed-event", () => {
+            setTimeout(() => this.SetColumnIntoStore(), 5);
+        });
 
         // grid.dataSource.bind("change", (e: any) => {
         //     if (e.action == "itemchange") {
@@ -112,7 +122,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SetColumnIntoStore() {
-        let columns: IColumn[] = this.grid.behavior.columns.map((x:any) => {
+        // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
+        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 ColumnFriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
@@ -120,7 +131,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: true
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+        let hiddenColumns: IColumn[] = this.grid.behavior.getHiddenColumns().map((x: any) => {
+            return {
+                ColumnId: x.name ? x.name : "Unknown Column",
+                ColumnFriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                ColumnType: this.getColumnType(x.name),
+                Visible: false
+            }
+        });
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -219,7 +238,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-            return false;
+        return false;
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
@@ -236,6 +255,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+        VisibleColumnList.forEach((column, index) => {
+            //we use allcolumns so we can show previously hidden columns
+            let oldcolindex = this.grid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
+            this.grid.behavior.showColumns(false, oldcolindex, index, false)
+            //this.grid.swapColumns(index, oldcolindex);
+        })
+        this.grid.behavior.getActiveColumns().filter((x: any) => VisibleColumnList.findIndex(y => y.ColumnId == x.name) < 0).forEach(((col: any) => {
+            this.grid.behavior.hideColumns(false, this.grid.behavior.allColumns.indexOf(col))
+        }))
+        this.grid.behavior.changed()
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.SetColumnIntoStore();
     }
 
     public saveAsExcel(fileName: string, allPages: boolean): void {
