@@ -1,10 +1,10 @@
 {
   "devtools_port": 9090,
   "startup_app": {
-    "name": "OpenFin with Kendo and Adaptable Blotter",
-    "description": "OpenFin with Kendo and Adaptable Blotter",
+    "name": "OpenFin with Adaptable Blotter",
+    "description": "OpenFin with Adaptable Blotter",
     "url": "http://localhost:8080",
-    "uuid": "openfin-kendo-adaptableblotter",
+    "uuid": "openfin-adaptable-blotter",
     "autoShow": true
   },
   "runtime": {
@@ -13,7 +13,7 @@
   },
   "shortcut": {
     "company": "Adaptable Tools",
-    "description": "OpenFin with Kendo and Adaptable Blotter",
-    "name": "OpenFin with Kendo and Adaptable Blotter"
+    "description": "Adaptable Blotter",
+    "name": "Adaptable Blotter"
   }
 }
