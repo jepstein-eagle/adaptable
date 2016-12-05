@@ -1,0 +1,19 @@
+{
+  "devtools_port": 9090,
+  "startup_app": {
+    "name": "OpenFin with HyperGrid and Adaptable Blotter",
+    "description": "OpenFin with HyperGrid and Adaptable Blotter",
+    "url": "http://localhost:8080",
+    "uuid": "openfin-hypergrid-adaptableblotter",
+    "autoShow": true
+  },
+  "runtime": {
+    "arguments": "",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "Adaptable Tools",
+    "description": "OpenFin with HyperGrid and Adaptable Blotter",
+    "name": "OpenFin with HyperGrid and Adaptable Blotter"
+  }
+}
