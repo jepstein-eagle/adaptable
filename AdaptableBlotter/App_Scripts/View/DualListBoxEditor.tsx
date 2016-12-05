@@ -159,7 +159,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                         <Panel header={this.props.HeaderAvailable} className="no-padding-panel" >
                             <div>
                                 {headerFirstListBox}
-                                <ListGroup fill className="AvailableDropZone" style={listGroupStyle}
+                                <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailable}
                                     onDragEnter={(event) => this.DragEnterAvailable(event)}
                                     onDragOver={(event) => this.DragOverAvailable(event)}
                                     onDragLeave={(event) => this.DragLeaveAvailable(event)}>
@@ -574,6 +574,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
 
 }
+
+var listGroupStyleAvailable = {
+    'overflowY': 'auto',
+    'maxHeight': '261px',
+    'height': '261px',
+    'marginBottom' : '0'
+};
 
 var listGroupStyle = {
     'overflowY': 'auto',
