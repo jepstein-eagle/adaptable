@@ -4,6 +4,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { SortOrder } from '../Core/Enums'
+import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 
 
@@ -85,33 +86,9 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
             }
         })
 
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={10}>
-                    <FormGroup style={{margin:0}}>
-                        <InputGroup>
-                            <FormControl
-                                type="text"
-                                value={this.state.FilterValue}
-                                placeholder="Enter text to filter list"
-                                onChange={(e) => this.handleChangeFilterValue(e)}
-                                />
-                            <InputGroup.Button>
-                                <Button onClick={() => this.clearFilter()}><Glyphicon glyph="remove" /></Button>
-                            </InputGroup.Button>
-                        </InputGroup>
-                    </FormGroup>
-
-                </Col>
-                <Col xs={2}>
-                    {this.state.SortOrder == SortOrder.Ascending ?
-                        <Button bsSize="small" onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon className="scale-lg" glyph="sort-by-alphabet" /></Button> :
-                        <Button bsSize="small" onClick={() => this.sortColumnValues()} style={{ float: "right" }}><Glyphicon className="scale-lg" glyph="sort-by-alphabet-alt" /></Button>
-                    }
-                </Col>
-            </Row>
-        </Form>
-
+        let header = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
+            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
+        
         return <div>
             {header}
             <ListGroup fill style={this.props.style}>
@@ -120,16 +97,9 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         </div>;
     }
 
-    handleChangeFilterValue(x: React.FormEvent) {
-        let e = x.target as HTMLInputElement;
+    handleChangeFilterValue(x: string) {
         this.setState({
-            FilterValue: e.value
-        } as SingleListBoxState);
-    }
-
-    clearFilter() {
-        this.setState({
-            FilterValue: ""
+            FilterValue: x
         } as SingleListBoxState);
     }
 
