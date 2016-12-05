@@ -50,7 +50,20 @@ export module Helper {
         else if (sortOrder == SortOrder.Descending) {
             return values.sort().reverse()
         }
+    }
 
+    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string): any[] {
+        let returnArray: any[]
+        if (displayMember) {
+            returnArray = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0)
+        }
+        else { returnArray = values.sort() }
+        if (sortOrder == SortOrder.Ascending) {
+            return returnArray
+        }
+        else if (sortOrder == SortOrder.Descending) {
+            return returnArray.reverse()
+        }
     }
 
     export function groupBy(array: Array<any>, prop: string): Array<any> {
