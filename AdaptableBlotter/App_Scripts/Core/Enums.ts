@@ -70,12 +70,7 @@ export enum CellStyle {
     RedFont
 }
 
-export enum SearchStringOperator{
-    Equals,
-    NotEquals,
-    Contains,
-    StartsWith
-}
+
 
 export enum SortOrder{
     Unknown,

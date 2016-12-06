@@ -3,16 +3,18 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { MenuType } from '../Core/Enums';
+import { MenuType, ColumnType } from '../Core/Enums';
+import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 
 /* First basic draft of FlashingCells Strategy. 
     A few assumptions at play here
     1.  We will only flash numeric columns (for now)
-    2.  The user cannot choose the flash colours or duraations; for now its just green and red, which are then hardcoded as styles in index.html.  All the user can choose is which numeric columns will flash    
+    2.  The user cannot choose the flash colours; for now its just green and red, which are then hardcoded as styles in index.html.  
+    All the user can choose is which numeric columns will flash and the duration 
  */
 
 const FLASH_UP_STYLE: string = "FlashUp"
@@ -21,6 +23,9 @@ const FLASH_DOWN_STYLE: string = "FlashDown"
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
+    private TurnOnFlashingCellsColumnMenuItem: string = "Turn On Flashing Cells";
+    private TurnOffFlashingCellsColumnMenuItem: string = "Turn Off Flashing Cells";
+
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
@@ -57,5 +62,39 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
+    }
+
+    addColumnMenuItem(column: IColumn, menuItems: string[]): void {
+        if (column.ColumnType == ColumnType.Number) {
+            let flashingCellColumn = this.FlashingCellState.FlashingColumns.find(fc => fc.ColumnName == column.ColumnId);
+            if (flashingCellColumn == null || !flashingCellColumn.IsLive) {
+                menuItems.push(this.TurnOnFlashingCellsColumnMenuItem);
+            } else {
+                menuItems.push(this.TurnOffFlashingCellsColumnMenuItem);
+            }
+        }
+    }
+
+    onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
+        let flashingCellColumn = this.FlashingCellState.FlashingColumns.find(fc => fc.ColumnName == column.ColumnId);
+
+        // if no flashing column then need to create one...
+        if (flashingCellColumn == null) {
+            flashingCellColumn = this.CreateDefaultFlashingColumn(column);
+         }
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch<FlashingCellsRedux.FlashingColumnSelectAction>(FlashingCellsRedux.SelectFlashingCellColumn(flashingCellColumn));
+    }
+
+    public GetFlashingCellDurations(): IFlashingCellDuration[] {
+        return [
+            { Name: "1/4 Second", Duration: 250 },
+            { Name: "1/2 Second", Duration: 500 },
+            { Name: "3/4 Second", Duration: 250 },
+            { Name: "1 Second", Duration: 1000 },
+        ]
+    }
+
+    public CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
+        return { IsLive: false, ColumnName: column.ColumnId, FlashingCellDuration: this.GetFlashingCellDurations().find(f => f.Name == "1/2 Second") };
     }
 }

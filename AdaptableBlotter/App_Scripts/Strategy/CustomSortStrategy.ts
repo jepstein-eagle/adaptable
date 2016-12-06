@@ -3,16 +3,17 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import {MenuType} from '../Core/Enums';
-
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { MenuType } from '../Core/Enums';
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     private menuItemConfig: IMenuItem;
+    private AddCustomSortColumnMenuItem: string = "Add Custom Sort";
+    private EditCustomSortColumnMenuItem: string = "Edit Custom Sort";
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Custom Sort", this.Id, 'CustomSortConfig',MenuType.Configuration, "sort-by-attributes");
+        this.menuItemConfig = new MenuItemShowPopup("Custom Sort", this.Id, 'CustomSortConfig', MenuType.Configuration, "sort-by-attributes");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
@@ -43,6 +44,29 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
+
+     addColumnMenuItem(column: IColumn, menuItems: string[]): void {
+             var existingSortsForColumn = this.CustomSorts.find(cs => cs.ColumnId == column.ColumnId);
+        if (existingSortsForColumn != null) {
+            menuItems.push(this.EditCustomSortColumnMenuItem);
+        } else {
+            menuItems.push(this.AddCustomSortColumnMenuItem);
+        }
+    }
+
+     onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
+             if (menuItem.includes(this.EditCustomSortColumnMenuItem)) {
+            alert("going to edit custom sort for column: " + column.ColumnId);
+        }
+
+        if (menuItem.includes(this.AddCustomSortColumnMenuItem)) {
+            alert("going to add new custom sort for column: " + column.ColumnId);
+
+            this.onAction("PlusMinusConfig")
+        }
+    }
+
+
 }
 
 function CreateCompareCustomSort(customSort: ICustomSort, blotter: IAdaptableBlotter) {

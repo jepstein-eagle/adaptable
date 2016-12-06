@@ -30,7 +30,7 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, SearchStringOperator } from '../Core/Enums'
+import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 
@@ -306,7 +306,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return [];
     }
 
+    public hideRows(rowIds: string[]): void {
+    }
 
+    public showRows(rowIds: string[]): void {
+        
+    }
 
     public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
@@ -315,10 +320,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-    public applyQuickSearch(): void {
-    }
-
-    public printGrid(): void {
+     public printGrid(): void {
 
     }
 

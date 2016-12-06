@@ -106,6 +106,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         };
     }
 
+    onTest(){
+        this.props.showPopup("CustomSortConfig");
+    }
+
     // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
     onSetQuickSearch(quickSearchText: string) {
         this.props.onSetQuickSearchText(quickSearchText);

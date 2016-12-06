@@ -2,10 +2,11 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
+import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
@@ -24,30 +25,28 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
-       let flashingCellDurations : IFlashingCellDuration[] = [  
-           { Name: "1/4 Second", Duration: 250 },
-           { Name: "1/2 Second", Duration: 500 },
-           { Name: "3/4 Second", Duration: 250 },
-           { Name: "1 Second", Duration: 1000 },
-      ]
-       
+        // have to use any because the cast fails as its not an enclosing jsx object - that must be fixable
+        let flashingCelllStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FlashingCellsStrategyId);
+
+        let flashingCellDurations: IFlashingCellDuration[] = flashingCelllStrategy.GetFlashingCellDurations();
+
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
 
         let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return flashingColumn.ColumnName
         });
 
-        let allPotentialFlashingColumns: IFlashingColumn[]=[];
+        let allPotentialFlashingColumns: IFlashingColumn[] = [];
         this.props.FlashingColumns.forEach(fc => {
             allPotentialFlashingColumns.push(fc);
         });
 
-        numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc=>{
-            let flashingColumn: IFlashingColumn= { IsLive: false, ColumnName: nc.ColumnId, FlashingCellDuration: flashingCellDurations.find(f=>f.Name=="1/2 Second") };
-             allPotentialFlashingColumns.push(flashingColumn);
+        numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc => {
+            let flashingColumn: IFlashingColumn = flashingCelllStrategy.CreateDefaultFlashingColumn(nc);
+            allPotentialFlashingColumns.push(flashingColumn);
         })
-     
-     let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
+
+        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return <FlashingCellConfigItem
                 FlashingColumn={flashingColumn}
                 key={flashingColumn.ColumnName}
@@ -71,8 +70,8 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 
         let setAllOption = <Form horizontal>
             <Row style={topRowStyle}>
-                 <Col xs={12}>
-                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f=>f.IsLive)} >
+                <Col xs={12}>
+                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
                         Turn On All Flashing Columns
                     </Checkbox>
                 </Col>
@@ -115,14 +114,11 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FlashingCellsConfig = connect(mapStateToProps, mapDispatchToProps)(FlashingCellsConfigComponent);
 
-
 var listGroupStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px',
     'height': '300px'
 };
-
-
 
 let panelStyle = {
     width: '800px'
