@@ -172,5 +172,6 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 let divStyle = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
-    'height': '305px'
+    'height': '305px', 
+    'marginBottom': '0'
 }

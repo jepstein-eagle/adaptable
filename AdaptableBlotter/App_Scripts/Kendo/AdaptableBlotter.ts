@@ -296,9 +296,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnHeader(columnId: string): string {
-        let column = this.grid.columns.find(x => x.field == columnId);
+        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
         if (column) {
-            return column.title
+            return column.ColumnFriendlyName
         }
         else {
             return "";
