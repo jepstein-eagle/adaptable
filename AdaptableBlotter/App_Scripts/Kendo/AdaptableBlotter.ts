@@ -108,23 +108,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
 
-        // following code is taken from Telerik website for how to ADD menu items to existing column header menu
+        // following code is taken from Telerik website for how to ADD menu items to their column header menu
+        // not sure yet if we want to use their or our menu, probably former
         // would be nice if can work out how to make it re-evaluate during runtime;
-        // at the moment its only correct the FIRST time it runs for a column
+        // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
         grid.bind("columnMenuInit", (e: any) => {
             let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
             var popup = e.container.data('kendoPopup');
-            let menuItems: string[] = [];
+            let columnMenuItems: string[] = [];
             let column: IColumn = this.getColumnFromColumnId(field);
-            this.Strategies.forEach(s => s.addColumnMenuItem(column, menuItems));
 
-            menuItems.forEach(s => menu.append({ text: s }))
+            // each strategy can add its own menu item if it wants to
+            this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
+
+            columnMenuItems.forEach(s => menu.append({ text: s }))
 
             // we can add the item this way which is nicer but not doing so for now
             //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
 
-            // event handler
+            // event handler - each strategy listens and acts accordingly
             menu.bind("select", (e: any) => {
                 var menuText = $(e.item).text();
                 menu.close();

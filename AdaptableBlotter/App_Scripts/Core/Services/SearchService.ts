@@ -63,7 +63,7 @@ export class SearchService implements ISearchService {
 
     private createSearchExpressions(columns: IColumn[]): Expression[] {
         // going to cheat for the moment and use a predefined expression though might not be actually such a bad idea...
-        // thought should create a proper expression
+        // though I should probably create a proper expression the proper way...
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
                 Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,

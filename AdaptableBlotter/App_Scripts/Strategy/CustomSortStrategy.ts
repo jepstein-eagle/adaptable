@@ -45,8 +45,8 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         return [this.menuItemConfig];
     }
 
-     addColumnMenuItem(column: IColumn, menuItems: string[]): void {
-             var existingSortsForColumn = this.CustomSorts.find(cs => cs.ColumnId == column.ColumnId);
+    addColumnMenuItem(column: IColumn, menuItems: string[]): void {
+        var existingSortsForColumn = this.CustomSorts.find(cs => cs.ColumnId == column.ColumnId);
         if (existingSortsForColumn != null) {
             menuItems.push(this.EditCustomSortColumnMenuItem);
         } else {
@@ -54,14 +54,16 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         }
     }
 
-     onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
-             if (menuItem.includes(this.EditCustomSortColumnMenuItem)) {
+    onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
+        if (menuItem.includes(this.EditCustomSortColumnMenuItem)) {
             alert("going to edit custom sort for column: " + column.ColumnId);
         }
 
         if (menuItem.includes(this.AddCustomSortColumnMenuItem)) {
             alert("going to add new custom sort for column: " + column.ColumnId);
 
+            // now I need to work out how I can launch the custom sort wizard window by itself...
+            // a popup service?  fuck, this is hard.
             this.onAction("CustomSortConfig")
         }
     }
