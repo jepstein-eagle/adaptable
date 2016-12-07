@@ -28,7 +28,8 @@
     "build-adaptableblotter": "node_modules/.bin/webpack",
     "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/",
     "dev-hypergrid": "node_modules/.bin/webpack-dev-server --content-base Harness/Hypergrid/",
-    "openfin": "node openfin-launcher.js"
+    "openfin": "node openfin-launcher.js",
+    "openfin-offline": "node openfin-launcheroffline.js"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,19 @@
+{
+  "devtools_port": 9090,
+  "startup_app": {
+    "name": "OpenFin with Adaptable Blotter Offline",
+    "description": "OpenFin with Adaptable Blotter Offline",
+    "url": "http://localhost:8080/indexoffline.html",
+    "uuid": "openfin-adaptable-blotter-offline",
+    "autoShow": true
+  },
+  "runtime": {
+    "arguments": "",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "Adaptable Tools",
+    "description": "Adaptable Blotter Offline",
+    "name": "Adaptable Blotter Offline"
+  }
+}
