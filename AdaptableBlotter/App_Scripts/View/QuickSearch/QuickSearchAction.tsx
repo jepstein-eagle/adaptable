@@ -72,7 +72,14 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
     render() {
         var blotter = this.props.AdaptableBlotter;
 
-        let optionColours = EnumExtensions.getNamesAndValues(LeafExpressionOperator).map((stringOperatorNameAndValue: any) => {
+        // for the moment we can only search on string columns because of the way operators work with expressiosn
+        // we need either to make the expressions better so you can do a contains across numeric columns, or use jquery to do the search
+        // either way I think we can only use these operators becasue the others dont make sense across all columns...
+        let stringOperators: LeafExpressionOperator[] = 
+        [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.EndsWith];
+        
+        let optionOperators = EnumExtensions.getNamesAndValues(LeafExpressionOperator).filter
+        (nv=> stringOperators.find(s=> s==nv.value)!=null).map((stringOperatorNameAndValue: any) => {
             return <option key={stringOperatorNameAndValue.value} value={stringOperatorNameAndValue.value}>{stringOperatorNameAndValue.name}</option>
         })
 
@@ -118,7 +125,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                         <Col xs={8}>
                                             <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                                 <option value="select" key="select">Select an operator</option>
-                                                {optionColours}
+                                                {optionOperators}
                                             </FormControl>
                                         </Col>
                                     </FormGroup>

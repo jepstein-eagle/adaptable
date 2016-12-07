@@ -13,6 +13,7 @@ import { StringExtensions } from '../Extensions'
 // At the moment this only has a very rough implementation of Quick Search
 // But like with .NET version in due course it will cover both Advanced and Quick Search and keep the 2 properly in sync
 // e.g. at moment quick search unhides all rows but that wont work if we havea  quick search as well.
+// Its using an Expression - rather than JQuery - though this means that it only works on string columns at present
 export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
@@ -45,6 +46,8 @@ export class SearchService implements ISearchService {
         }
     }
 
+  
+
     public ApplyQuickSearchOnRow(rowIdentifier: any): void {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let searchExpressions: Expression[] = this.createSearchExpressions(columns);
@@ -60,6 +63,7 @@ export class SearchService implements ISearchService {
 
     private createSearchExpressions(columns: IColumn[]): Expression[] {
         // going to cheat for the moment and use a predefined expression though might not be actually such a bad idea...
+        // thought should create a proper expression
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
                 Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,

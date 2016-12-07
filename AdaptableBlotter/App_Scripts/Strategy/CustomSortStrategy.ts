@@ -62,7 +62,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         if (menuItem.includes(this.AddCustomSortColumnMenuItem)) {
             alert("going to add new custom sort for column: " + column.ColumnId);
 
-            this.onAction("PlusMinusConfig")
+            this.onAction("CustomSortConfig")
         }
     }
 

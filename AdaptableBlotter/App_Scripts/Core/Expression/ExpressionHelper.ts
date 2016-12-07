@@ -107,7 +107,7 @@ export module ExpressionHelper {
                             case LeafExpressionOperator.StartsWith:
                                 isColumnSatisfied = columnValue.startsWith(operand1);
                                 break
-                            case LeafExpressionOperator.EndWith:
+                            case LeafExpressionOperator.EndsWith:
                                 isColumnSatisfied = columnValue.endsWith(operand1) == 0;
                                 break
                             case LeafExpressionOperator.Between:
@@ -162,7 +162,7 @@ export module ExpressionHelper {
                 return "Contains"
             case LeafExpressionOperator.StartsWith:
                 return "StartsWith"
-            case LeafExpressionOperator.EndWith:
+            case LeafExpressionOperator.EndsWith:
                 return "EndWith"
             case LeafExpressionOperator.MatchesRegex:
                 return "MatchesRegex"

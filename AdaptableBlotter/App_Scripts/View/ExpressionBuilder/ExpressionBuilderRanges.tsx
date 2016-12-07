@@ -96,7 +96,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <option value={LeafExpressionOperator.Unknown.toString()}>Select an operator</option>
                     <option value={LeafExpressionOperator.Contains.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</option>
                     <option value={LeafExpressionOperator.StartsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</option>
-                    <option value={LeafExpressionOperator.EndWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndWith)}</option>
+                    <option value={LeafExpressionOperator.EndsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</option>
                     <option value={LeafExpressionOperator.MatchesRegex.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.MatchesRegex)}</option>
                 </FormControl>
                 return <Form horizontal key={index}>

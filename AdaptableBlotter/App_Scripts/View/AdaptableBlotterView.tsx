@@ -1,5 +1,4 @@
 ﻿import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableBlotter } from '../Kendo/AdaptableBlotter';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
@@ -47,9 +46,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             });
         }
 
-
         return (
-
             <div >
 
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
@@ -106,7 +103,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         };
     }
 
-    onTest(){
+    onTest() {
         this.props.showPopup("CustomSortConfig");
     }
 
@@ -114,8 +111,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     onSetQuickSearch(quickSearchText: string) {
         this.props.onSetQuickSearchText(quickSearchText);
     }
-
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

@@ -27,7 +27,7 @@ export enum LeafExpressionOperator {
     //String
     Contains,
     StartsWith,
-    EndWith,
+    EndsWith,
     MatchesRegex
 }
 
