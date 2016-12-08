@@ -37,7 +37,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
         this.setState({ EditedQuickSearchText: this.props.QuickSearchText });
     }
 
-    handleFileNameChange(event: React.FormEvent) {
+    handleQuickSearchTextChange(event: React.FormEvent) {
         const e = event.target as HTMLInputElement;
         this.setState({ EditedQuickSearchText: e.value });
     }
@@ -96,7 +96,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                     value={this.state.EditedQuickSearchText}
                                     type="string"
                                     placeholder="Enter quick search text"
-                                    onChange={(e: React.FormEvent) => this.handleFileNameChange(e)}
+                                    onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)}
                                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)} />
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>

@@ -72,3 +72,8 @@ export interface QuickSearchState{
     QuickSearchOperator: LeafExpressionOperator 
     IsCaseSensitive: Boolean
 }
+
+export interface AdvancedSearchState{
+    AdvancedSearchName: string
+    
+}

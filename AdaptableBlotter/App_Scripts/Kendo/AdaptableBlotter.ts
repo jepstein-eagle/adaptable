@@ -27,6 +27,7 @@ import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
+import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -65,6 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 

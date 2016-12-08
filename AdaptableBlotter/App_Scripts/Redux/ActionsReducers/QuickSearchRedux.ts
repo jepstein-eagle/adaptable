@@ -40,7 +40,6 @@ const initialQuickSearchState: QuickSearchState = {
     IsCaseSensitive: false
 }
 
-
 export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: QuickSearchState = initialQuickSearchState, action: Redux.Action): QuickSearchState => {
     switch (action.type) {
         case QUICK_SEARCH_SET_SEARCH_TEXT:

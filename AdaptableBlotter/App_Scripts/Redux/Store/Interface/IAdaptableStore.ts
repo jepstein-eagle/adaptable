@@ -12,6 +12,7 @@ export interface AdaptableBlotterState {
     FlashingCell: AdaptableBlotterStates.FlashingCellState;
     Calendars: AdaptableBlotterStates.CalendarState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
+    AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
 }
 
 export interface IAdaptableBlotterStore {

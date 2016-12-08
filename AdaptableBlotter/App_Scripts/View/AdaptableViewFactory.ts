@@ -9,6 +9,7 @@ import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
 import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
+import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -23,6 +24,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ConditionalStyleConfig: ConditionalStyleConfig,
   PrintPreviewAction: PrintPreviewAction,
   QuickSearchAction: QuickSearchAction,
+  AdvancedSearchAction: AdvancedSearchAction,
 }
 
 
