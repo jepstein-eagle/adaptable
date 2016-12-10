@@ -13,6 +13,7 @@ import { Expression } from '../../Core/Expression/Expression';
 interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
+    SelectedColumnId : string
 }
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

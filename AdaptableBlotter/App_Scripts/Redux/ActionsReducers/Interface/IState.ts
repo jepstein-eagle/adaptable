@@ -8,6 +8,7 @@ import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
 import {ICalendar} from '../../../Core/interface/ICalendarStrategy';
 import {IConditionalStyleCondition} from '../../../Core/interface/IConditionalStyleStrategy';
+import {IAdvancedSearch} from '../../../Core/interface/IAdvancedSearchStrategy';
 
 
 export interface PlusMinusState {
@@ -74,6 +75,6 @@ export interface QuickSearchState{
 }
 
 export interface AdvancedSearchState{
-    AdvancedSearchName: string
+     AdvancedSearches : Array<IAdvancedSearch> ;
     
 }

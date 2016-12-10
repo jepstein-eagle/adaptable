@@ -43,7 +43,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
-    AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+ AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
 
 });
 

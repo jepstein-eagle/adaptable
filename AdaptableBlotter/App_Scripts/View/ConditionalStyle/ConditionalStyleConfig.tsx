@@ -70,7 +70,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 <AdaptableWizard Steps={
                     [
                         <ConditionalStyleSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} />
+                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter}  SelectedColumnId={null}/>
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
                     StepStartIndex={0}

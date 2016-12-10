@@ -30,7 +30,7 @@ interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigCo
 }
 
 interface PlusMinusConfigState {
-    EditedColumnNudgeValue: IPlusMinusCondition
+    EditedPlusMinusCondition: IPlusMinusCondition
     EditedIndexColumnNudgeValue: number
 }
 
@@ -38,7 +38,7 @@ interface PlusMinusConfigState {
 class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, PlusMinusConfigState> {
     constructor() {
         super();
-        this.state = { EditedColumnNudgeValue: null, EditedIndexColumnNudgeValue: -1 }
+        this.state = { EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 }
 
     }
     render() {
@@ -98,10 +98,10 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     {optionColumnsItems}
                 </ListGroup>
             </PanelWithButton>
-            {this.state.EditedColumnNudgeValue != null &&
+            {this.state.EditedPlusMinusCondition != null &&
                 <AdaptableWizard Steps={[<PlusMinusSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                <PlusMinusExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} />]}
-                    Data={this.state.EditedColumnNudgeValue}
+                <PlusMinusExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />]}
+                    Data={this.state.EditedPlusMinusCondition}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
@@ -114,18 +114,18 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             DefaultNudge: this.props.DefaultNudgeValue,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
-        this.setState({ EditedColumnNudgeValue: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedColumnNudgeValue: Helper.cloneObject(condition), EditedIndexColumnNudgeValue: index });
+        this.setState({ EditedPlusMinusCondition: Helper.cloneObject(condition), EditedIndexColumnNudgeValue: index });
     }
     closeWizard() {
-        this.setState({ EditedColumnNudgeValue: null, EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
     }
     WizardFinish() {
-        this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexColumnNudgeValue, this.state.EditedColumnNudgeValue);
-        this.setState({ EditedColumnNudgeValue: null, EditedIndexColumnNudgeValue: -1 });
+        this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexColumnNudgeValue, this.state.EditedPlusMinusCondition);
+        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
     }
 
     private onColumnSelectChange(index: number, event: React.FormEvent) {
