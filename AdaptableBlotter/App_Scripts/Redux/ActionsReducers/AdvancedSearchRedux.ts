@@ -6,6 +6,7 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 
 
 export const ADVANCED_SEARCH_ADD = 'ADVANCED_SEARCH_ADD';
+export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 
 export interface AdvancedSearchAddAction extends Redux.Action {
     AdvancedSearch: IAdvancedSearch
@@ -13,6 +14,15 @@ export interface AdvancedSearchAddAction extends Redux.Action {
 
 export const AdvancedSearchAdd = (AdvancedSearch: IAdvancedSearch): AdvancedSearchAddAction => ({
     type: ADVANCED_SEARCH_ADD,
+    AdvancedSearch
+})
+
+export interface AdvancedSearchDeleteAction extends Redux.Action {
+    AdvancedSearch: IAdvancedSearch
+}
+
+export const AdvancedSearchDelete = (AdvancedSearch: IAdvancedSearch): AdvancedSearchDeleteAction => ({
+    type: ADVANCED_SEARCH_DELETE,
     AdvancedSearch
 })
 
@@ -37,6 +47,14 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
             } else {
                 advancedSearches.push(actionTypedAddUpdate.AdvancedSearch)
             }
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches })
+
+        case ADVANCED_SEARCH_DELETE:
+            let actionTypedAddDelete = (<AdvancedSearchDeleteAction>action)
+            advancedSearches = [].concat(state.AdvancedSearches)
+
+            index = advancedSearches.findIndex(a => a.AdvancedSearchName == actionTypedAddDelete.AdvancedSearch.AdvancedSearchName)
+                advancedSearches.splice(index, 1);
             return Object.assign({}, state, { AdvancedSearches: advancedSearches })
 
         default:

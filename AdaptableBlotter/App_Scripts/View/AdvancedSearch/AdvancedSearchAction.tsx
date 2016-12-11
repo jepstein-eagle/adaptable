@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Accordion, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { Accordion, ButtonToolbar, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { LeafExpressionOperator } from '../../Core/Enums'
@@ -19,7 +19,6 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper } from '../../Core/Helper';
 import { AdvancedSearchPreview } from './AdvancedSearchPreview'
 import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
-
 import { Expression } from '../../Core/Expression/Expression';
 
 
@@ -28,6 +27,7 @@ interface AdvancedSearchActionProps extends React.ClassAttributes<AdvancedSearch
     Columns: IColumn[];
     AdaptableBlotter: IAdaptableBlotter;
     onAddAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddAction,
+    onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
 }
 
 interface AdvancedSearchActionInternalState {
@@ -37,18 +37,17 @@ interface AdvancedSearchActionInternalState {
 }
 
 class AdvancedSearchActionComponent extends React.Component<AdvancedSearchActionProps, AdvancedSearchActionInternalState> {
-  private IsDeleting: boolean = false;
+    private IsDeleting: boolean = false;
 
     constructor() {
         super();
-        this.state = { NewAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: ""}
+        this.state = { NewAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "" }
     }
 
 
     render() {
-      
-        //   alert(this.state.SelectedColumnId);
-       this.IsDeleting = false;
+
+        this.IsDeleting = false;
         var blotter = this.props.AdaptableBlotter;
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
@@ -56,8 +55,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         })
 
         let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.AdvancedSearchName : "";
-
-        //   let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.AdvancedSearchName : "";
 
         return (
             <div >
@@ -74,6 +71,19 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     <option value="select" key="select">Select a Search</option>
                                     {advancedSearches}
                                 </FormControl>
+
+                                {this.state.SelectedAdvancedSearch != null &&
+                                    <div >
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Search</Tooltip>}>
+                                            <Button bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                        </OverlayTrigger>
+                                        {' '}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
+                                            <Button onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                        </OverlayTrigger>
+                                    </div>
+                                }
+
                             </PanelWithButton>
 
                             {this.state.SelectedAdvancedSearch != null &&
@@ -125,6 +135,17 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.setState({ NewAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
+    onClearAdvancedSearch() {
+        this.setState({ SelectedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+    }
+
+    onDeleteAdvancedSearch() {
+        alert("Are you sure you want to delete.  We need a proper set of buttons here");
+        this.props.onDeleteAdvancedSearch(this.state.SelectedAdvancedSearch);
+        this.setState({ SelectedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+    }
+
+
     DeleteColumnValue(columnId: string, value: any) {
         let columnValues = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
         let index = columnValues.Values.indexOf(value)
@@ -133,7 +154,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             let columnValuesIndex = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.findIndex(x => x.ColumnName == columnId)
             this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.splice(columnValuesIndex, 1)
         }
-       this.onDeleteItem();
+        this.onDeleteItem();
     }
 
     DeleteRange(columnId: string, index: number) {
@@ -146,17 +167,15 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.onDeleteItem();
     }
 
-    onDeleteItem():void{
-     this.IsDeleting = true;
-          this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
-       this.props.onAddAdvancedSearch(this.state.SelectedAdvancedSearch); 
+    onDeleteItem(): void {
+        this.IsDeleting = true;
+        this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        this.props.onAddAdvancedSearch(this.state.SelectedAdvancedSearch);
 
     }
 
     onSelectedColumnChange(columnName: string) {
-        // not sure we can do anything here?  
-        // perhaps we can change the ExpressionBuilder to take a columnID as a prop variable and then it can update state with it?
-        if (!this.IsDeleting) {
+        if (!this.IsDeleting) { // this gets called after deleting an item so dont want to open advanced search in those circumstances
             this.setState({ SelectedColumnId: columnName, NewAdvancedSearch: this.state.SelectedAdvancedSearch } as AdvancedSearchActionInternalState)
         }
     }
@@ -194,6 +213,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),
+        onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
     };
 }
 
