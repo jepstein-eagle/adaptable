@@ -27,8 +27,8 @@ export const AdvancedSearchDelete = (AdvancedSearch: IAdvancedSearch): AdvancedS
 })
 
 const initialAdvancedSearchState: AdvancedSearchState = {
-    AdvancedSearches: [
-    ]
+    AdvancedSearches: [],
+    CurrentAdvancedSearch: ""
 }
 
 

@@ -1,14 +1,14 @@
-import {SmartEditOperation, LeafExpressionOperator} from '../../../Core/Enums'
-import {ISmartEditPreview} from '../../../Core/interface/ISmartEditStrategy'
-import {ICustomSort} from '../../../Core/interface/ICustomSortStrategy'
-import {IShortcut} from '../../../Core/interface/IShortcutStrategy'
-import {IFlashingColumn} from '../../../Core/interface/IFlashingCellsStrategy'
-import {IMenuItem} from '../../../Core/interface/IStrategy'
-import {IColumn} from '../../../Core/interface/IAdaptableBlotter'
+import { SmartEditOperation, LeafExpressionOperator } from '../../../Core/Enums'
+import { ISmartEditPreview } from '../../../Core/interface/ISmartEditStrategy'
+import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
+import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
+import { IFlashingColumn } from '../../../Core/interface/IFlashingCellsStrategy'
+import { IMenuItem } from '../../../Core/interface/IStrategy'
+import { IColumn } from '../../../Core/interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
-import {ICalendar} from '../../../Core/interface/ICalendarStrategy';
-import {IConditionalStyleCondition} from '../../../Core/interface/IConditionalStyleStrategy';
-import {IAdvancedSearch} from '../../../Core/interface/IAdvancedSearchStrategy';
+import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
+import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
+import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
 
 
 export interface PlusMinusState {
@@ -42,8 +42,8 @@ export interface CustomSortState {
 }
 
 export interface ShortcutState {
-    NumericShortcuts : Array<IShortcut>;
-    DateShortcuts : Array<IShortcut>; 
+    NumericShortcuts: Array<IShortcut>;
+    DateShortcuts: Array<IShortcut>;
 }
 
 export interface ExcelExportState {
@@ -55,26 +55,26 @@ export interface FlashingCellState {
     FlashingColumns: Array<IFlashingColumn>
 }
 
-export interface CalendarState{
-  CurrentCalendar : string ;
+export interface CalendarState {
+    CurrentCalendar: string;
 }
 
-export interface ConditionalStyleState{
-  ConditionalStyleConditions : Array<IConditionalStyleCondition> ;
+export interface ConditionalStyleState {
+    ConditionalStyleConditions: Array<IConditionalStyleCondition>;
 }
 
 // nothing at present but will add in due course...
 export interface PrintPreviewState {
-    
+
 }
 
-export interface QuickSearchState{
+export interface QuickSearchState {
     QuickSearchText: string
-    QuickSearchOperator: LeafExpressionOperator 
+    QuickSearchOperator: LeafExpressionOperator
     IsCaseSensitive: Boolean
 }
 
-export interface AdvancedSearchState{
-     AdvancedSearches : Array<IAdvancedSearch> ;
-    
+export interface AdvancedSearchState {
+    AdvancedSearches: Array<IAdvancedSearch>;
+    CurrentAdvancedSearch: string
 }
