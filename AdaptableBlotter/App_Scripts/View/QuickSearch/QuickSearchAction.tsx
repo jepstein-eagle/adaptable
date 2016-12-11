@@ -124,7 +124,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                         </Col>
                                         <Col xs={8}>
                                             <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
-                                                <option value="select" key="select">Select an operator</option>
+                                                <option value="select" key="select">Select operator</option>
                                                 {optionOperators}
                                             </FormControl>
                                         </Col>

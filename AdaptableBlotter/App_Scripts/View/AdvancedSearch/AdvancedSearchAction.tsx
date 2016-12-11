@@ -122,7 +122,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             AdvancedSearchName: "",
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
-        this.setState({ NewAdvancedSearch: _newAdvancedSearch } as AdvancedSearchActionInternalState)
+        this.setState({ NewAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
     DeleteColumnValue(columnId: string, value: any) {
@@ -133,9 +133,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             let columnValuesIndex = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.findIndex(x => x.ColumnName == columnId)
             this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.splice(columnValuesIndex, 1)
         }
-        this.IsDeleting = true;
-        this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
-        this.props.onAddAdvancedSearch(this.state.SelectedAdvancedSearch);
+       this.onDeleteItem();
     }
 
     DeleteRange(columnId: string, index: number) {
@@ -145,8 +143,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             let columnRangesIndex = this.state.SelectedAdvancedSearch.Expression.RangeExpression.findIndex(x => x.ColumnName == columnId)
             this.state.SelectedAdvancedSearch.Expression.RangeExpression.splice(columnRangesIndex, 1)
         }
-        this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        this.onDeleteItem();
+    }
+
+    onDeleteItem():void{
+     this.IsDeleting = true;
+          this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
        this.props.onAddAdvancedSearch(this.state.SelectedAdvancedSearch); 
+
     }
 
     onSelectedColumnChange(columnName: string) {
