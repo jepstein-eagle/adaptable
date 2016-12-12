@@ -27,16 +27,11 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     InitState() {
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
-
             // for the moment lets keep it really easy and simple
             // whenever ANYTHING changes in the search state, lets just run the CurrentAdvancedSearch
-            // because there are currently no changes that can be made which dont necessitate us running (or claearing) current search
             // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
-            let currentSearch: IAdvancedSearch = this.AdvancedSearchState.AdvancedSearches.find(s => s.Uid == this.AdvancedSearchState.CurrentAdvancedSearchId);
-            let currentSearchName = (currentSearch == null) ? "Empty Search" : currentSearch.Name;
-            // alert("something changed that triggered we research: " + currentSearchName);
-            this.blotter.SearchService.ApplySearchOnGrid()
+             this.blotter.SearchService.ApplySearchOnGrid()
         }
     }
 

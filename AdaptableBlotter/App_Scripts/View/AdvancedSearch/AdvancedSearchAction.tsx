@@ -63,6 +63,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                     {/* The main Search selection form */}
                     <Form inline>
                         <div style={divStyle}>
+
                             <PanelWithButton headerText="Select Search"
                                 buttonContent={"New Search"}
                                 buttonClick={() => this.onNewAdvancedSearch()}>
@@ -72,18 +73,20 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     <option value="select" key="select">Select a Search</option>
                                     {advancedSearches}
                                 </FormControl>
-
+                                {' '}
                                 {/* Buttons to clear or delete a search - only visible if a search is selected */}
                                 {this.state.SelectedAdvancedSearch != null &&
-                                    <div >
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Search</Tooltip>}>
-                                            <Button bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
-                                        </OverlayTrigger>
-                                        {' '}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                            <Button onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-                                        </OverlayTrigger>
-                                    </div>
+
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Search</Tooltip>}>
+                                        <Button bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                    </OverlayTrigger>
+                                }
+                                {' '}
+                                {this.state.SelectedAdvancedSearch != null &&
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
+                                        <Button onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                    </OverlayTrigger>
+
                                 }
                             </PanelWithButton>
 
@@ -130,7 +133,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         );
     }
 
-
+    // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
         let _newAdvancedSearch: IAdvancedSearch = {
             Uid: Helper.generateUid(),
@@ -140,11 +143,13 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
+    // Edit search: sets the edited search to the current selected search which will force the wizard to show
     onEditAdvancedSearch() {
         let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
+    // Clear search:  
     onClearAdvancedSearch() {
         this.setState({ EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" });
         this.props.onSelectAdvancedSearch("");
@@ -245,6 +250,12 @@ var divStyle = {
     overflowY: 'auto',
     maxHeight: '400px',
     margin: '10px'
+};
+
+var divStyle2 = {
+    overflowY: 'auto',
+    maxHeight: '400px',
+    left: '10px'
 };
 
 var headerStyle: React.CSSProperties = {
