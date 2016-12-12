@@ -41,7 +41,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     constructor() {
         super();
 
-        this.state = { EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "" }
+        this.state = { EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" }
     }
 
     render() {

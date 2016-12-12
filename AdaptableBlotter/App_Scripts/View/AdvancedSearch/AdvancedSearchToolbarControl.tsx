@@ -9,8 +9,8 @@ interface AdvancedSearchToolbarControlProps extends React.ClassAttributes<Advanc
     Blotter: IAdaptableBlotter;
     AdvancedSearches: IAdvancedSearch[];
     onSelectAdvancedSearch: (AdvancedSearchText: string) => void;
+    onEditAdvancedSearch:() => void;
 }
-
 
 export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearchToolbarControlProps, {}> {
 
@@ -33,6 +33,10 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
                     {advancedSearches}
                 </FormControl>
 
+                {' '}
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
+                    <Button bsSize='small' onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
+                </OverlayTrigger>
 
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Advanced Search</Tooltip>}>
@@ -53,6 +57,11 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
     onClearAdvancedSearch() {
         this.props.onSelectAdvancedSearch("");
+         this.setState(this.state)
+    }
+
+     onEditAdvancedSearch() {
+        this.props.onEditAdvancedSearch();
          this.setState(this.state)
     }
 }

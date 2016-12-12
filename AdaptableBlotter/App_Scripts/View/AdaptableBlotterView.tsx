@@ -57,11 +57,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Navbar.Header>
                         {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onSetQuickSearch(quickSearchText)} />}
                     </Navbar.Header>
-                     <Navbar.Header>
-                        {<AdvancedSearchToolbarControl 
-                            Blotter={this.props.AdaptableBlotter} 
+                    <Navbar.Header>
+                        {<AdvancedSearchToolbarControl
+                            Blotter={this.props.AdaptableBlotter}
                             AdvancedSearches={this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches}
-                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)} />}
+                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)} 
+                            onEditAdvancedSearch={()=>this.onEditAdvancedSearch()}  />}
                     </Navbar.Header>
                     <Nav>
                         {actionMenuItems}
@@ -102,6 +103,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
         );
     }
+
     onClick(menuItem: IMenuItem) {
         if (menuItem instanceof MenuItemShowPopup) {
             this.props.showPopup(menuItem.Action);
@@ -120,9 +122,13 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         this.props.onSetQuickSearchText(quickSearchText);
     }
 
-     // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
+    // note: we dont do a search here, we just update the advanced search state via Redux and the AdvancedSearchService will listen to the change and act accordingly.
     onSetAdvancedSearch(advancedSearchId: string) {
         this.props.onSelectAdvancedSearch(advancedSearchId);
+    }
+
+    onEditAdvancedSearch() {
+      this.props.showPopup("AdvancedSearchAction");
     }
 }
 
