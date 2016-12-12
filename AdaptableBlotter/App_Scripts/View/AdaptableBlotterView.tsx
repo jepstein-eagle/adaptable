@@ -10,6 +10,7 @@ import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
+import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
 import { PopupState, MenuState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -17,6 +18,7 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { IMenuItem } from '../Core/interface/IStrategy'
 import { MenuType } from '../Core/Enums';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
+import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -25,6 +27,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClose: () => PopupRedux.HidePopupAction;
     showPopup: (ComponentClassName: string) => PopupRedux.ShowPopupAction;
     onSetQuickSearchText: (newQuickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
+    onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
 }
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
@@ -53,6 +56,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 <Navbar fluid  >
                     <Navbar.Header>
                         {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onSetQuickSearch(quickSearchText)} />}
+                    </Navbar.Header>
+                     <Navbar.Header>
+                        {<AdvancedSearchToolbarControl 
+                            Blotter={this.props.AdaptableBlotter} 
+                            AdvancedSearches={this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches}
+                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)} />}
                     </Navbar.Header>
                     <Nav>
                         {actionMenuItems}
@@ -89,7 +98,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ComponentClassName={this.props.PopupState.ComponentClassName}
                     onHide={this.props.onClose}
                     AdaptableBlotter={this.props.AdaptableBlotter} />
-
             </div>
 
         );
@@ -111,6 +119,11 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     onSetQuickSearch(quickSearchText: string) {
         this.props.onSetQuickSearchText(quickSearchText);
     }
+
+     // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
+    onSetAdvancedSearch(advancedSearchId: string) {
+        this.props.onSelectAdvancedSearch(advancedSearchId);
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -126,6 +139,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClose: () => dispatch(PopupRedux.HidePopup()),
         showPopup: (ComponentClassName: string) => dispatch(PopupRedux.ShowPopup(ComponentClassName, null)),
         onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
+        onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
     };
 }
 

@@ -149,19 +149,20 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
-    // Clear search:  
+    // Clear search:  sets the edited and selected searches to null and calles Redux Select Advanced Search
     onClearAdvancedSearch() {
         this.setState({ EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" });
         this.props.onSelectAdvancedSearch("");
     }
 
+    // Delete search:  sets the selected search to null and calles Redux Delete Advanced Search
     onDeleteAdvancedSearch() {
         if (confirm("Are you sure you want to delete Advanced Search: '" + this.state.SelectedAdvancedSearch.Name + "'?")) {
-            //  this.props.onSelectAdvancedSearch("");
             this.props.onDeleteAdvancedSearch(this.state.SelectedAdvancedSearch);
             this.setState({ SelectedAdvancedSearch: null } as AdvancedSearchActionInternalState)
         }
     }
+
 
     onDeleteColumnValue(columnId: string, value: any) {
         let columnValues = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
