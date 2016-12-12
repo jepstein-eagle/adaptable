@@ -76,5 +76,5 @@ export interface QuickSearchState {
 
 export interface AdvancedSearchState {
     AdvancedSearches: Array<IAdvancedSearch>;
-    CurrentAdvancedSearch: string
+    CurrentAdvancedSearchId: string
 }

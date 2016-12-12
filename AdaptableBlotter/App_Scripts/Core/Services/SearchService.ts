@@ -7,8 +7,10 @@ import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expre
 import { Expression } from '../Expression/Expression'
 import { IExpressionRange } from '../Interface/IExpression';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
-import { QuickSearchState } from '../../Redux/ActionsReducers/Interface/IState'
+import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Extensions'
+import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
+
 
 // At the moment this only has a very rough implementation of Quick Search
 // But like with .NET version in due course it will cover both Advanced and Quick Search and keep the 2 properly in sync
@@ -19,9 +21,11 @@ export class SearchService implements ISearchService {
     constructor(private blotter: IAdaptableBlotter) {
     }
 
-    public ApplyQuickSearchOnGrid(): void {
-       
-        let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+
+
+    public ApplySearchOnGrid(): void {
+
+        let columns: IColumn[] = this.GetGridState().Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0) {
             let rowIds: string[] = this.blotter.getAllRowIds();
@@ -29,11 +33,11 @@ export class SearchService implements ISearchService {
             // first make sure they are all visible (as might have been hidden in a previous quick search)
             this.blotter.showRows(rowIds);
 
-            if (StringExtensions.IsNotNullOrEmpty(this.GetQuickSearchState().QuickSearchText)) {
-                let nonMatchingRowIds: string[] = [];
+// Get the Search Expressions - from both Advanced and Quick Search
+            let searchExpressions: Expression[] = this.createSearchExpressions(columns);
 
-                // create all the column expressions that are required here, so dont do it for each row
-                let searchExpressions: Expression[] = this.createSearchExpressions(columns);
+            if (searchExpressions.length > 0) {
+                let nonMatchingRowIds: string[] = [];
 
                 rowIds.forEach(rowId => {
                     let rowHasMatch: Boolean = this.rowHasMatch(searchExpressions, rowId, columns);
@@ -46,10 +50,11 @@ export class SearchService implements ISearchService {
         }
     }
 
-  
 
-    public ApplyQuickSearchOnRow(rowIdentifier: any): void {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+
+
+    public ApplySearchOnRow(rowIdentifier: any): void {
+        let columns = this.GetGridState().Columns;
         let searchExpressions: Expression[] = this.createSearchExpressions(columns);
         let identifiers: string[] = [];
         identifiers.push(rowIdentifier);
@@ -62,6 +67,24 @@ export class SearchService implements ISearchService {
     }
 
     private createSearchExpressions(columns: IColumn[]): Expression[] {
+        let searchExpressions: Expression[] = [];
+        // first add Quick Search Expressions - create all column expressions that are required here, so dont do it for each row
+        if (StringExtensions.IsNotNullOrEmpty(this.GetQuickSearchState().QuickSearchText)) {
+            searchExpressions.push(...this.createQuickSearchExpressions(columns))
+        }
+
+        // now add Advancd Search Expressions
+        let currentSearchId = this.GetAdvancedSearchState().CurrentAdvancedSearchId;
+        if (currentSearchId != "") {
+            let savedSearch: IAdvancedSearch = this.GetAdvancedSearchState().AdvancedSearches.find(s => s.Uid == currentSearchId);
+            searchExpressions.push(savedSearch.Expression);
+        }
+        return searchExpressions;
+    }
+
+
+
+    private createQuickSearchExpressions(columns: IColumn[]): Expression[] {
         // going to cheat for the moment and use a predefined expression though might not be actually such a bad idea...
         // though I should probably create a proper expression the proper way...
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
@@ -88,9 +111,17 @@ export class SearchService implements ISearchService {
         })
         return matches;
     }
-   
+
+    private GetGridState(): GridState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid
+    }
+
     private GetQuickSearchState(): QuickSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+    }
+
+    private GetAdvancedSearchState(): AdvancedSearchState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }
 
 

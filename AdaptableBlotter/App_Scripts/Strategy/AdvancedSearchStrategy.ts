@@ -1,4 +1,4 @@
-import { IAdvancedSearchStrategy } from '../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearchStrategy, IAdvancedSearch } from '../Core/Interface/IAdvancedSearchStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -16,7 +16,7 @@ import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState: AdvancedSearchState
-   
+
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
@@ -26,15 +26,24 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
     }
 
     InitState() {
-       if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
+        if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
+
+            // for the moment lets keep it really easy and simple
+            // whenever ANYTHING changes in the search state, lets just run the CurrentAdvancedSearch
+            // because there are currently no changes that can be made which dont necessitate us running (or claearing) current search
+            // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
+            let currentSearch: IAdvancedSearch = this.AdvancedSearchState.AdvancedSearches.find(s => s.Uid == this.AdvancedSearchState.CurrentAdvancedSearchId);
+            let currentSearchName = (currentSearch == null) ? "Empty Search" : currentSearch.Name;
+            // alert("something changed that triggered we research: " + currentSearchName);
+            this.blotter.SearchService.ApplySearchOnGrid()
         }
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
-      //  if (StringExtensions.IsNotNullOrEmpty(this.AdvancedSearchName)) {
-          //  this.blotter.SearchService.ApplyAdvancedSearchOnRow(dataChangedEvent.IdentifierValue);
-      //  }
+        if (StringExtensions.IsNotNullOrEmpty(this.AdvancedSearchState.CurrentAdvancedSearchId)) {
+            this.blotter.SearchService.ApplySearchOnRow(dataChangedEvent.IdentifierValue);
+        }
     }
 
     private GetAdvancedSearchState(): AdvancedSearchState {

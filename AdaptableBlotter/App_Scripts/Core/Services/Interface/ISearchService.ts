@@ -1,7 +1,9 @@
 
 
 export interface ISearchService {
-  ApplyQuickSearchOnGrid(): void 
+  
+  ApplySearchOnGrid(): void 
 
-   ApplyQuickSearchOnRow(rowIdentifier: any): void
+   ApplySearchOnRow(rowIdentifier: any): void
+
 }

@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Accordion, ButtonToolbar, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { ButtonToolbar, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -23,12 +23,14 @@ interface AdvancedSearchActionProps extends React.ClassAttributes<AdvancedSearch
     AdvancedSearches: IAdvancedSearch[];
     Columns: IColumn[];
     AdaptableBlotter: IAdaptableBlotter;
-    onAddAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddAction,
+    CurrentAdvancedSearchUid: string;
+    onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
+    onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
 }
 
 interface AdvancedSearchActionInternalState {
-    NewAdvancedSearch: IAdvancedSearch
+    EditedAdvancedSearch: IAdvancedSearch
     SelectedAdvancedSearch: IAdvancedSearch
     SelectedColumnId: string
 }
@@ -38,7 +40,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     constructor() {
         super();
-        this.state = { NewAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "" }
+
+        this.state = { EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "" }
     }
 
     render() {
@@ -47,15 +50,17 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         var blotter = this.props.AdaptableBlotter;
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
-            return <option value={x.AdvancedSearchName} key={x.AdvancedSearchName}>{x.AdvancedSearchName}</option>
+            return <option value={x.Name} key={x.Name}>{x.Name}</option>
         })
 
-        let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.AdvancedSearchName : "";
+        this.onCheckSavedSearchName();
+
+        let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.Name : "select";
 
         return (
             <div >
                 <Panel bsStyle="primary" style={panelStyle} header="Advanced Search">
-
+                    {/* The main Search selection form */}
                     <Form inline>
                         <div style={divStyle}>
                             <PanelWithButton headerText="Select Search"
@@ -68,6 +73,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     {advancedSearches}
                                 </FormControl>
 
+                                {/* Buttons to clear or delete a search - only visible if a search is selected */}
                                 {this.state.SelectedAdvancedSearch != null &&
                                     <div >
                                         <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Search</Tooltip>}>
@@ -79,9 +85,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                         </OverlayTrigger>
                                     </div>
                                 }
-
                             </PanelWithButton>
 
+                            {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                             {this.state.SelectedAdvancedSearch != null &&
                                 <Form inline>
                                     <PanelWithButton headerText="Search Details"
@@ -101,7 +107,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                         </div>
                     </Form>
 
-                    {this.state.NewAdvancedSearch != null &&
+                    {/* Wizard for creating or ediiting searches */}
+                    {this.state.EditedAdvancedSearch != null &&
                         <AdaptableWizard Steps={
                             [
                                 <AdvancedSearchExpressionWizard
@@ -112,7 +119,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     Columns={this.props.Columns}
                                     Blotter={this.props.AdaptableBlotter} />
                             ]}
-                            Data={this.state.NewAdvancedSearch}
+                            Data={this.state.EditedAdvancedSearch}
                             StepStartIndex={0}
                             onHide={() => this.onCloseWizard()}
                             onFinish={() => this.onFinishWizard()} >
@@ -123,25 +130,29 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         );
     }
 
+
     onNewAdvancedSearch() {
         let _newAdvancedSearch: IAdvancedSearch = {
-            AdvancedSearchName: "",
-            Expression: ExpressionHelper.CreateEmptyExpression()
+            Uid: Helper.generateUid(),
+            Name: "",
+            Expression: ExpressionHelper.CreateEmptyExpression(),
         }
-        this.setState({ NewAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
     onEditAdvancedSearch() {
         let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
-        this.setState({ NewAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
     onClearAdvancedSearch() {
-        this.setState({ SelectedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" });
+        this.props.onSelectAdvancedSearch("");
     }
 
     onDeleteAdvancedSearch() {
-        if (confirm("Are you sure you want to delete Advanced Search: '" + this.state.SelectedAdvancedSearch.AdvancedSearchName + "'?")) {
+        if (confirm("Are you sure you want to delete Advanced Search: '" + this.state.SelectedAdvancedSearch.Name + "'?")) {
+            //  this.props.onSelectAdvancedSearch("");
             this.props.onDeleteAdvancedSearch(this.state.SelectedAdvancedSearch);
             this.setState({ SelectedAdvancedSearch: null } as AdvancedSearchActionInternalState)
         }
@@ -170,47 +181,61 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     onDeleteSearchExpressionItem(): void {
         this.IsDeleting = true;
-        this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
-        this.props.onAddAdvancedSearch(this.state.SelectedAdvancedSearch);
+        this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        this.props.onAddUpdateAdvancedSearch(this.state.SelectedAdvancedSearch);
     }
 
     onSelectedColumnChange(columnName: string) {
         if (!this.IsDeleting) { // this gets called after deleting an item so dont want to open advanced search in those circumstances
             let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
-            this.setState({ SelectedColumnId: columnName, NewAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
+            this.setState({ SelectedColumnId: columnName, EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
         }
     }
 
     onCloseWizard() {
-        this.setState({ NewAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
     }
 
     onFinishWizard() {
-        let completedSearch: IAdvancedSearch = Helper.cloneObject(this.state.NewAdvancedSearch);
-        this.props.onAddAdvancedSearch(completedSearch);
+        let completedSearch: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdvancedSearch);
+        this.props.onAddUpdateAdvancedSearch(completedSearch);
         this.setState({ SelectedAdvancedSearch: completedSearch } as AdvancedSearchActionInternalState)
     }
 
     onSelectedSearchChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let selectedAdvancedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(a => a.AdvancedSearchName == e.value);
-        this.setState({ NewAdvancedSearch: null, SelectedAdvancedSearch: selectedAdvancedSearch, SelectedColumnId: "" });
+        if (e.value == "select") {
+            this.onClearAdvancedSearch();
+        } else {
+            let selectedAdvancedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(a => a.Name == e.value);
+            this.setState({ EditedAdvancedSearch: null, SelectedAdvancedSearch: selectedAdvancedSearch, SelectedColumnId: "select" });
+            this.props.onSelectAdvancedSearch(selectedAdvancedSearch.Uid);
+        }
     }
 
+    onCheckSavedSearchName(): void {
+        if (this.state.SelectedAdvancedSearch == null && this.props.CurrentAdvancedSearchUid != "") {
+            let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
+            this.setState({ SelectedAdvancedSearch: savedSearch } as AdvancedSearchActionInternalState);
+        }
+
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AdaptableBlotter: ownProps.AdaptableBlotter,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
+        CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),
+        onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
+        onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
     };
 }
 

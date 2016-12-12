@@ -21,7 +21,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     constructor(props: AdvancedSearchSettingsWizardProps) {
         super(props)
         this.state = {
-            AdvancedSearchName: this.props.Data.AdvancedSearchName,
+            AdvancedSearchName: this.props.Data.Name,
         }
     }
     render(): any {
@@ -54,7 +54,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.AdvancedSearchName = this.state.AdvancedSearchName
+        this.props.Data.Name = this.state.AdvancedSearchName
     }
     public Back(): void { }
     public StepName = "Advanced Search Settings"

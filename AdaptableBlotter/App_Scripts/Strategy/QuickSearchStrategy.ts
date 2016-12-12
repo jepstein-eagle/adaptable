@@ -35,27 +35,27 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchText: string = this.GetQuickSearchState().QuickSearchText;
         if (StringExtensions.IsNotNull(this.quickSearchText) && this.quickSearchText != stateQuickSearchText) {
             this.quickSearchText = stateQuickSearchText;
-            this.blotter.SearchService.ApplyQuickSearchOnGrid();
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
 
         // Run search if the operator has changed and search is not empty
         let stateQuickSearchOperator: LeafExpressionOperator = this.GetQuickSearchState().QuickSearchOperator;
         if (this.quickSearchOperator != null && this.quickSearchOperator != stateQuickSearchOperator && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchOperator = stateQuickSearchOperator;
-            this.blotter.SearchService.ApplyQuickSearchOnGrid();
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
 
         // Run search if the case sensitivity has changed and search is not empty
         let stateIsCaseSensitive: Boolean = this.GetQuickSearchState().IsCaseSensitive;
         if (this.isCaseSenstive != stateIsCaseSensitive && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.isCaseSenstive = stateIsCaseSensitive;
-            this.blotter.SearchService.ApplyQuickSearchOnGrid();
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         if (StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
-            this.blotter.SearchService.ApplyQuickSearchOnRow(dataChangedEvent.IdentifierValue);
+            this.blotter.SearchService.ApplySearchOnRow(dataChangedEvent.IdentifierValue);
         }
     }
 

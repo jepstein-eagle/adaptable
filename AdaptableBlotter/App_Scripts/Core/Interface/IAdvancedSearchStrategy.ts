@@ -4,11 +4,12 @@ import { Expression } from '../Expression/Expression';
 
 export interface IAdvancedSearchStrategy extends IStrategy {
 
-   
+
 }
 
-export interface IAdvancedSearch{
-    AdvancedSearchName: string,
-      Expression: Expression,
+export interface IAdvancedSearch {
+  Uid: string,
+  Name: string,
+  Expression: Expression,
 }
 
