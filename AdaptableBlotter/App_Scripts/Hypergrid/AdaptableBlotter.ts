@@ -62,7 +62,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
@@ -227,7 +227,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
-        return null
+        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+        var selected: Array<any> = this.grid.selectionModel.getSelections();
+        for (let rectangle of selected) {
+            //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
+            //for (let columnIndex = rectangle.firstSelectedCell.x; columnIndex <= rectangle.lastSelectedCell.x; columnIndex++) {
+            for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
+                let column = this.grid.behavior.getActiveColumns()[columnIndex]
+                for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
+                    // for (let rowIndex = rectangle.firstSelectedCell.y; rowIndex <= rectangle.lastSelectedCell.y; rowIndex++) {
+                    let row = this.grid.behavior.dataModel.dataSource.getRow(rowIndex)
+                    let primaryKey = this.getPrimaryKeyValueFromRecord(row)
+                    let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
+                    //this line is pretty much doing the same....just keeping it for the record
+                    //maybe we could get it directly from the row..... dunno wht's best
+                    // let value = column.getValue(rowIndex)
+                    let valueArray = selectionMap.get(primaryKey);
+                    if (valueArray == undefined) {
+                        valueArray = []
+                        selectionMap.set(primaryKey, valueArray);
+                    }
+                    valueArray.push({ columnID: column.name, value: value });
+                }
+            }
+        }
+
+        return {
+            Selection: selectionMap
+        };
     }
 
     public getColumnType(columnId: string): ColumnType {
@@ -264,14 +291,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(id: any, columnId: string, value: any): void {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        row[columnId] = value
+        //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
+        this.grid.repaint()
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+        //no need to have a batch mode so far.... we'll see in the future performance
+        for (let element of batchValues) {
+            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.id)
+            row[element.columnId] = element.value
+        }
+        //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
+        this.grid.repaint()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            let record: any = this.grid.dataSource.getByUid(id);
+            let record = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
             return (columnName: string) => { return record[columnName]; }
         }
         else {
