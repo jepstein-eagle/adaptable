@@ -59,25 +59,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        //this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
+        //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
-        this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
+        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
-        // //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
-        // //grid.table.bind("keydown",
-        // grid.table.keydown((event) => {
-        //     this._onKeyDown.Dispatch(this, event)
-        // })
+        grid.addEventListener("fin-keydown", (e: any) => {
+            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
+            //like that we avoid the need to have different logic for different grids....
+            this._onKeyDown.Dispatch(this, e.detail.primitiveEvent)
+        });
 
         // grid.addEventListener('fin-click', function (e: any) {
         //     var cell = e.detail.gridCell;
@@ -113,10 +113,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             stash: 'default',
             apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
         });
-
-        // grid.addEventListener("fin-keydown", (e: any) => {
-        //     console.log("+++++++++++++ The key down  ", e)
-        // });
 
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.SetColumnIntoStore(), 5);
