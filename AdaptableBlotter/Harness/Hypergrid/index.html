@@ -58,7 +58,12 @@
         var trades = dataGen.getTrades();
 
 
-        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades)});
+        let behavior = grid.behavior;
+        //Add Edit for Notional column
+        behavior.setColumnProperties(1, {
+            editor: 'textfield' // case-insensitive
+        });
         var container = document.getElementById('content');
         var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container, "tradeId");
         //dataGen.startTickingDataKendo(grid);
