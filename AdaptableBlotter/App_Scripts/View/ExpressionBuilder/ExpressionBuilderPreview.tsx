@@ -17,6 +17,7 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
+    ShowPanel: boolean
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
@@ -106,12 +107,23 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 </ListGroup>
             </div>
         })
-        return <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
+        return <div>
+        {this.props.ShowPanel  &&
+        
+        <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
             <div style={divStyle}>
                 {previewLists}
             </div>
         </PanelWithButton>
+        }
 
+         {!this.props.ShowPanel  &&
+        
+            <div >
+                {previewLists}
+            </div>
+        }
+        </div>
     }
 
     ensureSelectedColumnVisible(columnId: string) {

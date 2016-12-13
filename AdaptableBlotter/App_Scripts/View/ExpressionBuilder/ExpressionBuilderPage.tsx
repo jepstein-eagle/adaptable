@@ -42,7 +42,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}>
+                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+                        ShowPanel={true}>
                     </ExpressionBuilderPreview>
                 </Col>
             </Row>

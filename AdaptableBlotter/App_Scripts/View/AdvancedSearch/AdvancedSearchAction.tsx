@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { ButtonToolbar, Grid, FormControl, ControlLabel, Label, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -59,76 +59,79 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
         return (
             <div >
-                <Panel bsStyle="primary" style={panelStyle} header="Advanced Search">
-                    {/* The main Search selection form */}
-                    <Form inline>
+                <Form inline>
+                    <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
+                        buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
+
+                        {/* The main Search selection form */}
                         <div style={divStyle}>
-
-                            <PanelWithButton headerText="Select Search"
-                                buttonContent={"New Search"}
-                                buttonClick={() => this.onNewAdvancedSearch()}>
-                                <FormControl componentClass="select" placeholder="select"
-                                    value={currentAdvancedSearch}
-                                    onChange={(x) => this.onSelectedSearchChanged(x)} >
-                                    <option value="select" key="select">Select a Search</option>
-                                    {advancedSearches}
-                                </FormControl>
-                                {' '}
-                                {/* Buttons to clear or delete a search - only visible if a search is selected */}
-                                {this.state.SelectedAdvancedSearch != null &&
-
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Search</Tooltip>}>
-                                        <Button bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
-                                    </OverlayTrigger>
-                                }
-                                {' '}
-                                {this.state.SelectedAdvancedSearch != null &&
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                        <Button onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-                                    </OverlayTrigger>
-
-                                }
-                            </PanelWithButton>
-
-                            {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
-                            {this.state.SelectedAdvancedSearch != null &&
-                                <Form inline>
-                                    <PanelWithButton headerText="Search Details"
-                                        buttonContent={"Edit Search"}
-                                        buttonClick={() => this.onEditAdvancedSearch()}>
-
-                                        <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
-                                            onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                                            SelectedColumnId={this.state.SelectedColumnId}
-                                            ColumnsList={this.props.Columns}
-                                            DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
-                                            DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}>
-                                        </ExpressionBuilderPreview>
-                                    </PanelWithButton>
-                                </Form>
-                            }
+                            <Form horizontal>
+                                <FormGroup controlId="formInlineName">
+                                    <Col xs={2}>
+                                        <ControlLabel>Select: </ControlLabel>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <FormControl componentClass="select" placeholder="select"
+                                            value={currentAdvancedSearch}
+                                            onChange={(x) => this.onSelectedSearchChanged(x)} >
+                                            <option value="select" key="select">Select a Search</option>
+                                            {advancedSearches}
+                                        </FormControl>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
+                                            <Button disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                        </OverlayTrigger>
+                                        {' '}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
+                                            <Button disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                        </OverlayTrigger>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
                         </div>
-                    </Form>
 
-                    {/* Wizard for creating or ediiting searches */}
-                    {this.state.EditedAdvancedSearch != null &&
-                        <AdaptableWizard Steps={
-                            [
-                                <AdvancedSearchExpressionWizard
-                                    ColumnList={this.props.Columns}
-                                    Blotter={this.props.AdaptableBlotter}
-                                    SelectedColumnId={this.state.SelectedColumnId} />,
-                                <AdvancedSearchSettingsWizard
-                                    Columns={this.props.Columns}
-                                    Blotter={this.props.AdaptableBlotter} />
-                            ]}
-                            Data={this.state.EditedAdvancedSearch}
-                            StepStartIndex={0}
-                            onHide={() => this.onCloseWizard()}
-                            onFinish={() => this.onFinishWizard()} >
-                        </AdaptableWizard>}
+                        {/* Wizard for creating or ediiting searches */}
+                        {this.state.EditedAdvancedSearch != null &&
+                            <AdaptableWizard Steps={
+                                [
+                                    <AdvancedSearchExpressionWizard
+                                        ColumnList={this.props.Columns}
+                                        Blotter={this.props.AdaptableBlotter}
+                                        SelectedColumnId={this.state.SelectedColumnId} />,
+                                    <AdvancedSearchSettingsWizard
+                                        Columns={this.props.Columns}
+                                        Blotter={this.props.AdaptableBlotter} />
+                                ]}
+                                Data={this.state.EditedAdvancedSearch}
+                                StepStartIndex={0}
+                                onHide={() => this.onCloseWizard()}
+                                onFinish={() => this.onFinishWizard()} >
+                            </AdaptableWizard>}
 
-                </Panel>
+                    </PanelWithButton>
+
+                    {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
+                    {this.state.SelectedAdvancedSearch != null &&
+
+                        <PanelWithButton headerText="Search Details" bsStyle="primary" style={panelStyle}
+                            buttonContent={"Edit Search"}
+                            buttonClick={() => this.onEditAdvancedSearch()}>
+                            <div style={previewDivStyle}>
+                                <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
+                                    onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                                    SelectedColumnId={this.state.SelectedColumnId}
+                                    ColumnsList={this.props.Columns}
+                                    DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
+                                    DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}
+                                    ShowPanel={false}>
+                                </ExpressionBuilderPreview>
+                            </div>
+                        </PanelWithButton>
+
+                    }
+
+                </Form>
             </div>
         );
     }
@@ -250,27 +253,14 @@ export let AdvancedSearchAction = connect(mapStateToProps, mapDispatchToProps)(A
 var divStyle = {
     overflowY: 'auto',
     maxHeight: '400px',
-    margin: '10px'
+    margin: '5px'
 };
 
-var divStyle2 = {
+var previewDivStyle = {
     overflowY: 'auto',
-    maxHeight: '400px',
-    left: '10px'
-};
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bolder',
-    fontSize: '16px'
-};
-
-var inputStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'normal',
-    textAlign: 'left',
+    maxHeight: '350px',
 };
 
 let panelStyle = {
-    width: '800px'
+    width: '550px'
 }

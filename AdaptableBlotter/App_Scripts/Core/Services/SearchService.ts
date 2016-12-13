@@ -11,7 +11,6 @@ import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/Ac
 import { StringExtensions } from '../Extensions'
 import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
 
-
 /* At the moment this uses Expressions - rather than JQuery - and works for both Advanced and Quick Search
 Note:  Because Quick Search uses an expression - it only works on string columns at present - we can choose the operator but its always strings
 */
@@ -28,24 +27,21 @@ export class SearchService implements ISearchService {
         if (columns.length > 0) {
             let rowIds: string[] = this.blotter.getAllRowIds();
 
-            // first make sure they are all visible (as might have been hidden in a previous quick search)
+            // first make sure they are all visible (as might have been hidden in a previous search)
             this.blotter.showRows(rowIds);
 
-            // next get any rows which dont fit the search
+            // next get those rows which dont fit the search
             let nonMatchingRowIds: string[] = this.GetNonMatchingRows(rowIds, columns);
 
-            // last hide rows which dont fit the search
+            // lastly hide the rows which dont fit the search
             this.blotter.hideRows(nonMatchingRowIds);
         }
     }
 
 
-    public ApplySearchOnRow(rowIdentifier: any): void {
+    public ApplySearchOnRow(rowIdentifier: string): void {
         let columns = this.GetGridState().Columns;
-        // let searchExpressions: Expression[] = this.createSearchExpressions(columns);
-        let identifiers: string[] = [];
-        identifiers.push(rowIdentifier);
-
+        let identifiers: string[] = [rowIdentifier];
         let nonMatchingRowIds: string[] = this.GetNonMatchingRows(identifiers, columns);
 
         // we should only get one or zero rows back
@@ -67,7 +63,7 @@ export class SearchService implements ISearchService {
 
         // we only want to return non matching rows if we have at least one expression!
         if (hasQuickSearchExpression || hasAdvancedSearchExpression) {
-             rowIdentifiers.forEach(rowId => {
+            rowIdentifiers.forEach(rowId => {
                 let rowHasMatch: Boolean = false;
                 let isQuickSearchMatchSuccess: Boolean = true;
                 let isAdvancedSearchMatchSuccess: Boolean = true;
@@ -86,8 +82,6 @@ export class SearchService implements ISearchService {
 
                 if (!rowHasMatch) {
                     nonMatchingRowIds.push(rowId);
-                }else{
-                    var s = "hello";
                 }
             })
         }
