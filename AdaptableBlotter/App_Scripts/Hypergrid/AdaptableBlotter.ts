@@ -105,11 +105,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //keys =  event.detail.keys;
         });
 
-        //This is temporary for now as it replaces the whole pipelne. 
-        //Ideally dev should set that up or we should just add our instead of replacing the whole chain
-        grid.setPipeline([MySorterDataSource(this)], {
+        //We add our sorter pipe last into the existing pipeline
+        let currentDataSources = grid.behavior.dataModel.DataSources;
+        currentDataSources.push(MySorterDataSource(this))
+
+        grid.setPipeline(currentDataSources, {
             stash: 'default',
-            apply: false //  Set the new pipeline without calling reindex.
+            apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
         });
 
         // grid.addEventListener("fin-keydown", (e: any) => {
