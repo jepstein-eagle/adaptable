@@ -109,7 +109,7 @@ export module ExpressionHelper {
                                 isColumnSatisfied = columnValue.startsWith(operand1);
                                 break
                             case LeafExpressionOperator.EndWith:
-                                isColumnSatisfied = columnValue.endsWith(operand1) == 0;
+                                isColumnSatisfied = columnValue.endsWith(operand1);
                                 break
                             case LeafExpressionOperator.Between:
                                 isColumnSatisfied = columnValue >= operand1
