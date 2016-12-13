@@ -15,7 +15,7 @@ import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
 import * as StrategyIds from '../Core/StrategyIds'
-import { CustomSortStrategyHyperGrid } from '../Strategy/CustomSortStrategyHyperGrid'
+import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
@@ -58,7 +58,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategyHyperGrid(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -355,7 +355,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        return ""
+        //This is wrong as it doesnt get DisplayValue but I'll check after....
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        return row[columnId]
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
