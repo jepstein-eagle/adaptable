@@ -8,14 +8,14 @@ import { ColumnType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
-import {MenuType} from '../Core/Enums';
+import { MenuType } from '../Core/Enums';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private menuItemConfig: IMenuItem;
     private PlusMinusState: PlusMinusState
-    constructor(blotter: IAdaptableBlotter) {
+    constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration,"plus-sign");
+        this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration, "plus-sign");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
@@ -66,13 +66,12 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 }
             }
 
-      //      newValues.forEach((v)=>{
-      //          this.blotter.setValue(v.id, v.columnId, v.value);
-      //      })
             this.blotter.setValueBatch(newValues);
-        
-            //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
-            this.blotter.selectCells(newValues);
+
+            if (this.reSelectCells) {
+                //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
+                this.blotter.selectCells(newValues);
+            }
         }
     }
 
