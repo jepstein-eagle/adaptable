@@ -84,7 +84,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (e.action == "itemchange") {
                 let itemsArray = e.items[0];
                 let changedValue = itemsArray[e.field];
-                let identifierValue = itemsArray["uid"];
+                let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
                 this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
             }
         });
@@ -96,7 +96,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
                 for (let valueField in e.values) {
                     let changedValue = e.values[valueField];
-                    let identifierValue = e.model.uid;
+                    let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
                     this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
                 }
             }, 5)
@@ -156,11 +156,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.getcurrentEditedCell().val();
     }
 
+    public getPrimaryKeyValueFromRecord( record: any) : any{
+        return record["uid"]
+    }
+
     getActiveCell(): { Id: any, ColumnId: string, Value: any } {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
         let item = this.grid.dataItem(row);
-        let uuid = item.uid;
+        let uuid = this.getPrimaryKeyValueFromRecord(item);
         let idx = activeCell.index();
         let col = <string>(this.grid.options.columns[idx].field);
         return {
@@ -181,7 +185,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         selected.each((i, element) => {
             var row = $(element).closest("tr");
             var item = this.grid.dataItem(row);
-            var uuid = item.uid;
+            var uuid = this.getPrimaryKeyValueFromRecord(item);
             var idx = $(element).index();
             var col = <string>(this.grid.options.columns[idx].field);
             var value = item.get(col);
@@ -362,6 +366,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
+        //be careful here if we ever change to real primary key for kendo as we rely on UID
         return this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
     }
 
@@ -438,7 +443,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         var dataSource = this.grid.dataSource.data();
         let uidList: string[] = [];
         for (var i = 0; i < dataSource.length; i++) {
-            uidList.push(dataSource[i].uid);
+            uidList.push(this.getPrimaryKeyValueFromRecord(dataSource[i]));
         }
         return uidList;
     }
@@ -453,7 +458,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         var currentRowIndex: number;
         for (var i = 0; i < testarray.length; i++) {
             var myRow: any = testarray[i];
-            var uidValue = myRow["uid"];
+            var uidValue = this.getPrimaryKeyValueFromRecord(myRow);
             if (uidValue != null && uidValue == identifierValue) {
                 currentRowIndex = i;
                 break;

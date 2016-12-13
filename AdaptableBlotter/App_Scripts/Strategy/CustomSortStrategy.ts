@@ -47,8 +47,8 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
 
 function CreateCompareCustomSort(customSort: ICustomSort, blotter: IAdaptableBlotter) {
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
-        let firstElementValueString = blotter.getDisplayValue(firstElement.uid, customSort.ColumnId) //firstElement[customSort.ColumnId];
-        let secondElementValueString = blotter.getDisplayValue(secondElement.uid, customSort.ColumnId)//secondElement[customSort.ColumnId];
+        let firstElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(firstElement), customSort.ColumnId) //firstElement[customSort.ColumnId];
+        let secondElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(secondElement), customSort.ColumnId)//secondElement[customSort.ColumnId];
         let firstElementValue = firstElement[customSort.ColumnId];
         let secondElementValue = secondElement[customSort.ColumnId];
         let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);

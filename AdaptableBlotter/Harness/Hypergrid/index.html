@@ -60,7 +60,7 @@
 
         var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
         var container = document.getElementById('content');
-        var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container);
+        var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container, "tradeId");
         //dataGen.startTickingDataKendo(grid);
     }
   

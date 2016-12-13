@@ -46,7 +46,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public SearchService: ISearchService
 
-    constructor(private grid: any, private container: HTMLElement) {
+    constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
         this.CustomSorts = new Map<number, Function>()
 
@@ -124,7 +124,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     if (e.action == "itemchange") {
         //         let itemsArray = e.items[0];
         //         let changedValue = itemsArray[e.field];
-        //         let identifierValue = itemsArray["uid"];
+        //         let identifierValue = //itemsArray["uid"];
         //         this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
         //     }
         // });
@@ -136,7 +136,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
         //         for (let valueField in e.values) {
         //             let changedValue = e.values[valueField];
-        //             let identifierValue = e.model.uid;
+        //             let identifierValue = //e.model.uid;
         //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
         //         }
         //     }, 5)
@@ -209,6 +209,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.sortColumn = columnIndex;
         }
         this.grid.behavior.reindex();
+    }
+
+    public getPrimaryKeyValueFromRecord(record: any): any {
+        return record[this.primaryKey]
     }
 
     public gridHasCurrentEditValue(): boolean {

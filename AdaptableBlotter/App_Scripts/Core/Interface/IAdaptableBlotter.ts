@@ -35,6 +35,7 @@ export interface IAdaptableBlotter {
     SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): { Id: any, ColumnId: string, Value: any }
     isGridPageable(): boolean
+    getPrimaryKeyValueFromRecord( record: any) : any
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void
