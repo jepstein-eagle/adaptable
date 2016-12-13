@@ -323,17 +323,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnArray: string[] = []
         let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
-        //This is wrong as it doesnt get DisplayValue but I'll check after.... I hate this fcking grid
         for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getValue(dataSourceColumnIndex, index)
-            returnArray.push(element)
+            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+            returnArray.push(this.getDisplayValue(this.getPrimaryKeyValueFromRecord(element), columnId))
         }
-        //this allow to get value only from visible rows. so only ~30 as there is scrolling.
-        // for (var index = 1; index < rowCount; index++) {
-        //     var element = this.grid.getValue(columnIndex,index)
-        //     returnArray.push(element)
-        // }
-
         return returnArray
     }
 
@@ -357,9 +350,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        //This is wrong as it doesnt get DisplayValue but I'll check after....
+        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let formatter = column.getFormatter()
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
-        return row[columnId]
+        return formatter(row[columnId])
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
