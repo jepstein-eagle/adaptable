@@ -235,31 +235,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnType(columnId: string): ColumnType {
-        // //Some columns can have no ID or Title. we return string as a consequence but it needs testing
-        // if (!columnId) {
-        //     console.log('columnId is undefined returning String for Type')
-        //     return ColumnType.String;
-        // }
-        // if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-        //     console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
-        //     return ColumnType.String;
-        // }
+        //Some columns can have no ID or Title. we return string as a consequence but it needs testing
+        if (!columnId) {
+            console.log('columnId is undefined returning String for Type')
+            return ColumnType.String;
+        }
 
-        // let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
-        // switch (type) {
-        //     case 'string':
-        //         return ColumnType.String;
-        //     case 'number':
-        //         return ColumnType.Number;
-        //     case 'boolean':
-        //         return ColumnType.Boolean;
-        //     case 'date':
-        //         return ColumnType.Date;
-        //     case 'object':
-        //         return ColumnType.Object;
-        //     default:
-        //         break;
-        // }
+        let column = this.grid.behavior.dataModel.schema.find((x: any) => x.name == columnId)
+        if (column) {
+            if (!column.hasOwnProperty('type')) {
+                console.log('There is no defined type. Defaulting to type string for column ' + columnId)
+                return ColumnType.String;
+            }
+            let type = column.type;
+            switch (type) {
+                case 'string':
+                    return ColumnType.String;
+                case 'number':
+                    return ColumnType.Number;
+                case 'boolean':
+                    return ColumnType.Boolean;
+                case 'date':
+                    return ColumnType.Date;
+                case 'object':
+                    return ColumnType.Object;
+                default:
+                    break;
+            }
+        }
+        console.log('columnId does not exist')
         return ColumnType.String;
     }
 
