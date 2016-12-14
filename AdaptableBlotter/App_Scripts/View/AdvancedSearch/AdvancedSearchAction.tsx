@@ -40,7 +40,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     constructor() {
         super();
-
         this.state = { EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" }
     }
 
@@ -61,7 +60,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             <div >
                 <Form inline>
                     <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                        buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
+                       useSmallButton={true}  buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
 
                         {/* The main Search selection form */}
                         <div style={divStyle}>
@@ -80,11 +79,11 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     </Col>
                                     <Col xs={5}>
                                         <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
-                                            <Button disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                            <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
                                         </OverlayTrigger>
                                         {' '}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                            <Button disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                            <Button  bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
                                         </OverlayTrigger>
                                     </Col>
                                 </FormGroup>
@@ -116,7 +115,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
                         <PanelWithButton headerText="Search Details" bsStyle="primary" style={panelStyle}
                             buttonContent={"Edit Search"}
-                            buttonClick={() => this.onEditAdvancedSearch()}>
+                            buttonClick={() => this.onEditAdvancedSearch()}
+                            useSmallButton={true}>
                             <div style={previewDivStyle}>
                                 <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
                                     onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
@@ -263,4 +263,9 @@ var previewDivStyle = {
 
 let panelStyle = {
     width: '550px'
+}
+
+
+let smallButtonStyle = {
+  margin: '2px'
 }

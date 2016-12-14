@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { Form, FormControl, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 
 
@@ -9,7 +9,7 @@ interface AdvancedSearchToolbarControlProps extends React.ClassAttributes<Advanc
     Blotter: IAdaptableBlotter;
     AdvancedSearches: IAdvancedSearch[];
     onSelectAdvancedSearch: (AdvancedSearchText: string) => void;
-    onEditAdvancedSearch:() => void;
+    onEditAdvancedSearch: () => void;
 }
 
 export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearchToolbarControlProps, {}> {
@@ -26,23 +26,25 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
         return (
             <Form className='navbar-form'>
-                <FormControl componentClass="select" placeholder="select"
-                    value={currentAdvancedSearch}
-                    onChange={(x) => this.onSelectedSearchChanged(x)} >
-                    <option value="select" key="select">Select Advanced Search</option>
-                    {advancedSearches}
-                </FormControl>
+                <Panel>
+                    <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
+           <FormControl componentClass="select" placeholder="select"
+                        value={currentAdvancedSearch}
+                        onChange={(x) => this.onSelectedSearchChanged(x)} >
+                        <option value="select" key="select">Select a Search</option>
+                        {advancedSearches}
+                    </FormControl>
 
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
-                    <Button bsSize='small' onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
-                </OverlayTrigger>
+                    {' '}
+                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
+                        <Button bsSize='small' bsStyle='success' onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
+                    </OverlayTrigger>
 
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Advanced Search</Tooltip>}>
-                    <Button bsSize='small' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
-                </OverlayTrigger>
-
+                    {' '}
+                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Advanced Search</Tooltip>}>
+                        <Button bsSize='small' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                    </OverlayTrigger>
+                </Panel>
             </Form>
 
         );
@@ -57,11 +59,16 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
     onClearAdvancedSearch() {
         this.props.onSelectAdvancedSearch("");
-         this.setState(this.state)
+        this.setState(this.state)
     }
 
-     onEditAdvancedSearch() {
+    onEditAdvancedSearch() {
         this.props.onEditAdvancedSearch();
-         this.setState(this.state)
+        this.setState(this.state)
     }
 }
+
+
+var labelStyle = {
+     margin: '5px'
+};

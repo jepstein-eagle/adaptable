@@ -10,6 +10,7 @@ interface PanelWithButtonProps extends PanelProps {
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;
     headerText : string
+    useSmallButton? : boolean
 }
 
 
@@ -24,7 +25,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         {
             className += " " + this.props.className
         }
-        if(buttonContent)
+         if(buttonContent)
         {
             className += " " + "panel-with-button-reduce-header-padding"
         }
@@ -33,7 +34,8 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 <Col xs={7}>{this.props.headerText}</Col>
                 <Col xs={5}>
                     {buttonContent &&
-                        <Button onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+                     
+                        <Button {...this.props.useSmallButton?{bsSize:"small"}:{} }  onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
                 </Col>
@@ -43,4 +45,5 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
             {this.props.children}
         </Panel>;
     }
+
 }
