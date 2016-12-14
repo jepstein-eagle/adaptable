@@ -61,8 +61,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         {<AdvancedSearchToolbarControl
                             Blotter={this.props.AdaptableBlotter}
                             AdvancedSearches={this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches}
-                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)} 
-                            onEditAdvancedSearch={()=>this.onEditAdvancedSearch()}  />}
+                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)}
+                            onNewAdvancedSearch={() => this.onEditAdvancedSearch()}
+                            onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
                     <Nav>
                         {actionMenuItems}
@@ -128,7 +129,13 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     }
 
     onEditAdvancedSearch() {
-      this.props.showPopup("AdvancedSearchAction");
+        this.props.showPopup("AdvancedSearchAction");
+    }
+
+    onNewAdvancedSearch() {
+        // we need some way of passing in a argument to a screens
+        // that way we can tell the advancedsearchscreen it needs to start the new search wizard
+        this.props.showPopup("AdvancedSearchAction");
     }
 }
 
