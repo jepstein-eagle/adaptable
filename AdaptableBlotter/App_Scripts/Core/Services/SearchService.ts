@@ -103,18 +103,22 @@ export class SearchService implements ISearchService {
     private createQuickSearchExpressions(columns: IColumn[]): Expression[] {
         // going to cheat for the moment and use a predefined expression though might not be actually such a bad idea...
         // though I should probably create a proper expression the proper way...
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
-                Operator: this.GetQuickSearchState().QuickSearchOperator,
-                Operand1: this.GetQuickSearchState().QuickSearchText, Operand2: ""
-            };
-
         let searchExpressions: Expression[] = [];
-        columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
-            let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo);
-            searchExpressions.push(predefinedExpression);
-        });
+        let quickSearchText: string = this.GetQuickSearchState().QuickSearchText;
+
+        if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
+            let predefinedExpressionInfo: IPredefinedExpressionInfo =
+                {
+                    Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
+                    Operator: this.GetQuickSearchState().QuickSearchOperator,
+                    Operand1: quickSearchText, 
+                    Operand2: ""
+                };
+            columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
+                let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo);
+                searchExpressions.push(predefinedExpression);
+            });
+        }
         return searchExpressions;
     }
 
