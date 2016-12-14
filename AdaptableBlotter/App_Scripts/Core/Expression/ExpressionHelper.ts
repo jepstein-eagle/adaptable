@@ -75,7 +75,7 @@ export module ExpressionHelper {
 
                                 // added by JW to allow quicksearch to choose case sensitivity - hope this is right
                                 // only going to worry about it for string columns
-                                if(!isCaseSensitive){
+                                if (!isCaseSensitive) {
                                     operand1 = operand1.toLowerCase();
                                     operand2 = operand2.toLowerCase();
                                     columnValue = columnValue.toLowerCase();
@@ -107,13 +107,8 @@ export module ExpressionHelper {
                             case LeafExpressionOperator.StartsWith:
                                 isColumnSatisfied = columnValue.startsWith(operand1);
                                 break
-<<<<<<< HEAD
                             case LeafExpressionOperator.EndsWith:
-                                isColumnSatisfied = columnValue.endsWith(operand1) != 0;
-=======
-                            case LeafExpressionOperator.EndWith:
                                 isColumnSatisfied = columnValue.endsWith(operand1);
->>>>>>> 4497f4b2de18175b143e062f0751c3a47b742b83
                                 break
                             case LeafExpressionOperator.Between:
                                 isColumnSatisfied = columnValue >= operand1

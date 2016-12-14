@@ -56,7 +56,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
 
-        //we build the list of strategies
+       //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
@@ -68,16 +68,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-<<<<<<< HEAD
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
-        this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-=======
+        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
->>>>>>> 4497f4b2de18175b143e062f0751c3a47b742b83
+
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
