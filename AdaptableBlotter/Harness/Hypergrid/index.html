@@ -48,7 +48,13 @@
         firstRow = (typeof firstRow === 'object') ? firstRow : {};
         for (var p in firstRow) {
             if (firstRow.hasOwnProperty(p)){
-                schema.push({name: p, header: capitalize(p)});
+                if(p === 'notional')
+                {
+                    schema.push({name: p, header: capitalize(p), type: 'number'});
+                }
+                else{
+                    schema.push({name: p, header: capitalize(p)});
+                }
             }
         }
         return schema;
@@ -57,10 +63,46 @@
     var dataGen = new harness.DataGenerator();
         var trades = dataGen.getTrades();
 
+            var notionalPattern = /^(\d+) EUR$/;
+    var notionalLocalizer = {
+        format: function(value) {
+            if (value != null) {
+                value = value + ' EUR';
+            } else {
+                value = null;
+            }
+            return value;
+        },
+        parse: function(str) {
+            var value, parts = str.match(notionalPattern);
+            if (parts) {
+                value = parts[0]
+            } else {
+                value = 0;
+            }
+            return value;
+        }
+    };
 
-        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+
+        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades)});
+        let behavior = grid.behavior;
+
+        grid.localization.add('notional', notionalLocalizer);
+           grid.localization.add('notional2', new grid.localization.NumberFormatter('fr-FR', {
+        style: 'currency',
+        currency: 'EUR'
+    }));
+        //Add Edit for Notional column
+        behavior.setColumnProperties(1, {
+            editor: 'textfield' ,// case-insensitive
+            format: 'notional2'
+        });
+
+        
+
         var container = document.getElementById('content');
-        var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container);
+        var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container, "tradeId");
         //dataGen.startTickingDataKendo(grid);
     }
   

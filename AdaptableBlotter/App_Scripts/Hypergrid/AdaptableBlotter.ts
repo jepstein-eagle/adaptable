@@ -15,7 +15,7 @@ import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
 import * as StrategyIds from '../Core/StrategyIds'
-import { CustomSortStrategyHyperGrid } from '../Strategy/CustomSortStrategyHyperGrid'
+import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
@@ -47,7 +47,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public SearchService: ISearchService
 
-    constructor(private grid: any, private container: HTMLElement) {
+    constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
         this.CustomSorts = new Map<number, Function>()
 
@@ -59,27 +59,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategyHyperGrid(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+<<<<<<< HEAD
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+=======
+        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
+        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+>>>>>>> 4497f4b2de18175b143e062f0751c3a47b742b83
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
-        // //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
-        // //grid.table.bind("keydown",
-        // grid.table.keydown((event) => {
-        //     this._onKeyDown.Dispatch(this, event)
-        // })
+        grid.addEventListener("fin-keydown", (e: any) => {
+            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
+            //like that we avoid the need to have different logic for different grids....
+            this._onKeyDown.Dispatch(this, e.detail.primitiveEvent)
+        });
 
         // grid.addEventListener('fin-click', function (e: any) {
         //     var cell = e.detail.gridCell;
@@ -107,16 +113,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //keys =  event.detail.keys;
         });
 
-        //This is temporary for now as it replaces the whole pipelne. 
-        //Ideally dev should set that up or we should just add our instead of replacing the whole chain
-        grid.setPipeline([MySorterDataSource(this)], {
-            stash: 'default',
-            apply: false //  Set the new pipeline without calling reindex.
-        });
+        //We add our sorter pipe last into the existing pipeline
+        let currentDataSources = grid.behavior.dataModel.DataSources;
+        currentDataSources.push(MySorterDataSource(this))
 
-        // grid.addEventListener("fin-keydown", (e: any) => {
-        //     console.log("+++++++++++++ The key down  ", e)
-        // });
+        grid.setPipeline(currentDataSources, {
+            stash: 'default',
+            apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
+        });
 
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.SetColumnIntoStore(), 5);
@@ -126,7 +130,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     if (e.action == "itemchange") {
         //         let itemsArray = e.items[0];
         //         let changedValue = itemsArray[e.field];
-        //         let identifierValue = itemsArray["uid"];
+        //         let identifierValue = //itemsArray["uid"];
         //         this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
         //     }
         // });
@@ -138,7 +142,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
         //         for (let valueField in e.values) {
         //             let changedValue = e.values[valueField];
-        //             let identifierValue = e.model.uid;
+        //             let identifierValue = //e.model.uid;
         //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
         //         }
         //     }, 5)
@@ -213,6 +217,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.reindex();
     }
 
+    public getPrimaryKeyValueFromRecord(record: any): any {
+        return record[this.primaryKey]
+    }
+
     public gridHasCurrentEditValue(): boolean {
         return false;
     }
@@ -227,47 +235,89 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
-        return null
+        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+        var selected: Array<any> = this.grid.selectionModel.getSelections();
+        for (let rectangle of selected) {
+            //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
+            //for (let columnIndex = rectangle.firstSelectedCell.x; columnIndex <= rectangle.lastSelectedCell.x; columnIndex++) {
+            for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
+                let column = this.grid.behavior.getActiveColumns()[columnIndex]
+                for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
+                    // for (let rowIndex = rectangle.firstSelectedCell.y; rowIndex <= rectangle.lastSelectedCell.y; rowIndex++) {
+                    let row = this.grid.behavior.dataModel.dataSource.getRow(rowIndex)
+                    let primaryKey = this.getPrimaryKeyValueFromRecord(row)
+                    let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
+                    //this line is pretty much doing the same....just keeping it for the record
+                    //maybe we could get it directly from the row..... dunno wht's best
+                    // let value = column.getValue(rowIndex)
+                    let valueArray = selectionMap.get(primaryKey);
+                    if (valueArray == undefined) {
+                        valueArray = []
+                        selectionMap.set(primaryKey, valueArray);
+                    }
+                    valueArray.push({ columnID: column.name, value: value });
+                }
+            }
+        }
+
+        return {
+            Selection: selectionMap
+        };
     }
 
     public getColumnType(columnId: string): ColumnType {
-        // //Some columns can have no ID or Title. we return string as a consequence but it needs testing
-        // if (!columnId) {
-        //     console.log('columnId is undefined returning String for Type')
-        //     return ColumnType.String;
-        // }
-        // if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-        //     console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
-        //     return ColumnType.String;
-        // }
+        //Some columns can have no ID or Title. we return string as a consequence but it needs testing
+        if (!columnId) {
+            console.log('columnId is undefined returning String for Type')
+            return ColumnType.String;
+        }
 
-        // let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
-        // switch (type) {
-        //     case 'string':
-        //         return ColumnType.String;
-        //     case 'number':
-        //         return ColumnType.Number;
-        //     case 'boolean':
-        //         return ColumnType.Boolean;
-        //     case 'date':
-        //         return ColumnType.Date;
-        //     case 'object':
-        //         return ColumnType.Object;
-        //     default:
-        //         break;
-        // }
+        let column = this.grid.behavior.dataModel.schema.find((x: any) => x.name == columnId)
+        if (column) {
+            if (!column.hasOwnProperty('type')) {
+                console.log('There is no defined type. Defaulting to type string for column ' + columnId)
+                return ColumnType.String;
+            }
+            let type = column.type;
+            switch (type) {
+                case 'string':
+                    return ColumnType.String;
+                case 'number':
+                    return ColumnType.Number;
+                case 'boolean':
+                    return ColumnType.Boolean;
+                case 'date':
+                    return ColumnType.Date;
+                case 'object':
+                    return ColumnType.Object;
+                default:
+                    break;
+            }
+        }
+        console.log('columnId does not exist')
         return ColumnType.String;
     }
 
     public setValue(id: any, columnId: string, value: any): void {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        row[columnId] = value
+        //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
+        this.grid.repaint()
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+        //no need to have a batch mode so far.... we'll see in the future performance
+        for (let element of batchValues) {
+            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.id)
+            row[element.columnId] = element.value
+        }
+        //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
+        this.grid.repaint()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            let record: any = this.grid.dataSource.getByUid(id);
+            let record = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
             return (columnName: string) => { return record[columnName]; }
         }
         else {
@@ -319,17 +369,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnArray: string[] = []
         let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
-        //This is wrong as it doesnt get DisplayValue but I'll check after.... I hate this fcking grid
         for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getValue(dataSourceColumnIndex, index)
-            returnArray.push(element)
+            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+            returnArray.push(this.getDisplayValue(this.getPrimaryKeyValueFromRecord(element), columnId))
         }
-        //this allow to get value only from visible rows. so only ~30 as there is scrolling.
-        // for (var index = 1; index < rowCount; index++) {
-        //     var element = this.grid.getValue(columnIndex,index)
-        //     returnArray.push(element)
-        // }
-
         return returnArray
     }
 
@@ -353,7 +396,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        return ""
+        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let formatter = column.getFormatter()
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        return formatter(row[columnId])
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {

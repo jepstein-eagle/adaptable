@@ -13,7 +13,7 @@ import { MenuType } from '../Core/Enums';
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private menuItemConfig: IMenuItem;
     private PlusMinusState: PlusMinusState
-    constructor(blotter: IAdaptableBlotter) {
+    constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration, "plus-sign");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
@@ -64,6 +64,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 }
             }
 
+<<<<<<< HEAD
             //      newValues.forEach((v)=>{
             //          this.blotter.setValue(v.id, v.columnId, v.value);
             //      })
@@ -71,6 +72,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
             this.blotter.selectCells(newValues);
+=======
+            this.blotter.setValueBatch(newValues);
+
+            if (this.reSelectCells) {
+                //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
+                this.blotter.selectCells(newValues);
+            }
+>>>>>>> 4497f4b2de18175b143e062f0751c3a47b742b83
         }
     }
 
