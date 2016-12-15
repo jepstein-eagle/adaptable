@@ -1,8 +1,8 @@
 import { Expression } from './Expression'
 import { IExpressionRange } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
-import { IColumn } from '../Interface/IAdaptableBlotter'
 import { ColumnType } from '../Enums'
+import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 
 
 export module ExpressionHelper {
@@ -35,23 +35,14 @@ export module ExpressionHelper {
         return returnValue
     }
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[]): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], isCaseSensitive: Boolean = true): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
         for (let columnId of expressionColumnList) {
             //we need either a column value or range to match the column
             let isColumnSatisfied = false
             let columnValues = Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
             if (columnValues) {
-                // ok interesting observation
-                // if we do a getColumnValue check on on style expression check then it works
-                // but it we do a getDisplayColumnValue check then it doesnt - because the new value is not (yet) returned by the cell.Text() function which this eventually calls...
-                // not sure what the thinking is of doing one rather than the other...
                 let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
-                //let columnDisplayValue = getColumnValue(columnValues.ColumnName)
-
-                // this line was checked in by Jo but my VS Code doesnt like the syntax
-                //  isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) ! > -1
-                // so Ive got rid of the "!" and just made it ' > -1' which seems to work but....
                 isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) > -1
             }
             if (!isColumnSatisfied) {
@@ -81,6 +72,14 @@ export module ExpressionHelper {
                             case ColumnType.String:
                                 operand1 = range.Operand1
                                 operand2 = range.Operand2
+
+                                // added by JW to allow quicksearch to choose case sensitivity - hope this is right
+                                // only going to worry about it for string columns
+                                if (!isCaseSensitive) {
+                                    operand1 = operand1.toLowerCase();
+                                    operand2 = operand2.toLowerCase();
+                                    columnValue = columnValue.toLowerCase();
+                                }
                                 break;
                         }
                         switch (range.Operator) {
@@ -108,7 +107,7 @@ export module ExpressionHelper {
                             case LeafExpressionOperator.StartsWith:
                                 isColumnSatisfied = columnValue.startsWith(operand1);
                                 break
-                            case LeafExpressionOperator.EndWith:
+                            case LeafExpressionOperator.EndsWith:
                                 isColumnSatisfied = columnValue.endsWith(operand1);
                                 break
                             case LeafExpressionOperator.Between:
@@ -163,7 +162,7 @@ export module ExpressionHelper {
                 return "Contains"
             case LeafExpressionOperator.StartsWith:
                 return "StartsWith"
-            case LeafExpressionOperator.EndWith:
+            case LeafExpressionOperator.EndsWith:
                 return "EndWith"
             case LeafExpressionOperator.MatchesRegex:
                 return "MatchesRegex"
@@ -218,6 +217,18 @@ export module ExpressionHelper {
         return new Expression([], "Any", [])
     }
 
-   
+    export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter, isCaseSensitive: Boolean = true): boolean {
+        let returnVal: boolean = (
+            this.IsSatisfied(
+                Expression,
+                blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
+                blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
+                columns,
+                isCaseSensitive
+            ))
+
+        return returnVal;
+    }
+
 
 } 

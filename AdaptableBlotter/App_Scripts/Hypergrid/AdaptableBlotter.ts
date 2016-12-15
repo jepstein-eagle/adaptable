@@ -27,10 +27,11 @@ import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
+import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, SearchStringOperator, SortOrder } from '../Core/Enums'
+import { ColumnType,  SortOrder } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 
@@ -55,7 +56,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
 
-        //we build the list of strategies
+       //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
@@ -67,9 +68,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -423,7 +426,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return [];
     }
 
+    public hideRows(rowIds: string[]): void {
+    }
 
+    public showRows(rowIds: string[]): void {
+        
+    }
 
     public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
@@ -432,10 +440,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-    public applyQuickSearch(): void {
-    }
-
-    public printGrid(): void {
+     public printGrid(): void {
 
     }
 

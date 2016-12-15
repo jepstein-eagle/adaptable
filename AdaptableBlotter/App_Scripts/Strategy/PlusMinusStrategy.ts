@@ -6,7 +6,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { ColumnType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
 import { MenuType } from '../Core/Enums';
 
@@ -35,6 +35,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
             }
+            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let selectedCell = this.blotter.getSelectedCells()
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
@@ -43,10 +44,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.ColumnsDefaultNudge.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
                         for (let columnNudge of columnNudgesWithExpression) {
-                            if (ExpressionHelper.IsSatisfied(columnNudge.Expression,
-                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getColumnValue"),
-                                this.blotter.getRecordIsSatisfiedFunction(keyValuePair[0], "getDisplayColumnValue"),
-                                this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns)) {
+                            if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
                                 newValue = { id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) }
                             }
                         }
@@ -65,7 +63,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     }
                 }
             }
-
             this.blotter.setValueBatch(newValues);
 
             if (this.reSelectCells) {
@@ -78,6 +75,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
+
+
 }
 
 

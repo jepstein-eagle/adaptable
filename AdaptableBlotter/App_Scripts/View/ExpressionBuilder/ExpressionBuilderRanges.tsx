@@ -22,7 +22,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         if (this.props.ColumnType == ColumnType.Number || this.props.ColumnType == ColumnType.Date) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let numericAndDateOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
-                    <option value={LeafExpressionOperator.Unknown.toString()}>Select an operator</option>
+                    <option value={LeafExpressionOperator.Unknown.toString()}>Select operator</option>
                     <option value={LeafExpressionOperator.GreaterThan.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</option>
                     <option value={LeafExpressionOperator.GreaterThanOrEqual.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</option>
                     <option value={LeafExpressionOperator.LessThan.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThan)}</option>
@@ -93,10 +93,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         else if (this.props.ColumnType == ColumnType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let numericOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
-                    <option value={LeafExpressionOperator.Unknown.toString()}>Select an operator</option>
+                    <option value={LeafExpressionOperator.Unknown.toString()}>Select operator</option>
                     <option value={LeafExpressionOperator.Contains.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</option>
                     <option value={LeafExpressionOperator.StartsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</option>
-                    <option value={LeafExpressionOperator.EndWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndWith)}</option>
+                    <option value={LeafExpressionOperator.EndsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</option>
                     <option value={LeafExpressionOperator.MatchesRegex.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.MatchesRegex)}</option>
                 </FormControl>
                 return <Form horizontal key={index}>

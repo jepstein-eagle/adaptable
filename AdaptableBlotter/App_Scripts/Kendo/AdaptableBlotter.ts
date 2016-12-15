@@ -27,14 +27,13 @@ import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
+import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, SearchStringOperator } from '../Core/Enums'
+import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
-
-
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -67,6 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -109,6 +109,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // http://www.telerik.com/forums/column-reorder-event-delay
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
+
+        // following code is taken from Telerik website for how to ADD menu items to their column header menu
+        // not sure yet if we want to use their or our menu, probably former
+        // would be nice if can work out how to make it re-evaluate during runtime;
+        // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
+        grid.bind("columnMenuInit", (e: any) => {
+            let menu: any = e.container.find(".k-menu").data("kendoMenu");
+            var field = e.field;
+            var popup = e.container.data('kendoPopup');
+            let columnMenuItems: string[] = [];
+            let column: IColumn = this.getColumnFromColumnId(field);
+
+            // each strategy can add its own menu item if it wants to
+            this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
+
+            columnMenuItems.forEach(s => menu.append({ text: s }))
+
+            // we can add the item this way which is nicer but not doing so for now
+            //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
+
+            // event handler - each strategy listens and acts accordingly
+            menu.bind("select", (e: any) => {
+                var menuText = $(e.item).text();
+                menu.close();
+                popup.close();
+                this.Strategies.forEach(s => s.onColumnMenuItemClicked(column, menuText));
+            });
+        })
     }
 
     public SetColumnIntoStore() {
@@ -290,6 +318,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.grid.columns.findIndex(x => x.field == columnName);
     }
 
+    public getColumnFromColumnId(columnId: string): IColumn {
+        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnId);
+    }
 
     public isColumnReadonly(columnId: string): boolean {
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
@@ -476,51 +507,62 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-
-    // this needs to be done properly with serious expressions etc and using search service properly etc
-    // but for now just want to have a very rough quick search working for Accenture Fintech demo
-    // n.b. we are only searching on string columns  -- not sure how to include other columns :(  
-    public applyQuickSearch(): void {
-        let quickSearchText = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
-        if (quickSearchText != "") {
-            let filterItems: kendo.data.DataSourceFilterItem[] = [];
-
-            let stringOperator: SearchStringOperator = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator;
-
-            let kendoStringOperator: string;
-            let filterLogic: string;
-
-            switch (stringOperator) {
-                case SearchStringOperator.Contains:
-                    kendoStringOperator = "contains"   // ?
-                    filterLogic = "or"
-                    break;
-                case SearchStringOperator.Equals:
-                    kendoStringOperator = "eq"   // ?
-                    filterLogic = "or"
-                    break;
-                case SearchStringOperator.NotEquals:
-                    kendoStringOperator = "neq"   // ?
-                    filterLogic = "and"
-                    break;
-                case SearchStringOperator.StartsWith:
-                    kendoStringOperator = "startswith"   // ?
-                    filterLogic = "or"
-                    break;
-            }
-
-
-            this.grid.columns.filter(c => this.getColumnType(c.field) == ColumnType.String).forEach(c => {
-                let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: c.field, value: quickSearchText };
-                filterItems.push(filterItem);
-            })
-            let filters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
-            this.grid.dataSource.filter(filters);
-        }
-        else {
-            this.grid.dataSource.filter([]);
-        }
+    public hideRows(rowIds: string[]): void {
+        rowIds.forEach(rowID => {
+            var row = this.getRowByRowIdentifier(rowID);
+            row.hide();
+        })
     }
+
+    public showRows(rowIds: string[]): void {
+        rowIds.forEach(rowID => {
+            var row = this.getRowByRowIdentifier(rowID);
+            row.show();
+        })
+    }
+
+
+    // this is all dead now and never called as we just hide the rows in the strategy...
+    // keeping it commented out only so we have the working for when we do filters...
+    /*        let quickSearchText = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+            if (quickSearchText != "") {
+                let filterItems: kendo.data.DataSourceFilterItem[] = [];
+    
+                let stringOperator: SearchStringOperator = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator;
+    
+                let kendoStringOperator: string;
+                let filterLogic: string;
+    
+                switch (stringOperator) {
+                    case SearchStringOperator.Contains:
+                        kendoStringOperator = "contains"   // ?
+                        filterLogic = "or"
+                        break;
+                    case SearchStringOperator.Equals:
+                        kendoStringOperator = "eq"   // ?
+                        filterLogic = "or"
+                        break;
+                    case SearchStringOperator.NotEquals:
+                        kendoStringOperator = "neq"   // ?
+                        filterLogic = "and"
+                        break;
+                    case SearchStringOperator.StartsWith:
+                        kendoStringOperator = "startswith"   // ?
+                        filterLogic = "or"
+                        break;
+                }
+                this.grid.columns.filter(c => this.getColumnType(c.field) == ColumnType.String).forEach(c => {
+                    let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: c.field, value: quickSearchText };
+                    filterItems.push(filterItem);
+                })
+                let filters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
+                this.grid.dataSource.filter(filters);
+            }
+            else {
+                this.grid.dataSource.filter([]);
+            }
+            */
+
 
     // this is copied straight from Telerik website and needs a fair bit of work but is ok for now...
     public printGrid(): void {

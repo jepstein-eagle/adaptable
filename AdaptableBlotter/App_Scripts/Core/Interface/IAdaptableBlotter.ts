@@ -50,14 +50,14 @@ export interface IAdaptableBlotter {
 
     // playing around
     getAllRowIds(): string[]
+        hideRows(rowIds: string[]): void
+        showRows(rowIds: string[]): void
 
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
 
-    // Quick Search
-    applyQuickSearch(): void
-
+   
     // Export
     saveAsExcel(fileName: string, allPages: boolean): void
 

@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 101; i++) {
+        for (var i = 1; i < 501; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -29,7 +29,7 @@ export class DataGenerator {
 
             // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
             // as that way at least we dont refresh anything etc and it has no impact.
-         //   trade.set(columnName, newValue);
+            //   trade.set(columnName, newValue);
 
             //trade[columnName] = newValue;
             //trade.dirty = true;
@@ -238,6 +238,7 @@ export class DataGenerator {
 
     protected getCountries(): string[] {
         var countries = [
+            "Argentina",
             "Australia",
             "Belgium",
             "Brazil",
@@ -247,6 +248,7 @@ export class DataGenerator {
             "Egypt",
             "France",
             "Germany",
+            "Holland",
             "Hungary",
             "India",
             "Ireland",
@@ -256,10 +258,8 @@ export class DataGenerator {
             "Portugal",
             "Qatar",
             "Russia",
-            "South Korea",
             "Spain",
-            "United Kingdom",
-            "United States"
+            "Thailand"
         ];
         return countries;
     }

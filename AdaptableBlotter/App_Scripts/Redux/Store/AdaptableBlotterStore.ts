@@ -17,6 +17,7 @@ import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
+import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -41,7 +42,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Calendars: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
-    QuickSearch: QuickSearchRedux.QuickSearchReducer
+    QuickSearch: QuickSearchRedux.QuickSearchReducer,
+ AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
 
 });
 
@@ -154,11 +156,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-               // case QuickSearchRedux.QUICK_SEARCH_SET_SEARCH_TEXT: {
-               //     let mytext: string = middlewareAPI.getState().QuickSearch.QuickSearchText;
-               //     adaptableBlotter.applySearch(null, mytext);
-               //     return next(action);
-               // }
+                // case QuickSearchRedux.QUICK_SEARCH_SET_SEARCH_TEXT: {
+                //     let mytext: string = middlewareAPI.getState().QuickSearch.QuickSearchText;
+                //     adaptableBlotter.applySearch(null, mytext);
+                //     return next(action);
+                // }
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:

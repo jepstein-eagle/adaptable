@@ -72,7 +72,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         })
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.props.onSelectedColumnChange("select")}
-            buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
+            buttonContent={"Add Condition"} useSmallButton={true} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={3}>

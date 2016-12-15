@@ -68,11 +68,10 @@
     function InitBlotter() {
     var dataGen = new harness.DataGenerator();
         var trades = dataGen.getTrades();
+ 
 
-        $("#grid")
-            .kendoGrid({
-                dataSource: {
-                //  pageSize: 100,
+
+var dS = new kendo.data.DataSource({
                     data: trades,
                     schema: {
                         model: {
@@ -101,28 +100,30 @@
                                 lastUpdatedBy: { type: "string" }
                             }
                         }
-                    }
-            },
+                    },
+        //  aggregate:[{ field: "bid", aggregate: "sum" },{field:"bid", aggregate: "count" },]
+         }  
+          );
+
+        $("#grid")
+            .kendoGrid({
+                dataSource: dS,
                 columns:
                 [
-                    // ($('input[name=editable]:checked').val() == "popup" || $('input[name=editable]:checked').val() == "inline" )? 
-                    //         { command: ["edit"], title: "&nbsp;", width: "250px" } : 
-                    //             {},
                     { field: "tradeId", title: "ID" },
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
                     { field: "counterparty", title: "Counterparty" },
-                    { field: "currency", title: "Currency" },
-                    { field: "country", title: "Country", width: "350px" },
+                    { field: "currency", title: "Currency", width:100 },
+                    { field: "country", title: "Country", width: 200 },
                     { field: "marketPrice", title: "Market Price", format:"{0:n4}" , attributes:{class:"numberColumn"}},
                     { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
-                    {
-                        field: "isLive", title: "Is Live",
-                        template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>'
-                    },
+                    { field: "isLive", title: "Is Live", template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>'  },
                     { field: "fitchRating", title: "Fitch Rating"},
                     { field: "moodysRating", title: "Moodys Rating" },
-                    { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: "350px" },
-                    { field: "bid", title: "Bid" , format:"{0:n4}", attributes:{class:"numberColumn"}},
+                    { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: 200 },
+                    { field: "bid", title: "Bid", format:"{0:n4}", attributes:{class:"numberColumn"}, 
+                // playing with aggregates but not now    aggregates: ["count"], footerTemplate: "#=count#"
+                },
                     { field: "ask", title: "Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
                     { field: "bloombergAsk", title: "Bloomberg Ask", format:"{0:n4}", attributes:{class:"numberColumn"}},
                     { field: "bloombergBid", title: "Bloomberg Bid", format:"{0:n4}" , attributes:{class:"numberColumn"}},
@@ -132,7 +133,7 @@
                     { field: "occasionalPrice", title: "Occasional Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
                     { field: "lastUpdated", title: "Last Update", format: "{0:dd MMM yyyy}", width: "450px" },
                     { field: "lastUpdatedBy", title: "Last Updated By" }
-                ],
+                ],            
                 selectable: "multiple cell",
                 sortable: true,
                 reorderable: true,
@@ -141,16 +142,29 @@
                 scrollable: false,
                 filterable: true,
                 pageable: false,
-        //editable : "popup",
-        //editable: "inline"
-        editable: true
+                editable: true,
+                columnMenu: true,
+                /*{
+                       filterable: false,
+    messages: {
+      columns: "Choose columns",
+      filter: "Apply filter",
+      sortAscending: "Sort (asc)",
+      sortDescending: "Sort (desc)"
+    },
+    */
 
+/*
+ columnMenuInit: function (e) {
+       
+    }
+*/
             });
-
-        var grid = $("#grid").data("kendoGrid");
+ var grid = $("#grid").data("kendoGrid");
         var container = document.getElementById('content');
         var blotter = new adaptableblotterkendo.AdaptableBlotter(grid,container);
-        //dataGen.startTickingDataKendo(grid);
+     
+         //dataGen.startTickingDataKendo(grid);
     }
   
 

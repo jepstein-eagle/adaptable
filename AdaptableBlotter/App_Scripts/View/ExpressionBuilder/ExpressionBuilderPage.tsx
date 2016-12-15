@@ -12,6 +12,7 @@ import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
+    SelectedColumnId: string
     UpdateGoBackState?(finish?: boolean): void
 }
 
@@ -21,7 +22,9 @@ export interface ExpressionBuilderPageState {
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
+
     render() {
+
         return <Grid>
             <Row>
                 <Col xs={9}>
@@ -39,7 +42,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}>
+                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+                        ShowPanel={true}>
                     </ExpressionBuilderPreview>
                 </Col>
             </Row>

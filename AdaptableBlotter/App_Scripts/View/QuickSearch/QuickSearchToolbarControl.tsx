@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { Form, FormControl, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 
 interface QuickSearchToolbarControlProps extends React.ClassAttributes<QuickSearchToolbarControl> {
@@ -26,9 +26,11 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
 
     render(): any {
         return <Form className='navbar-form'>
-            <FormControl
+          <Panel>
+           <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
+             <FormControl
                 type="text"
-                placeholder="Quick Search"
+                placeholder="Enter Search Text"
                 value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                 onChange={(x) => this.onUpdateQuickSearchText(x)}
                 onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
@@ -41,7 +43,7 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
                 <Button bsSize='small' onClick={() => this.onClearQuickSearch()}>Clear</Button>
             </OverlayTrigger>
-
+</Panel>
         </Form>
 
     }
@@ -76,4 +78,8 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
         }
     }
 }
+
+var labelStyle = {
+     margin: '5px'
+};
 
