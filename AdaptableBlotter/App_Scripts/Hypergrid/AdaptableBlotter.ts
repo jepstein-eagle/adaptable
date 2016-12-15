@@ -31,7 +31,7 @@ import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType,  SortOrder } from '../Core/Enums'
+import { ColumnType, SortOrder } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 
@@ -56,12 +56,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
 
-       //we build the list of strategies
+        //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
@@ -80,6 +80,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
             //like that we avoid the need to have different logic for different grids....
             this._onKeyDown.Dispatch(this, e.detail.primitiveEvent)
+        });
+
+        //we'll see if we need to handle differently keydown when in edit mode internally or not....
+        //I think we don't need to but hey.... you never know
+        grid.addEventListener("fin-editor-keydown", (e: any) => {
+            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
+            //like that we avoid the need to have different logic for different grids....
+            this._onKeyDown.Dispatch(this, e.detail.keyEvent)
         });
 
         // grid.addEventListener('fin-click', function (e: any) {
@@ -217,14 +225,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
-        return false;
+        return this.grid.cellEditor;
     }
 
     public getCurrentCellEditValue(): any {
+        if (this.grid.cellEditor) {
+            return this.grid.cellEditor.getEditorValue()
+        }
         return "";
     }
 
     getActiveCell(): { Id: any, ColumnId: string, Value: any } {
+        let currentCell = this.grid.selectionModel.getLastSelection();
+
+        if (currentCell) {
+            let column = this.grid.behavior.getActiveColumns()[currentCell.origin.x]
+            let row = this.grid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
+            let primaryKey = this.getPrimaryKeyValueFromRecord(row)
+            let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
+            return { Id: primaryKey, ColumnId: column.name, Value: value }
+        }
         return null
     }
 
@@ -296,6 +316,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValue(id: any, columnId: string, value: any): void {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
         row[columnId] = value
+        //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
+        //so we just close editor for now even if not the one where we set the value
+        //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
+        if(this.gridHasCurrentEditValue())
+        {
+            this.grid.cellEditor.cancelEditing()
+        }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.grid.repaint()
     }
@@ -430,7 +457,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public showRows(rowIds: string[]): void {
-        
+
     }
 
     public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
@@ -440,7 +467,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-     public printGrid(): void {
+    public printGrid(): void {
 
     }
 

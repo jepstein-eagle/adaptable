@@ -21,93 +21,100 @@
     <div>
         <!--<h3>Adaptable Blotter</h3> -->
         <div id="content" style="margin:15px;"></div>
-    </div>
+</div>
 
-    <script src="adaptableblotter/adaptableblotterhypergrid-bundle.js"></script>
-    <p/>
-    <div id="grid"></div>
+<script src="adaptableblotter/adaptableblotterhypergrid-bundle.js"></script>
+<p/>
+<div id="grid"></div>
 
-    <script>
-    InitBlotter()
-    function handleClickEdit() {
+<script>
         InitBlotter()
-    }
-    function capitalize(string) {
-        return (/[a-z]/.test(string) ? string : string.toLowerCase())
-            .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
-            .replace(/[A-Z]/g, ' $&')
-            .trim();
-    }
+        function handleClickEdit() {
+            InitBlotter()
+        }
+        function capitalize(string) {
+            return (/[a-z]/.test(string) ? string : string.toLowerCase())
+                .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
+                .replace(/[A-Z]/g, ' $&')
+                .trim();
+        }
         function replacer(a, b, c) {
-        return b.toUpperCase() + c;
-    }
-    function getSchema(data){
-        var schema = [],
-            firstRow = Array.isArray(data) && data[0];
+            return b.toUpperCase() + c;
+        }
+        function getSchema(data) {
+            var schema = [],
+                firstRow = Array.isArray(data) && data[0];
 
-        firstRow = (typeof firstRow === 'object') ? firstRow : {};
-        for (var p in firstRow) {
-            if (firstRow.hasOwnProperty(p)){
-                if(p === 'notional')
-                {
-                    schema.push({name: p, header: capitalize(p), type: 'number'});
-                }
-                else{
-                    schema.push({name: p, header: capitalize(p)});
+            firstRow = (typeof firstRow === 'object') ? firstRow : {};
+            for (var p in firstRow) {
+                if (firstRow.hasOwnProperty(p)) {
+                    if (p === 'notional') {
+                        schema.push({ name: p, header: capitalize(p), type: 'number' });
+                    }
+                    else if (p === 'tradeDate') {
+                        schema.push({ name: p, header: capitalize(p), type: 'date' });
+                    }
+                    else {
+                        schema.push({ name: p, header: capitalize(p) });
+                    }
                 }
             }
+            return schema;
         }
-        return schema;
-    }
-    function InitBlotter() {
-    var dataGen = new harness.DataGenerator();
-        var trades = dataGen.getTrades();
+        function InitBlotter() {
+            var dataGen = new harness.DataGenerator();
+            var trades = dataGen.getTrades();
 
             var notionalPattern = /^(\d+) EUR$/;
-    var notionalLocalizer = {
-        format: function(value) {
-            if (value != null) {
-                value = value + ' EUR';
-            } else {
-                value = null;
-            }
-            return value;
-        },
-        parse: function(str) {
-            var value, parts = str.match(notionalPattern);
-            if (parts) {
-                value = parts[0]
-            } else {
-                value = 0;
-            }
-            return value;
+            var notionalLocalizer = {
+                format: function (value) {
+                    if (value != null) {
+                        value = value + ' EUR';
+                    } else {
+                        value = null;
+                    }
+                    return value;
+                },
+                parse: function (str) {
+                    var value, parts = str.match(notionalPattern);
+                    if (parts) {
+                        value = parts[0]
+                    } else {
+                        value = 0;
+                    }
+                    return value;
+                }
+            };
+
+
+            var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+            //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
+            //which causes an issue.....
+            grid.addProperties({ editOnKeydown: false })
+            let behavior = grid.behavior;
+
+            grid.localization.add('notional', notionalLocalizer);
+            grid.localization.add('notional2', new grid.localization.NumberFormatter('fr-FR', {
+                style: 'currency',
+                currency: 'EUR'
+            }));
+            //Add Edit for Notional column
+            behavior.setColumnProperties(1, {
+                editor: 'textfield',// case-insensitive
+                format: 'notional2'
+            });
+            //Add Edit for Trade DAte column
+            behavior.setColumnProperties(12, {
+                editor: 'textfield',
+            });
+
+            var container = document.getElementById('content');
+            var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, "tradeId");
+            //dataGen.startTickingDataKendo(grid);
         }
-    };
 
 
-        var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades)});
-        let behavior = grid.behavior;
-
-        grid.localization.add('notional', notionalLocalizer);
-           grid.localization.add('notional2', new grid.localization.NumberFormatter('fr-FR', {
-        style: 'currency',
-        currency: 'EUR'
-    }));
-        //Add Edit for Notional column
-        behavior.setColumnProperties(1, {
-            editor: 'textfield' ,// case-insensitive
-            format: 'notional2'
-        });
-
-        
-
-        var container = document.getElementById('content');
-        var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid,container, "tradeId");
-        //dataGen.startTickingDataKendo(grid);
-    }
-  
-
-</script>
+    </script>
 </body>
 
 </html>
