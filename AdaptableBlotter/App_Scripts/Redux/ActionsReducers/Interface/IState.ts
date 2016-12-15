@@ -29,6 +29,7 @@ export interface PopupState {
     ShowErrorPopup: boolean;
     ComponentClassName: string;
     ErrorMsg: string;
+    Params?: any
 }
 
 export interface SmartEditState {

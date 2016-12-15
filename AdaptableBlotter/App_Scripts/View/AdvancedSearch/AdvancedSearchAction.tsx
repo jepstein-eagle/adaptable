@@ -9,6 +9,7 @@ import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
@@ -16,6 +17,7 @@ import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper } from '../../Core/Helper';
 import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
+import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 
 
 interface AdvancedSearchActionProps extends React.ClassAttributes<AdvancedSearchActionComponent> {
@@ -26,6 +28,7 @@ interface AdvancedSearchActionProps extends React.ClassAttributes<AdvancedSearch
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
+    onClearPopup: () => PopupRedux.ClearPopupAction,
 }
 
 interface AdvancedSearchActionInternalState {
@@ -36,6 +39,7 @@ interface AdvancedSearchActionInternalState {
 
 class AdvancedSearchActionComponent extends React.Component<AdvancedSearchActionProps, AdvancedSearchActionInternalState> {
     private IsDeleting: boolean = false;
+    private DisplayedNew: boolean = false;
 
     constructor() {
         super();
@@ -43,6 +47,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     render() {
+
+        var isNew: PopupState = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Popup;
+
 
         this.IsDeleting = false;
         var blotter = this.props.AdaptableBlotter;
@@ -55,11 +62,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
         let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.Name : "select";
 
+        if (isNew.Params != null && !this.DisplayedNew) {
+            this.onNewAdvancedSearch();
+        }
         return (
             <div >
                 <Form inline>
                     <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                       useSmallButton={true}  buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
+                        useSmallButton={true} buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
 
                         {/* The main Search selection form */}
                         <div style={divStyle}>
@@ -82,7 +92,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                         </OverlayTrigger>
                                         {' '}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                            <Button  bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                            <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
                                         </OverlayTrigger>
                                     </Col>
                                 </FormGroup>
@@ -142,6 +152,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
         }
+      this.DisplayedNew= true; // must be a better way but not sure what it is yet!
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
@@ -201,7 +212,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onCloseWizard() {
-        this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+        
+          this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
     }
 
     onFinishWizard() {
@@ -244,6 +256,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
+        onClearPopup: () => dispatch(PopupRedux.ClearPopup()),
     };
 }
 
@@ -266,5 +279,5 @@ let panelStyle = {
 
 
 let smallButtonStyle = {
-  margin: '2px'
+    margin: '2px'
 }

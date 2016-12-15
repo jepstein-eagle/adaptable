@@ -25,7 +25,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     MenuState: MenuState;
     AdaptableBlotter: IAdaptableBlotter;
     onClose: () => PopupRedux.HidePopupAction;
-    showPopup: (ComponentClassName: string) => PopupRedux.ShowPopupAction;
+    showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.ShowPopupAction;
     onSetQuickSearchText: (newQuickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
     onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
 }
@@ -62,7 +62,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             Blotter={this.props.AdaptableBlotter}
                             AdvancedSearches={this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches}
                             onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)}
-                            onNewAdvancedSearch={() => this.onEditAdvancedSearch()}
+                            onNewAdvancedSearch={() => this.onNewAdvancedSearch()}
                             onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
                     <Nav>
@@ -135,7 +135,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     onNewAdvancedSearch() {
         // we need some way of passing in a argument to a screens
         // that way we can tell the advancedsearchscreen it needs to start the new search wizard
-        this.props.showPopup("AdvancedSearchAction");
+        this.props.showPopup("AdvancedSearchAction", "New");
     }
 }
 
@@ -150,7 +150,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClose: () => dispatch(PopupRedux.HidePopup()),
-        showPopup: (ComponentClassName: string) => dispatch(PopupRedux.ShowPopup(ComponentClassName, null)),
+        showPopup: (componentClassName: string, params? :any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
         onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
     };
