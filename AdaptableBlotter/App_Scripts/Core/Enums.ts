@@ -77,3 +77,19 @@ export enum SortOrder{
     Ascending,
     Descending
 }
+
+
+export enum AlertCategory{
+    Data,
+    Action
+}
+
+// not sure about this...
+export enum NotificationType{
+    CellUpdated,
+    CellEdited,
+    UserDataEdited,
+    FunctionExecuted
+}
+
+

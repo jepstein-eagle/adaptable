@@ -22,7 +22,7 @@ import { EntityListActionButtons } from '../EntityListActionButtons';
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
     Columns: IColumn[],
-    ColumnsDefaultNudge: IPlusMinusCondition[]
+    PlusMinusConditions: IPlusMinusCondition[]
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditColumnsDefaultNudgeAction
     onDeleteColumnDefaultNudgeValue: (Index: number) => PlusMinusRedux.PlusMinusDeleteColumnsDefaultNudgeAction
@@ -51,8 +51,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             </Row>
         </Panel>
 
-        let optionColumnsItems = this.props.ColumnsDefaultNudge.map((x, index) => {
-            let optionColumns = this.props.Columns.filter(column => { return this.props.ColumnsDefaultNudge.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
+        let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
+            let optionColumns = this.props.Columns.filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
                 return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
             })
             return <li
@@ -130,12 +130,12 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
     private onColumnSelectChange(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: e.value, DefaultNudge: this.props.ColumnsDefaultNudge[index].DefaultNudge });
+        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: e.value, DefaultNudge: this.props.PlusMinusConditions[index].DefaultNudge });
     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: this.props.ColumnsDefaultNudge[index].ColumnId, DefaultNudge: parseFloat(e.value) });
+        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: this.props.PlusMinusConditions[index].ColumnId, DefaultNudge: parseFloat(e.value) });
     }
 
     handleDefaultNudgeValueChange(event: React.FormEvent) {
@@ -147,7 +147,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DefaultNudgeValue: state.PlusMinus.DefaultNudge,
-        ColumnsDefaultNudge: state.PlusMinus.ColumnsDefaultNudge,
+        PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
         Columns: state.Grid.Columns
     };
 }

@@ -18,6 +18,7 @@ import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
+import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -43,7 +44,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
- AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+    AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+    Alert: AlertRedux.AlertReducer,
 
 });
 

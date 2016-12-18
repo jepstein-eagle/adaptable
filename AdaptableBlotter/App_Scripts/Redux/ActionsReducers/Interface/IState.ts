@@ -9,11 +9,12 @@ import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy'
 import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
+import { IAlert } from '../../../Core/interface/IAlertStrategy';
 
 
 export interface PlusMinusState {
     DefaultNudge: number
-    ColumnsDefaultNudge: IPlusMinusCondition[]
+    PlusMinusConditions: IPlusMinusCondition[]
 }
 
 export interface GridState {
@@ -78,4 +79,9 @@ export interface QuickSearchState {
 export interface AdvancedSearchState {
     AdvancedSearches: Array<IAdvancedSearch>;
     CurrentAdvancedSearchId: string
+}
+
+
+export interface AlertState {
+    Alerts: Array<IAlert>;
 }

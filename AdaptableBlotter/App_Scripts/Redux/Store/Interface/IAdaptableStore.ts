@@ -13,6 +13,7 @@ export interface AdaptableBlotterState {
     Calendars: AdaptableBlotterStates.CalendarState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
+    Alert: AdaptableBlotterStates.AlertState;
 }
 
 export interface IAdaptableBlotterStore {

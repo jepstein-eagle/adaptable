@@ -42,7 +42,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number) {
                         let newValue: { id: any, columnId: string, value: any }
                         //we try to find a condition with an expression for that column that matches the record
-                        let columnNudgesWithExpression = this.PlusMinusState.ColumnsDefaultNudge.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
+                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
                                 newValue = { id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) }
@@ -50,7 +50,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         }
                         //we havent found any Condition with an Expression so we look for a general one for the column
                         if (!newValue) {
-                            let columnNudge = this.PlusMinusState.ColumnsDefaultNudge.find(x => x.ColumnId == columnValuePair.columnID && x.Expression == null)
+                            let columnNudge = this.PlusMinusState.PlusMinusConditions.find(x => x.ColumnId == columnValuePair.columnID && x.Expression == null)
                             if (columnNudge) {
                                 newValue = ({ id: keyValuePair[0], columnId: columnValuePair.columnID, value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
                             }
