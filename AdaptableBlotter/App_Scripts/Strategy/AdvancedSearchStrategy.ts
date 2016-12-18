@@ -20,8 +20,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Advanced Search", this.Id, 'AdvancedSearchAction', MenuType.Action, "search");
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.menuItemConfig = new MenuItemShowPopup("Advanced Search", this.Id, 'AdvancedSearchAction', MenuType.Configuration, "search");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
@@ -31,13 +30,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             // whenever ANYTHING changes in the search state, lets just run the CurrentAdvancedSearch
             // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
-             this.blotter.SearchService.ApplySearchOnGrid()
-        }
-    }
-
-    private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
-        if (StringExtensions.IsNotNullOrEmpty(this.AdvancedSearchState.CurrentAdvancedSearchId)) {
-            this.blotter.SearchService.ApplySearchOnRow(dataChangedEvent.IdentifierValue);
+            this.blotter.SearchService.ApplySearchOnGrid()
         }
     }
 

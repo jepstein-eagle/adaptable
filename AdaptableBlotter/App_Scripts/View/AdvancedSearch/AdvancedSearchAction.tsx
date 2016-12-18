@@ -73,30 +73,28 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
                         {/* The main Search selection form */}
                         <div style={divStyle}>
-                            <Form horizontal>
-                                <FormGroup controlId="formInlineName">
-                                    <Col xs={2}>
-                                        <ControlLabel>Select: </ControlLabel>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <FormControl componentClass="select" placeholder="select"
-                                            value={currentAdvancedSearch}
-                                            onChange={(x) => this.onSelectedSearchChanged(x)} >
-                                            <option value="select" key="select">Select a Search</option>
-                                            {advancedSearches}
-                                        </FormControl>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
-                                            <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
-                                        </OverlayTrigger>
-                                        {' '}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                            <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-                                        </OverlayTrigger>
-                                    </Col>
-                                </FormGroup>
-                            </Form>
+                            <FormGroup controlId="formInlineName">
+                                <Col xs={2}>
+                                    <ControlLabel>Select: </ControlLabel>
+                                </Col>
+                                <Col xs={5}>
+                                    <FormControl componentClass="select" placeholder="select"
+                                        value={currentAdvancedSearch}
+                                        onChange={(x) => this.onSelectedSearchChanged(x)} >
+                                        <option value="select" key="select">Select a Search</option>
+                                        {advancedSearches}
+                                    </FormControl>
+                                </Col>
+                                <Col xs={5}>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
+                                        <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                    </OverlayTrigger>
+                                    {' '}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
+                                        <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                    </OverlayTrigger>
+                                </Col>
+                            </FormGroup>
                         </div>
 
                         {/* Wizard for creating or ediiting searches */}
@@ -152,7 +150,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
         }
-      this.DisplayedNew= true; // must be a better way but not sure what it is yet!
+        this.DisplayedNew = true; // must be a better way but not sure what it is yet!
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
@@ -212,8 +210,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onCloseWizard() {
-        
-          this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
+
+        this.setState({ EditedAdvancedSearch: null } as AdvancedSearchActionInternalState)
     }
 
     onFinishWizard() {

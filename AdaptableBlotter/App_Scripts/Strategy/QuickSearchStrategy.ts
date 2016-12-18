@@ -22,11 +22,10 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("QuickSearch", this.Id, 'QuickSearchAction', MenuType.Action, "search");
+        this.menuItemConfig = new MenuItemShowPopup("QuickSearch", this.Id, 'QuickSearchAction', MenuType.Configuration, "search");
         this.quickSearchText = "";
         this.quickSearchOperator = this.GetQuickSearchState().QuickSearchOperator
         this.isCaseSenstive = this.GetQuickSearchState().IsCaseSensitive;
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
@@ -53,13 +52,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         }
     }
 
-    private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
-        if (StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
-            this.blotter.SearchService.ApplySearchOnRow(dataChangedEvent.IdentifierValue);
-        }
-    }
-
-    private GetQuickSearchState(): QuickSearchState {
+       private GetQuickSearchState(): QuickSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
     }
 

@@ -13,7 +13,19 @@ interface AdvancedSearchToolbarControlProps extends React.ClassAttributes<Advanc
     onEditAdvancedSearch: () => void;
 }
 
-export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearchToolbarControlProps, {}> {
+interface AdvancedSearchToolbarState {
+    SelectedAdvancedSearch: string
+}
+
+export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearchToolbarControlProps, AdvancedSearchToolbarState> {
+
+
+    constructor() {
+        super();
+        this.state = { SelectedAdvancedSearch: "" }
+    }
+
+private currentAdvancedSearch: string 
 
     render(): any {
 
@@ -23,14 +35,14 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
         let currentAdvancedSearchId: string = this.props.Blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId;
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == currentAdvancedSearchId);
-        let currentAdvancedSearch: string = savedSearch != null ? savedSearch.Uid : "select";
+        this.currentAdvancedSearch = savedSearch != null ? savedSearch.Uid : "select";
 
         return (
             <Form className='navbar-form'>
                 <Panel>
                     <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
-           <FormControl componentClass="select" placeholder="select"
-                        value={currentAdvancedSearch}
+                    <FormControl componentClass="select" placeholder="select"
+                        value={this.currentAdvancedSearch}
                         onChange={(x) => this.onSelectedSearchChanged(x)} >
                         <option value="select" key="select">Select a Search</option>
                         {advancedSearches}
@@ -38,15 +50,15 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='success' onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
+                        <Button bsSize='small' bsStyle='success' disabled={this.currentAdvancedSearch == "select"}  onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
                     </OverlayTrigger>
 
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Advanced Search</Tooltip>}>
-                        <Button bsSize='small' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                        <Button bsSize='small' disabled={this.currentAdvancedSearch == "select"} onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
                     </OverlayTrigger>
 
-                     {' '}
+                    {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">New Advanced Search</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.onNewAdvancedSearch()}>New</Button>
                     </OverlayTrigger>
@@ -60,26 +72,26 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
         let e = event.target as HTMLInputElement;
         let advancedSearchId = (e.value == "select") ? "" : e.value;
         this.props.onSelectAdvancedSearch(advancedSearchId);
-        this.setState(this.state)
+       this.setState({ SelectedAdvancedSearch: advancedSearchId });
     }
 
     onClearAdvancedSearch() {
         this.props.onSelectAdvancedSearch("");
-        this.setState(this.state)
+        this.setState({ SelectedAdvancedSearch: "" });
     }
 
     onEditAdvancedSearch() {
         this.props.onEditAdvancedSearch();
-        this.setState(this.state)
+        // this.forceUpdate()
     }
 
-     onNewAdvancedSearch() {
+    onNewAdvancedSearch() {
         this.props.onNewAdvancedSearch();
-        this.setState(this.state)
+        this.setState({ SelectedAdvancedSearch: "" });
     }
 }
 
 
 var labelStyle = {
-     margin: '5px'
+    margin: '5px'
 };

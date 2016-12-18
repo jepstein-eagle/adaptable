@@ -9,11 +9,11 @@ interface QuickSearchToolbarControlProps extends React.ClassAttributes<QuickSear
     onSetQuickSearchText: (quickSearchText: string) => void;
 }
 
-interface QuickSearchActionState {
+interface QuickSearchToolbarState {
     EditedQuickSearchText: string
 }
 
-export class QuickSearchToolbarControl extends React.Component<QuickSearchToolbarControlProps, QuickSearchActionState> {
+export class QuickSearchToolbarControl extends React.Component<QuickSearchToolbarControlProps, QuickSearchToolbarState> {
 
 
     constructor() {

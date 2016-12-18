@@ -18,6 +18,15 @@ Note:  Because Quick Search uses an expression - it only works on string columns
 export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+
+    }
+
+    private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+        if (StringExtensions.IsNotNullOrEmpty(this.GetQuickSearchState().QuickSearchText) ||
+            StringExtensions.IsNotNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearchId)) {
+            this.ApplySearchOnRow(dataChangedEvent.IdentifierValue);
+        }
     }
 
     public ApplySearchOnGrid(): void {
@@ -111,7 +120,7 @@ export class SearchService implements ISearchService {
                 {
                     Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
                     Operator: this.GetQuickSearchState().QuickSearchOperator,
-                    Operand1: quickSearchText, 
+                    Operand1: quickSearchText,
                     Operand2: ""
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
