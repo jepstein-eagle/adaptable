@@ -79,10 +79,10 @@ export enum SortOrder{
 }
 
 
-export enum AlertCategory{
-    Data,
-    Action
-}
+//export enum AlertCategory{
+//    Data,
+//    Action
+//}
 
 // not sure about this...
 export enum NotificationType{
@@ -90,6 +90,16 @@ export enum NotificationType{
     CellEdited,
     UserDataEdited,
     FunctionExecuted
+}
+
+export enum CellChangeType{
+    Any,
+    Equals,
+    NotEquals,
+    GreaterThan,
+    LessThan,
+    ValueChange,
+    PercentChange
 }
 
 

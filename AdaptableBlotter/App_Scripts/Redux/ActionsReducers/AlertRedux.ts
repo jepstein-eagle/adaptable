@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import { AlertState } from './Interface/IState';
-import { IAlert, NotificationCellUpdated, NotificationCellUserDataEdited, TempNotificationCreator } from '../../Core/Interface/IAlertStrategy';
+import { IAlert, TempNotificationCreator } from '../../Core/Interface/IAlertStrategy';
 
 
 export const ALERT_ADD_OR_UPDATE = 'ALERT_ADD_OR_UPDATE';

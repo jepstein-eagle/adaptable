@@ -13,14 +13,19 @@ import { Expression } from '../../Core/Expression/Expression';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
-//import { AlertExpressionWizard } from './AlertExpressionWizard'
-import { IAlert, INotification, NotificationCellUpdated } from '../../Core/Interface/IAlertStrategy'
+import { AlertSettingsWizard } from './AlertSettingsWizard'
+import { IAlert, ICellChangeRule} from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
+import { NotificationType, CellChangeType } from '../../Core/Enums'
+
+
+
 
 interface AlertConfigProps extends IStrategyViewPopupProps<AlertConfigComponent> {
     AlertConditions: IAlert[]
+    Columns: IColumn[],
     onDeleteAlert: (Index: number) => AlertRedux.AlertDeleteAction
     onAddEditAlert: (Index: number, ColumnsDefaultNudge: IAlert) => AlertRedux.AlertAddOrUpdateAction
 }
@@ -52,22 +57,22 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             return <li
                 className="list-group-item" key={index}>
                 <Row >
-                     <Col xs={4}>
-                       {x.Notification.WhereApplied()}
-                    </Col> 
                     <Col xs={4}>
-                        {x.Notification.WhenApplied()}
-                    </Col> 
-                    <Col xs={1}>
-                        {x.SendEmail? <Glyphicon glyph="ok" />:  <Glyphicon glyph="remove" />}
+                        {NotificationType[x.NotificationType]}
                     </Col>
-                     <Col xs={1}>
-                        {x.ShowPopup? <Glyphicon glyph="ok" />:  <Glyphicon glyph="remove" />}
+                    <Col xs={4}>
+                        {x.LongDescription}
+                    </Col>
+                    <Col xs={1}>
+                        {x.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                    </Col>
+                    <Col xs={1}>
+                        {x.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteAlert(index)}
-                            editClick={() => this.onEdit(index, x)}>
+                            deleteClick={() => this.props.onDeleteAlert(index) }
+                            editClick={() => this.onEdit(index, x) }>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -75,30 +80,39 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         })
         return <PanelWithButton headerText="Alerts Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Alert"}
-            buttonClick={() => this.createAlert()}  >
+            buttonClick={() => this.createAlert() }  >
             {alertItems.length > 0 && alertsHeader}
             <ListGroup style={panelColumNudge}>
                 {alertItems}
             </ListGroup>
 
-{this.state.EditedAlert != null &&
+            {this.state.EditedAlert != null &&
                 <AdaptableWizard Steps={[
                     <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} />,
+                    <AlertSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                 ]}
                     Data={this.state.EditedAlert}
                     StepStartIndex={0}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
+                    onHide={() => this.closeWizard() }
+                    onFinish={() => this.WizardFinish() } ></AdaptableWizard>}
 
         </PanelWithButton>
     }
 
     createAlert() {
+        let newCellChangeRule: ICellChangeRule = {
+            ColumnId: "select",
+            ChangeValue: null,
+            CellChangeType: CellChangeType.Any
+        }
+
         let _editedAlert: IAlert = {
-            Notification: new NotificationCellUpdated(),
+            NotificationType: NotificationType.CellUpdated,
             SendEmail: false,
             ShowPopup: false,
-            AlertText: ""
+            AlertText: "",
+            LongDescription: "",
+            CellChangeRule: newCellChangeRule,
         }
         this.setState({ EditedAlert: _editedAlert, EditedIndexAlert: -1 });
     }
@@ -108,14 +122,14 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         this.setState({ EditedAlert: Helper.cloneObject(alert), EditedIndexAlert: index });
     }
 
-       closeWizard() {
-           this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
-        }
-    
-        WizardFinish() {
-           // this.props.onAddEditAlert(this.state.EditedIndexAlert, this.state.EditedAlert);
-            this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
-        }
+    closeWizard() {
+        this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
+    }
+
+    WizardFinish() {
+        this.props.onAddEditAlert(this.state.EditedIndexAlert, this.state.EditedAlert);
+        this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
+    }
 
 
 
@@ -124,6 +138,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AlertConditions: state.Alert.Alerts,
+        Columns: state.Grid.Columns
     };
 }
 
