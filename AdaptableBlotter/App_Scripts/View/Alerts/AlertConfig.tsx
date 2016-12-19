@@ -45,10 +45,9 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
     render() {
         let alertsHeader = <Panel style={panelHeaderStyle} >
             <Row >
-                <Col xs={4} style={headerStyle}>Where</Col>
-                <Col xs={4} style={headerStyle}>Details</Col>
-                <Col xs={1} style={headerStyle}>Email</Col>
-                <Col xs={1} style={headerStyle}>Popup</Col>
+                <Col xs={6} style={headerStyle}>When Run</Col>
+                <Col xs={2} style={headerStyle}>Email</Col>
+                <Col xs={2} style={headerStyle}>Popup</Col>
                 <Col xs={2} style={headerStyle}></Col>
             </Row>
         </Panel>
@@ -57,16 +56,13 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             return <li
                 className="list-group-item" key={index}>
                 <Row >
-                    <Col xs={4}>
-                        {NotificationType[x.NotificationType]}
+                    <Col xs={6}>
+                        {this.createAlertDescription(x) }
                     </Col>
-                    <Col xs={4}>
-                        {x.LongDescription}
-                    </Col>
-                    <Col xs={1}>
+                    <Col xs={2}>
                         {x.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
-                    <Col xs={1}>
+                    <Col xs={2}>
                         {x.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
@@ -111,7 +107,6 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             SendEmail: false,
             ShowPopup: false,
             AlertText: "",
-            LongDescription: "",
             CellChangeRule: newCellChangeRule,
         }
         this.setState({ EditedAlert: _editedAlert, EditedIndexAlert: -1 });
@@ -131,6 +126,54 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
     }
 
+    createAlertDescription(alert: IAlert): string {
+
+        // first get where it runs
+        if (alert.NotificationType == NotificationType.FunctionExecuted) {
+            return "Any function is executed"
+        }
+
+        if (alert.NotificationType == NotificationType.UserDataEdited) {
+            return "Any piece of user data is edited"
+        }
+
+        // now dealing with updated / edited - need scope, action and value description
+        let scope: string = this.props.Columns.find(c => c.ColumnId == alert.CellChangeRule.ColumnId).ColumnFriendlyName;
+
+        let action: string = (alert.NotificationType == NotificationType.CellEdited) ? "edited" : "updated";
+
+        let valueDescription: string = "";
+
+        if (alert.CellChangeRule.CellChangeType != CellChangeType.Any) {
+            switch(alert.CellChangeRule.CellChangeType){
+                case CellChangeType.Equals:
+                valueDescription = " and new value = ";
+                break;
+                 case CellChangeType.NotEquals:
+                valueDescription = " and new value <> ";
+                break;
+                 case CellChangeType.GreaterThan:
+                valueDescription = " and new value > ";
+                break;
+                 case CellChangeType.LessThan:
+                valueDescription = " and new value < ";
+                break;
+                 case CellChangeType.ValueChange:
+                valueDescription = " and change in value at least ";
+                break;
+                 case CellChangeType.PercentChange:
+                valueDescription = " and % change is at least ";
+                break;
+              }
+            valueDescription = valueDescription +  alert.CellChangeRule.ChangeValue;
+            
+            
+        } else {
+            valueDescription = " for any value change"
+        }
+
+        return "'" + scope + "' column is " + action + valueDescription;
+    }
 
 
 }

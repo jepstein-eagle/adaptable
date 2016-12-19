@@ -36,15 +36,26 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
 
         let selectedColumn: string = (this.state.ColumnId != "") ? this.state.ColumnId : "select";
 
+
         let isNumericColumn: boolean = (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Number);
+
+
+        let availableCellChangeTypes: CellChangeType[] = (isNumericColumn) ?
+            [CellChangeType.Any, CellChangeType.Equals, CellChangeType.NotEquals, CellChangeType.GreaterThan, CellChangeType.LessThan, CellChangeType.ValueChange, CellChangeType.PercentChange] :
+            [CellChangeType.Any, CellChangeType.Equals, CellChangeType.NotEquals];
+
+        let optionCellChangeTypes = availableCellChangeTypes.map(c => {
+            return <option value={c} key={c}>{this.getTextForCellChangeValue(c) }</option>
+
+        });
 
         return <Panel header="Alert Settings" bsStyle="primary">
             <Form horizontal>
                 <FormGroup controlId="formColumn">
                     <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={3}>Select Column: </Col>
-                        <Col xs={9}>
-                            <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChange(x) } >
+                        <Col componentClass={ControlLabel} xs={5}>Select Column: </Col>
+                        <Col xs={7}>
+                            <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChanged(x) } >
                                 <option value="select" key="select">Select a column</option>
                                 {optionColumns}
                             </FormControl>
@@ -53,154 +64,79 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
                 </FormGroup>
                 <FormGroup>
                     <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={3}>Condition: </Col>
-                        <Col xs={5}>
-                            <Radio value="Any" checked={this.state.CellChangeType == CellChangeType.Any} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                Any Change in Value
-                            </Radio>
-                        </Col>
-                        <Col xs={4}>
+                        <Col componentClass={ControlLabel} xs={5}>Select Change Condition: </Col>
+                        <Col xs={7}>
+                            <FormControl componentClass="select" placeholder="select" value={this.state.CellChangeType} onChange={(x) => this.onCellChangeTypeChanged(x) } >
+                                {optionCellChangeTypes}
+                            </FormControl>
                         </Col>
                     </Row>
-
-                    { /* if not numeric then show a string control for now */ }
-                    {!isNumericColumn &&
-                        <div>
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="Equals" checked={this.state.CellChangeType == CellChangeType.Equals} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Equals
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="string" placeholder="Enter a Value"  />
-                                </Col>
-                            </Row>
-
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="NotEquals" checked={this.state.CellChangeType == CellChangeType.NotEquals} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Not Equal To
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="string" placeholder="Enter a Value"  />
-                                </Col>
-                            </Row>
-                        </div>
-                    }
-
-                    { /* if numeric then show all the numeric controls */ }
-                    {isNumericColumn &&
-                        <div>
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="Equals" checked={this.state.CellChangeType == CellChangeType.Equals} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Equals
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="NotEquals" checked={this.state.CellChangeType == CellChangeType.NotEquals} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Not Equal To
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="GreaterThan" checked={this.state.CellChangeType == CellChangeType.GreaterThan} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Greater Than
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="LessThan" checked={this.state.CellChangeType == CellChangeType.LessThan} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        New Value Less Than
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="ValueChange" checked={this.state.CellChangeType == CellChangeType.ValueChange} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        Value Change is At Least
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-
-                            <Row style={smallMarginStyle}>
-                                <Col componentClass={ControlLabel} xs={3}></Col>
-                                <Col xs={5}>
-                                    <Radio value="PercentChange" checked={this.state.CellChangeType == CellChangeType.PercentChange} onChange={(e) => this.onNotificationTypeChange(e) }>
-                                        % Change is At Least
-                                    </Radio>
-                                </Col>
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }}  type="number" placeholder="Enter a Number"  />
-                                </Col>
-                            </Row>
-                        </div>
-                    }
                 </FormGroup>
+
+                { /* if  numeric then show a numeric control */ }
+                {this.state.CellChangeType != CellChangeType.Any && isNumericColumn &&
+                    <FormGroup>
+                        <Row style={smallMarginStyle}>
+                            <Col componentClass={ControlLabel} xs={5}>Value: </Col>
+                            <Col xs={7}>
+                                <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="number" placeholder="Enter a Number" onChange={(x) => this.onNumericChangeValueChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                }
+
+                { /* if not numeric then show a string control for now */ }
+                {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn &&
+                    <FormGroup>
+                        <Row style={smallMarginStyle}>
+                            <Col componentClass={ControlLabel} xs={5}>Value: </Col>
+                            <Col xs={7}>
+                                <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="string" placeholder="Enter a Value" onChange={(x) => this.onStringChangeValueChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                }
 
             </Form>
         </Panel>
     }
 
-    private onColumnSelectChange(event: React.FormEvent) {
+    private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ ColumnId: e.value, CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onNotificationTypeChange(event: React.FormEvent) {
+    private onCellChangeTypeChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        switch (e.value) {
-            case "Any":
-                this.setState({ CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "Equals":
-                this.setState({ CellChangeType: CellChangeType.Equals } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "NotEquals":
-                this.setState({ CellChangeType: CellChangeType.NotEquals } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "GreaterThan":
-                this.setState({ CellChangeType: CellChangeType.GreaterThan } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "LessThan":
-                this.setState({ CellChangeType: CellChangeType.LessThan } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "ValueChange":
-                this.setState({ CellChangeType: CellChangeType.ValueChange } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
-            case "PercentChange":
-                this.setState({ CellChangeType: CellChangeType.PercentChange } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
-                break;
+        this.setState({ CellChangeType: Number.parseInt(e.value) } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+private onNumericChangeValueChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ChangeValue: Number.parseFloat(e.value) } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onStringChangeValueChanged(event: React.FormEvent) {        let e = event.target as HTMLInputElement;
+        this.setState({ ChangeValue: e.value } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+    
+
+    private getTextForCellChangeValue(cellChangeType: CellChangeType): string {
+        switch (cellChangeType) {
+            case CellChangeType.Any:
+                return "Any Change In Value"
+            case CellChangeType.Equals:
+                return "New Value Equals"
+            case CellChangeType.NotEquals:
+                return "New Value Not Equal To"
+            case CellChangeType.GreaterThan:
+                return "New Value Greater Than"
+            case CellChangeType.LessThan:
+                return "New Value Less Than"
+            case CellChangeType.ValueChange:
+                return "Value Change is At Least"
+            case CellChangeType.PercentChange:
+                return "% Change is At Least"
         }
     }
 
