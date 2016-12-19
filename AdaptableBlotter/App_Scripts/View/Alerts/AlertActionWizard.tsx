@@ -35,10 +35,11 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
     render(): any {
 
-        let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((popupTypeNameAndValue: any) => {
-            return <option key={popupTypeNameAndValue.value} value={popupTypeNameAndValue.value}>{popupTypeNameAndValue.name}</option>
+        let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((enumNameAndValue: any) => {
+            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
         })
 
+        let selectedPopup = this.state.PopupType.toString();
 
         return <Panel header="Alert Action" bsStyle="primary">
             <Form horizontal>
@@ -51,12 +52,12 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
                 { /* show recipients if showing email */}
                 {this.state.SendEmail &&
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={4}>Email Recipients: </Col>
-                            <Col xs={8}>
-                                <FormControl value={this.state.EmailRecipients} type="string" placeholder="Enter recipient names" onChange={(x) => this.onEmailRecipientsChanged(x)} />
-                            </Col>
-                        </Row>
+                    <Row style={smallMarginStyle}>
+                        <Col componentClass={ControlLabel} xs={4}>Email Recipients: </Col>
+                        <Col xs={8}>
+                            <FormControl value={this.state.EmailRecipients} type="string" placeholder="Enter recipient names" onChange={(x) => this.onEmailRecipientsChanged(x)} />
+                        </Col>
+                    </Row>
                 }
 
                 <Row style={smallMarginStyle}>
@@ -69,14 +70,14 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
                 { /* select popuptype if showing popup */}
                 {this.state.ShowPopup &&
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={4}>Popup Type: </Col>
-                            <Col xs={8}>
-                                <FormControl componentClass="select" placeholder="select" value={PopupType[this.state.PopupType]} onChange={(x) => this.onPopupTypeChanged(x)} >
-                                    {optionPopupTypes}
-                                </FormControl>
-                            </Col>
-                        </Row>
+                    <Row style={smallMarginStyle}>
+                        <Col componentClass={ControlLabel} xs={4}>Popup Type: </Col>
+                        <Col xs={8}>
+                            <FormControl componentClass="select" placeholder="select" value={selectedPopup} onChange={(x) => this.onPopupTypeChanged(x)} >
+                                {optionPopupTypes}
+                            </FormControl>
+                        </Col>
+                    </Row>
                 }
 
             </Form>

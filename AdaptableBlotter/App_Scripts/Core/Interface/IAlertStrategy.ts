@@ -1,5 +1,9 @@
 import { NotificationType, CellChangeType, PopupType } from '../Enums';
 
+export interface IAlertStrategy{
+    CreateEmptyAlert(): IAlert
+    CreateEmptyCellChangeRule(): ICellChangeRule
+}
 
 export interface IAlert {
     NotificationType: NotificationType
@@ -56,5 +60,7 @@ export class TempNotificationCreator {
         returnAlerts.push(alert1);
         return returnAlerts;
     }
+
+  
 
 }
