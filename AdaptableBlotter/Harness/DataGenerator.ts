@@ -37,17 +37,18 @@ export class DataGenerator {
         }, 5000)
     }
     
-    startTickingDataHypergrid(data: any) {
+    startTickingDataHypergrid(grid: any) {
         setInterval(() => {
             let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
             //pick a random trade in the first ten
-            let trade = this.getRandomItem(data, 10);
+            let trade = this.getRandomItem(grid.behavior.getData(), 10);
             //pick a random colum in the numeric col
             let columnName = this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
             let newValue = initialNewValue + numberToAdd;
             trade[columnName] = newValue;
-        }, 5000)
+            grid.repaint()
+        }, 500)
     }
 
     createTrade(i: number): ITrade {

@@ -66,7 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
@@ -110,6 +110,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return icon;
         }
 
+        grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+            var x = config.x;
+            var y = config.y;
+            let row = this.grid.behavior.dataModel.dataSource.getRow(y)
+            let column = this.grid.behavior.getActiveColumns()[x]
+            if (column && row) {
+                this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
+            }
+            let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+            if (flashColor) {
+                config.backgroundColor = flashColor;
+            }
+            return this.grid.cellRenderers.get(declaredRendererName);
+        };
         grid.addEventListener('fin-column-sort', (e: any) => {
             this.toggleSort(e.detail.column)
             //in case we want multi column
@@ -423,8 +437,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
-        if (timeout) {
-            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnIndex, style), timeout);
+        //here we don't call Repaint as we consider that we already are in the repaint loop
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        if (rowIndex) {
+            this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', 'red')
+            if (timeout) {
+                setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, style), timeout);
+            }
         }
     }
 
@@ -438,6 +458,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
+    }
+
+
+    private removeCellStyleByIndex(x: any, y: number, style: string): void {
+        this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
+        this.grid.repaint()
     }
 
     public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {

@@ -417,6 +417,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.text();
     }
 
+    //Jo: we know that this function is wrong as it's not cumulative
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
         var cell = this.getCellByColumnIndexAndRow(row, columnIndex);

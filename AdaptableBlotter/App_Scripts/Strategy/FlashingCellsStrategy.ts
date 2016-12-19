@@ -50,13 +50,12 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     public FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn): void {
         if (dataChangedEvent.OldValue == null) return;
-        //  alert("going to flash column: " + DataChangedEvent.ColumnName + " on row PK: " + DataChangedEvent.IdentifierValue)
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
-
+        //Jo : we know that this function is wrong as it's not cumulative
         this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle, flashingColumn.FlashingCellDuration.Duration)
     }
 

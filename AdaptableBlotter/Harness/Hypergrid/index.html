@@ -48,7 +48,7 @@
             firstRow = (typeof firstRow === 'object') ? firstRow : {};
             for (var p in firstRow) {
                 if (firstRow.hasOwnProperty(p)) {
-                    if (p === 'notional') {
+                    if (p === 'notional' || p === 'ask'|| p === 'bid') {
                         schema.push({ name: p, header: capitalize(p), type: 'number' });
                     }
                     else if (p === 'tradeDate') {
@@ -64,7 +64,7 @@
         function InitBlotter() {
             var dataGen = new harness.DataGenerator();
             var trades = dataGen.getTrades();
-            dataGen.startTickingDataHypergrid(trades)
+            
 
             var notionalPattern = /^(\d+) EUR$/;
             var notionalLocalizer = {
@@ -89,7 +89,7 @@
 
 
             var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-            
+            dataGen.startTickingDataHypergrid(grid)
             //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
             //which causes an issue.....
             grid.addProperties({ editOnKeydown: false })
