@@ -10,18 +10,18 @@ import { NotificationType, ColumnType, CellChangeType, PopupType } from '../../C
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
 
-interface AlertBodyWizardProps extends AdaptableWizardStepProps<IAlert> {
+interface AlertContentsWizardProps extends AdaptableWizardStepProps<IAlert> {
     Blotter: IAdaptableBlotter
 
 }
-interface AlertBodyWizardState {
+interface AlertContentsWizardState {
     AlertHeader: string
     AlertBody: string
 
 }
 
-export class AlertBodyWizard extends React.Component<AlertBodyWizardProps, AlertBodyWizardState> implements AdaptableWizardStep {
-    constructor(props: AlertBodyWizardProps) {
+export class AlertContentsWizard extends React.Component<AlertContentsWizardProps, AlertContentsWizardState> implements AdaptableWizardStep {
+    constructor(props: AlertContentsWizardProps) {
         super(props)
         this.state = {
             AlertHeader: this.props.Data.AlertHeader,
@@ -31,18 +31,18 @@ export class AlertBodyWizard extends React.Component<AlertBodyWizardProps, Alert
 
     render(): any {
 
-        return <Panel header="Alert Text" bsStyle="primary">
+        return <Panel header="Alert Contents" bsStyle="primary">
             <Form horizontal>
                         <Row style={smallMarginStyle}>
                             <Col componentClass={ControlLabel} xs={4}>Alert Header: </Col>
                             <Col xs={8}>
-                                <FormControl value={this.state.AlertHeader} type="string" placeholder="Enter alert text" onChange={(x) => this.onAlertHeaderTextChanged(x)} />
+                                <FormControl value={this.state.AlertHeader} type="string" placeholder="Enter alert header" onChange={(x) => this.onAlertHeaderTextChanged(x)} />
                             </Col>
                         </Row>
                         <Row style={smallMarginStyle}>
                             <Col componentClass={ControlLabel} xs={4}>Alert Body: </Col>
                             <Col xs={8}>
-                                <FormControl value={this.state.AlertBody} type="string" placeholder="Enter alert text" onChange={(x) => this.onAlertBodyTextChanged(x)} />
+                                <FormControl value={this.state.AlertBody} type="string" placeholder="Enter alert body" onChange={(x) => this.onAlertBodyTextChanged(x)} />
                             </Col>
                         </Row>
               
@@ -52,13 +52,13 @@ export class AlertBodyWizard extends React.Component<AlertBodyWizardProps, Alert
 
     private onAlertHeaderTextChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ AlertHeader: e.value } as AlertBodyWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ AlertHeader: e.value } as AlertContentsWizardState, () => this.props.UpdateGoBackState())
     }
 
 
     private onAlertBodyTextChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ AlertBody: e.value } as AlertBodyWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ AlertBody: e.value } as AlertContentsWizardState, () => this.props.UpdateGoBackState())
     }
   
     public canNext(): boolean {
@@ -72,7 +72,7 @@ export class AlertBodyWizard extends React.Component<AlertBodyWizardProps, Alert
     }
   
     public Back(): void { }
-    public StepName = "Alert Text"
+    public StepName = "Alert Contents"
 }
 
 

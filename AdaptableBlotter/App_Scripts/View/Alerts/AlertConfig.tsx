@@ -4,7 +4,6 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup } from 'react-bootstrap';
-
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -16,7 +15,7 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
 import { AlertSettingsWizard } from './AlertSettingsWizard'
 import { AlertActionWizard } from './AlertActionWizard'
-import { AlertBodyWizard } from './AlertBodyWizard'
+import { AlertContentsWizard } from './AlertContentsWizard'
 import { IAlert, ICellChangeRule, IAlertEmailInfo, IAlertPopupInfo } from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
@@ -24,8 +23,6 @@ import { EntityListActionButtons } from '../EntityListActionButtons';
 import { NotificationType, CellChangeType, PopupType } from '../../Core/Enums'
 import { IAlertStrategy } from '../../Core/Interface/IAlertStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
-
-
 
 interface AlertConfigProps extends IStrategyViewPopupProps<AlertConfigComponent> {
     AlertConditions: IAlert[]
@@ -91,7 +88,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                     <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} />,
                     <AlertSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                     <AlertActionWizard Blotter={this.props.AdaptableBlotter} />,
-                    <AlertBodyWizard Blotter={this.props.AdaptableBlotter} />,
+                    <AlertContentsWizard Blotter={this.props.AdaptableBlotter} />,
                 ]}
                     Data={this.state.EditedAlert}
                     StepStartIndex={0}
