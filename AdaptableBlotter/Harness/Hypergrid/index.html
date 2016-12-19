@@ -64,6 +64,7 @@
         function InitBlotter() {
             var dataGen = new harness.DataGenerator();
             var trades = dataGen.getTrades();
+            dataGen.startTickingDataHypergrid(trades)
 
             var notionalPattern = /^(\d+) EUR$/;
             var notionalLocalizer = {
@@ -88,6 +89,7 @@
 
 
             var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+            
             //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
             //which causes an issue.....
             grid.addProperties({ editOnKeydown: false })
