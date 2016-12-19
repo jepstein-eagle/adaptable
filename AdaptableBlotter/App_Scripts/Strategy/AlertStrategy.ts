@@ -43,7 +43,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
             NotificationType: NotificationType.CellUpdated,
             AlertEmailInfo: emailInfo,
             AlertPopupInfo: popupInfo,
-            AlertText: "",
+            AlertHeader: "",
+            AlertBody: "",
             CellChangeRule: this.CreateEmptyCellChangeRule(),
         }
         return newAlert;

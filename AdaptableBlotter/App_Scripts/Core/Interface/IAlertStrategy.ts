@@ -9,7 +9,8 @@ export interface IAlert {
     NotificationType: NotificationType
     AlertEmailInfo: IAlertEmailInfo,
     AlertPopupInfo: IAlertPopupInfo,
-    AlertText: string,
+    AlertHeader: string,
+    AlertBody: string,
     CellChangeRule: ICellChangeRule
 }
 
@@ -40,12 +41,12 @@ export class TempNotificationCreator {
         }
 
         let emailInfo: IAlertEmailInfo = {
-            SendEmail: true,
+            SendEmail: false,
             EmailRecipients: ""
         }
 
         let popupInfo: IAlertPopupInfo = {
-            ShowPopup: false,
+            ShowPopup: true,
             PopupType: PopupType.DisappearAutomatically
         }
 
@@ -54,7 +55,8 @@ export class TempNotificationCreator {
             CellChangeRule: cellChangeRule,
             AlertEmailInfo: emailInfo,
             AlertPopupInfo: popupInfo,
-            AlertText: "hello",
+            AlertHeader: "Bid Updated",
+            AlertBody: "The value in the Bid Column has updated",
         }
 
         returnAlerts.push(alert1);
