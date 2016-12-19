@@ -14,11 +14,12 @@ import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
 import { AlertSettingsWizard } from './AlertSettingsWizard'
-import { IAlert, ICellChangeRule} from '../../Core/Interface/IAlertStrategy'
+import { AlertActionWizard } from './AlertActionWizard'
+import { IAlert, ICellChangeRule, IAlertEmailInfo, IAlertPopupInfo} from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { NotificationType, CellChangeType } from '../../Core/Enums'
+import { NotificationType, CellChangeType, PopupType } from '../../Core/Enums'
 
 
 
@@ -60,10 +61,10 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                         {this.createAlertDescription(x) }
                     </Col>
                     <Col xs={2}>
-                        {x.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertEmailInfo.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
-                        {x.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertPopupInfo.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
@@ -86,6 +87,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                 <AdaptableWizard Steps={[
                     <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} />,
                     <AlertSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
+                    <AlertActionWizard Blotter={this.props.AdaptableBlotter} />,
                 ]}
                     Data={this.state.EditedAlert}
                     StepStartIndex={0}
@@ -102,10 +104,20 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             CellChangeType: CellChangeType.Any
         }
 
+        let emailInfo: IAlertEmailInfo = {
+            SendEmail: true,
+            EmailRecipients: ""
+        }
+
+        let popupInfo: IAlertPopupInfo = {
+            ShowPopup: false,
+            PopupType: PopupType.DisappearAutomatically
+        }
+
         let _editedAlert: IAlert = {
             NotificationType: NotificationType.CellUpdated,
-            SendEmail: false,
-            ShowPopup: false,
+            AlertEmailInfo: emailInfo,
+            AlertPopupInfo: popupInfo,
             AlertText: "",
             CellChangeRule: newCellChangeRule,
         }
@@ -145,33 +157,30 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         let valueDescription: string = "";
 
         if (alert.CellChangeRule.CellChangeType != CellChangeType.Any) {
-            switch(alert.CellChangeRule.CellChangeType){
+            switch (alert.CellChangeRule.CellChangeType) {
                 case CellChangeType.Equals:
-                valueDescription = " and new value = ";
-                break;
-                 case CellChangeType.NotEquals:
-                valueDescription = " and new value <> ";
-                break;
-                 case CellChangeType.GreaterThan:
-                valueDescription = " and new value > ";
-                break;
-                 case CellChangeType.LessThan:
-                valueDescription = " and new value < ";
-                break;
-                 case CellChangeType.ValueChange:
-                valueDescription = " and change in value at least ";
-                break;
-                 case CellChangeType.PercentChange:
-                valueDescription = " and % change is at least ";
-                break;
-              }
-            valueDescription = valueDescription +  alert.CellChangeRule.ChangeValue;
-            
-            
+                    valueDescription = " and new value = ";
+                    break;
+                case CellChangeType.NotEquals:
+                    valueDescription = " and new value <> ";
+                    break;
+                case CellChangeType.GreaterThan:
+                    valueDescription = " and new value > ";
+                    break;
+                case CellChangeType.LessThan:
+                    valueDescription = " and new value < ";
+                    break;
+                case CellChangeType.ValueChange:
+                    valueDescription = " and change in value at least ";
+                    break;
+                case CellChangeType.PercentChange:
+                    valueDescription = " and % change is at least ";
+                    break;
+            }
+            valueDescription = valueDescription + alert.CellChangeRule.ChangeValue;
         } else {
             valueDescription = " for any value change"
         }
-
         return "'" + scope + "' column is " + action + valueDescription;
     }
 

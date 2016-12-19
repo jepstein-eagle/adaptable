@@ -103,3 +103,11 @@ export enum CellChangeType{
 }
 
 
+export enum PopupType{
+    DisappearAutomatically,
+    ManualClose
+}
+
+
+
+

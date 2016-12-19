@@ -1,10 +1,10 @@
-import { NotificationType, CellChangeType } from '../Enums';
+import { NotificationType, CellChangeType, PopupType } from '../Enums';
 
 
 export interface IAlert {
     NotificationType: NotificationType
-    SendEmail: Boolean,
-    ShowPopup: Boolean,
+    AlertEmailInfo: IAlertEmailInfo,
+    AlertPopupInfo: IAlertPopupInfo,
     AlertText: string,
     CellChangeRule: ICellChangeRule
 }
@@ -15,23 +15,43 @@ export interface ICellChangeRule {
     ChangeValue: any,
 }
 
+export interface IAlertEmailInfo {
+    SendEmail: boolean,
+    EmailRecipients: string
+}
+
+export interface IAlertPopupInfo {
+    ShowPopup: boolean,
+    PopupType: PopupType
+}
+
 export class TempNotificationCreator {
     public CreateTempAlerts(): IAlert[] {
         let returnAlerts: IAlert[] = []
 
-        let cellChangeRule1: ICellChangeRule = {
+        let cellChangeRule: ICellChangeRule = {
             ColumnId: "bid",
             CellChangeType: CellChangeType.GreaterThan,
             ChangeValue: 5,
         }
 
+        let emailInfo: IAlertEmailInfo = {
+            SendEmail: true,
+            EmailRecipients: ""
+        }
+
+        let popupInfo: IAlertPopupInfo = {
+            ShowPopup: false,
+            PopupType: PopupType.DisappearAutomatically
+        }
+
         var alert1: IAlert = {
             NotificationType: NotificationType.CellUpdated,
-            CellChangeRule: cellChangeRule1,
-            ShowPopup: false,
-            SendEmail: true,
+            CellChangeRule: cellChangeRule,
+            AlertEmailInfo: emailInfo,
+            AlertPopupInfo: popupInfo,
             AlertText: "hello",
-         }
+        }
 
         returnAlerts.push(alert1);
         return returnAlerts;

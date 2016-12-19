@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Grid, FormControl, ControlLabel, Label, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { ButtonToolbar, Grid, FormControl, ControlLabel, Label, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

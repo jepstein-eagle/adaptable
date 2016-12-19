@@ -8,7 +8,7 @@ import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { CalendarsConfigItem, CalendarConfigHeader } from './CalendarsConfigItem'
 import { CalendarEntryItem, CalendarEntryHeader } from './CalendarEntryItem'
 

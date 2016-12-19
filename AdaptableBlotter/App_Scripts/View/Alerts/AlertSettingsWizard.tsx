@@ -45,7 +45,7 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
             [CellChangeType.Any, CellChangeType.Equals, CellChangeType.NotEquals];
 
         let optionCellChangeTypes = availableCellChangeTypes.map(c => {
-            return <option value={c} key={c}>{this.getTextForCellChangeValue(c) }</option>
+            return <option value={CellChangeType[c]} key={c}>{this.getTextForCellChangeValue(c)}</option>
 
         });
 
@@ -55,7 +55,7 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
                     <Row style={smallMarginStyle}>
                         <Col componentClass={ControlLabel} xs={5}>Select Column: </Col>
                         <Col xs={7}>
-                            <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChanged(x) } >
+                            <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChanged(x)} >
                                 <option value="select" key="select">Select a column</option>
                                 {optionColumns}
                             </FormControl>
@@ -66,14 +66,14 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
                     <Row style={smallMarginStyle}>
                         <Col componentClass={ControlLabel} xs={5}>Select Change Condition: </Col>
                         <Col xs={7}>
-                            <FormControl componentClass="select" placeholder="select" value={this.state.CellChangeType} onChange={(x) => this.onCellChangeTypeChanged(x) } >
+                            <FormControl componentClass="select" placeholder="select" value={CellChangeType[this.state.CellChangeType]} onChange={(x) => this.onCellChangeTypeChanged(x)} >
                                 {optionCellChangeTypes}
                             </FormControl>
                         </Col>
                     </Row>
                 </FormGroup>
 
-                { /* if  numeric then show a numeric control */ }
+                { /* if  numeric then show a numeric control */}
                 {this.state.CellChangeType != CellChangeType.Any && isNumericColumn &&
                     <FormGroup>
                         <Row style={smallMarginStyle}>
@@ -85,7 +85,7 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
                     </FormGroup>
                 }
 
-                { /* if not numeric then show a string control for now */ }
+                { /* if not numeric then show a string control for now */}
                 {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn &&
                     <FormGroup>
                         <Row style={smallMarginStyle}>
@@ -111,15 +111,16 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
         this.setState({ CellChangeType: Number.parseInt(e.value) } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-private onNumericChangeValueChanged(event: React.FormEvent) {
+    private onNumericChangeValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ ChangeValue: Number.parseFloat(e.value) } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onStringChangeValueChanged(event: React.FormEvent) {        let e = event.target as HTMLInputElement;
+    private onStringChangeValueChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
         this.setState({ ChangeValue: e.value } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
     }
-    
+
 
     private getTextForCellChangeValue(cellChangeType: CellChangeType): string {
         switch (cellChangeType) {
@@ -157,7 +158,7 @@ private onNumericChangeValueChanged(event: React.FormEvent) {
         return true;
     }
 
-    public canBack(): boolean { return false; }
+    public canBack(): boolean { return true; }
     public Next(): void {
         var cellChangeRule: ICellChangeRule = {
             ColumnId: this.state.ColumnId,
