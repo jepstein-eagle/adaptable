@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup } from 'react-bootstrap';
+import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -16,7 +16,7 @@ import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
 import { AlertSettingsWizard } from './AlertSettingsWizard'
 import { AlertActionWizard } from './AlertActionWizard'
 import { AlertContentsWizard } from './AlertContentsWizard'
-import { IAlert, ICellChangeRule, IAlertEmailInfo, IAlertPopupInfo } from '../../Core/Interface/IAlertStrategy'
+import { IAlert, ICellChangeRule, IAlertCommunicationInfo } from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
@@ -35,7 +35,6 @@ interface AlertConfigState {
     EditedAlert: IAlert
     EditedIndexAlert: number
 }
-
 
 class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfigState> {
 
@@ -61,10 +60,10 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                         {this.createAlertDescription(x)}
                     </Col>
                     <Col xs={2}>
-                        {x.AlertEmailInfo.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertCommunicationInfo.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
-                        {x.AlertPopupInfo.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertCommunicationInfo.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
@@ -79,13 +78,19 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             buttonContent={"Create Alert"}
             buttonClick={() => this.createAlert()}  >
             {alertItems.length > 0 && alertsHeader}
-            <ListGroup style={panelColumNudge}>
-                {alertItems}
-            </ListGroup>
+            {alertItems.length > 0 &&
+                <ListGroup style={panelColumNudge}>
+                    {alertItems}
+                </ListGroup>
+            }
+
+            {alertItems.length == 0 &&
+                <Well bsSize="small">Click 'Create Alert' to start creating alerts.</Well>
+            }
 
             {this.state.EditedAlert != null &&
                 <AdaptableWizard Steps={[
-                    <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} />,
+                    <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} Alerts={this.props.AlertConditions} />,
                     <AlertSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                     <AlertActionWizard Blotter={this.props.AdaptableBlotter} />,
                     <AlertContentsWizard Blotter={this.props.AdaptableBlotter} />,
@@ -93,13 +98,12 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                     Data={this.state.EditedAlert}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
+                    onFinish={() => this.finishWizard()} ></AdaptableWizard>}
 
         </PanelWithButton>
     }
 
     createAlert() {
-
         // have to use any as cannot cast from IStrategy to IAlertStrategy  :(
         let alertStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AlertStrategyId);
         this.setState({ EditedAlert: alertStrategy.CreateEmptyAlert(), EditedIndexAlert: -1 });
@@ -114,7 +118,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
     }
 
-    WizardFinish() {
+    finishWizard() {
         this.props.onAddEditAlert(this.state.EditedIndexAlert, this.state.EditedAlert);
         this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
     }

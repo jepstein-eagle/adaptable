@@ -1,4 +1,4 @@
-import { IAlert, IAlertStrategy, ICellChangeRule, IAlertEmailInfo, IAlertPopupInfo } from '../Core/Interface/IAlertStrategy';
+import { IAlert, IAlertStrategy, ICellChangeRule, IAlertCommunicationInfo } from '../Core/Interface/IAlertStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -29,20 +29,16 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
     public CreateEmptyAlert(): IAlert {
 
-        let emailInfo: IAlertEmailInfo = {
+        let alertCommunicationInfo: IAlertCommunicationInfo = {
             SendEmail: false,
-            EmailRecipients: ""
-        }
-
-        let popupInfo: IAlertPopupInfo = {
-            ShowPopup: true,
+            EmailRecipients: "",
+                        ShowPopup: true,
             PopupType: PopupType.DisappearAutomatically
         }
 
         let newAlert: IAlert = {
             NotificationType: NotificationType.CellUpdated,
-            AlertEmailInfo: emailInfo,
-            AlertPopupInfo: popupInfo,
+            AlertCommunicationInfo: alertCommunicationInfo,
             AlertHeader: "",
             AlertBody: "",
             CellChangeRule: this.CreateEmptyCellChangeRule(),

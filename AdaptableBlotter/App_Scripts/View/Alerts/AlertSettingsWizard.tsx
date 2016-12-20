@@ -114,7 +114,12 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
 
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ColumnId: e.value, CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        // if we are changing from existing column to new column then update CellChangeType and ChangeValue as well; otherwise just change the column
+        if (this.stateHasColumn()) {
+            this.setState({ ColumnId: e.value, ChangeValue: null, CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ColumnId: e.value } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
     }
 
     private onCellChangeTypeChanged(event: React.FormEvent) {

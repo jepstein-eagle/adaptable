@@ -26,10 +26,10 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
     constructor(props: AlertActionWizardProps) {
         super(props)
         this.state = {
-            SendEmail: this.props.Data.AlertEmailInfo.SendEmail,
-            EmailRecipients: this.props.Data.AlertEmailInfo.EmailRecipients,
-            ShowPopup: this.props.Data.AlertPopupInfo.ShowPopup,
-            PopupType: this.props.Data.AlertPopupInfo.PopupType
+            SendEmail: this.props.Data.AlertCommunicationInfo.SendEmail,
+            EmailRecipients: this.props.Data.AlertCommunicationInfo.EmailRecipients,
+            ShowPopup: this.props.Data.AlertCommunicationInfo.ShowPopup,
+            PopupType: this.props.Data.AlertCommunicationInfo.PopupType
         }
     }
 
@@ -119,10 +119,10 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.AlertEmailInfo.SendEmail = this.state.SendEmail;
-        this.props.Data.AlertEmailInfo.EmailRecipients = this.state.EmailRecipients;
-        this.props.Data.AlertPopupInfo.ShowPopup = this.state.ShowPopup;
-        this.props.Data.AlertPopupInfo.PopupType = this.state.PopupType;
+        this.props.Data.AlertCommunicationInfo.SendEmail = this.state.SendEmail;
+        this.props.Data.AlertCommunicationInfo.EmailRecipients = this.state.EmailRecipients;
+        this.props.Data.AlertCommunicationInfo.ShowPopup = this.state.ShowPopup;
+        this.props.Data.AlertCommunicationInfo.PopupType = this.state.PopupType;
     }
     public Back(): void { }
     public StepName = "Alert Action"
