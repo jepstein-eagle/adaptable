@@ -90,7 +90,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
                     <Form inline>
                         <div style={divStyle}>
-                            <Panel header={"Search For"} style={headerStyle}>
+                            <Panel header={"Search For"} style={headerStyle} bsStyle="success">
                                 <FormControl
                                     style={inputStyle}
                                     value={this.state.EditedQuickSearchText}
@@ -115,7 +115,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                     <Form horizontal>
                         <div >
                             <Accordion>
-                                <Panel header="Quick Search Options" style={divStyle} eventKey="1">
+                                <Panel header="Quick Search Options" style={divStyle} eventKey="1" bsStyle="success">
 
 
                                     <FormGroup controlId="formInlineSearchOperator">

@@ -112,7 +112,7 @@ var dS = new kendo.data.DataSource({
                 [
                     { field: "tradeId", title: "ID" },
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
-                    { field: "counterparty", title: "Counterparty" },
+                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true, search: true }},
                     { field: "currency", title: "Currency", width:100 },
                     { field: "country", title: "Country", width: 200 },
                     { field: "marketPrice", title: "Market Price", format:"{0:n4}" , attributes:{class:"numberColumn"}},
@@ -143,7 +143,7 @@ var dS = new kendo.data.DataSource({
                 filterable: true,
                 pageable: false,
                 editable: true,
-                columnMenu: true,
+               // columnMenu: true,
                 /*{
                        filterable: false,
     messages: {

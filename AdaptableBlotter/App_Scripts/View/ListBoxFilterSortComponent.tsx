@@ -24,7 +24,7 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
                             <FormControl
                                 type="text"
                                 value={this.props.FilterValue}
-                                placeholder="Enter text to filter list"
+                                placeholder="Search"
                                 onChange={(e) => this.handleChangeFilterValue(e)}
                                 />
                             <InputGroup.Button>

@@ -116,6 +116,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // not sure yet if we want to use their or our menu, probably former
         // would be nice if can work out how to make it re-evaluate during runtime;
         // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
+
+        /*
         grid.bind("columnMenuInit", (e: any) => {
             let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
@@ -139,8 +141,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.Strategies.forEach(s => s.onColumnMenuItemClicked(column, menuText));
             });
         })
-    }
+ */
+   
 
+ }
+   
     public SetColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
