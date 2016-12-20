@@ -10,7 +10,6 @@ interface PanelWithButtonProps extends PanelProps {
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;
     headerText : string
-    useSmallButton? : boolean
 }
 
 
@@ -35,7 +34,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 <Col xs={5}>
                     {buttonContent &&
                      
-                        <Button {...this.props.useSmallButton?{bsSize:"small"}:{} }  onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+                        <Button bsSize="small"  onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
                 </Col>
