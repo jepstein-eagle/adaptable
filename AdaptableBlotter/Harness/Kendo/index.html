@@ -54,24 +54,61 @@
     <div>
         <!--<h3>Adaptable Blotter</h3> -->
         <div id="content" style="margin:15px;"></div>
-    </div>
+</div>
 
-    <script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
-    <p/>
-    <div id="grid"></div>
+<script src="adaptableblotter/adaptableblotterkendo-bundle.js"></script>
+<p/>
+<div id="grid"></div>
 
-    <script>
+<script>
     InitBlotter()
     function handleClickEdit() {
         InitBlotter()
     }
     function InitBlotter() {
-    var dataGen = new harness.DataGenerator();
+        var dataGen = new harness.DataGenerator();
         var trades = dataGen.getTrades();
- 
 
 
-var dS = new kendo.data.DataSource({
+        /*
+                    var dS = new kendo.data.DataSource({
+                        data: trades,
+                        schema: {
+                            model: {
+                                fields: {
+                                    tradeId: { type: "number" },
+                                    notional: { type: "number" },
+                                    counterparty: { type: "string" },
+                                    currency: { type: "string" },
+                                    country: { type: "string" },
+                                    marketPrice: { type: "number" },
+                                    bid: { type: "number" },
+                                    ask: { type: "number" },
+                                    tradeDate: { type: "date" },
+                                    isLive: { type: "boolean" },
+                                    fitchRating: { type: "string" },
+                                    moodysRating: { type: "string" },
+                                    settlementDate: { type: "date" },
+                                    bloombergAsk: { type: "number" },
+                                    bloombergBid: { type: "number" },
+                                    indicativeAsk: { type: "number" },
+                                    indicativeBid: { type: "number" },
+                                    delta: { type: "number", editable: false },
+                                    occasionalPrice: { type: "number" },
+                                    bookingGuid: { type: "string" },
+                                    lastUpdated: { type: "date" },
+                                    lastUpdatedBy: { type: "string" }
+                                }
+                            }
+                        },
+                        //  aggregate:[{ field: "bid", aggregate: "sum" },{field:"bid", aggregate: "count" },]
+                    }
+                    );
+        */
+        $("#grid")
+            .kendoGrid({
+                dataSource: {
+                    //  pageSize: 100,
                     data: trades,
                     schema: {
                         model: {
@@ -100,40 +137,35 @@ var dS = new kendo.data.DataSource({
                                 lastUpdatedBy: { type: "string" }
                             }
                         }
-                    },
-        //  aggregate:[{ field: "bid", aggregate: "sum" },{field:"bid", aggregate: "count" },]
-         }  
-          );
-
-        $("#grid")
-            .kendoGrid({
-                dataSource: dS,
+                    }
+                },
                 columns:
                 [
                     { field: "tradeId", title: "ID" },
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
-                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true, search: true }},
-                    { field: "currency", title: "Currency", width:100 },
+                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true, search: true } },
+                    { field: "currency", title: "Currency", width: 100 },
                     { field: "country", title: "Country", width: 200 },
-                    { field: "marketPrice", title: "Market Price", format:"{0:n4}" , attributes:{class:"numberColumn"}},
+                    { field: "marketPrice", title: "Market Price", format: "{0:n4}", attributes: { class: "numberColumn" } },
                     { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
-                    { field: "isLive", title: "Is Live", template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>'  },
-                    { field: "fitchRating", title: "Fitch Rating"},
+                    { field: "isLive", title: "Is Live", template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>' },
+                    { field: "fitchRating", title: "Fitch Rating" },
                     { field: "moodysRating", title: "Moodys Rating" },
-                    { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}" , width: 200 },
-                    { field: "bid", title: "Bid", format:"{0:n4}", attributes:{class:"numberColumn"}, 
-                // playing with aggregates but not now    aggregates: ["count"], footerTemplate: "#=count#"
-                },
-                    { field: "ask", title: "Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
-                    { field: "bloombergAsk", title: "Bloomberg Ask", format:"{0:n4}", attributes:{class:"numberColumn"}},
-                    { field: "bloombergBid", title: "Bloomberg Bid", format:"{0:n4}" , attributes:{class:"numberColumn"}},
-                    { field: "indicativeAsk", title: "Indicative Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
-                    { field: "indicativeBid", title: "Indicative Bid", format:"{0:n4}", attributes:{class:"numberColumn"}},
-                    { field: "delta", format: "{0:n2}", title: "Delta", attributes:{class:"numberColumn"}},
-                    { field: "occasionalPrice", title: "Occasional Price", format:"{0:p}", attributes:{class:"numberColumn"}},
+                    { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}", width: 200 },
+                    {
+                        field: "bid", title: "Bid", format: "{0:n4}", attributes: { class: "numberColumn" },
+                        // playing with aggregates but not now    aggregates: ["count"], footerTemplate: "#=count#"
+                    },
+                    { field: "ask", title: "Ask", format: "{0:n4}", attributes: { class: "numberColumn" } },
+                    { field: "bloombergAsk", title: "Bloomberg Ask", format: "{0:n4}", attributes: { class: "numberColumn" } },
+                    { field: "bloombergBid", title: "Bloomberg Bid", format: "{0:n4}", attributes: { class: "numberColumn" } },
+                    { field: "indicativeAsk", title: "Indicative Ask", format: "{0:n4}", attributes: { class: "numberColumn" } },
+                    { field: "indicativeBid", title: "Indicative Bid", format: "{0:n4}", attributes: { class: "numberColumn" } },
+                    { field: "delta", format: "{0:n2}", title: "Delta", attributes: { class: "numberColumn" } },
+                    { field: "occasionalPrice", title: "Occasional Price", format: "{0:p}", attributes: { class: "numberColumn" } },
                     { field: "lastUpdated", title: "Last Update", format: "{0:dd MMM yyyy}", width: "450px" },
                     { field: "lastUpdatedBy", title: "Last Updated By" }
-                ],            
+                ],
                 selectable: "multiple cell",
                 sortable: true,
                 reorderable: true,
@@ -141,9 +173,11 @@ var dS = new kendo.data.DataSource({
                 resizable: true,
                 scrollable: false,
                 filterable: true,
-                pageable: false,
+                pageable: {
+                    pageSize: 20
+                },
                 editable: true,
-               // columnMenu: true,
+                // columnMenu: true,
                 /*{
                        filterable: false,
     messages: {
@@ -154,19 +188,14 @@ var dS = new kendo.data.DataSource({
     },
     */
 
-/*
- columnMenuInit: function (e) {
-       
-    }
-*/
             });
- var grid = $("#grid").data("kendoGrid");
+        var grid = $("#grid").data("kendoGrid");
         var container = document.getElementById('content');
-        var blotter = new adaptableblotterkendo.AdaptableBlotter(grid,container);
-     
-         //dataGen.startTickingDataKendo(grid);
+        var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container);
+
+        //dataGen.startTickingDataKendo(grid);
     }
-  
+
 
 </script>
 </body>
