@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, Form, FormGroup, InputGroup, FormControl } from 'react-bootstrap';
-import { SortOrder } from '../Core/Enums'
+import { SortOrder, ColumnType } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 
 interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
@@ -14,6 +14,7 @@ interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor
     onChange: (SelectedValues: Array<any>) => void
     HeaderAvailable: string
     HeaderSelected: string
+    ValuesDataType: ColumnType
     //if not primitive objects both DisplayMember and ValueMember need to be used
     DisplayMember?: string
     ValueMember?: string
@@ -50,7 +51,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         })
         this.state = {
             SelectedValues: this.props.SelectedValues,
-            AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, availableValues, this.props.DisplayMember),
+            AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, availableValues, this.props.DisplayMember, this.props.ValuesDataType),
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
             FilterValue: "",
@@ -96,7 +97,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
         this.setState({
             SelectedValues: nextProps.SelectedValues,
-            AvailableValues: Helper.sortArrayDisplayMember(this.state.SortOrder, availableValues, nextProps.DisplayMember),
+            AvailableValues: Helper.sortArrayDisplayMember(this.state.SortOrder, availableValues, nextProps.DisplayMember, nextProps.ValuesDataType),
             UiSelectedAvailableValues: uiAvailableSelected,
             UiSelectedSelectedValues: uiSelectedSelected,
             FilterValue: this.state.FilterValue,
@@ -526,13 +527,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     sortColumnValues() {
         if (this.state.SortOrder == SortOrder.Ascending) {
             this.setState({
-                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Descending, this.state.AvailableValues, this.props.DisplayMember),
+                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Descending, this.state.AvailableValues, this.props.DisplayMember, this.props.ValuesDataType),
                 SortOrder: SortOrder.Descending
             } as DualListBoxEditorState);
         }
         else {
             this.setState({
-                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, this.state.AvailableValues, this.props.DisplayMember),
+                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, this.state.AvailableValues, this.props.DisplayMember, this.props.ValuesDataType),
                 SortOrder: SortOrder.Ascending
             } as DualListBoxEditorState);
         }

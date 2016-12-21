@@ -71,7 +71,7 @@ export module Helper {
     }
 
     export function sortDateArray(dateArray: string[]): any[] {
-      // assumes that the strings are dates underneath - if they arent then this will fail....
+        // assumes that the strings are dates underneath - if they arent then this will fail....
         return dateArray.sort((a, b) => +new Date(b) - +new Date(a));
     }
 
@@ -94,17 +94,13 @@ export module Helper {
         }
     }
 
-    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string): any[] {
-        let returnArray: any[]
+    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string, dataType: ColumnType): any[] {
         if (displayMember) {
-            returnArray = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0)
+            let returnArray: any[] = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0);
+            return (sortOrder == SortOrder.Descending) ? returnArray.reverse() : returnArray;
         }
-        else { returnArray = values.sort() }
-        if (sortOrder == SortOrder.Ascending) {
-            return returnArray
-        }
-        else if (sortOrder == SortOrder.Descending) {
-            return returnArray.reverse()
+        else {
+            return sortArray(sortOrder, values, dataType);
         }
     }
 

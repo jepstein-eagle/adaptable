@@ -1,12 +1,13 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import {ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem} from 'react-bootstrap';
+import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 
-import {IColumn, IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
-import {DualListBoxEditor} from './../DualListBoxEditor'
-import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
+import { DualListBoxEditor } from './../DualListBoxEditor'
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
+import { ColumnType } from '../../Core/Enums';
 
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -29,12 +30,19 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
         }
         this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).ColumnFriendlyName
     }
+
+
+
     render(): any {
+        let selectedColumnType: ColumnType = (this.props.Data.ColumnId == "select") ? null : this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).ColumnType;
+
+
         return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
             SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
             HeaderSelected="Custom Sort Order"
-            onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues) }></DualListBoxEditor>
+            ValuesDataType={selectedColumnType}
+            onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
     }
     OnSelectedValuesChange(newValues: Array<string>) {
         this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () => this.props.UpdateGoBackState())

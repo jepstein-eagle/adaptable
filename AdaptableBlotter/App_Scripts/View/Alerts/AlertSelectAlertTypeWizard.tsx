@@ -5,7 +5,6 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IAlert } from '../../Core/interface/IAlertStrategy';
 import { NotificationType } from '../../Core/Enums';
 
