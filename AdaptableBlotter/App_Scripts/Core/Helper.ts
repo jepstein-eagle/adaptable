@@ -1,4 +1,4 @@
-import { SortOrder } from '../Core/Enums'
+import { SortOrder, ColumnType } from '../Core/Enums'
 
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;
@@ -43,26 +43,64 @@ export module Helper {
         return uuid;
     }
 
-    export function sortArray(sortOrder: SortOrder, values: any[]): any[] {
-        if (sortOrder == SortOrder.Ascending) {
-            return values.sort()
+    export function sortStringArray(stringArray: string[]): string[] {
+        var sortedSringArray: string[] = stringArray.sort((n1, n2) => {
+            if (n1 > n2) {
+                return 1;
+            }
+            if (n1 < n2) {
+                return -1;
+            }
+            return 0;
+        });
+        return sortedSringArray;
+    }
+
+    export function sortNumericArray(numericArray: any[]): any[] {
+        // Im sure this is overkill and can be done simpler...
+        // also we dont want to have to do it when its already a number, only when its masked...
+        let selectionMap: Map<number, any> = new Map<number, any>();
+        numericArray.forEach(n => selectionMap.set(convertToNumber(n), n));
+        var sortedMap = new Map([...selectionMap.entries()].sort((n1, n2) => n1[0] - n2[0]));
+        return [...sortedMap.values()];
+    }
+
+    export function convertToNumber(itemToConvert: any): number {
+        // Regex might need some work but hopefully it only allows numbers, full stopes and minus signs....
+        return Number(itemToConvert.replace(/[^0-9\.\-]+/g, ""));
+    }
+
+    export function sortDateArray(dateArray: string[]): any[] {
+        // assumes that the strings are dates underneath - if they arent then this will fail....
+        return dateArray.sort((a, b) => +new Date(b) - +new Date(a));
+    }
+
+    export function sortArray(sortOrder: SortOrder, values: any[], dataType: ColumnType): any[] {
+        let sortedValues: any[]
+
+        if (dataType == ColumnType.Number) {
+            sortedValues = sortNumericArray(values);
+        } else if (dataType == ColumnType.Date) {
+            sortedValues = sortDateArray(values);
         }
-        else if (sortOrder == SortOrder.Descending) {
-            return values.sort().reverse()
+        else {
+            sortedValues = sortStringArray(values);
+        }
+
+        if (sortOrder == SortOrder.Descending) {
+            return sortedValues.reverse()
+        } else {
+            return sortedValues;
         }
     }
 
-    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string): any[] {
-        let returnArray: any[]
+    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string, dataType: ColumnType): any[] {
         if (displayMember) {
-            returnArray = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0)
+            let returnArray: any[] = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0);
+            return (sortOrder == SortOrder.Descending) ? returnArray.reverse() : returnArray;
         }
-        else { returnArray = values.sort() }
-        if (sortOrder == SortOrder.Ascending) {
-            return returnArray
-        }
-        else if (sortOrder == SortOrder.Descending) {
-            return returnArray.reverse()
+        else {
+            return sortArray(sortOrder, values, dataType);
         }
     }
 

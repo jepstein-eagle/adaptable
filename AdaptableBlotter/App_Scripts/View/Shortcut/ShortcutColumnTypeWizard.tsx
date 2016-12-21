@@ -1,12 +1,12 @@
-import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import {ListGroup, ListGroupItem, Panel} from 'react-bootstrap';
-import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
-import {AdaptableWizard} from './../Wizard/AdaptableWizard'
-import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
-import {ColumnType} from '../../Core/Enums';
+import { ListGroup, ListGroupItem, Panel, Radio } from 'react-bootstrap';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizard } from './../Wizard/AdaptableWizard'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { ColumnType } from '../../Core/Enums';
 
 
 interface ShortcutColumnTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -23,24 +23,19 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
     }
     render(): any {
 
-        var columnTypeList: Array<ColumnType> = [ColumnType.Number, ColumnType.Date];
-
-        var columnTypes = columnTypeList.map((columnType: ColumnType) => {
-            return <ListGroupItem key={columnType}
-                onClick={() => this.onClickColum(columnType) }
-                active={this.state.ColumnType == null ? false : columnType == this.state.ColumnType}>{ColumnType[columnType]}
-            </ListGroupItem>
-        })
-
         return <Panel header="Select the Type of Column for the Shortcut">
-            <ListGroup style={listGroupStyle}>
-                {columnTypes}
-            </ListGroup>
+            <Radio style={divStyle} value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
+            <Radio style={divStyle} value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
         </Panel>
     }
 
-    onClickColum(columnType: ColumnType) {
-        this.setState({ ColumnType: columnType }, () => this.props.UpdateGoBackState())
+    private onColumTypeChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        if (e.value == "Number") {
+            this.setState({ ColumnType: ColumnType.Number }, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ColumnType: ColumnType.Date }, () => this.props.UpdateGoBackState())
+        }
     }
 
     public canNext(): boolean { return this.state.ColumnType != null; }
@@ -55,3 +50,7 @@ var listGroupStyle = {
     'maxHeight': '300px',
     'height': '300px'
 };
+
+let divStyle = {
+    margin: '15px'
+}

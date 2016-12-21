@@ -4,7 +4,6 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { ColumnType } from '../../Core/Enums';
 

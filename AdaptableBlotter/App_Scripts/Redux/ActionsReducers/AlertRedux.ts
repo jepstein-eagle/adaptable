@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import { AlertState } from './Interface/IState';
-import { IAlert, TempNotificationCreator } from '../../Core/Interface/IAlertStrategy';
+import { IAlert } from '../../Core/Interface/IAlertStrategy';
 
 
 export const ALERT_ADD_OR_UPDATE = 'ALERT_ADD_OR_UPDATE';
@@ -29,8 +29,7 @@ export const DeleteAlert = (Index: number): AlertDeleteAction => ({
 })
 
 const initialAlertState: AlertState = {
-  // let notificationCellUpdated: NotificationCellUpdated = new NotificationCellUpdated();
-    Alerts: new TempNotificationCreator().CreateTempAlerts()
+    Alerts: []
 }
 
 export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = initialAlertState, action: Redux.Action): AlertState => {

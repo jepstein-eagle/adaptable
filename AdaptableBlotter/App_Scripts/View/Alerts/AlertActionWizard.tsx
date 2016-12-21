@@ -4,7 +4,6 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Checkbox, Button, Form, Row, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IAlert, ICellChangeRule } from '../../Core/interface/IAlertStrategy';
 import { NotificationType, ColumnType, CellChangeType, PopupType } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
@@ -26,19 +25,20 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
     constructor(props: AlertActionWizardProps) {
         super(props)
         this.state = {
-            SendEmail: this.props.Data.AlertEmailInfo.SendEmail,
-            EmailRecipients: this.props.Data.AlertEmailInfo.EmailRecipients,
-            ShowPopup: this.props.Data.AlertPopupInfo.ShowPopup,
-            PopupType: this.props.Data.AlertPopupInfo.PopupType
+            SendEmail: this.props.Data.AlertCommunicationInfo.SendEmail,
+            EmailRecipients: this.props.Data.AlertCommunicationInfo.EmailRecipients,
+            ShowPopup: this.props.Data.AlertCommunicationInfo.ShowPopup,
+            PopupType: this.props.Data.AlertCommunicationInfo.PopupType
         }
     }
 
     render(): any {
 
-        let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((popupTypeNameAndValue: any) => {
-            return <option key={popupTypeNameAndValue.value} value={popupTypeNameAndValue.value}>{popupTypeNameAndValue.name}</option>
+        let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((enumNameAndValue: any) => {
+            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
         })
 
+        let selectedPopup = this.state.PopupType.toString();
 
         return <Panel header="Alert Action" bsStyle="primary">
             <Form horizontal>
@@ -51,12 +51,12 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
                 { /* show recipients if showing email */}
                 {this.state.SendEmail &&
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={4}>Email Recipients: </Col>
-                            <Col xs={8}>
-                                <FormControl value={this.state.EmailRecipients} type="string" placeholder="Enter recipient names" onChange={(x) => this.onEmailRecipientsChanged(x)} />
-                            </Col>
-                        </Row>
+                    <Row style={smallMarginStyle}>
+                        <Col componentClass={ControlLabel} xs={4}>Email Recipients: </Col>
+                        <Col xs={8}>
+                            <FormControl value={this.state.EmailRecipients} type="string" placeholder="Enter recipient names" onChange={(x) => this.onEmailRecipientsChanged(x)} />
+                        </Col>
+                    </Row>
                 }
 
                 <Row style={smallMarginStyle}>
@@ -69,14 +69,14 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
                 { /* select popuptype if showing popup */}
                 {this.state.ShowPopup &&
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={4}>Popup Type: </Col>
-                            <Col xs={8}>
-                                <FormControl componentClass="select" placeholder="select" value={PopupType[this.state.PopupType]} onChange={(x) => this.onPopupTypeChanged(x)} >
-                                    {optionPopupTypes}
-                                </FormControl>
-                            </Col>
-                        </Row>
+                    <Row style={smallMarginStyle}>
+                        <Col componentClass={ControlLabel} xs={4}>Popup Type: </Col>
+                        <Col xs={8}>
+                            <FormControl componentClass="select" placeholder="select" value={selectedPopup} onChange={(x) => this.onPopupTypeChanged(x)} >
+                                {optionPopupTypes}
+                            </FormControl>
+                        </Col>
+                    </Row>
                 }
 
             </Form>
@@ -118,10 +118,10 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.AlertEmailInfo.SendEmail = this.state.SendEmail;
-        this.props.Data.AlertEmailInfo.EmailRecipients = this.state.EmailRecipients;
-        this.props.Data.AlertPopupInfo.ShowPopup = this.state.ShowPopup;
-        this.props.Data.AlertPopupInfo.PopupType = this.state.PopupType;
+        this.props.Data.AlertCommunicationInfo.SendEmail = this.state.SendEmail;
+        this.props.Data.AlertCommunicationInfo.EmailRecipients = this.state.EmailRecipients;
+        this.props.Data.AlertCommunicationInfo.ShowPopup = this.state.ShowPopup;
+        this.props.Data.AlertCommunicationInfo.PopupType = this.state.PopupType;
     }
     public Back(): void { }
     public StepName = "Alert Action"

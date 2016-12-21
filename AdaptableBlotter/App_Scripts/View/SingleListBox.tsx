@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { SortOrder } from '../Core/Enums'
+import { SortOrder, ColumnType } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 
@@ -12,6 +12,7 @@ interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
     UiSelectedValues: Array<any>
     onSelectedChange: (SelectedValues: Array<any>) => void
+    ValuesDataType: ColumnType // need to change name of this enum
     //if not primitive objects both DisplayMember and ValueMember need to be used
     DisplayMember?: string
     ValueMember?: string
@@ -64,7 +65,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
             uiSelectedValues = nextProps.UiSelectedValues
         }
         this.setState({
-            Values: Helper.sortArray(this.state.SortOrder, nextProps.Values),
+            Values: Helper.sortArray(this.state.SortOrder, nextProps.Values, this.props.ValuesDataType),
             UiSelectedValues: uiSelectedValues,
             FilterValue: this.state.FilterValue,
             SortOrder: this.state.SortOrder
@@ -106,13 +107,13 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     sortColumnValues() {
         if (this.state.SortOrder == SortOrder.Ascending) {
             this.setState({
-                Values: Helper.sortArray(SortOrder.Descending, this.state.Values),
+                Values: Helper.sortArray(SortOrder.Descending, this.state.Values, this.props.ValuesDataType),
                 SortOrder: SortOrder.Descending
             } as SingleListBoxState);
         }
         else {
             this.setState({
-                Values: Helper.sortArray(SortOrder.Ascending, this.state.Values),
+                Values: Helper.sortArray(SortOrder.Ascending, this.state.Values, this.props.ValuesDataType),
                 SortOrder: SortOrder.Ascending
             } as SingleListBoxState);
         }

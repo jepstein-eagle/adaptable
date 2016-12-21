@@ -69,7 +69,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             <div >
                 <Form inline>
                     <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                        useSmallButton={true} buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
+                        buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
 
                         {/* The main Search selection form */}
                         <div style={divStyle}>
@@ -122,8 +122,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
                         <PanelWithButton headerText="Search Details" bsStyle="primary" style={panelStyle}
                             buttonContent={"Edit Search"}
-                            buttonClick={() => this.onEditAdvancedSearch()}
-                            useSmallButton={true}>
+                            buttonClick={() => this.onEditAdvancedSearch()}>
                             <div style={previewDivStyle}>
                                 <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
                                     onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}

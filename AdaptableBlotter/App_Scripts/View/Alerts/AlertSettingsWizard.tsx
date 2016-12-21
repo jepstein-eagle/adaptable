@@ -1,12 +1,12 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from './../DualListBoxEditor'
 import { IAlert, ICellChangeRule } from '../../Core/interface/IAlertStrategy';
 import { NotificationType, ColumnType, CellChangeType } from '../../Core/Enums';
+import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
 
 interface AlertSettingsWizardProps extends AdaptableWizardStepProps<IAlert> {
@@ -39,71 +39,86 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
 
         let isNumericColumn: boolean = (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Number);
 
+        let optionPopupTypes = EnumExtensions.getNamesAndValues(CellChangeType).filter(c => this.shouldShowCellChangeTypeValue(isNumericColumn, c.value)).map((enumNameAndValue: any) => {
+            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{this.getTextForCellChangeValue(enumNameAndValue.value)}</option>
+        })
 
-        let availableCellChangeTypes: CellChangeType[] = (isNumericColumn) ?
-            [CellChangeType.Any, CellChangeType.Equals, CellChangeType.NotEquals, CellChangeType.GreaterThan, CellChangeType.LessThan, CellChangeType.ValueChange, CellChangeType.PercentChange] :
-            [CellChangeType.Any, CellChangeType.Equals, CellChangeType.NotEquals];
-
-        let optionCellChangeTypes = availableCellChangeTypes.map(c => {
-            return <option value={CellChangeType[c]} key={c}>{this.getTextForCellChangeValue(c)}</option>
-
-        });
+        let currentCellChangeValue = this.state.CellChangeType.toString();
 
         return <Panel header="Alert Settings" bsStyle="primary">
-            <Form horizontal>
-                <FormGroup controlId="formColumn">
-                    <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={5}>Select Column: </Col>
-                        <Col xs={7}>
-                            <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChanged(x)} >
-                                <option value="select" key="select">Select a column</option>
-                                {optionColumns}
-                            </FormControl>
-                        </Col>
-                    </Row>
-                </FormGroup>
-                <FormGroup>
-                    <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={5}>Select Change Condition: </Col>
-                        <Col xs={7}>
-                            <FormControl componentClass="select" placeholder="select" value={CellChangeType[this.state.CellChangeType]} onChange={(x) => this.onCellChangeTypeChanged(x)} >
-                                {optionCellChangeTypes}
-                            </FormControl>
-                        </Col>
-                    </Row>
-                </FormGroup>
 
-                { /* if  numeric then show a numeric control */}
-                {this.state.CellChangeType != CellChangeType.Any && isNumericColumn &&
-                    <FormGroup>
+            {!this.stateRequiesCellChangeRule() &&
+                <Form horizontal>
+                    <Well bsSize="small">There are no additional settings for this Alert type.</Well>
+                </Form>
+            }
+
+            {this.stateRequiesCellChangeRule() &&
+                <Form horizontal>
+                    <FormGroup controlId="formColumn">
                         <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={5}>Value: </Col>
-                            <Col xs={7}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="number" placeholder="Enter a Number" onChange={(x) => this.onNumericChangeValueChanged(x)} />
+                            <Col componentClass={ControlLabel} xs={3}>Column: </Col>
+                            <Col xs={9}>
+                                <FormControl componentClass="select" placeholder="select" value={selectedColumn} onChange={(x) => this.onColumnSelectChanged(x)} >
+                                    <option value="select" key="select">Select a column</option>
+                                    {optionColumns}
+                                </FormControl>
                             </Col>
                         </Row>
                     </FormGroup>
-                }
-
-                { /* if not numeric then show a string control for now */}
-                {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn &&
                     <FormGroup>
                         <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={5}>Value: </Col>
-                            <Col xs={7}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="string" placeholder="Enter a Value" onChange={(x) => this.onStringChangeValueChanged(x)} />
+                            <Col componentClass={ControlLabel} xs={3}>Condition: </Col>
+                            <Col xs={9}>
+                                <FormControl componentClass="select" placeholder="select" value={currentCellChangeValue} onChange={(x) => this.onCellChangeTypeChanged(x)} >
+                                    {optionPopupTypes}
+                                </FormControl>
                             </Col>
                         </Row>
                     </FormGroup>
-                }
 
-            </Form>
+                    { /* if  numeric then show a numeric control */}
+                    {this.state.CellChangeType != CellChangeType.Any && isNumericColumn &&
+                        <FormGroup>
+                            <Row style={smallMarginStyle}>
+                                <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                                <Col xs={9}>
+                                    <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="number" placeholder="Enter a Number" onChange={(x) => this.onNumericChangeValueChanged(x)} />
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    }
+
+                    { /* if not numeric then show a string control for now */}
+                    {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn &&
+                        <FormGroup>
+                            <Row style={smallMarginStyle}>
+                                <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                                <Col xs={9}>
+                                    <FormControl style={{ width: "Auto" }} value={this.state.ChangeValue} type="string" placeholder="Enter a Value" onChange={(x) => this.onStringChangeValueChanged(x)} />
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    }
+                </Form>
+            }
         </Panel>
+    }
+
+    private shouldShowCellChangeTypeValue(isNumericColumn: boolean, cellChangeType: CellChangeType): boolean {
+        if (isNumericColumn) return true;
+
+        return (cellChangeType == CellChangeType.Any || cellChangeType == CellChangeType.Equals || cellChangeType == CellChangeType.NotEquals);
     }
 
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ColumnId: e.value, CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        // if we are changing from existing column to new column then update CellChangeType and ChangeValue as well; otherwise just change the column
+        if (this.stateHasColumn()) {
+            this.setState({ ColumnId: e.value, ChangeValue: null, CellChangeType: CellChangeType.Any } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ColumnId: e.value } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
     }
 
     private onCellChangeTypeChanged(event: React.FormEvent) {

@@ -112,7 +112,7 @@ var dS = new kendo.data.DataSource({
                 [
                     { field: "tradeId", title: "ID" },
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
-                    { field: "counterparty", title: "Counterparty" },
+                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true, search: true }},
                     { field: "currency", title: "Currency", width:100 },
                     { field: "country", title: "Country", width: 200 },
                     { field: "marketPrice", title: "Market Price", format:"{0:n4}" , attributes:{class:"numberColumn"}},
@@ -129,8 +129,8 @@ var dS = new kendo.data.DataSource({
                     { field: "bloombergBid", title: "Bloomberg Bid", format:"{0:n4}" , attributes:{class:"numberColumn"}},
                     { field: "indicativeAsk", title: "Indicative Ask" , format:"{0:n4}", attributes:{class:"numberColumn"}},
                     { field: "indicativeBid", title: "Indicative Bid", format:"{0:n4}", attributes:{class:"numberColumn"}},
-                    { field: "delta", format: "{0:n4}", title: "Delta", attributes:{class:"numberColumn"}},
-                    { field: "occasionalPrice", title: "Occasional Price", format:"{0:n4}", attributes:{class:"numberColumn"}},
+                    { field: "delta", format: "{0:n2}", title: "Delta", attributes:{class:"numberColumn"}},
+                    { field: "occasionalPrice", title: "Occasional Price", format:"{0:p}", attributes:{class:"numberColumn"}},
                     { field: "lastUpdated", title: "Last Update", format: "{0:dd MMM yyyy}", width: "450px" },
                     { field: "lastUpdatedBy", title: "Last Updated By" }
                 ],            
@@ -143,7 +143,7 @@ var dS = new kendo.data.DataSource({
                 filterable: true,
                 pageable: false,
                 editable: true,
-                columnMenu: true,
+               // columnMenu: true,
                 /*{
                        filterable: false,
     messages: {

@@ -3,10 +3,10 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup } from 'react-bootstrap';
-
+import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
@@ -15,14 +15,14 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
 import { AlertSettingsWizard } from './AlertSettingsWizard'
 import { AlertActionWizard } from './AlertActionWizard'
-import { IAlert, ICellChangeRule, IAlertEmailInfo, IAlertPopupInfo} from '../../Core/Interface/IAlertStrategy'
+import { AlertContentsWizard } from './AlertContentsWizard'
+import { IAlert, ICellChangeRule, IAlertCommunicationInfo } from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { NotificationType, CellChangeType, PopupType } from '../../Core/Enums'
-
-
-
+import { IAlertStrategy } from '../../Core/Interface/IAlertStrategy';
+import { IStrategy } from '../../Core/Interface/IStrategy';
 
 interface AlertConfigProps extends IStrategyViewPopupProps<AlertConfigComponent> {
     AlertConditions: IAlert[]
@@ -36,17 +36,16 @@ interface AlertConfigState {
     EditedIndexAlert: number
 }
 
-
 class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfigState> {
+
     constructor() {
         super();
         this.state = { EditedAlert: null, EditedIndexAlert: -1 }
-
     }
     render() {
         let alertsHeader = <Panel style={panelHeaderStyle} >
             <Row >
-                <Col xs={6} style={headerStyle}>When Run</Col>
+                <Col xs={6} style={headerStyle}>Alert Condition</Col>
                 <Col xs={2} style={headerStyle}>Email</Col>
                 <Col xs={2} style={headerStyle}>Popup</Col>
                 <Col xs={2} style={headerStyle}></Col>
@@ -58,18 +57,18 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
                 className="list-group-item" key={index}>
                 <Row >
                     <Col xs={6}>
-                        {this.createAlertDescription(x) }
+                        {this.createAlertDescription(x)}
                     </Col>
                     <Col xs={2}>
-                        {x.AlertEmailInfo.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertCommunicationInfo.SendEmail ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
-                        {x.AlertPopupInfo.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
+                        {x.AlertCommunicationInfo.ShowPopup ? <Glyphicon glyph="ok" /> : <Glyphicon glyph="remove" />}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteAlert(index) }
-                            editClick={() => this.onEdit(index, x) }>
+                            deleteClick={() => this.props.onDeleteAlert(index)}
+                            editClick={() => this.onEdit(index, x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -77,51 +76,37 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         })
         return <PanelWithButton headerText="Alerts Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Alert"}
-            buttonClick={() => this.createAlert() }  >
+            buttonClick={() => this.createAlert()}  >
             {alertItems.length > 0 && alertsHeader}
-            <ListGroup style={panelColumNudge}>
-                {alertItems}
-            </ListGroup>
+            {alertItems.length > 0 &&
+                <ListGroup style={panelColumNudge}>
+                    {alertItems}
+                </ListGroup>
+            }
+
+            {alertItems.length == 0 &&
+                <Well bsSize="small">Click 'Create Alert' to start creating alerts.</Well>
+            }
 
             {this.state.EditedAlert != null &&
                 <AdaptableWizard Steps={[
-                    <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} />,
+                    <AlertSelectAlertTypeWizard Blotter={this.props.AdaptableBlotter} Alerts={this.props.AlertConditions} />,
                     <AlertSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                     <AlertActionWizard Blotter={this.props.AdaptableBlotter} />,
+                    <AlertContentsWizard Blotter={this.props.AdaptableBlotter} />,
                 ]}
                     Data={this.state.EditedAlert}
                     StepStartIndex={0}
-                    onHide={() => this.closeWizard() }
-                    onFinish={() => this.WizardFinish() } ></AdaptableWizard>}
+                    onHide={() => this.closeWizard()}
+                    onFinish={() => this.finishWizard()} ></AdaptableWizard>}
 
         </PanelWithButton>
     }
 
     createAlert() {
-        let newCellChangeRule: ICellChangeRule = {
-            ColumnId: "select",
-            ChangeValue: null,
-            CellChangeType: CellChangeType.Any
-        }
-
-        let emailInfo: IAlertEmailInfo = {
-            SendEmail: true,
-            EmailRecipients: ""
-        }
-
-        let popupInfo: IAlertPopupInfo = {
-            ShowPopup: false,
-            PopupType: PopupType.DisappearAutomatically
-        }
-
-        let _editedAlert: IAlert = {
-            NotificationType: NotificationType.CellUpdated,
-            AlertEmailInfo: emailInfo,
-            AlertPopupInfo: popupInfo,
-            AlertText: "",
-            CellChangeRule: newCellChangeRule,
-        }
-        this.setState({ EditedAlert: _editedAlert, EditedIndexAlert: -1 });
+        // have to use any as cannot cast from IStrategy to IAlertStrategy  :(
+        let alertStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AlertStrategyId);
+        this.setState({ EditedAlert: alertStrategy.CreateEmptyAlert(), EditedIndexAlert: -1 });
     }
 
     onEdit(index: number, alert: IAlert) {
@@ -133,7 +118,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
     }
 
-    WizardFinish() {
+    finishWizard() {
         this.props.onAddEditAlert(this.state.EditedIndexAlert, this.state.EditedAlert);
         this.setState({ EditedAlert: null, EditedIndexAlert: -1 });
     }
@@ -179,7 +164,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             }
             valueDescription = valueDescription + alert.CellChangeRule.ChangeValue;
         } else {
-            valueDescription = " for any value change"
+            valueDescription = " with any change"
         }
         return "'" + scope + "' column is " + action + valueDescription;
     }
