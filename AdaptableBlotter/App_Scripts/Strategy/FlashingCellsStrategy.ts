@@ -23,13 +23,11 @@ const FLASH_DOWN_STYLE: string = "FlashDown"
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
-    private TurnOnFlashingCellsColumnMenuItem: string = "Turn On Flashing Cells";
-    private TurnOffFlashingCellsColumnMenuItem: string = "Turn Off Flashing Cells";
-
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig', MenuType.Configuration, "flash");
+        this.InitState()
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
@@ -43,12 +41,13 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
         // TODO:  Need to fix this : make sure that we only flash if its the right column...
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
+        let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)
         if (flashingColumn != null && flashingColumn.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingColumn);
+            this.FlashCell(DataChangedEvent, flashingColumn,flashingColumnIndex);
         }
     }
 
-    public FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn): void {
+    private FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
         if (dataChangedEvent.OldValue == null) return;
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
@@ -56,32 +55,11 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
         //Jo : we know that this function is wrong as it's not cumulative
-        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle, flashingColumn.FlashingCellDuration.Duration)
+        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle+index, flashingColumn.FlashingCellDuration.Duration)
     }
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
-    }
-
-    addColumnMenuItem(column: IColumn, menuItems: string[]): void {
-        if (column.ColumnType == ColumnType.Number) {
-            let flashingCellColumn = this.FlashingCellState.FlashingColumns.find(fc => fc.ColumnName == column.ColumnId);
-            if (flashingCellColumn == null || !flashingCellColumn.IsLive) {
-                menuItems.push(this.TurnOnFlashingCellsColumnMenuItem);
-            } else {
-                menuItems.push(this.TurnOffFlashingCellsColumnMenuItem);
-            }
-        }
-    }
-
-    onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
-        let flashingCellColumn = this.FlashingCellState.FlashingColumns.find(fc => fc.ColumnName == column.ColumnId);
-
-        // if no flashing column then need to create one...
-        if (flashingCellColumn == null) {
-            flashingCellColumn = this.CreateDefaultFlashingColumn(column);
-         }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<FlashingCellsRedux.FlashingColumnSelectAction>(FlashingCellsRedux.SelectFlashingCellColumn(flashingCellColumn));
     }
 
     public GetFlashingCellDurations(): IFlashingCellDuration[] {
@@ -94,6 +72,6 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     }
 
     public CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
-        return { IsLive: false, ColumnName: column.ColumnId, FlashingCellDuration: this.GetFlashingCellDurations().find(f => f.Name == "1/2 Second") };
+        return { IsLive: false, ColumnName: column.ColumnId, FlashingCellDuration: this.GetFlashingCellDurations().find(f => f.Name == "1/2 Second"), UpBackColor: '#008000', DownBackColor: '#FF0000' };
     }
 }

@@ -7,17 +7,6 @@
     min-width: 300px;  
 }
 
-		.FlashUp {
-			background-color: green !important;
-			color: white!important;
-			
-		}
-		
-		.FlashDown {
-			background-color: red!important;
-			color: white!important;
-		}
-
     	.Ab-ConditionalStyle-Green {
 			background-color: green !important;
 			color: white !important;
