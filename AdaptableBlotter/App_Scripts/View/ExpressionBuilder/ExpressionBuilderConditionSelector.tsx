@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import { IExpressionRange } from '../../Core/Interface/IExpression'
-import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
+import { ColumnType } from '../../Core/Enums'
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
@@ -62,6 +62,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             };
         }
     }
+    
     componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
         this.setState(this.buildState(nextProps))
     }
@@ -70,6 +71,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let optionColumns = this.props.ColumnsList.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
+
+        let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select"  )? null: this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
+
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.props.onSelectedColumnChange("select")}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
@@ -90,6 +94,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 </FormGroup>
             </Form>
             {this.props.SelectedColumnId == "select" ? null :
+
+           
                 <div>
                     <Form horizontal>
                         <FormGroup controlId="formInlineCriteria">
@@ -102,11 +108,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         <Col xs={5}>
                             <ExpressionBuilderColumnValues ColumnValues={this.state.ColumnValues}
                                 SelectedValues={this.state.SelectedColumnValues}
-                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)} >
+                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}
+                                ColumnValuesDataType={selectedColumnType} >
                             </ExpressionBuilderColumnValues>
                         </Col>
                         <Col xs={7}>
-                            <ExpressionBuilderRanges ColumnType={this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType}
+                            <ExpressionBuilderRanges ColumnType={selectedColumnType}
                                 Ranges={this.state.SelectedColumnRanges} onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
                             </ExpressionBuilderRanges>
                         </Col>

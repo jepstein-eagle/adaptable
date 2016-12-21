@@ -3,7 +3,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
-import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';

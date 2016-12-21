@@ -1,5 +1,6 @@
 
 // General Enums
+// should really rename this DataType
 export enum ColumnType {
     String,
     Number,

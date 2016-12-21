@@ -4,7 +4,6 @@ import * as React from "react";
 import { ColumnType } from '../../Core/Enums'
 import { IExpressionRange } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
-import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
