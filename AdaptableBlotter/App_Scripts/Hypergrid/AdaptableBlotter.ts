@@ -22,7 +22,7 @@ import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrate
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from '../Strategy/ExcelExportStrategy'
-import { FlashingCellsStrategy } from '../Strategy/FlashingCellsStrategy'
+import { FlashingCellsHypergridStrategy } from '../Strategy/FlashingCellsHypergridStrategy'
 import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
@@ -66,7 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
@@ -437,13 +437,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
+        throw 'Not implemented for hypergrid see addCellStyleHypergrid';
+    }
+
+    public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         if (rowIndex) {
-            this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', 'red')
-            if (timeout) {
-                setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, style), timeout);
+            if (style.flashBackColor) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
+                if (timeout) {
+                    setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
+                }
             }
         }
     }
@@ -461,9 +467,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    private removeCellStyleByIndex(x: any, y: number, style: string): void {
-        this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
-        this.grid.repaint()
+    private removeCellStyleByIndex(x: any, y: number, style: string | 'flash'): void {
+        if (style == 'flash') {
+            this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
+            this.grid.repaint()
+        }
     }
 
     public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
@@ -584,3 +592,8 @@ var MySorterDataSource = (blotter: IAdaptableBlotter) => (<any>window).fin.Hyper
         return row[this.dataSource.schema[c].name];
     }
 });
+
+interface CellStyleHypergrid {
+    foreColor?: string,
+    flashBackColor?: string
+}

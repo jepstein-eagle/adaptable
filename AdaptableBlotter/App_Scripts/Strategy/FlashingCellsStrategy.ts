@@ -17,12 +17,13 @@ import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux
     All the user can choose is which numeric columns will flash and the duration 
  */
 
-const FLASH_UP_STYLE: string = "FlashUp"
-const FLASH_DOWN_STYLE: string = "FlashDown"
+
 
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
+    protected FLASH_UP_STYLE: string = "FlashUp"
+protected FLASH_DOWN_STYLE: string = "FlashDown"
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
@@ -47,12 +48,12 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         }
     }
 
-    private FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
+    protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
         if (dataChangedEvent.OldValue == null) return;
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
-        var cellStyle: string = (oldvalueNumber > newValueNumber) ? FLASH_DOWN_STYLE : FLASH_UP_STYLE
+        var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
         //Jo : we know that this function is wrong as it's not cumulative
         this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle+index, flashingColumn.FlashingCellDuration.Duration)
