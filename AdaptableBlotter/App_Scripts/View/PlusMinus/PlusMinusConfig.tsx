@@ -118,7 +118,10 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedPlusMinusCondition: Helper.cloneObject(condition), EditedIndexColumnNudgeValue: index });
+        // but this causes an issue as filters dont clone because they have a function...
+         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
+        clonedObject.Expression.FiltersExpression = condition.Expression.FiltersExpression;
+        this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index });
     }
     closeWizard() {
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });

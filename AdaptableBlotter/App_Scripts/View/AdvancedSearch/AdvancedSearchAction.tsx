@@ -129,6 +129,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     SelectedColumnId={this.state.SelectedColumnId}
                                     ColumnsList={this.props.Columns}
                                     DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
+                                    DeleteFilter={(columnId: string, index: number) => this.onDeleteFilter(columnId, index)}
                                     DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}
                                     ShowPanel={false}>
                                 </ExpressionBuilderPreview>
@@ -155,7 +156,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show
     onEditAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
+        let clonedSearch: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.SelectedAdvancedSearch);
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
@@ -185,6 +186,16 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.onDeleteSearchExpressionItem();
     }
 
+    onDeleteFilter(columnId: string, index: number) {
+        let columnFilters = this.state.SelectedAdvancedSearch.Expression.FiltersExpression.find(x => x.ColumnName == columnId)
+        columnFilters.Filters.splice(index, 1)
+        if (columnFilters.Filters.length == 0) {
+            let columnFiltersIndex = this.state.SelectedAdvancedSearch.Expression.FiltersExpression.findIndex(x => x.ColumnName == columnId)
+            this.state.SelectedAdvancedSearch.Expression.FiltersExpression.splice(columnFiltersIndex, 1)
+        }
+        this.onDeleteSearchExpressionItem();
+    }
+
     onDeleteRange(columnId: string, index: number) {
         let columnRanges = this.state.SelectedAdvancedSearch.Expression.RangeExpression.find(x => x.ColumnName == columnId)
         columnRanges.Ranges.splice(index, 1)
@@ -203,7 +214,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     onSelectedColumnChange(columnName: string) {
         if (!this.IsDeleting) { // this gets called after deleting an item so dont want to open advanced search in those circumstances
-            let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
+            let clonedSearch: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.SelectedAdvancedSearch);
             this.setState({ SelectedColumnId: columnName, EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
         }
     }
@@ -214,9 +225,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onFinishWizard() {
-        let completedSearch: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdvancedSearch);
-        this.props.onAddUpdateAdvancedSearch(completedSearch);
-        this.setState({ SelectedAdvancedSearch: completedSearch } as AdvancedSearchActionInternalState)
+        let clonedObject: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.EditedAdvancedSearch);
+        this.props.onAddUpdateAdvancedSearch(clonedObject);
+        this.setState({ SelectedAdvancedSearch: clonedObject } as AdvancedSearchActionInternalState)
     }
 
     onSelectedSearchChanged(event: React.FormEvent) {
@@ -236,6 +247,13 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             this.setState({ SelectedAdvancedSearch: savedSearch } as AdvancedSearchActionInternalState);
         }
 
+    }
+
+    // we have an issue with cloning at the moment where filter is lost so we are going to always clone here and then its just one place until I fix
+    onCloneAdvancedSearch(objectToClone: IAdvancedSearch): IAdvancedSearch {
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(objectToClone);
+        clonedObject.Expression.FiltersExpression = this.state.EditedAdvancedSearch.Expression.FiltersExpression;
+        return clonedObject;
     }
 }
 

@@ -98,6 +98,8 @@ export class CalendarService implements ICalendarService {
         ]
     }
 
+    
+
     public AvailableCalendars: ICalendar[];
 
     public GetDynamicDate(dynamicDateName: string): Date {

@@ -15,6 +15,7 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
+    DeleteFilter: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
     ShowPanel: boolean
 }
@@ -26,6 +27,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     render() {
         let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression)
         let previewLists = columnList.map(columnId => {
+
+            // First lets do the column values
             let columnValues = this.props.Expression.ColumnValuesExpression.find(colValues => colValues.ColumnName == columnId)
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
@@ -40,6 +43,24 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     </ListGroupItem>
                 })
             }
+
+            // Next do the column filters
+            let columnFilters = this.props.Expression.FiltersExpression.find(colFilters => colFilters.ColumnName == columnId)
+            let columnFiltersListgroupItems: JSX.Element[]
+            if (columnFilters) {
+                columnFiltersListgroupItems = columnFilters.Filters.map((filter, index) => {
+                    return <ListGroupItem key={filter.ExpressionName} onClick={() => this.props.onSelectedColumnChange(columnId)}>
+                        <Form inline>
+                            {filter.ExpressionName}
+                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteFilter(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                            </OverlayTrigger>
+                        </Form>
+                    </ListGroupItem>
+                })
+            }
+
+            // Finally do the column ranges
             let columnRanges = this.props.Expression.RangeExpression.find(colValues => colValues.ColumnName == columnId)
             let columnRangesListgroupItems: JSX.Element[]
             if (columnRanges) {
@@ -91,6 +112,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                 })
             }
+
             let columnFriendlyName = this.props.ColumnsList.find(x => x.ColumnId == columnId).ColumnFriendlyName
             return <div key={columnId + "div"}>
                 <Button block style={panelHeaderStyle}
@@ -102,26 +124,27 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 </Button>
                 <ListGroup>
                     {columnValuesListgroupItems}
+                    {columnFiltersListgroupItems}
                     {columnRangesListgroupItems}
                 </ListGroup>
             </div>
         })
         return <div>
-        {this.props.ShowPanel  &&
-        
-        <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
-            <div style={divStyle}>
-                {previewLists}
-            </div>
-        </PanelWithButton>
-        }
+            {this.props.ShowPanel &&
 
-         {!this.props.ShowPanel  &&
-        
-            <div >
-                {previewLists}
-            </div>
-        }
+                <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
+                    <div style={divStyle}>
+                        {previewLists}
+                    </div>
+                </PanelWithButton>
+            }
+
+            {!this.props.ShowPanel &&
+
+                <div >
+                    {previewLists}
+                </div>
+            }
         </div>
     }
 

@@ -49,6 +49,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     public canNext(): boolean {
         return this.state.AdvancedSearchName != "";
     }
+    
    
     public canBack(): boolean { return true; }
 

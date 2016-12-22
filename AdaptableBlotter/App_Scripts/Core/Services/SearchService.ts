@@ -124,12 +124,11 @@ export class SearchService implements ISearchService {
             let predefinedExpressionInfo: IPredefinedExpressionInfo =
                 {
                     Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
-                    Operator: this.GetQuickSearchState().QuickSearchOperator,
-                    Operand1: quickSearchText,
-                    Operand2: ""
+                    ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
+                    ExpressionFilter: null
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
-                let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo);
+                let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);
                 searchExpressions.push(predefinedExpression);
             });
         }

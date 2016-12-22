@@ -91,20 +91,20 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         }
         else if (this.props.ColumnType == ColumnType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
-                let numericOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
+                let stringOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
                     <option value={LeafExpressionOperator.Unknown.toString()}>Select operator</option>
                     <option value={LeafExpressionOperator.Contains.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</option>
                     <option value={LeafExpressionOperator.StartsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</option>
                     <option value={LeafExpressionOperator.EndsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</option>
                     <option value={LeafExpressionOperator.MatchesRegex.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.MatchesRegex)}</option>
                 </FormControl>
-                return <Form horizontal key={index}>
-                    <FormGroup controlId={"Range" + index}>
+                return <Form horizontal key={index} >
+            <FormGroup controlId={"Range" + index}>
                         <Col xs={5}>
-                            {numericOption}
+                            {stringOption}
                         </Col>
                         <Col xs={5}>
-                            <FormControl value={String(x.Operand1)} type="string" placeholder="Enter a string" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                            <FormControl value={String(x.Operand1)} type="string" placeholder="Enter value" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                         </Col>
                         <Col xs={2}>
                             <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
@@ -115,6 +115,8 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                 </Form>
             })
         }
+        {/*
+            // dont think we are using this....
         let header = <Form horizontal>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={8}>{ColumnType[this.props.ColumnType] + " Entry"}</Col>
@@ -125,7 +127,8 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                 </Col>
             </Row>
         </Form>;
-        return <PanelWithButton headerText={ColumnType[this.props.ColumnType] + " Entry"}
+        */}
+        return <PanelWithButton headerText={"Ranges"}
             buttonClick={() => this.addRange()}
             buttonContent={"Add a range entry"}>
             <div style={divStyle}>

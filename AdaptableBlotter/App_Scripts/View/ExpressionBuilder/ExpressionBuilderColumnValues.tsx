@@ -17,7 +17,7 @@ interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<Expre
 export class ExpressionBuilderColumnValues extends React.Component<ExpressionBuilderColumnValuesProps, {}> {
 
     render() {
-        return <PanelWithButton headerText={"Column Values"} className="no-padding-panel">
+        return <PanelWithButton headerText={"Values"} className="no-padding-panel">
             <SingleListBox style={divStyle} Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
                 onSelectedChange={(list) => this.props.onColumnValuesChange(list)}

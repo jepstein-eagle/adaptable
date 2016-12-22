@@ -15,3 +15,4 @@ export interface ICalendarEntry {
     HolidayName: string;
     HolidayDate: Date;
 }
+

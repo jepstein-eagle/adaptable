@@ -5,6 +5,7 @@ import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
+import { IExpressionService } from '../Services/Interface/IExpressionService'
 import { Expression } from '../../Core/Expression/Expression';
 
 
@@ -16,6 +17,7 @@ export interface IAdaptableBlotter {
     CalendarService: ICalendarService
     AuditService: IAuditService
     SearchService: ISearchService
+    ExpressionService: IExpressionService
 
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType

@@ -70,7 +70,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 <AdaptableWizard Steps={
                     [
                         <ConditionalStyleSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter}  SelectedColumnId={null}/>
+                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
                     StepStartIndex={0}
@@ -95,7 +95,10 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onEdit(condition: IConditionalStyleCondition) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedConditionalStyleCondition: Helper.cloneObject(condition) });
+        // but until we fix the clone issue we need to frig cloning the fitercondition object :(
+        let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
+        clonedObject.Expression.FiltersExpression = condition.Expression.FiltersExpression;
+        this.setState({ EditedConditionalStyleCondition: clonedObject });
     }
 
     closeWizard() {

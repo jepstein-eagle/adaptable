@@ -42,6 +42,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
+                        DeleteFilter={(columnId, index) => this.DeleteFilter(columnId, index)}
                         DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
                         ShowPanel={true}>
                     </ExpressionBuilderPreview>
@@ -63,6 +64,19 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
 
     }
+
+     DeleteFilter(columnId: string, index: number) {
+        //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let columnFilters = this.state.Expression.FiltersExpression.find(x => x.ColumnName == columnId)
+        columnFilters.Filters.splice(index, 1)
+        if (columnFilters.Filters.length == 0) {
+            let columnFiltersIndex = this.state.Expression.FiltersExpression.findIndex(x => x.ColumnName == columnId)
+            this.state.Expression.FiltersExpression.splice(columnFiltersIndex, 1)
+        }
+        let newExpression: Expression = Object.assign({}, this.state.Expression)
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+    }
+
     DeleteRange(columnId: string, index: number) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let columnRanges = this.state.Expression.RangeExpression.find(x => x.ColumnName == columnId)
@@ -74,6 +88,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
+
     onChangeExpression(newExpression: Expression) {
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }

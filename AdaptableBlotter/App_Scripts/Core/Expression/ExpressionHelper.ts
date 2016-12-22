@@ -1,11 +1,14 @@
 import { Expression } from './Expression'
-import { IExpressionRange } from '../Interface/IExpression';
+import { IExpressionRange, IExpressionFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 
 
 export module ExpressionHelper {
+
+
+
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
@@ -16,10 +19,23 @@ export module ExpressionHelper {
         for (let columnId of columnList) {
             let columnFriendlyName = columns.find(x => x.ColumnId == columnId).ColumnFriendlyName
             let columnToString = ""
+
+            // Column Values
             let columnValues = Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
             if (columnValues) {
                 columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
+
+            // Column Filters
+            let columnFilters = Expression.FiltersExpression.find(x => x.ColumnName == columnId)
+            if (columnFilters) {
+                if (columnToString != "") {
+                    columnToString += " OR "
+                }
+                columnToString = ColumnFiltersKeyPairToString(columnFilters, columnFriendlyName)
+            }
+
+            // Column Ranges
             let columnRanges = Expression.RangeExpression.find(x => x.ColumnName == columnId)
             if (columnRanges) {
                 if (columnToString != "") {
@@ -35,16 +51,39 @@ export module ExpressionHelper {
         return returnValue
     }
 
+
     export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], isCaseSensitive: Boolean = true): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
+
         for (let columnId of expressionColumnList) {
-            //we need either a column value or range to match the column
+
+            //we need either a column value or filter or range to match the column
             let isColumnSatisfied = false
+
+            // check for column values
             let columnValues = Expression.ColumnValuesExpression.find(x => x.ColumnName == columnId)
             if (columnValues) {
                 let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
                 isColumnSatisfied = columnValues.Values.indexOf(columnDisplayValue) > -1
             }
+
+            // Check for filters if column fails
+            if (!isColumnSatisfied) {
+                let columnFilters = Expression.FiltersExpression.find(x => x.ColumnName == columnId)
+                if (columnFilters) {
+                    let column = columnBlotterList.find(x => x.ColumnId == columnFilters.ColumnName)
+                    let valueCheck: any = getColumnValue(columnFilters.ColumnName);
+
+                    for (let filter of columnFilters.Filters) {
+                        isColumnSatisfied = filter.isExpressionSatisfied(valueCheck);
+                        if (isColumnSatisfied) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Check for ranges if column and filter have failed
             if (!isColumnSatisfied) {
                 let columnRanges = Expression.RangeExpression.find(x => x.ColumnName == columnId)
                 if (columnRanges) {
@@ -140,6 +179,17 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.Values.join(", ") + ")"
     }
 
+    function ColumnFiltersKeyPairToString(keyValuePair: { ColumnName: string, Filters: Array<IExpressionFilter> }, columnFriendlyName: string): string {
+        let returnValue = ""
+        for (let filter of keyValuePair.Filters) {
+            if (returnValue != "") {
+                returnValue += " OR "
+            }
+            returnValue += "[" + columnFriendlyName + "] " + filter.ExpressionName;
+        }
+        return returnValue
+    }
+
     export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {
             case LeafExpressionOperator.Unknown:
@@ -187,16 +237,17 @@ export module ExpressionHelper {
     }
 
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
-        return Array.from(new Set(Expression.ColumnValuesExpression.map(x => x.ColumnName).concat(Expression.RangeExpression.map(x => x.ColumnName))))
+        return Array.from(new Set(Expression.ColumnValuesExpression.map(x => x.ColumnName).concat(Expression.FiltersExpression.map(x => x.ColumnName)).concat(Expression.RangeExpression.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
         return Expression.ColumnValuesExpression.length == 0
+            && Expression.FiltersExpression.length == 0
             && Expression.RangeExpression.length == 0
     }
 
     export function IsExpressionValid(Expression: Expression): boolean {
-        //nothing to check for ColumnValues. 
+        //nothing to check for ColumnValues or FilterValues. 
         //we check that all ranges are properly populated
         return Expression.RangeExpression.every(x => {
             return x.Ranges.every(range => {
@@ -214,11 +265,12 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyExpression(): Expression {
-        return new Expression([], "Any", [])
+        return new Expression([], [], [])
     }
 
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter, isCaseSensitive: Boolean = true): boolean {
         let returnVal: boolean = (
+
             this.IsSatisfied(
                 Expression,
                 blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
@@ -229,6 +281,8 @@ export module ExpressionHelper {
 
         return returnVal;
     }
+
+
 
 
 } 
