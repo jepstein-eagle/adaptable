@@ -3,16 +3,22 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IExpressionFilter } from '../Interface/IExpression';
 import { ColumnType } from '../Enums'
 import { IExpressionService } from './Interface/IExpressionService';
+import { StringExtensions } from '../../Core/Extensions';
+
 
 export class ExpressionService implements IExpressionService {
 
     private _expressionFilters: IExpressionFilter[];
 
     constructor(private blotter: IAdaptableBlotter) {
-
         this._expressionFilters = [];
     }
 
+    // only doing this because we seem to lose hte "isExpressionSatisfied" bit when we persist so we cannot rely on it being in the object
+    // so either we get it every time we load or we do this
+    public EvaluateExpression(expressionName: string, valueToCheck: any): boolean {
+        return this.GetFilterExpressions().find(e => e.ExpressionName == expressionName).isExpressionSatisfied(valueToCheck);
+    }
 
     public GetFilterExpressions(): Array<IExpressionFilter> {
 
@@ -23,43 +29,43 @@ export class ExpressionService implements IExpressionService {
             this._expressionFilters.push({
                 ExpressionName: "Is Today Date",
                 ColumnType: ColumnType.Date,
-                isExpressionSatisfied: (date: any): boolean => {
+                isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
-                    return (today.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0))
+                    return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                 }
             });
 
             this._expressionFilters.push({
                 ExpressionName: "Is In Past",
                 ColumnType: ColumnType.Date,
-                isExpressionSatisfied: (date: any): boolean => {
-                    return +date < Date.now();
+                isExpressionSatisfied: (dateToCheck: Date): boolean => {
+                    return +dateToCheck < Date.now();
                 }
             });
 
             this._expressionFilters.push({
                 ExpressionName: "Is In Future",
                 ColumnType: ColumnType.Date,
-                isExpressionSatisfied: (date: any): boolean => {
-                    return +date > Date.now();
+                isExpressionSatisfied: (dateToCheck: Date): boolean => {
+                    return +dateToCheck > Date.now();
                 }
             });
 
             this._expressionFilters.push({
                 ExpressionName: "Is Yesterday",
                 ColumnType: ColumnType.Date,
-                isExpressionSatisfied: (date: any): boolean => {
+                isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
-                    return (yesterday.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0))
+                    return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                 }
             });
 
             this._expressionFilters.push({
                 ExpressionName: "Is Tomorrow",
                 ColumnType: ColumnType.Date,
-                isExpressionSatisfied: (date: any): boolean => {
+                isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
-                    return (tomorrow.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0))
+                    return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                 }
             });
 
@@ -67,18 +73,37 @@ export class ExpressionService implements IExpressionService {
             this._expressionFilters.push({
                 ExpressionName: "Positive",
                 ColumnType: ColumnType.Number,
-                isExpressionSatisfied: (number: any): boolean => {
-                    return (number > 0);
+                isExpressionSatisfied: (numberToCheck: number): boolean => {
+                    return (numberToCheck > 0);
                 }
             });
 
             this._expressionFilters.push({
                 ExpressionName: "Negative",
                 ColumnType: ColumnType.Number,
-                isExpressionSatisfied: (number: any): boolean => {
-                    return (number < 0);
+                isExpressionSatisfied: (numberToCheck: number): boolean => {
+                    return (numberToCheck < 0);
                 }
             });
+
+
+ // String Filters
+            this._expressionFilters.push({
+                ExpressionName: "Blanks",
+                ColumnType: ColumnType.String,
+                isExpressionSatisfied: (stringToCheck: string): boolean => {
+                    return (StringExtensions.IsNullOrEmpty( stringToCheck ));
+                }
+            });
+
+            this._expressionFilters.push({
+                ExpressionName: "Non Blanks",
+                ColumnType: ColumnType.String,
+                isExpressionSatisfied: (stringToCheck: any): boolean => {
+                    return (StringExtensions.IsNotNullOrEmpty( stringToCheck ));
+                }
+            });
+
         }
 
         return this._expressionFilters;

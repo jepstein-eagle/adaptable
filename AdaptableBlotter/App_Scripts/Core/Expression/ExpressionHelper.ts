@@ -52,7 +52,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], isCaseSensitive: Boolean = true): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], blotter: IAdaptableBlotter, isCaseSensitive: Boolean = true): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -72,10 +72,13 @@ export module ExpressionHelper {
                 let columnFilters = Expression.FiltersExpression.find(x => x.ColumnName == columnId)
                 if (columnFilters) {
                     let column = columnBlotterList.find(x => x.ColumnId == columnFilters.ColumnName)
-                    let valueCheck: any = getColumnValue(columnFilters.ColumnName);
+                    let valueToCheck: any = getColumnValue(columnFilters.ColumnName);
 
                     for (let filter of columnFilters.Filters) {
-                        isColumnSatisfied = filter.isExpressionSatisfied(valueCheck);
+                        // because we cannot be sure to have persisted the method instead of calling it directly on the object we call it via a helper method
+                        // need to fix this because, well its a bit crap
+                        //   isColumnSatisfied =   filter.isExpressionSatisfied(valueCheck); -- should be this line and life would be easier
+                        isColumnSatisfied = blotter.ExpressionService.EvaluateExpression(filter.ExpressionName, valueToCheck);
                         if (isColumnSatisfied) {
                             break;
                         }
@@ -276,6 +279,7 @@ export module ExpressionHelper {
                 blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
                 blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
                 columns,
+                blotter,
                 isCaseSensitive
             ))
 

@@ -156,7 +156,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show
     onEditAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.SelectedAdvancedSearch);
+        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch) ;
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
@@ -214,7 +214,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     onSelectedColumnChange(columnName: string) {
         if (!this.IsDeleting) { // this gets called after deleting an item so dont want to open advanced search in those circumstances
-            let clonedSearch: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.SelectedAdvancedSearch);
+            let clonedSearch: IAdvancedSearch =  Helper.cloneObject(this.state.SelectedAdvancedSearch) ;
             this.setState({ SelectedColumnId: columnName, EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
         }
     }
@@ -225,7 +225,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onFinishWizard() {
-        let clonedObject: IAdvancedSearch = this.onCloneAdvancedSearch(this.state.EditedAdvancedSearch);
+        let clonedObject: IAdvancedSearch =  Helper.cloneObject(this.state.EditedAdvancedSearch);
         this.props.onAddUpdateAdvancedSearch(clonedObject);
         this.setState({ SelectedAdvancedSearch: clonedObject } as AdvancedSearchActionInternalState)
     }
@@ -249,12 +249,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     }
 
-    // we have an issue with cloning at the moment where filter is lost so we are going to always clone here and then its just one place until I fix
-    onCloneAdvancedSearch(objectToClone: IAdvancedSearch): IAdvancedSearch {
-        let clonedObject: IAdvancedSearch = Helper.cloneObject(objectToClone);
-        clonedObject.Expression.FiltersExpression = this.state.EditedAdvancedSearch.Expression.FiltersExpression;
-        return clonedObject;
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

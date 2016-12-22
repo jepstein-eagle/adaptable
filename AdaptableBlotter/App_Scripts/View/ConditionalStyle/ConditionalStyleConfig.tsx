@@ -94,10 +94,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     onEdit(condition: IConditionalStyleCondition) {
-        //we clone the condition as we do not want to mutate the redux state here....
-        // but until we fix the clone issue we need to frig cloning the fitercondition object :(
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        clonedObject.Expression.FiltersExpression = condition.Expression.FiltersExpression;
         this.setState({ EditedConditionalStyleCondition: clonedObject });
     }
 

@@ -1,7 +1,8 @@
 
-import {  IExpressionFilter } from '../../Interface/IExpression';
+import { IExpressionFilter } from '../../Interface/IExpression';
 
 
 export interface IExpressionService {
-    GetFilterExpressions(): Array<IExpressionFilter> 
+    GetFilterExpressions(): Array<IExpressionFilter>
+    EvaluateExpression(expressionName: string, valueToCheck: any): boolean
 }
