@@ -15,7 +15,7 @@ export class ExpressionService implements IExpressionService {
     }
 
     // only doing this because we seem to lose hte "isExpressionSatisfied" bit when we persist so we cannot rely on it being in the object
-    // so either we get it every time we load or we do this
+    // so either we get it every time we load for every expression or we go via this method
     public EvaluateExpression(expressionName: string, valueToCheck: any): boolean {
         return this.GetFilterExpressions().find(e => e.ExpressionName == expressionName).isExpressionSatisfied(valueToCheck);
     }
@@ -83,6 +83,14 @@ export class ExpressionService implements IExpressionService {
                 ColumnType: ColumnType.Number,
                 isExpressionSatisfied: (numberToCheck: number): boolean => {
                     return (numberToCheck < 0);
+                }
+            });
+
+            this._expressionFilters.push({
+                ExpressionName: "Zero",
+                ColumnType: ColumnType.Number,
+                isExpressionSatisfied: (numberToCheck: number): boolean => {
+                    return (numberToCheck == 0);
                 }
             });
 

@@ -6,6 +6,7 @@ import { Helper } from '../Core/Helper'
 import { SortOrder, ColumnType } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, ListGroupProps, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap';
+import { StringExtensions } from '../Core/Extensions';
 
 
 interface SingleListBoxProps extends ListGroupProps {
@@ -76,7 +77,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
             let isActive = this.state.UiSelectedValues.indexOf(x) >= 0;
             let display: string = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-            if (this.state.FilterValue != "" && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+            if (StringExtensions.IsNotEmpty(this.state.FilterValue) && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
                 return null;
             }
             else {
@@ -89,7 +90,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
 
         let header = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
             SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
-        
+
         return <div>
             {header}
             <ListGroup fill style={this.props.style}>

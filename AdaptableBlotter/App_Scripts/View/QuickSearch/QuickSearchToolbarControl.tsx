@@ -2,6 +2,7 @@
 import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { StringExtensions } from '../../Core/Extensions';
 
 
 interface QuickSearchToolbarControlProps extends React.ClassAttributes<QuickSearchToolbarControl> {
@@ -37,11 +38,11 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
                 />{' '}
 
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
+                <Button bsSize='small' bsStyle='success' disabled={StringExtensions.IsEmpty( this.state.EditedQuickSearchText)}   onClick={() => this.onSetQuickSearch()}>Search</Button>
             </OverlayTrigger>
             {' '}
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                <Button bsSize='small' onClick={() => this.onClearQuickSearch()}>Clear</Button>
+                <Button bsSize='small' disabled={StringExtensions.IsEmpty( this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
             </OverlayTrigger>
 </Panel>
         </Form>

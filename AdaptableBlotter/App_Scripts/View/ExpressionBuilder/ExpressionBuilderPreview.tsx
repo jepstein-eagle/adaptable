@@ -8,6 +8,8 @@ import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip,
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
+import { StringExtensions } from '../../Core/Extensions';
+
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression
@@ -67,7 +69,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
                     if (y.Operator == LeafExpressionOperator.Between) {
 
-                        if (y.Operand1 == "" || y.Operand2 == "") {
+                        if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
@@ -89,7 +91,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         }
                     }
                     else {
-                        if (y.Operand1 == "" || y.Operator == LeafExpressionOperator.Unknown) {
+                        if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
                                 <Form inline>
                                     {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
