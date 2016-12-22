@@ -37,7 +37,7 @@ export interface IAdaptableBlotter {
     SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): { Id: any, ColumnId: string, Value: any }
     isGridPageable(): boolean
-    getPrimaryKeyValueFromRecord( record: any) : any
+    getPrimaryKeyValueFromRecord(record: any): any
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void
@@ -52,14 +52,14 @@ export interface IAdaptableBlotter {
 
     // playing around
     getAllRowIds(): string[]
-        hideRows(rowIds: string[]): void
-        showRows(rowIds: string[]): void
+    hideRows(rowIds: string[]): void
+    showRows(rowIds: string[]): void
 
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
 
-   
+
     // Export
     saveAsExcel(fileName: string, allPages: boolean): void
 

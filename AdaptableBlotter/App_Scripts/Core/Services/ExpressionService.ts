@@ -27,7 +27,7 @@ export class ExpressionService implements IExpressionService {
 
             // Date Filters
             this._expressionFilters.push({
-                ExpressionName: "Is Today Date",
+                ExpressionName: "Today",
                 ColumnType: ColumnType.Date,
                 isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
@@ -36,7 +36,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._expressionFilters.push({
-                ExpressionName: "Is In Past",
+                ExpressionName: "In Past",
                 ColumnType: ColumnType.Date,
                 isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     return +dateToCheck < Date.now();
@@ -44,7 +44,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._expressionFilters.push({
-                ExpressionName: "Is In Future",
+                ExpressionName: "In Future",
                 ColumnType: ColumnType.Date,
                 isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     return +dateToCheck > Date.now();
@@ -52,7 +52,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._expressionFilters.push({
-                ExpressionName: "Is Yesterday",
+                ExpressionName: "Yesterday",
                 ColumnType: ColumnType.Date,
                 isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
@@ -61,7 +61,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._expressionFilters.push({
-                ExpressionName: "Is Tomorrow",
+                ExpressionName: "Tomorrow",
                 ColumnType: ColumnType.Date,
                 isExpressionSatisfied: (dateToCheck: Date): boolean => {
                     let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
@@ -87,12 +87,12 @@ export class ExpressionService implements IExpressionService {
             });
 
 
- // String Filters
+            // String Filters
             this._expressionFilters.push({
                 ExpressionName: "Blanks",
                 ColumnType: ColumnType.String,
                 isExpressionSatisfied: (stringToCheck: string): boolean => {
-                    return (StringExtensions.IsNullOrEmpty( stringToCheck ));
+                    return (StringExtensions.IsNullOrEmpty(stringToCheck));
                 }
             });
 
@@ -100,7 +100,25 @@ export class ExpressionService implements IExpressionService {
                 ExpressionName: "Non Blanks",
                 ColumnType: ColumnType.String,
                 isExpressionSatisfied: (stringToCheck: any): boolean => {
-                    return (StringExtensions.IsNotNullOrEmpty( stringToCheck ));
+                    return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
+                }
+            });
+
+
+            // Boolean Filters
+            this._expressionFilters.push({
+                ExpressionName: "True",
+                ColumnType: ColumnType.Boolean,
+                isExpressionSatisfied: (boolToCheck: boolean): boolean => {
+                    return (boolToCheck);
+                }
+            });
+
+            this._expressionFilters.push({
+                ExpressionName: "False",
+                ColumnType: ColumnType.Boolean,
+                isExpressionSatisfied: (boolToCheck: boolean): boolean => {
+                    return (!boolToCheck);
                 }
             });
 
