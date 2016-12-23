@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Grid, FormControl, ControlLabel, Label, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
+import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -49,7 +49,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     render() {
 
         var isNew: PopupState = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Popup;
-
 
         this.IsDeleting = false;
         var blotter = this.props.AdaptableBlotter;
@@ -156,7 +155,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show
     onEditAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch) ;
+        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
@@ -214,7 +213,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     onSelectedColumnChange(columnName: string) {
         if (!this.IsDeleting) { // this gets called after deleting an item so dont want to open advanced search in those circumstances
-            let clonedSearch: IAdvancedSearch =  Helper.cloneObject(this.state.SelectedAdvancedSearch) ;
+            let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
             this.setState({ SelectedColumnId: columnName, EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
         }
     }
@@ -225,7 +224,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onFinishWizard() {
-        let clonedObject: IAdvancedSearch =  Helper.cloneObject(this.state.EditedAdvancedSearch);
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdvancedSearch);
         this.props.onAddUpdateAdvancedSearch(clonedObject);
         this.setState({ SelectedAdvancedSearch: clonedObject } as AdvancedSearchActionInternalState)
     }
@@ -246,9 +245,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
             this.setState({ SelectedAdvancedSearch: savedSearch } as AdvancedSearchActionInternalState);
         }
-
     }
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

@@ -3,8 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup } from 'react-bootstrap';
-
+import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
@@ -90,13 +89,20 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </Col>
                 </FormGroup>
             </Form>
-            <PanelWithButton headerText="Column Nudge Values"
+            <PanelWithButton headerText="Column Nudge Values" 
+            bsStyle="success"
                 buttonContent={"Create Column Nudge Value"}
                 buttonClick={() => this.createColumnNudgeValue()}  >
-                {optionColumnsItems.length > 0 && columnNudgesHeader}
-                <ListGroup style={panelColumNudge}>
-                    {optionColumnsItems}
-                </ListGroup>
+
+                {optionColumnsItems.length == 0 ?
+                    <Well bsSize="small">Click 'Create Column Nudge Value' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>
+                    :
+                    <div>
+                        {columnNudgesHeader}
+                        <ListGroup style={panelColumNudge}>
+                            {optionColumnsItems}
+                        </ListGroup>
+                    </div>}
             </PanelWithButton>
             {this.state.EditedPlusMinusCondition != null &&
                 <AdaptableWizard Steps={[<PlusMinusSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
@@ -117,7 +123,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         this.setState({ EditedPlusMinusCondition: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
-         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
+        let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
         this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index });
     }
     closeWizard() {

@@ -58,7 +58,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             bsStyle="primary" style={panelStyle}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
-                <Well bsSize="large">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
+                <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
                 : <ConditionalStyleConfigHeader />
             }
 

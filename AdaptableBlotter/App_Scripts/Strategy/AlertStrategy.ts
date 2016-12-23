@@ -32,7 +32,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         let alertCommunicationInfo: IAlertCommunicationInfo = {
             SendEmail: false,
             EmailRecipients: "",
-                        ShowPopup: true,
+            ShowPopup: true,
             PopupType: PopupType.DisappearAutomatically
         }
 

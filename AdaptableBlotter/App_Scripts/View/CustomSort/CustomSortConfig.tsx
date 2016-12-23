@@ -51,7 +51,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             buttonClick={() => this.CreateCustomSort()}
             buttonContent="Create Custom Sort" bsStyle="primary">
             {this.props.CustomSorts.length == 0 ?
-                <Well bsSize="large">Click 'Create Custom Sort' to create a new bespoke sort for a column of your choosing.</Well>
+                <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
                 : <CustomSortConfigHeader />
             }
 
