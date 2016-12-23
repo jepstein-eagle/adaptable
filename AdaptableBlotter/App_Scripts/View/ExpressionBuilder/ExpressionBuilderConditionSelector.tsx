@@ -121,7 +121,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             {this.props.SelectedColumnId == "select" ? null :
 
 
-                <div style={divStyleTest}>
+                <div >
                     <Form horizontal>
                         <FormGroup controlId="formInlineCriteria">
                             <Col xs={3}>
@@ -129,7 +129,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             </Col>
                         </FormGroup>
                     </Form>
-                    <Row style-={divStyleTest}>
+                    <Row >
                         <Col xs={3}>
                             <ExpressionBuilderColumnValues
                                 ColumnValues={this.state.ColumnValues}
@@ -228,8 +228,4 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 let divStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px'
-}
-
-let divStyleTest = {
-    'margin': '5px'
 }

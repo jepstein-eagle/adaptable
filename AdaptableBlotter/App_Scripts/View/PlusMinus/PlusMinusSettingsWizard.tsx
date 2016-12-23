@@ -1,11 +1,12 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, Glyphicon, OverlayTrigger, Popover } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
 import { ColumnType } from '../../Core/Enums';
+import { InformationPopover } from '../InformationPopover';
 
 
 interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
@@ -33,6 +34,9 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         let optionColumns = this.props.Columns.filter(x => x.ColumnType == ColumnType.Number).map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
+
+
+
         return <Panel header="Plus/Minus Settings" bsStyle="primary">
             <Form horizontal>
                 <FormGroup controlId="formColumn">
@@ -57,7 +61,8 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                             Whole Column
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Column Expression (created in next step)
+                            Column Expression {' '}
+                           <InformationPopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} />
                         </Radio>
                     </Col>
                 </FormGroup>
