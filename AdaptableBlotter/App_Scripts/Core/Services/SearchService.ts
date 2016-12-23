@@ -16,7 +16,6 @@ Note:  Because Quick Search uses an expression - it only works on string columns
 See: 1561: Can only perform Quick Search on string columns
 
 Becuase we are using Expressions on visible rows rather than JQuery on the data source it means that we have other bugs. eg.
-1557:  Sorting ignores Search and puts the rows back
 1559:  Paging doesnt work properly in Kendo
 */
 
@@ -24,6 +23,8 @@ export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        
+        this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
 
     }
 
