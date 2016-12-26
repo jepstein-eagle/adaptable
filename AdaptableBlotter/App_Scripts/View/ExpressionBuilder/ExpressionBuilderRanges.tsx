@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ColumnType } from '../../Core/Enums'
-import { IExpressionRange } from '../../Core/Interface/IExpression'
+import { IRangeExpression } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../PanelWithButton'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
@@ -11,8 +11,8 @@ import { ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, F
 
 interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     ColumnType: ColumnType
-    Ranges: Array<IExpressionRange>
-    onRangesChange: (Ranges: Array<IExpressionRange>) => void
+    Ranges: Array<IRangeExpression>
+    onRangesChange: (Ranges: Array<IRangeExpression>) => void
 }
 
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesProps, {}> {
@@ -148,7 +148,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
     private onLeafExpressionOperatorChange(index: number, x: React.FormEvent) {
         let e = x.target as HTMLInputElement;
-        let rangeCol: Array<IExpressionRange> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operator: Number.parseInt(e.value) })
         this.props.onRangesChange(rangeCol)
@@ -156,7 +156,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
     private onOperand1Edit(index: number, x: React.FormEvent) {
         let e = x.target as HTMLInputElement;
-        let rangeCol: Array<IExpressionRange> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operand1: e.value })
         this.props.onRangesChange(rangeCol)
@@ -164,7 +164,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
     private onOperand2Edit(index: number, x: React.FormEvent) {
         let e = x.target as HTMLInputElement;
-        let rangeCol: Array<IExpressionRange> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operand2: e.value })
         this.props.onRangesChange(rangeCol)

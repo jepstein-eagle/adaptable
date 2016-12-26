@@ -7,7 +7,6 @@ import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Core/Enums';
 import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
 import { Expression } from '../Core/Expression/Expression'
-import { IExpressionRange } from '../Core/Interface/IExpression';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'

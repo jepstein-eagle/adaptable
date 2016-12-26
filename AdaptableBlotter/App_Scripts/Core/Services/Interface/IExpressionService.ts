@@ -1,8 +1,11 @@
+import {  IColumn } from '../../Interface/IAdaptableBlotter';
 
-import { IExpressionFilter } from '../../Interface/IExpression';
+import { INamedExpression } from '../../Interface/IExpression';
 
 
 export interface IExpressionService {
-    GetFilterExpressions(): Array<IExpressionFilter>
-    EvaluateExpression(expressionName: string, valueToCheck: any): boolean
+    GetNamedExpressions(): Array<INamedExpression>
+    EvaluateExpression(expressionId: string, valueToCheck: any): boolean
+     ShouldShowNamedExpressionForColumn(namedExpression: INamedExpression, column: IColumn):boolean
+
 }

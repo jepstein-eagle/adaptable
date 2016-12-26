@@ -10,8 +10,8 @@ import { Helper } from '../../Core/Helper';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
-import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
-import { IExpressionRange } from '../../Core/Interface/IExpression';
+import { IPredefinedExpressionInfo, IPredefinedExpressionStyle, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
+import { IRangeExpression } from '../../Core/Interface/IExpression';
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Blotter: IAdaptableBlotter
@@ -23,22 +23,22 @@ interface ConditionalStyleSettingsWizardState {
     CellStyle: CellStyle,
     ConditionalStyleScope: ConditionalStyleScope,
     IsPredefinedExpression: boolean,
-    PredefinedExpressionInfo: IPredefinedExpressionInfo,
+    PredefinedExpressionStyle: IPredefinedExpressionStyle,
     Expression: Expression
 }
 
 export class ConditionalStyleSettingsWizard extends React.Component<ConditionalStyleSettingsWizardProps, ConditionalStyleSettingsWizardState> implements AdaptableWizardStep {
-private predefinedExpressions: IPredefinedExpressionInfo[] = [];
+    private predefinedExpressions: IPredefinedExpressionStyle[] = [];
 
 
-constructor(props: ConditionalStyleSettingsWizardProps) {
+    constructor(props: ConditionalStyleSettingsWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
             CellStyle: this.props.Data.CellStyle,
             ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
             IsPredefinedExpression: this.props.Data.IsPredefinedExpression,
-            PredefinedExpressionInfo: this.props.Data.PredefinedExpressionInfo,
+            PredefinedExpressionStyle: this.props.Data.PredefinedExpressionStyle,
             Expression: this.props.Data.Expression
         }
     }
@@ -54,21 +54,29 @@ constructor(props: ConditionalStyleSettingsWizardProps) {
             return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
         })
 
-if(this.predefinedExpressions.length==0){
-        // create 2 predefined styles - do it here and not in the helper class
-        this.predefinedExpressions.push({
-            Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", CellStyle: CellStyle.GreenFont,
-            ExpressionRange: null,
-            ExpressionFilter: this.props.Blotter.ExpressionService.GetFilterExpressions().find(f=>f.ExpressionName=="Positive"),
-        });
+        if (this.predefinedExpressions.length == 0) {
+            // create 2 predefined styles - do it here and not in the helper class
+            this.predefinedExpressions.push(
+                {
+                    PredefinedExpressionInfo: {
+                        ColumnValues: null,
+                        ExpressionRange: null,
+                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Id == "Positive"),
+                    }, CellStyle: CellStyle.GreenFont, FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
+
+                });
 
 
-        this.predefinedExpressions.push({
-            Id: "NegativeRed", FriendlyName: "Negative numbers in red font", CellStyle: CellStyle.RedFont,
-            ExpressionRange: null,
-            ExpressionFilter: this.props.Blotter.ExpressionService.GetFilterExpressions().find(f=>f.ExpressionName=="Negative"),
-        });
-}
+            this.predefinedExpressions.push(
+                {
+                    PredefinedExpressionInfo: {
+                        ColumnValues: null,
+                        ExpressionRange: null,
+                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Id == "Negative"),
+                    }, CellStyle: CellStyle.RedFont, FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
+
+                });
+        }
 
         let optionPredefinedExpressions = this.predefinedExpressions.map(pe => {
             return <option key={pe.Id} value={pe.Id}>{pe.FriendlyName}</option>
@@ -78,8 +86,8 @@ if(this.predefinedExpressions.length==0){
         let currentColour = this.state.CellStyle == null ? emptyStyle : this.state.CellStyle.toString();
 
         let emptyPredefinedExpression: string = "Select an expression"
-        let currentPredefinedExpression = (this.state.IsPredefinedExpression && this.state.PredefinedExpressionInfo != null) ?
-            this.state.PredefinedExpressionInfo.Id :
+        let currentPredefinedExpression = (this.state.IsPredefinedExpression && this.state.PredefinedExpressionStyle != null) ?
+            this.state.PredefinedExpressionStyle.Id :
             emptyPredefinedExpression;
 
         return <Panel header="Conditional Style Settings" bsStyle="primary">
@@ -156,10 +164,7 @@ if(this.predefinedExpressions.length==0){
         </Panel>
     }
 
-    // this enum should really be a class and then its all in there...
-    private mapPredefinedExpressionToText(conditionalStylePredefinedExpression: IPredefinedExpressionInfo): string {
-        return conditionalStylePredefinedExpression.FriendlyName
-    }
+
     private onExpressionOptionChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let result: boolean = (e.value == "predefined")
@@ -173,7 +178,7 @@ if(this.predefinedExpressions.length==0){
 
     private onPredefinedExpressionSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ PredefinedExpressionInfo: this.predefinedExpressions.find(pe => pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        this.setState({ PredefinedExpressionStyle: this.predefinedExpressions.find(pe => pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
     private onColourSelectChange(event: React.FormEvent) {
@@ -194,16 +199,16 @@ if(this.predefinedExpressions.length==0){
     }
 
     private onCreatePredefinedExpression() {
-        let testExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo, this.props.Blotter);
+        let testExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionStyle.PredefinedExpressionInfo, this.props.Blotter);
         //   this.setState({ Expression: testExpression } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
         //   this.setState({ ConditionalStyleColour: conditionalStyleColour } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))  
-        this.state.CellStyle = this.state.PredefinedExpressionInfo.CellStyle;
+        this.state.CellStyle = this.state.PredefinedExpressionStyle.CellStyle;
         this.state.Expression = testExpression;
     }
 
     public canNext(): boolean {
         if (this.state.IsPredefinedExpression) {
-            if (this.state.PredefinedExpressionInfo == null) {
+            if (this.state.PredefinedExpressionStyle == null) {
                 return false;
             }
         } else {
@@ -230,7 +235,7 @@ if(this.predefinedExpressions.length==0){
         this.props.Data.CellStyle = this.state.CellStyle;
         this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
         this.props.Data.IsPredefinedExpression = this.state.IsPredefinedExpression;
-        this.props.Data.PredefinedExpressionInfo = this.state.PredefinedExpressionInfo;
+        this.props.Data.PredefinedExpressionStyle = this.state.PredefinedExpressionStyle;
         this.props.Data.Expression = this.state.Expression;
     }
     public Back(): void { }

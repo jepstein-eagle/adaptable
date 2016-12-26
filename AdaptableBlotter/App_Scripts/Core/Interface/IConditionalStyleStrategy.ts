@@ -1,7 +1,7 @@
 import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { Expression } from '../Expression/Expression';
 import { ConditionalStyleScope, CellStyle } from '../Enums';
-import { IPredefinedExpressionInfo } from '../../Core/Expression/PredefinedExpressionHelper';
+import { IPredefinedExpressionInfo , IPredefinedExpressionStyle} from '../../Core/Expression/PredefinedExpressionHelper';
 
 
 
@@ -15,5 +15,5 @@ export interface IConditionalStyleCondition {
     ConditionalStyleScope: ConditionalStyleScope
     Expression: Expression
     IsPredefinedExpression: boolean
-    PredefinedExpressionInfo: IPredefinedExpressionInfo
+    PredefinedExpressionStyle: IPredefinedExpressionStyle
 }

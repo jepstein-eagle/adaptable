@@ -17,7 +17,7 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
-    DeleteFilter: (ColumnId: string, index: number) => void
+    DeleteNamedExpression: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
     ShowPanel: boolean
 }
@@ -31,10 +31,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         let previewLists = columnList.map(columnId => {
 
             // First lets do the column values
-            let columnValues = this.props.Expression.ColumnValuesExpression.find(colValues => colValues.ColumnName == columnId)
+            let columnValues = this.props.Expression.ColumnValuesExpressions.find(colValues => colValues.ColumnName == columnId)
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
-                columnValuesListgroupItems = columnValues.Values.map(y => {
+                columnValuesListgroupItems = columnValues.ColumnValues.map(y => {
                     return <ListGroupItem key={y} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                         <Form inline>
                             {y}
@@ -46,16 +46,16 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 })
             }
 
-            // Next do the column filters
-            let columnFilters = this.props.Expression.FiltersExpression.find(colFilters => colFilters.ColumnName == columnId)
-            let columnFiltersListgroupItems: JSX.Element[]
-            if (columnFilters) {
-                columnFiltersListgroupItems = columnFilters.Filters.map((filter, index) => {
-                    return <ListGroupItem key={filter.ExpressionName} onClick={() => this.props.onSelectedColumnChange(columnId)}>
+            // Next do the named expressions
+            let namedExpressions = this.props.Expression.NamedExpressions.find(ne => ne.ColumnName == columnId)
+            let columnNamedExpressionsListgroupItems: JSX.Element[]
+            if (namedExpressions) {
+                columnNamedExpressionsListgroupItems = namedExpressions.Named.map((ne, index) => {
+                    return <ListGroupItem key={ne.Id} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                         <Form inline>
-                            {filter.ExpressionName}
+                            {ne.FriendlyName}
                             <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteFilter(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
                             </OverlayTrigger>
                         </Form>
                     </ListGroupItem>
@@ -63,7 +63,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             }
 
             // Finally do the column ranges
-            let columnRanges = this.props.Expression.RangeExpression.find(colValues => colValues.ColumnName == columnId)
+            let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)
             let columnRangesListgroupItems: JSX.Element[]
             if (columnRanges) {
                 columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
@@ -126,7 +126,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 </Button>
                 <ListGroup>
                     {columnValuesListgroupItems}
-                    {columnFiltersListgroupItems}
+                    {columnNamedExpressionsListgroupItems}
                     {columnRangesListgroupItems}
                 </ListGroup>
             </div>

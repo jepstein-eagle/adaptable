@@ -5,7 +5,6 @@ import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Enum
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expression/PredefinedExpressionHelper';
 import { Expression } from '../Expression/Expression'
-import { IExpressionRange } from '../Interface/IExpression';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Extensions'
@@ -23,7 +22,7 @@ export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
-        
+
         this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
 
     }
@@ -124,9 +123,9 @@ export class SearchService implements ISearchService {
         if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             let predefinedExpressionInfo: IPredefinedExpressionInfo =
                 {
-                    Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
+                    ColumnValues: null,
                     ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
-                    ExpressionFilter: null
+                    NamedExpression: null
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
                 let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);
