@@ -10,6 +10,7 @@ import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
 import { IAlert } from '../../../Core/interface/IAlertStrategy';
+import { INamedExpression } from '../../../Core/interface/IExpression';
 
 
 export interface PlusMinusState {
@@ -84,4 +85,8 @@ export interface AdvancedSearchState {
 
 export interface AlertState {
     Alerts: Array<IAlert>;
+}
+
+export interface FilterState {
+    Filters: Array<INamedExpression>;
 }

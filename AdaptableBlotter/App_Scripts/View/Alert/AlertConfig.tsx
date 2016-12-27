@@ -28,7 +28,7 @@ interface AlertConfigProps extends IStrategyViewPopupProps<AlertConfigComponent>
     AlertConditions: IAlert[]
     Columns: IColumn[],
     onDeleteAlert: (Index: number) => AlertRedux.AlertDeleteAction
-    onAddEditAlert: (Index: number, ColumnsDefaultNudge: IAlert) => AlertRedux.AlertAddOrUpdateAction
+    onAddEditAlert: (Index: number, Alert: IAlert) => AlertRedux.AlertAddOrUpdateAction
 }
 
 interface AlertConfigState {

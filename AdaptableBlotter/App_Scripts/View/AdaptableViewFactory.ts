@@ -10,7 +10,8 @@ import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
-import { AlertConfig } from './Alerts/AlertConfig'
+import { AlertConfig } from './Alert/AlertConfig'
+import { FilterConfig } from './Filter/FilterConfig'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -27,6 +28,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   QuickSearchAction: QuickSearchAction,
   AdvancedSearchAction: AdvancedSearchAction,
   AlertConfig: AlertConfig,
+  FilterConfig: FilterConfig,
 }
 
 

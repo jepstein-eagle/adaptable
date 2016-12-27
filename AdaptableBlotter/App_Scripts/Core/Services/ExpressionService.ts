@@ -48,7 +48,7 @@ export class ExpressionService implements IExpressionService {
         // Create if first time called - is there a better way to lazy load?
         if (this._namedExpressions == null || this._namedExpressions.length == 0) {
 
-            // Date Filters
+            // Date Predefined Named Expressions
             this._namedExpressions.push({
                 Id: "Today",
                 FriendlyName: "Today",
@@ -107,7 +107,7 @@ export class ExpressionService implements IExpressionService {
                 IsPredefined: true
             });
 
-            // Numeric Filters
+            // Numeric Predefined Named Expressions
             this._namedExpressions.push({
                 Id: "Positive",
                 FriendlyName: "Positive",
@@ -164,7 +164,7 @@ export class ExpressionService implements IExpressionService {
             });
 
 
-            // String Filters
+            // String Predefined Named Expressions
             this._namedExpressions.push({
                 Id: "StringBlanks",
                 FriendlyName: "Blanks",
@@ -187,7 +187,7 @@ export class ExpressionService implements IExpressionService {
                 IsPredefined: true
             });
 
-            // Boolean Filters
+            // Boolean Predefined Named Expressions
             this._namedExpressions.push({
                 Id: "True",
                 FriendlyName: "True",
@@ -217,9 +217,24 @@ export class ExpressionService implements IExpressionService {
 
             this._namedExpressions.push({
                 Id: "EuroCurrency",
-                FriendlyName: "EuroCurrency",
+                FriendlyName: "Euro Currency",
                 ColumnType: ColumnType.String,
                 Expression: new Expression([], [], rangeExpressionCurrency),
+                isExpressionSatisfied: (value: any): boolean => {
+                    return null;
+                },
+                IsPredefined: false
+            });
+
+            // this is going to mimic a named expression that is created by a user:  TradeDate > '1 Jan 2016' = uses a range expression
+            let predefinedExpressionInfoTradeDate: IPredefinedExpressionInfo = { ColumnValues: null, NamedExpression: null, ExpressionRange: { Operator: LeafExpressionOperator.GreaterThan, Operand1: new Date(2016, 0, 1).toDateString(), Operand2: "" } };
+            let rangeExpressionTradeDate: Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> = PredefinedExpressionHelper.CreateRangeExpression("tradeDate", predefinedExpressionInfoTradeDate);
+
+            this._namedExpressions.push({
+                Id: "TradeDateThisYear",
+                FriendlyName: "Trade Date This Year",
+                ColumnType: ColumnType.Date,
+                Expression: new Expression([], [], rangeExpressionTradeDate),
                 isExpressionSatisfied: (value: any): boolean => {
                     return null;
                 },
@@ -243,6 +258,25 @@ export class ExpressionService implements IExpressionService {
         }
 
         return this._namedExpressions;
+    }
+
+
+    public CreateNamedExpression(): INamedExpression {
+        let predefinedExpressionCountries: IPredefinedExpressionInfo = { ColumnValues: ["Belgium", "Luxemborg", "Holland"], NamedExpression: null, ExpressionRange: null };
+        let columnsExpressionCountries: Array<{ ColumnName: string, ColumnValues: Array<any> }> = PredefinedExpressionHelper.CreateColumnValuesExpression("country", predefinedExpressionCountries);
+
+        let namedExpression: INamedExpression = {
+            Id: "Benelux",
+            FriendlyName: "Benelux",
+            ColumnType: ColumnType.String,
+            Expression: new Expression(columnsExpressionCountries, [], []),
+            isExpressionSatisfied: (value: any): boolean => {
+                return null;
+            },
+            IsPredefined: false
+        };
+
+        return namedExpression;
     }
 
 

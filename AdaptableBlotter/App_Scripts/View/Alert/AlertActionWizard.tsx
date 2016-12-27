@@ -18,7 +18,6 @@ interface AlertActionWizardState {
     EmailRecipients: string
     ShowPopup: boolean
     PopupType: PopupType
-
 }
 
 export class AlertActionWizard extends React.Component<AlertActionWizardProps, AlertActionWizardState> implements AdaptableWizardStep {

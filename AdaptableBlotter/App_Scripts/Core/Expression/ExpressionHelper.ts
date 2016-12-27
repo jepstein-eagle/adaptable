@@ -67,13 +67,13 @@ export module ExpressionHelper {
                 isColumnSatisfied = columnValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
             }
 
-
             // Check for named expressions if column fails
             if (!isColumnSatisfied) {
                 let namedExpressions = Expression.NamedExpressions.find(x => x.ColumnName == columnId)
                 if (namedExpressions) {
                     for (let namedExpression of namedExpressions.Named) {
-                        if (!isColumnSatisfied && namedExpression.IsPredefined) {
+                        // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
+                        if (namedExpression.IsPredefined) {
                             let valueToCheck: any = getColumnValue(namedExpressions.ColumnName);
                             isColumnSatisfied = blotter.ExpressionService.EvaluateExpression(namedExpression.Id, valueToCheck);
                         } else {
