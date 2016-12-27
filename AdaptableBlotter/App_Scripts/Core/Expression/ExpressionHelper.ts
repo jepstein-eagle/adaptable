@@ -219,6 +219,27 @@ export module ExpressionHelper {
         return false;
     }
 
+    export function GetColumnTypeForNamedExpression(namedExpression: INamedExpression, Columns: Array<IColumn>): ColumnType {
+
+        // predefined expressions return if its right column type
+        if (namedExpression.IsPredefined) {
+            return namedExpression.ColumnType;
+        }
+
+        // see if there are any columnvalues and then get the first only
+        if (namedExpression.Expression.ColumnValuesExpressions != null && namedExpression.Expression.ColumnValuesExpressions.length > 0) {
+            let columnID: string = namedExpression.Expression.ColumnValuesExpressions[0].ColumnName;
+            return Columns.find(c => c.ColumnId == columnID).ColumnType;
+        }
+
+        // see if there are any ranges and then get the first only
+        if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
+            let columnID: string = namedExpression.Expression.RangeExpressions[0].ColumnName;
+            return Columns.find(c => c.ColumnId == columnID).ColumnType;
+        }
+    }
+
+
     export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {
             case LeafExpressionOperator.Unknown:
