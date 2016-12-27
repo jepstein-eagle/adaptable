@@ -3,13 +3,13 @@ import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-
+import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export module ExpressionHelper {
 
 
 
-    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>): string {
+    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, blotter: IAdaptableBlotter): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
             return "Any";
@@ -32,7 +32,7 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString = ColumnNamedExpressionsKeyPairToString(columnNamedExpressions, columnFriendlyName)
+                columnToString = ColumnNamedExpressionsKeyPairToString(GetNamedExpressions(columnNamedExpressions.Named, blotter), columnFriendlyName)
             }
 
             // Column Ranges
@@ -69,13 +69,14 @@ export module ExpressionHelper {
 
             // Check for named expressions if column fails
             if (!isColumnSatisfied) {
-                let namedExpressions = Expression.NamedExpressions.find(x => x.ColumnName == columnId)
-                if (namedExpressions) {
-                    for (let namedExpression of namedExpressions.Named) {
+                let columnNamedExpressions = Expression.NamedExpressions.find(x => x.ColumnName == columnId)
+                if (columnNamedExpressions) {
+                    let namedExpressions: INamedExpression[] = GetNamedExpressions(columnNamedExpressions.Named, blotter);
+                    for (let namedExpression of namedExpressions) {
                         // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (namedExpression.IsPredefined) {
-                            let valueToCheck: any = getColumnValue(namedExpressions.ColumnName);
-                            isColumnSatisfied = blotter.ExpressionService.EvaluateExpression(namedExpression.Uid, valueToCheck);
+                            let valueToCheck: any = getColumnValue(columnId);
+                            isColumnSatisfied = namedExpression.IsExpressionSatisfied(valueToCheck);
                         } else {
                             isColumnSatisfied = IsSatisfied(namedExpression.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter, isCaseSensitive);
                         }
@@ -182,15 +183,40 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-    function ColumnNamedExpressionsKeyPairToString(keyValuePair: { ColumnName: string, Named: Array<INamedExpression> }, columnFriendlyName: string): string {
+    function ColumnNamedExpressionsKeyPairToString(namedExpressions: INamedExpression[], columnFriendlyName: string): string {
         let returnValue = ""
-        for (let namedExpression of keyValuePair.Named) {
+        for (let namedExpression of namedExpressions) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
             returnValue += "[" + columnFriendlyName + "] " + namedExpression.FriendlyName;
         }
         return returnValue
+    }
+
+    export function GetNamedExpressions(namedExpressionUids: string[], blotter: IAdaptableBlotter): INamedExpression[] {
+        return blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.filter(f => namedExpressionUids.find(uid => uid == f.Uid) != null)
+    }
+
+    export function ShouldShowNamedExpressionForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
+        let namedExpression: INamedExpression = blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.find(f => f.Uid == expressionUid);
+
+        // predefined expressions return if its right column type
+        if (namedExpression.IsPredefined) {
+            return namedExpression.ColumnType == column.ColumnType;
+        }
+
+        // see if there are any columnvalues and then get the first only
+        if (namedExpression.Expression.ColumnValuesExpressions != null && namedExpression.Expression.ColumnValuesExpressions.length > 0) {
+            return namedExpression.Expression.ColumnValuesExpressions[0].ColumnName == column.ColumnId;
+        }
+
+        // see if there are any ranges and then get the first only
+        if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
+            return namedExpression.Expression.RangeExpressions[0].ColumnName == column.ColumnId;
+        }
+
+        return false;
     }
 
     export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {

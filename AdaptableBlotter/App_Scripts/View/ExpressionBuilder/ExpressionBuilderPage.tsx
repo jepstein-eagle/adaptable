@@ -38,6 +38,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                 </Col>
                 <Col xs={3}>
                     <ExpressionBuilderPreview Expression={this.state.Expression}
+                        Blotter={this.props.Blotter}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}
@@ -65,7 +66,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     }
 
-     DeleteNamedExpression(columnId: string, index: number) {
+    DeleteNamedExpression(columnId: string, index: number) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let columnNamedExpressions = this.state.Expression.NamedExpressions.find(x => x.ColumnName == columnId)
         columnNamedExpressions.Named.splice(index, 1)

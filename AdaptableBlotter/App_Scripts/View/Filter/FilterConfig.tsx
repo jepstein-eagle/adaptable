@@ -58,7 +58,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                         {x.FriendlyName}
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns)}
+                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
@@ -91,6 +91,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                         ColumnList={this.props.Columns}
                         SelectedColumnId={null} />,
                     <FilterSettingsWizard
+                    Blotter={this.props.AdaptableBlotter}
                         Columns={this.props.Columns}
                         />,
                 ]}

@@ -12,14 +12,11 @@ import { Helper } from '../Core/Helper';
 
 
 export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
-  //  private Filters: INamedExpression[]
     private menuItemConfig: IMenuItem;
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FilterStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'FilterConfig', MenuType.Configuration, "filter");
-      //  this.InitState();
-       // blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     InitState() {
@@ -34,7 +31,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
             Description: "",
             ColumnType: ColumnType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            isExpressionSatisfied: (value: any): boolean => {
+            IsExpressionSatisfied: (value: any): boolean => {
                 return null;
             },
             IsPredefined: false

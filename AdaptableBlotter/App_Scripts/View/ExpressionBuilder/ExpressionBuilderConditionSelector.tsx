@@ -26,8 +26,8 @@ interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<
 interface ExpressionBuilderConditionSelectorState {
     ColumnValues: Array<any>
     SelectedColumnValues: Array<any>
-    NamedExpressions: Array<INamedExpression>
-    SelectedNamedExpresions: Array<INamedExpression>
+    NamedExpressions: Array<string>
+    SelectedNamedExpresions: Array<string>
     SelectedColumnRanges: Array<IRangeExpression>
 }
 
@@ -48,7 +48,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         }
         else {
             let selectedColumnValues: Array<any>
-            let selectedColumnNamedExpressions: Array<INamedExpression>
+            let selectedColumnNamedExpressions: Array<string>
             let selectedColumnRanges: Array<IRangeExpression>
 
             // get column values
@@ -80,14 +80,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: Array.from(new Set(theProps.Blotter.getColumnValueString(theProps.SelectedColumnId))),
                 SelectedColumnValues: selectedColumnValues,
-                NamedExpressions: this.GetFilterState().Filters,
+                NamedExpressions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.map(f => f.Uid),
                 SelectedNamedExpresions: selectedColumnNamedExpressions,
                 SelectedColumnRanges: selectedColumnRanges
             };
         }
     }
-
-
 
     componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
         this.setState(this.buildState(nextProps))
@@ -100,7 +98,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        
+
+        let availableExpressionIds: string[] = this.state.NamedExpressions.filter(f => ExpressionHelper.ShouldShowNamedExpressionForColumn(f, selectedColumn, this.props.Blotter));
 
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.props.onSelectedColumnChange("select")}
@@ -143,8 +142,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                         <Col xs={3}>
                             <ExpressionBuilderNamed
-                                NamedExpressions={this.state.NamedExpressions.filter(f => this.props.Blotter.ExpressionService.ShouldShowNamedExpressionForColumn(f, selectedColumn))}
-                                SelectedNamedExpressions={this.state.SelectedNamedExpresions}
+                                NamedExpressions={ExpressionHelper.GetNamedExpressions(availableExpressionIds, this.props.Blotter)}
+                                SelectedNamedExpressions={ExpressionHelper.GetNamedExpressions(this.state.SelectedNamedExpresions, this.props.Blotter)}
                                 onNamedExpressionChange={(selectedValues) => this.onSelectedNamedExpressionsChange(selectedValues)} >
                             </ExpressionBuilderNamed>
                         </Col>
@@ -200,6 +199,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
     onSelectedNamedExpressionsChange(selectedNamedExpressions: Array<INamedExpression>) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let selectedNameExpressionUids: string[] = selectedNamedExpressions.map(s => s.Uid);
         let colNamedExpression = this.props.Expression.NamedExpressions
         let namedExpressionCol = colNamedExpression.find(x => x.ColumnName == this.props.SelectedColumnId)
         if (namedExpressionCol) {
@@ -208,15 +208,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 colNamedExpression.splice(keyValuePairIndex, 1)
             }
             else {
-                namedExpressionCol.Named = selectedNamedExpressions
+                namedExpressionCol.Named = selectedNameExpressionUids
             }
         }
         else {
-            colNamedExpression.push({ ColumnName: this.props.SelectedColumnId, Named: selectedNamedExpressions })
+            colNamedExpression.push({ ColumnName: this.props.SelectedColumnId, Named: selectedNameExpressionUids })
         }
 
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { NamedExpressions: colNamedExpression }))
-        this.setState({ SelectedNamedExpresions: selectedNamedExpressions } as ExpressionBuilderConditionSelectorState)
+        this.setState({ SelectedNamedExpresions: selectedNameExpressionUids } as ExpressionBuilderConditionSelectorState)
     }
 
     private onColumnSelectChange(event: React.FormEvent) {
@@ -224,9 +224,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.props.onSelectedColumnChange(e.value)
     }
 
-private GetFilterState(): FilterState {
-        return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter;
-    }
+
 }
 
 let divStyle = {

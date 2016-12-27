@@ -18,7 +18,7 @@ export interface INamedExpression {
     FriendlyName: string;
     Description: string;
     ColumnType: ColumnType;
-    isExpressionSatisfied(valueToCheck: any): boolean;
+    IsExpressionSatisfied(valueToCheck: any): boolean;
     Expression: Expression,
     IsPredefined: boolean
 }

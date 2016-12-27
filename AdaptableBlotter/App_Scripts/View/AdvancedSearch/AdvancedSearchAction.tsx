@@ -24,7 +24,7 @@ import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 interface AdvancedSearchActionProps extends React.ClassAttributes<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
     Columns: IColumn[];
-    AdaptableBlotter: IAdaptableBlotter;
+    Blotter: IAdaptableBlotter;
     CurrentAdvancedSearchUid: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
@@ -49,10 +49,10 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     render() {
 
-        var isNew: PopupState = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Popup;
+        var isNew: PopupState = this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Popup;
 
         this.IsDeleting = false;
-        var blotter = this.props.AdaptableBlotter;
+        var blotter = this.props.Blotter;
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Name} key={x.Name}>{x.Name}</option>
@@ -103,7 +103,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 [
                                     <AdvancedSearchExpressionWizard
                                         ColumnList={this.props.Columns}
-                                        Blotter={this.props.AdaptableBlotter}
+                                        Blotter={this.props.Blotter}
                                         SelectedColumnId={this.state.SelectedColumnId} />,
                                     <AdvancedSearchSettingsWizard />
                                 ]}
@@ -123,6 +123,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                             buttonClick={() => this.onEditAdvancedSearch()}>
                             <div style={previewDivStyle}>
                                 <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
+                                    Blotter={this.props.Blotter}
                                     onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                                     SelectedColumnId={this.state.SelectedColumnId}
                                     ColumnsList={this.props.Columns}
@@ -143,9 +144,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
-         let advancedSearchStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AdvancedSearchStrategyId);
+        let advancedSearchStrategy: any = this.props.Blotter.Strategies.get(StrategyIds.AdvancedSearchStrategyId);
         let _newAdvancedSearch: IAdvancedSearch = advancedSearchStrategy.CreateEmptyAdvancedSearch();
-       this.DisplayedNew = true; // must be a better way but not sure what it is yet!
+        this.DisplayedNew = true; // must be a better way but not sure what it is yet!
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
@@ -246,7 +247,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        AdaptableBlotter: ownProps.AdaptableBlotter,
+        Blotter: ownProps.AdaptableBlotter,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns

@@ -2,17 +2,19 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
+import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
+import { INamedExpression } from '../../Core/Interface/IExpression';
 
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
-    Expression: Expression
+    Blotter: IAdaptableBlotter
+     Expression: Expression
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
@@ -47,21 +49,24 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             }
 
             // Next do the named expressions
-            let namedExpressions = this.props.Expression.NamedExpressions.find(ne => ne.ColumnName == columnId)
-            let columnNamedExpressionsListgroupItems: JSX.Element[]
-            if (namedExpressions) {
-                columnNamedExpressionsListgroupItems = namedExpressions.Named.map((ne, index) => {
-                    return <ListGroupItem key={ne.Uid} onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                        <Form inline>
-                            {ne.FriendlyName}
-                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
-                        </Form>
-                    </ListGroupItem>
-                })
-            }
 
+            let columnNamedExpressions = this.props.Expression.NamedExpressions.find(ne => ne.ColumnName == columnId)
+            let columnNamedExpressionsListgroupItems: JSX.Element[]
+                if (columnNamedExpressions) {
+                let namedExpressions = ExpressionHelper.GetNamedExpressions(columnNamedExpressions.Named, this.props.Blotter);
+                if (namedExpressions) {
+                    columnNamedExpressionsListgroupItems = namedExpressions.map((ne, index) => {
+                        return <ListGroupItem key={ne.Uid} onClick={() => this.props.onSelectedColumnChange(columnId)}>
+                            <Form inline>
+                                {ne.FriendlyName}
+                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                </OverlayTrigger>
+                            </Form>
+                        </ListGroupItem>
+                    })
+                }
+            }
             // Finally do the column ranges
             let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)
             let columnRangesListgroupItems: JSX.Element[]
@@ -157,6 +162,9 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             domNode.scrollIntoView(true);
         }
     }
+
+
+
 }
 
 let divStyle = {

@@ -5,13 +5,14 @@ import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
+   Blotter: IAdaptableBlotter;
     Columns: IColumn[];
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
@@ -54,7 +55,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col xs={4}>
-                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns)}
+                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.Blotter)}
                 </Col>
 
                 <Col md={2} >

@@ -14,8 +14,6 @@ import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
-import { IExpressionService } from '../Core/Services/Interface/IExpressionService'
-import { ExpressionService } from '../Core/Services/ExpressionService'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -46,8 +44,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
-    public ExpressionService: IExpressionService
-
+   
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -55,8 +52,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
-        this.ExpressionService = new ExpressionService(this);
-
+   
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();

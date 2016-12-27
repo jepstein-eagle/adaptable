@@ -44,6 +44,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
                 key={conditionalStyleCondition.Uid}
+                Blotter={this.props.AdaptableBlotter}
                 Columns={this.props.Columns}
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
                 onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition)}

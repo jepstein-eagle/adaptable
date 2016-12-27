@@ -67,7 +67,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e)} />
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns)}
+                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
@@ -78,6 +78,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 </Row>
             </li>
         })
+        
         return <Panel header="Plus/Minus Configuration" bsStyle="primary" style={panelStyle}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
