@@ -16,6 +16,7 @@ export interface IRangeExpression {
 export interface INamedExpression {
     Uid: string;
     FriendlyName: string;
+    Description: string;
     ColumnType: ColumnType;
     isExpressionSatisfied(valueToCheck: any): boolean;
     Expression: Expression,

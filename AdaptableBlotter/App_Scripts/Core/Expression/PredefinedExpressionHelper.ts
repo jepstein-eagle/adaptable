@@ -2,6 +2,8 @@ import { Expression } from './Expression'
 import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { CellStyle, LeafExpressionOperator } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
+
 
 export interface IPredefinedExpressionInfo {
     ColumnValues: Array<any>,
@@ -30,7 +32,7 @@ export module PredefinedExpressionHelper {
     export function CreateNamedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Array<{ ColumnName: string, Named: Array<INamedExpression> }> {
         let namedExpression: Array<{ ColumnName: string, Named: Array<INamedExpression> }> = [];
         if (predefinedExpression.NamedExpression != null) {
-            let named = blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == predefinedExpression.NamedExpression.Uid);
+            let named = GetFilterState().Filters.find(f => f.Uid == predefinedExpression.NamedExpression.Uid);
             let namedExpressions: Array<INamedExpression> = [];
             namedExpressions.push(named);
             let singleNamedExpression: { ColumnName: string, Named: Array<INamedExpression> } = { ColumnName: columnName, Named: namedExpressions }
@@ -49,6 +51,10 @@ export module PredefinedExpressionHelper {
             rangeExpression.push(singleRangeExpression);
         }
         return rangeExpression;
+    }
+
+     export function GetFilterState(): FilterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter;
     }
 }
 

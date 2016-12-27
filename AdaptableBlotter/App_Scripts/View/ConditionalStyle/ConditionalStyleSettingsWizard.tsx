@@ -4,7 +4,7 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IConditionalStyleCondition , IPredefinedStyleCondition} from '../../Core/interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, ColumnType, CellStyle, LeafExpressionOperator } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';
 import { Expression } from '../../Core/Expression/Expression';
@@ -12,6 +12,8 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
+import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
+
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Blotter: IAdaptableBlotter
@@ -61,7 +63,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == "Positive"),
+                        NamedExpression: this.GetFilterState().Filters.find(f => f.Uid == "Positive"),
                     }, CellStyle: CellStyle.GreenFont, FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -72,7 +74,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == "Negative"),
+                        NamedExpression: this.GetFilterState().Filters.find(f => f.Uid == "Negative"),
                     }, CellStyle: CellStyle.RedFont, FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
@@ -164,6 +166,9 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
+    private GetFilterState(): FilterState {
+        return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    }
 
     private onExpressionOptionChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;

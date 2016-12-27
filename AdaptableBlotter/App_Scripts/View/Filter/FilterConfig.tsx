@@ -25,20 +25,19 @@ import { FilterSettingsWizard } from './FilterSettingsWizard'
 interface FilterConfigProps extends IStrategyViewPopupProps<FilterConfigComponent> {
     Filters: INamedExpression[]
     Columns: IColumn[],
-    onDeleteFilter: (Index: number) => FilterRedux.FilterDeleteAction
-    onAddEditFilter: (Index: number, Filter: INamedExpression) => FilterRedux.FilterAddOrUpdateAction
+    onDeleteFilter: (Filter: INamedExpression) => FilterRedux.FilterDeleteAction
+    onAddEditFilter: (Filter: INamedExpression) => FilterRedux.FilterAddOrUpdateAction
 }
 
 interface FilterConfigState {
     EditedFilter: INamedExpression
-    EditedIndexFilter: number
 }
 
 class FilterConfigComponent extends React.Component<FilterConfigProps, FilterConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedFilter: null, EditedIndexFilter: -1 }
+        this.state = { EditedFilter: null }
     }
 
     render() {
@@ -51,20 +50,20 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
             </Row>
         </Panel>
 
-        let filterItems = this.props.Filters.map((x, index) => {
+        let filterItems = this.props.Filters.filter(f=>!f.IsPredefined).map((x) => {
             return <li
-                className="list-group-item" key={index}>
+                className="list-group-item" key={x.Uid}>
                 <Row >
                     <Col xs={4}>
                         {x.FriendlyName}
                     </Col>
-                   <Col xs={5}>
+                    <Col xs={5}>
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns)}
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteFilter(index)}
-                            editClick={() => this.onEdit(index, x)}>
+                            deleteClick={() => this.props.onDeleteFilter(x)}
+                            editClick={() => this.onEdit( x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -91,7 +90,9 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                         Blotter={this.props.AdaptableBlotter}
                         ColumnList={this.props.Columns}
                         SelectedColumnId={null} />,
-                    <FilterSettingsWizard />,
+                    <FilterSettingsWizard
+                        Columns={this.props.Columns}
+                        />,
                 ]}
                     Data={this.state.EditedFilter}
                     StepStartIndex={0}
@@ -104,21 +105,21 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         // have to use any as cannot cast from IStrategy to IFilterStrategy  :(
         let filterStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FilterStrategyId);
         let emptyFilter: INamedExpression = filterStrategy.CreateEmptyFilter();
-        this.setState({ EditedFilter: emptyFilter, EditedIndexFilter: -1 });
+        this.setState({ EditedFilter: emptyFilter });
     }
 
-    onEdit(index: number, Filter: INamedExpression) {
+    onEdit(Filter: INamedExpression) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedFilter: Helper.cloneObject(Filter), EditedIndexFilter: index });
+        this.setState({ EditedFilter: Helper.cloneObject(Filter) });
     }
 
     closeWizard() {
-        this.setState({ EditedFilter: null, EditedIndexFilter: -1 });
+        this.setState({ EditedFilter: null, });
     }
 
     finishWizard() {
-        this.props.onAddEditFilter(this.state.EditedIndexFilter, this.state.EditedFilter);
-        this.setState({ EditedFilter: null, EditedIndexFilter: -1 });
+        this.props.onAddEditFilter(this.state.EditedFilter);
+        this.setState({ EditedFilter: null });
     }
 
 }
@@ -133,8 +134,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteFilter: (Index: number) => dispatch(FilterRedux.DeleteFilter(Index)),
-        onAddEditFilter: (Index: number, Filter: INamedExpression) => dispatch(FilterRedux.AddEditFilter(Index, Filter))
+        onDeleteFilter: (Filter: INamedExpression) => dispatch(FilterRedux.DeleteFilter(Filter)),
+        onAddEditFilter: (  Filter: INamedExpression) => dispatch(FilterRedux.AddEditFilter( Filter))
     };
 }
 

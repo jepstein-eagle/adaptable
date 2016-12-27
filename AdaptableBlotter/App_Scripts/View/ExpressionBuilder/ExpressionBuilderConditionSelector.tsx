@@ -11,6 +11,7 @@ import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormCon
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ColumnType } from '../../Core/Enums'
+import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -76,14 +77,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             else {
                 selectedColumnRanges = []
             }
-
-
-
             return {
-
                 ColumnValues: Array.from(new Set(theProps.Blotter.getColumnValueString(theProps.SelectedColumnId))),
                 SelectedColumnValues: selectedColumnValues,
-                NamedExpressions: theProps.Blotter.ExpressionService.GetNamedExpressions(),
+                NamedExpressions: this.GetFilterState().Filters,
                 SelectedNamedExpresions: selectedColumnNamedExpressions,
                 SelectedColumnRanges: selectedColumnRanges
             };
@@ -227,7 +224,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.props.onSelectedColumnChange(e.value)
     }
 
-
+private GetFilterState(): FilterState {
+        return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    }
 }
 
 let divStyle = {

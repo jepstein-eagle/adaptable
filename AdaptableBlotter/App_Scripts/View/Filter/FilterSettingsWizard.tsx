@@ -7,9 +7,11 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { INamedExpression } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { ColumnType } from '../../Core/Enums';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 interface FilterSettingsWizardProps extends AdaptableWizardStepProps<INamedExpression> {
+ Columns: Array<IColumn>
 }
 interface FilterSettingsWizardState {
     FilterName: string
@@ -55,6 +57,7 @@ export class FilterSettingsWizard extends React.Component<FilterSettingsWizardPr
     public Next(): void {
         this.props.Data.FriendlyName = this.state.FilterName
         this.props.Data.ColumnType = ColumnType.String
+        this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns)
     }
     public Back(): void { }
     public StepName = "Filter Settings"
