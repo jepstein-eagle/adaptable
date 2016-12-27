@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
+import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
@@ -104,9 +105,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                         ColumnList={this.props.Columns}
                                         Blotter={this.props.AdaptableBlotter}
                                         SelectedColumnId={this.state.SelectedColumnId} />,
-                                    <AdvancedSearchSettingsWizard
-                                        Columns={this.props.Columns}
-                                        Blotter={this.props.AdaptableBlotter} />
+                                    <AdvancedSearchSettingsWizard />
                                 ]}
                                 Data={this.state.EditedAdvancedSearch}
                                 StepStartIndex={0}
@@ -144,12 +143,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
-        let _newAdvancedSearch: IAdvancedSearch = {
-            Uid: Helper.generateUid(),
-            Name: "",
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-        }
-        this.DisplayedNew = true; // must be a better way but not sure what it is yet!
+         let advancedSearchStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AdvancedSearchStrategyId);
+        let _newAdvancedSearch: IAdvancedSearch = advancedSearchStrategy.CreateEmptyAdvancedSearch();
+       this.DisplayedNew = true; // must be a better way but not sure what it is yet!
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 

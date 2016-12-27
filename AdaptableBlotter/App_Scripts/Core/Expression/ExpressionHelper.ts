@@ -75,7 +75,7 @@ export module ExpressionHelper {
                         // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (namedExpression.IsPredefined) {
                             let valueToCheck: any = getColumnValue(namedExpressions.ColumnName);
-                            isColumnSatisfied = blotter.ExpressionService.EvaluateExpression(namedExpression.Id, valueToCheck);
+                            isColumnSatisfied = blotter.ExpressionService.EvaluateExpression(namedExpression.Uid, valueToCheck);
                         } else {
                             isColumnSatisfied = IsSatisfied(namedExpression.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter, isCaseSensitive);
                         }

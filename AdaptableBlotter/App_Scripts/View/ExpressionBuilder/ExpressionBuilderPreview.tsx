@@ -51,7 +51,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnNamedExpressionsListgroupItems: JSX.Element[]
             if (namedExpressions) {
                 columnNamedExpressionsListgroupItems = namedExpressions.Named.map((ne, index) => {
-                    return <ListGroupItem key={ne.Id} onClick={() => this.props.onSelectedColumnChange(columnId)}>
+                    return <ListGroupItem key={ne.Uid} onClick={() => this.props.onSelectedColumnChange(columnId)}>
                         <Form inline>
                             {ne.FriendlyName}
                             <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>

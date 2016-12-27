@@ -30,7 +30,7 @@ export module PredefinedExpressionHelper {
     export function CreateNamedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Array<{ ColumnName: string, Named: Array<INamedExpression> }> {
         let namedExpression: Array<{ ColumnName: string, Named: Array<INamedExpression> }> = [];
         if (predefinedExpression.NamedExpression != null) {
-            let named = blotter.ExpressionService.GetNamedExpressions().find(f => f.Id == predefinedExpression.NamedExpression.Id);
+            let named = blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == predefinedExpression.NamedExpression.Uid);
             let namedExpressions: Array<INamedExpression> = [];
             namedExpressions.push(named);
             let singleNamedExpression: { ColumnName: string, Named: Array<INamedExpression> } = { ColumnName: columnName, Named: namedExpressions }

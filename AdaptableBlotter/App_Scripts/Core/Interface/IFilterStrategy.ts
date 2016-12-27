@@ -1,3 +1,4 @@
+import { INamedExpression } from '../../Core/interface/IExpression';
 
 
 // This is not the full filter strategy in the sense that we are not doing filters
@@ -5,6 +6,8 @@
 
 
 export interface IFilterStrategy{
+
+        CreateEmptyFilter(): INamedExpression 
 }
    
 

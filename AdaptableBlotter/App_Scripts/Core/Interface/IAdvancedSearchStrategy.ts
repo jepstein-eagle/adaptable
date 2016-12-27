@@ -4,6 +4,7 @@ import { Expression } from '../Expression/Expression';
 
 export interface IAdvancedSearchStrategy extends IStrategy {
 
+     CreateEmptyAdvancedSearch(): IAdvancedSearch 
 
 }
 

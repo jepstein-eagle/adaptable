@@ -9,9 +9,8 @@ import { ColumnType } from '../../Core/Enums';
 
 
 interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
-    Blotter: IAdaptableBlotter
-    Columns: Array<IColumn>
 }
+
 interface AdvancedSearchSettingsWizardState {
     AdvancedSearchName: string
 }
@@ -27,10 +26,10 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
 
         return <Panel header="Advanced Search Settings" bsStyle="primary">
             <Form horizontal>
-                <FormGroup controlId="nudgeColumn">
+                <FormGroup controlId="searchName">
                     <Col xs={3} componentClass={ControlLabel}>Search Name: </Col>
                     <Col xs={9}>
-                        <FormControl value={this.state.AdvancedSearchName} type="string" placeholder="Enter Search name"
+                        <FormControl value={this.state.AdvancedSearchName} type="string" placeholder="Enter search name"
                             onChange={(e: React.FormEvent) => this.onAdvancedSearchNameChange(e)} />
                     </Col>
                 </FormGroup>

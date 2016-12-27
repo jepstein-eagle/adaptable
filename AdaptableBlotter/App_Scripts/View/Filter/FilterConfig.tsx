@@ -16,9 +16,11 @@ import { INamedExpression } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { NotificationType, CellChangeType, PopupType } from '../../Core/Enums'
+import { ColumnType } from '../../Core/Enums'
 import { IFilterStrategy } from '../../Core/Interface/IFilterStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
+import { FilterExpressionWizard } from './FilterExpressionWizard'
+import { FilterSettingsWizard } from './FilterSettingsWizard'
 
 interface FilterConfigProps extends IStrategyViewPopupProps<FilterConfigComponent> {
     Filters: INamedExpression[]
@@ -38,18 +40,71 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         super();
         this.state = { EditedFilter: null, EditedIndexFilter: -1 }
     }
-    render() {
-       
-        return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}>
-           <div>Hello world</div>
 
+    render() {
+
+        let filtersHeader = <Panel style={panelHeaderStyle} >
+            <Row >
+                <Col xs={4} style={headerStyle}>Name</Col>
+                <Col xs={5} style={headerStyle}>Expression</Col>
+                <Col xs={3} style={headerStyle}></Col>
+            </Row>
+        </Panel>
+
+        let filterItems = this.props.Filters.map((x, index) => {
+            return <li
+                className="list-group-item" key={index}>
+                <Row >
+                    <Col xs={4}>
+                        {x.FriendlyName}
+                    </Col>
+                   <Col xs={5}>
+                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns)}
+                    </Col>
+                    <Col xs={3}>
+                        <EntityListActionButtons
+                            deleteClick={() => this.props.onDeleteFilter(index)}
+                            editClick={() => this.onEdit(index, x)}>
+                        </EntityListActionButtons>
+                    </Col>
+                </Row>
+            </li>
+        })
+
+        return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}
+            buttonContent={"Create Filter"}
+            buttonClick={() => this.createFilter()}  >
+            {filterItems.length > 0 && filtersHeader}
+            {filterItems.length > 0 &&
+                <ListGroup style={listGroupStyle}>
+                    {filterItems}
+                </ListGroup>
+            }
+
+            {filterItems.length == 0 &&
+                <Well bsSize="small">Click 'Create Filter' to start creating column filters.</Well>
+            }
+
+            {this.state.EditedFilter != null &&
+                <AdaptableWizard Steps={[
+                    <FilterExpressionWizard
+                        Blotter={this.props.AdaptableBlotter}
+                        ColumnList={this.props.Columns}
+                        SelectedColumnId={null} />,
+                    <FilterSettingsWizard />,
+                ]}
+                    Data={this.state.EditedFilter}
+                    StepStartIndex={0}
+                    onHide={() => this.closeWizard()}
+                    onFinish={() => this.finishWizard()} ></AdaptableWizard>}
         </PanelWithButton>
     }
 
     createFilter() {
         // have to use any as cannot cast from IStrategy to IFilterStrategy  :(
-        let FilterStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FilterStrategyId);
-        this.setState({ EditedFilter: FilterStrategy.CreateEmptyFilter(), EditedIndexFilter: -1 });
+        let filterStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FilterStrategyId);
+        let emptyFilter: INamedExpression = filterStrategy.CreateEmptyFilter();
+        this.setState({ EditedFilter: emptyFilter, EditedIndexFilter: -1 });
     }
 
     onEdit(index: number, Filter: INamedExpression) {
@@ -66,7 +121,6 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         this.setState({ EditedFilter: null, EditedIndexFilter: -1 });
     }
 
-  
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -86,7 +140,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FilterConfig = connect(mapStateToProps, mapDispatchToProps)(FilterConfigComponent);
 
-let panelColumNudge = {
+let listGroupStyle = {
     overflowY: 'auto',
     minHeight: '100px',
     maxHeight: '300px'

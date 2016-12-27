@@ -24,7 +24,7 @@ export class ExpressionBuilderNamed extends React.Component<ExpressionBuilderNam
         var namedExpressions = this.props.NamedExpressions.map((ne: INamedExpression, index: number) => {
             return <ListGroupItem key={index}
                 onClick={() => this.onClickColum(ne)}
-                active={this.props.SelectedNamedExpressions.find(f => f.Id == ne.Id)}>
+                active={this.props.SelectedNamedExpressions.find(f => f.Uid == ne.Uid)}>
                 {ne.FriendlyName}
             </ListGroupItem>
         })
@@ -38,7 +38,7 @@ export class ExpressionBuilderNamed extends React.Component<ExpressionBuilderNam
 
     onClickColum(namedExpression: INamedExpression) {
         let newArray: INamedExpression[] = [];
-        let existingNamedExpression = this.props.SelectedNamedExpressions.find(f => f.Id == namedExpression.Id);
+        let existingNamedExpression = this.props.SelectedNamedExpressions.find(f => f.Uid == namedExpression.Uid);
         if (existingNamedExpression != null) { // it exists
             let index = this.props.SelectedNamedExpressions.indexOf(existingNamedExpression);
             newArray = [...this.props.SelectedNamedExpressions];

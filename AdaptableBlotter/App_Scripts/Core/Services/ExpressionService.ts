@@ -19,7 +19,7 @@ export class ExpressionService implements IExpressionService {
     // only doing this because we seem to lose hte "isExpressionSatisfied" bit when we persist so we cannot rely on it being in the object
     // so either we get it every time we load for every expression or we go via this method
     public EvaluateExpression(expressionId: string, valueToCheck: any): boolean {
-        return this.GetNamedExpressions().find(e => e.Id == expressionId).isExpressionSatisfied(valueToCheck);
+        return this.GetNamedExpressions().find(e => e.Uid == expressionId).isExpressionSatisfied(valueToCheck);
     }
 
     public ShouldShowNamedExpressionForColumn(namedExpression: INamedExpression, column: IColumn): boolean {
@@ -50,7 +50,7 @@ export class ExpressionService implements IExpressionService {
 
             // Date Predefined Named Expressions
             this._namedExpressions.push({
-                Id: "Today",
+                Uid: "Today",
                 FriendlyName: "Today",
                 ColumnType: ColumnType.Date,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -62,7 +62,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "In Past",
+                Uid: "In Past",
                 FriendlyName: "In Past",
                 ColumnType: ColumnType.Date,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -73,7 +73,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "In Future",
+                Uid: "In Future",
                 FriendlyName: "In Future",
                 ColumnType: ColumnType.Date,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -84,7 +84,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "Yesterday",
+                Uid: "Yesterday",
                 FriendlyName: "Yesterday",
                 ColumnType: ColumnType.Date,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -96,7 +96,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "Tomorrow",
+                Uid: "Tomorrow",
                 FriendlyName: "Tomorrow",
                 ColumnType: ColumnType.Date,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -109,7 +109,7 @@ export class ExpressionService implements IExpressionService {
 
             // Numeric Predefined Named Expressions
             this._namedExpressions.push({
-                Id: "Positive",
+                Uid: "Positive",
                 FriendlyName: "Positive",
                 ColumnType: ColumnType.Number,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -120,7 +120,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "Negative",
+                Uid: "Negative",
                 FriendlyName: "Negative",
                 ColumnType: ColumnType.Number,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -131,7 +131,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "Zero",
+                Uid: "Zero",
                 FriendlyName: "Zero",
                 ColumnType: ColumnType.Number,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -142,7 +142,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "NumericBlanks",
+                Uid: "NumericBlanks",
                 FriendlyName: "Blanks",
                 ColumnType: ColumnType.Number,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -153,7 +153,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "NumericNonBlanks",
+                Uid: "NumericNonBlanks",
                 FriendlyName: "Non Blanks",
                 ColumnType: ColumnType.Number,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -166,7 +166,7 @@ export class ExpressionService implements IExpressionService {
 
             // String Predefined Named Expressions
             this._namedExpressions.push({
-                Id: "StringBlanks",
+                Uid: "StringBlanks",
                 FriendlyName: "Blanks",
                 ColumnType: ColumnType.String,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -177,7 +177,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "StringNonBlanks",
+                Uid: "StringNonBlanks",
                 FriendlyName: "Non Blanks",
                 ColumnType: ColumnType.String,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -189,7 +189,7 @@ export class ExpressionService implements IExpressionService {
 
             // Boolean Predefined Named Expressions
             this._namedExpressions.push({
-                Id: "True",
+                Uid: "True",
                 FriendlyName: "True",
                 ColumnType: ColumnType.Boolean,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -200,7 +200,7 @@ export class ExpressionService implements IExpressionService {
             });
 
             this._namedExpressions.push({
-                Id: "False",
+                Uid: "False",
                 FriendlyName: "False",
                 ColumnType: ColumnType.Boolean,
                 Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -216,7 +216,7 @@ export class ExpressionService implements IExpressionService {
             let rangeExpressionCurrency: Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> = PredefinedExpressionHelper.CreateRangeExpression("currency", predefinedExpressionInfoCurrency);
 
             this._namedExpressions.push({
-                Id: "EuroCurrency",
+                Uid: "EuroCurrency",
                 FriendlyName: "Euro Currency",
                 ColumnType: ColumnType.String,
                 Expression: new Expression([], [], rangeExpressionCurrency),
@@ -231,7 +231,7 @@ export class ExpressionService implements IExpressionService {
             let rangeExpressionTradeDate: Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> = PredefinedExpressionHelper.CreateRangeExpression("tradeDate", predefinedExpressionInfoTradeDate);
 
             this._namedExpressions.push({
-                Id: "TradeDateThisYear",
+                Uid: "TradeDateThisYear",
                 FriendlyName: "Trade Date This Year",
                 ColumnType: ColumnType.Date,
                 Expression: new Expression([], [], rangeExpressionTradeDate),
@@ -246,7 +246,7 @@ export class ExpressionService implements IExpressionService {
             let columnsExpressionCountries: Array<{ ColumnName: string, ColumnValues: Array<any> }> = PredefinedExpressionHelper.CreateColumnValuesExpression("country", predefinedExpressionCountries);
 
             this._namedExpressions.push({
-                Id: "Benelux",
+                Uid: "Benelux",
                 FriendlyName: "Benelux",
                 ColumnType: ColumnType.String,
                 Expression: new Expression(columnsExpressionCountries, [], []),
@@ -266,7 +266,7 @@ export class ExpressionService implements IExpressionService {
         let columnsExpressionCountries: Array<{ ColumnName: string, ColumnValues: Array<any> }> = PredefinedExpressionHelper.CreateColumnValuesExpression("country", predefinedExpressionCountries);
 
         let namedExpression: INamedExpression = {
-            Id: "Benelux",
+            Uid: "Benelux",
             FriendlyName: "Benelux",
             ColumnType: ColumnType.String,
             Expression: new Expression(columnsExpressionCountries, [], []),

@@ -79,7 +79,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             buttonClick={() => this.createAlert()}  >
             {alertItems.length > 0 && alertsHeader}
             {alertItems.length > 0 &&
-                <ListGroup style={panelColumNudge}>
+                <ListGroup style={listGroupStyle}>
                     {alertItems}
                 </ListGroup>
             }
@@ -189,7 +189,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let AlertConfig = connect(mapStateToProps, mapDispatchToProps)(AlertConfigComponent);
 
-let panelColumNudge = {
+let listGroupStyle = {
     overflowY: 'auto',
     minHeight: '100px',
     maxHeight: '300px'

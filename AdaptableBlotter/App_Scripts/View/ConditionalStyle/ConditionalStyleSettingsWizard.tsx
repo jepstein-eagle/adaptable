@@ -61,7 +61,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Id == "Positive"),
+                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == "Positive"),
                     }, CellStyle: CellStyle.GreenFont, FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -72,7 +72,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Id == "Negative"),
+                        NamedExpression: this.props.Blotter.ExpressionService.GetNamedExpressions().find(f => f.Uid == "Negative"),
                     }, CellStyle: CellStyle.RedFont, FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });

@@ -10,6 +10,7 @@ import { Expression } from '../Core/Expression/Expression'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { StringExtensions } from '../Core/Extensions'
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { Helper } from '../Core/Helper';
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -20,7 +21,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Advanced Search", this.Id, 'AdvancedSearchAction', MenuType.Configuration, "search");
         this.InitState();
-         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     InitState() {
@@ -30,6 +31,14 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
             this.blotter.SearchService.ApplySearchOnGrid()
+        }
+    }
+
+    public CreateEmptyAdvancedSearch(): IAdvancedSearch {
+        return {
+            Uid: Helper.generateUid(),
+            Name: "",
+            Expression: ExpressionHelper.CreateEmptyExpression(),
         }
     }
 
