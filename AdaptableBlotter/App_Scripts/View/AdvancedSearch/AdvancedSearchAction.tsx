@@ -67,15 +67,15 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         }
         return (
             <div >
-                <Form inline>
+                <Form >
                     <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
                         buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
 
                         {/* The main Search selection form */}
-                        <div style={divStyle}>
+                        <div >
                             <FormGroup controlId="formInlineName">
-                                <Col xs={2}>
-                                    <ControlLabel>Select: </ControlLabel>
+                                <Col xs={3}>
+                                    <ControlLabel style={largeControlStyle}>Current:</ControlLabel>
                                 </Col>
                                 <Col xs={5}>
                                     <FormControl componentClass="select" placeholder="select"
@@ -85,7 +85,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                         {advancedSearches}
                                     </FormControl>
                                 </Col>
-                                <Col xs={5}>
+                                <Col xs={4}>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
                                         <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
                                     </OverlayTrigger>
@@ -268,7 +268,7 @@ export let AdvancedSearchAction = connect(mapStateToProps, mapDispatchToProps)(A
 var divStyle = {
     overflowY: 'auto',
     maxHeight: '400px',
-    margin: '5px'
+    margin: '6px'
 };
 
 var previewDivStyle = {
@@ -280,6 +280,9 @@ let panelStyle = {
     width: '550px'
 }
 
+let largeControlStyle = {
+    margin: '6px'
+}
 
 let smallButtonStyle = {
     margin: '2px'

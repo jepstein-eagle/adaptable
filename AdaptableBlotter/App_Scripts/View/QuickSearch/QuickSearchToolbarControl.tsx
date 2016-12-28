@@ -27,24 +27,24 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
 
     render(): any {
         return <Form className='navbar-form'>
-          <Panel>
-           <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
-             <FormControl
-                type="text"
-                placeholder="Enter Search Text"
-                value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
-                onChange={(x) => this.onUpdateQuickSearchText(x)}
-                onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
-                />{' '}
+            <Panel>
+                <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
+                <FormControl
+                    type="text"
+                    placeholder="Enter Search Text"
+                    value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
+                    onChange={(x) => this.onUpdateQuickSearchText(x)}
+                    onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
+                    />{' '}
 
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='success' disabled={StringExtensions.IsEmpty( this.state.EditedQuickSearchText)}   onClick={() => this.onSetQuickSearch()}>Search</Button>
-            </OverlayTrigger>
-            {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                <Button bsSize='small' disabled={StringExtensions.IsEmpty( this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
-            </OverlayTrigger>
-</Panel>
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
+                    <Button bsSize='small' bsStyle='success' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Search</Button>
+                </OverlayTrigger>
+                {' '}
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
+                    <Button bsSize='small' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
+                </OverlayTrigger>
+            </Panel>
         </Form>
 
     }
@@ -81,6 +81,6 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
 }
 
 var labelStyle = {
-     margin: '5px'
+    margin: '5px'
 };
 
