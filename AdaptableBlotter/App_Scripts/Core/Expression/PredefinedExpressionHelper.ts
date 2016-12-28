@@ -35,9 +35,10 @@ export module PredefinedExpressionHelper {
 
 
     export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
+        //RGBA might not be 100% compatible with all browsesrs
         return [
-            // { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", CellStyle: CellStyle.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
-            // { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", CellStyle: CellStyle.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
+            { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", BackColor: 'rgba(0, 0, 0, 0)', ForeColor: '#008000', Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
+             { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", BackColor: 'rgba(0, 0, 0, 0)', ForeColor: '#FF0000', Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
         ]
     }
 
