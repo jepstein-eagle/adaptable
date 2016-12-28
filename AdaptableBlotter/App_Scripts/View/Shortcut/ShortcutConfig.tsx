@@ -18,7 +18,7 @@ import { ShortcutConfigHeader } from './ShortcutConfigItem'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutColumnTypeWizard } from './ShortcutColumnTypeWizard'
 import { ShortcutKeyWizard } from './ShortcutKeyWizard'
-import { ShortcutResultWizard } from './ShortcutResultWizard'
+import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithButton } from '../PanelWithButton';
 
 
@@ -86,13 +86,13 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                 <AdaptableWizard Steps={
                     [
                         <ShortcutColumnTypeWizard />,
-                        <ShortcutKeyWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
+                        <ShortcutSettingsWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
                             keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
                             : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
                             NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
                                 keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
                                 : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
-                        <ShortcutResultWizard />
+                       
                     ]}
                     Data={this._editedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}

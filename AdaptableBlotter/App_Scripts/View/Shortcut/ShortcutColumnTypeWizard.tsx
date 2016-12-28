@@ -23,7 +23,7 @@ export class ShortcutColumnTypeWizard extends React.Component<ShortcutColumnType
     }
     render(): any {
 
-        return <Panel header="Select the Type of Column for the Shortcut">
+        return <Panel header="Select the Type of Column for the Shortcut" bsStyle="primary">
             <Radio style={divStyle} value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
             <Radio style={divStyle} value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
         </Panel>

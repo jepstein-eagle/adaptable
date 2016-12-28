@@ -3,7 +3,6 @@ import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
 
 import * as React from "react";
 import {   ListGroup, ListGroupItem, Panel} from 'react-bootstrap';
-
 import {AdaptableWizardStep, AdaptableWizardStepProps} from './../Wizard/Interface/IAdaptableWizard'
 import {AdaptableWizard} from './../Wizard/AdaptableWizard'
 import {IColumn} from '../../Core/Interface/IAdaptableBlotter';
@@ -40,7 +39,7 @@ export class ShortcutKeyWizard extends React.Component<ShortcutKeyWizardProps, S
                 active={this.state.ShortcutKey == null ? false : key == this.state.ShortcutKey}>{key}</ListGroupItem>
         })
 
-        return <Panel header="Select a Key for the Shortcut">
+        return <Panel header="Select a Key for the Shortcut" bsStyle="primary">
             <ListGroup style={listGroupStyle}>
                 {keys}
             </ListGroup>
