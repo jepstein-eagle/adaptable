@@ -57,22 +57,6 @@ export enum ConditionalStyleScope {
     Row
 }
 
-export enum CellStyle {
-    Red,
-    Green,
-    LightGreen,
-    Blue,
-    Yellow,
-    LightYellow,
-    Orange,
-    Purple,
-    Pink,
-    GreenFont,
-    RedFont
-}
-
-
-
 export enum SortOrder{
     Unknown,
     Ascending,

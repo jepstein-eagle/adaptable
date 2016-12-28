@@ -1,7 +1,7 @@
 
 import { ISearchService } from './Interface/ISearchService';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Enums';
+import { MenuType, LeafExpressionOperator, ColumnType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expression/PredefinedExpressionHelper';
 import { Expression } from '../Expression/Expression'
@@ -118,7 +118,8 @@ export class SearchService implements ISearchService {
         if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             let predefinedExpressionInfo: IPredefinedExpressionInfo =
                 {
-                    Id: "QuickSearch", FriendlyName: "Quick Search Expression", CellStyle: CellStyle.GreenFont,
+                    //Jo: Need to update colors here.... Not sure yet what the predefined expression is supposed to do for quicksearch
+                    Id: "QuickSearch", FriendlyName: "Quick Search Expression", BackColor: '#008000', ForeColor: '#FF0000',
                     Operator: this.GetQuickSearchState().QuickSearchOperator,
                     Operand1: quickSearchText,
                     Operand2: ""

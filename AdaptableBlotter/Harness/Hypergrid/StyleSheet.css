@@ -7,64 +7,6 @@
     min-width: 300px;  
 }
 
-    	.Ab-ConditionalStyle-Green {
-			background-color: green !important;
-			color: white !important;
-		}
-
-		.Ab-ConditionalStyle-LightGreen {
-			background-color: lightgreen !important;
-			color: white !important;
-		}
-
-    	.Ab-ConditionalStyle-Red {
-			background-color: red !important;
-			color: white !important;
-		}
-
-    	.Ab-ConditionalStyle-Blue {
-			background-color: blue !important;
-			color: white !important;
-		}
-
-    	.Ab-ConditionalStyle-Yellow {
-			background-color: yellow !important;
-			color: black !important;
-		}
-
-		.Ab-ConditionalStyle-LightYellow {
-			background-color: lightyellow !important;
-			color: black !important;
-		}
-
-    	.Ab-ConditionalStyle-Orange {
-			background-color: orange !important;
-			color: white !important;
-		}
-
-    	.Ab-ConditionalStyle-Purple {
-			background-color: purple !important;
-			color: white !important;
-		}
-
-
-    	.Ab-ConditionalStyle-Pink {
-			background-color: pink !important;
-			color: black !important;
-		}
-
-		.Ab-ConditionalStyle-GreenFont {
-			font-weight: bold !important;
-			color: green !important;
-		}
-
-		.Ab-ConditionalStyle-RedFont {
-			font-weight: bold !important;
-			color: red !important;
-		}
-
-		
-
 button.placeholder {background: #87D0FA;}
 button.placeholder:before {
   content: "Drop here";

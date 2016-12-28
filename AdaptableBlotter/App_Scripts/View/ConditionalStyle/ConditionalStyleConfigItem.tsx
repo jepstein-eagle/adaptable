@@ -2,8 +2,8 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ConditionalStyleScope, ColumnType, CellStyle } from '../../Core/Enums';
+import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
+import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -16,7 +16,7 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
-    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, newColour: CellStyle) => void;
+    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
@@ -25,10 +25,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
         let optionColumns = this.props.Columns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
-        })
-
-        let optionColours = EnumExtensions.getNamesAndValues(CellStyle).map((cellStyleNameAndValue: any) => {
-            return <option key={cellStyleNameAndValue.value} value={cellStyleNameAndValue.value}>{cellStyleNameAndValue.name}</option>
         })
 
         return <li
@@ -46,14 +42,14 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     }
                 </Col>
 
-                <Col md={3} >
-                    <FormControl componentClass="select" placeholder="select" value={this.props.ConditionalStyleCondition.CellStyle.toString()} onChange={(x) => this.onColourSelectChange(x)} >
-                        <option value="select" key="select">Select a colour</option>
-                        {optionColours}
-                    </FormControl>
+                <Col md={2} >
+                    <FormControl type="color" style={{ width: '40px' }} value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                </Col>
+                <Col md={2} >
+                    <FormControl type="color" style={{ width: '40px' }} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
 
-                <Col xs={4}>
+                <Col xs={3}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns)}
                 </Col>
 
@@ -72,9 +68,14 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
     }
 
-    private onColourSelectChange(event: React.FormEvent) {
+    private onBackColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeColour(this.props.ConditionalStyleCondition, Number.parseInt(e.value));
+        this.props.onChangeColour(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.ForeColor);
+    }
+
+    private onForeColourSelectChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.BackColor, e.value);
     }
 
 }
@@ -87,8 +88,9 @@ export class ConditionalStyleConfigHeader extends React.Component<ConditionalSty
         return <Panel style={panelHeaderStyle} >
             <Row >
                 <Col md={3} style={headerStyle}>Where Applied</Col>
-                <Col md={3} style={headerStyle}>Style</Col>
-                <Col md={4} style={headerStyle}>Expression</Col>
+                <Col md={2} style={headerStyle}>BackColor</Col>
+                <Col md={2} style={headerStyle}>ForeColor</Col>
+                <Col md={3} style={headerStyle}>Expression</Col>
             </Row>
         </Panel>
     }

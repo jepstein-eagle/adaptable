@@ -1,6 +1,6 @@
 import { Expression } from './Expression'
-import {  IExpressionRange } from '../Interface/IExpression';
-import {  CellStyle, LeafExpressionOperator } from '../Enums';
+import { IExpressionRange } from '../Interface/IExpression';
+import { LeafExpressionOperator } from '../Enums';
 
 /*  
  Not sure about this still but I THINK its a good idea.
@@ -12,14 +12,15 @@ It could be that the whole thing adds a layer of complexity that is not justifie
 export interface IPredefinedExpressionInfo {
     Id: string
     FriendlyName: string
-    CellStyle: CellStyle
     Operator: LeafExpressionOperator
     Operand1: string
     Operand2: string
+    BackColor: string
+    ForeColor: string
 }
 
 export module PredefinedExpressionHelper {
- export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Expression {
+    export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Expression {
 
         let columnValuesExpression: Array<{ ColumnName: string, Values: Array<any> }> = [];
 
@@ -35,8 +36,8 @@ export module PredefinedExpressionHelper {
 
     export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
         return [
-            { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", CellStyle: CellStyle.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
-            { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", CellStyle: CellStyle.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
+            // { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", CellStyle: CellStyle.GreenFont, Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
+            // { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", CellStyle: CellStyle.RedFont, Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
         ]
     }
 

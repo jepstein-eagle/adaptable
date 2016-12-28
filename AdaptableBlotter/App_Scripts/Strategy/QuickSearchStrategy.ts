@@ -4,7 +4,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Core/Enums';
+import { MenuType, LeafExpressionOperator, ColumnType } from '../Core/Enums';
 import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
 import { Expression } from '../Core/Expression/Expression'
