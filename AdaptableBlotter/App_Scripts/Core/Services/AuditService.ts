@@ -16,12 +16,11 @@ export class AuditService implements IAuditService {
         this._columnDataValueList = [];
     }
 
-
-    public CreateAuditEvent(identifierValue: any, newValue: any, columnName: string): void {
+    public CreateAuditEvent(identifierValue: any, newValue: any, columnName: string, forceDispatch?: boolean): void {
         var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnName: columnName, IdentifierValue: identifierValue };
         this.AddDataValuesToList(dataChangedEvent);
         // not sure why this is being called twice but we can prevent duplicate identical events at least
-        if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
+        if (dataChangedEvent.NewValue != dataChangedEvent.OldValue || forceDispatch) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
         }
     }

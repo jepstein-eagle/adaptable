@@ -22,6 +22,6 @@ export interface IDataValue {
 
 
 export interface IAuditService {
-     CreateAuditEvent(identifierValue: any,  NewValue: any, ColumnName :string): void;
+     CreateAuditEvent(identifierValue: any,  NewValue: any, ColumnName :string, forceDispatch?: boolean): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
 }

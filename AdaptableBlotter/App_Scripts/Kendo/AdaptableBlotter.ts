@@ -103,7 +103,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 for (let valueField in e.values) {
                     let changedValue = e.values[valueField];
                     let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
-                    this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
+                    this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField, true);
                 }
             }, 5)
         })
