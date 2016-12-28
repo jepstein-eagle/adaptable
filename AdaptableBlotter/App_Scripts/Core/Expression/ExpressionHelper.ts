@@ -244,6 +244,24 @@ export module ExpressionHelper {
         }
     }
 
+    export function GetColumnIdForNamedExpression(namedExpression: INamedExpression): string {
+
+        // see if there are any columnvalues and then get the first only
+        if (namedExpression.Expression.ColumnValuesExpressions != null && namedExpression.Expression.ColumnValuesExpressions.length > 0) {
+            return namedExpression.Expression.ColumnValuesExpressions[0].ColumnName;
+        }
+
+        // see if there are any named expressionss and then get the first only
+        if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
+            return namedExpression.Expression.NamedExpressions[0].ColumnName;
+        }
+
+        // see if there are any ranges and then get the first only
+        if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
+            return namedExpression.Expression.RangeExpressions[0].ColumnName;
+        }
+    }
+
 
     export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {

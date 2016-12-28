@@ -1,18 +1,17 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { INamedExpression } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
-import { ColumnType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 interface FilterSettingsWizardProps extends AdaptableWizardStepProps<INamedExpression> {
- Blotter: IAdaptableBlotter,
- Columns: Array<IColumn>
+    Blotter: IAdaptableBlotter,
+    Columns: Array<IColumn>
 }
 interface FilterSettingsWizardState {
     FilterName: string
@@ -51,8 +50,8 @@ export class FilterSettingsWizard extends React.Component<FilterSettingsWizardPr
     public canNext(): boolean {
         return this.state.FilterName != "";
     }
-    
-   
+
+
     public canBack(): boolean { return true; }
 
     public Next(): void {

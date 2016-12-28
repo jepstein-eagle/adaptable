@@ -5,6 +5,7 @@ import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Enum
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expression/PredefinedExpressionHelper';
 import { Expression } from '../Expression/Expression'
+import { INamedExpression } from '../Interface/IExpression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Extensions'
@@ -22,9 +23,7 @@ export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
-
         this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
-
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
@@ -67,10 +66,25 @@ export class SearchService implements ISearchService {
         }
     }
 
+    public ApplySearchOnFilter(namedExpressionID: string): void {
+        let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
+        let namedExpressions: string[] = [];
+
+        advancedSearchExpressions.forEach(a => {
+            a.NamedExpressions.forEach(n => {
+                namedExpressions.push(...n.Named);
+            })
+        })
+
+        if (namedExpressions.find(n => n == namedExpressionID)) {
+            this.ApplySearchOnGrid();
+        }
+    }
+
     private GetNonMatchingRows(rowIdentifiers: string[], columns: IColumn[]): string[] {
         let nonMatchingRowIds: string[] = [];
         let quickSearchExpressions: Expression[] = this.createQuickSearchExpressions(columns);
-        let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions(columns);
+        let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
 
         let hasQuickSearchExpression: boolean = quickSearchExpressions.length > 0;
         let hasAdvancedSearchExpression: boolean = advancedSearchExpressions.length > 0;
@@ -102,7 +116,7 @@ export class SearchService implements ISearchService {
         return nonMatchingRowIds;
     }
 
-    private createAdvancedSearchExpressions(columns: IColumn[]): Expression[] {
+    private createAdvancedSearchExpressions(): Expression[] {
         let searchExpressions: Expression[] = [];
         let currentSearchId = this.GetAdvancedSearchState().CurrentAdvancedSearchId;
         if (currentSearchId != "") {

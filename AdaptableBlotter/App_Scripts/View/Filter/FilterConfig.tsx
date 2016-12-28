@@ -9,7 +9,6 @@ import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { Expression } from '../../Core/Expression/Expression';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { INamedExpression } from '../../Core/interface/IExpression';
@@ -21,6 +20,8 @@ import { IFilterStrategy } from '../../Core/Interface/IFilterStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { FilterExpressionWizard } from './FilterExpressionWizard'
 import { FilterSettingsWizard } from './FilterSettingsWizard'
+import { StringExtensions } from '../../Core/Extensions';
+
 
 interface FilterConfigProps extends IStrategyViewPopupProps<FilterConfigComponent> {
     Filters: INamedExpression[]
@@ -41,6 +42,14 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
     }
 
     render() {
+
+        let selectedColumnId: string = "select";
+        if (this.state.EditedFilter != null) {
+            let editedFilterColumn: string = ExpressionHelper.GetColumnIdForNamedExpression(this.state.EditedFilter);
+            if (StringExtensions.IsNotNullOrEmpty(editedFilterColumn)) {
+                selectedColumnId = editedFilterColumn;
+            }
+        }
 
         let filtersHeader = <Panel style={panelHeaderStyle} >
             <Row >
@@ -71,7 +80,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         })
 
         return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Filter"}  
+            buttonContent={"Create Filter"}
             buttonClick={() => this.createFilter()}  >
             {filterItems.length > 0 && filtersHeader}
             {filterItems.length > 0 &&
@@ -90,11 +99,10 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                         Blotter={this.props.AdaptableBlotter}
                         ColumnList={this.props.Columns}
                         ExpressionMode={ExpressionMode.SingleColumn}
-                        SelectedColumnId={null} />,
+                        SelectedColumnId={selectedColumnId} />,
                     <FilterSettingsWizard
                         Blotter={this.props.AdaptableBlotter}
-                        Columns={this.props.Columns}
-                        />,
+                        Columns={this.props.Columns} />,
                 ]}
                     Data={this.state.EditedFilter}
                     StepStartIndex={0}
@@ -122,6 +130,8 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
     finishWizard() {
         this.props.onAddEditFilter(this.state.EditedFilter);
         this.setState({ EditedFilter: null });
+        // tell the search service that a filter has changed and it will decide if it needs to run search
+        this.props.AdaptableBlotter.SearchService.ApplySearchOnFilter(this.state.EditedFilter.Uid);
     }
 
 }

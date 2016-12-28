@@ -3,12 +3,9 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Core/Enums';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { MenuType } from '../Core/Enums';
 import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
-import { Expression } from '../Core/Expression/Expression'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { StringExtensions } from '../Core/Extensions'
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { Helper } from '../Core/Helper';
 

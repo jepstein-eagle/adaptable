@@ -35,8 +35,6 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
-
-
         return <Panel header="Plus/Minus Settings" bsStyle="primary">
             <Form horizontal>
                 <FormGroup controlId="formColumn">

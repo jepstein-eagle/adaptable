@@ -4,10 +4,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, CellStyle, LeafExpressionOperator, ColumnType } from '../Core/Enums';
-import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
-import { Expression } from '../Core/Expression/Expression'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { MenuType, LeafExpressionOperator } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 
@@ -50,7 +47,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         }
     }
 
-       private GetQuickSearchState(): QuickSearchState {
+    private GetQuickSearchState(): QuickSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
     }
 

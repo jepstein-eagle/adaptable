@@ -8,7 +8,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
-    private Alerts: IAlert[]
+    private alerts: IAlert[]
     private menuItemConfig: IMenuItem;
 
 
@@ -21,8 +21,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
 
     InitState() {
-        if (this.Alerts != this.GetAlertState().Alerts) {
-            this.Alerts = this.GetAlertState().Alerts;
+        if (this.alerts != this.GetAlertState().Alerts) {
+            this.alerts = this.GetAlertState().Alerts;
         }
 
     }
@@ -55,7 +55,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         return newCellChangeRule;
     }
 
-    getMenuItems(): IMenuItem[] {
+   public getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
 
