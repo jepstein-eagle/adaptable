@@ -16,8 +16,6 @@
         settlementDate: Date;
         bloombergAsk: number;
         bloombergBid: number;
-        indicativeAsk: number;
-        indicativeBid: number;
         delta: number;
         occasionalPrice: number;
         bookingGuid: string;

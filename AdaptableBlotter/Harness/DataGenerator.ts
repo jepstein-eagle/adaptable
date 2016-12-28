@@ -10,7 +10,7 @@ export class DataGenerator {
         return trades;
     }
 
-    private _numericCols: string[] = ["bid", "ask"];//, "marketPrice", "bloombergAsk", "bloombergBid", "indicativeAsk", "indicativeBid"];
+    private _numericCols: string[] = ["bid", "ask"]; 
 
     //Can't be bothered to create a ts file for kendo....
     startTickingDataKendo(grid: kendo.ui.Grid) {
@@ -40,6 +40,8 @@ export class DataGenerator {
 
     createTrade(i: number): ITrade {
         var bid = this.getMeaningfulDouble();
+        var ask = this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1));
+        var tradeDate = this.generateRandomDateAndTime(-5000, 1000);
         var trade =
             {
                 "tradeId": i,
@@ -50,16 +52,14 @@ export class DataGenerator {
                 "country": this.getRandomItem(this.getCountries()),
                 "marketPrice": this.getMeaningfulPositiveNegativeDouble(),
                 "bid": bid,
-                "ask": this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1)),
+                "ask": ask,
                 "isLive": this.generateRandomBool(),
                 "fitchRating": this.getRandomItem(this.getFitchRatings()),
                 "moodysRating": this.getRandomItem(this.getMoodysRatings()),
-                "tradeDate": this.generateRandomDateAndTime(-5000, 0),
-                "settlementDate": this.generateRandomDate(0, 5000),
-                "bloombergAsk": this.getMeaningfulDouble(),
-                "bloombergBid": this.getMeaningfulDouble(),
-                "indicativeAsk": this.getMeaningfulDouble(),
-                "indicativeBid": this.getMeaningfulDouble(),
+                "tradeDate": tradeDate,
+                "settlementDate":this.addDays(tradeDate,3),
+                "bloombergAsk": ask + 0.01,
+                "bloombergBid": bid - 0.01,
                 "delta": this.getMeaningfulDoubleTest(),
                 "occasionalPrice": this.generateRandomNullableDouble(),
                 "bookingGuid": this.generateUuid(),

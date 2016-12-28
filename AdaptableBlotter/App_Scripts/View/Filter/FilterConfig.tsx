@@ -71,8 +71,8 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteFilter(x)}
-                            editClick={() => this.onEdit(x)}>
+                            deleteClick={() => this.onDeleteFilter(x)}
+                            editClick={() => this.onEditFilter(x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -81,7 +81,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
 
         return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Filter"}
-            buttonClick={() => this.createFilter()}  >
+            buttonClick={() => this.onCreateFilter()}  >
             {filterItems.length > 0 && filtersHeader}
             {filterItems.length > 0 &&
                 <ListGroup style={listGroupStyle}>
@@ -111,16 +111,22 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         </PanelWithButton>
     }
 
-    createFilter() {
+    onCreateFilter() {
         // have to use any as cannot cast from IStrategy to IFilterStrategy  :(
         let filterStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FilterStrategyId);
         let emptyFilter: INamedExpression = filterStrategy.CreateEmptyFilter();
         this.setState({ EditedFilter: emptyFilter });
     }
 
-    onEdit(Filter: INamedExpression) {
+    onEditFilter(filter: INamedExpression) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedFilter: Helper.cloneObject(Filter) });
+        this.setState({ EditedFilter: Helper.cloneObject(filter) });
+    }
+
+     onDeleteFilter(filter: INamedExpression) {
+        this.props.onDeleteFilter(filter);
+        // tell the search service that a filter has changed and it will decide if it needs to run search
+        this.props.AdaptableBlotter.SearchService.ApplySearchOnFilter(filter.Uid);
     }
 
     closeWizard() {

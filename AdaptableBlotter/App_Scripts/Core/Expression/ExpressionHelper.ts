@@ -72,6 +72,9 @@ export module ExpressionHelper {
                 let columnNamedExpressions = Expression.NamedExpressions.find(x => x.ColumnName == columnId)
                 if (columnNamedExpressions) {
                     let namedExpressions: INamedExpression[] = GetNamedExpressions(columnNamedExpressions.Named, blotter);
+                //    if(namedExpressions.length==0){
+                //        alert("this search contains a filter that cannot be found and will be removed")
+                //    }
                     for (let namedExpression of namedExpressions) {
                         // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (namedExpression.IsPredefined) {

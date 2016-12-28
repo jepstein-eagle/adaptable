@@ -36,7 +36,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
         // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
         // in this version all action items are buttons and all config screens go in a dropdown
-        // plus i've added a very simple quick search control which runs a quick search of 'contains' across all string columns
+        // plus i've added very simple quick search and advanced search controls
         if (this.props.MenuState.MenuItems) {
             var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
                 return <NavItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</NavItem>
@@ -65,7 +65,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             onNewAdvancedSearch={() => this.onNewAdvancedSearch()}
                             onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
-                    <Nav>
+                    <Nav style={divStyle}>
                         {actionMenuItems}
                         <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
@@ -169,5 +169,9 @@ let titleStyle: React.CSSProperties = {
 let buttonStyle: React.CSSProperties = {
     active: "none",
     focus: "none"
+}
+
+let divStyle: React.CSSProperties = {
+    margin: "20px"
 }
 
