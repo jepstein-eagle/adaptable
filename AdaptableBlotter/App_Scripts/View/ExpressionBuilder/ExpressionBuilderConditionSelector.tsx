@@ -100,13 +100,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
 
+        let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedNamedExpresions.length > 0;
         let availableExpressionIds: string[] = this.state.NamedExpressions.filter(f => ExpressionHelper.ShouldShowNamedExpressionForColumn(f, selectedColumn, this.props.Blotter));
-
-        let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select");
-
+        let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
+        let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
         return <PanelWithButton headerText="Build Expression"
-            buttonClick={() => this.props.onSelectedColumnChange("select")} buttonDisabled={this.props.ExpressionMode == ExpressionMode.SingleColumn}
+            buttonClick={() => this.props.onSelectedColumnChange("select")} buttonDisabled={addConditionButtonDisabled}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
