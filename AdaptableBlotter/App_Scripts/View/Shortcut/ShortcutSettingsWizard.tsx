@@ -71,10 +71,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                         <option value="select" key="select">Select a key</option>
                         {optionKeys}
                     </FormControl>
-
-
                 </Panel>
-
 
                 {this.props.Data.ColumnType == ColumnType.Number ?
                     <div>
