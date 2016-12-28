@@ -211,6 +211,11 @@ export module ExpressionHelper {
             return namedExpression.Expression.ColumnValuesExpressions[0].ColumnName == column.ColumnId;
         }
 
+        // see if there are any named expressions and then get the first only
+        if (namedExpression.Expression.NamedExpressions != null && namedExpression.Expression.NamedExpressions.length > 0) {
+            return namedExpression.Expression.NamedExpressions[0].ColumnName == column.ColumnId;
+        }
+
         // see if there are any ranges and then get the first only
         if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
             return namedExpression.Expression.RangeExpressions[0].ColumnName == column.ColumnId;

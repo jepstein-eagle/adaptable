@@ -16,7 +16,7 @@ import { INamedExpression } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { ColumnType } from '../../Core/Enums'
+import { ColumnType, ExpressionMode } from '../../Core/Enums'
 import { IFilterStrategy } from '../../Core/Interface/IFilterStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { FilterExpressionWizard } from './FilterExpressionWizard'
@@ -50,7 +50,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
             </Row>
         </Panel>
 
-        let filterItems = this.props.Filters.filter(f=>!f.IsPredefined).map((x) => {
+        let filterItems = this.props.Filters.filter(f => !f.IsPredefined).map((x) => {
             return <li
                 className="list-group-item" key={x.Uid}>
                 <Row >
@@ -63,7 +63,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                     <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteFilter(x)}
-                            editClick={() => this.onEdit( x)}>
+                            editClick={() => this.onEdit(x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -71,7 +71,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         })
 
         return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Filter"}
+            buttonContent={"Create Filter"}  
             buttonClick={() => this.createFilter()}  >
             {filterItems.length > 0 && filtersHeader}
             {filterItems.length > 0 &&
@@ -89,9 +89,10 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                     <FilterExpressionWizard
                         Blotter={this.props.AdaptableBlotter}
                         ColumnList={this.props.Columns}
+                        ExpressionMode={ExpressionMode.SingleColumn}
                         SelectedColumnId={null} />,
                     <FilterSettingsWizard
-                    Blotter={this.props.AdaptableBlotter}
+                        Blotter={this.props.AdaptableBlotter}
                         Columns={this.props.Columns}
                         />,
                 ]}
@@ -136,7 +137,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteFilter: (Filter: INamedExpression) => dispatch(FilterRedux.DeleteFilter(Filter)),
-        onAddEditFilter: (  Filter: INamedExpression) => dispatch(FilterRedux.AddEditFilter( Filter))
+        onAddEditFilter: (Filter: INamedExpression) => dispatch(FilterRedux.AddEditFilter(Filter))
     };
 }
 

@@ -19,6 +19,7 @@ import { PanelWithButton } from '../PanelWithButton';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
+
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
@@ -70,8 +71,13 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             {this.state.EditedConditionalStyleCondition != null &&
                 <AdaptableWizard Steps={
                     [
-                        <ConditionalStyleSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />
+                        <ConditionalStyleSettingsWizard
+                            Columns={this.props.Columns}
+                            Blotter={this.props.AdaptableBlotter} />,
+                        <ConditionalStyleExpressionWizard
+                            ColumnList={this.props.Columns}
+                            Blotter={this.props.AdaptableBlotter}
+                            SelectedColumnId={null} />
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
                     StepStartIndex={0}

@@ -5,7 +5,7 @@ import { ControlLabel, FormGroup, FormControl, Button, Form, Col, Panel, ListGro
 
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ExpressionBuilderPage,ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
+import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 
@@ -13,15 +13,15 @@ import { Expression } from '../../Core/Expression/Expression';
 interface PlusMinusExpressionWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
-     SelectedColumnId : string
+    SelectedColumnId: string
 }
 
 export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: PlusMinusExpressionWizardProps) {
         super(props2)
         this.state = {
-            Expression : props2.Data.Expression,
-            SelectedColumnId : "select"
+            Expression: props2.Data.Expression,
+            SelectedColumnId: "select"
         }
     }
 

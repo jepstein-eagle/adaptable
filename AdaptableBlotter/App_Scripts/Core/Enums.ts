@@ -15,6 +15,12 @@ export enum BooleanOperator {
     Not
 }
 
+
+export enum ExpressionMode {
+    SingleColumn,
+    MultiColumn
+}
+
 export enum LeafExpressionOperator {
     Unknown,
     //Numeric and Date
@@ -79,11 +85,6 @@ export enum SortOrder{
     Descending
 }
 
-
-//export enum AlertCategory{
-//    Data,
-//    Action
-//}
 
 // not sure about this...
 export enum NotificationType{

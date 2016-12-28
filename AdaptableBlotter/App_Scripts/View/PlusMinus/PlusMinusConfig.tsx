@@ -18,6 +18,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 
+
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
     Columns: IColumn[],
@@ -78,7 +79,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 </Row>
             </li>
         })
-        
+
         return <Panel header="Plus/Minus Configuration" bsStyle="primary" style={panelStyle}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
@@ -90,8 +91,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </Col>
                 </FormGroup>
             </Form>
-            <PanelWithButton headerText="Column Nudge Values" 
-            bsStyle="success"
+            <PanelWithButton headerText="Column Nudge Values"
+                bsStyle="success"
                 buttonContent={"Create Column Nudge Value"}
                 buttonClick={() => this.createColumnNudgeValue()}  >
 
@@ -106,8 +107,14 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </div>}
             </PanelWithButton>
             {this.state.EditedPlusMinusCondition != null &&
-                <AdaptableWizard Steps={[<PlusMinusSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                <PlusMinusExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />]}
+                <AdaptableWizard Steps={
+                    [<PlusMinusSettingsWizard
+                        Columns={this.props.Columns}
+                        Blotter={this.props.AdaptableBlotter} />,
+                    <PlusMinusExpressionWizard
+                        ColumnList={this.props.Columns}
+                        Blotter={this.props.AdaptableBlotter}
+                        SelectedColumnId={null} />]}
                     Data={this.state.EditedPlusMinusCondition}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}

@@ -10,7 +10,7 @@ import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { ColumnType } from '../../Core/Enums'
+import { ColumnType, ExpressionMode } from '../../Core/Enums'
 import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 
@@ -18,6 +18,7 @@ interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<
     ColumnsList: Array<IColumn>
     Blotter: IAdaptableBlotter
     Expression: Expression
+    ExpressionMode: ExpressionMode
     onExpressionChange: (Expression: Expression) => void
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
@@ -101,8 +102,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let availableExpressionIds: string[] = this.state.NamedExpressions.filter(f => ExpressionHelper.ShouldShowNamedExpressionForColumn(f, selectedColumn, this.props.Blotter));
 
+        let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select");
+
+
         return <PanelWithButton headerText="Build Expression"
-            buttonClick={() => this.props.onSelectedColumnChange("select")}
+            buttonClick={() => this.props.onSelectedColumnChange("select")} buttonDisabled={this.props.ExpressionMode == ExpressionMode.SingleColumn}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
@@ -113,7 +117,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         }
                     </Col>
                     <Col xs={9}>
-                        <FormControl style={{ width: "Auto" }} componentClass="select" placeholder="select" value={this.props.SelectedColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
+                        <FormControl style={{ width: "Auto" }} componentClass="select" placeholder="select" value={this.props.SelectedColumnId} onChange={(x) => this.onColumnSelectChange(x)} disabled={columnDropdownDisabled} >
                             <option value="select" key="select">Select a column</option>
                             {optionColumns}
                         </FormControl>

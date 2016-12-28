@@ -8,11 +8,13 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interfa
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
+import { ExpressionMode } from '../../Core/Enums'
 
 interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string
+    ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
 }
 
@@ -31,6 +33,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                     <ExpressionBuilderConditionSelector ColumnsList={this.props.ColumnList}
                         Blotter={this.props.Blotter}
                         Expression={this.state.Expression}
+                        ExpressionMode={ (this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
                         onExpressionChange={(expression) => this.onChangeExpression(expression)}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                         SelectedColumnId={this.state.SelectedColumnId}>

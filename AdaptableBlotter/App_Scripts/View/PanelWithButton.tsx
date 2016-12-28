@@ -10,6 +10,7 @@ interface PanelWithButtonProps extends PanelProps {
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;
     headerText : string
+    buttonDisabled?: boolean
 }
 
 
@@ -28,13 +29,14 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         {
             className += " " + "panel-with-button-reduce-header-padding"
         }
+    
         let header = <Form horizontal>
             <Row style={{ display: "flex", alignItems: "center"}}>
                 <Col xs={7}>{this.props.headerText}</Col>
                 <Col xs={5}>
                     {buttonContent &&
                      
-                        <Button bsSize="small"  onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+                        <Button bsSize="small" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
                 </Col>
