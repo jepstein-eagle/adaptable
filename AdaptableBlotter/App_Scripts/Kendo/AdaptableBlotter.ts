@@ -405,6 +405,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.options.excel.fileName = fileName + ".xls";
         this.grid.options.excel.allPages = allPages;
         this.grid.saveAsExcel();
+
+  let myOptions: any =       this.grid.getOptions();
+  let s:string = "hello"
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {

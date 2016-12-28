@@ -13,6 +13,11 @@ import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
 
 /* At the moment this uses Expressions - rather than JQuery - and works for both Advanced and Quick Search
 Note:  Because Quick Search uses an expression - it only works on string columns at present - we can choose the operator but its always strings
+See: 1561: Can only perform Quick Search on string columns
+
+Becuase we are using Expressions on visible rows rather than JQuery on the data source it means that we have other bugs. eg.
+1557:  Sorting ignores Search and puts the rows back
+1559:  Paging doesnt work properly in Kendo
 */
 
 export class SearchService implements ISearchService {
