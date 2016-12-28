@@ -16,7 +16,7 @@ import { MenuType } from '../Core/Enums';
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
     private menuItemConfig: IMenuItem;
-    private ConditionalStyleState: ConditionalStyleState
+    protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Conditional Styles", this.Id, 'ConditionalStyleConfig', MenuType.Configuration, "tint");
@@ -34,7 +34,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
-    private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
@@ -65,7 +65,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-    private InitStyles(): void {
+    protected InitStyles(): void {
         this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
         this.blotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
 
