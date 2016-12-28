@@ -17,7 +17,6 @@ import { ShortcutConfigHeader } from './ShortcutConfigItem'
 
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutColumnTypeWizard } from './ShortcutColumnTypeWizard'
-import { ShortcutKeyWizard } from './ShortcutKeyWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithButton } from '../PanelWithButton';
 
