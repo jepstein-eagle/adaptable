@@ -22,7 +22,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
 
 
         let optionColumns = this.props.CellInfo.map(x => {
-            return <Col xs={x[1]}>{x[0]}</Col>
+            return <Col key={x[1]+x[0]} xs={x[1]}>{x[0]}</Col>
         })
        
         let header = <Form horizontal>
