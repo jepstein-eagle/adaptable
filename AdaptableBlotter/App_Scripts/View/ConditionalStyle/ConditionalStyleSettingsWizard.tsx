@@ -13,6 +13,7 @@ import { EnumExtensions } from '../../Core/Extensions';
 import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ColorPicker } from '../ColorPicker';
 
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
@@ -31,9 +32,9 @@ interface ConditionalStyleSettingsWizardState {
 }
 
 export class ConditionalStyleSettingsWizard extends React.Component<ConditionalStyleSettingsWizardProps, ConditionalStyleSettingsWizardState> implements AdaptableWizardStep {
-      private predefinedExpressions: IPredefinedStyleCondition[] = [];
-      
-      constructor(props: ConditionalStyleSettingsWizardProps) {
+    private predefinedExpressions: IPredefinedStyleCondition[] = [];
+
+    constructor(props: ConditionalStyleSettingsWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
@@ -53,7 +54,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
-               if (this.predefinedExpressions.length == 0) {
+        if (this.predefinedExpressions.length == 0) {
             // create 2 predefined styles - do it here and not in the helper class
             this.predefinedExpressions.push(
                 {
@@ -61,7 +62,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         ColumnValues: null,
                         ExpressionRange: null,
                         NamedExpression: this.GetFilterState().Filters.find(f => f.Uid == "Positive"),
-                    }, BackColor: 'rgba(0,0,0,0)', ForeColor:'#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
+                    }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
 
@@ -72,7 +73,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         ColumnValues: null,
                         ExpressionRange: null,
                         NamedExpression: this.GetFilterState().Filters.find(f => f.Uid == "Negative"),
-                    }, BackColor: 'rgba(0,0,0,0)', ForeColor:'#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
+                    }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
         }
@@ -148,13 +149,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         <FormGroup controlId="colorBackStyle">
                             <Col xs={4} componentClass={ControlLabel}>BackColor: </Col>
                             <Col xs={8}>
-                                <FormControl type="color" style={{ width: '40px' }} value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="colorForeStyle">
                             <Col xs={4} componentClass={ControlLabel}>ForeColor: </Col>
                             <Col xs={8}>
-                                <FormControl type="color" style={{ width: '40px' }} value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                             </Col>
                         </FormGroup>
                     </div>}
@@ -164,11 +165,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
-        private GetFilterState(): FilterState {
+    private GetFilterState(): FilterState {
         return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter;
     }
 
-    
+
     private onExpressionOptionChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let result: boolean = (e.value == "predefined")
@@ -180,7 +181,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.setState({ ColumnId: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
-       private onPredefinedExpressionSelectChange(event: React.FormEvent) {
+    private onPredefinedExpressionSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ PredefinedStyleCondition: this.predefinedExpressions.find(pe => pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
@@ -208,8 +209,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     private onCreatePredefinedExpression() {
-          let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
-       this.state.BackColor = this.state.PredefinedStyleCondition.BackColor;
+        let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
+        this.state.BackColor = this.state.PredefinedStyleCondition.BackColor;
         this.state.ForeColor = this.state.PredefinedStyleCondition.ForeColor;
         this.state.Expression = predefinedExpression;
     }

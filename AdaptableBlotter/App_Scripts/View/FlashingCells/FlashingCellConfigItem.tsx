@@ -9,6 +9,7 @@ import { ColumnType } from '../../Core/Enums'
 import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
+import { ColorPicker } from '../ColorPicker';
 
 interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
@@ -45,10 +46,10 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     }
                 </Col>
                 <Col md={2} >
-                    <FormControl type="color" style={{ width: '40px' }} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+                    <ColorPicker value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
                 </Col>
                 <Col md={2} >
-                    <FormControl type="color" style={{ width: '40px' }} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
+                    <ColorPicker value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
                 </Col>
             </Row>
         </li>
