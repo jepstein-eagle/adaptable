@@ -152,7 +152,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.props.Data.ShortcutKey = this.state.ShortcutKey;
     }
     public Back(): void { }
-    public StepName = "Create Shortcut"
+    public StepName = "Shortcut Setttings"
 }
 
 let listGroupStyle = {
