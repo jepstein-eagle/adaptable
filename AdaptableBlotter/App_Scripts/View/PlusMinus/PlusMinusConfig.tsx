@@ -92,8 +92,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 <Well bsSize="small">Click 'Create Column Nudge Value' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>
                 :
                 <div>
+                    <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     <ListGroup style={panelColumNudge}>
-                        <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                         {optionColumnsItems}
                     </ListGroup>
                 </div>}

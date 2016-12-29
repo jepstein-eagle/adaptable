@@ -74,10 +74,12 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
             buttonContent={"Create Alert"}
             buttonClick={() => this.createAlert()}  >
             {alertItems.length > 0 &&
-                <ListGroup style={listGroupStyle}>
+                <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-                    {alertItems}
-                </ListGroup>
+                    <ListGroup style={listGroupStyle}>
+                        {alertItems}
+                    </ListGroup>
+                </div>
             }
 
             {alertItems.length == 0 &&

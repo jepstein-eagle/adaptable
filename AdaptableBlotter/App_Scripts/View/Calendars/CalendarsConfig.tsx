@@ -61,8 +61,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
         </Form>;
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
+            <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
-                <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 {allCalendars}
             </ListGroup>
 
@@ -73,8 +73,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                         <Modal.Title>Calendar Details: {this._displayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
+                        <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="info" />
                         <ListGroup style={divStyle}>
-                            <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="info" />
                             {calendarEntryItems}
                         </ListGroup>
                     </Modal.Body>

@@ -78,10 +78,12 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
             buttonContent={"Create Filter"}
             buttonClick={() => this.onCreateFilter()}  >
             {filterItems.length > 0 &&
-                <ListGroup style={listGroupStyle}>
+                <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-                    {filterItems}
-                </ListGroup>
+                    <ListGroup style={listGroupStyle}>
+                        {filterItems}
+                    </ListGroup>
+                </div>
             }
 
             {filterItems.length == 0 &&
@@ -120,8 +122,6 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
 
     onDeleteFilter(filter: INamedExpression) {
         this.props.onDeleteFilter(filter);
-        // tell the search service that a filter has changed and it will decide if it needs to run search
-        this.props.AdaptableBlotter.SearchService.ApplySearchOnFilter(filter.Uid);
     }
 
     closeWizard() {
@@ -131,8 +131,6 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
     finishWizard() {
         this.props.onAddEditFilter(this.state.EditedFilter);
         this.setState({ EditedFilter: null });
-        // tell the search service that a filter has changed and it will decide if it needs to run search
-        this.props.AdaptableBlotter.SearchService.ApplySearchOnFilter(this.state.EditedFilter.Uid);
     }
 
 }

@@ -35,13 +35,14 @@ export class SearchService implements ISearchService {
 
     public ApplySearchOnGrid(): void {
 
+        let rowIds: string[] = this.blotter.getAllRowIds();
+
+        // first make sure they are all visible (as might have been hidden in a previous search)
+        this.blotter.showRows(rowIds);
+      
         let columns: IColumn[] = this.GetGridState().Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0) {
-            let rowIds: string[] = this.blotter.getAllRowIds();
-
-            // first make sure they are all visible (as might have been hidden in a previous search)
-            this.blotter.showRows(rowIds);
 
             // next get those rows which dont fit the search
             let nonMatchingRowIds: string[] = this.GetNonMatchingRows(rowIds, columns);
@@ -66,17 +67,17 @@ export class SearchService implements ISearchService {
         }
     }
 
-    public ApplySearchOnFilter(namedExpressionID: string): void {
+    public ApplySearchOnFilters(namedExpressionIds: string[]): void {
         let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
-        let namedExpressions: string[] = [];
+        let namedExpressionsInCurrentSearch: string[] = [];
 
         advancedSearchExpressions.forEach(a => {
             a.NamedExpressions.forEach(n => {
-                namedExpressions.push(...n.Named);
+                namedExpressionsInCurrentSearch.push(...n.Named);
             })
         })
 
-        if (namedExpressions.find(n => n == namedExpressionID)) {
+        if (namedExpressionsInCurrentSearch.find(n =>namedExpressionIds.find(ne=>ne== n)!=null  )) {
             this.ApplySearchOnGrid();
         }
     }
