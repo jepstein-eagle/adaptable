@@ -24,6 +24,8 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
     public onAction(action: string) {
         if (action == cleanUserData) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData());
+            // rerun search just in case its active
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
     }
 }

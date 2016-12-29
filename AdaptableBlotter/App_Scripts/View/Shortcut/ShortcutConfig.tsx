@@ -14,7 +14,6 @@ import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItem } from './ShortcutConfigItem'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { ShortcutColumnTypeWizard } from './ShortcutColumnTypeWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithButton } from '../PanelWithButton';
@@ -76,18 +75,17 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         return <PanelWithButton headerText="Shortcuts"
             buttonClick={() => this.CreateShortcut()}
             buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle}>
-           
+
 
             <ListGroup style={divStyle}>
-               <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-                 {numericShortcuts}
+                <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                {numericShortcuts}
                 {dateShortcuts}
             </ListGroup>
 
             {this.state.isEditing ?
                 <AdaptableWizard Steps={
                     [
-                        <ShortcutColumnTypeWizard />,
                         <ShortcutSettingsWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
                             keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
                             : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
