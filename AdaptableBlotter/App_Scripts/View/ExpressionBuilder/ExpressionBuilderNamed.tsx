@@ -54,6 +54,6 @@ export class ExpressionBuilderNamed extends React.Component<ExpressionBuilderNam
 
 var listGroupStyle = {
     'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
+    'maxHeight': '350px',
+    'height': '350px'
 };
