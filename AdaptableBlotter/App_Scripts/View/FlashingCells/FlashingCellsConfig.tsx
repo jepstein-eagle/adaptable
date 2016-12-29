@@ -40,7 +40,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             return flashingColumn.ColumnName
         });
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Down Color", 2], ["Up Color", 2]];
+        let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Up Color", 2], ["Down Color", 2]];
 
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
         this.props.FlashingColumns.forEach(fc => {
