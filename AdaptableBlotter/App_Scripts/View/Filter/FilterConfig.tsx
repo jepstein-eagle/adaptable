@@ -21,6 +21,7 @@ import { IStrategy } from '../../Core/Interface/IStrategy';
 import { FilterExpressionWizard } from './FilterExpressionWizard'
 import { FilterSettingsWizard } from './FilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface FilterConfigProps extends IStrategyViewPopupProps<FilterConfigComponent> {
@@ -51,13 +52,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
             }
         }
 
-        let filtersHeader = <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col xs={4} style={headerStyle}>Name</Col>
-                <Col xs={5} style={headerStyle}>Expression</Col>
-                <Col xs={3} style={headerStyle}></Col>
-            </Row>
-        </Panel>
+        let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
 
         let filterItems = this.props.Filters.filter(f => !f.IsPredefined).map((x) => {
             return <li
@@ -82,9 +77,9 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         return <PanelWithButton headerText="Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Filter"}
             buttonClick={() => this.onCreateFilter()}  >
-            {filterItems.length > 0 && filtersHeader}
             {filterItems.length > 0 &&
                 <ListGroup style={listGroupStyle}>
+                    <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     {filterItems}
                 </ListGroup>
             }
@@ -123,7 +118,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         this.setState({ EditedFilter: Helper.cloneObject(filter) });
     }
 
-     onDeleteFilter(filter: INamedExpression) {
+    onDeleteFilter(filter: INamedExpression) {
         this.props.onDeleteFilter(filter);
         // tell the search service that a filter has changed and it will decide if it needs to run search
         this.props.AdaptableBlotter.SearchService.ApplySearchOnFilter(filter.Uid);

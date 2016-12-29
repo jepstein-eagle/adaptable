@@ -66,7 +66,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         return <div>
             <Panel header="Shortcut Settings" bsStyle="primary">
 
-                <Panel header="Select a Shortcut Key" bsStyle="success">
+                <Panel header="Select a Shortcut Key" bsStyle="info">
                     <FormControl componentClass="select" placeholder="select" value={this.state.ShortcutKey} onChange={(x) => this.onShortcutKeyChanged(x)} >
                         <option value="select" key="select">Select a key</option>
                         {optionKeys}
@@ -75,13 +75,13 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
                 {this.props.Data.ColumnType == ColumnType.Number ?
                     <div>
-                        <Panel header="Select a Shortcut Action" bsStyle="success">
+                        <Panel header="Select a Shortcut Action" bsStyle="info">
                             <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
                                 {optionActions}
                             </FormControl>
                         </Panel>
 
-                        <Panel header="Enter Shortcut Number Result" bsStyle="success">
+                        <Panel header="Enter Shortcut Number Result" bsStyle="info">
                             <FormControl
                                 type="number"
                                 placeholder="Shortcut Result"
@@ -91,7 +91,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                         </Panel>
                     </div>
                     :
-                    <Panel header="Enter Shortcut Date Result" bsStyle="success">
+                    <Panel header="Enter Shortcut Date Result" bsStyle="info">
                         <FormControl
                             type="date"
                             placeholder="Shortcut Result"

@@ -34,21 +34,6 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
     }
 }
 
-interface CustomSortConfigHeaderProps extends React.ClassAttributes<CustomSortConfigHeader> {
-}
-
-export class CustomSortConfigHeader extends React.Component<CustomSortConfigHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle}>
-            <Row>
-                <Col xs={2} style={headerStyle}>Column</Col>
-                <Col xs={6} style={headerStyle}>Sort Order</Col>
-                <Col xs={4}></Col>
-            </Row>
-        </Panel>
-    }
-}
-
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'bold'

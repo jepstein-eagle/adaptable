@@ -11,7 +11,8 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ColumnType } from '../../Core/Enums'
-import { FlashingCellConfigItem, FlashingCellConfigHeader } from './FlashingCellConfigItem'
+import { FlashingCellConfigItem } from './FlashingCellConfigItem'
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
@@ -38,6 +39,8 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return flashingColumn.ColumnName
         });
+
+        let cellInfo: [string, number][] = [["Live", 1],["Column Name", 4],["Flash Duration", 3], ["Down Color",2], ["Up Color", 2]];
 
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
         this.props.FlashingColumns.forEach(fc => {
@@ -85,8 +88,8 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
             {setAllOption}
-            <FlashingCellConfigHeader />
             <ListGroup style={divStyle}>
+             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 {allFlashingColumns}
             </ListGroup>
 
@@ -134,7 +137,6 @@ let panelStyle = {
 let topRowStyle = {
     height: '50px',
     margin: '0px',
-    fontSize: "larger",
     alignItems: "right"
 }
 

@@ -10,7 +10,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { ConditionalStyleScope } from '../../Core/Enums'
-import { ConditionalStyleConfigItem, ConditionalStyleConfigHeader } from './ConditionalStyleConfigItem'
+import { ConditionalStyleConfigItem } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
@@ -18,6 +18,7 @@ import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../PanelWithButton';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
@@ -41,6 +42,9 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     render() {
+
+        let cellInfo: [string, number][] = [["Where Applied", 3], ["BackColor", 2], ["ForeColor", 2], ["Description", 4], ["", 2]];
+
         let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition) => {
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
@@ -61,7 +65,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
-                : <ConditionalStyleConfigHeader />
+                :  <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 
             <ListGroup style={divStyle}>

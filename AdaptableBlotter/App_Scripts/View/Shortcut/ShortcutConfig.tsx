@@ -13,11 +13,10 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItem } from './ShortcutConfigItem'
-import { ShortcutConfigHeader } from './ShortcutConfigItem'
-
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutColumnTypeWizard } from './ShortcutColumnTypeWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
+import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithButton } from '../PanelWithButton';
 
 
@@ -47,6 +46,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
     render() {
 
+        let cellInfo: [string, number][] = [["Live", 1], ["Key", 2], ["Columns", 2], ["Action", 3], ["Result", 3], ["", 1]];
+
         let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
             let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
@@ -75,9 +76,11 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         return <PanelWithButton headerText="Shortcuts"
             buttonClick={() => this.CreateShortcut()}
             buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle}>
-            <ShortcutConfigHeader />
+           
+
             <ListGroup style={divStyle}>
-                {numericShortcuts}
+               <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                 {numericShortcuts}
                 {dateShortcuts}
             </ListGroup>
 
@@ -91,7 +94,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                             NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
                                 keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
                                 : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
-                       
+
                     ]}
                     Data={this._editedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
@@ -154,3 +157,4 @@ let divStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }
+

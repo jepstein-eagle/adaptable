@@ -24,19 +24,6 @@ export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {
     }
 }
 
-interface CalendarEntryHeaderProps extends React.ClassAttributes<CalendarEntryHeader> {
-}
-
-export class CalendarEntryHeader extends React.Component<CalendarEntryHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col md={6} style={headerStyle}>Holiday Name</Col>
-                <Col md={6} style={headerStyle}>Date</Col>
-            </Row>
-        </Panel>
-    }
-}
 
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',

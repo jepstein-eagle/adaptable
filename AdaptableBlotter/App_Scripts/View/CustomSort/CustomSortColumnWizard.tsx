@@ -32,7 +32,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
                 onClick={() => this.onClickColum(Column)}
                 active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.ColumnFriendlyName}</ListGroupItem>
         })
-        return <Panel header="Select a Column" bsStyle="success">
+        return <Panel header="Select a Column" bsStyle="primary">
             <ListGroup style={listGroupStyle}>
                 {columnsItems}
             </ListGroup>

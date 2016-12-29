@@ -80,22 +80,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
 }
 
-interface ConditionalStyleConfigHeaderProps extends React.ClassAttributes<ConditionalStyleConfigHeader> {
-}
-
-export class ConditionalStyleConfigHeader extends React.Component<ConditionalStyleConfigHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col md={3} style={headerStyle}>Where Applied</Col>
-                <Col md={2} style={headerStyle}>BackColor</Col>
-                <Col md={2} style={headerStyle}>ForeColor</Col>
-                <Col md={3} style={headerStyle}>Expression</Col>
-            </Row>
-        </Panel>
-    }
-}
-
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'bold'

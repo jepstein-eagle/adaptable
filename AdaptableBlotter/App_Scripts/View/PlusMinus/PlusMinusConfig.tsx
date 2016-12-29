@@ -17,6 +17,7 @@ import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
@@ -42,14 +43,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
     }
     render() {
-        let columnNudgesHeader = <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col xs={3} style={headerStyle}>Column</Col>
-                <Col xs={2} style={headerStyle}>Nudge</Col>
-                <Col xs={5} style={headerStyle}>Row Condition</Col>
-                <Col xs={2} style={headerStyle}></Col>
-            </Row>
-        </Panel>
+
+        let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 5], ["", 2]];
 
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
             let optionColumns = this.props.Columns.filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
@@ -80,7 +75,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             </li>
         })
 
-        return <Panel header="Plus/Minus Configuration" bsStyle="primary" style={panelStyle}>
+        return <PanelWithButton headerText="Plus/Minus Configuration" bsStyle="primary" style={panelStyle} buttonContent={"Create Column Nudge Value"}
+            buttonClick={() => this.createColumnNudgeValue()}  >
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
@@ -91,21 +87,16 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </Col>
                 </FormGroup>
             </Form>
-            <PanelWithButton headerText="Column Nudge Values"
-                bsStyle="success"
-                buttonContent={"Create Column Nudge Value"}
-                buttonClick={() => this.createColumnNudgeValue()}  >
 
-                {optionColumnsItems.length == 0 ?
-                    <Well bsSize="small">Click 'Create Column Nudge Value' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>
-                    :
-                    <div>
-                        {columnNudgesHeader}
-                        <ListGroup style={panelColumNudge}>
-                            {optionColumnsItems}
-                        </ListGroup>
-                    </div>}
-            </PanelWithButton>
+            {optionColumnsItems.length == 0 ?
+                <Well bsSize="small">Click 'Create Column Nudge Value' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>
+                :
+                <div>
+                    <ListGroup style={panelColumNudge}>
+                        <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                        {optionColumnsItems}
+                    </ListGroup>
+                </div>}
             {this.state.EditedPlusMinusCondition != null &&
                 <AdaptableWizard Steps={
                     [<PlusMinusSettingsWizard
@@ -119,7 +110,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
-        </Panel>
+        </PanelWithButton>
     }
 
     createColumnNudgeValue() {

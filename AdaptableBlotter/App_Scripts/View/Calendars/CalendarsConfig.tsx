@@ -9,8 +9,9 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { CalendarsConfigItem, CalendarConfigHeader } from './CalendarsConfigItem'
-import { CalendarEntryItem, CalendarEntryHeader } from './CalendarEntryItem'
+import { CalendarsConfigItem } from './CalendarsConfigItem'
+import { CalendarEntryItem } from './CalendarEntryItem'
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigComponent> {
@@ -41,6 +42,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             </CalendarsConfigItem>
         });
 
+        let cellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
+        let calendarEntryCellInfo: [string, number][] = [["Holiday Name", 6], ["Date", 6]];
         let sortedCalendarEntries = (this._displayedCalendar != null) ? this._displayedCalendar.CalendarEntries.sort(compareCalendarEntries) : null;
 
         let calendarEntryItems = (this._displayedCalendar != null) ? sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
@@ -58,8 +61,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
         </Form>;
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
-            <CalendarConfigHeader />
             <ListGroup style={divStyle}>
+                <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 {allCalendars}
             </ListGroup>
 
@@ -70,8 +73,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                         <Modal.Title>Calendar Details: {this._displayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                        <CalendarEntryHeader />
                         <ListGroup style={divStyle}>
+                            <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="info" />
                             {calendarEntryItems}
                         </ListGroup>
                     </Modal.Body>
@@ -90,7 +93,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
     }
 
     private onShowInformation(calendar: ICalendar) {
-       this._displayedCalendar = calendar;
+        this._displayedCalendar = calendar;
         this.setState({ isShowingInformation: true });
     }
 

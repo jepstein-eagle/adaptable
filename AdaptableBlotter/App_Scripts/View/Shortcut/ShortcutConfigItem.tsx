@@ -103,27 +103,12 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
 }
 
 
-interface ShortcutConfigHeaderProps extends React.ClassAttributes<ShortcutConfigHeader> {
-}
-
-export class ShortcutConfigHeader extends React.Component<ShortcutConfigHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col md={1} style={headerStyle}>Live</Col>
-                <Col md={2} style={headerStyle}>Key</Col>
-                <Col md={2} style={headerStyle}>Columns</Col>
-                <Col md={3} style={headerStyle}>Action</Col>
-                <Col md={3} style={headerStyle}>Result</Col>
-                <Col md={1} style={headerStyle}></Col>
-            </Row>
-        </Panel>
-    }
-}
-
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    backgroundColor: 'yellow',
+    padding: '0px',
+    margin: '0px'
 };
 
 let panelHeaderStyle: React.CSSProperties = {

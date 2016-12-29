@@ -73,22 +73,6 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
 }
 
 
-interface FlashingCellConfigHeaderProps extends React.ClassAttributes<FlashingCellConfigHeader> {
-}
-
-export class FlashingCellConfigHeader extends React.Component<FlashingCellConfigHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col md={1} style={headerStyle}>Live</Col>
-                <Col md={4} style={headerStyle}>Column Name</Col>
-                <Col md={3} style={headerStyle}>Flash Duration</Col>
-                <Col md={2} style={headerStyle}>Down Color</Col>
-                <Col md={2} style={headerStyle}>Up Color</Col>
-            </Row>
-        </Panel>
-    }
-}
 
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',

@@ -90,7 +90,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
                     <Form inline>
                         <div style={divStyle}>
-                            <Panel header={"Search For"} style={headerStyle} bsStyle="success">
+                            <Panel header={"Search For"} style={headerStyle} bsStyle="info">
                                 <FormControl
                                     style={inputStyle}
                                     value={this.state.EditedQuickSearchText}
@@ -100,7 +100,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)} />
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
-                                    <Button bsStyle='primary' onClick={() => this.onSetQuickSearch()}>Search</Button>
+                                    <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
                                 </OverlayTrigger>
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipClearSearch">Clear Quick Search</Tooltip>}>
@@ -115,7 +115,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                     <Form horizontal>
                         <div >
                             <Accordion>
-                                <Panel header="Quick Search Options" style={divStyle} eventKey="1" bsStyle="success">
+                                <Panel header="Quick Search Options" style={divStyle} eventKey="1" bsStyle="info">
 
 
                                     <FormGroup controlId="formInlineSearchOperator">

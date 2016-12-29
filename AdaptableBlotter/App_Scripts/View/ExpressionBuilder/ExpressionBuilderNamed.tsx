@@ -29,7 +29,7 @@ export class ExpressionBuilderNamed extends React.Component<ExpressionBuilderNam
             </ListGroupItem>
         })
 
-        return <PanelWithButton headerText={"Filters"} className="no-padding-panel">
+        return <PanelWithButton headerText={"Filters"} className="no-padding-panel" bsStyle="info">
             <ListGroup style={listGroupStyle}>
                 {namedExpressions}
             </ListGroup>

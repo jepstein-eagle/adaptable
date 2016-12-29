@@ -5,17 +5,16 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
-
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortConfigItem } from './CustomSortConfigItem'
-import { CustomSortConfigHeader } from './CustomSortConfigItem'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithRow } from '../PanelWithRow';
 
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
@@ -47,12 +46,15 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
         });
 
+ let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
+
+
         return <PanelWithButton headerText="Custom Sorts"
             buttonClick={() => this.CreateCustomSort()}
             buttonContent="Create Custom Sort" bsStyle="primary">
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
-                : <CustomSortConfigHeader />
+                :   <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 
             <ListGroup style={divStyle}>

@@ -23,6 +23,8 @@ import { EntityListActionButtons } from '../EntityListActionButtons';
 import { NotificationType, CellChangeType, PopupType } from '../../Core/Enums'
 import { IAlertStrategy } from '../../Core/Interface/IAlertStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
+import { PanelWithRow } from '../PanelWithRow';
+
 
 interface AlertConfigProps extends IStrategyViewPopupProps<AlertConfigComponent> {
     AlertConditions: IAlert[]
@@ -43,14 +45,8 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         this.state = { EditedAlert: null, EditedIndexAlert: -1 }
     }
     render() {
-        let alertsHeader = <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col xs={6} style={headerStyle}>Alert Condition</Col>
-                <Col xs={2} style={headerStyle}>Email</Col>
-                <Col xs={2} style={headerStyle}>Popup</Col>
-                <Col xs={2} style={headerStyle}></Col>
-            </Row>
-        </Panel>
+
+        let cellInfo: [string, number][] = [["Alert Condition", 6], ["Email", 2], ["Popup", 2], ["", 2]];
 
         let alertItems = this.props.AlertConditions.map((x, index) => {
             return <li
@@ -77,9 +73,9 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         return <PanelWithButton headerText="Alerts Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Alert"}
             buttonClick={() => this.createAlert()}  >
-            {alertItems.length > 0 && alertsHeader}
             {alertItems.length > 0 &&
                 <ListGroup style={listGroupStyle}>
+                    <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     {alertItems}
                 </ListGroup>
             }

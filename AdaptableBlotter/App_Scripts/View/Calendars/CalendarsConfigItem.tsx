@@ -43,20 +43,6 @@ export class CalendarsConfigItem extends React.Component<CalendarsConfigItemProp
     }
 }
 
-interface CalendarConfigHeaderProps extends React.ClassAttributes<CalendarConfigHeader> {
-}
-
-export class CalendarConfigHeader extends React.Component<CalendarConfigHeaderProps, {}> {
-    render(): any {
-        return <Panel style={panelHeaderStyle} >
-            <Row >
-                <Col md={3} style={headerStyle}>Current</Col>
-                <Col md={5} style={headerStyle}>Calendar</Col>
-                <Col md={4} style={headerStyle}>Details</Col>
-            </Row>
-        </Panel>
-    }
-}
 
 var headerStyle: React.CSSProperties = {
     wordWrap: 'break-word',
