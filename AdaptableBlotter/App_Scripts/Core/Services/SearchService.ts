@@ -137,17 +137,9 @@ export class SearchService implements ISearchService {
         if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             let predefinedExpressionInfo: IPredefinedExpressionInfo =
                 {
-<<<<<<< HEAD
                     ColumnValues: null,
                     ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
                     NamedExpression: null
-=======
-                    //Jo: Need to update colors here.... Not sure yet what the predefined expression is supposed to do for quicksearch
-                    Id: "QuickSearch", FriendlyName: "Quick Search Expression", BackColor: '#008000', ForeColor: '#FF0000',
-                    Operator: this.GetQuickSearchState().QuickSearchOperator,
-                    Operand1: quickSearchText,
-                    Operand2: ""
->>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
                 let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);

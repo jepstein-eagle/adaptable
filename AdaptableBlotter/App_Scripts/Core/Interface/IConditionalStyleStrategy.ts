@@ -15,17 +15,15 @@ export interface IConditionalStyleCondition {
     Expression: Expression
     IsPredefinedExpression: boolean
     PredefinedStyleCondition: IPredefinedStyleCondition
+    BackColor : string
+    ForeColor : string
 }
 
 
 export interface IPredefinedStyleCondition {
     Id: string
     PredefinedExpressionInfo: IPredefinedExpressionInfo
-<<<<<<< HEAD
-    CellStyle: CellStyle
     FriendlyName: string
-=======
     BackColor : string
     ForeColor : string
->>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
 }

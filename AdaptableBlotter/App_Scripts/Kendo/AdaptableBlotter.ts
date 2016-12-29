@@ -45,12 +45,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
-<<<<<<< HEAD
-   
-=======
+
     public StyleService: StyleService
 
->>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -58,13 +55,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
-<<<<<<< HEAD
-   
-=======
         this.StyleService = new StyleService(this);
 
 
->>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();

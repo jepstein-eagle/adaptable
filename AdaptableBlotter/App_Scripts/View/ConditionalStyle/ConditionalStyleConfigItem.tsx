@@ -49,14 +49,8 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 <Col md={2} >
                     <FormControl type="color" style={{ width: '40px' }} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
-
-<<<<<<< HEAD
                 <Col xs={4}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.Blotter)}
-=======
-                <Col xs={3}>
-                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns)}
->>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
                 </Col>
 
                 <Col md={2} >
