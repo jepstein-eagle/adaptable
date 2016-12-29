@@ -9,7 +9,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
-import { ConditionalStyleScope, CellStyle } from '../../Core/Enums'
+import { ConditionalStyleScope } from '../../Core/Enums'
 import { ConditionalStyleConfigItem, ConditionalStyleConfigHeader } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
@@ -26,7 +26,7 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
     onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
     onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
-    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, cellStyle: CellStyle) => ConditionalStyleRedux.ConditionalStyleEditColourAction
+    onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => ConditionalStyleRedux.ConditionalStyleEditColourAction
 }
 
 interface ConditionalStyleConfigState {
@@ -50,7 +50,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
                 onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition)}
                 onChangeColumn={(conditionalStyleCondition, newColumnId) => this.props.onChangeColumnConditionalStyle(conditionalStyleCondition, newColumnId)}
-                onChangeColour={(conditionalStyleCondition, newColour) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, newColour)} >
+                onChangeColour={(conditionalStyleCondition, backColor, foreColor) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, backColor, foreColor)} >
             </ConditionalStyleConfigItem>
         });
 
@@ -71,6 +71,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             {this.state.EditedConditionalStyleCondition != null &&
                 <AdaptableWizard Steps={
                     [
+<<<<<<< HEAD
                         <ConditionalStyleSettingsWizard
                             Columns={this.props.Columns}
                             Blotter={this.props.AdaptableBlotter} />,
@@ -78,6 +79,10 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                             ColumnList={this.props.Columns}
                             Blotter={this.props.AdaptableBlotter}
                             SelectedColumnId={null} />
+=======
+                        <ConditionalStyleSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
+                        <ConditionalStyleExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
                     StepStartIndex={0}
@@ -91,7 +96,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let _editedConditionalStyle: IConditionalStyleCondition = {
             Uid: Helper.generateUid(),
             ColumnId: "select",
-            CellStyle: null,
+            BackColor: '#ffffff',
+            ForeColor: '#000000',
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefinedExpression: false,
@@ -127,7 +133,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition)),
         onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition)),
         onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId)),
-        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, cellStyle: CellStyle) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, cellStyle)),
+        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, backColor, foreColor)),
     };
 }
 

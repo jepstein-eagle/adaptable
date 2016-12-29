@@ -14,6 +14,7 @@ import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
+import { StyleService } from '../Core/Services/StyleService'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -44,7 +45,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
+<<<<<<< HEAD
    
+=======
+    public StyleService: StyleService
+
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -52,7 +58,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
+<<<<<<< HEAD
    
+=======
+        this.StyleService = new StyleService(this);
+
+
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
@@ -101,7 +113,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 for (let valueField in e.values) {
                     let changedValue = e.values[valueField];
                     let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
-                    this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
+                    this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField, true);
                 }
             }, 5)
         })
@@ -424,6 +436,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.text();
     }
 
+    //Jo: we know that this function is wrong as it's not cumulative
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row = this.getRowByRowIdentifier(rowIdentifierValue);
         var cell = this.getCellByColumnIndexAndRow(row, columnIndex);

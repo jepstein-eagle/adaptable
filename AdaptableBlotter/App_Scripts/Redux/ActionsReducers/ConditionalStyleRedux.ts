@@ -3,7 +3,7 @@ import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { ConditionalStyleScope, CellStyle } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';
 
 export const CONDITIONAL_STYLE_ADD_OR_UPDATE = 'CONDITIONAL_STYLE_ADD_OR_UPDATE';
@@ -33,13 +33,15 @@ export const EditColumnConditionalStyle = (conditionalStyleCondition: ICondition
 
 export interface ConditionalStyleEditColourAction extends Redux.Action {
     conditionalStyleCondition: IConditionalStyleCondition,
-    style: CellStyle
+    backColor: string,
+    foreColor: string
 }
 
-export const EditColourConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, style: CellStyle): ConditionalStyleEditColourAction => ({
+export const EditColourConditionalStyle = (conditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string): ConditionalStyleEditColourAction => ({
     type: CONDITIONAL_STYLE_EDIT_COLOUR,
     conditionalStyleCondition,
-    style
+    backColor,
+    foreColor
 })
 
 export interface ConditionalStyleDeleteAction extends Redux.Action {
@@ -86,7 +88,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             let conditionColour = actionTypedColour.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
             index = conditions.findIndex(i => i.Uid == actionTypedColour.conditionalStyleCondition.Uid)
-            conditions[index] = Object.assign({}, conditionColour, { CellStyle: actionTypedColour.style, Uid: Helper.generateUid() })
+            conditions[index] = Object.assign({}, conditionColour, { BackColor: actionTypedColour.backColor, ForeColor: actionTypedColour.foreColor, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
         case CONDITIONAL_STYLE_DELETE:

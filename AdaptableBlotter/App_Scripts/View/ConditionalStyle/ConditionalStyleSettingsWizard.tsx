@@ -4,8 +4,13 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
+<<<<<<< HEAD
 import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, ColumnType, CellStyle, LeafExpressionOperator } from '../../Core/Enums';
+=======
+import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
+import { ConditionalStyleScope, ColumnType, LeafExpressionOperator } from '../../Core/Enums';
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
 import { Helper } from '../../Core/Helper';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -22,7 +27,8 @@ interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<I
 
 interface ConditionalStyleSettingsWizardState {
     ColumnId: string,
-    CellStyle: CellStyle,
+    BackColor: string,
+    ForeColor: string,
     ConditionalStyleScope: ConditionalStyleScope,
     IsPredefinedExpression: boolean,
     PredefinedStyleCondition: IPredefinedStyleCondition,
@@ -37,7 +43,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
-            CellStyle: this.props.Data.CellStyle,
+            BackColor: this.props.Data.BackColor,
+            ForeColor: this.props.Data.ForeColor,
             ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
             IsPredefinedExpression: this.props.Data.IsPredefinedExpression,
             PredefinedStyleCondition: this.props.Data.PredefinedStyleCondition,
@@ -52,6 +59,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
         })
 
+<<<<<<< HEAD
         let optionColours = EnumExtensions.getNamesAndValues(CellStyle).map((conditionalStyleColourNameAndValue: any) => {
             return <option key={conditionalStyleColourNameAndValue.value} value={conditionalStyleColourNameAndValue.value}>{conditionalStyleColourNameAndValue.name}</option>
         })
@@ -81,11 +89,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         }
 
         let optionPredefinedExpressions = this.predefinedExpressions.map(pe => {
+=======
+        let optionPredefinedExpressions = PredefinedExpressionHelper.GetPredefinedExpressions().map(pe => {
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
             return <option key={pe.Id} value={pe.Id}>{pe.FriendlyName}</option>
         })
-
-        let emptyStyle: string = "Select a style"
-        let currentColour = this.state.CellStyle == null ? emptyStyle : this.state.CellStyle.toString();
 
         let emptyPredefinedExpression: string = "Select an expression"
         let currentPredefinedExpression = (this.state.IsPredefinedExpression && this.state.PredefinedStyleCondition != null) ?
@@ -150,16 +158,20 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         </Col>
                     </FormGroup>
                     :
-
-                    <FormGroup controlId="styleName">
-                        <Col xs={4} componentClass={ControlLabel}>Select Style: </Col>
-                        <Col xs={8}>
-                            <FormControl componentClass="select" placeholder="select" value={currentColour} onChange={(x) => this.onColourSelectChange(x)} >
-                                <option value="select" key="select">{emptyStyle}</option>
-                                {optionColours}
-                            </FormControl>
-                        </Col>
-                    </FormGroup>}
+                    <div>
+                        <FormGroup controlId="colorBackStyle">
+                            <Col xs={4} componentClass={ControlLabel}>BackColor: </Col>
+                            <Col xs={8}>
+                                <FormControl type="color" style={{ width: '40px' }} value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId="colorForeStyle">
+                            <Col xs={4} componentClass={ControlLabel}>ForeColor: </Col>
+                            <Col xs={8}>
+                                <FormControl type="color" style={{ width: '40px' }} value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                            </Col>
+                        </FormGroup>
+                    </div>}
 
 
             </Form>
@@ -186,9 +198,14 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.setState({ PredefinedStyleCondition: this.predefinedExpressions.find(pe => pe.Id == e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
-    private onColourSelectChange(event: React.FormEvent) {
+    private onBackColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellStyle: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        this.setState({ BackColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+    }
+
+    private onForeColourSelectChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ForeColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
     private onWhereAppliedSelectChange(event: React.FormEvent) {
@@ -204,9 +221,16 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     private onCreatePredefinedExpression() {
+<<<<<<< HEAD
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
         this.state.CellStyle = this.state.PredefinedStyleCondition.CellStyle;
         this.state.Expression = predefinedExpression;
+=======
+        let testExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedExpressionInfo);
+        this.state.BackColor = this.state.PredefinedExpressionInfo.BackColor;
+        this.state.ForeColor = this.state.PredefinedExpressionInfo.ForeColor;
+        this.state.Expression = testExpression;
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
     }
 
     public canNext(): boolean {
@@ -214,12 +238,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             if (this.state.PredefinedStyleCondition == null) {
                 return false;
             }
-        } else {
-            if (this.state.CellStyle == null) {
-                return false;
-            }
         }
-        if (this.state.ConditionalStyleScope == null) {
+        if (!this.state.ConditionalStyleScope == null) {
             return false;
         }
         if (this.state.ConditionalStyleScope == ConditionalStyleScope.Column && this.state.ColumnId == "select") {
@@ -235,7 +255,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             this.onCreatePredefinedExpression();
         }
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.CellStyle = this.state.CellStyle;
+        this.props.Data.BackColor = this.state.BackColor;
+        this.props.Data.ForeColor = this.state.ForeColor;
         this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
         this.props.Data.IsPredefinedExpression = this.state.IsPredefinedExpression;
         this.props.Data.PredefinedStyleCondition = this.state.PredefinedStyleCondition;

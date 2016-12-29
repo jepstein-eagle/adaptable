@@ -4,7 +4,7 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { ConditionalStyleScope, ColumnType, CellStyle } from '../Core/Enums';
+import { ConditionalStyleScope, ColumnType } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { IConditionalStyleCondition } from '../Core/Interface/IConditionalStyleStrategy';
@@ -13,12 +13,10 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { MenuType } from '../Core/Enums';
 
-
-
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
     private menuItemConfig: IMenuItem;
-    private ConditionalStyleState: ConditionalStyleState
+    protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Conditional Styles", this.Id, 'ConditionalStyleConfig', MenuType.Configuration, "tint");
@@ -36,25 +34,25 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
-    private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        this.ConditionalStyleState.ConditionalStyleConditions.forEach(c => {
+        this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
 
             if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                 if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    this.blotter.addRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                    this.blotter.addRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
                 }
                 else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                    this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
                 }
             }
             else {
                 if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    this.blotter.removeRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                    this.blotter.removeRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
                 }
                 else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + CellStyle[c.CellStyle])
+                    this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
                 }
             }
         })
@@ -67,7 +65,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-    private InitStyles(): void {
+    protected InitStyles(): void {
         this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
         this.blotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
 
@@ -82,7 +80,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
             //we add the Index of the column to the list so we do not need to reevaluate every row
             let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
-                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId) }))
+                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId), collectionIndex: this.ConditionalStyleState.ConditionalStyleConditions.indexOf(cs) }))
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
 
@@ -94,7 +92,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
-                            this.blotter.addCellStyle(rowId, columnCS.columnIndex, this.ConsitionalStylePrefix + CellStyle[columnCS.CellStyle])
+                            this.blotter.addCellStyle(rowId, columnCS.columnIndex, this.ConsitionalStylePrefix + columnCS.collectionIndex)
                             break
                         }
                     }
@@ -102,7 +100,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
-                        this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + CellStyle[rowCS.CellStyle])
+                        this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
                         break
                     }
                 }

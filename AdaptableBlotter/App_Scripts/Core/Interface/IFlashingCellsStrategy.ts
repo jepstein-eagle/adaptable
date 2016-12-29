@@ -7,6 +7,8 @@ export interface IFlashingColumn {
     IsLive: boolean,
     ColumnName: string;
     FlashingCellDuration: IFlashingCellDuration;
+    UpBackColor : string
+    DownBackColor : string
 }
 
 export interface IFlashingCellDuration {
@@ -15,7 +17,6 @@ export interface IFlashingCellDuration {
 }
 
 export interface IFlashingCellsStrategy extends IStrategy {
-    FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn): void;
     GetFlashingCellDurations(): IFlashingCellDuration[];
     CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn ;
 }

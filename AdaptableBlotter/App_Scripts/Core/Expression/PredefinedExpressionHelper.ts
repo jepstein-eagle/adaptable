@@ -1,17 +1,36 @@
 import { Expression } from './Expression'
+<<<<<<< HEAD
 import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { CellStyle, LeafExpressionOperator } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
+=======
+import { IExpressionRange } from '../Interface/IExpression';
+import { LeafExpressionOperator } from '../Enums';
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
 
 
 export interface IPredefinedExpressionInfo {
+<<<<<<< HEAD
     ColumnValues: Array<any>,
     NamedExpression: INamedExpression,
     ExpressionRange: IRangeExpression,
 }
 
 export module PredefinedExpressionHelper {
+=======
+    Id: string
+    FriendlyName: string
+    Operator: LeafExpressionOperator
+    Operand1: string
+    Operand2: string
+    BackColor: string
+    ForeColor: string
+}
+
+export module PredefinedExpressionHelper {
+    export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Expression {
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
 
     export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Expression {
         let columnValuesExpression = CreateColumnValuesExpression(columnName, predefinedExpression);
@@ -41,6 +60,7 @@ export module PredefinedExpressionHelper {
         return namedExpression;
     }
 
+<<<<<<< HEAD
      function CreateRangeExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> {
         let rangeExpression: Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> = [];
         if (predefinedExpression.ExpressionRange != null) {
@@ -51,6 +71,14 @@ export module PredefinedExpressionHelper {
             rangeExpression.push(singleRangeExpression);
         }
         return rangeExpression;
+=======
+    export function GetPredefinedExpressions(): IPredefinedExpressionInfo[] {
+        //RGBA might not be 100% compatible with all browsesrs
+        return [
+            { Id: "PositiveGreen", FriendlyName: "Positive numbers in green font", BackColor: 'rgba(0, 0, 0, 0)', ForeColor: '#008000', Operator: LeafExpressionOperator.GreaterThanOrEqual, Operand1: "0", Operand2: "" },
+             { Id: "NegativeRed", FriendlyName: "Negative numbers in red font", BackColor: 'rgba(0, 0, 0, 0)', ForeColor: '#FF0000', Operator: LeafExpressionOperator.LessThan, Operand1: "0", Operand2: "" },
+        ]
+>>>>>>> 9e285dd679d810e10f33adebaa023a9d1e75de7c
     }
 
       function GetFilterState(): FilterState {

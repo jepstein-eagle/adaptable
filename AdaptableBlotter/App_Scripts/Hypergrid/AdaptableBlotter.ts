@@ -22,9 +22,9 @@ import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrate
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
 import { ExcelExportStrategy } from '../Strategy/ExcelExportStrategy'
-import { FlashingCellsStrategy } from '../Strategy/FlashingCellsStrategy'
+import { FlashingCellsHypergridStrategy } from '../Strategy/FlashingCellsHypergridStrategy'
 import { CalendarStrategy } from '../Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
+import { ConditionalStyleHypergridStrategy } from '../Strategy/ConditionalStyleHypergridStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
@@ -66,10 +66,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
 
@@ -110,6 +110,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return icon;
         }
 
+        grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+            //might need to use untranslatedX
+            var x = config.x;
+            var y = config.normalizedY;
+            let row = this.grid.behavior.dataModel.dataSource.getRow(y)
+            let column = this.grid.behavior.getActiveColumns()[x]
+            if (column && row) {
+                this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
+            }
+            let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+            let csBackgroundColorColumn = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorColumn')
+            let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
+            let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
+            let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
+            if (flashColor) {
+                config.backgroundColor = flashColor;
+            }
+            else if (csBackgroundColorColumn || csForeColorColumn) {
+                config.backgroundColor = csBackgroundColorColumn;
+                config.color = csForeColorColumn;
+            }
+            else if (csBackgroundColorRow || csForeColorRow) {
+                config.backgroundColor = csBackgroundColorRow;
+                config.color = csForeColorRow;
+            }
+            return this.grid.cellRenderers.get(declaredRendererName);
+        };
         grid.addEventListener('fin-column-sort', (e: any) => {
             this.toggleSort(e.detail.column)
             //in case we want multi column
@@ -423,15 +450,55 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
-        if (timeout) {
-            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnIndex, style), timeout);
+        throw 'Not implemented for hypergrid see addCellStyleHypergrid';
+    }
+
+    public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
+        //here we don't call Repaint as we consider that we already are in the repaint loop
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        if (rowIndex) {
+            if (style.flashBackColor) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
+                if (timeout) {
+                    setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
+                }
+            }
+            //There is never a timeout for CS
+            if (style.csBackColorColumn) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
+            }
+            if (style.csForeColorColumn) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csForeColorColumn', style.csForeColorColumn)
+            }
         }
     }
 
-    public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
-        if (timeout) {
-            setTimeout(() => this.removeRowStyle(rowIdentifierValue, style), timeout);
+    public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        if (rowIndex) {
+            for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
+                //here we don't call Repaint as we consider that we already are in the repaint loop
+                //There is never a timeout for CS
+                if (style.csBackColorRow) {
+                    this.grid.behavior.setCellProperty(index, rowIndex, 'csBackgroundColorRow', style.csBackColorRow)
+                }
+                if (style.csForeColorRow) {
+                    this.grid.behavior.setCellProperty(index, rowIndex, 'csForeColorRow', style.csForeColorRow)
+                }
+            }
         }
+    }
+
+    public getRowIndexHypergrid(rowIdentifierValue: any): number {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        return rowIndex
+    }
+
+    public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
+        throw 'Not implemented for hypergrid see addRowStyleHypergrid';
     }
 
     public removeAllCellStylesWithRegex(regex: RegExp): void {
@@ -440,15 +507,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public removeAllRowStylesWithRegex(regex: RegExp): void {
     }
 
+
+    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow'): void {
+        if (style == 'flash') {
+            this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
+            this.grid.repaint()
+        }
+        if (style == 'csColumn') {
+            this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorColumn', undefined)
+            this.grid.behavior.setCellProperty(x, y, 'csForeColorColumn', undefined)
+            this.grid.repaint()
+        }
+        if (style == 'csRow') {
+            this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorRow', undefined)
+            this.grid.behavior.setCellProperty(x, y, 'csForeColorRow', undefined)
+            this.grid.repaint()
+        }
+    }
+
     public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
     }
 
     public removeRowStyle(rowIdentifierValue: any, style: string): void {
     }
 
-    // Im sure this is wrong! But for now want to try it..
     public getAllRowIds(): string[] {
-        return [];
+        let ds = this.grid.behavior.dataModel.dataSource
+        let count = ds.getRowCount();
+        let result = new Array(count);
+        for (var y = 0; y < count; y++) {
+            result[y] = ds.getRow(y)[this.primaryKey];
+        }
+        return result
     }
 
     public hideRows(rowIds: string[]): void {
@@ -558,3 +648,11 @@ var MySorterDataSource = (blotter: IAdaptableBlotter) => (<any>window).fin.Hyper
         return row[this.dataSource.schema[c].name];
     }
 });
+
+interface CellStyleHypergrid {
+    csForeColorColumn?: string,
+    csBackColorColumn?: string,
+    csForeColorRow?: string,
+    csBackColorRow?: string,
+    flashBackColor?: string
+}
