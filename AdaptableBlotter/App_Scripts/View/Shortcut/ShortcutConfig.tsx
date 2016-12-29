@@ -77,8 +77,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle}>
 
 
+            <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
-                <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 {numericShortcuts}
                 {dateShortcuts}
             </ListGroup>
