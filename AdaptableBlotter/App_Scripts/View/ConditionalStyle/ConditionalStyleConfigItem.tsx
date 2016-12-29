@@ -9,10 +9,11 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { EntityListActionButtons } from '../EntityListActionButtons';
+import { ColorPicker } from '../ColorPicker';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
-   Blotter: IAdaptableBlotter;
+    Blotter: IAdaptableBlotter;
     Columns: IColumn[];
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
@@ -44,10 +45,10 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col md={2} >
-                    <FormControl type="color" style={{ width: '40px' }} value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                    <ColorPicker value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                 </Col>
                 <Col md={2} >
-                    <FormControl type="color" style={{ width: '40px' }} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                    <ColorPicker value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
                 <Col xs={4}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.Blotter)}
