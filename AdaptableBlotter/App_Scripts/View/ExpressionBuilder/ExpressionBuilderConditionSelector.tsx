@@ -136,7 +136,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </FormGroup>
                     </Form>
                     <Row >
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <ExpressionBuilderColumnValues
                                 ColumnValues={this.state.ColumnValues}
                                 SelectedValues={this.state.SelectedColumnValues}
@@ -144,14 +144,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                 ColumnValuesDataType={selectedColumnType} >
                             </ExpressionBuilderColumnValues>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <ExpressionBuilderNamed
                                 NamedExpressions={ExpressionHelper.GetNamedExpressions(availableExpressionIds, this.props.Blotter)}
                                 SelectedNamedExpressions={ExpressionHelper.GetNamedExpressions(this.state.SelectedNamedExpresions, this.props.Blotter)}
                                 onNamedExpressionChange={(selectedValues) => this.onSelectedNamedExpressionsChange(selectedValues)} >
                             </ExpressionBuilderNamed>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={4}>
                             <ExpressionBuilderRanges
                                 ColumnType={selectedColumnType}
                                 Ranges={this.state.SelectedColumnRanges}

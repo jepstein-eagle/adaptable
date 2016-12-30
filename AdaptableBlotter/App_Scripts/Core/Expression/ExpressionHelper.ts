@@ -160,7 +160,7 @@ export module ExpressionHelper {
                                 isColumnSatisfied = columnValue >= operand1
                                     && columnValue <= operand2;
                                 break
-                            case LeafExpressionOperator.MatchesRegex:
+                            case LeafExpressionOperator.Regex:
                                 let regex = new RegExp(operand1)
                                 isColumnSatisfied = regex.test(columnValue);
                                 break
@@ -290,8 +290,8 @@ export module ExpressionHelper {
                 return "StartsWith"
             case LeafExpressionOperator.EndsWith:
                 return "EndWith"
-            case LeafExpressionOperator.MatchesRegex:
-                return "MatchesRegex"
+            case LeafExpressionOperator.Regex:
+                return "Regex"
         }
     }
 
