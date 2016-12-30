@@ -11,6 +11,11 @@ import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { INamedExpression } from '../../Core/Interface/IExpression';
 
+//I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
+                    // since html cannot render a button within a button.
+                    // https://github.com/react-bootstrap/react-bootstrap/issues/1445
+                    // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
+                    // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Blotter: IAdaptableBlotter
@@ -43,7 +48,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
                     return <ListGroupItem key={y} >
-                        <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{cursor: 'pointer'}}>
+                        <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                             <Form inline>
                                 {y}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -63,13 +68,15 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 let namedExpressions = ExpressionHelper.GetNamedExpressions(columnNamedExpressions.Named, this.props.Blotter);
                 if (namedExpressions) {
                     columnNamedExpressionsListgroupItems = namedExpressions.map((ne, index) => {
-                        return <ListGroupItem key={ne.Uid} onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                            <Form inline>
-                                {ne.FriendlyName}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                                </OverlayTrigger>
-                            </Form>
+                        return <ListGroupItem key={ne.Uid}>
+                            <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <Form inline>
+                                    {ne.FriendlyName}
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </Form>
+                            </div>
                         </ListGroupItem>
                     })
                 }
@@ -82,45 +89,53 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     if (y.Operator == LeafExpressionOperator.Between) {
 
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                                <Form inline>
-                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                                    </OverlayTrigger>
-                                </Form>
+                            return <ListGroupItem key={columnId + index} bsStyle="danger" >
+                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                    <Form inline>
+                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        </OverlayTrigger>
+                                    </Form>
+                                </div>
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index} onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                                <Form inline>
-                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                                    </OverlayTrigger>
-                                </Form>
+                            return <ListGroupItem key={columnId + index}>
+                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                    <Form inline>
+                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        </OverlayTrigger>
+                                    </Form>
+                                </div>
                             </ListGroupItem>
                         }
                     }
                     else {
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger" onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                                <Form inline>
-                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                                    </OverlayTrigger>
-                                </Form>
+                            return <ListGroupItem key={columnId + index} bsStyle="danger" >
+                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                    <Form inline>
+                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        </OverlayTrigger>
+                                    </Form>
+                                </div>
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index} onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                                <Form inline>
-                                    {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
-                                    </OverlayTrigger>
-                                </Form>
+                            return <ListGroupItem key={columnId + index}>
+                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                    <Form inline>
+                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        </OverlayTrigger>
+                                    </Form>
+                                </div>
                             </ListGroupItem>
                         }
                     }
