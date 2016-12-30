@@ -14,7 +14,7 @@ import { INamedExpression } from '../../Core/Interface/IExpression';
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Blotter: IAdaptableBlotter
-     Expression: Expression
+    Expression: Expression
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
@@ -37,13 +37,20 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
                 columnValuesListgroupItems = columnValues.ColumnValues.map(y => {
-                    return <ListGroupItem key={y} onClick={() => this.props.onSelectedColumnChange(columnId)}>
-                        <Form inline>
-                            {y}
-                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)}><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
-                        </Form>
+                    //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
+                    // since html cannot render a button within a button.
+                    // https://github.com/react-bootstrap/react-bootstrap/issues/1445
+                    // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
+                    // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
+                    return <ListGroupItem key={y} >
+                        <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{cursor: 'pointer'}}>
+                            <Form inline>
+                                {y}
+                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)}><Glyphicon glyph="trash" /></Button>
+                                </OverlayTrigger>
+                            </Form>
+                        </div>
                     </ListGroupItem>
                 })
             }
@@ -52,7 +59,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
             let columnNamedExpressions = this.props.Expression.NamedExpressions.find(ne => ne.ColumnName == columnId)
             let columnNamedExpressionsListgroupItems: JSX.Element[]
-                if (columnNamedExpressions) {
+            if (columnNamedExpressions) {
                 let namedExpressions = ExpressionHelper.GetNamedExpressions(columnNamedExpressions.Named, this.props.Blotter);
                 if (namedExpressions) {
                     columnNamedExpressionsListgroupItems = namedExpressions.map((ne, index) => {
