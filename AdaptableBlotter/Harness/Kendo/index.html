@@ -145,7 +145,7 @@
                     { field: "marketPrice", title: "Market Price", format: "{0:n4}", attributes: { class: "numberColumn" } },
                     { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                     { field: "isLive", title: "Is Live", template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>' },
-                    { field: "fitchRating", title: "Fitch Rating" },
+                    { field: "fitchRating", title: "Fitch Rating", filterable: { multi: true, search: true, search: true } },
                     { field: "moodysRating", title: "Moodys Rating" },
                     { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}", width: 200 },
                     {

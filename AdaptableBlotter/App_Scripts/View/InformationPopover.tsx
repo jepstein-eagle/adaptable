@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Button, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
+import { StringExtensions } from '../Core/Extensions';
 
 
 /*
@@ -10,7 +11,6 @@ Very basic - for now! - info box that allows us to show information where requir
 2 params:
 1. HeaderText - if not supplied then no header appears
 2. BodyText - the main message
-Simple button with an image.  Trigger is click - though not sure if hover isnt actually better?
 */
 
 
@@ -23,19 +23,18 @@ interface InformationPopoverProps extends React.ClassAttributes<InformationPopov
 export class InformationPopover extends React.Component<InformationPopoverProps, {}> {
     render() {
         const popoverClickRootClose = (
-            <Popover id="popover-trigger-click-root-close" title={this.props.headerText != "" ? this.props.headerText : ""}>
+            <Popover id="popover-trigger-click-root-close" title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
                 {this.props.bodyText}
             </Popover>);
 
-        return <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popoverClickRootClose}>
-            <Button style={divStyle} bsStyle="info" bsSize="xsmall">
+        return <OverlayTrigger trigger="hover" rootClose placement="bottom" overlay={popoverClickRootClose}>
+            <Button style={buttonNoMarginStyle} bsStyle="info" bsSize="xsmall">
                 <Glyphicon glyph="info-sign" />
             </Button>
         </OverlayTrigger>
     }
 }
 
-let divStyle = {
+let buttonNoMarginStyle = {
     margin: '0px',
-    //    padding: '5px'
 }
