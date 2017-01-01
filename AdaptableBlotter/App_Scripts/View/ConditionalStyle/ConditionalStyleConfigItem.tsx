@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
+import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, OverlayTrigger, Tooltip, FormGroup } from 'react-bootstrap';
 import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';

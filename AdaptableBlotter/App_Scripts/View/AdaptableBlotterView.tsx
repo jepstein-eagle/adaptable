@@ -5,7 +5,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown, FormControl, Form } from 'react-bootstrap';
+import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown, FormControl, Form, Col, Row, ControlLabel } from 'react-bootstrap';
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -77,7 +77,17 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
-                            <h4>Error</h4>
+                            <div>
+                                <Form horizontal>
+                                    <Row style={{ display: "flex" }}>
+                                        <Col xs={1} >   <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} /> </Col>
+                                        <Col xs={11} style={errorHeaderStyle}>
+                                            <h4>Error</h4>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </div>
+
                             <p>
                                 {this.props.PopupState.ErrorMsg.split("\n").map(function (item, index) {
                                     return (
@@ -150,7 +160,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClose: () => dispatch(PopupRedux.HidePopup()),
-        showPopup: (componentClassName: string, params? :any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
+        showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
         onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
     };
@@ -166,6 +176,11 @@ let titleStyle: React.CSSProperties = {
     fontSize: "18px"
 }
 
+
+let errorGlypIconStyle: React.CSSProperties = {
+    fontSize: "20px"
+}
+
 let buttonStyle: React.CSSProperties = {
     active: "none",
     focus: "none"
@@ -175,3 +190,6 @@ let divStyle: React.CSSProperties = {
     margin: "20px"
 }
 
+let errorHeaderStyle: React.CSSProperties = {
+    margin: "3px"
+}
