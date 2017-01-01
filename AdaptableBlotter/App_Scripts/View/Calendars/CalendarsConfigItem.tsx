@@ -4,7 +4,7 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ShortcutAction } from '../../Core/Enums'
 import { ICalendar } from '../../Core/Interface/ICalendarStrategy';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';

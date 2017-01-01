@@ -139,7 +139,7 @@
                 [
                     { field: "tradeId", title: "ID" },
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
-                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true, search: true } },
+                    { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true } },
                     { field: "currency", title: "Currency", width: 100 },
                     { field: "country", title: "Country", width: 200 },
                     { field: "marketPrice", title: "Market Price", format: "{0:n4}", attributes: { class: "numberColumn" } },
@@ -166,12 +166,14 @@
                 navigatable: true,
                 resizable: true,
                 scrollable: false,
-                filterable: true,
+                filterable: {
+                    extra: false
+                },
               //  pageable: {
               //      pageSize: 20
               //  },
                 editable: true,
-                // columnMenu: true,
+                 columnMenu: true,
                 /*{
                        filterable: false,
     messages: {
@@ -189,6 +191,8 @@
 
         //dataGen.startTickingDataKendo(grid);
     }
+
+   
 
 
 </script>

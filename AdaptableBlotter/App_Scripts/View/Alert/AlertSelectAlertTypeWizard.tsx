@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as StrategyIds from '../../Core/StrategyIds'
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, Button, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IAlert } from '../../Core/interface/IAlertStrategy';

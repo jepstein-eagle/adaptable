@@ -87,10 +87,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         grid.bind("dataBound", (e: any) => {
             this._onGridDataBound.Dispatch(this, e)
+
+
         });
 
         grid.dataSource.bind("change", (e: any) => {
-            if (e.action == "itemchange") {
+           
+     //    let filterable : any = grid.options.filterable;
+    //     filterable.ui = this.cityFilter;
+
+      if (e.action == "itemchange") {
                 let itemsArray = e.items[0];
                 let changedValue = itemsArray[e.field];
                 let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
@@ -124,7 +130,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // would be nice if can work out how to make it re-evaluate during runtime;
         // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
 
-        /*
+        
         grid.bind("columnMenuInit", (e: any) => {
             let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
@@ -148,10 +154,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.Strategies.forEach(s => s.onColumnMenuItemClicked(column, menuText));
             });
         })
- */
+ 
    
+      grid.bind("filterMenuInit", (e: any) => {
+/* this is where we want to put OUR filter screen once i can work out how to wire it up properly
+there is an example here so it should be easy but currently cannot get it to work...
+http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
+*/
+//alert("Hello");
+initializedFilterMenu(e);
+      })
 
+
+   var initializedFilterMenu = function (e:any) {
+                var popup = e.container.data("kendoPopup");
+            
+            };
+     
  }
+
+  public cityFilter(element: any) {
+                    alert('Im in the right function')
+                }
+
    
     public SetColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
