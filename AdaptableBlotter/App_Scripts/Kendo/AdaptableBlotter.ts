@@ -411,6 +411,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueString(columnId: string): Array<string> {
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
         let tdIndex = columnIndex + 1;
+    
+    // we could get the values from teh data but its not using jquery and we lose the text representation
+    // though it does mean we get all the data and not just filtered data....
+   //  var dataSource = this.grid.dataSource.data();
+   //     let uidList: string[] = [];
+   //     for (var i = 0; i < dataSource.length; i++) {
+   //         uidList.push(dataSource[i][columnId])
+   //         }
+   //     return uidList;
+    
+    
         var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
         let returnVal = rows.map((index, element) => $(element).text()).toArray();
         return returnVal;
