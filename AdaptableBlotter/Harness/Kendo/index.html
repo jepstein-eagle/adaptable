@@ -141,7 +141,7 @@
                     { field: "notional", title: "Notional", format: "{0:c}", attributes: { style: "text-align:right;" } },
                     { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true } },
                     { field: "currency", title: "Currency", width: 100 },
-                    { field: "country", title: "Country", width: 200 },
+                    { field: "country", title: "Country", filterable: { multi: true, search: true } , width: 200 },
                     { field: "marketPrice", title: "Market Price", format: "{0:n4}", attributes: { class: "numberColumn" } },
                     { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                     { field: "isLive", title: "Is Live", template: '<input type="checkbox" #= isLive ? checked="checked" : "" # disabled="disabled" ></input>' },
@@ -166,14 +166,9 @@
                 navigatable: true,
                 resizable: true,
                 scrollable: false,
-                filterable: {
-                    extra: false
-                },
-              //  pageable: {
-              //      pageSize: 20
-              //  },
+                filterable: true,
                 editable: true,
-                 columnMenu: true,
+                 columnMenu: false,
                 /*{
                        filterable: false,
     messages: {

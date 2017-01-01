@@ -6,6 +6,8 @@ import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
 import { Expression } from '../../Core/Expression/Expression';
+import { INamedExpression } from '../../Core/Interface/IExpression';
+
 
 
 
@@ -69,6 +71,10 @@ export interface IAdaptableBlotter {
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+
+
+    // temp test
+      applyFilter(filter:INamedExpression): void 
 }
 
 export interface ISelectedCells {

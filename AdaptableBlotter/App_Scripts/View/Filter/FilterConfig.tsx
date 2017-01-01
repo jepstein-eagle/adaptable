@@ -129,8 +129,15 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
     }
 
     finishWizard() {
+        // temp going to apply the filter...
+this.props.AdaptableBlotter.applyFilter(this.state.EditedFilter);
+
+
+
         this.props.onAddEditFilter(this.state.EditedFilter);
         this.setState({ EditedFilter: null });
+
+
     }
 
 }

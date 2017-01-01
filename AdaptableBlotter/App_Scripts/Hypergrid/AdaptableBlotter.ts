@@ -34,6 +34,9 @@ import { Helper } from '../Core/Helper';
 import { ColumnType, SortOrder } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
+import { INamedExpression } from '../Core/Interface/IExpression';
+
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -559,6 +562,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
+ public applyFilter(filter:INamedExpression): void {}
+ 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }

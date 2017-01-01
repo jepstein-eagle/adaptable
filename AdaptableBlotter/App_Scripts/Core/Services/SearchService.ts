@@ -35,6 +35,8 @@ export class SearchService implements ISearchService {
 
     public ApplySearchOnGrid(): void {
 
+/*
+
         let rowIds: string[] = this.blotter.getAllRowIds();
 
         // first make sure they are all visible (as might have been hidden in a previous search)
@@ -50,6 +52,8 @@ export class SearchService implements ISearchService {
             // lastly hide the rows which dont fit the search
             this.blotter.hideRows(nonMatchingRowIds);
         }
+
+        */
     }
 
 
