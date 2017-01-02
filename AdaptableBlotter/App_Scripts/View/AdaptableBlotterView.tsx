@@ -80,7 +80,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             <div>
                                 <Form horizontal>
                                     <Row style={{ display: "flex" }}>
-                                        <Col xs={1} >   <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} /> </Col>
+                                        <Col xs={1} >
+                                            <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} />
+                                        </Col>
                                         <Col xs={11} style={errorHeaderStyle}>
                                             <h4>Error</h4>
                                         </Col>

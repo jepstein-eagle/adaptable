@@ -411,17 +411,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueString(columnId: string): Array<string> {
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
         let tdIndex = columnIndex + 1;
-    
-    // we could get the values from teh data but its not using jquery and we lose the text representation
-    // though it does mean we get all the data and not just filtered data....
-   //  var dataSource = this.grid.dataSource.data();
-   //     let uidList: string[] = [];
-   //     for (var i = 0; i < dataSource.length; i++) {
-   //         uidList.push(dataSource[i][columnId])
-   //         }
-   //     return uidList;
-    
-    
+
+        // we could get the values from teh data but its not using jquery and we lose the text representation
+        // though it does mean we get all the data and not just filtered data....
+        //  var dataSource = this.grid.dataSource.data();
+        //     let uidList: string[] = [];
+        //     for (var i = 0; i < dataSource.length; i++) {
+        //         uidList.push(dataSource[i][columnId])
+        //         }
+        //     return uidList;
+
+
         var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
         let returnVal = rows.map((index, element) => $(element).text()).toArray();
         return returnVal;
@@ -574,6 +574,45 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var row = this.getRowByRowIdentifier(rowID);
             row.show();
         })
+    }
+
+
+    private getFiltersPropertyFromFilters(filters: kendo.data.DataSourceFilters): any {
+        let subFilters: kendo.data.DataSourceFilter[] = filters.filters;
+        if (subFilters) { // has sub filters so we need to get them
+            return this.getFiltersPropertyFromFilters(subFilters);
+        }
+        return filters;
+    }
+
+    public isFilteredColumn(columnId: string): boolean {
+        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+
+        if (!currentFilters) {
+            return false;
+        }
+        let returnValue: boolean = false;
+
+        currentFilters.filters.forEach(c => {
+            if (!returnValue) {
+                let filterObjects: kendo.data.DataSourceFilterItem[] = this.getFiltersPropertyFromFilters(c);
+                let filterObjectToCheck: kendo.data.DataSourceFilterItem = (filterObjects.length > 0) ? filterObjects[0] : filterObjects;
+                returnValue = this.dataSourceFilterItemContainsField(filterObjectToCheck, columnId);
+            } else {
+                return true;
+            }
+        })
+        return returnValue;
+    }
+
+
+
+    private dataSourceFilterItemContainsField(item: kendo.data.DataSourceFilterItem, columnId: string): boolean {
+        let field = item.field;
+        if (field != null && field == columnId) {
+            return true;
+        }
+        return false;
     }
 
     public applyFilter(filter: INamedExpression): void {
