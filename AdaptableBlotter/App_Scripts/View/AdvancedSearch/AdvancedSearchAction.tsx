@@ -87,7 +87,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 </Col>
                                 <Col xs={4}>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
-                                        <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='primary' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                        <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='success' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
                                     </OverlayTrigger>
                                     {' '}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
@@ -118,7 +118,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                     {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                     {this.state.SelectedAdvancedSearch != null &&
 
-                        <PanelWithButton headerText="Search Details" bsStyle="info" style={panelStyle}
+                        <PanelWithButton headerText="Search Details" bsStyle="primary" style={panelStyle}
                             buttonContent={"Edit Search"}
                             buttonClick={() => this.onEditAdvancedSearch()}>
                             <div style={previewDivStyle}>

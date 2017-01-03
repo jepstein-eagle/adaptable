@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, Glyphicon, OverlayTrigger, Popover } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, OverlayTrigger, Popover } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
@@ -60,8 +60,8 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Column Expression {' '}
-                           <InformationPopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} />
-                        </Radio>
+                            <InformationPopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} />
+                            </Radio>
                     </Col>
                 </FormGroup>
             </Form>

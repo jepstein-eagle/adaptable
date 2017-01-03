@@ -255,7 +255,7 @@ export module ExpressionHelper {
         }
 
         // see if there are any named expressionss and then get the first only
-        if (namedExpression.Expression.RangeExpressions != null && namedExpression.Expression.RangeExpressions.length > 0) {
+        if (namedExpression.Expression.NamedExpressions != null && namedExpression.Expression.NamedExpressions.length > 0) {
             return namedExpression.Expression.NamedExpressions[0].ColumnName;
         }
 

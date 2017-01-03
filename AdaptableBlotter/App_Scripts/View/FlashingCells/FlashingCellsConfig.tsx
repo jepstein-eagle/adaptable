@@ -9,7 +9,7 @@ import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRe
 import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, FormControl, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ColumnType } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
@@ -40,7 +40,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             return flashingColumn.ColumnName
         });
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Down Color", 2], ["Up Color", 2]];
+        let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Up Color", 2], ["Down Color", 2]];
 
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
         this.props.FlashingColumns.forEach(fc => {

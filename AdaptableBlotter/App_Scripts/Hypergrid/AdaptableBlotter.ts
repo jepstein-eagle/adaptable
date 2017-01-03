@@ -37,6 +37,7 @@ import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { QuickSearchDataSource } from './QuickSearchDataSource'
 import { AdvancedSearchDataSource } from './AdvancedSearchDataSource'
+import { INamedExpression } from '../Core/Interface/IExpression';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -567,6 +568,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public printGrid(): void {
 
+    }
+
+    public applyFilter(filter: INamedExpression): void { }
+
+    public isFilteredColumn(columnId: string): boolean {
+        return false;
     }
 
     destroy() {

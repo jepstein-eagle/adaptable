@@ -50,6 +50,7 @@ export class SearchService implements ISearchService {
             // lastly hide the rows which dont fit the search
             this.blotter.hideRows(nonMatchingRowIds);
         }
+
     }
 
 

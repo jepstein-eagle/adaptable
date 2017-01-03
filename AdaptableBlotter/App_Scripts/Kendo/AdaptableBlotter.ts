@@ -37,6 +37,9 @@ import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
+import { INamedExpression } from '../Core/Interface/IExpression';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -87,9 +90,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         grid.bind("dataBound", (e: any) => {
             this._onGridDataBound.Dispatch(this, e)
+
+
         });
 
         grid.dataSource.bind("change", (e: any) => {
+
+            //    let filterable : any = grid.options.filterable;
+            //     filterable.ui = this.cityFilter;
+
             if (e.action == "itemchange") {
                 let itemsArray = e.items[0];
                 let changedValue = itemsArray[e.field];
@@ -124,7 +133,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // would be nice if can work out how to make it re-evaluate during runtime;
         // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
 
-        /*
+
         grid.bind("columnMenuInit", (e: any) => {
             let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
@@ -148,11 +157,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.Strategies.forEach(s => s.onColumnMenuItemClicked(column, menuText));
             });
         })
- */
-   
 
- }
-   
+
+        grid.bind("filterMenuInit", (e: any) => {
+            /* this is where we want to put OUR filter screen once i can work out how to wire it up properly
+            there is an example here so it should be easy but currently cannot get it to work...
+            http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
+            */
+            //alert("Hello");
+            initializedFilterMenu(e);
+        })
+
+
+        var initializedFilterMenu = function (e: any) {
+            var popup = e.container.data("kendoPopup");
+
+        };
+
+    }
+
+    public cityFilter(element: any) {
+        alert('Im in the right function')
+    }
+
+
     public SetColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
@@ -198,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.getcurrentEditedCell().val();
     }
 
-    public getPrimaryKeyValueFromRecord( record: any) : any{
+    public getPrimaryKeyValueFromRecord(record: any): any {
         return record["uid"]
     }
 
@@ -383,8 +411,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueString(columnId: string): Array<string> {
         let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
         let tdIndex = columnIndex + 1;
+
+        // we could get the values from teh data but its not using jquery and we lose the text representation
+        // though it does mean we get all the data and not just filtered data....
+        //  var dataSource = this.grid.dataSource.data();
+        //     let uidList: string[] = [];
+        //     for (var i = 0; i < dataSource.length; i++) {
+        //         uidList.push(dataSource[i][columnId])
+        //         }
+        //     return uidList;
+
+
         var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
-        return rows.map((index, element) => $(element).text()).toArray();
+        let returnVal = rows.map((index, element) => $(element).text()).toArray();
+        return returnVal;
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -537,6 +577,107 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
+    private getFiltersPropertyFromFilters(filters: kendo.data.DataSourceFilters): any {
+        let subFilters: kendo.data.DataSourceFilter[] = filters.filters;
+        if (subFilters) { // has sub filters so we need to get them
+            return this.getFiltersPropertyFromFilters(subFilters);
+        }
+        return filters;
+    }
+
+    public isFilteredColumn(columnId: string): boolean {
+        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+
+        if (!currentFilters) {
+            return false;
+        }
+        let returnValue: boolean = false;
+
+        currentFilters.filters.forEach(c => {
+            if (!returnValue) {
+                let filterObjects: kendo.data.DataSourceFilterItem[] = this.getFiltersPropertyFromFilters(c);
+                let filterObjectToCheck: kendo.data.DataSourceFilterItem = (filterObjects.length > 0) ? filterObjects[0] : filterObjects;
+                returnValue = this.dataSourceFilterItemContainsField(filterObjectToCheck, columnId);
+            } else {
+                return true;
+            }
+        })
+        return returnValue;
+    }
+
+
+
+    private dataSourceFilterItemContainsField(item: kendo.data.DataSourceFilterItem, columnId: string): boolean {
+        let field = item.field;
+        if (field != null && field == columnId) {
+            return true;
+        }
+        return false;
+    }
+
+    public applyFilter(filter: INamedExpression): void {
+        // first lets get the column for the expression - there can only be one!
+        let columnName: string = ExpressionHelper.GetColumnIdForNamedExpression(filter);
+
+        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+        let currentFilterIsMultiple: boolean = true;
+        if (currentFilters) {
+            currentFilterIsMultiple = currentFilters.logic == "and";
+        }
+
+        // ok, not going to be easy.  think we need to find the field and then merge if its the same field. or at least do something with and / or!
+        // for now we are giong to assume that every filter is a NEW column!!!!!!
+
+
+        let columnValuesExpression = filter.Expression.ColumnValuesExpressions;
+        if (columnValuesExpression.length > 0) {
+
+
+            // for now just deal with the first column Expression
+            let expressionValues: string[] = filter.Expression.ColumnValuesExpressions[0].ColumnValues;
+
+
+
+            let filterItems: kendo.data.DataSourceFilterItem[] = [];
+            let kendoStringOperator: string = "eq"
+            let filterLogic: string = "or";
+
+            expressionValues.forEach(e => {
+                let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: columnName, value: e };
+                filterItems.push(filterItem);
+            })
+
+            let newFilters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
+
+
+
+
+            // so I think it needs to be like this...
+            // if there is one column then its one filter with or
+            // if there is MORE than one column than each has an or filter and both are children of an 'AND' filter
+            // yeah, its fucking hard
+            if (currentFilters) {  // we need to create a parent collection...
+                let newAndOldFilters: kendo.data.DataSourceFilter[] = [];
+                //  currentFilters.filters.forEach(cf => {
+                //   var testFilters: kendo.data.DataSourceFilters = { logic: "or", filters: null }
+                if (currentFilterIsMultiple) {
+                    newAndOldFilters.push(...currentFilters.filters);
+
+                } else {
+                    newAndOldFilters.push(currentFilters);
+
+                }
+
+                //   })
+                newAndOldFilters.push(newFilters);
+
+                let parentFilters: kendo.data.DataSourceFilters = { logic: "and", filters: newAndOldFilters };
+                this.grid.dataSource.filter(parentFilters);
+            } else {
+                this.grid.dataSource.filter(newFilters);
+            }
+        }
+    }
     // this is all dead now and never called as we just hide the rows in the strategy...
     // keeping it commented out only so we have the working for when we do filters...
     /*        let quickSearchText = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
