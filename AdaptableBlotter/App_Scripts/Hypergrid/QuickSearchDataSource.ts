@@ -12,10 +12,11 @@ export let QuickSearchDataSource = (blotter: IAdaptableBlotter) => DataSourceInd
         }
     },
     filterTest: function (r: any, rowObject: any) {
-        //Need to use the operator
+        //Need to use the operator and case sensitive
         for (let prop in rowObject) {
-            let stringValue = String(rowObject[prop])
-            if (stringValue.includes(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+            let stringValueLowerCase = String(rowObject[prop]).toLowerCase()
+            let quickSearchLowerCase = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText.toLowerCase()
+            if (stringValueLowerCase.includes(quickSearchLowerCase)) {
                 return true
             }
         }
