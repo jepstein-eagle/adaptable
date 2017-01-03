@@ -24,7 +24,7 @@ export let QuickSearchDataSource = (blotter: IAdaptableBlotter) => DataSourceInd
         return false;
     },
     getRowCount: function () {
-        return blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText != ""
+        return StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
             ? this.index.length : this.dataSource.getRowCount();
     }
 });

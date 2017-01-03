@@ -36,6 +36,7 @@ import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColum
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { QuickSearchDataSource } from './QuickSearchDataSource'
+import { AdvancedSearchDataSource } from './AdvancedSearchDataSource'
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -69,11 +70,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -151,7 +151,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //We add our sorter pipe last into the existing pipeline
         let currentDataSources = grid.behavior.dataModel.DataSources;
+        //first AdvancedSearch that should filter most of the data
+        currentDataSources.push(AdvancedSearchDataSource(this))
+        //then quick search that will filter occasionnaly
         currentDataSources.push(QuickSearchDataSource(this))
+        //last has to be the customsort so we sort only the remaining data
         currentDataSources.push(CustomSortDataSource(this))
 
         grid.setPipeline(currentDataSources, {
