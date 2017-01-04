@@ -93,7 +93,9 @@ export module KendoFiltering {
             case ColumnType.Date:
                 return new Date(valueToTest);
             case ColumnType.Number:
-                return Helper.convertToNumber(valueToTest);
+                //Jo: commenting for now until Jonny knows what to do
+                // return Helper.convertToNumber(valueToTest);
+                return valueToTest;
             case ColumnType.String:
                 return valueToTest;
         }
