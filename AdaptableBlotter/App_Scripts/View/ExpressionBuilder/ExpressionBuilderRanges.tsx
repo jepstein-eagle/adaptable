@@ -6,7 +6,7 @@ import { IRangeExpression } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../PanelWithButton'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import { ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { DropdownButton, MenuItem, InputGroup, ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 
 
 interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
@@ -20,70 +20,62 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         let rangesElement: JSX.Element[] = null
         if (this.props.ColumnType == ColumnType.Number || this.props.ColumnType == ColumnType.Date) {
             rangesElement = this.props.Ranges.map((x, index) => {
-                let numericAndDateOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
-                    <option value={LeafExpressionOperator.Unknown.toString()}>Select operator</option>
-                    <option value={LeafExpressionOperator.GreaterThan.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</option>
-                    <option value={LeafExpressionOperator.GreaterThanOrEqual.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</option>
-                    <option value={LeafExpressionOperator.LessThan.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThan)}</option>
-                    <option value={LeafExpressionOperator.LessThanOrEqual.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThanOrEqual)}</option>
-                    <option value={LeafExpressionOperator.Equals.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Equals)}</option>
-                    <option value={LeafExpressionOperator.NotEquals.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.NotEquals)}</option>
-                    <option value={LeafExpressionOperator.Between.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Between)}</option>
-                </FormControl>
+                let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThan)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThanOrEqual)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Equals)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.NotEquals)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Between)}</MenuItem>
+                </DropdownButton>
                 if (x.Operator == LeafExpressionOperator.Between) {
-                    return <Form horizontal key={index}>
+                    return <Form key={index}>
                         <FormGroup controlId={"Range1" + index}>
-                            <Col xs={4}>
+                            <InputGroup>
                                 {numericAndDateOption}
-                            </Col>
-                            <Col xs={6}>
                                 {this.props.ColumnType == ColumnType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 {this.props.ColumnType == ColumnType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter a Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
-                            </Col>
-                            <Col xs={2}>
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                    <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
-                                </OverlayTrigger>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId={"Range2" + index}>
-                            <Col xs={2} xsOffset={2}>
-                                And
-                            </Col>
-                            <Col xs={6}>
+                                <InputGroup.Button>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
+                                        <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </InputGroup.Button>
+                            </InputGroup>
+                            <InputGroup style={betweenAddOnStyle}>
+                                <InputGroup.Addon>And</InputGroup.Addon>
                                 {this.props.ColumnType == ColumnType.Number &&
-                                    <FormControl value={String(x.Operand2)} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
+                                    <FormControl value={String(x.Operand2)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
                                 }
                                 {this.props.ColumnType == ColumnType.Date &&
-                                    <FormControl value={String(x.Operand2)} type="date" placeholder="Enter a Date" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
+                                    <FormControl value={String(x.Operand2)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
                                 }
-                            </Col>
+                            </InputGroup>
                         </FormGroup>
                     </Form>
                 }
                 else {
-                    return <Form horizontal key={index}>
+                    return <Form key={index}>
                         <FormGroup controlId={"Range" + index}>
-                            <Col xs={5}>
+                            <InputGroup>
                                 {numericAndDateOption}
-                            </Col>
-                            <Col xs={5}>
                                 {this.props.ColumnType == ColumnType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 {this.props.ColumnType == ColumnType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter a Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
-                            </Col>
-                            <Col xs={2}>
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                    <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
-                                </OverlayTrigger>
-                            </Col>
+                                <InputGroup.Button>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
+                                        <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
+                                    </OverlayTrigger>
+                                </InputGroup.Button>
+                            </InputGroup>
                         </FormGroup>
                     </Form>
                 }
@@ -91,43 +83,29 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         }
         else if (this.props.ColumnType == ColumnType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
-                let stringOption = <FormControl componentClass="select" placeholder={LeafExpressionOperator[LeafExpressionOperator.Unknown]} value={x.Operator.toString()} onChange={(x) => this.onLeafExpressionOperatorChange(index, x)} >
-                    <option value={LeafExpressionOperator.Unknown.toString()}>Select operator</option>
-                    <option value={LeafExpressionOperator.Contains.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</option>
-                    <option value={LeafExpressionOperator.StartsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</option>
-                    <option value={LeafExpressionOperator.EndsWith.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</option>
-                    <option value={LeafExpressionOperator.MatchesRegex.toString()}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.MatchesRegex)}</option>
-                </FormControl>
-                return <Form horizontal key={index} >
-            <FormGroup controlId={"Range" + index}>
-                        <Col xs={5}>
+                let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.StartsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Regex)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Regex)}</MenuItem>
+                </DropdownButton>
+                return <Form key={index} >
+                    <FormGroup controlId={"Range" + index}>
+                        <InputGroup>
                             {stringOption}
-                        </Col>
-                        <Col xs={5}>
                             <FormControl value={String(x.Operand1)} type="string" placeholder="Enter value" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
-                        </Col>
-                        <Col xs={2}>
-                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
-                            </OverlayTrigger>
-                        </Col>
+                            <InputGroup.Button>
+                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
+                                    <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
+                                </OverlayTrigger>
+                            </InputGroup.Button>
+                        </InputGroup>
                     </FormGroup>
                 </Form>
             })
         }
-        {/*
-            // dont think we are using this....
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={8}>{ColumnType[this.props.ColumnType] + " Entry"}</Col>
-                <Col xs={4}>
-                    <Button bsSize='small' onClick={() => this.addRange()} style={{ float: 'right' }}>
-                        Add a range entry
-                    </Button>
-                </Col>
-            </Row>
-        </Form>;
-        */}
+
         return <PanelWithButton headerText={"Ranges"} className="no-padding-panel" bsStyle="info"
             buttonClick={() => this.addRange()}
             buttonContent={"Add a range entry"}>
@@ -146,11 +124,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         this.props.onRangesChange([].concat(this.props.Ranges, { Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Unknown }))
     }
 
-    private onLeafExpressionOperatorChange(index: number, x: React.FormEvent) {
-        let e = x.target as HTMLInputElement;
+    private onLeafExpressionOperatorChange(index: number, x: number) {
         let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
-        rangeCol[index] = Object.assign({}, range, { Operator: Number.parseInt(e.value) })
+        rangeCol[index] = Object.assign({}, range, { Operator: x })
         this.props.onRangesChange(rangeCol)
     }
 
@@ -174,6 +151,16 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 let divStyle = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
-    'height': '370px', 
+    'height': '370px',
     'marginBottom': '0'
 }
+
+let dropDownNumbDateStyle = {
+    'width': '92px'
+}
+
+let dropDownStringStyle = {
+    'width': '102px'
+}
+
+let betweenAddOnStyle = { marginLeft: '41px' }

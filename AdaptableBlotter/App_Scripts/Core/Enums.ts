@@ -35,7 +35,7 @@ export enum LeafExpressionOperator {
     Contains,
     StartsWith,
     EndsWith,
-    MatchesRegex
+    Regex
 }
 
 export enum MenuType{

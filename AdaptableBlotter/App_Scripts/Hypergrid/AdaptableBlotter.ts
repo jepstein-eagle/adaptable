@@ -13,7 +13,7 @@ import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
-import { SearchService } from '../Core/Services/SearchService'
+import { SearchServiceHyperGrid } from '../Core/Services/SearchServiceHypergrid'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -34,9 +34,10 @@ import { Helper } from '../Core/Helper';
 import { ColumnType, SortOrder } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
+import { CustomSortDataSource } from './CustomSortDataSource'
+import { QuickSearchDataSource } from './QuickSearchDataSource'
+import { AdvancedSearchDataSource } from './AdvancedSearchDataSource'
 import { INamedExpression } from '../Core/Interface/IExpression';
-
-
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -52,12 +53,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
-        this.CustomSorts = new Map<number, Function>()
 
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchService(this);
+        this.SearchService = new SearchServiceHyperGrid(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -71,11 +71,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -91,6 +90,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
             //like that we avoid the need to have different logic for different grids....
             this._onKeyDown.Dispatch(this, e.detail.keyEvent)
+        });
+
+        grid.addEventListener("fin-after-cell-edit", (e: any) => {
+            this.grid.behavior.reindex();
+            throw 'reminder';
         });
 
         // grid.addEventListener('fin-click', function (e: any) {
@@ -148,7 +152,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //We add our sorter pipe last into the existing pipeline
         let currentDataSources = grid.behavior.dataModel.DataSources;
-        currentDataSources.push(MySorterDataSource(this))
+        //first AdvancedSearch that should filter most of the data
+        currentDataSources.push(AdvancedSearchDataSource(this))
+        //then quick search that will filter occasionnaly
+        currentDataSources.push(QuickSearchDataSource(this))
+        //last has to be the customsort so we sort only the remaining data
+        currentDataSources.push(CustomSortDataSource(this))
 
         grid.setPipeline(currentDataSources, {
             stash: 'default',
@@ -232,13 +241,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
     }
 
-    public sortColumn: number
+    public sortColumn: number = -1
     public sortOrder: SortOrder
     public toggleSort(columnIndex: number) {
         //Toggle sort one column at a time
         if (this.sortColumn === columnIndex) {
             if (this.sortOrder == SortOrder.Descending) {
-                this.sortColumn = null;
+                this.sortColumn = -1;
             }
             else {
                 this.sortOrder = SortOrder.Descending
@@ -399,22 +408,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public CustomSorts: Map<number, Function>
     public setCustomSort(columnId: string, comparer: Function): void {
-        let columnIndex = this.getColumnIndex(columnId)
-        this.CustomSorts.set(columnIndex, comparer)
-        this.ReInitGrid()
+        //nothing to do except the reindex so the CustomSortSource does it's job if needed
+        this.ReindexAndRepaint()
     }
 
     public removeCustomSort(columnId: string): void {
-        this.CustomSorts.delete(this.getColumnIndex(columnId))
-        this.ReInitGrid()
+        //nothing to do except the reindex so the CustomSortSource does it's job if needed
+        this.ReindexAndRepaint()
     }
 
-    private ReInitGrid() {
-        this.grid.behavior.reindex()
+    public ReindexAndRepaint()
+    {
+        this.grid.behavior.reindex();
+        this.grid.repaint();
     }
-
     public getColumnValueString(columnId: string): Array<string> {
         let returnArray: string[] = []
         let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
@@ -572,91 +580,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 }
-
-
-//All custom pipelines should extend from pipelineBase
-var MySorterDataSource = (blotter: IAdaptableBlotter) => (<any>window).fin.Hypergrid.DataSourceBase.extend('MySorterDataSource', {
-    //The `get` and `set` are two functions are use by HyperGrid core if there if the DataSource has the type "sorter"
-    type: 'sorter',
-    blotter: blotter,
-    data: [],
-    set: function (sorter: any) {
-        // if (sorter) {
-        //     this.sorter = sorter; // Will become a ref to MySorterAPI
-        // } else {
-        //     delete this.sorter;
-        // }
-    },
-
-    get: function () {
-        return this.sorter;
-    },
-    // This function is called on every reIndex call if this object is in the pipelne
-    apply: function () {
-        var c = this.blotter.sortColumn;
-        if (!c) {
-            this.data.length = 0;
-            return;
-        }
-
-        var fields = this.dataSource.schema[c].name;
-        //All objects added to your pipeline will have access to the underlying "raw" data
-        // getReIndex resolves the entire pipeline beneath this dataSource for all rows
-        // Furthermore this sort reorders objects in an array as opposed to leveraging an index
-        // This trivial example would not scale
-        this.data = (function () {
-            var ds = this.dataSource;
-            var count = ds.getRowCount();
-            var result = new Array(count);
-            for (var y = 0; y < count; y++) {
-                result[y] = ds.getRow(y);
-            }
-
-            return result;
-        }).bind(this)();
-
-        let customComparer = this.blotter.CustomSorts.get(c)
-        if (customComparer) {
-            this.data = this.data.sort(customComparer)
-            if (this.blotter.sortOrder === SortOrder.Descending) {
-                this.data = this.data.reverse()
-            }
-        }
-        else {
-            this.data = this.data.sort(function (a: any, b: any) {
-                if (a[fields] > b[fields]) {
-                    return 1;
-                }
-                if (a[fields] < b[fields]) {
-                    return -1;
-                }
-                // a must be equal to b
-                return 0;
-            })
-            if (this.blotter.sortOrder === SortOrder.Descending) {
-                this.data = this.data.reverse()
-            }
-        }
-    },
-    getRow: function (y: any) {
-        //Data available after an apply call
-        if (this.data.length > 0) {
-            return this.data[y];
-        }
-        //No sorted columns. Go down the pipeline for the dataRows
-        return this.dataSource.getRow(y);
-    },
-    //Since we are not using an index, but making a copy of the underlying data for this pipeline
-    //We also need to override the following
-    //If we override setValue the update will not persist down the other pipelineDataSources
-    getValue: function (c: any, r: any) {
-        var row = this.getRow(r);
-        if (!row) {
-            return null;
-        }
-        return row[this.dataSource.schema[c].name];
-    }
-});
 
 interface CellStyleHypergrid {
     csForeColorColumn?: string,

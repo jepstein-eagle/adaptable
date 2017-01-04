@@ -47,6 +47,10 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
     }
 
     protected InitStyles(): void {
+        //JO: temp fix
+        if(!this.blotterBypass){
+            this.blotterBypass = this.blotter as AdaptableBlotter
+        }
         let rowIds: string[] = this.blotter.getAllRowIds();
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         for (let rowId of rowIds) {
