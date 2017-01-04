@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import * as FilterRedux from '../Redux/ActionsReducers/FilterRedux'
-import { FilterState, NamedExpressionState } from '../Redux/ActionsReducers/Interface/IState';
+import { FilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, ListGroupItem, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithRow } from './PanelWithRow';
@@ -19,7 +19,7 @@ interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
     AdaptableBlotter: IAdaptableBlotter;
     CurrentColumn: IColumn;
     FilterState: FilterState;
-    NamedExpressionState: NamedExpressionState;
+    UserFilterState: UserFilterState;
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.FilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.FilterAddEditAction
 
@@ -38,7 +38,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     render(): any {
 
 
-// get namedexpressions for the columnValue
+// get user filter expressions for the columnValue
 
 
 // get the values for the column
@@ -67,7 +67,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             {
                 ColumnValues: values,
                 ExpressionRange: null,
-                NamedExpression: null
+                UserFilterExpression: null
             };
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
 
@@ -81,6 +81,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         AdaptableBlotter: ownProps.Blotter,
         CurrentColumn: ownProps.CurrentColumn,
         FilterState: state.Filter,
+        UserFilterState: state.UserFilter
     };
 }
 

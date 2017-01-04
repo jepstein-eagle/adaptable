@@ -11,7 +11,7 @@ import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfi
 import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { AlertConfig } from './Alert/AlertConfig'
-import { NamedExpressionConfig } from './NamedExpression/NamedExpressionConfig'
+import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -28,7 +28,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   QuickSearchAction: QuickSearchAction,
   AdvancedSearchAction: AdvancedSearchAction,
   AlertConfig: AlertConfig,
-  NamedExpressionConfig: NamedExpressionConfig,
+  UserFilterConfig: UserFilterConfig,
 }
 
 

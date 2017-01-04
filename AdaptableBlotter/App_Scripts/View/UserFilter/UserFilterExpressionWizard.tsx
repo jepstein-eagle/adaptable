@@ -4,17 +4,17 @@ import * as React from "react";
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { INamedExpression } from '../../Core/Interface/IExpression';
+import { IUserFilterExpression } from '../../Core/Interface/IExpression';
 
 
-interface NamedExpressionWizardProps extends AdaptableWizardStepProps<INamedExpression> {
+interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilterExpression> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string
 }
 
-export class NamedExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: NamedExpressionWizardProps) {
+export class UserFilterExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+    constructor(private props2: UserFilterExpressionWizardProps) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

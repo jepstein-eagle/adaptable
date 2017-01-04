@@ -4,21 +4,21 @@ import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { INamedExpression } from '../../Core/Interface/IExpression';
+import { IUserFilterExpression } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
-interface NamedExpressionSettingsWizardProps extends AdaptableWizardStepProps<INamedExpression> {
+interface UserFilterExpressionSettingsWizardProps extends AdaptableWizardStepProps<IUserFilterExpression> {
     Blotter: IAdaptableBlotter,
     Columns: Array<IColumn>
 }
-interface NamedExpressionSettingsWizardState {
+interface UserFilterExpressionSettingsWizardState {
     FilterName: string
 }
 
-export class NamedExpressionSettingsWizard extends React.Component<NamedExpressionSettingsWizardProps, NamedExpressionSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: NamedExpressionSettingsWizardProps) {
+export class UserFilterSettingsWizard extends React.Component<UserFilterExpressionSettingsWizardProps, UserFilterExpressionSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: UserFilterExpressionSettingsWizardProps) {
         super(props)
         this.state = {
             FilterName: this.props.Data.FriendlyName,
@@ -44,7 +44,7 @@ export class NamedExpressionSettingsWizard extends React.Component<NamedExpressi
 
     onFilterNameChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ FilterName: e.value } as NamedExpressionSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ FilterName: e.value } as UserFilterExpressionSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
@@ -56,7 +56,7 @@ export class NamedExpressionSettingsWizard extends React.Component<NamedExpressi
 
     public Next(): void {
         this.props.Data.FriendlyName = this.state.FilterName
-        this.props.Data.ColumnType = ExpressionHelper.GetColumnTypeForNamedExpression(this.props.Data, this.props.Columns)
+        this.props.Data.ColumnType = ExpressionHelper.GetColumnTypeForUserFilterExpression(this.props.Data, this.props.Columns)
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.Blotter)
     }
     public Back(): void { }

@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import { NamedExpressionState } from './Interface/IState';
-import { INamedExpression } from '../../Core/interface/IExpression';
+import { UserFilterState } from './Interface/IState';
+import { IUserFilterExpression } from '../../Core/interface/IExpression';
 import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';
@@ -11,54 +11,54 @@ export const NAMED_EXPRESSION_ADD_OR_UPDATE = 'NAMED_EXPRESSION_ADD_OR_UPDATE';
 export const NAMED_EXPRESSION_DELETE = 'NAMED_EXPRESSION_DELETE';
 
 
-export interface NamedExpressionAddOrUpdateAction extends Redux.Action {
-    NamedExpression: INamedExpression
+export interface UserFilterAddOrUpdateAction extends Redux.Action {
+    UserFilter: IUserFilterExpression
 }
 
-export interface NamedExpressionDeleteAction extends Redux.Action {
-    NamedExpression: INamedExpression
+export interface UserFilterDeleteAction extends Redux.Action {
+    UserFilter: IUserFilterExpression
 }
 
-export const AddEditNamedExpression = (NamedExpression: INamedExpression): NamedExpressionAddOrUpdateAction => ({
+export const AddEditUserFilter = (UserFilter: IUserFilterExpression): UserFilterAddOrUpdateAction => ({
     type: NAMED_EXPRESSION_ADD_OR_UPDATE,
-    NamedExpression
+    UserFilter
 })
 
-export const DeleteNamedExpression = (NamedExpression: INamedExpression): NamedExpressionDeleteAction => ({
+export const DeleteUserFilter = (UserFilter: IUserFilterExpression): UserFilterDeleteAction => ({
     type: NAMED_EXPRESSION_DELETE,
-    NamedExpression
+    UserFilter
 })
 
-const initialNamedExpressionState:
-    NamedExpressionState = {
-        NamedExpressions: CreatePredefinedExpressions(),
+const initialUserFilterState:
+    UserFilterState = {
+        UserFilters: CreatePredefinedExpressions(),
     }
 
-export const NamedExpressionReducer: Redux.Reducer<NamedExpressionState> = (state: NamedExpressionState = initialNamedExpressionState, action: Redux.Action): NamedExpressionState => {
+export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFilterState = initialUserFilterState, action: Redux.Action): UserFilterState => {
     let index: number;
-    let namedExpressions: INamedExpression[]
+    let UserFilters: IUserFilterExpression[]
 
 
     switch (action.type) {
 
         case NAMED_EXPRESSION_ADD_OR_UPDATE: {
-            let actionTypedAddUpdate = (<NamedExpressionAddOrUpdateAction>action)
-            namedExpressions = [].concat(state.NamedExpressions)
-            index = namedExpressions.findIndex(i => i.Uid == actionTypedAddUpdate.NamedExpression.Uid)
+            let actionTypedAddUpdate = (<UserFilterAddOrUpdateAction>action)
+            UserFilters = [].concat(state.UserFilters)
+            index = UserFilters.findIndex(i => i.Uid == actionTypedAddUpdate.UserFilter.Uid)
             if (index != -1) {  // it exists
-                namedExpressions[index] = actionTypedAddUpdate.NamedExpression
+                UserFilters[index] = actionTypedAddUpdate.UserFilter
             } else {
-                namedExpressions.push(actionTypedAddUpdate.NamedExpression)
+                UserFilters.push(actionTypedAddUpdate.UserFilter)
             }
-            return Object.assign({}, state, { NamedExpressions: namedExpressions })
+            return Object.assign({}, state, { UserFilters: UserFilters })
         }
 
         case NAMED_EXPRESSION_DELETE: {
-            let actionTypedDelete = (<NamedExpressionDeleteAction>action)
-            namedExpressions = [].concat(state.NamedExpressions)
-            index = namedExpressions.findIndex(i => i.Uid == actionTypedDelete.NamedExpression.Uid)
-            namedExpressions.splice(index, 1);
-            return Object.assign({}, state, { NamedExpressions: namedExpressions })
+            let actionTypedDelete = (<UserFilterDeleteAction>action)
+            UserFilters = [].concat(state.UserFilters)
+            index = UserFilters.findIndex(i => i.Uid == actionTypedDelete.UserFilter.Uid)
+            UserFilters.splice(index, 1);
+            return Object.assign({}, state, { UserFilters: UserFilters })
         }
 
         default:
@@ -72,11 +72,11 @@ export const NamedExpressionReducer: Redux.Reducer<NamedExpressionState> = (stat
 }
 
 
-export function CreatePredefinedExpressions(): Array<INamedExpression> {
+export function CreatePredefinedExpressions(): Array<IUserFilterExpression> {
 
-    let _predefinedExpressions: INamedExpression[] = [];
+    let _predefinedExpressions: IUserFilterExpression[] = [];
 
-    // Date Predefined Named Expressions
+    // Date Predefined user filter Expressions
     _predefinedExpressions.push({
         Uid: "Today",
         FriendlyName: "Today",
@@ -140,7 +140,7 @@ export function CreatePredefinedExpressions(): Array<INamedExpression> {
         IsPredefined: true
     });
 
-    // Numeric Predefined Named Expressions
+    // Numeric Predefined user filter Expressions
     _predefinedExpressions.push({
         Uid: "Positive",
         FriendlyName: "Positive",
@@ -202,7 +202,7 @@ export function CreatePredefinedExpressions(): Array<INamedExpression> {
     });
 
 
-    // String Predefined Named Expressions
+    // String Predefined user filter Expressions
     _predefinedExpressions.push({
         Uid: "StringBlanks",
         FriendlyName: "Blanks",
@@ -227,7 +227,7 @@ export function CreatePredefinedExpressions(): Array<INamedExpression> {
         IsPredefined: true
     });
 
-    // Boolean Predefined Named Expressions
+    // Boolean Predefined user filter Expressions
     _predefinedExpressions.push({
         Uid: "True",
         FriendlyName: "True",

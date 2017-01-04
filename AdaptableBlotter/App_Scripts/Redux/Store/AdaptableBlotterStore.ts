@@ -19,7 +19,7 @@ import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
-import * as NamedExpressionRedux from '../ActionsReducers/NamedExpressionRedux'
+import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as FilterRedux from '../ActionsReducers/FilterRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
@@ -48,7 +48,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     Alert: AlertRedux.AlertReducer,
-    NamedExpression: NamedExpressionRedux.NamedExpressionReducer,
+    UserFilter: UserFilterRedux.UserFilterReducer,
     Filter: FilterRedux.FilterReducer,
 
 });

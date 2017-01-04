@@ -46,7 +46,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-                        DeleteNamedExpression={(columnId, index) => this.DeleteNamedExpression(columnId, index)}
+                        DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
                         DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
                         ShowPanel={true}>
                     </ExpressionBuilderPreview>
@@ -69,13 +69,13 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     }
 
-    DeleteNamedExpression(columnId: string, index: number) {
+    DeleteUserFilterExpression(columnId: string, index: number) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let columnNamedExpressions = this.state.Expression.NamedExpressions.find(x => x.ColumnName == columnId)
-        columnNamedExpressions.Named.splice(index, 1)
-        if (columnNamedExpressions.Named.length == 0) {
-            let columnNamedExpressionIndex = this.state.Expression.NamedExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.Expression.NamedExpressions.splice(columnNamedExpressionIndex, 1)
+        let columnUserFilterExpressions = this.state.Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
+        columnUserFilterExpressions.Named.splice(index, 1)
+        if (columnUserFilterExpressions.Named.length == 0) {
+            let columnUserFilterExpressionIndex = this.state.Expression.UserFilterExpressions.findIndex(x => x.ColumnName == columnId)
+            this.state.Expression.UserFilterExpressions.splice(columnUserFilterExpressionIndex, 1)
         }
         let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())

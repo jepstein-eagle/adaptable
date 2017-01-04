@@ -13,7 +13,7 @@ export interface IRangeExpression {
     Operand2: string;
 }
 
-export interface INamedExpression {
+export interface IUserFilterExpression {
     Uid: string;
     FriendlyName: string;
     Description: string;

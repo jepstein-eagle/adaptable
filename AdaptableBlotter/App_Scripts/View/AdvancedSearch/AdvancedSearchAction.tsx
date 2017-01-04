@@ -128,7 +128,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     SelectedColumnId={this.state.SelectedColumnId}
                                     ColumnsList={this.props.Columns}
                                     DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
-                                    DeleteNamedExpression={(columnId: string, index: number) => this.onDeleteNamedExpression(columnId, index)}
+                                    DeleteUserFilterExpression={(columnId: string, index: number) => this.onDeleteUserFilterExpression(columnId, index)}
                                     DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}
                                     ShowPanel={false}>
                                 </ExpressionBuilderPreview>
@@ -182,12 +182,12 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.onDeleteSearchExpressionItem();
     }
 
-    onDeleteNamedExpression(columnId: string, index: number) {
-        let columnNamedExpressions = this.state.SelectedAdvancedSearch.Expression.NamedExpressions.find(x => x.ColumnName == columnId)
-        columnNamedExpressions.Named.splice(index, 1)
-        if (columnNamedExpressions.Named.length == 0) {
-            let columnNamedExpressionIndex = this.state.SelectedAdvancedSearch.Expression.NamedExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.NamedExpressions.splice(columnNamedExpressionIndex, 1)
+    onDeleteUserFilterExpression(columnId: string, index: number) {
+        let columnUserFilterExpressions = this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
+        columnUserFilterExpressions.Named.splice(index, 1)
+        if (columnUserFilterExpressions.Named.length == 0) {
+            let columnUserFilterExpressionIndex = this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.findIndex(x => x.ColumnName == columnId)
+            this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.splice(columnUserFilterExpressionIndex, 1)
         }
         this.onDeleteSearchExpressionItem();
     }

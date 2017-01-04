@@ -5,7 +5,6 @@ import { MenuType, LeafExpressionOperator, ColumnType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expression/PredefinedExpressionHelper';
 import { Expression } from '../Expression/Expression'
-import { INamedExpression } from '../Interface/IExpression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Extensions'
@@ -68,17 +67,17 @@ export class SearchService implements ISearchService {
         }
     }
 
-    public ApplySearchOnNamedExpressions(namedExpressionIds: string[]): void {
+    public ApplySearchOnUserFilterExpressions(userFilterExpressionIds: string[]): void {
         let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
-        let namedExpressionsInCurrentSearch: string[] = [];
+        let userFilterExpressionsInCurrentSearch: string[] = [];
 
         advancedSearchExpressions.forEach(a => {
-            a.NamedExpressions.forEach(n => {
-                namedExpressionsInCurrentSearch.push(...n.Named);
+            a.UserFilterExpressions.forEach(n => {
+                userFilterExpressionsInCurrentSearch.push(...n.Named);
             })
         })
 
-        if (namedExpressionsInCurrentSearch.find(n =>namedExpressionIds.find(ne=>ne== n)!=null  )) {
+        if (userFilterExpressionsInCurrentSearch.find(n =>userFilterExpressionIds.find(ne=>ne== n)!=null  )) {
             this.ApplySearchOnGrid();
         }
     }
@@ -141,7 +140,7 @@ export class SearchService implements ISearchService {
                 {
                     ColumnValues: null,
                     ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
-                    NamedExpression: null
+                    UserFilterExpression: null
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
                 let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);

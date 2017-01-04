@@ -6,7 +6,6 @@ import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
 import { Expression } from '../../Core/Expression/Expression';
-import { INamedExpression } from '../../Core/Interface/IExpression';
 
 
 

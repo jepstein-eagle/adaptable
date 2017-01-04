@@ -31,7 +31,7 @@ import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { AlertStrategy } from '../Strategy/AlertStrategy'
-import { NamedExpressionStrategy } from '../Strategy/NamedExpressionStrategy'
+import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { FilterStrategy } from '../Strategy/FilterStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
@@ -80,7 +80,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyIds.NamedExpressionStrategyId, new NamedExpressionStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);

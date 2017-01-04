@@ -5,48 +5,48 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, FormGroup, Panel, ControlLabel, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as NamedExpressionRedux from '../../Redux/ActionsReducers/NamedExpressionRedux'
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { INamedExpression } from '../../Core/interface/IExpression';
+import { IUserFilterExpression } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'
-import { INamedExpressionStrategy } from '../../Core/Interface/INamedExpressionStrategy';
+import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
-import { NamedExpressionWizard } from './NamedExpressionWizard'
-import { NamedExpressionSettingsWizard } from './NamedExpressionSettingsWizard'
+import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
+import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../PanelWithRow';
 
 
-interface NamedExpressionConfigProps extends IStrategyViewPopupProps<NamedExpressionConfigComponent> {
-    NamedExpressions: INamedExpression[]
+interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
+    UserFilterExpressions: IUserFilterExpression[]
     Columns: IColumn[],
-    onDeleteNamedExpression: (NamedExpression: INamedExpression) => NamedExpressionRedux.NamedExpressionDeleteAction
-    onAddEditNamedExpression: (NamedExpression: INamedExpression) => NamedExpressionRedux.NamedExpressionAddOrUpdateAction
+    onDeleteUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => UserFilterRedux.UserFilterDeleteAction
+    onAddEditUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => UserFilterRedux.UserFilterAddOrUpdateAction
 }
 
-interface NamedExpressionConfigState {
-    EditedNamedExpression: INamedExpression
+interface UserFilterConfigState {
+    EditedUserFilterExpression: IUserFilterExpression
 }
 
-class NamedExpressionConfigComponent extends React.Component<NamedExpressionConfigProps, NamedExpressionConfigState> {
+class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, UserFilterConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedNamedExpression: null }
+        this.state = { EditedUserFilterExpression: null }
     }
 
     render() {
 
         let selectedColumnId: string = "select";
-        if (this.state.EditedNamedExpression != null) {
-            let editedColumn: string = ExpressionHelper.GetColumnIdForNamedExpression(this.state.EditedNamedExpression);
+        if (this.state.EditedUserFilterExpression != null) {
+            let editedColumn: string = ExpressionHelper.GetColumnIdForUserFilterExpression(this.state.EditedUserFilterExpression);
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
             }
@@ -54,7 +54,7 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
 
         let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
 
-        let namedExpressionItems = this.props.NamedExpressions.filter(f => !f.IsPredefined).map((x) => {
+        let UserFilterExpressionItems = this.props.UserFilterExpressions.filter(f => !f.IsPredefined).map((x) => {
             return <li
                 className="list-group-item" key={x.Uid}>
                 <Row >
@@ -66,8 +66,8 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.onDeleteNamedExpression(x)}
-                            editClick={() => this.onEditNamedExpression(x)}>
+                            deleteClick={() => this.onDeleteUserFilterExpression(x)}
+                            editClick={() => this.onEditUserFilterExpression(x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -76,68 +76,68 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
 
         return <PanelWithButton headerText="Column Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Column Filter"}
-            buttonClick={() => this.onCreateNamedExpression()}  >
-            {namedExpressionItems.length > 0 &&
+            buttonClick={() => this.onCreateUserFilterExpression()}  >
+            {UserFilterExpressionItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     <ListGroup style={listGroupStyle}>
-                        {namedExpressionItems}
+                        {UserFilterExpressionItems}
                     </ListGroup>
                 </div>
             }
 
-            {namedExpressionItems.length == 0 &&
+            {UserFilterExpressionItems.length == 0 &&
                 <Well bsSize="small">Click 'Create Column Filter' to start creating column filters.</Well>
             }
 
-            {this.state.EditedNamedExpression != null &&
+            {this.state.EditedUserFilterExpression != null &&
                 <AdaptableWizard Steps={[
-                    <NamedExpressionWizard
+                    <UserFilterExpressionWizard
                         Blotter={this.props.AdaptableBlotter}
                         ColumnList={this.props.Columns}
                         ExpressionMode={ExpressionMode.SingleColumn}
                         SelectedColumnId={selectedColumnId} />,
-                    <NamedExpressionSettingsWizard
+                    <UserFilterSettingsWizard
                         Blotter={this.props.AdaptableBlotter}
                         Columns={this.props.Columns} />,
                 ]}
-                    Data={this.state.EditedNamedExpression}
+                    Data={this.state.EditedUserFilterExpression}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.finishWizard()} ></AdaptableWizard>}
         </PanelWithButton>
     }
 
-    onCreateNamedExpression() {
-        // have to use any as cannot cast from IStrategy to INamedExpressionStrategy  :(
-        let namedExpressionStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.NamedExpressionStrategyId);
-        let emptyFilter: INamedExpression = namedExpressionStrategy.CreateEmptyNamedExpression();
-        this.setState({ EditedNamedExpression: emptyFilter });
+    onCreateUserFilterExpression() {
+        // have to use any as cannot cast from IStrategy to IUserFilterExpressionStrategy  :(
+        let UserFilterExpressionStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.UserFilterStrategyId);
+        let emptyFilter: IUserFilterExpression = UserFilterExpressionStrategy.CreateEmptyUserFilterExpression();
+        this.setState({ EditedUserFilterExpression: emptyFilter });
     }
 
-    onEditNamedExpression(namedExpression: INamedExpression) {
+    onEditUserFilterExpression(UserFilterExpression: IUserFilterExpression) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedNamedExpression: Helper.cloneObject(namedExpression) });
+        this.setState({ EditedUserFilterExpression: Helper.cloneObject(UserFilterExpression) });
     }
 
-    onDeleteNamedExpression(namedExpression: INamedExpression) {
-        this.props.onDeleteNamedExpression(namedExpression);
+    onDeleteUserFilterExpression(UserFilterExpression: IUserFilterExpression) {
+        this.props.onDeleteUserFilterExpression(UserFilterExpression);
     }
 
     closeWizard() {
-        this.setState({ EditedNamedExpression: null, });
+        this.setState({ EditedUserFilterExpression: null, });
     }
 
     finishWizard() {
-        this.props.onAddEditNamedExpression(this.state.EditedNamedExpression);
-        this.setState({ EditedNamedExpression: null });
+        this.props.onAddEditUserFilterExpression(this.state.EditedUserFilterExpression);
+        this.setState({ EditedUserFilterExpression: null });
     }
 
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        NamedExpressions: state.NamedExpression.NamedExpressions,
+        UserFilterExpressions: state.UserFilter.UserFilters,
         Columns: state.Grid.Columns
     };
 }
@@ -145,12 +145,12 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteNamedExpression: (NamedExpression: INamedExpression) => dispatch(NamedExpressionRedux.DeleteNamedExpression(NamedExpression)),
-        onAddEditNamedExpression: (NamedExpression: INamedExpression) => dispatch(NamedExpressionRedux.AddEditNamedExpression(NamedExpression))
+        onDeleteUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => dispatch(UserFilterRedux.DeleteUserFilter(UserFilterExpression)),
+        onAddEditUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => dispatch(UserFilterRedux.AddEditUserFilter(UserFilterExpression))
     };
 }
 
-export let NamedExpressionConfig = connect(mapStateToProps, mapDispatchToProps)(NamedExpressionConfigComponent);
+export let UserFilterConfig = connect(mapStateToProps, mapDispatchToProps)(UserFilterConfigComponent);
 
 let listGroupStyle = {
     overflowY: 'auto',

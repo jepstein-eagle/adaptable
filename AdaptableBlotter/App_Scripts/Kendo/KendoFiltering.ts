@@ -1,9 +1,8 @@
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { IRangeExpression, INamedExpression } from '../Core/Interface/IExpression';
+import { IRangeExpression } from '../Core/Interface/IExpression';
 import { Helper } from '../Core/Helper';
 import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { NamedExpressionState } from './../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { IColumnFilter } from '../Core/Interface/IFilterStrategy';
 import { Expression } from '../Core/Expression/Expression';

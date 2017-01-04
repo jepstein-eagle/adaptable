@@ -9,7 +9,6 @@ import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
-import { INamedExpression } from '../../Core/Interface/IExpression';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
                     // since html cannot render a button within a button.
@@ -24,7 +23,7 @@ interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Expression
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
-    DeleteNamedExpression: (ColumnId: string, index: number) => void
+    DeleteUserFilterExpression: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
     ShowPanel: boolean
 }
@@ -60,20 +59,20 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 })
             }
 
-            // Next do the named expressions
+            // Next do the user filter expressions
 
-            let columnNamedExpressions = this.props.Expression.NamedExpressions.find(ne => ne.ColumnName == columnId)
-            let columnNamedExpressionsListgroupItems: JSX.Element[]
-            if (columnNamedExpressions) {
-                let namedExpressions = ExpressionHelper.GetNamedExpressions(columnNamedExpressions.Named, this.props.Blotter);
-                if (namedExpressions) {
-                    columnNamedExpressionsListgroupItems = namedExpressions.map((ne, index) => {
+            let columnUserFilterExpressions = this.props.Expression.UserFilterExpressions.find(ne => ne.ColumnName == columnId)
+            let columnUserFilterExpressionsListgroupItems: JSX.Element[]
+            if (columnUserFilterExpressions) {
+                let userFilterExpressions = ExpressionHelper.GetUserFilterExpressions(columnUserFilterExpressions.Named, this.props.Blotter);
+                if (userFilterExpressions) {
+                    columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
                         return <ListGroupItem key={ne.Uid}>
                             <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                 <Form inline>
                                     {ne.FriendlyName}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteNamedExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteUserFilterExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
                                     </OverlayTrigger>
                                 </Form>
                             </div>
@@ -153,7 +152,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 </Button>
                 <ListGroup>
                     {columnValuesListgroupItems}
-                    {columnNamedExpressionsListgroupItems}
+                    {columnUserFilterExpressionsListgroupItems}
                     {columnRangesListgroupItems}
                 </ListGroup>
             </div>
