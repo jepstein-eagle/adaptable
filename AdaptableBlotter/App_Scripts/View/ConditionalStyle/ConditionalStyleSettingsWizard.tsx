@@ -6,13 +6,9 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, ColumnType, LeafExpressionOperator } from '../../Core/Enums';
-import { Helper } from '../../Core/Helper';
 import { Expression } from '../../Core/Expression/Expression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { EnumExtensions } from '../../Core/Extensions';
 import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
-import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
+import { NamedExpressionState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ColorPicker } from '../ColorPicker';
 
 
@@ -51,7 +47,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     render(): any {
 
         let optionColumns = this.props.Columns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         if (this.predefinedExpressions.length == 0) {
@@ -61,7 +57,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.GetFilterState().CreatedFilters.find(f => f.Uid == "Positive"),
+                        NamedExpression: this.GetNamedExpressionState().NamedExpressions.find(f => f.Uid == "Positive"),
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -72,7 +68,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        NamedExpression: this.GetFilterState().CreatedFilters.find(f => f.Uid == "Negative"),
+                        NamedExpression: this.GetNamedExpressionState().NamedExpressions.find(f => f.Uid == "Negative"),
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
@@ -90,48 +86,47 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         return <Panel header="Conditional Style Settings" bsStyle="primary">
             <Form horizontal>
 
-
                 <FormGroup controlId="whereApplied">
-                    <Col xs={4} componentClass={ControlLabel}>Apply To: </Col>
-                    <Col xs={8}>
-                        <FormControl componentClass="select" placeholder="select" value={this.state.ConditionalStyleScope.toString()} onChange={(x) => this.onWhereAppliedSelectChange(x)} >
-                            {
-                                EnumExtensions.getNamesAndValues(ConditionalStyleScope).map((conditionalStyleScopeNameAndValue: any) => {
-                                    return <option key={conditionalStyleScopeNameAndValue.value} value={conditionalStyleScopeNameAndValue.value}>{conditionalStyleScopeNameAndValue.name}</option>
-                                })
-                            })
-                            }
-                        </FormControl>
-                    </Col>
+
+                    <Form inline >
+                        <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
+                        <Col xs={3}>
+                            <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
+                        </Col>
+                        <Col xs={5}>
+                            <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
+                        </Col>
+                    </Form>
                 </FormGroup>
 
                 {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ?
+                    <div>
+                        <FormGroup controlId="formColumn">
+                            <Col componentClass={ControlLabel} xs={4}>Select Column: </Col>
+                            <Col xs={8}>
+                                <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
+                                    <option value="select" key="select">Select a column</option>
+                                    {optionColumns}
+                                </FormControl>
+                            </Col>
+                        </FormGroup>
 
-                    <FormGroup controlId="formColumn">
-                        <Col componentClass={ControlLabel} xs={4}>Select Column: </Col>
-                        <Col xs={8}>
-                            <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
-                                <option value="select" key="select">Select a column</option>
-                                {optionColumns}
-                            </FormControl>
-                        </Col>
-                    </FormGroup>
-                    : null}
 
-                <FormGroup controlId="applyTo">
-                    <Col xs={4} componentClass={ControlLabel}>Expression Type: </Col>
-                    <Col xs={8}>
-                        <Radio value="custom" checked={this.state.IsPredefinedExpression == false}
-                            onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Custom Expression (created in next step)
+                        <FormGroup controlId="expressionType">
+                            <Col xs={4} componentClass={ControlLabel}>Expression Type: </Col>
+                            <Col xs={8}>
+                                <Radio value="custom" checked={this.state.IsPredefinedExpression == false}
+                                    onChange={(e) => this.onExpressionOptionChange(e)}>
+                                    Custom Expression (created in next step)
                         </Radio>
-                        {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ? <Radio value="predefined"
-                            checked={this.state.IsPredefinedExpression == true} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Existing Expression
-                        </Radio> : null}
-                    </Col>
-                </FormGroup>
-
+                                <Radio value="predefined"
+                                    checked={this.state.IsPredefinedExpression == true} onChange={(e) => this.onExpressionOptionChange(e)}>
+                                    Existing Expression
+                        </Radio>
+                            </Col>
+                        </FormGroup>
+                    </div>
+                    : null}
 
                 {this.state.IsPredefinedExpression ?
 
@@ -165,8 +160,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
-    private GetFilterState(): FilterState {
-        return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    private GetNamedExpressionState(): NamedExpressionState {
+        return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().NamedExpression;
     }
 
 
@@ -196,16 +191,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.setState({ ForeColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
     }
 
-    private onWhereAppliedSelectChange(event: React.FormEvent) {
+    private onWhereAppliedSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let conditionalScope = Number.parseInt(e.value)
-        if (conditionalScope == ConditionalStyleScope.Column) {
-            this.setState({ ConditionalStyleScope: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        if (e.value == "Column") {
+            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
+        } else {
+            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Row, IsPredefinedExpression: false } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
         }
-        else if (conditionalScope == ConditionalStyleScope.Row) {
-            this.setState({ ConditionalStyleScope: Number.parseInt(e.value), IsPredefinedExpression: false } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsPredefinedExpression))
-        }
-
     }
 
     private onCreatePredefinedExpression() {

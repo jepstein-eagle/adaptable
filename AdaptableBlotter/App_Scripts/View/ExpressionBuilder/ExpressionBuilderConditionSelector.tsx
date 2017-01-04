@@ -11,7 +11,6 @@ import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormCon
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'
-import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -81,7 +80,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: Array.from(new Set(theProps.Blotter.getColumnValueString(theProps.SelectedColumnId))),
                 SelectedColumnValues: selectedColumnValues,
-                NamedExpressions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.map(f => f.Uid),
+                NamedExpressions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.map(f => f.Uid),
                 SelectedNamedExpresions: selectedColumnNamedExpressions,
                 SelectedColumnRanges: selectedColumnRanges
             };
@@ -94,7 +93,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
     render() {
         let optionColumns = this.props.ColumnsList.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;

@@ -68,7 +68,7 @@ export class SearchService implements ISearchService {
         }
     }
 
-    public ApplySearchOnFilters(namedExpressionIds: string[]): void {
+    public ApplySearchOnNamedExpressions(namedExpressionIds: string[]): void {
         let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
         let namedExpressionsInCurrentSearch: string[] = [];
 

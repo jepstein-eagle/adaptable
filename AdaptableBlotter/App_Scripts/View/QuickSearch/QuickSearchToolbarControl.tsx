@@ -38,7 +38,7 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
                     />{' '}
 
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                    <Button bsSize='small' bsStyle='success' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Search</Button>
+                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Search</Button>
                 </OverlayTrigger>
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>

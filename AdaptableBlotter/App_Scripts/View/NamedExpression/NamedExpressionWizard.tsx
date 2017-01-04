@@ -7,14 +7,14 @@ import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../Expressi
 import { INamedExpression } from '../../Core/Interface/IExpression';
 
 
-interface FilterExpressionWizardProps extends AdaptableWizardStepProps<INamedExpression> {
+interface NamedExpressionWizardProps extends AdaptableWizardStepProps<INamedExpression> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string
 }
 
-export class FilterExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: FilterExpressionWizardProps) {
+export class NamedExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+    constructor(private props2: NamedExpressionWizardProps) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

@@ -43,7 +43,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
                 onEdit={(customSort) => this.onEditCustomSort(customSort)}
                 onDelete={(customSort) => this.props.onDeleteCustomSort(customSort)}
-                ColumnLabel={column.ColumnFriendlyName}></CustomSortConfigItem>
+                ColumnLabel={column.FriendlyName}></CustomSortConfigItem>
         });
 
  let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];

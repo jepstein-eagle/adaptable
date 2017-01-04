@@ -30,7 +30,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
         var columnsItems = this.props.Columns.map((Column: IColumn) => {
             return <ListGroupItem key={Column.ColumnId}
                 onClick={() => this.onClickColum(Column)}
-                active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.ColumnFriendlyName}</ListGroupItem>
+                active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.FriendlyName}</ListGroupItem>
         })
         return <Panel header="Select a Column" bsStyle="primary">
             <ListGroup style={listGroupStyle}>

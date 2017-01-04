@@ -32,7 +32,7 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     <Checkbox onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
                 </Col>
                 <Col md={4} >
-                    {this.props.Columns.find(f => f.ColumnId == this.props.FlashingColumn.ColumnName).ColumnFriendlyName}
+                    {this.props.Columns.find(f => f.ColumnId == this.props.FlashingColumn.ColumnName).FriendlyName}
                 </Col>
                 <Col md={3} >
                     {

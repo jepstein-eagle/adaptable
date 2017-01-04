@@ -28,7 +28,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
             SelectedValues: this.props.Data.CustomSortItems,
             IsEdit: this.props.Data.CustomSortItems.length > 0
         }
-        this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).ColumnFriendlyName
+        this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
 
 

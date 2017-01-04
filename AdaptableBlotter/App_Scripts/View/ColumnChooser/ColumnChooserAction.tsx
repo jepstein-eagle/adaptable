@@ -25,7 +25,7 @@ class ColumnChooserActionComponent extends React.Component<ColumnChooserActionPr
                 SelectedValues={this.props.Columns.filter(x=>x.Visible)}
                 HeaderAvailable="Hidden Columns"
                 HeaderSelected="Visible Columns"
-                DisplayMember="ColumnFriendlyName"
+                DisplayMember="FriendlyName"
                 ValueMember="ColumnId"
                 ValuesDataType={ColumnType.String}
                 onChange={(SelectedValues) => this.props.onNewColumnListOrder(SelectedValues) }></DualListBoxEditor>

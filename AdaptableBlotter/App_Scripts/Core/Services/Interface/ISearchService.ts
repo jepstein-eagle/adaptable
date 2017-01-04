@@ -6,7 +6,7 @@ export interface ISearchService {
 
    ApplySearchOnRow(rowIdentifier: any): void
 
-    ApplySearchOnFilters(namedExpressionIds: string[]):void
+    ApplySearchOnNamedExpressions(namedExpressionIds: string[]):void
     
 
 }

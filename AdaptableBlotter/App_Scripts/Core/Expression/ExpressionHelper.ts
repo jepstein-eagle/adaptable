@@ -3,7 +3,6 @@ import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export module ExpressionHelper {
 
@@ -17,7 +16,7 @@ export module ExpressionHelper {
 
         let columnList = GetColumnListFromExpression(Expression)
         for (let columnId of columnList) {
-            let columnFriendlyName = columns.find(x => x.ColumnId == columnId).ColumnFriendlyName
+            let columnFriendlyName = columns.find(x => x.ColumnId == columnId).FriendlyName
             let columnToString = ""
 
             // Column Values
@@ -198,11 +197,11 @@ export module ExpressionHelper {
     }
 
     export function GetNamedExpressions(namedExpressionUids: string[], blotter: IAdaptableBlotter): INamedExpression[] {
-        return blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => namedExpressionUids.find(uid => uid == f.Uid) != null)
+        return blotter.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.filter(f => namedExpressionUids.find(uid => uid == f.Uid) != null)
     }
 
     export function ShouldShowNamedExpressionForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
-        let namedExpression: INamedExpression = blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.find(f => f.Uid == expressionUid);
+        let namedExpression: INamedExpression = blotter.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.find(f => f.Uid == expressionUid);
 
         // predefined expressions return if its right column type
         if (namedExpression.IsPredefined) {

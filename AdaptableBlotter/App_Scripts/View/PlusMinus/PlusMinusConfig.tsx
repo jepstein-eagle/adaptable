@@ -48,7 +48,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
             let optionColumns = this.props.Columns.filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
-                return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+                return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
             })
             return <li
                 className="list-group-item" key={x.ColumnId + index}>

@@ -26,7 +26,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
     render(): any {
 
         let optionColumns = this.props.Columns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         return <li

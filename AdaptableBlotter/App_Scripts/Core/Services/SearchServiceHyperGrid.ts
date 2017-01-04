@@ -30,7 +30,7 @@ export class SearchServiceHyperGrid implements ISearchService {
         theBlotterBypass.ReindexAndRepaint()
     }
 
-    public ApplySearchOnFilters(namedExpressionIds: string[]): void {
+    public ApplySearchOnNamedExpressions(namedExpressionIds: string[]): void {
         let theBlotterBypass: AdaptableBlotter = this.blotter as AdaptableBlotter
         theBlotterBypass.ReindexAndRepaint()
     }

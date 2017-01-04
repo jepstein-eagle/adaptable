@@ -1,65 +1,64 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import { FilterState } from './Interface/IState';
+import { NamedExpressionState } from './Interface/IState';
 import { INamedExpression } from '../../Core/interface/IExpression';
 import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';
 
 
-export const FILTER_ADD_OR_UPDATE = 'FILTER_ADD_OR_UPDATE';
-export const FILTER_DELETE = 'FILTER_DELETE';
+export const NAMED_EXPRESSION_ADD_OR_UPDATE = 'NAMED_EXPRESSION_ADD_OR_UPDATE';
+export const NAMED_EXPRESSION_DELETE = 'NAMED_EXPRESSION_DELETE';
 
 
-export interface FilterAddOrUpdateAction extends Redux.Action {
+export interface NamedExpressionAddOrUpdateAction extends Redux.Action {
     Filter: INamedExpression
 }
 
-export interface FilterDeleteAction extends Redux.Action {
+export interface NamedExpressionDeleteAction extends Redux.Action {
     Filter: INamedExpression
 }
 
-export const AddEditFilter = (Filter: INamedExpression): FilterAddOrUpdateAction => ({
-    type: FILTER_ADD_OR_UPDATE,
+export const AddEditNamedExpression = (Filter: INamedExpression): NamedExpressionAddOrUpdateAction => ({
+    type: NAMED_EXPRESSION_ADD_OR_UPDATE,
     Filter
 })
 
-export const DeleteFilter = (Filter: INamedExpression): FilterDeleteAction => ({
-    type: FILTER_DELETE,
+export const DeleteNamedExpression = (Filter: INamedExpression): NamedExpressionDeleteAction => ({
+    type: NAMED_EXPRESSION_DELETE,
     Filter
 })
 
-const initialFilterState:
-    FilterState = {
-        CreatedFilters: CreatePredefinedExpressions(),
-        CurrentFilters: []
+const initialNamedExpressionState:
+    NamedExpressionState = {
+        NamedExpressions: CreatePredefinedExpressions(),
     }
 
-export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {
+export const NamedExpressionReducer: Redux.Reducer<NamedExpressionState> = (state: NamedExpressionState = initialNamedExpressionState, action: Redux.Action): NamedExpressionState => {
     let index: number;
-    let filters: INamedExpression[]
+    let namedExpressions: INamedExpression[]
 
 
     switch (action.type) {
 
-        case FILTER_ADD_OR_UPDATE: {
-            let actionTypedAddUpdate = (<FilterAddOrUpdateAction>action)
-            filters = [].concat(state.CreatedFilters)
-            index = filters.findIndex(i => i.Uid == actionTypedAddUpdate.Filter.Uid)
+        case NAMED_EXPRESSION_ADD_OR_UPDATE: {
+            let actionTypedAddUpdate = (<NamedExpressionAddOrUpdateAction>action)
+            namedExpressions = [].concat(state.NamedExpressions)
+            index = namedExpressions.findIndex(i => i.Uid == actionTypedAddUpdate.Filter.Uid)
             if (index != -1) {  // it exists
-                filters[index] = actionTypedAddUpdate.Filter
+                namedExpressions[index] = actionTypedAddUpdate.Filter
             } else {
-                filters.push(actionTypedAddUpdate.Filter)
+                namedExpressions.push(actionTypedAddUpdate.Filter)
             }
-            return Object.assign({}, state, { CreatedFilters: filters })
+            return Object.assign({}, state, { NamedExpressions: namedExpressions })
         }
 
-        case FILTER_DELETE: {
-            let actionTypedDelete = (<FilterDeleteAction>action)
-            filters = [].concat(state.CreatedFilters)
-            index = filters.findIndex(i => i.Uid == actionTypedDelete.Filter.Uid)
-            filters.splice(index, 1);
-            return Object.assign({}, state, { CreatedFilters: filters })
+        case NAMED_EXPRESSION_DELETE: {
+            let actionTypedDelete = (<NamedExpressionDeleteAction>action)
+            namedExpressions = [].concat(state.NamedExpressions)
+            index = namedExpressions.findIndex(i => i.Uid == actionTypedDelete.Filter.Uid)
+            namedExpressions.splice(index, 1);
+            return Object.assign({}, state, { NamedExpressions: namedExpressions })
         }
 
         default:

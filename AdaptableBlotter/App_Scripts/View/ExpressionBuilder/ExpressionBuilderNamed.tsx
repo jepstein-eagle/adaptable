@@ -1,10 +1,8 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
-import { ColumnType } from '../../Core/Enums'
 import { INamedExpression } from '../../Core/Interface/IExpression';
 
 
@@ -17,9 +15,6 @@ interface ExpressionBuilderNamedProps extends React.ClassAttributes<ExpressionBu
 export class ExpressionBuilderNamed extends React.Component<ExpressionBuilderNamedProps, {}> {
 
     render(): any {
-
-        // testing if round trip works..
-        var test: any = this.props.SelectedNamedExpressions;
 
         var namedExpressions = this.props.NamedExpressions.map((ne: INamedExpression, index: number) => {
             return <ListGroupItem key={index}

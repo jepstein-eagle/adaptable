@@ -31,14 +31,14 @@ import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { AlertStrategy } from '../Strategy/AlertStrategy'
-import { FilterStrategy } from '../Strategy/FilterStrategy'
+import { NamedExpressionStrategy } from '../Strategy/NamedExpressionStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
-import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IFilterContext } from '../Core/Interface/INamedExpressionStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
@@ -79,7 +79,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.NamedExpressionStrategyId, new NamedExpressionStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -170,7 +170,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Container: e.container,
                 Popup: e.container.data("kendoPopup"),
                 DataSource: grid.dataSource,
-                ColumnId: e.field,
+                Column:   this.getColumnFromColumnId(e.field),
                 Blotter: this
             };
             this.initUrlFilterUI(filterContext);
@@ -182,10 +182,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // Remove default filter UI
         filterContext.Container.off();
         filterContext.Container.empty();
-        let formId = "filterform" + filterContext.ColumnId;
+        let formId = "filterform" + filterContext.Column.ColumnId;
         filterContext.Container.html('<div id="' + formId + '"></div>');
         var filterContainer = document.getElementById(formId);
-        ReactDOM.render(FilterFormReact(filterContext.Blotter), filterContainer);
+        ReactDOM.render(FilterFormReact(filterContext), filterContainer);
         //   filterContext.container
         //       .on('submit', $.proxy(onSubmit, filterContext))
         //       .on('reset', $.proxy(onReset, filterContext));
@@ -198,7 +198,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let columns: IColumn[] = this.grid.columns.map(x => {
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
-                ColumnFriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
+                FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
                 ColumnType: this.getColumnType(x.field),
                 Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
             }
@@ -360,7 +360,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnHeader(columnId: string): string {
         let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
         if (column) {
-            return column.ColumnFriendlyName
+            return column.FriendlyName
         }
         else {
             return "";
@@ -594,7 +594,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //          return false;
         //    }
 
-        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => !f.IsPredefined);
+        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.filter(f => !f.IsPredefined);
         let columnFilters: IColumnFilter[] = []
 
         // this should really be an iFilter...
@@ -617,7 +617,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => !f.IsPredefined);
+        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.filter(f => !f.IsPredefined);
         let columnFilters: IColumnFilter[] = []
 
         // this should really be an iFilter...

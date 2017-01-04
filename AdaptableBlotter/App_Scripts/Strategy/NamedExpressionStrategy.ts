@@ -1,4 +1,4 @@
-import { IFilterStrategy } from '../Core/Interface/IFilterStrategy';
+import { INamedExpressionStrategy } from '../Core/Interface/INamedExpressionStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -8,37 +8,36 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { INamedExpression } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
-import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { NamedExpressionState } from '../Redux/ActionsReducers/Interface/IState';
 
 
-export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
+export class NamedExpressionStrategy extends AdaptableStrategyBase implements INamedExpressionStrategy {
     private menuItemConfig: IMenuItem;
     private namedExpressions: INamedExpression[]
 
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.FilterStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'FilterConfig', MenuType.Configuration, "filter");
+        super(StrategyIds.NamedExpressionStrategyId, blotter)
+        this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'NamedExpressionConfig', MenuType.Configuration, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
 
     InitState() {
-        if (this.namedExpressions != this.GetFilterState().CreatedFilters) {
+        if (this.namedExpressions != this.GetNamedExpressionState().NamedExpressions) {
 
             // call search service as search might need to re-run if its using a filter that has changed / been deleted
             // tell the search service that a filter has changed and it will decide if it needs to run search
-            // get filter ids in old collection that are not in new one (as we dont care about new filters)
+            // get filter ids in old collection that are not in new one (as we dont care about new named expressions)
             if (this.namedExpressions != null && this.namedExpressions.length > 0) {
                 let oldFilterUids: string[] = this.namedExpressions.filter(f => !f.IsPredefined).map(f => f.Uid);
-                this.blotter.SearchService.ApplySearchOnFilters(oldFilterUids);
+                this.blotter.SearchService.ApplySearchOnNamedExpressions(oldFilterUids);
             }
-            this.namedExpressions = this.GetFilterState().CreatedFilters;
+            this.namedExpressions = this.GetNamedExpressionState().NamedExpressions;
         }
-
     }
 
-    public CreateEmptyFilter(): INamedExpression {
+    public CreateEmptyNamedExpression(): INamedExpression {
 
         let namedExpression: INamedExpression = {
             Uid: Helper.generateUid(),
@@ -59,8 +58,8 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
         return [this.menuItemConfig];
     }
 
-    private GetFilterState(): FilterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    private GetNamedExpressionState(): NamedExpressionState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().NamedExpression;
     }
 }
 

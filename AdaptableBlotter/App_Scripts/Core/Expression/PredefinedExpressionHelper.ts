@@ -1,7 +1,6 @@
 import { Expression } from './Expression'
 import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
 
 
 export interface IPredefinedExpressionInfo {

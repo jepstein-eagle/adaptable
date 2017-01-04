@@ -31,7 +31,7 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
 
     render(): any {
         let optionColumns = this.props.Columns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         let selectedColumn: string = (this.state.ColumnId != "") ? this.state.ColumnId : "select";

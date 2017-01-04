@@ -50,7 +50,7 @@ private currentAdvancedSearch: string
 
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='success' disabled={this.currentAdvancedSearch == "select"}  onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
+                        <Button bsSize='small' bsStyle='info' disabled={this.currentAdvancedSearch == "select"}  onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
                     </OverlayTrigger>
 
                     {' '}

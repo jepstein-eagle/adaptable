@@ -204,7 +204,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
-                ColumnFriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
                 Visible: true
             }
@@ -212,7 +212,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let hiddenColumns: IColumn[] = this.grid.behavior.getHiddenColumns().map((x: any) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
-                ColumnFriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
                 Visible: false
             }
@@ -390,7 +390,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnHeader(columnId: string): string {
         let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
         if (column) {
-            return column.ColumnFriendlyName
+            return column.FriendlyName
         }
         else {
             return "";

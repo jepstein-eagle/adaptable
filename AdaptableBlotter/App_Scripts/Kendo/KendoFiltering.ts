@@ -3,9 +3,9 @@ import { IRangeExpression, INamedExpression } from '../Core/Interface/IExpressio
 import { Helper } from '../Core/Helper';
 import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { FilterState } from './../Redux/ActionsReducers/Interface/IState';
+import { NamedExpressionState } from './../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IColumnFilter } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilter } from '../Core/Interface/INamedExpressionStrategy';
 import { Expression } from '../Core/Expression/Expression';
 
 export module KendoFiltering {

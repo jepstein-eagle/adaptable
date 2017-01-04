@@ -9,16 +9,16 @@ import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
-interface FilterSettingsWizardProps extends AdaptableWizardStepProps<INamedExpression> {
+interface NamedExpressionSettingsWizardProps extends AdaptableWizardStepProps<INamedExpression> {
     Blotter: IAdaptableBlotter,
     Columns: Array<IColumn>
 }
-interface FilterSettingsWizardState {
+interface NamedExpressionSettingsWizardState {
     FilterName: string
 }
 
-export class FilterSettingsWizard extends React.Component<FilterSettingsWizardProps, FilterSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: FilterSettingsWizardProps) {
+export class NamedExpressionSettingsWizard extends React.Component<NamedExpressionSettingsWizardProps, NamedExpressionSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: NamedExpressionSettingsWizardProps) {
         super(props)
         this.state = {
             FilterName: this.props.Data.FriendlyName,
@@ -44,7 +44,7 @@ export class FilterSettingsWizard extends React.Component<FilterSettingsWizardPr
 
     onFilterNameChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ FilterName: e.value } as FilterSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ FilterName: e.value } as NamedExpressionSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

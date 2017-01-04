@@ -88,7 +88,7 @@ export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 
 export interface IColumn {
     ColumnId: string,
-    ColumnFriendlyName: string
+    FriendlyName: string
     ColumnType: ColumnType
     Visible: boolean
 }  

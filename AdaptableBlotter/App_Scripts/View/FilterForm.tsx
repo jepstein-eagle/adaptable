@@ -1,21 +1,24 @@
-import { IShortcut } from '../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
-import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
+import { NamedExpressionState, GridState } from '../Redux/ActionsReducers/Interface/IState';
+import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, ListGroupItem, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithRow } from './PanelWithRow';
 import { PanelWithButton } from './PanelWithButton';
+import { IColumnFilter, IFilterContext } from '../Core/Interface/INamedExpressionStrategy';
 
 
 
 
 
 interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
-
+    AdaptableBlotter: IAdaptableBlotter;
+    CurrentColumn: IColumn;
+    NamedExpressionState: NamedExpressionState;
+    GridState: GridState;
 }
 
 interface FilterFormState {
@@ -28,22 +31,35 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         this.state = { isEditing: false }
     }
 
-    render() {
-
-        let cellInfo: [string, number][] = [["Live", 1], ["Key", 2], ["Columns", 2], ["Action", 3], ["Result", 3], ["", 1]];
+    render(): any {
 
 
-        return <PanelWithButton headerText="Shortcuts"
-            buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle}>
-            <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-        </PanelWithButton>
+ let  columnValues: Array<any> = Array.from(new Set(this.props.AdaptableBlotter.getColumnValueString(this.props.CurrentColumn.ColumnId)));
+               
+        var columnValuesGroupItems = columnValues.map((columnValue: any, index: number) => {
+            return <ListGroupItem key={index} bsSize="xsmall"
+                onClick={() => this.onClickColumValue(columnValue)}
+                >
+                {columnValue}
+            </ListGroupItem>
+        })
+
+        return <ListGroup style={listGroupStyle}  >
+            {columnValuesGroupItems}
+        </ListGroup>
     }
 
+    onClickColumValue(columnValue: any) {
+       alert("you filtered on " + columnValue)
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-
+        AdaptableBlotter: ownProps.Blotter,
+        CurrentColumn : ownProps.CurrentColumn,
+        NamedExpressionState: state.NamedExpression,
+        GridState: state.Grid,
     };
 }
 
@@ -56,10 +72,20 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
-export const FilterFormReact = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
-    <FilterForm  />
+export const FilterFormReact = (FilterContext: IFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
+    <FilterForm Blotter={FilterContext.Blotter} CurrentColumn={FilterContext.Column} />
 </Provider>;
 
 let panelStyle = {
     width: '800px'
 }
+
+var listGroupStyle = {
+    'overflowY': 'auto',
+    'maxHeight': '500px',
+    'height': '400px'
+};
+
+var listGroupItemStyle = {
+    fontSize: "small"
+};

@@ -133,7 +133,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         }
 
         // now dealing with updated / edited - need scope, action and value description
-        let scope: string = this.props.Columns.find(c => c.ColumnId == alert.CellChangeRule.ColumnId).ColumnFriendlyName;
+        let scope: string = this.props.Columns.find(c => c.ColumnId == alert.CellChangeRule.ColumnId).FriendlyName;
 
         let action: string = (alert.NotificationType == NotificationType.CellEdited) ? "edited" : "updated";
 

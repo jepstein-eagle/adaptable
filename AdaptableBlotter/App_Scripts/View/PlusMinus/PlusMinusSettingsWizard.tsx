@@ -32,7 +32,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
     }
     render(): any {
         let optionColumns = this.props.Columns.filter(x => x.ColumnType == ColumnType.Number).map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.ColumnFriendlyName}</option>
+            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         return <Panel header="Plus/Minus Settings" bsStyle="primary">

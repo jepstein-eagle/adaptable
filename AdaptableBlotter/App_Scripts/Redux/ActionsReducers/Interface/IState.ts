@@ -10,7 +10,7 @@ import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
 import { IAlert } from '../../../Core/interface/IAlertStrategy';
-import { IColumnFilter } from '../../../Core/interface/IFilterStrategy';
+import { IColumnFilter } from '../../../Core/interface/INamedExpressionStrategy';
 import { INamedExpression } from '../../../Core/interface/IExpression';
 
 
@@ -88,7 +88,10 @@ export interface AlertState {
     Alerts: Array<IAlert>;
 }
 
+export interface NamedExpressionState {
+    NamedExpressions: Array<INamedExpression>;
+}
+
 export interface FilterState {
-    CreatedFilters: Array<INamedExpression>;
     CurrentFilters: Array<IColumnFilter>
 }
