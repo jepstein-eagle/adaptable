@@ -24,7 +24,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
         this.state = {
-            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairList(this.props.Data.ColumnId),
+            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId),
             SelectedValues: this.props.Data.CustomSortItems,
             IsEdit: this.props.Data.CustomSortItems.length > 0
         }

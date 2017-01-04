@@ -421,7 +421,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.setDataSource(this.grid.dataSource);
     }
 
-    public getColumnValueString(columnId: string): Array<string> {
+    public getColumnValueStringDistinct(columnId: string): Array<string> {
         let displayValueArray = this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
         return Array.from(new Set(displayValueArray))
         // let tdIndex = columnIndex + 1;
@@ -441,7 +441,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // return returnVal;
     }
 
-    public getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         this.grid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)

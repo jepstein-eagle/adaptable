@@ -421,7 +421,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.reindex();
         this.grid.repaint();
     }
-    public getColumnValueString(columnId: string): Array<string> {
+    public getColumnValueStringDistinct(columnId: string): Array<string> {
         let returnArray: string[] = []
         let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
@@ -432,7 +432,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return returnArray
     }
 
-    public getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
         for (var index = 0; index < rowCount; index++) {
