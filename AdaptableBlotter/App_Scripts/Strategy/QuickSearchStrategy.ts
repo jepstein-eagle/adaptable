@@ -16,7 +16,6 @@ import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     private quickSearchText: string
     private quickSearchOperator: LeafExpressionOperator
-    private isCaseSenstive: Boolean
 
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
@@ -24,7 +23,6 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         this.menuItemConfig = new MenuItemShowPopup("QuickSearch", this.Id, 'QuickSearchAction', MenuType.Configuration, "search");
         this.quickSearchText = "";
         this.quickSearchOperator = this.GetQuickSearchState().QuickSearchOperator
-        this.isCaseSenstive = this.GetQuickSearchState().IsCaseSensitive;
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
@@ -40,13 +38,6 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchOperator: LeafExpressionOperator = this.GetQuickSearchState().QuickSearchOperator;
         if (this.quickSearchOperator != null && this.quickSearchOperator != stateQuickSearchOperator && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchOperator = stateQuickSearchOperator;
-            this.blotter.SearchService.ApplySearchOnGrid();
-        }
-
-        // Run search if the case sensitivity has changed and search is not empty
-        let stateIsCaseSensitive: Boolean = this.GetQuickSearchState().IsCaseSensitive;
-        if (this.isCaseSenstive != stateIsCaseSensitive && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
-            this.isCaseSenstive = stateIsCaseSensitive;
             this.blotter.SearchService.ApplySearchOnGrid();
         }
     }

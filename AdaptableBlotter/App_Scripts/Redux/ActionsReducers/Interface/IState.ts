@@ -75,7 +75,6 @@ export interface PrintPreviewState {
 export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
-    IsCaseSensitive: Boolean
 }
 
 export interface AdvancedSearchState {

@@ -51,7 +51,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], blotter: IAdaptableBlotter, isCaseSensitive: Boolean = true): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -77,7 +77,7 @@ export module ExpressionHelper {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilterExpression.IsExpressionSatisfied(valueToCheck);
                         } else {
-                            isColumnSatisfied = IsSatisfied(userFilterExpression.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter, isCaseSensitive);
+                            isColumnSatisfied = IsSatisfied(userFilterExpression.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter);
                         }
                         if (isColumnSatisfied) {
                             break;
@@ -112,16 +112,9 @@ export module ExpressionHelper {
                             case ColumnType.Boolean:
                             case ColumnType.Object:
                             case ColumnType.String:
-                                operand1 = range.Operand1
-                                operand2 = range.Operand2
-
-                                // added by JW to allow quicksearch to choose case sensitivity - hope this is right
-                                // only going to worry about it for string columns
-                                if (!isCaseSensitive) {
-                                    operand1 = operand1.toLowerCase();
-                                    operand2 = operand2.toLowerCase();
-                                    columnValue = columnValue.toLowerCase();
-                                }
+                                operand1 = range.Operand1.toLowerCase();
+                                operand2 = range.Operand2.toLowerCase();
+                                columnValue = columnValue.toLowerCase();
                                 break;
                         }
                         switch (range.Operator) {
@@ -340,7 +333,7 @@ export module ExpressionHelper {
         return new Expression([], [], [])
     }
 
-    export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter, isCaseSensitive: Boolean = true): boolean {
+    export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         let returnVal: boolean = (
 
             this.IsSatisfied(
@@ -348,8 +341,7 @@ export module ExpressionHelper {
                 blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
                 blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
                 columns,
-                blotter,
-                isCaseSensitive
+                blotter
             ))
 
         return returnVal;
