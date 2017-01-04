@@ -172,7 +172,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Container: e.container,
                 Popup: e.container.data("kendoPopup"),
                 DataSource: grid.dataSource,
-                Column:   this.getColumnFromColumnId(e.field),
+                Column: this.getColumnFromColumnId(e.field),
                 Blotter: this
             };
             this.initUrlFilterUI(filterContext);
@@ -422,7 +422,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueString(columnId: string): Array<string> {
-        return this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
+        let displayValueArray = this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
+        return Array.from(new Set(displayValueArray))
         // let tdIndex = columnIndex + 1;
 
         // we could get the values from teh data but its not using jquery and we lose the text representation
@@ -438,6 +439,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
         // let returnVal = rows.map((index, element) => $(element).text()).toArray();
         // return returnVal;
+    }
+
+    public getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, DisplayValue: string }> {
+        let returnMap = new Map<string, { rawValue: any, DisplayValue: string }>();
+        this.grid.dataSource.data().forEach((row: any) => {
+            let displayValue = this.getDisplayValueFromRecord(row, columnId)
+            returnMap.set(displayValue, { rawValue: row[columnId], DisplayValue: displayValue });
+        })
+        return Array.from(returnMap.values());
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -476,20 +486,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let column = this.grid.columns.find(x => x.field == columnId);
         let record: any = this.grid.dataSource.getByUid(id);
-        if(column.format)
-        {
-            return kendo.format(column.format, record[columnId])
-        }
-        else
-        {
-            return record[columnId]
-        }
+        return this.getDisplayValueFromRecord(record, columnId)
         // let columnIndex = this.getColumnIndex(columnId)
         // let row = this.getRowByRowIdentifier(id)
         // let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
         // return cell.text();
+    }
+
+    private getDisplayValueFromRecord(row: any, columnId: string): string {
+        let column = this.grid.columns.find(x => x.field == columnId);
+        if (column.format) {
+            return kendo.format(column.format, row[columnId])
+        }
+        else {
+            return row[columnId]
+        }
     }
 
     //Jo: we know that this function is wrong as it's not cumulative
@@ -599,14 +611,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
     }
 
-   
+
     public applyColumnFilters(): void {
 
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-        let columnFilters: IColumnFilter[]  = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-       
+        let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
 
         this.grid.dataSource.filter(kendoFilters);
