@@ -1,11 +1,11 @@
 import { Expression } from './Expression'
-import { IRangeExpression, IUserFilterExpression } from '../Interface/IExpression';
+import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
 
 export interface IPredefinedExpressionInfo {
     ColumnValues: Array<any>,
-    UserFilterExpression: IUserFilterExpression,
+    UserFilter: IUserFilter,
     ExpressionRange: IRangeExpression,
 }
 
@@ -13,9 +13,9 @@ export module PredefinedExpressionHelper {
 
     export function CreatePredefinedExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Expression {
         let columnValuesExpression = CreateColumnValuesExpression(columnName, predefinedExpression);
-        let userFilterExpression = CreateUserFilterExpression(columnName, predefinedExpression, blotter);
+        let userFilter = CreateUserFilter(columnName, predefinedExpression, blotter);
         let rangeExpression = CreateRangeExpression(columnName, predefinedExpression);
-        return new Expression(columnValuesExpression, userFilterExpression, rangeExpression);
+        return new Expression(columnValuesExpression, userFilter, rangeExpression);
     }
 
     function CreateColumnValuesExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Array<{ ColumnName: string, ColumnValues: Array<any> }> {
@@ -27,15 +27,15 @@ export module PredefinedExpressionHelper {
         return columnValuesExpression;
     }
 
-    function CreateUserFilterExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Array<{ ColumnName: string, Named: Array<string> }> {
-        let userFilterExpression: Array<{ ColumnName: string, Named: Array<string> }> = [];
-        if (predefinedExpression.UserFilterExpression != null) {
-            let userfilterExpressions: Array<string> = [];
-            userfilterExpressions.push(predefinedExpression.UserFilterExpression.Uid);
-            let singleUserFilterExpression: { ColumnName: string, Named: Array<string> } = { ColumnName: columnName, Named: userfilterExpressions }
-            userFilterExpression.push(singleUserFilterExpression);
+    function CreateUserFilter(columnName: string, predefinedExpression: IPredefinedExpressionInfo, blotter: IAdaptableBlotter): Array<{ ColumnName: string, UserFilterUids: Array<string> }> {
+        let userFilter: Array<{ ColumnName: string, UserFilterUids: Array<string> }> = [];
+        if (predefinedExpression.UserFilter != null) {
+            let userFilters: Array<string> = [];
+            userFilters.push(predefinedExpression.UserFilter.Uid);
+            let singleUserFilter: { ColumnName: string, UserFilterUids: Array<string> } = { ColumnName: columnName, UserFilterUids: userFilters }
+            userFilter.push(singleUserFilter);
         }
-        return userFilterExpression;
+        return userFilter;
     }
 
     function CreateRangeExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Array<{ ColumnName: string, Ranges: Array<IRangeExpression> }> {

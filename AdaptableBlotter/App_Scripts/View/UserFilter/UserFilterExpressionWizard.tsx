@@ -4,10 +4,10 @@ import * as React from "react";
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { IUserFilterExpression } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
-interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilterExpression> {
+interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string

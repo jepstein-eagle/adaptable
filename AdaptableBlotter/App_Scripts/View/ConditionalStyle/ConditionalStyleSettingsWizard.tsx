@@ -57,7 +57,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilterExpression: this.GetUserFilterExpressionState().UserFilters.find(f => f.Uid == "Positive"),
+                        UserFilter: this.GetUserFilterState().UserFilters.find(f => f.Uid == "Positive"),
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -68,7 +68,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilterExpression: this.GetUserFilterExpressionState().UserFilters.find(f => f.Uid == "Negative"),
+                        UserFilter: this.GetUserFilterState().UserFilters.find(f => f.Uid == "Negative"),
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
@@ -160,7 +160,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
-    private GetUserFilterExpressionState(): UserFilterState {
+    private GetUserFilterState(): UserFilterState {
         return this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter;
     }
 

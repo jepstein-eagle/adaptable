@@ -67,17 +67,17 @@ export class SearchService implements ISearchService {
         }
     }
 
-    public ApplySearchOnUserFilterExpressions(userFilterExpressionIds: string[]): void {
+    public ApplySearchOnUserFilter(userFilterIds: string[]): void {
         let advancedSearchExpressions: Expression[] = this.createAdvancedSearchExpressions();
-        let userFilterExpressionsInCurrentSearch: string[] = [];
+        let userFiltersCurrentSearch: string[] = [];
 
         advancedSearchExpressions.forEach(a => {
-            a.UserFilterExpressions.forEach(n => {
-                userFilterExpressionsInCurrentSearch.push(...n.Named);
+            a.UserFilters.forEach(n => {
+                userFiltersCurrentSearch.push(...n.UserFilterUids);
             })
         })
 
-        if (userFilterExpressionsInCurrentSearch.find(n =>userFilterExpressionIds.find(ne=>ne== n)!=null  )) {
+        if (userFiltersCurrentSearch.find(n =>userFilterIds.find(ne=>ne== n)!=null  )) {
             this.ApplySearchOnGrid();
         }
     }
@@ -140,7 +140,7 @@ export class SearchService implements ISearchService {
                 {
                     ColumnValues: null,
                     ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
-                    UserFilterExpression: null
+                    UserFilter: null
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
                 let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);

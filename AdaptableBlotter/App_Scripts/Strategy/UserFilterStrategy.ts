@@ -5,7 +5,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType, ColumnType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IUserFilterExpression } from '../Core/Interface/IExpression';
+import { IUserFilter } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
@@ -13,7 +13,7 @@ import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private menuItemConfig: IMenuItem;
-    private userFilterExpressions: IUserFilterExpression[]
+    private userFilters: IUserFilter[]
 
 
     constructor(blotter: IAdaptableBlotter) {
@@ -24,22 +24,22 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
 
 
     InitState() {
-        if (this.userFilterExpressions != this.GetUserFilterExpressionState().UserFilters) {
+        if (this.userFilters != this.GetUserFilterState().UserFilters) {
 
             // call search service as search might need to re-run if its using a filter that has changed / been deleted
             // tell the search service that a filter has changed and it will decide if it needs to run search
             // get filter ids in old collection that are not in new one (as we dont care about new user filter expressions)
-            if (this.userFilterExpressions != null && this.userFilterExpressions.length > 0) {
-                let oldFilterUids: string[] = this.userFilterExpressions.filter(f => !f.IsPredefined).map(f => f.Uid);
-                this.blotter.SearchService.ApplySearchOnUserFilterExpressions(oldFilterUids);
+            if (this.userFilters != null && this.userFilters.length > 0) {
+                let oldFilterUids: string[] = this.userFilters.filter(f => !f.IsPredefined).map(f => f.Uid);
+                this.blotter.SearchService.ApplySearchOnUserFilter(oldFilterUids);
             }
-            this.userFilterExpressions = this.GetUserFilterExpressionState().UserFilters;
+            this.userFilters = this.GetUserFilterState().UserFilters;
         }
     }
 
-    public CreateEmptyUserFilterExpression(): IUserFilterExpression {
+    public CreateEmptyUserFilter(): IUserFilter {
 
-        let userFilterExpression: IUserFilterExpression = {
+        let userFilter: IUserFilter = {
             Uid: Helper.generateUid(),
             FriendlyName: "",
             Description: "",
@@ -51,14 +51,14 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             IsPredefined: false
         };
 
-        return userFilterExpression;
+        return userFilter;
     }
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
 
-    private GetUserFilterExpressionState(): UserFilterState {
+    private GetUserFilterState(): UserFilterState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter;
     }
 }

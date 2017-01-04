@@ -11,7 +11,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { IUserFilterExpression } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
@@ -25,28 +25,28 @@ import { PanelWithRow } from '../PanelWithRow';
 
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
-    UserFilterExpressions: IUserFilterExpression[]
+    UserFilters: IUserFilter[]
     Columns: IColumn[],
-    onDeleteUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => UserFilterRedux.UserFilterDeleteAction
-    onAddEditUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => UserFilterRedux.UserFilterAddOrUpdateAction
+    onDeleteUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterDeleteAction
+    onAddEditUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddOrUpdateAction
 }
 
 interface UserFilterConfigState {
-    EditedUserFilterExpression: IUserFilterExpression
+    EditedUserFilter: IUserFilter
 }
 
 class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, UserFilterConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedUserFilterExpression: null }
+        this.state = { EditedUserFilter: null }
     }
 
     render() {
 
         let selectedColumnId: string = "select";
-        if (this.state.EditedUserFilterExpression != null) {
-            let editedColumn: string = ExpressionHelper.GetColumnIdForUserFilterExpression(this.state.EditedUserFilterExpression);
+        if (this.state.EditedUserFilter != null) {
+            let editedColumn: string = ExpressionHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
             }
@@ -54,7 +54,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
 
-        let UserFilterExpressionItems = this.props.UserFilterExpressions.filter(f => !f.IsPredefined).map((x) => {
+        let UserFilterItems = this.props.UserFilters.filter(f => !f.IsPredefined).map((x) => {
             return <li
                 className="list-group-item" key={x.Uid}>
                 <Row >
@@ -66,8 +66,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.onDeleteUserFilterExpression(x)}
-                            editClick={() => this.onEditUserFilterExpression(x)}>
+                            deleteClick={() => this.onDeleteUserFilter(x)}
+                            editClick={() => this.onEditUserFilter(x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -76,21 +76,21 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         return <PanelWithButton headerText="User Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create User Filter"}
-            buttonClick={() => this.onCreateUserFilterExpression()}  >
-            {UserFilterExpressionItems.length > 0 &&
+            buttonClick={() => this.onCreateUserFilter()}  >
+            {UserFilterItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     <ListGroup style={listGroupStyle}>
-                        {UserFilterExpressionItems}
+                        {UserFilterItems}
                     </ListGroup>
                 </div>
             }
 
-            {UserFilterExpressionItems.length == 0 &&
+            {UserFilterItems.length == 0 &&
                 <Well bsSize="small">Click 'Create Column Filter' to start creating column filters.</Well>
             }
 
-            {this.state.EditedUserFilterExpression != null &&
+            {this.state.EditedUserFilter != null &&
                 <AdaptableWizard Steps={[
                     <UserFilterExpressionWizard
                         Blotter={this.props.AdaptableBlotter}
@@ -101,43 +101,43 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                         Blotter={this.props.AdaptableBlotter}
                         Columns={this.props.Columns} />,
                 ]}
-                    Data={this.state.EditedUserFilterExpression}
+                    Data={this.state.EditedUserFilter}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.finishWizard()} ></AdaptableWizard>}
         </PanelWithButton>
     }
 
-    onCreateUserFilterExpression() {
-        // have to use any as cannot cast from IStrategy to IUserFilterExpressionStrategy  :(
-        let UserFilterExpressionStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.UserFilterStrategyId);
-        let emptyFilter: IUserFilterExpression = UserFilterExpressionStrategy.CreateEmptyUserFilterExpression();
-        this.setState({ EditedUserFilterExpression: emptyFilter });
+    onCreateUserFilter() {
+        // have to use any as cannot cast from IStrategy to userFilterStrategy  :(
+        let userFilterStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.UserFilterStrategyId);
+        let emptyFilter: IUserFilter = userFilterStrategy.CreateEmptyUserFilter();
+        this.setState({ EditedUserFilter: emptyFilter });
     }
 
-    onEditUserFilterExpression(UserFilterExpression: IUserFilterExpression) {
+    onEditUserFilter(userFilter: IUserFilter) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedUserFilterExpression: Helper.cloneObject(UserFilterExpression) });
+        this.setState({ EditedUserFilter: Helper.cloneObject(userFilter) });
     }
 
-    onDeleteUserFilterExpression(UserFilterExpression: IUserFilterExpression) {
-        this.props.onDeleteUserFilterExpression(UserFilterExpression);
+    onDeleteUserFilter(userFilter: IUserFilter) {
+        this.props.onDeleteUserFilter(userFilter);
     }
 
     closeWizard() {
-        this.setState({ EditedUserFilterExpression: null, });
+        this.setState({ EditedUserFilter: null, });
     }
 
     finishWizard() {
-        this.props.onAddEditUserFilterExpression(this.state.EditedUserFilterExpression);
-        this.setState({ EditedUserFilterExpression: null });
+        this.props.onAddEditUserFilter(this.state.EditedUserFilter);
+        this.setState({ EditedUserFilter: null });
     }
 
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        UserFilterExpressions: state.UserFilter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
         Columns: state.Grid.Columns
     };
 }
@@ -145,8 +145,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => dispatch(UserFilterRedux.DeleteUserFilter(UserFilterExpression)),
-        onAddEditUserFilterExpression: (UserFilterExpression: IUserFilterExpression) => dispatch(UserFilterRedux.AddEditUserFilter(UserFilterExpression))
+        onDeleteUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.DeleteUserFilter(userFilter)),
+        onAddEditUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.AddEditUserFilter(userFilter))
     };
 }
 

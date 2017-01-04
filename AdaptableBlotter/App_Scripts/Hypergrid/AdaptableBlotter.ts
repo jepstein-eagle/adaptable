@@ -571,6 +571,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public applyColumnFilters(): void { }
 
+       
+
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }

@@ -21,6 +21,7 @@ export class ExcelExportStrategy extends AdaptableStrategyBase implements IExcel
     }
 
 
+
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }

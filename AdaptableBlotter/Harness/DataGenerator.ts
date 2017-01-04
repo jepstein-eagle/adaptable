@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 501; i++) {
+        for (var i = 1; i < 150; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -52,30 +52,29 @@ export class DataGenerator {
     }
 
     createTrade(i: number): ITrade {
-        var bid = this.getMeaningfulDouble();
-        var ask = this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1));
+        var bid = this.getMeaningfulDoubleInRange(5.001, 5.009);
         var tradeDate = this.generateRandomDateAndTime(-5000, 1000);
         var trade =
             {
                 "tradeId": i,
-                "notional": this.getRandomItem(this.getNotionals()),
-                "deskId": this.generateRandomInt(0, 250),
+                "notional": bid,
+                "deskId": bid,
                 "counterparty": this.getRandomItem(this.getCounterparties()),
                 "currency": this.getRandomItem(this.getCurrencies()),
                 "country": this.getRandomItem(this.getCountries()),
-                "marketPrice": this.getMeaningfulPositiveNegativeDouble(),
+                "marketPrice": bid,
                 "bid": bid,
-                "ask": ask,
+                "ask": bid,
                 "isLive": this.generateRandomBool(),
                 "fitchRating": this.getRandomItem(this.getFitchRatings()),
                 "moodysRating": this.getRandomItem(this.getMoodysRatings()),
                 "tradeDate": tradeDate,
                 "settlementDate":this.addDays(tradeDate,3),
-                "bloombergAsk": this.roundTo4Dp(ask + 0.01),
-                "bloombergBid": this.roundTo4Dp(bid - 0.01),
-                "delta": this.getMeaningfulDoubleTest(),
-                "occasionalPrice": this.generateRandomNullableDouble(),
-                "bookingGuid": this.generateUuid(),
+                "bloombergAsk": bid,
+                "bloombergBid": bid,
+                "delta": bid,
+                "occasionalPrice": bid,
+                "bookingGuid": this.generateUuid(), 
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames())
             };

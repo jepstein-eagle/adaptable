@@ -183,11 +183,11 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     onDeleteUserFilterExpression(columnId: string, index: number) {
-        let columnUserFilterExpressions = this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
-        columnUserFilterExpressions.Named.splice(index, 1)
-        if (columnUserFilterExpressions.Named.length == 0) {
-            let columnUserFilterExpressionIndex = this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.UserFilterExpressions.splice(columnUserFilterExpressionIndex, 1)
+        let columnUserFilterExpressions = this.state.SelectedAdvancedSearch.Expression.UserFilters.find(x => x.ColumnName == columnId)
+        columnUserFilterExpressions.UserFilterUids.splice(index, 1)
+        if (columnUserFilterExpressions.UserFilterUids.length == 0) {
+            let columnUserFilterExpressionIndex = this.state.SelectedAdvancedSearch.Expression.UserFilters.findIndex(x => x.ColumnName == columnId)
+            this.state.SelectedAdvancedSearch.Expression.UserFilters.splice(columnUserFilterExpressionIndex, 1)
         }
         this.onDeleteSearchExpressionItem();
     }

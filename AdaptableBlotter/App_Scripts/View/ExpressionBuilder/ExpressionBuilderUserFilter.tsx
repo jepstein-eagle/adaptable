@@ -3,20 +3,20 @@
 import * as React from "react";
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
-import { IUserFilterExpression } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
 interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
-    UserFilterExpressions: Array<IUserFilterExpression>
-    SelectedUserFilterExpressions: Array<IUserFilterExpression>
-    onUserFilterExpressionChange: (SelectedUserFilterExpressions: Array<IUserFilterExpression>) => void
+    UserFilterExpressions: Array<IUserFilter>
+    SelectedUserFilterExpressions: Array<IUserFilter>
+    onUserFilterExpressionChange: (SelectedUserFilterExpressions: Array<IUserFilter>) => void
 }
 
 export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuilderUserFilterProps, {}> {
 
     render(): any {
 
-        var userFilterExpressions = this.props.UserFilterExpressions.map((ne: IUserFilterExpression, index: number) => {
+        var userFilterExpressions = this.props.UserFilterExpressions.map((ne: IUserFilter, index: number) => {
             return <ListGroupItem key={index}
                 onClick={() => this.onClickColum(ne)}
                 active={this.props.SelectedUserFilterExpressions.find(f => f.Uid == ne.Uid)}>
@@ -31,8 +31,8 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
         </PanelWithButton>
     }
 
-    onClickColum(userFilterExpression: IUserFilterExpression) {
-        let newArray: IUserFilterExpression[] = [];
+    onClickColum(userFilterExpression: IUserFilter) {
+        let newArray: IUserFilter[] = [];
         let existingUserFilterExpression = this.props.SelectedUserFilterExpressions.find(f => f.Uid == userFilterExpression.Uid);
         if (existingUserFilterExpression != null) { // it exists
             let index = this.props.SelectedUserFilterExpressions.indexOf(existingUserFilterExpression);

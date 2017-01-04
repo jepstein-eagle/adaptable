@@ -11,7 +11,7 @@ import { IConditionalStyleCondition } from '../../../Core/interface/IConditional
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
 import { IAlert } from '../../../Core/interface/IAlertStrategy';
 import { IColumnFilter } from '../../../Core/interface/IFilterStrategy';
-import { IUserFilterExpression } from '../../../Core/interface/IExpression';
+import { IUserFilter } from '../../../Core/interface/IExpression';
 
 
 export interface PlusMinusState {
@@ -89,7 +89,7 @@ export interface AlertState {
 }
 
 export interface UserFilterState {
-    UserFilters: Array<IUserFilterExpression>;
+    UserFilters: Array<IUserFilter>;
 }
 
 export interface FilterState {

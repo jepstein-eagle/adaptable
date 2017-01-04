@@ -43,6 +43,7 @@ import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
+
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -172,11 +173,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Container: e.container,
                 Popup: e.container.data("kendoPopup"),
                 DataSource: grid.dataSource,
-                Column:   this.getColumnFromColumnId(e.field),
+                Column: this.getColumnFromColumnId(e.field),
                 Blotter: this
             };
-            this.initUrlFilterUI(filterContext);
+               this.initUrlFilterUI(filterContext);
+
+
+
         });
+    }
+
+public generateRandomInt(minValue: number, maxValue: number): number {
+        return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
     }
 
 
@@ -184,7 +192,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // Remove default filter UI
         filterContext.Container.off();
         filterContext.Container.empty();
-        let formId = "filterform" + filterContext.Column.ColumnId;
+        let formId = "filterform" + filterContext.Column.ColumnId ;
         filterContext.Container.html('<div id="' + formId + '"></div>');
         var filterContainer = document.getElementById(formId);
         ReactDOM.render(FilterFormReact(filterContext), filterContainer);
@@ -457,7 +465,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SetColumnIntoStore();
     }
 
+    
     public saveAsExcel(fileName: string, allPages: boolean): void {
+
+
         this.grid.options.excel.fileName = fileName + ".xls";
         this.grid.options.excel.allPages = allPages;
         this.grid.saveAsExcel();
@@ -478,12 +489,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getDisplayValue(id: any, columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);
         let record: any = this.grid.dataSource.getByUid(id);
-        if(column.format)
-        {
+        if (column.format) {
             return kendo.format(column.format, record[columnId])
         }
-        else
-        {
+        else {
             return record[columnId]
         }
         // let columnIndex = this.getColumnIndex(columnId)
@@ -599,14 +608,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
     }
 
-   
+
     public applyColumnFilters(): void {
 
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-        let columnFilters: IColumnFilter[]  = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-       
+        let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
 
         this.grid.dataSource.filter(kendoFilters);

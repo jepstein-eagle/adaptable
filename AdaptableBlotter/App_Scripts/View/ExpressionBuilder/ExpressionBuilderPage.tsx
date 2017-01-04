@@ -71,11 +71,11 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     DeleteUserFilterExpression(columnId: string, index: number) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let columnUserFilterExpressions = this.state.Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
-        columnUserFilterExpressions.Named.splice(index, 1)
-        if (columnUserFilterExpressions.Named.length == 0) {
-            let columnUserFilterExpressionIndex = this.state.Expression.UserFilterExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.Expression.UserFilterExpressions.splice(columnUserFilterExpressionIndex, 1)
+        let columnUserFilterExpressions = this.state.Expression.UserFilters.find(x => x.ColumnName == columnId)
+        columnUserFilterExpressions.UserFilterUids.splice(index, 1)
+        if (columnUserFilterExpressions.UserFilterUids.length == 0) {
+            let columnUserFilterExpressionIndex = this.state.Expression.UserFilters.findIndex(x => x.ColumnName == columnId)
+            this.state.Expression.UserFilters.splice(columnUserFilterExpressionIndex, 1)
         }
         let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())

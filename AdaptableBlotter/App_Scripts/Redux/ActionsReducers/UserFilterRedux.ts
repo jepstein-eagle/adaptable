@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import { UserFilterState } from './Interface/IState';
-import { IUserFilterExpression } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/interface/IExpression';
 import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';
@@ -12,19 +12,19 @@ export const NAMED_EXPRESSION_DELETE = 'NAMED_EXPRESSION_DELETE';
 
 
 export interface UserFilterAddOrUpdateAction extends Redux.Action {
-    UserFilter: IUserFilterExpression
+    UserFilter: IUserFilter
 }
 
 export interface UserFilterDeleteAction extends Redux.Action {
-    UserFilter: IUserFilterExpression
+    UserFilter: IUserFilter
 }
 
-export const AddEditUserFilter = (UserFilter: IUserFilterExpression): UserFilterAddOrUpdateAction => ({
+export const AddEditUserFilter = (UserFilter: IUserFilter): UserFilterAddOrUpdateAction => ({
     type: NAMED_EXPRESSION_ADD_OR_UPDATE,
     UserFilter
 })
 
-export const DeleteUserFilter = (UserFilter: IUserFilterExpression): UserFilterDeleteAction => ({
+export const DeleteUserFilter = (UserFilter: IUserFilter): UserFilterDeleteAction => ({
     type: NAMED_EXPRESSION_DELETE,
     UserFilter
 })
@@ -36,7 +36,7 @@ const initialUserFilterState:
 
 export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFilterState = initialUserFilterState, action: Redux.Action): UserFilterState => {
     let index: number;
-    let UserFilters: IUserFilterExpression[]
+    let UserFilters: IUserFilter[]
 
 
     switch (action.type) {
@@ -72,9 +72,9 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
 }
 
 
-export function CreatePredefinedExpressions(): Array<IUserFilterExpression> {
+export function CreatePredefinedExpressions(): Array<IUserFilter> {
 
-    let _predefinedExpressions: IUserFilterExpression[] = [];
+    let _predefinedExpressions: IUserFilter[] = [];
 
     // Date Predefined user filter Expressions
     _predefinedExpressions.push({

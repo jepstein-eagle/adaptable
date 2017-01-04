@@ -1,5 +1,5 @@
 import { Expression } from './Expression'
-import { IRangeExpression, IUserFilterExpression } from '../Interface/IExpression';
+import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
@@ -25,13 +25,13 @@ export module ExpressionHelper {
                 columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
 
-            // User Filter Expressions
-            let columnUserFilterExpressions = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
-            if (columnUserFilterExpressions) {
+            // User Filters
+            let columnUserFilters = Expression.UserFilters.find(x => x.ColumnName == columnId)
+            if (columnUserFilters) {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString = ColumnUserFilterExpressionsKeyPairToString(GetUserFilterExpressions(columnUserFilterExpressions.Named, blotter), columnFriendlyName)
+                columnToString = ColumnUserFiltersKeyPairToString(GetUserFilters(columnUserFilters.UserFilterUids, blotter), columnFriendlyName)
             }
 
             // Column Ranges
@@ -68,16 +68,16 @@ export module ExpressionHelper {
 
             // Check for user filter expressions if column fails
             if (!isColumnSatisfied) {
-                let columnUserFilterExpressions = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
-                if (columnUserFilterExpressions) {
-                    let userFilterExpressions: IUserFilterExpression[] = GetUserFilterExpressions(columnUserFilterExpressions.Named, blotter);
-                    for (let userFilterExpression of userFilterExpressions) {
+                let columnUserFilters = Expression.UserFilters.find(x => x.ColumnName == columnId)
+                if (columnUserFilters) {
+                    let userFilters: IUserFilter[] = GetUserFilters(columnUserFilters.UserFilterUids, blotter);
+                    for (let userFilter of userFilters) {
                         // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
-                        if (userFilterExpression.IsPredefined) {
+                        if (userFilter.IsPredefined) {
                             let valueToCheck: any = getColumnValue(columnId);
-                            isColumnSatisfied = userFilterExpression.IsExpressionSatisfied(valueToCheck);
+                            isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck);
                         } else {
-                            isColumnSatisfied = IsSatisfied(userFilterExpression.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter, isCaseSensitive);
+                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter, isCaseSensitive);
                         }
                         if (isColumnSatisfied) {
                             break;
@@ -182,82 +182,82 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-    function ColumnUserFilterExpressionsKeyPairToString(userFilterExpressions: IUserFilterExpression[], columnFriendlyName: string): string {
+    function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
         let returnValue = ""
-        for (let userFilterExpression of userFilterExpressions) {
+        for (let userFilter of userFilters) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
-            returnValue += "[" + columnFriendlyName + "] " + userFilterExpression.FriendlyName;
+            returnValue += "[" + columnFriendlyName + "] " + userFilter.FriendlyName;
         }
         return returnValue
     }
 
-    export function GetUserFilterExpressions(userFilterExpressionUids: string[], blotter: IAdaptableBlotter): IUserFilterExpression[] {
-        return blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.filter(f => userFilterExpressionUids.find(uid => uid == f.Uid) != null)
+    export function GetUserFilters(userFilterUids: string[], blotter: IAdaptableBlotter): IUserFilter[] {
+        return blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.filter(f => userFilterUids.find(uid => uid == f.Uid) != null)
     }
 
-    export function ShouldShowUserFilterExpressionForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
-        let userFilterExpression: IUserFilterExpression = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.find(f => f.Uid == expressionUid);
+    export function ShouldShowUserFilterForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
+        let userFilter: IUserFilter = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.find(f => f.Uid == expressionUid);
 
         // predefined expressions return if its right column type
-        if (userFilterExpression.IsPredefined) {
-            return userFilterExpression.ColumnType == column.ColumnType;
+        if (userFilter.IsPredefined) {
+            return userFilter.ColumnType == column.ColumnType;
         }
 
         // see if there are any columnvalues and then get the first only
-        if (userFilterExpression.Expression.ColumnValuesExpressions != null && userFilterExpression.Expression.ColumnValuesExpressions.length > 0) {
-            return userFilterExpression.Expression.ColumnValuesExpressions[0].ColumnName == column.ColumnId;
+        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
+            return userFilter.Expression.ColumnValuesExpressions[0].ColumnName == column.ColumnId;
         }
 
         // see if there are any user filter expressions and then get the first only
-        if (userFilterExpression.Expression.UserFilterExpressions != null && userFilterExpression.Expression.UserFilterExpressions.length > 0) {
-            return userFilterExpression.Expression.UserFilterExpressions[0].ColumnName == column.ColumnId;
+        if (userFilter.Expression.UserFilters != null && userFilter.Expression.UserFilters.length > 0) {
+            return userFilter.Expression.UserFilters[0].ColumnName == column.ColumnId;
         }
 
         // see if there are any ranges and then get the first only
-        if (userFilterExpression.Expression.RangeExpressions != null && userFilterExpression.Expression.RangeExpressions.length > 0) {
-            return userFilterExpression.Expression.RangeExpressions[0].ColumnName == column.ColumnId;
+        if (userFilter.Expression.RangeExpressions != null && userFilter.Expression.RangeExpressions.length > 0) {
+            return userFilter.Expression.RangeExpressions[0].ColumnName == column.ColumnId;
         }
 
         return false;
     }
 
-    export function GetColumnTypeForUserFilterExpression(userFilterExpression: IUserFilterExpression, Columns: Array<IColumn>): ColumnType {
+    export function GetColumnTypeForUserFilter(userFilter: IUserFilter, Columns: Array<IColumn>): ColumnType {
 
         // predefined expressions return if its right column type
-        if (userFilterExpression.IsPredefined) {
-            return userFilterExpression.ColumnType;
+        if (userFilter.IsPredefined) {
+            return userFilter.ColumnType;
         }
 
         // see if there are any columnvalues and then get the first only
-        if (userFilterExpression.Expression.ColumnValuesExpressions != null && userFilterExpression.Expression.ColumnValuesExpressions.length > 0) {
-            let columnID: string = userFilterExpression.Expression.ColumnValuesExpressions[0].ColumnName;
+        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
+            let columnID: string = userFilter.Expression.ColumnValuesExpressions[0].ColumnName;
             return Columns.find(c => c.ColumnId == columnID).ColumnType;
         }
 
         // see if there are any ranges and then get the first only
-        if (userFilterExpression.Expression.RangeExpressions != null && userFilterExpression.Expression.RangeExpressions.length > 0) {
-            let columnID: string = userFilterExpression.Expression.RangeExpressions[0].ColumnName;
+        if (userFilter.Expression.RangeExpressions != null && userFilter.Expression.RangeExpressions.length > 0) {
+            let columnID: string = userFilter.Expression.RangeExpressions[0].ColumnName;
             return Columns.find(c => c.ColumnId == columnID).ColumnType;
         }
     }
 
-    export function GetColumnIdForUserFilterExpression(userFilterExpression: IUserFilterExpression): string {
+    export function GetColumnIdForUserFilter(userFilter: IUserFilter): string {
 
         // see if there are any columnvalues and then get the first only
-        if (userFilterExpression.Expression.ColumnValuesExpressions != null && userFilterExpression.Expression.ColumnValuesExpressions.length > 0) {
-            return userFilterExpression.Expression.ColumnValuesExpressions[0].ColumnName;
+        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
+            return userFilter.Expression.ColumnValuesExpressions[0].ColumnName;
         }
 
         // see if there are any user filter expressionss and then get the first only
-        if (userFilterExpression.Expression.UserFilterExpressions != null && userFilterExpression.Expression.UserFilterExpressions.length > 0) {
-            return userFilterExpression.Expression.UserFilterExpressions[0].ColumnName;
+        if (userFilter.Expression.UserFilters != null && userFilter.Expression.UserFilters.length > 0) {
+            return userFilter.Expression.UserFilters[0].ColumnName;
         }
 
         // see if there are any ranges and then get the first only
-        if (userFilterExpression.Expression.RangeExpressions != null && userFilterExpression.Expression.RangeExpressions.length > 0) {
-            return userFilterExpression.Expression.RangeExpressions[0].ColumnName;
+        if (userFilter.Expression.RangeExpressions != null && userFilter.Expression.RangeExpressions.length > 0) {
+            return userFilter.Expression.RangeExpressions[0].ColumnName;
         }
     }
 
@@ -309,12 +309,12 @@ export module ExpressionHelper {
     }
 
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
-        return Array.from(new Set(Expression.ColumnValuesExpressions.map(x => x.ColumnName).concat(Expression.UserFilterExpressions.map(x => x.ColumnName)).concat(Expression.RangeExpressions.map(x => x.ColumnName))))
+        return Array.from(new Set(Expression.ColumnValuesExpressions.map(x => x.ColumnName).concat(Expression.UserFilters.map(x => x.ColumnName)).concat(Expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
         return Expression.ColumnValuesExpressions.length == 0
-            && Expression.UserFilterExpressions.length == 0
+            && Expression.UserFilters.length == 0
             && Expression.RangeExpressions.length == 0
     }
 

@@ -26,7 +26,7 @@ export class SearchServiceHyperGrid implements ISearchService {
         theBlotterBypass.ReindexAndRepaint()
     }
 
-    public ApplySearchOnUserFilterExpressions(userFilterExpressionIds: string[]): void {
+    public ApplySearchOnUserFilter(userFilterIds: string[]): void {
         let theBlotterBypass: AdaptableBlotter = this.blotter as AdaptableBlotter
         theBlotterBypass.ReindexAndRepaint()
     }

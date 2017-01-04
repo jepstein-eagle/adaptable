@@ -74,6 +74,7 @@ export interface IAdaptableBlotter {
 
     // temp test
     applyColumnFilters(): void 
+
 }
 
 export interface ISelectedCells {
