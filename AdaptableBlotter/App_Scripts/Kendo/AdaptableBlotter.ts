@@ -422,8 +422,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueString(columnId: string): Array<string> {
-        let columnIndex = this.grid.columns.findIndex(x => x.field == columnId);
-        let tdIndex = columnIndex + 1;
+        return this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
+        // let tdIndex = columnIndex + 1;
 
         // we could get the values from teh data but its not using jquery and we lose the text representation
         // though it does mean we get all the data and not just filtered data....
@@ -435,9 +435,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     return uidList;
 
 
-        var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
-        let returnVal = rows.map((index, element) => $(element).text()).toArray();
-        return returnVal;
+        // var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
+        // let returnVal = rows.map((index, element) => $(element).text()).toArray();
+        // return returnVal;
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -476,10 +476,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let columnIndex = this.getColumnIndex(columnId)
-        let row = this.getRowByRowIdentifier(id)
-        let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
-        return cell.text();
+        let column = this.grid.columns.find(x => x.field == columnId);
+        let record: any = this.grid.dataSource.getByUid(id);
+        if(column.format)
+        {
+            return kendo.format(column.format, record[columnId])
+        }
+        else
+        {
+            return record[columnId]
+        }
+        // let columnIndex = this.getColumnIndex(columnId)
+        // let row = this.getRowByRowIdentifier(id)
+        // let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
+        // return cell.text();
     }
 
     //Jo: we know that this function is wrong as it's not cumulative
