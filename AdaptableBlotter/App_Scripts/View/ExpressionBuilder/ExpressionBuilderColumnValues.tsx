@@ -20,6 +20,9 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
         return <PanelWithButton headerText={"Values"} className="no-padding-panel" bsStyle="info">
             <SingleListBox style={divStyle} Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
+                DisplayMember="displayValue"
+                ValueMember="displayValue"
+                SortMember="rawValue"
                 onSelectedChange={(list) => this.props.onColumnValuesChange(list)}
                 ValuesDataType={this.props.ColumnValuesDataType}>
             </SingleListBox>
