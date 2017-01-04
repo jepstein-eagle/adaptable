@@ -15,9 +15,10 @@ interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor
     HeaderAvailable: string
     HeaderSelected: string
     ValuesDataType: ColumnType
-    //if not primitive objects both DisplayMember and ValueMember need to be used
+    //if not primitive objects all DisplayMember and ValueMember and sortmember need to be used
     DisplayMember?: string
     ValueMember?: string
+    SortMember?: string
 }
 
 interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -39,7 +40,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let availableValues = new Array<any>();
         this.props.AvailableValues.forEach(x => {
             if (this.props.ValueMember) {
-                if (this.props.SelectedValues.findIndex(y => y[this.props.ValueMember] == x[this.props.ValueMember]) < 0) {
+                if (this.props.SelectedValues.findIndex(y => y == x[this.props.ValueMember]) < 0) {
                     availableValues.push(x);
                 }
             }
@@ -51,7 +52,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         })
         this.state = {
             SelectedValues: this.props.SelectedValues,
-            AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, availableValues, this.props.DisplayMember, this.props.ValuesDataType),
+            AvailableValues: Helper.sortArrayWithProperty(SortOrder.Ascending, availableValues, this.props.SortMember),
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
             FilterValue: "",
@@ -62,7 +63,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let availableValues = new Array<any>();
         nextProps.AvailableValues.forEach(x => {
             if (nextProps.ValueMember) {
-                if (nextProps.SelectedValues.findIndex(y => y[nextProps.ValueMember] == x[nextProps.ValueMember]) < 0) {
+                if (nextProps.SelectedValues.findIndex(y => y == x[nextProps.ValueMember]) < 0) {
                     availableValues.push(x);
                 }
             }
@@ -85,7 +86,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             })
             uiSelectedSelected = []
             this.state.UiSelectedSelectedValues.forEach(x => {
-                let item = nextProps.SelectedValues.find(y => y[nextProps.ValueMember] == x[nextProps.ValueMember])
+                let item = nextProps.SelectedValues.find(y => y == x)
                 if (item) {
                     uiSelectedSelected.push(item)
                 }
@@ -97,7 +98,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
         this.setState({
             SelectedValues: nextProps.SelectedValues,
-            AvailableValues: Helper.sortArrayDisplayMember(this.state.SortOrder, availableValues, nextProps.DisplayMember, nextProps.ValuesDataType),
+            AvailableValues: Helper.sortArrayWithProperty(this.state.SortOrder, availableValues, nextProps.SortMember),
             UiSelectedAvailableValues: uiAvailableSelected,
             UiSelectedSelectedValues: uiSelectedSelected,
             FilterValue: this.state.FilterValue,
@@ -108,27 +109,25 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let setRefFirstSelected = true
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
-            let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
-            let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
             if (isActive && setRefFirstSelected) {
                 setRefFirstSelected = false
-                return <ListGroupItem key={value} className="Selected"
+                return <ListGroupItem key={x} className="Selected"
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
                     active={isActive}
                     ref="FirstSelectedSelected"
                     onDragStart={(event) => this.DragSelectedStart(event, x)}
                     onDragEnd={() => this.DragSelectedEnd()}
-                    value={value}>{display}</ListGroupItem>
+                    value={x}>{x}</ListGroupItem>
             }
             else {
-                return <ListGroupItem key={value} className="Selected"
+                return <ListGroupItem key={x} className="Selected"
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
                     active={isActive}
                     onDragStart={(event) => this.DragSelectedStart(event, x)}
                     onDragEnd={() => this.DragSelectedEnd()}
-                    value={value}>{display}</ListGroupItem>
+                    value={x}>{x}</ListGroupItem>
             }
         })
 
@@ -276,7 +275,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         this.state.UiSelectedAvailableValues.forEach(x => {
             let index = newAvailableValues.indexOf(x);
             newAvailableValues.splice(index, 1);
-            newSelectedValues.push(x)
+            if (this.props.ValueMember) {
+                newSelectedValues.push(x[this.props.ValueMember])
+            }
+            else {
+                newSelectedValues.push(x)
+            }
+
         })
         //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
         this.setState({
@@ -287,7 +292,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
 
     AddAll() {
-        let newSelectedValues = [].concat(this.state.SelectedValues, this.state.AvailableValues);
+        let newSelectedValues = [].concat(this.state.SelectedValues);
+        this.state.AvailableValues.forEach(x => {
+            if (this.props.ValueMember) {
+                newSelectedValues.push(x[this.props.ValueMember])
+            }
+            else {
+                newSelectedValues.push(x)
+            }
+        })
+
         let newAvailableValues: string[] = [];
         this.setState({
             UiSelectedSelectedValues: [],
@@ -299,7 +313,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
     RemoveAll() {
         let newSelectedValues: string[] = [];
-        let newAvailableValues = [].concat(this.state.SelectedValues, this.state.AvailableValues);
+        let newAvailableValues = [].concat(this.props.AvailableValues);
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -313,7 +327,19 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         this.state.UiSelectedSelectedValues.forEach(x => {
             let index = newSelectedValues.indexOf(x);
             newSelectedValues.splice(index, 1);
-            newAvailableValues.push(x)
+            if (this.props.ValueMember) {
+                let originalItem = this.props.AvailableValues.find(y => y[this.props.ValueMember] == x)
+                if (originalItem) {
+                    newAvailableValues.push(originalItem)
+                }
+            }
+            else {
+                let originalItem = this.props.AvailableValues.find(y => y == x)
+                if (originalItem) {
+                    newAvailableValues.push(originalItem)
+                }
+            }
+
         })
         //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
         this.setState({
@@ -346,13 +372,35 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newSelectedArray = [...this.state.SelectedValues];
                 newSelectedArray.splice(from, 1);
                 newAvailableValues = [...this.state.AvailableValues];
-                newAvailableValues.splice(to, 0, this.draggedElement)
+                if (this.props.ValueMember) {
+                    let originalItem = this.props.AvailableValues.find(y => y[this.props.ValueMember] == this.draggedElement)
+                    if (originalItem) {
+                        newAvailableValues.splice(to, 0, originalItem)
+                    }
+                }
+                else {
+                    let originalItem = this.props.AvailableValues.find(y => y == this.draggedElement)
+                    if (originalItem) {
+                        newAvailableValues.splice(to, 0, originalItem)
+                    }
+                }
             }
             else if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
                 newSelectedArray = [...this.state.SelectedValues];
                 newSelectedArray.splice(from, 1);
                 newAvailableValues = [...this.state.AvailableValues];
-                newAvailableValues.push(this.draggedElement)
+                if (this.props.ValueMember) {
+                    let originalItem = this.props.AvailableValues.find(y => y[this.props.ValueMember] == this.draggedElement)
+                    if (originalItem) {
+                        newAvailableValues.push(originalItem)
+                    }
+                }
+                else {
+                    let originalItem = this.props.AvailableValues.find(y => y == this.draggedElement)
+                    if (originalItem) {
+                        newAvailableValues.push(originalItem)
+                    }
+                }
             }
             else if (this.overHTMLElement.classList.contains("Selected")) {
                 if (this.props.DisplayMember) {
@@ -411,13 +459,23 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
                 }
                 newSelectedArray = [...this.state.SelectedValues];
-                newSelectedArray.splice(to, 0, this.draggedElement)
+                if (this.props.ValueMember) {
+                    newSelectedArray.splice(to, 0, this.draggedElement[this.props.ValueMember])
+                }
+                else {
+                    newSelectedArray.splice(to, 0, this.draggedElement)
+                }
                 newAvailableValues = [...this.state.AvailableValues];
                 newAvailableValues.splice(from, 1);
             }
             else if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
                 newSelectedArray = [...this.state.SelectedValues];
-                newSelectedArray.push(this.draggedElement)
+                if (this.props.ValueMember) {
+                    newSelectedArray.push(this.draggedElement[this.props.ValueMember])
+                }
+                else {
+                    newSelectedArray.push(this.draggedElement)
+                }
                 newAvailableValues = [...this.state.AvailableValues];
                 newAvailableValues.splice(from, 1);
             }
@@ -527,13 +585,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     sortColumnValues() {
         if (this.state.SortOrder == SortOrder.Ascending) {
             this.setState({
-                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Descending, this.state.AvailableValues, this.props.DisplayMember, this.props.ValuesDataType),
+                AvailableValues: Helper.sortArrayWithProperty(SortOrder.Descending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: SortOrder.Descending
             } as DualListBoxEditorState);
         }
         else {
             this.setState({
-                AvailableValues: Helper.sortArrayDisplayMember(SortOrder.Ascending, this.state.AvailableValues, this.props.DisplayMember, this.props.ValuesDataType),
+                AvailableValues: Helper.sortArrayWithProperty(SortOrder.Ascending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: SortOrder.Ascending
             } as DualListBoxEditorState);
         }
@@ -580,14 +638,14 @@ var listGroupStyleAvailable = {
     'overflowY': 'auto',
     'maxHeight': '261px',
     'height': '261px',
-    'marginBottom' : '0'
+    'marginBottom': '0'
 };
 
 var listGroupStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px',
     'height': '300px',
-    'marginBottom' : '0'
+    'marginBottom': '0'
 };
 
 var panelStyle = {
