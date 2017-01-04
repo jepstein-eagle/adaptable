@@ -198,11 +198,11 @@ export module ExpressionHelper {
     }
 
     export function GetNamedExpressions(namedExpressionUids: string[], blotter: IAdaptableBlotter): INamedExpression[] {
-        return blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.filter(f => namedExpressionUids.find(uid => uid == f.Uid) != null)
+        return blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => namedExpressionUids.find(uid => uid == f.Uid) != null)
     }
 
     export function ShouldShowNamedExpressionForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
-        let namedExpression: INamedExpression = blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.find(f => f.Uid == expressionUid);
+        let namedExpression: INamedExpression = blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.find(f => f.Uid == expressionUid);
 
         // predefined expressions return if its right column type
         if (namedExpression.IsPredefined) {

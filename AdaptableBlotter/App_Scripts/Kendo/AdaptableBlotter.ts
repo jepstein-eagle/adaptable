@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
+import { FilterFormReact } from '../View/FilterForm';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
@@ -36,9 +37,9 @@ import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { Expression } from '../Core/Expression/Expression';
-import { INamedExpression } from '../Core/Interface/IExpression';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
+import { KendoFiltering } from './KendoFiltering';
+import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -160,25 +161,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.bind("filterMenuInit", (e: any) => {
-            /* this is where we want to put OUR filter screen once i can work out how to wire it up properly
-            there is an example here so it should be easy but currently cannot get it to work...
+            /* 
+            replacing filter screen with our own - good idea?  some ideas stolen from...
             http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
+            https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
             */
-            //alert("Hello");
-            initializedFilterMenu(e);
-        })
-
-
-        var initializedFilterMenu = function (e: any) {
-            var popup = e.container.data("kendoPopup");
-
-        };
-
+            let filterContext: IFilterContext = {
+                Container: e.container,
+                Popup: e.container.data("kendoPopup"),
+                DataSource: grid.dataSource,
+                ColumnId: e.field,
+                Blotter: this
+            };
+            this.initUrlFilterUI(filterContext);
+        });
     }
 
-    public cityFilter(element: any) {
-        alert('Im in the right function')
-    }
+
+    private initUrlFilterUI(filterContext: IFilterContext) {
+        // Remove default filter UI
+        filterContext.Container.off();
+        filterContext.Container.empty();
+        let formId = "filterform" + filterContext.ColumnId;
+        filterContext.Container.html('<div id="' + formId + '"></div>');
+        var filterContainer = document.getElementById(formId);
+        ReactDOM.render(FilterFormReact(filterContext.Blotter), filterContainer);
+        //   filterContext.container
+        //       .on('submit', $.proxy(onSubmit, filterContext))
+        //       .on('reset', $.proxy(onReset, filterContext));
+    };
 
 
     public SetColumnIntoStore() {
@@ -576,148 +587,55 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
     }
 
-
-    private getFiltersPropertyFromFilters(filters: kendo.data.DataSourceFilters): any {
-        let subFilters: kendo.data.DataSourceFilter[] = filters.filters;
-        if (subFilters) { // has sub filters so we need to get them
-            return this.getFiltersPropertyFromFilters(subFilters);
-        }
-        return filters;
-    }
-
     public isFilteredColumn(columnId: string): boolean {
-        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+        //      let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-        if (!currentFilters) {
-            return false;
-        }
-        let returnValue: boolean = false;
+        //        if (!currentFilters) {
+        //          return false;
+        //    }
 
-        currentFilters.filters.forEach(c => {
-            if (!returnValue) {
-                let filterObjects: kendo.data.DataSourceFilterItem[] = this.getFiltersPropertyFromFilters(c);
-                let filterObjectToCheck: kendo.data.DataSourceFilterItem = (filterObjects.length > 0) ? filterObjects[0] : filterObjects;
-                returnValue = this.dataSourceFilterItemContainsField(filterObjectToCheck, columnId);
-            } else {
-                return true;
+        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => !f.IsPredefined);
+        let columnFilters: IColumnFilter[] = []
+
+        // this should really be an iFilter...
+        // for now we are going to experiment with named expressions just taking the first one for each column
+        existingExpressions.forEach(e => {
+            let columnID = ExpressionHelper.GetColumnIdForNamedExpression(e);
+            if (!columnFilters.find(c => c.ColumnId == columnID)) {
+                let columnFilter: IColumnFilter = { ColumnId: columnID, Filter: e.Expression };
+                columnFilters.push(columnFilter);
             }
+
         })
-        return returnValue;
+
+        return columnFilters.find(c => c.ColumnId == columnId) != null;
     }
 
 
+    public applyFilters(): void {
 
-    private dataSourceFilterItemContainsField(item: kendo.data.DataSourceFilterItem, columnId: string): boolean {
-        let field = item.field;
-        if (field != null && field == columnId) {
-            return true;
-        }
-        return false;
-    }
-
-    public applyFilter(filter: INamedExpression): void {
-        // first lets get the column for the expression - there can only be one!
-        let columnName: string = ExpressionHelper.GetColumnIdForNamedExpression(filter);
-
+        // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
-        let currentFilterIsMultiple: boolean = true;
-        if (currentFilters) {
-            currentFilterIsMultiple = currentFilters.logic == "and";
-        }
 
-        // ok, not going to be easy.  think we need to find the field and then merge if its the same field. or at least do something with and / or!
-        // for now we are giong to assume that every filter is a NEW column!!!!!!
+        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.filter(f => !f.IsPredefined);
+        let columnFilters: IColumnFilter[] = []
 
-
-        let columnValuesExpression = filter.Expression.ColumnValuesExpressions;
-        if (columnValuesExpression.length > 0) {
-
-
-            // for now just deal with the first column Expression
-            let expressionValues: string[] = filter.Expression.ColumnValuesExpressions[0].ColumnValues;
-
-
-
-            let filterItems: kendo.data.DataSourceFilterItem[] = [];
-            let kendoStringOperator: string = "eq"
-            let filterLogic: string = "or";
-
-            expressionValues.forEach(e => {
-                let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: columnName, value: e };
-                filterItems.push(filterItem);
-            })
-
-            let newFilters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
-
-
-
-
-            // so I think it needs to be like this...
-            // if there is one column then its one filter with or
-            // if there is MORE than one column than each has an or filter and both are children of an 'AND' filter
-            // yeah, its fucking hard
-            if (currentFilters) {  // we need to create a parent collection...
-                let newAndOldFilters: kendo.data.DataSourceFilter[] = [];
-                //  currentFilters.filters.forEach(cf => {
-                //   var testFilters: kendo.data.DataSourceFilters = { logic: "or", filters: null }
-                if (currentFilterIsMultiple) {
-                    newAndOldFilters.push(...currentFilters.filters);
-
-                } else {
-                    newAndOldFilters.push(currentFilters);
-
-                }
-
-                //   })
-                newAndOldFilters.push(newFilters);
-
-                let parentFilters: kendo.data.DataSourceFilters = { logic: "and", filters: newAndOldFilters };
-                this.grid.dataSource.filter(parentFilters);
-            } else {
-                this.grid.dataSource.filter(newFilters);
+        // this should really be an iFilter...
+        // for now we are going to experiment with named expressions just taking the first one for each column
+        existingExpressions.forEach(e => {
+            let columnID = ExpressionHelper.GetColumnIdForNamedExpression(e);
+            if (!columnFilters.find(c => c.ColumnId == columnID)) {
+                let columnFilter: IColumnFilter = { ColumnId: columnID, Filter: e.Expression };
+                columnFilters.push(columnFilter);
             }
-        }
+
+        })
+
+
+        let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
+
+        this.grid.dataSource.filter(kendoFilters);
     }
-    // this is all dead now and never called as we just hide the rows in the strategy...
-    // keeping it commented out only so we have the working for when we do filters...
-    /*        let quickSearchText = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
-            if (quickSearchText != "") {
-                let filterItems: kendo.data.DataSourceFilterItem[] = [];
-    
-                let stringOperator: SearchStringOperator = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.SearchStringOperator;
-    
-                let kendoStringOperator: string;
-                let filterLogic: string;
-    
-                switch (stringOperator) {
-                    case SearchStringOperator.Contains:
-                        kendoStringOperator = "contains"   // ?
-                        filterLogic = "or"
-                        break;
-                    case SearchStringOperator.Equals:
-                        kendoStringOperator = "eq"   // ?
-                        filterLogic = "or"
-                        break;
-                    case SearchStringOperator.NotEquals:
-                        kendoStringOperator = "neq"   // ?
-                        filterLogic = "and"
-                        break;
-                    case SearchStringOperator.StartsWith:
-                        kendoStringOperator = "startswith"   // ?
-                        filterLogic = "or"
-                        break;
-                }
-                this.grid.columns.filter(c => this.getColumnType(c.field) == ColumnType.String).forEach(c => {
-                    let filterItem: kendo.data.DataSourceFilterItem = { operator: kendoStringOperator, field: c.field, value: quickSearchText };
-                    filterItems.push(filterItem);
-                })
-                let filters: kendo.data.DataSourceFilters = { logic: filterLogic, filters: filterItems };
-                this.grid.dataSource.filter(filters);
-            }
-            else {
-                this.grid.dataSource.filter([]);
-            }
-            */
 
 
     // this is copied straight from Telerik website and needs a fair bit of work but is ok for now...

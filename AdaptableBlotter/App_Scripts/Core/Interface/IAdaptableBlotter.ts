@@ -74,7 +74,7 @@ export interface IAdaptableBlotter {
 
 
     // temp test
-      applyFilter(filter:INamedExpression): void 
+    applyFilters(): void 
        isFilteredColumn(columnId: string): boolean 
 }
 

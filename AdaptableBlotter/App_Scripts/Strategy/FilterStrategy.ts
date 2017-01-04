@@ -24,7 +24,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
 
 
     InitState() {
-        if (this.namedExpressions != this.GetFilterState().Filters) {
+        if (this.namedExpressions != this.GetFilterState().CreatedFilters) {
 
             // call search service as search might need to re-run if its using a filter that has changed / been deleted
             // tell the search service that a filter has changed and it will decide if it needs to run search
@@ -33,7 +33,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
                 let oldFilterUids: string[] = this.namedExpressions.filter(f => !f.IsPredefined).map(f => f.Uid);
                 this.blotter.SearchService.ApplySearchOnFilters(oldFilterUids);
             }
-            this.namedExpressions = this.GetFilterState().Filters;
+            this.namedExpressions = this.GetFilterState().CreatedFilters;
         }
 
     }
