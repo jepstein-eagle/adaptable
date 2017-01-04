@@ -81,7 +81,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: Array.from(new Set(theProps.Blotter.getColumnValueString(theProps.SelectedColumnId))),
                 SelectedColumnValues: selectedColumnValues,
-                NamedExpressions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.Filters.map(f => f.Uid),
+                NamedExpressions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.CreatedFilters.map(f => f.Uid),
                 SelectedNamedExpresions: selectedColumnNamedExpressions,
                 SelectedColumnRanges: selectedColumnRanges
             };
@@ -99,8 +99,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        let isFilteredColumn: boolean = (this.props.SelectedColumnId == "select") ? false : this.props.Blotter.isFilteredColumn(this.props.SelectedColumnId);
-       
+        let filteredWarning: string =  (this.props.SelectedColumnId != "select" && this.props.Blotter.isFilteredColumn(this.props.SelectedColumnId)) ? "Column is currently in a filter so only filtered values are shown" : "";
+
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedNamedExpresions.length > 0;
         let availableExpressionIds: string[] = this.state.NamedExpressions.filter(f => ExpressionHelper.ShouldShowNamedExpressionForColumn(f, selectedColumn, this.props.Blotter));
         let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
@@ -123,13 +123,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             {optionColumns}
                         </FormControl>
                     </Col>
-                    {!isFilteredColumn ? null :
-                        <Col xs={6}>
-                            <FormGroup controlId="formValidationSuccess3" validationState="error">
-                                <ControlLabel>Column is currently in a filter so only filtered values are shown</ControlLabel>
-                            </FormGroup>
-                        </Col>
-                    }
+                    <Col xs={6}>
+                        <FormGroup controlId="formValidationSuccess3" validationState="error">
+                            <ControlLabel >{filteredWarning}</ControlLabel>
+                        </FormGroup>
+                    </Col>
                 </FormGroup>
             </Form>
 

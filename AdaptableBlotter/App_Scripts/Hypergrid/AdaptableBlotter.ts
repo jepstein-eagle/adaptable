@@ -570,7 +570,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public applyFilter(filter: INamedExpression): void { }
+    public applyFilters(): void { }
 
     public isFilteredColumn(columnId: string): boolean {
         return false;

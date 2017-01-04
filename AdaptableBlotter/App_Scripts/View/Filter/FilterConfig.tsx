@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, ListGroup, Well } from 'react-bootstrap';
+import { Button, Form, FormGroup, Panel, ControlLabel, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -52,7 +52,7 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
             }
         }
 
-        let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
+        let cellInfo: [string, number][] = [["Name", 4], ["Description", 4], ["Temp", 1], ["", 3]];
 
         let filterItems = this.props.Filters.filter(f => !f.IsPredefined).map((x) => {
             return <li
@@ -61,8 +61,11 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
                     <Col xs={4}>
                         {x.FriendlyName}
                     </Col>
-                    <Col xs={5}>
+                    <Col xs={4}>
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
+                    </Col>
+                    <Col xs={1}>
+                        <Button onClick={() => this.tempApplyFilter(x)}><Glyphicon glyph="edit" /></Button>
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
@@ -120,6 +123,10 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
         this.setState({ EditedFilter: Helper.cloneObject(filter) });
     }
 
+    tempApplyFilter(filter: INamedExpression) {
+        this.props.AdaptableBlotter.applyFilters();
+    }
+
     onDeleteFilter(filter: INamedExpression) {
         this.props.onDeleteFilter(filter);
     }
@@ -129,22 +136,15 @@ class FilterConfigComponent extends React.Component<FilterConfigProps, FilterCon
     }
 
     finishWizard() {
-        // temp going to apply the filter...
-this.props.AdaptableBlotter.applyFilter(this.state.EditedFilter);
-
-
-
         this.props.onAddEditFilter(this.state.EditedFilter);
         this.setState({ EditedFilter: null });
-
-
     }
 
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Filters: state.Filter.Filters,
+        Filters: state.Filter.CreatedFilters,
         Columns: state.Grid.Columns
     };
 }

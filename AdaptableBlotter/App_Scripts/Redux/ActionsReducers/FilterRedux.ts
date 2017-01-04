@@ -29,9 +29,11 @@ export const DeleteFilter = (Filter: INamedExpression): FilterDeleteAction => ({
     Filter
 })
 
-const initialFilterState: FilterState = {
-    Filters: CreatePredefinedExpressions()
-}
+const initialFilterState:
+    FilterState = {
+        CreatedFilters: CreatePredefinedExpressions(),
+        CurrentFilters: []
+    }
 
 export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {
     let index: number;
@@ -42,22 +44,22 @@ export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = i
 
         case FILTER_ADD_OR_UPDATE: {
             let actionTypedAddUpdate = (<FilterAddOrUpdateAction>action)
-            filters = [].concat(state.Filters)
+            filters = [].concat(state.CreatedFilters)
             index = filters.findIndex(i => i.Uid == actionTypedAddUpdate.Filter.Uid)
             if (index != -1) {  // it exists
                 filters[index] = actionTypedAddUpdate.Filter
             } else {
                 filters.push(actionTypedAddUpdate.Filter)
             }
-            return Object.assign({}, state, { Filters: filters })
+            return Object.assign({}, state, { CreatedFilters: filters })
         }
 
         case FILTER_DELETE: {
             let actionTypedDelete = (<FilterDeleteAction>action)
-            filters = [].concat(state.Filters)
+            filters = [].concat(state.CreatedFilters)
             index = filters.findIndex(i => i.Uid == actionTypedDelete.Filter.Uid)
             filters.splice(index, 1);
-            return Object.assign({}, state, { Filters: filters })
+            return Object.assign({}, state, { CreatedFilters: filters })
         }
 
         default:

@@ -2,7 +2,6 @@ import { Expression } from './Expression'
 import { IRangeExpression, INamedExpression } from '../Interface/IExpression';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { FilterState } from '../../Redux/ActionsReducers/Interface/IState';
-import { LeafExpressionOperator } from '../Enums';
 
 
 export interface IPredefinedExpressionInfo {
