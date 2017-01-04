@@ -429,8 +429,9 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         this.grid.setDataSource(this.grid.dataSource);
     }
 
-    public getColumnValueString(columnId: string): Array<string> {
-        return this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
+    public getColumnValueStringDistinct(columnId: string): Array<string> {
+        let displayValueArray = this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
+        return Array.from(new Set(displayValueArray))
         // let tdIndex = columnIndex + 1;
 
         // we could get the values from teh data but its not using jquery and we lose the text representation
@@ -446,6 +447,15 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         // var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
         // let returnVal = rows.map((index, element) => $(element).text()).toArray();
         // return returnVal;
+    }
+
+    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+        let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
+        this.grid.dataSource.data().forEach((row: any) => {
+            let displayValue = this.getDisplayValueFromRecord(row, columnId)
+            returnMap.set(displayValue, { rawValue: row[columnId], displayValue: displayValue });
+        })
+        return Array.from(returnMap.values());
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -487,18 +497,28 @@ public generateRandomInt(minValue: number, maxValue: number): number {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let column = this.grid.columns.find(x => x.field == columnId);
         let record: any = this.grid.dataSource.getByUid(id);
-        if (column.format) {
-            return kendo.format(column.format, record[columnId])
-        }
-        else {
-            return record[columnId]
-        }
+      //  if (column.format) {
+      //      return kendo.format(column.format, record[columnId])
+      //  }
+      //  else {
+      //      return record[columnId]
+      //  }
+        return this.getDisplayValueFromRecord(record, columnId)
         // let columnIndex = this.getColumnIndex(columnId)
         // let row = this.getRowByRowIdentifier(id)
         // let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
         // return cell.text();
+    }
+
+    private getDisplayValueFromRecord(row: any, columnId: string): string {
+        let column = this.grid.columns.find(x => x.field == columnId);
+        if (column.format) {
+            return kendo.format(column.format, row[columnId])
+        }
+        else {
+            return row[columnId]
+        }
     }
 
     //Jo: we know that this function is wrong as it's not cumulative

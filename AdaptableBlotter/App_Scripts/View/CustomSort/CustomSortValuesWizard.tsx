@@ -24,14 +24,12 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
         this.state = {
-            ColumnValues: Array.from(new Set(this.props.Blotter.getColumnValueString(this.props.Data.ColumnId))),
+            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId),
             SelectedValues: this.props.Data.CustomSortItems,
             IsEdit: this.props.Data.CustomSortItems.length > 0
         }
         this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
-
-
 
     render(): any {
         let selectedColumnType: ColumnType = (this.props.Data.ColumnId == "select") ? null : this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).ColumnType;
@@ -41,6 +39,9 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
             SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
             HeaderSelected="Custom Sort Order"
+            DisplayMember="displayValue"
+            SortMember="rawValue"
+            ValueMember="displayValue"
             ValuesDataType={selectedColumnType}
             onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
     }

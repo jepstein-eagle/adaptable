@@ -16,10 +16,8 @@ interface QuickSearchActionProps extends React.ClassAttributes<QuickSearchAction
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     AdaptableBlotter: IAdaptableBlotter;
-    IsCaseSensitive: Boolean;
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
-    onSetCaseSensitivity: (isCaseSensitive: Boolean) => QuickSearchRedux.QuickSearchSetCaseSensitivityAction
 }
 
 interface QuickSearchActionState {
@@ -62,12 +60,6 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchOperator(Number.parseInt(e.value));
     }
-
-    onCaseSensitivityChange(event: React.FormEvent) {
-        const e = event.target as HTMLInputElement;
-        this.props.onSetCaseSensitivity(e.checked);
-    }
-
 
     render() {
         var blotter = this.props.AdaptableBlotter;
@@ -128,18 +120,6 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
-                                <FormGroup controlId="formInlineCaseSensitivity">
-                                    <Col xs={4}>
-                                        <ControlLabel style={inputStyle}>Case Sensitive:</ControlLabel>
-                                    </Col>
-                                    <Col xs={8}>
-                                        <Checkbox
-                                            onChange={(e: React.FormEvent) => this.onCaseSensitivityChange(e)}
-                                            checked={this.props.IsCaseSensitive == true}>
-                                        </Checkbox>
-                                    </Col>
-                                </FormGroup>
-
                             </Panel>
                         </div>
                     </Form>
@@ -156,8 +136,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AdaptableBlotter: ownProps.AdaptableBlotter,
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
-        IsCaseSensitive: state.QuickSearch.IsCaseSensitive
+        QuickSearchOperator: state.QuickSearch.QuickSearchOperator
     };
 }
 
@@ -165,7 +144,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetQuickSearchText: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(quickSearchText)),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetSearchOperator(searchOperator)),
-        onSetCaseSensitivity: (isCaseSensitive: Boolean) => dispatch(QuickSearchRedux.QuickSearchSetCaseSensitivity(isCaseSensitive)),
     };
 }
 

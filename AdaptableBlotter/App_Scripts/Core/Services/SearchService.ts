@@ -154,7 +154,7 @@ export class SearchService implements ISearchService {
         var matches: Boolean = false;
         searchExpressions.forEach(s => {
             if (!matches) {
-                matches = ExpressionHelper.checkForExpression(s, rowId, columns, this.blotter, this.GetQuickSearchState().IsCaseSensitive);
+                matches = ExpressionHelper.checkForExpression(s, rowId, columns, this.blotter);
             }
         })
         return matches;

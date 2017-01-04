@@ -19,7 +19,7 @@ export let AdvancedSearchDataSource = (blotter: IAdaptableBlotter) => DataSource
     filterTest: (currentSearch: IAdvancedSearch) => function (r: any, rowObject: any) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns
         let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
-        return ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, blotter, false);
+        return ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, blotter);
     },
     getRowCount: function () {
         return StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)

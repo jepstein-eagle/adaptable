@@ -417,12 +417,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint()
     }
 
-    public ReindexAndRepaint()
-    {
+    public ReindexAndRepaint() {
         this.grid.behavior.reindex();
         this.grid.repaint();
     }
-    public getColumnValueString(columnId: string): Array<string> {
+    public getColumnValueStringDistinct(columnId: string): Array<string> {
         let returnArray: string[] = []
         let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
@@ -431,6 +430,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             returnArray.push(this.getDisplayValue(this.getPrimaryKeyValueFromRecord(element), columnId))
         }
         return returnArray
+    }
+
+    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+        let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
+        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
+        for (var index = 0; index < rowCount; index++) {
+            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+            let displayString = this.getDisplayValueFromRecord(element, columnId)
+            returnMap.set(displayString, { rawValue: element[columnId], displayValue: displayString });
+        }
+        return Array.from(returnMap.values());
     }
 
     public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -453,9 +463,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        return this.getDisplayValueFromRecord(row,columnId)
+    }
+
+    private getDisplayValueFromRecord(row: any, columnId: string) {
         let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
         let formatter = column.getFormatter()
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
         return formatter(row[columnId])
     }
 
