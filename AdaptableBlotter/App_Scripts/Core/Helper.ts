@@ -43,64 +43,16 @@ export module Helper {
         return uuid;
     }
 
-    export function sortStringArray(stringArray: string[]): string[] {
-        var sortedSringArray: string[] = stringArray.sort((n1, n2) => {
-            if (n1 > n2) {
-                return 1;
-            }
-            if (n1 < n2) {
-                return -1;
-            }
-            return 0;
-        });
-        return sortedSringArray;
-    }
-
-    export function sortNumericArray(numericArray: any[]): any[] {
-        // Im sure this is overkill and can be done simpler...
-        // also we dont want to have to do it when its already a number, only when its masked...
-        let selectionMap: Map<number, any> = new Map<number, any>();
-        numericArray.forEach(n => selectionMap.set(convertToNumber(n), n));
-        var sortedMap = new Map([...selectionMap.entries()].sort((n1, n2) => n1[0] - n2[0]));
-        return [...sortedMap.values()];
-    }
-
-    export function convertToNumber(itemToConvert: any): number {
-        // Regex might need some work but hopefully it only allows numbers, full stopes and minus signs....
-        return Number(itemToConvert.replace(/[^0-9\.\-]+/g, ""));
-    }
-
-    export function sortDateArray(dateArray: string[]): any[] {
-        // assumes that the strings are dates underneath - if they arent then this will fail....
-        return dateArray.sort((a, b) => +new Date(b) - +new Date(a));
-    }
-
-    export function sortArray(sortOrder: SortOrder, values: any[], dataType: ColumnType): any[] {
-        let sortedValues: any[]
-
-        if (dataType == ColumnType.Number) {
-            sortedValues = sortNumericArray(values);
-        } else if (dataType == ColumnType.Date) {
-            sortedValues = sortDateArray(values);
-        }
-        else {
-            sortedValues = sortStringArray(values);
-        }
-
+    export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
+        let direction = 1
         if (sortOrder == SortOrder.Descending) {
-            return sortedValues.reverse()
-        } else {
-            return sortedValues;
+            direction = -1
         }
-    }
-
-    export function sortArrayDisplayMember(sortOrder: SortOrder, values: any[], displayMember: string, dataType: ColumnType): any[] {
-        if (displayMember) {
-            let returnArray: any[] = values.sort((a, b) => (a[displayMember] < b[displayMember]) ? -1 : (a[displayMember] > b[displayMember]) ? 1 : 0);
-            return (sortOrder == SortOrder.Descending) ? returnArray.reverse() : returnArray;
+        if (sortProperty) {
+            return values.sort((a, b) => (a[sortProperty] < b[sortProperty]) ? -1 * direction : (a[sortProperty] > b[sortProperty]) ? 1 * direction : 0);
         }
         else {
-            return sortArray(sortOrder, values, dataType);
+            return values.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
         }
     }
 
