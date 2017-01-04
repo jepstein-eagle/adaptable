@@ -27,6 +27,7 @@ export interface IAdaptableBlotter {
     CreateMenu(): void
     SetColumnIntoStore(): void
     getColumnValueString(columnId: string): Array<string>
+    getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, displayValue: string }>
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean

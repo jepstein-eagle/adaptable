@@ -441,11 +441,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // return returnVal;
     }
 
-    public getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, DisplayValue: string }> {
-        let returnMap = new Map<string, { rawValue: any, DisplayValue: string }>();
+    public getColumnValueDisplayValuePairList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+        let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         this.grid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)
-            returnMap.set(displayValue, { rawValue: row[columnId], DisplayValue: displayValue });
+            returnMap.set(displayValue, { rawValue: row[columnId], displayValue: displayValue });
         })
         return Array.from(returnMap.values());
     }
