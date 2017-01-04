@@ -52,7 +52,7 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
             }
         }
 
-        let cellInfo: [string, number][] = [["Name", 4], ["Description", 4], ["Temp", 1], ["", 3]];
+        let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
 
         let namedExpressionItems = this.props.NamedExpressions.filter(f => !f.IsPredefined).map((x) => {
             return <li
@@ -61,11 +61,8 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
                     <Col xs={4}>
                         {x.FriendlyName}
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={5}>
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
-                    </Col>
-                    <Col xs={1}>
-                        <Button onClick={() => this.tempApplyNamedExpression(x)}><Glyphicon glyph="edit" /></Button>
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
@@ -121,10 +118,6 @@ class NamedExpressionConfigComponent extends React.Component<NamedExpressionConf
     onEditNamedExpression(namedExpression: INamedExpression) {
         //we clone the condition as we do not want to mutate the redux state here....
         this.setState({ EditedNamedExpression: Helper.cloneObject(namedExpression) });
-    }
-
-    tempApplyNamedExpression(namedExpression: INamedExpression) {
-        this.props.AdaptableBlotter.applyFilters();
     }
 
     onDeleteNamedExpression(namedExpression: INamedExpression) {

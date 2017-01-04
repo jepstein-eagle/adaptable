@@ -570,11 +570,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public applyFilters(): void { }
-
-    public isFilteredColumn(columnId: string): boolean {
-        return false;
-    }
+    public applyColumnFilters(): void { }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);

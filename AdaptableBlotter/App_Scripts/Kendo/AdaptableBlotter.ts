@@ -32,13 +32,14 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { NamedExpressionStrategy } from '../Strategy/NamedExpressionStrategy'
+import { FilterStrategy } from '../Strategy/FilterStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
-import { IColumnFilter, IFilterContext } from '../Core/Interface/INamedExpressionStrategy';
+import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
@@ -80,6 +81,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.NamedExpressionStrategyId, new NamedExpressionStrategy(this))
+        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -587,51 +589,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
     }
 
-    public isFilteredColumn(columnId: string): boolean {
-        //      let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
-
-        //        if (!currentFilters) {
-        //          return false;
-        //    }
-
-        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.filter(f => !f.IsPredefined);
-        let columnFilters: IColumnFilter[] = []
-
-        // this should really be an iFilter...
-        // for now we are going to experiment with named expressions just taking the first one for each column
-        existingExpressions.forEach(e => {
-            let columnID = ExpressionHelper.GetColumnIdForNamedExpression(e);
-            if (!columnFilters.find(c => c.ColumnId == columnID)) {
-                let columnFilter: IColumnFilter = { ColumnId: columnID, Filter: e.Expression };
-                columnFilters.push(columnFilter);
-            }
-
-        })
-
-        return columnFilters.find(c => c.ColumnId == columnId) != null;
-    }
-
-
-    public applyFilters(): void {
+   
+    public applyColumnFilters(): void {
 
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-        let existingExpressions = this.AdaptableBlotterStore.TheStore.getState().NamedExpression.NamedExpressions.filter(f => !f.IsPredefined);
-        let columnFilters: IColumnFilter[] = []
-
-        // this should really be an iFilter...
-        // for now we are going to experiment with named expressions just taking the first one for each column
-        existingExpressions.forEach(e => {
-            let columnID = ExpressionHelper.GetColumnIdForNamedExpression(e);
-            if (!columnFilters.find(c => c.ColumnId == columnID)) {
-                let columnFilter: IColumnFilter = { ColumnId: columnID, Filter: e.Expression };
-                columnFilters.push(columnFilter);
-            }
-
-        })
-
-
+        let columnFilters: IColumnFilter[]  = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+       
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
 
         this.grid.dataSource.filter(kendoFilters);

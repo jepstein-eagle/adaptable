@@ -74,8 +74,7 @@ export interface IAdaptableBlotter {
 
 
     // temp test
-    applyFilters(): void 
-       isFilteredColumn(columnId: string): boolean 
+    applyColumnFilters(): void 
 }
 
 export interface ISelectedCells {

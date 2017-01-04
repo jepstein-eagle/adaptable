@@ -15,7 +15,7 @@ export interface AdaptableBlotterState {
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     Alert: AdaptableBlotterStates.AlertState;
     NamedExpression: AdaptableBlotterStates.NamedExpressionState;
-    //NamedExpression: AdaptableBlotterStates.NamedExpressionState;
+    Filter: AdaptableBlotterStates.FilterState;
 }
 
 export interface IAdaptableBlotterStore {

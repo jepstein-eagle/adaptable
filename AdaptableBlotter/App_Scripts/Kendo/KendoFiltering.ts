@@ -5,7 +5,7 @@ import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { NamedExpressionState } from './../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IColumnFilter } from '../Core/Interface/INamedExpressionStrategy';
+import { IColumnFilter } from '../Core/Interface/IFilterStrategy';
 import { Expression } from '../Core/Expression/Expression';
 
 export module KendoFiltering {

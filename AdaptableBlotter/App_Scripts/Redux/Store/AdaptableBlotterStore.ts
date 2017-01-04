@@ -20,6 +20,7 @@ import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as NamedExpressionRedux from '../ActionsReducers/NamedExpressionRedux'
+import * as FilterRedux from '../ActionsReducers/FilterRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -48,6 +49,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     Alert: AlertRedux.AlertReducer,
     NamedExpression: NamedExpressionRedux.NamedExpressionReducer,
+    Filter: FilterRedux.FilterReducer,
 
 });
 

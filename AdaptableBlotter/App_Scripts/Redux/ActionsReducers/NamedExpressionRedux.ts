@@ -12,21 +12,21 @@ export const NAMED_EXPRESSION_DELETE = 'NAMED_EXPRESSION_DELETE';
 
 
 export interface NamedExpressionAddOrUpdateAction extends Redux.Action {
-    Filter: INamedExpression
+    NamedExpression: INamedExpression
 }
 
 export interface NamedExpressionDeleteAction extends Redux.Action {
-    Filter: INamedExpression
+    NamedExpression: INamedExpression
 }
 
-export const AddEditNamedExpression = (Filter: INamedExpression): NamedExpressionAddOrUpdateAction => ({
+export const AddEditNamedExpression = (NamedExpression: INamedExpression): NamedExpressionAddOrUpdateAction => ({
     type: NAMED_EXPRESSION_ADD_OR_UPDATE,
-    Filter
+    NamedExpression
 })
 
-export const DeleteNamedExpression = (Filter: INamedExpression): NamedExpressionDeleteAction => ({
+export const DeleteNamedExpression = (NamedExpression: INamedExpression): NamedExpressionDeleteAction => ({
     type: NAMED_EXPRESSION_DELETE,
-    Filter
+    NamedExpression
 })
 
 const initialNamedExpressionState:
@@ -44,11 +44,11 @@ export const NamedExpressionReducer: Redux.Reducer<NamedExpressionState> = (stat
         case NAMED_EXPRESSION_ADD_OR_UPDATE: {
             let actionTypedAddUpdate = (<NamedExpressionAddOrUpdateAction>action)
             namedExpressions = [].concat(state.NamedExpressions)
-            index = namedExpressions.findIndex(i => i.Uid == actionTypedAddUpdate.Filter.Uid)
+            index = namedExpressions.findIndex(i => i.Uid == actionTypedAddUpdate.NamedExpression.Uid)
             if (index != -1) {  // it exists
-                namedExpressions[index] = actionTypedAddUpdate.Filter
+                namedExpressions[index] = actionTypedAddUpdate.NamedExpression
             } else {
-                namedExpressions.push(actionTypedAddUpdate.Filter)
+                namedExpressions.push(actionTypedAddUpdate.NamedExpression)
             }
             return Object.assign({}, state, { NamedExpressions: namedExpressions })
         }
@@ -56,7 +56,7 @@ export const NamedExpressionReducer: Redux.Reducer<NamedExpressionState> = (stat
         case NAMED_EXPRESSION_DELETE: {
             let actionTypedDelete = (<NamedExpressionDeleteAction>action)
             namedExpressions = [].concat(state.NamedExpressions)
-            index = namedExpressions.findIndex(i => i.Uid == actionTypedDelete.Filter.Uid)
+            index = namedExpressions.findIndex(i => i.Uid == actionTypedDelete.NamedExpression.Uid)
             namedExpressions.splice(index, 1);
             return Object.assign({}, state, { NamedExpressions: namedExpressions })
         }

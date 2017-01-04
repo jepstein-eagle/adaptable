@@ -18,7 +18,7 @@ export class NamedExpressionStrategy extends AdaptableStrategyBase implements IN
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.NamedExpressionStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'NamedExpressionConfig', MenuType.Configuration, "filter");
+        this.menuItemConfig = new MenuItemShowPopup("Column Filter", this.Id, 'NamedExpressionConfig', MenuType.Configuration, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 

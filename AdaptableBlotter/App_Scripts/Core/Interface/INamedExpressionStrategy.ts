@@ -9,17 +9,6 @@ export interface INamedExpressionStrategy{
 }
 
 
-export interface IColumnFilter {
-    ColumnId: string
-    Filter: Expression
-}
 
-export interface IFilterContext {
-    Container: any;
-    Popup: any;
-    DataSource: any,
-    Column: IColumn,
-    Blotter: IAdaptableBlotter
-}
    
 
