@@ -12,9 +12,11 @@ import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { LeafExpressionOperator, ColumnType } from '../Core/Enums';
+import { LeafExpressionOperator, ColumnType, SortOrder } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'
+import { Helper } from '../Core/Helper'
+import { SingleListBox } from './SingleListBox'
 
 
 interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
@@ -39,63 +41,73 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     render(): any {
 
-        // TODO:  We need to highlight existing filter(s) 
+        // TODO:  We need to highlight existing filter(s) and we need to allow for multiples - basically use the select box really!
+        // but cannot use the single list box until i can take a custom sort - because we want the user filters first and then the column values...
 
-        // get user filter expressions for the columnValue
+        // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => ExpressionHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
 
-        let userFiltersGroupItems = userFilters.map((userFilter: IUserFilter, index: number) => {
+        let userFiltersGroupItems = userFilters.map((userFilter: IUserFilter) => {
             return <ListGroupItem key={userFilter.Uid} bsSize="xsmall"
                 onClick={() => this.onClickUserFilter(userFilter)} >
                 {userFilter.FriendlyName}
             </ListGroupItem>
         })
 
-        // get the values for the column
+        // get the values for the column and then sort by raw value
+        let columnValues: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
+        let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValues, "rawValue");
 
-    //    let columnDistinctValues: Array<string> = this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
-    //    let columnValues:Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId);
-    //Jo: deleted as requested by jonny
-        let columnValues: Array<any> //= this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
+     //   var columnValuesGroupItems = sortedColumnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
+     //       return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
+     //           onClick={() => this.onClickColumValue(columnValue)} >
+     //           {columnValue.displayValue}
+     //       </ListGroupItem>
+     //   })
 
-        var columnValuesGroupItems = columnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
-            return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
-                onClick={() => this.onClickColumValue(columnValue)}
-                >
-                {columnValue.displayValue}
-            </ListGroupItem>
-        })
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
+            <SingleListBox Values={columnValues} style={divStyle}
+                UiSelectedValues={[]}
+                DisplayMember="displayValue"
+                ValueMember="rawValue"
+                SortMember="rawValue"
+                onSelectedChange={(list) => this.onClickColumValue(list)}
+                ValuesDataType={this.props.CurrentColumn.ColumnType}>
+            </SingleListBox>
+        </PanelWithButton>
 
-        return <ListGroup style={listGroupStyle}  >
+        /*<ListGroup style={listGroupStyle}  >
             {userFiltersGroupItems}
             {columnValuesGroupItems}
         </ListGroup>
-
-
+*/
     }
 
     onClickUserFilter(userFilter: IUserFilter) {
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: userFilter.Expression, RealValue: 1 };
+        // send the user filter - but note at the moment this means that the display value is getting sent
+        // but lets send as we should explore Jo's idea of listening to the filter event and providing our own implementation...
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: userFilter.Expression };
         this.props.onAddEditColumnFilter(columnFilter);
     }
 
 
     // TODO:  Fix this so it works with multiple values...
-    onClickColumValue(columnValue: { rawValue: any, displayValue: string }) {
+    onClickColumValue(list: string[]) {
+        let x: any;
 
-        let values: any[] = [];
-        values.push(columnValue.displayValue);
+           let values: any[] = [];
+            values.push(list[0]);
 
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                ColumnValues: values,
-                ExpressionRange: null,
-                UserFilter: null
-            };
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
+                let predefinedExpressionInfo: IPredefinedExpressionInfo =
+                  {
+                     ColumnValues: values,
+                     ExpressionRange: null,
+                     UserFilter: null
+                 };
+             let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
 
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression , RealValue: columnValue.rawValue};
-        this.props.onAddEditColumnFilter(columnFilter);
+            let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+            this.props.onAddEditColumnFilter(columnFilter);
     }
 }
 
@@ -124,7 +136,7 @@ export const FilterFormReact = (FilterContext: IFilterContext) => <Provider stor
 </Provider>;
 
 let panelStyle = {
-    width: '800px'
+    width: '200px'
 }
 
 var listGroupStyle = {
@@ -136,3 +148,9 @@ var listGroupStyle = {
 var listGroupItemStyle = {
     fontSize: "small"
 };
+
+let divStyle = {
+    'overflowY': 'auto',
+    'height': '335px',
+    'marginBottom': '0'
+}

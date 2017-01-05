@@ -176,14 +176,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Column: this.getColumnFromColumnId(e.field),
                 Blotter: this
             };
-               this.initUrlFilterUI(filterContext);
+            this.initUrlFilterUI(filterContext);
 
 
 
         });
+
+
+        grid.bind("filter", (e: any) => {
+            alert("I dont get called because Im not in this version")
+        });
     }
 
-public generateRandomInt(minValue: number, maxValue: number): number {
+    public generateRandomInt(minValue: number, maxValue: number): number {
         return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
     }
 
@@ -192,7 +197,7 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         // Remove default filter UI
         filterContext.Container.off();
         filterContext.Container.empty();
-        let formId = "filterform" + filterContext.Column.ColumnId ;
+        let formId = "filterform" + filterContext.Column.ColumnId;
         filterContext.Container.html('<div id="' + formId + '"></div>');
         var filterContainer = document.getElementById(formId);
         ReactDOM.render(FilterFormReact(filterContext), filterContainer);
@@ -462,7 +467,7 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         this.SetColumnIntoStore();
     }
 
-    
+
     public saveAsExcel(fileName: string, allPages: boolean): void {
 
 
@@ -483,7 +488,7 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         return cell;
     }
 
-public getDisplayValue(id: any, columnId: string): string {
+    public getDisplayValue(id: any, columnId: string): string {
         let record: any = this.grid.dataSource.getByUid(id);
         return this.getDisplayValueFromRecord(record, columnId)
         // let columnIndex = this.getColumnIndex(columnId)
@@ -616,8 +621,8 @@ public getDisplayValue(id: any, columnId: string): string {
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
-// for the moment alwyas giong to remove the current filters
- this.grid.dataSource.filter();
+        // for the moment alwyas giong to remove the current filters
+        this.grid.dataSource.filter();
 
         let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
 
