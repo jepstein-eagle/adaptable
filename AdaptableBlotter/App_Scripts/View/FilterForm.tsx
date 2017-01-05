@@ -41,9 +41,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     render(): any {
 
-        // TODO:  We need to highlight existing filter(s) and we need to allow for multiples - basically use the select box really!
-        // but cannot use the single list box until i can take a custom sort - because we want the user filters first and then the column values...
-
         // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => ExpressionHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
 
@@ -58,13 +55,15 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let columnValues: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValues, "rawValue");
 
-     //   var columnValuesGroupItems = sortedColumnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
-     //       return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
-     //           onClick={() => this.onClickColumValue(columnValue)} >
-     //           {columnValue.displayValue}
-     //       </ListGroupItem>
-     //   })
+        //   var columnValuesGroupItems = sortedColumnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
+        //       return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
+        //           onClick={() => this.onClickColumValue(columnValue)} >
+        //           {columnValue.displayValue}
+        //       </ListGroupItem>
+        //   })
 
+
+        // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <SingleListBox Values={columnValues} style={divStyle}
                 UiSelectedValues={[]}
@@ -93,21 +92,18 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     // TODO:  Fix this so it works with multiple values...
     onClickColumValue(list: string[]) {
-        let x: any;
+       
+       
+        let predefinedExpressionInfo: IPredefinedExpressionInfo =
+            {
+                ColumnValues: list,
+                ExpressionRange: null,
+                UserFilter: null
+            };
+        let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
 
-           let values: any[] = [];
-            values.push(list[0]);
-
-                let predefinedExpressionInfo: IPredefinedExpressionInfo =
-                  {
-                     ColumnValues: values,
-                     ExpressionRange: null,
-                     UserFilter: null
-                 };
-             let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
-
-            let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
-            this.props.onAddEditColumnFilter(columnFilter);
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+        this.props.onAddEditColumnFilter(columnFilter);
     }
 }
 
