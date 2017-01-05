@@ -30,13 +30,13 @@ interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
 }
 
 interface FilterFormState {
-    isEditing: boolean;
+    SelectedColumnValues: any[];
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
     constructor() {
         super();
-        this.state = { isEditing: false }
+        this.state = { SelectedColumnValues: [] }
     }
 
     render(): any {
@@ -66,7 +66,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <SingleListBox Values={columnValues} style={divStyle}
-                UiSelectedValues={[]}
+                UiSelectedValues={this.state.SelectedColumnValues}
                 DisplayMember="displayValue"
                 ValueMember="rawValue"
                 SortMember="rawValue"
@@ -91,12 +91,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
 
     // TODO:  Fix this so it works with multiple values...
-    onClickColumValue(list: string[]) {
-       
-       
+    onClickColumValue(selectedColumnValues: string[]) {
+
+
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
-                ColumnValues: list,
+                ColumnValues: selectedColumnValues,
                 ExpressionRange: null,
                 UserFilter: null
             };
@@ -104,6 +104,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
         this.props.onAddEditColumnFilter(columnFilter);
+        this.setState({ SelectedColumnValues: selectedColumnValues } as FilterFormState)
+
     }
 }
 
