@@ -12,13 +12,7 @@ import { Expression } from '../Core/Expression/Expression';
 export module KendoFiltering {
 
 
-
-    export function testRangeMadeness(fromValue: number, toValue: number): kendo.data.DataSourceFilters {
-
-        return null;
-    }
-
-
+/* dead stuff from when trying to be clever wtih display and real values... 
     function getDecPlaces(itemToConvert: any): any {
         // Regex might need some work but hopefully it only allows numbers, full stopes and minus signs....
 
@@ -55,17 +49,23 @@ export module KendoFiltering {
         }
     }
 
-    export function buildKendoFiltersFromAdaptableFilters(columnFilters: IColumnFilter[], blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
+
+export function buildKendoFiltersFromAdaptableFilters(columnFilters: IColumnFilter[], blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
         if (columnFilters == null || columnFilters.length < 1) {
             return null;
         }
         let columnFilter: IColumnFilter = columnFilters[0];
 
+//let columnFilter: IColumnFilter =  columnFilter.Filter.ColumnValuesExpressions[0].ColumnValues[0];
+
+
         let column: IColumn = blotter.getColumnFromColumnId(columnFilter.ColumnId);
 
         let displayValue: any = columnFilter.Filter.ColumnValuesExpressions[0].ColumnValues[0];
 
-let numberDecPlacesTest = getDecPlaces(displayValue);
+        let rawValue : any = columnFilter.RealValue;
+
+let numberDecPlacesTest = getDecPlaces(rawValue);
         let realDisplayValue: number = getTypedValue(displayValue, column);
         let numberDecPlaces = getDecPlaces(realDisplayValue);
 
@@ -81,11 +81,13 @@ let numberDecPlacesTest = getDecPlaces(displayValue);
         newFilters.filters.push(fromFilterItem);
         newFilters.filters.push(toFilterItem);
         return newFilters;
+    */
 
-
-
-        /*
-        
+    export function buildKendoFiltersFromAdaptableFilters(columnFilters: IColumnFilter[], blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
+        if (columnFilters == null || columnFilters.length < 1) {
+            return null;
+        }
+      
         
                    let kendoFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };
         
@@ -115,8 +117,6 @@ let numberDecPlacesTest = getDecPlaces(displayValue);
                     }
                 })
                 return kendoFilters;
-        */
-
     }
 
     function createFilterFromColumnValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
@@ -256,6 +256,13 @@ let numberDecPlacesTest = getDecPlaces(displayValue);
                 return "contains";
         }
     }
+
+
+    function convertToNumber(itemToConvert: any): number {
+        // Regex might need some work but hopefully it only allows numbers, full stopes and minus signs....
+        return Number(itemToConvert.replace(/[^0-9\.\-]+/g, ""));
+    }
+
 
     /*
       export function isFilteredColumn(currentFilters: kendo.data.DataSourceFilters, columnId: string): boolean {

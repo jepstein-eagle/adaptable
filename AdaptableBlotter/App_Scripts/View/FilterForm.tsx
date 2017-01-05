@@ -53,13 +53,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         // get the values for the column
 
-        let columnValues: Array<any> = this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
+        let columnDistinctValues: Array<string> = this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
+        let columnValues:Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId);
 
-        var columnValuesGroupItems = columnValues.map((columnValue: any, index: number) => {
-            return <ListGroupItem key={index} bsSize="xsmall"
+        var columnValuesGroupItems = columnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
+            return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
                 onClick={() => this.onClickColumValue(columnValue)}
                 >
-                {columnValue}
+                {columnValue.displayValue}
             </ListGroupItem>
         })
 
@@ -72,16 +73,16 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     onClickUserFilter(userFilter: IUserFilter) {
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: userFilter.Expression };
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: userFilter.Expression, RealValue: 1 };
         this.props.onAddEditColumnFilter(columnFilter);
     }
 
 
     // TODO:  Fix this so it works with multiple values...
-    onClickColumValue(columnValue: any) {
+    onClickColumValue(columnValue: { rawValue: any, displayValue: string }) {
 
         let values: any[] = [];
-        values.push(columnValue);
+        values.push(columnValue.displayValue);
 
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
@@ -91,7 +92,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             };
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
 
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression , RealValue: columnValue.rawValue};
         this.props.onAddEditColumnFilter(columnFilter);
     }
 }

@@ -8,6 +8,7 @@ export interface IFilterStrategy{
 export interface IColumnFilter {
     ColumnId: string
     Filter: Expression
+    RealValue: number
 }
 
 export interface IFilterContext {

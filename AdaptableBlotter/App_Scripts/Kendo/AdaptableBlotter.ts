@@ -496,14 +496,8 @@ public generateRandomInt(minValue: number, maxValue: number): number {
         return cell;
     }
 
-    public getDisplayValue(id: any, columnId: string): string {
+public getDisplayValue(id: any, columnId: string): string {
         let record: any = this.grid.dataSource.getByUid(id);
-      //  if (column.format) {
-      //      return kendo.format(column.format, record[columnId])
-      //  }
-      //  else {
-      //      return record[columnId]
-      //  }
         return this.getDisplayValueFromRecord(record, columnId)
         // let columnIndex = this.getColumnIndex(columnId)
         // let row = this.getRowByRowIdentifier(id)
@@ -520,6 +514,7 @@ public generateRandomInt(minValue: number, maxValue: number): number {
             return row[columnId]
         }
     }
+
 
     //Jo: we know that this function is wrong as it's not cumulative
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
@@ -633,6 +628,9 @@ public generateRandomInt(minValue: number, maxValue: number): number {
 
         // dont need it but helps me to see what is happening!
         let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+
+// for the moment alwyas giong to remove the current filters
+ this.grid.dataSource.filter();
 
         let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
 
