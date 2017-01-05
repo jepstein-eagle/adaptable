@@ -421,26 +421,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.setDataSource(this.grid.dataSource);
     }
 
-    public getColumnValueStringDistinct(columnId: string): Array<string> {
-        let displayValueArray = this.grid.dataSource.data().map(row => this.getDisplayValue(this.getPrimaryKeyValueFromRecord(row), columnId))
-        return Array.from(new Set(displayValueArray))
-        // let tdIndex = columnIndex + 1;
-
-        // we could get the values from teh data but its not using jquery and we lose the text representation
-        // though it does mean we get all the data and not just filtered data....
-        //  var dataSource = this.grid.dataSource.data();
-        //     let uidList: string[] = [];
-        //     for (var i = 0; i < dataSource.length; i++) {
-        //         uidList.push(dataSource[i][columnId])
-        //         }
-        //     return uidList;
-
-
-        // var rows = this.grid.table.find("tr > td:nth-child(" + tdIndex + ")");
-        // let returnVal = rows.map((index, element) => $(element).text()).toArray();
-        // return returnVal;
-    }
-
     public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         this.grid.dataSource.data().forEach((row: any) => {

@@ -421,16 +421,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.reindex();
         this.grid.repaint();
     }
-    public getColumnValueStringDistinct(columnId: string): Array<string> {
-        let returnArray: string[] = []
-        let dataSourceColumnIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == columnId)
-        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
-        for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
-            returnArray.push(this.getDisplayValue(this.getPrimaryKeyValueFromRecord(element), columnId))
-        }
-        return returnArray
-    }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
