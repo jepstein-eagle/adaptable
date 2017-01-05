@@ -421,11 +421,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.setDataSource(this.grid.dataSource);
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         this.grid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)
-            returnMap.set(displayValue, { rawValue: row[columnId], displayValue: displayValue });
+            let rawValue = row[columnId]
+            if (distinctCriteria == "rawValue") {
+                returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayValue });
+            }
+            else if (distinctCriteria == "displayValue") {
+                returnMap.set(displayValue, { rawValue: rawValue, displayValue: displayValue });
+            }
+
         })
         return Array.from(returnMap.values());
     }

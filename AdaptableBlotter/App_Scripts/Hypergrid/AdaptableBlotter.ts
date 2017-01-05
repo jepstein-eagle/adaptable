@@ -422,13 +422,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.repaint();
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
         for (var index = 0; index < rowCount; index++) {
             var element = this.grid.behavior.dataModel.dataSource.getRow(index)
             let displayString = this.getDisplayValueFromRecord(element, columnId)
-            returnMap.set(displayString, { rawValue: element[columnId], displayValue: displayString });
+            let rawValue = element[columnId]
+            if (distinctCriteria == "rawValue") {
+                returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayString });
+            }
+            else if (distinctCriteria == "displayValue") {
+                returnMap.set(displayString, { rawValue: rawValue, displayValue: displayString });
+            }
         }
         return Array.from(returnMap.values());
     }
@@ -454,7 +460,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getDisplayValue(id: any, columnId: string): string {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
-        return this.getDisplayValueFromRecord(row,columnId)
+        return this.getDisplayValueFromRecord(row, columnId)
     }
 
     private getDisplayValueFromRecord(row: any, columnId: string) {

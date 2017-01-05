@@ -26,7 +26,7 @@ export interface IAdaptableBlotter {
     setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
     CreateMenu(): void
     SetColumnIntoStore(): void
-    getColumnValueDisplayValuePairDistinctList(columnId: string): Array<{ rawValue: any, displayValue: string }>
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }>
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
