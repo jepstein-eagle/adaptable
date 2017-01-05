@@ -53,8 +53,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         // get the values for the column
 
-        let columnDistinctValues: Array<string> = this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
-        let columnValues:Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId);
+    //    let columnDistinctValues: Array<string> = this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
+    //    let columnValues:Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId);
+    //Jo: deleted as requested by jonny
+        let columnValues: Array<any> //= this.props.AdaptableBlotter.getColumnValueStringDistinct(this.props.CurrentColumn.ColumnId);
 
         var columnValuesGroupItems = columnValues.map((columnValue: { rawValue: any, displayValue: string }) => {
             return <ListGroupItem key={columnValue.rawValue} bsSize="xsmall"
