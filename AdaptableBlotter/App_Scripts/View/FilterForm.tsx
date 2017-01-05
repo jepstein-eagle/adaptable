@@ -26,7 +26,6 @@ interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
     UserFilterState: UserFilterState;
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.FilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.FilterAddEditAction
-
 }
 
 interface FilterFormState {
@@ -89,11 +88,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         this.props.onAddEditColumnFilter(columnFilter);
     }
 
-
-    // TODO:  Fix this so it works with multiple values...
     onClickColumValue(selectedColumnValues: string[]) {
-
-
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
                 ColumnValues: selectedColumnValues,
@@ -101,11 +96,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 UserFilter: null
             };
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
-
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
         this.props.onAddEditColumnFilter(columnFilter);
         this.setState({ SelectedColumnValues: selectedColumnValues } as FilterFormState)
-
     }
 }
 
@@ -118,7 +111,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.DeleteFilter(columnFilter)),
