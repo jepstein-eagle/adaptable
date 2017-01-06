@@ -21,8 +21,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
     InitState() {
         if (this.ColumnFilters != this.GetColumnFilterState().ColumnFilters) {
-
-            this.blotter.applyColumnFilters();
+            setTimeout(() => this.blotter.applyColumnFilters(), 5);
             this.ColumnFilters = this.GetColumnFilterState().ColumnFilters;
         }
     }
