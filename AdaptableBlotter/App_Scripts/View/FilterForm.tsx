@@ -62,9 +62,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         // get the values for the column and then sort by raw value
         let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
+       
         filterUIItems = [].concat(filterUIItems, columnValuePairs.map((cvp, index) => {
-            filterUIItems.push({ RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount });
-        }));
+        return { RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount }}));
 
 
         // using the Single List Box but only passing in column values for now 
