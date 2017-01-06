@@ -41,6 +41,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         });
     }
     render() {
+        let firstElement = true
         let userFiltersItemsElements = this.props.UserFilters.map(x => {
             let isActive: boolean
             isActive = this.state.UiSelectedUserFilters.indexOf(x.rawValue) >= 0;
@@ -50,12 +51,23 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={value} style={{ width: '80%' }}
-                    onClick={() => this.onClickItemUserFilter(x)}
-                    active={isActive}
-                    value={value} >{display}</ListGroupItem>
+                if (firstElement) {
+                    firstElement = false
+                    return <ListGroupItem key={value} header="User Filters" style={{ width: '80%' }}
+                        onClick={() => this.onClickItemUserFilter(x)}
+                        active={isActive}
+                        value={value} >{display}</ListGroupItem>
+                }
+                else {
+                    return <ListGroupItem key={value} style={{ width: '80%' }}
+                        onClick={() => this.onClickItemUserFilter(x)}
+                        active={isActive}
+                        value={value} >{display}</ListGroupItem>
+                }
             }
         })
+
+        firstElement = true
         let columnValuesItemsElements = this.props.ColumnValues.map(x => {
             let isActive: boolean
             isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
@@ -65,10 +77,18 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={value} style={{ width: '80%' }}
-                    onClick={() => this.onClickItemColumnValue(x)}
-                    active={isActive}
-                    value={value} >{display}</ListGroupItem>
+                if (firstElement) {
+                    firstElement= false
+                    return <ListGroupItem key={value} header="Column Values" style={{ width: '80%' }}
+                        onClick={() => this.onClickItemColumnValue(x)}
+                        active={isActive}
+                        value={value} >{display}</ListGroupItem>
+                } else {
+                    return <ListGroupItem key={value} style={{ width: '80%' }}
+                        onClick={() => this.onClickItemColumnValue(x)}
+                        active={isActive}
+                        value={value} >{display}</ListGroupItem>
+                }
             }
         })
 
@@ -90,6 +110,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             {header}
             <ListGroup fill style={divStyle}>
                 {userFiltersItemsElements}
+                <hr style={{marginTop:'7px', marginBottom:'7px'}}/>
                 {columnValuesItemsElements}
             </ListGroup>
         </div>;
