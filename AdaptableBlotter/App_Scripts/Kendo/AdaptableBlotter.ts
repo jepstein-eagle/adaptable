@@ -616,15 +616,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
 
         // dont need it but helps me to see what is happening!
-        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+       // let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
         // for the moment alwyas giong to remove the current filters
-        this.grid.dataSource.filter();
-
+     //   this.grid.dataSource.filter();
         let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
-
         this.grid.dataSource.filter(kendoFilters);
     }
 
