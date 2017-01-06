@@ -16,7 +16,7 @@ import { LeafExpressionOperator, ColumnType, SortOrder } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'
 import { Helper } from '../Core/Helper'
-import { SingleListBox } from './SingleListBox'
+import { ListBoxFilterForm } from './ListBoxFilterForm'
 
 
 interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
@@ -28,88 +28,59 @@ interface FilterFormProps extends React.ClassAttributes<FilterFormComponent> {
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.FilterAddEditAction
 }
 
-interface FilterFormState {
-    SelectedFilterDisplayValues: string[];
-}
-
-class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
-    constructor(props: FilterFormProps) {
-        super(props);
-        this.state = this.buildState(this.props)
-    }
-
-
-    private buildState(theProps: FilterFormProps): FilterFormState {
-        let existingColumnFilter: IColumnFilter = theProps.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-        if (existingColumnFilter == null || existingColumnFilter.Filter.ColumnValuesExpressions == null || existingColumnFilter.Filter.ColumnValuesExpressions.length == 0) {
-            return { SelectedFilterDisplayValues: [] };
-        }
-        else {
-            return { SelectedFilterDisplayValues: this.getSelectedValuesFromState(existingColumnFilter) };
-        }
-    }
+class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     render(): any {
 
-        let filterUIItems: IColumnFilterItem[] = [];
-
         // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => ExpressionHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
-        filterUIItems = userFilters.map((uf, index) => { return { RawValue: uf.Uid, DisplayValue: uf.FriendlyName, Index: index } })
-
-        let userFilterCount: number = userFilters.length;
+        let userFilterItems: { rawValue: any, displayValue: string }[] = userFilters.map((uf, index) => { return { rawValue: uf.Uid, displayValue: uf.FriendlyName } })
 
         // get the values for the column and then sort by raw value
         let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
-       
-        filterUIItems = [].concat(filterUIItems, columnValuePairs.map((cvp, index) => {
-        return { RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount }}));
 
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
-            <SingleListBox Values={filterUIItems} style={divStyle}
-                UiSelectedValues={this.state.SelectedFilterDisplayValues}
-                DisplayMember="DisplayValue"
-                ValueMember="RawValue"
-                SortMember="Index"
-                onSelectedChange={(list) => this.onClickColumValue(list)}>
-            </SingleListBox>
+            <ListBoxFilterForm ColumnValues={columnValuePairs}
+                UiSelectedColumnValues={existingColumnFilter ? existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues : []}
+                UiSelectedUserFilters={existingColumnFilter ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
+                UserFilters={userFilterItems}
+                onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
+                onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}>
+            </ListBoxFilterForm>
         </PanelWithButton>
-
     }
 
-    onClickColumValue(selectedFilterDisplayValues: string[]) {
-        let selectedUserFilters: string[] = [];
-        let selectedColumnDisplayValues: string[] = [];
-
-        selectedFilterDisplayValues.forEach(sfdv => {
-            if (this.props.UserFilterState.UserFilters.find(uf => uf.Uid == sfdv) != null) {
-                selectedUserFilters.push(sfdv);
-            } else {
-                selectedColumnDisplayValues.push(sfdv);
-            }
-        })
-
+    onClickColumValue(columnValues: string[]) {
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
-                ColumnValues: selectedColumnDisplayValues,
+                ColumnValues: columnValues,
                 ExpressionRange: null,
-                UserFilterUids: selectedUserFilters
+                UserFilterUids: existingColumnFilter ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
             };
 
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
         this.props.onAddEditColumnFilter(columnFilter);
-        this.setState({ SelectedFilterDisplayValues: selectedFilterDisplayValues } as FilterFormState)
     }
 
-    getSelectedValuesFromState(existingColumnFilter: IColumnFilter): string[] {
-        let selectedStateValues: string[] = [];
-        selectedStateValues.push(...existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues);
-        selectedStateValues.push(...existingColumnFilter.Filter.UserFilters[0].UserFilterUids);
-        return selectedStateValues;
+    onClickUserFilter(selectedFilterDisplayValues: string[]) {
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+
+        let predefinedExpressionInfo: IPredefinedExpressionInfo =
+            {
+                ColumnValues: existingColumnFilter ? existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues : [],
+                ExpressionRange: null,
+                UserFilterUids: selectedFilterDisplayValues
+            };
+
+        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+        this.props.onAddEditColumnFilter(columnFilter);
     }
 }
 
@@ -140,18 +111,3 @@ let panelStyle = {
     width: '200px'
 }
 
-var listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '500px',
-    'height': '400px'
-};
-
-var listGroupItemStyle = {
-    fontSize: "small"
-};
-
-let divStyle = {
-    'overflowY': 'auto',
-    'height': '335px',
-    'marginBottom': '0'
-}
