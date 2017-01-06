@@ -55,20 +55,18 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => ExpressionHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
-        userFilters.map((uf, index) => {
-            filterUIItems.push({ RawValue: uf.Uid, DisplayValue: uf.FriendlyName, Index: index })
-        })
+        filterUIItems = userFilters.map((uf, index) => { return { RawValue: uf.Uid, DisplayValue: uf.FriendlyName, Index: index } })
 
-let userFilterCount: number = userFilters.length;
+        let userFilterCount: number = userFilters.length;
 
-// get the values for the column and then sort by raw value
+        // get the values for the column and then sort by raw value
         let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
-        columnValuePairs.map((cvp, index) => {
-       filterUIItems.push({ RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount });
-        });
+       
+        filterUIItems = [].concat(filterUIItems, columnValuePairs.map((cvp, index) => {
+        return { RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount }}));
 
-        
+
         // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <SingleListBox Values={filterUIItems} style={divStyle}
@@ -109,7 +107,7 @@ let userFilterCount: number = userFilters.length;
     }
 
     getSelectedValuesFromState(existingColumnFilter: IColumnFilter): string[] {
-        let selectedStateValues: string[]=[];
+        let selectedStateValues: string[] = [];
         selectedStateValues.push(...existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues);
         selectedStateValues.push(...existingColumnFilter.Filter.UserFilters[0].UserFilterUids);
         return selectedStateValues;
