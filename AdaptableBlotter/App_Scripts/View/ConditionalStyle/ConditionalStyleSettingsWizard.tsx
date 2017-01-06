@@ -57,7 +57,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilters: ["Positive"] ,
+                        UserFilterUids: ["Positive"] ,
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -68,7 +68,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilters:[ "Negative"],
+                        UserFilterUids:[ "Negative"],
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
@@ -201,7 +201,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     private onCreatePredefinedExpression() {
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
+        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
         this.state.BackColor = this.state.PredefinedStyleCondition.BackColor;
         this.state.ForeColor = this.state.PredefinedStyleCondition.ForeColor;
         this.state.Expression = predefinedExpression;

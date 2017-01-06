@@ -18,7 +18,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserFilterStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Column Filter", this.Id, 'UserFilterConfig', MenuType.Configuration, "filter");
+        this.menuItemConfig = new MenuItemShowPopup("User Filter", this.Id, 'UserFilterConfig', MenuType.Configuration, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 

@@ -41,18 +41,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     private buildState(theProps: FilterFormProps): FilterFormState {
         let existingColumnFilter: IColumnFilter = theProps.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-
         if (existingColumnFilter == null || existingColumnFilter.Filter.ColumnValuesExpressions == null || existingColumnFilter.Filter.ColumnValuesExpressions.length == 0) {
-            return {
-                SelectedFilterDisplayValues: [],
-            };
+            return { SelectedFilterDisplayValues: [] };
         }
         else {
-
-            return {
-                // this is not completely correct as there might be some user filters selected as well which we are not displaying...
-                SelectedFilterDisplayValues: existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues,
-            };
+            return { SelectedFilterDisplayValues: this.getSelectedValuesFromState(existingColumnFilter) };
         }
     }
 
@@ -87,15 +80,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     }
 
-    //  onClickUserFilter(userFilter: IUserFilter) {
-    // send the user filter - but note at the moment this means that the display value is getting sent
-    // but lets send as we should explore Jo's idea of listening to the filter event and providing our own implementation...
-    //      let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: userFilter.Expression };
-    //      this.props.onAddEditColumnFilter(columnFilter);
-    //    }
-
     onClickColumValue(selectedFilterDisplayValues: string[]) {
-        // Create an expression with 2 sets of values - though currently nothing is being done with the user filters...
         let selectedUserFilters: string[] = [];
         let selectedColumnDisplayValues: string[] = [];
 
@@ -111,13 +96,20 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             {
                 ColumnValues: selectedColumnDisplayValues,
                 ExpressionRange: null,
-                UserFilters: selectedUserFilters
+                UserFilterUids: selectedUserFilters
             };
 
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
+        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
         this.props.onAddEditColumnFilter(columnFilter);
         this.setState({ SelectedFilterDisplayValues: selectedFilterDisplayValues } as FilterFormState)
+    }
+
+    getSelectedValuesFromState(existingColumnFilter: IColumnFilter): string[] {
+        let selectedStateValues: string[]=[];
+        selectedStateValues.push(...existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues);
+        selectedStateValues.push(...existingColumnFilter.Filter.UserFilters[0].UserFilterUids);
+        return selectedStateValues;
     }
 }
 

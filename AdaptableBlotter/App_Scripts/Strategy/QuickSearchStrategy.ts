@@ -3,12 +3,8 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, ColumnType } from '../Core/Enums';
-import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
-import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
-import { Expression } from '../Core/Expression/Expression'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { MenuType, LeafExpressionOperator } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 

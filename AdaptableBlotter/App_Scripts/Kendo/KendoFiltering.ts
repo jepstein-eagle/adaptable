@@ -12,12 +12,10 @@ import { Expression } from '../Core/Expression/Expression';
 export module KendoFiltering {
 
     export function buildKendoFiltersFromAdaptableFilters(columnFilters: IColumnFilter[], blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
-     
-     
+
         if (columnFilters == null || columnFilters.length < 1) {
             return null;
         }
-
 
         let kendoFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };
 
@@ -25,23 +23,24 @@ export module KendoFiltering {
 
             let column: IColumn = blotter.getColumnFromColumnId(columnFilter.ColumnId);
 
-            // for now lets just get any column value filters and range filters - we are leaving predefined / named filters for now...
             let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnValuesExpression(columnFilter.Filter, column);
             let rangeFilters: kendo.data.DataSourceFilters = createFilterFromRangesExpression(columnFilter.Filter, column);
+            let userFilters: kendo.data.DataSourceFilters = createFilterFromUserFiltersExpression(columnFilter.Filter, column, blotter);
 
-            // examine userfilters, and add column value filters and range filters respectively as appropriate
-            createFilterFromUserFiltersExpression(columnFilter.Filter, column, blotter, columnValueFilters, rangeFilters);
+            if (columnValueFilters || rangeFilters || userFilters) { 
+                let columnKendoFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  
 
+                if (columnValueFilters) {
+                    columnKendoFilters.filters.push(columnValueFilters);
+                }
+                if (rangeFilters) {
+                    columnKendoFilters.filters.push(rangeFilters);
+                }
+                if (userFilters) {
+                    columnKendoFilters.filters.push(userFilters);
+                }
 
-            if (columnValueFilters && rangeFilters) {
-                let jointFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // is it "and" or is it "or" here?
-                jointFilters.filters.push(columnValueFilters);
-                jointFilters.filters.push(rangeFilters);
-                kendoFilters.filters.push(jointFilters);
-            } else if (columnValueFilters) {
-                kendoFilters.filters.push(columnValueFilters);
-            } else if (rangeFilters) {
-                kendoFilters.filters.push(rangeFilters);
+                kendoFilters.filters.push(columnKendoFilters);
             }
         })
         return kendoFilters;
@@ -62,15 +61,11 @@ export module KendoFiltering {
                     let filterItem: kendo.data.DataSourceFilterItem = { operator: "eq", field: column.ColumnId, value: e };
                     filterItems.push(filterItem);
                 })
-                let newFilters: kendo.data.DataSourceFilters = { logic: "or", filters: filterItems };  // multiple column value items are "or"
-                return newFilters;
+                let kendoColumnFilters: kendo.data.DataSourceFilters = { logic: "or", filters: filterItems };  // multiple column value items are "or"
+                return kendoColumnFilters;
             }
         }
     }
-
-
-
-
 
     function createFilterFromRangesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
         let rangeExpression = expression.RangeExpressions;
@@ -96,19 +91,21 @@ export module KendoFiltering {
                         filterItems.push(createFilterFromBasicRange(range, column));
                     }
                 })
-                let newFilters: kendo.data.DataSourceFilters = { logic: "and", filters: filterItems };  // multiple range items are "and"
-                return newFilters;
+                let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "and", filters: filterItems };  // multiple range items are "and"
+                return kendoRangeFilters;
             }
         }
     }
 
 
+    function createFilterFromUserFiltersExpression(expression: Expression, column: IColumn, blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
 
-    function createFilterFromUserFiltersExpression(expression: Expression, column: IColumn, blotter: AdaptableBlotter, columnValueFilters: kendo.data.DataSourceFilters, rangeFilters: kendo.data.DataSourceFilters): void {
         let userFiltersExpression = expression.UserFilters;
         if (userFiltersExpression.length > 0) {
             let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
             let userFilterUids: string[] = userFiltersExpression[0].UserFilterUids;
+
+            let kendoUserFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // is it "and" or "or" ?????
 
             userFilterUids.forEach(userFilterUid => {
 
@@ -118,47 +115,36 @@ export module KendoFiltering {
                 if (!userFilter.IsPredefined) { // leaving out predefined for now as no fucking idea what to do....
 
                     let columnValueFiltersNew: kendo.data.DataSourceFilters = createFilterFromColumnValuesExpression(userFilter.Expression, column);
-                    if (columnValueFiltersNew)
-                        if (columnValueFilters) {
-                            columnValueFilters.filters.push(columnValueFiltersNew);
-                        } else {
-                            columnValueFilters = columnValueFiltersNew;
-                        }
-
-
                     let rangeFiltersNew: kendo.data.DataSourceFilters = createFilterFromRangesExpression(userFilter.Expression, column);
-                    if (rangeFiltersNew)
-                        if (rangeFilters) {
-                            rangeFilters.filters.push(rangeFiltersNew);
-                        } else {
-                            rangeFilters = rangeFilters;
+
+                    if (columnValueFiltersNew || rangeFiltersNew) {
+                        if (columnValueFiltersNew) {
+                            kendoUserFilters.filters.push(columnValueFiltersNew);
                         }
+                        if (rangeFiltersNew) {
+                            kendoUserFilters.filters.push(rangeFiltersNew);
+                        }
+                    }
                 }
-            })
-
-
+            });
+            return (kendoUserFilters.filters.length > 0) ? kendoUserFilters : null;
         }
     }
 
-
-
-
-
     function createFilterFromBasicRange(range: IRangeExpression, column: IColumn): kendo.data.DataSourceFilterItem {
-        return { operator: getFilterStringOperatorForLeafOperator(range.Operator), field: column.ColumnId, value: range.Operand1 };
+        return { operator: getKendoOperatorForLeafOperator(range.Operator), field: column.ColumnId, value: range.Operand1 };
     }
 
     function createFilterFromBetweenRange(range: IRangeExpression, column: IColumn): kendo.data.DataSourceFilterItem[] {
         let newFilters: kendo.data.DataSourceFilterItem[] = [];
-        let fromFilterItem: kendo.data.DataSourceFilterItem = { operator: getFilterStringOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: range.Operand1 };
-        let toFilterItem: kendo.data.DataSourceFilterItem = { operator: getFilterStringOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: range.Operand2 };
+        let fromFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: range.Operand1 };
+        let toFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: range.Operand2 };
         newFilters.push(fromFilterItem);
         newFilters.push(toFilterItem);
         return newFilters;
     }
 
-
-    function getFilterStringOperatorForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
+    function getKendoOperatorForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
         // just doing a couple for now but will need to do them all.... :(
         switch (leafExpressionOperator) {
             case LeafExpressionOperator.GreaterThan:
@@ -175,10 +161,10 @@ export module KendoFiltering {
     }
 
 
-    function convertToNumber(itemToConvert: any): number {
+  //  function convertToNumber(itemToConvert: any): number {
         // Regex might need some work but hopefully it only allows numbers, full stopes and minus signs....
-        return Number(itemToConvert.replace(/[^0-9\.\-]+/g, ""));
-    }
+   //     return Number(itemToConvert.replace(/[^0-9\.\-]+/g, ""));
+   // }
 
 
     /*

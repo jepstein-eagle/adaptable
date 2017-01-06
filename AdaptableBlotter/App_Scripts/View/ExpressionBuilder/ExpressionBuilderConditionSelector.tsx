@@ -98,9 +98,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        let isFilteredColumn: boolean =   this.props.Blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.find(cf=>cf.ColumnId== this.props.SelectedColumnId)!=null;;
-        let filteredWarning: string = (this.props.SelectedColumnId != "select" && isFilteredColumn) ? "Column is currently in a filter so only filtered values are shown" : "";
-
+  
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
         let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => ExpressionHelper.ShouldShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
         let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
@@ -117,16 +115,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             <div style={{ paddingTop: '7px' }}>Step 1: Select Column</div>
                         }
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={9}>
                         <FormControl style={{ width: "Auto" }} componentClass="select" placeholder="select" value={this.props.SelectedColumnId} onChange={(x) => this.onColumnSelectChange(x)} disabled={columnDropdownDisabled} >
                             <option value="select" key="select">Select a column</option>
                             {optionColumns}
                         </FormControl>
-                    </Col>
-                    <Col xs={6}>
-                        <FormGroup controlId="formValidationSuccess3" validationState="error">
-                            <ControlLabel >{filteredWarning}</ControlLabel>
-                        </FormGroup>
                     </Col>
                 </FormGroup>
             </Form>
