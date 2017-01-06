@@ -42,7 +42,6 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
             DisplayMember="displayValue"
             SortMember="rawValue"
             ValueMember="displayValue"
-            ValuesDataType={selectedColumnType}
             onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
     }
     OnSelectedValuesChange(newValues: Array<string>) {

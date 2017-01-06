@@ -13,7 +13,6 @@ interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
     UiSelectedValues: Array<any>
     onSelectedChange: (SelectedValues: Array<any>) => void
-    ValuesDataType: ColumnType // need to change name of this enum
     //if not primitive objects all DisplayMember and ValueMember and SortMember need to be used
     DisplayMember?: string
     ValueMember?: string

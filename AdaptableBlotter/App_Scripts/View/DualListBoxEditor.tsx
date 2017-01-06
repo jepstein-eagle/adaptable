@@ -14,7 +14,6 @@ interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor
     onChange: (SelectedValues: Array<any>) => void
     HeaderAvailable: string
     HeaderSelected: string
-    ValuesDataType: ColumnType
     //if not primitive objects all DisplayMember and ValueMember and sortmember need to be used
     DisplayMember?: string
     ValueMember?: string

@@ -74,8 +74,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 DisplayMember="DisplayValue"
                 ValueMember="RawValue"
                 SortMember="Index"
-                onSelectedChange={(list) => this.onClickColumValue(list)}
-                ValuesDataType={this.props.CurrentColumn.ColumnType}>
+                onSelectedChange={(list) => this.onClickColumValue(list)}>
             </SingleListBox>
         </PanelWithButton>
 

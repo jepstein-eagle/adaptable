@@ -139,8 +139,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             <ExpressionBuilderColumnValues
                                 ColumnValues={this.state.ColumnValues}
                                 SelectedValues={this.state.SelectedColumnValues}
-                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}
-                                ColumnValuesDataType={selectedColumnType} >
+                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
                             </ExpressionBuilderColumnValues>
                         </Col>
                         <Col xs={4}>

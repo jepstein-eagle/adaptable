@@ -28,7 +28,6 @@ class ColumnChooserActionComponent extends React.Component<ColumnChooserActionPr
                 DisplayMember="FriendlyName"
                 SortMember="FriendlyName"
                 ValueMember="FriendlyName"
-                ValuesDataType={ColumnType.String}
                 onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>
         </Panel>
     }

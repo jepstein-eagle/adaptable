@@ -10,7 +10,6 @@ import { ColumnType } from '../../Core/Enums'
 interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
     SelectedValues: Array<any>
     ColumnValues: Array<any>
-      ColumnValuesDataType: ColumnType // need to change name of this enum
     onColumnValuesChange: (SelectedValues: Array<any>) => void
 }
 
@@ -23,8 +22,7 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
                 DisplayMember="displayValue"
                 ValueMember="displayValue"
                 SortMember="rawValue"
-                onSelectedChange={(list) => this.props.onColumnValuesChange(list)}
-                ValuesDataType={this.props.ColumnValuesDataType}>
+                onSelectedChange={(list) => this.props.onColumnValuesChange(list)}>
             </SingleListBox>
         </PanelWithButton>
     }
