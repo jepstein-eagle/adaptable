@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import { ColumnFilterState } from './Interface/IState';
-import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
+import { IColumnFilter } from '../../Core/interface/IColumnFilterStrategy';
 import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';

@@ -4,7 +4,7 @@ import { Helper } from '../Core/Helper';
 import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IColumnFilter, } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
 import { IUserFilter } from '../Core/interface/IExpression';
 import { Expression } from '../Core/Expression/Expression';
 

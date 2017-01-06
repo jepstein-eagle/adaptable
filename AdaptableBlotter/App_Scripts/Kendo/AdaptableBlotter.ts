@@ -32,14 +32,14 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
-import { FilterStrategy } from '../Strategy/FilterStrategy'
+import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
-import { IColumnFilter, IFilterContext } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
@@ -82,7 +82,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -169,7 +169,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
             https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
             */
-            let filterContext: IFilterContext = {
+            let filterContext: IColumnFilterContext = {
                 Container: e.container,
                 Popup: e.container.data("kendoPopup"),
                 DataSource: grid.dataSource,
@@ -190,7 +190,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    private initUrlFilterUI(filterContext: IFilterContext) {
+    private initUrlFilterUI(filterContext: IColumnFilterContext) {
         // Remove default filter UI
         filterContext.Container.off();
         filterContext.Container.empty();

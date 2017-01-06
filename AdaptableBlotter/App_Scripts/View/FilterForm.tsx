@@ -9,7 +9,7 @@ import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, ListGroup
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithRow } from './PanelWithRow';
 import { PanelWithButton } from './PanelWithButton';
-import { IColumnFilter, IFilterContext, IFilterUIItem } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext, IFilterUIItem } from '../Core/Interface/IColumnFilterStrategy';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator, ColumnType, SortOrder } from '../Core/Enums';
@@ -132,7 +132,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
-export const FilterFormReact = (FilterContext: IFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
+export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
     <FilterForm Blotter={FilterContext.Blotter} CurrentColumn={FilterContext.Column} />
 </Provider>;
 

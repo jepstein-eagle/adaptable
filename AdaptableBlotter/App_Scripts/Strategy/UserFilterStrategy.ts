@@ -32,6 +32,9 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             if (this.userFilters != null && this.userFilters.length > 0) {
                 let oldFilterUids: string[] = this.userFilters.filter(f => !f.IsPredefined).map(f => f.Uid);
                 this.blotter.SearchService.ApplySearchOnUserFilter(oldFilterUids);
+
+                // also rerun column filter - just do it every time 
+                this.blotter.applyColumnFilters();
             }
             this.userFilters = this.GetUserFilterState().UserFilters;
         }
