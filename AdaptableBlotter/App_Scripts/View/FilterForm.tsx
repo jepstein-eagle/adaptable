@@ -9,7 +9,7 @@ import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, ListGroup
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithRow } from './PanelWithRow';
 import { PanelWithButton } from './PanelWithButton';
-import { IColumnFilter, IColumnFilterContext, IFilterUIItem } from '../Core/Interface/IColumnFilterStrategy';
+import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { LeafExpressionOperator, ColumnType, SortOrder } from '../Core/Enums';
@@ -51,28 +51,31 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     render(): any {
 
-        let filterUIItems: IFilterUIItem[] = [];
-
-        // get the values for the column and then sort by raw value
-        let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
-        Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
-        filterUIItems = columnValuePairs.map((cvp) => {
-            return { RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, FilterUIType: "Value" }
-        });
+        let filterUIItems: IColumnFilterItem[] = [];
 
         // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => ExpressionHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
-        userFilters.forEach(uf => {
-            filterUIItems.push({ RawValue: uf.Uid, DisplayValue: uf.FriendlyName, FilterUIType: "UserFilter" })
+        userFilters.map((uf, index) => {
+            filterUIItems.push({ RawValue: uf.Uid, DisplayValue: uf.FriendlyName, Index: index })
         })
 
+let userFilterCount: number = userFilters.length;
+
+// get the values for the column and then sort by raw value
+        let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
+        Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
+        columnValuePairs.map((cvp, index) => {
+       filterUIItems.push({ RawValue: cvp.rawValue, DisplayValue: cvp.displayValue, Index: index + userFilterCount });
+        });
+
+        
         // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <SingleListBox Values={filterUIItems} style={divStyle}
                 UiSelectedValues={this.state.SelectedFilterDisplayValues}
                 DisplayMember="DisplayValue"
                 ValueMember="RawValue"
-                SortMember="FilterUIType"
+                SortMember="Index"
                 onSelectedChange={(list) => this.onClickColumValue(list)}
                 ValuesDataType={this.props.CurrentColumn.ColumnType}>
             </SingleListBox>

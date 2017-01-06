@@ -10,10 +10,10 @@ export interface IColumnFilter {
     Filter: Expression
 }
 
-export interface IFilterUIItem {
+export interface IColumnFilterItem {
     RawValue: string
     DisplayValue: string
-    FilterUIType: string
+    Index: number
 }
 
 
