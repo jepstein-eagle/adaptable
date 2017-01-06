@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import { FilterState } from './Interface/IState';
+import { ColumnFilterState } from './Interface/IState';
 import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
 import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -30,35 +30,35 @@ export const DeleteFilter = (columnFilter: IColumnFilter): FilterDeleteAction =>
 })
 
 const initialFilterState:
-    FilterState = {
+    ColumnFilterState = {
         ColumnFilters: [],
     }
 
-export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {
+export const FilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFilterState = initialFilterState, action: Redux.Action): ColumnFilterState => {
     let index: number;
-    let ColumnFilters: IColumnFilter[]
+    let columnFilters: IColumnFilter[]
 
 
     switch (action.type) {
 
         case FILTER_ADD_OR_UPDATE: {
             let actionTypedAddUpdate = (<FilterAddEditAction>action)
-            ColumnFilters = [].concat(state.ColumnFilters)
-            index = ColumnFilters.findIndex(i => i.ColumnId == actionTypedAddUpdate.columnFilter.ColumnId)
+            columnFilters = [].concat(state.ColumnFilters)
+            index = columnFilters.findIndex(i => i.ColumnId == actionTypedAddUpdate.columnFilter.ColumnId)
             if (index != -1) {  // it exists
-                ColumnFilters[index] = actionTypedAddUpdate.columnFilter
+                columnFilters[index] = actionTypedAddUpdate.columnFilter
             } else {
-                ColumnFilters.push(actionTypedAddUpdate.columnFilter)
+                columnFilters.push(actionTypedAddUpdate.columnFilter)
             }
-            return Object.assign({}, state, { ColumnFilters: ColumnFilters })
+            return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
 
         case FILTER_DELETE: {
             let actionTypedDelete = (<FilterDeleteAction>action)
-            ColumnFilters = [].concat(state.ColumnFilters)
-            index = ColumnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId)
-            ColumnFilters.splice(index, 1);
-            return Object.assign({}, state, { ColumnFilters: ColumnFilters })
+            columnFilters = [].concat(state.ColumnFilters)
+            index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId)
+            columnFilters.splice(index, 1);
+            return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
 
         default:

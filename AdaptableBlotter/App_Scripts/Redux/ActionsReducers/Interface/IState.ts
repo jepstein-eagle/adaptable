@@ -91,6 +91,6 @@ export interface UserFilterState {
     UserFilters: Array<IUserFilter>;
 }
 
-export interface FilterState {
+export interface ColumnFilterState {
     ColumnFilters: Array<IColumnFilter>
 }

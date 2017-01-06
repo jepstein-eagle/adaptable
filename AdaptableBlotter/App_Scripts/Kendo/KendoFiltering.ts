@@ -12,6 +12,8 @@ import { Expression } from '../Core/Expression/Expression';
 export module KendoFiltering {
 
     export function buildKendoFiltersFromAdaptableFilters(columnFilters: IColumnFilter[], blotter: AdaptableBlotter): kendo.data.DataSourceFilters {
+     
+     
         if (columnFilters == null || columnFilters.length < 1) {
             return null;
         }

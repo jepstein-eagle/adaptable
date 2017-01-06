@@ -17,7 +17,7 @@ export interface IAdaptableBlotter {
     CalendarService: ICalendarService
     AuditService: IAuditService
     SearchService: ISearchService
-    
+
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
@@ -58,23 +58,19 @@ export interface IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
 
-
     // Export
     saveAsExcel(fileName: string, allPages: boolean): void
 
     // Print Preview
     printGrid(): void
 
+    // filtering
+    applyColumnFilters(): void
 
     // Grid Events
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-
-
-    // temp test
-    applyColumnFilters(): void 
-
 }
 
 export interface ISelectedCells {

@@ -177,9 +177,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Blotter: this
             };
             this.initUrlFilterUI(filterContext);
-
-
-
         });
 
 
@@ -624,7 +621,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // for the moment alwyas giong to remove the current filters
         this.grid.dataSource.filter();
 
-        let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
 
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
 

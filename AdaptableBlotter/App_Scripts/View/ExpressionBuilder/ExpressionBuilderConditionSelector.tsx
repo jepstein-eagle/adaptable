@@ -98,7 +98,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        let isFilteredColumn: boolean =   this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.find(cf=>cf.ColumnId== this.props.SelectedColumnId)!=null;;
+        let isFilteredColumn: boolean =   this.props.Blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.find(cf=>cf.ColumnId== this.props.SelectedColumnId)!=null;;
         let filteredWarning: string = (this.props.SelectedColumnId != "select" && isFilteredColumn) ? "Column is currently in a filter so only filtered values are shown" : "";
 
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;

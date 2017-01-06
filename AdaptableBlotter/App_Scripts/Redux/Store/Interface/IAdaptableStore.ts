@@ -15,7 +15,7 @@ export interface AdaptableBlotterState {
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     Alert: AdaptableBlotterStates.AlertState;
     UserFilter: AdaptableBlotterStates.UserFilterState;
-    Filter: AdaptableBlotterStates.FilterState;
+    ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
 }
 
 export interface IAdaptableBlotterStore {

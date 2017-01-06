@@ -140,7 +140,7 @@ export class SearchService implements ISearchService {
                 {
                     ColumnValues: null,
                     ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
-                    UserFilter: null
+                    UserFilters: null
                 };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
                 let predefinedExpression: Expression = PredefinedExpressionHelper.CreatePredefinedExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);

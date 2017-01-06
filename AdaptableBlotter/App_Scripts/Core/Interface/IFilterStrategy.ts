@@ -1,7 +1,7 @@
 import { Expression } from '../../Core/Expression/Expression';
-import {IAdaptableBlotter, IColumn} from './IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn } from './IAdaptableBlotter';
 
-export interface IFilterStrategy{
+export interface IFilterStrategy {
 }
 
 
@@ -10,6 +10,14 @@ export interface IColumnFilter {
     Filter: Expression
 }
 
+export interface IFilterUIItem {
+    RawValue: string
+    DisplayValue: string
+    FilterUIType: string
+}
+
+
+
 export interface IFilterContext {
     Container: any;
     Popup: any;
@@ -17,5 +25,3 @@ export interface IFilterContext {
     Column: IColumn,
     Blotter: IAdaptableBlotter
 }
-   
-

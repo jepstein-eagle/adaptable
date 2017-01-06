@@ -49,7 +49,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     Alert: AlertRedux.AlertReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
-    Filter: FilterRedux.FilterReducer,
+    ColumnFilter: FilterRedux.FilterReducer,
 
 });
 

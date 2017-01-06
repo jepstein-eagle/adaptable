@@ -57,7 +57,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilter: this.GetUserFilterState().UserFilters.find(f => f.Uid == "Positive"),
+                        UserFilters: ["Positive"] ,
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -68,7 +68,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     PredefinedExpressionInfo: {
                         ColumnValues: null,
                         ExpressionRange: null,
-                        UserFilter: this.GetUserFilterState().UserFilters.find(f => f.Uid == "Negative"),
+                        UserFilters:[ "Negative"],
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });

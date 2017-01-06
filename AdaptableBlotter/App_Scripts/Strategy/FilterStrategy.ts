@@ -7,7 +7,7 @@ import { MenuType, ColumnType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
-import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
@@ -16,15 +16,16 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FilterStrategyId, blotter)
+        this.InitState()
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
 
     InitState() {
-        if (this.ColumnFilters != this.GetFilterState().ColumnFilters) {
+        if (this.ColumnFilters != this.GetColumnFilterState().ColumnFilters) {
 
             this.blotter.applyColumnFilters();
-            this.ColumnFilters = this.GetFilterState().ColumnFilters;
+            this.ColumnFilters = this.GetColumnFilterState().ColumnFilters;
         }
     }
 
@@ -33,8 +34,8 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     }
 
 
-    private GetFilterState(): FilterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    private GetColumnFilterState(): ColumnFilterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
     }
 }
 
