@@ -107,6 +107,6 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
 </Provider>;
 
 let panelStyle = {
-    width: '200px'
+    width: '130px'
 }
 

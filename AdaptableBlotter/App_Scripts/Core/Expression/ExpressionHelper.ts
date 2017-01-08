@@ -206,9 +206,9 @@ export module ExpressionHelper {
             case LeafExpressionOperator.Contains:
                 return "Contains"
             case LeafExpressionOperator.StartsWith:
-                return "StartsWith"
+                return "Starts With"
             case LeafExpressionOperator.EndsWith:
-                return "EndWith"
+                return "Ends With"
             case LeafExpressionOperator.Regex:
                 return "Regex"
         }

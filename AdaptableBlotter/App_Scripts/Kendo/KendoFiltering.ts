@@ -1,6 +1,4 @@
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IRangeExpression } from '../Core/Interface/IExpression';
-import { Helper } from '../Core/Helper';
 import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
@@ -24,7 +22,6 @@ export module KendoFiltering {
         columnFilters.forEach(columnFilter => {
 
             let column: IColumn = blotter.getColumnFromColumnId(columnFilter.ColumnId);
-
             let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnValuesExpression(columnFilter.Filter, column);
             let rangeFilters: kendo.data.DataSourceFilters = createFilterFromRangesExpression(columnFilter.Filter, column);
             let userFilters: kendo.data.DataSourceFilters = createFilterFromUserFiltersExpression(columnFilter.Filter, column, blotter);
@@ -41,7 +38,6 @@ export module KendoFiltering {
                 if (userFilters) {
                     columnKendoFilters.filters.push(userFilters);
                 }
-
                 kendoFilters.filters.push(columnKendoFilters);
             }
         })
