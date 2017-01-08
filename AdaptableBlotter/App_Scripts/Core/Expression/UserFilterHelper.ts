@@ -13,7 +13,7 @@ export module UserFilterHelper {
         return blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.filter(f => userFilterUids.find(uid => uid == f.Uid) != null)
     }
 
-    export function ShouldShowUserFilterForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
+    export function ShowUserFilterForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
         let userFilter: IUserFilter = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.find(f => f.Uid == expressionUid);
 
         // predefined expressions return if its right column type
@@ -77,7 +77,7 @@ export module UserFilterHelper {
         }
     }
 
-// Date
+    // Date
     export const TODAY_USER_FILTER = 'Today'
     export const IN_PAST_USER_FILTER = 'InPast'
     export const IN_FUTURE_USER_FILTER = 'InFuture'

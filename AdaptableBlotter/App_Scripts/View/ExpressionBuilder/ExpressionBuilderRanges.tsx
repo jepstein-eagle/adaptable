@@ -65,10 +65,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             <InputGroup>
                                 {numericAndDateOption}
                                 {this.props.ColumnType == ColumnType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 {this.props.ColumnType == ColumnType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 <InputGroup.Button>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
@@ -94,7 +94,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <FormGroup controlId={"Range" + index}>
                         <InputGroup>
                             {stringOption}
-                            <FormControl value={String(x.Operand1)} type="string" placeholder="Enter value" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                            <FormControl value={String(x.Operand1)} type="string" placeholder="Value" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                             <InputGroup.Button>
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
                                     <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>

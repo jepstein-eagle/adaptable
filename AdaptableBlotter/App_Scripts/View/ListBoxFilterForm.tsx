@@ -40,8 +40,13 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             FilterValue: this.state.FilterValue
         });
     }
+    
     render() {
-        let firstElement = true
+        let allElement = <ListGroupItem key={"all"} style={{ width: '80%', fontStyle: 'italic' }}
+            onClick={() => this.onClickAllItem()}
+            active={false}
+            value={"all"} >{"(All)"}</ListGroupItem>
+
         let userFiltersItemsElements = this.props.UserFilters.map(x => {
             let isActive: boolean
             isActive = this.state.UiSelectedUserFilters.indexOf(x.rawValue) >= 0;
@@ -51,23 +56,13 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                if (firstElement) {
-                    firstElement = false
-                    return <ListGroupItem key={value} header="User Filters" style={{ width: '80%' }}
-                        onClick={() => this.onClickItemUserFilter(x)}
-                        active={isActive}
-                        value={value} >{display}</ListGroupItem>
-                }
-                else {
-                    return <ListGroupItem key={value} style={{ width: '80%' }}
-                        onClick={() => this.onClickItemUserFilter(x)}
-                        active={isActive}
-                        value={value} >{display}</ListGroupItem>
-                }
+                return <ListGroupItem key={value} style={{ width: '80%', fontStyle: 'italic' }}
+                    onClick={() => this.onClickItemUserFilter(x)}
+                    active={isActive}
+                    value={value} >{display}</ListGroupItem>
             }
         })
 
-        firstElement = true
         let columnValuesItemsElements = this.props.ColumnValues.map(x => {
             let isActive: boolean
             isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
@@ -77,18 +72,10 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                if (firstElement) {
-                    firstElement= false
-                    return <ListGroupItem key={value} header="Column Values" style={{ width: '80%' }}
-                        onClick={() => this.onClickItemColumnValue(x)}
-                        active={isActive}
-                        value={value} >{display}</ListGroupItem>
-                } else {
-                    return <ListGroupItem key={value} style={{ width: '80%' }}
-                        onClick={() => this.onClickItemColumnValue(x)}
-                        active={isActive}
-                        value={value} >{display}</ListGroupItem>
-                }
+                return <ListGroupItem key={value} style={{ width: '80%' }}
+                    onClick={() => this.onClickItemColumnValue(x)}
+                    active={isActive}
+                    value={value} >{display}</ListGroupItem>
             }
         })
 
@@ -109,8 +96,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         return <div>
             {header}
             <ListGroup fill style={divStyle}>
+                {allElement}
                 {userFiltersItemsElements}
-                <hr style={{marginTop:'7px', marginBottom:'7px'}}/>
                 {columnValuesItemsElements}
             </ListGroup>
         </div>;
@@ -128,6 +115,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             FilterValue: ""
         } as ListBoxFilterFormState);
     }
+
+   
 
     raiseOnChangeColumnValues() {
         this.props.onColumnValueSelectedChange(this.state.UiSelectedColumnValues);
@@ -163,6 +152,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             newArray.push(item.rawValue)
             this.setState({ UiSelectedUserFilters: newArray } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
         }
+    }
+
+    onClickAllItem() {
+        // just set it to nothing...
+        let allArray:string[]= ["All"];
+        this.setState({  UiSelectedUserFilters: allArray, UiSelectedColumnValues: this.state.UiSelectedUserFilters, FilterValue: this.state.FilterValue } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
     }
 }
 

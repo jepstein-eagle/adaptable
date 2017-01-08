@@ -160,8 +160,12 @@ export module KendoFiltering {
                 return "neq";
             case LeafExpressionOperator.GreaterThan:
                 return "gt";
+            case LeafExpressionOperator.GreaterThanOrEqual:
+                return "gte";
             case LeafExpressionOperator.LessThan:
                 return "lt";
+            case LeafExpressionOperator.LessThanOrEqual:
+                return "lte";
             case LeafExpressionOperator.StartsWith:
                 return "startswith";
             case LeafExpressionOperator.EndsWith:

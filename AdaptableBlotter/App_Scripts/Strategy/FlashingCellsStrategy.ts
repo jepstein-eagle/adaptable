@@ -27,7 +27,7 @@ protected FLASH_DOWN_STYLE: string = "FlashDown"
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Flashing Cells", this.Id, 'FlashingCellsConfig', MenuType.Configuration, "flash");
+        this.menuItemConfig = new MenuItemShowPopup("Flashing Cell", this.Id, 'FlashingCellsConfig', MenuType.Configuration, "flash");
         this.InitState()
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))

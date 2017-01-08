@@ -101,7 +101,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
   
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
-        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShouldShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
+        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
         let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 

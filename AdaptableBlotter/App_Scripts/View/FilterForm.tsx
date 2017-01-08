@@ -33,7 +33,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     render(): any {
 
         // get user filter expressions appropriate for this column
-        let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => UserFilterHelper.ShouldShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
+        let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => UserFilterHelper.ShowUserFilterForColumn(u.Uid, this.props.CurrentColumn, this.props.AdaptableBlotter));
         let userFilterItems: { rawValue: any, displayValue: string }[] = userFilters.map((uf, index) => { return { rawValue: uf.Uid, displayValue: uf.FriendlyName } })
 
         // get the values for the column and then sort by raw value
@@ -42,7 +42,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
-        // using the Single List Box but only passing in column values for now 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}
                 UiSelectedColumnValues={existingColumnFilter ? existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues : []}
@@ -68,7 +67,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onClickUserFilter(selectedFilterDisplayValues: string[]) {
+
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+
+        if (selectedFilterDisplayValues.find(s => s == "All")) {
+            existingColumnFilter = null;
+            selectedFilterDisplayValues = [];
+        }
 
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {

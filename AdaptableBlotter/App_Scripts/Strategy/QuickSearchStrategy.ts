@@ -16,7 +16,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("QuickSearch", this.Id, 'QuickSearchAction', MenuType.Configuration, "search");
+        this.menuItemConfig = new MenuItemShowPopup("Quick Search", this.Id, 'QuickSearchAction', MenuType.Configuration, "search");
         this.quickSearchText = "";
         this.quickSearchOperator = this.GetQuickSearchState().QuickSearchOperator
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
