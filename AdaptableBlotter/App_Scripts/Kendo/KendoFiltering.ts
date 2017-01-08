@@ -252,11 +252,11 @@ export module KendoFiltering {
                 break;
 
             // Bool Filters
-            case UserFilterHelper.STRING_BLANKS_USER_FILTER:
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: true };
+            case UserFilterHelper.TRUE_USER_FILTER:
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: Boolean(true) };
                 break;
-            case UserFilterHelper.STRING_NON_BLANKS_USER_FILTER:
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: false };
+            case UserFilterHelper.FALSE_USER_FILTER:
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: Boolean(false) };
                 break;
         }
 

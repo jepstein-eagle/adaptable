@@ -5,15 +5,12 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, ListGroupItem, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { PanelWithRow } from './PanelWithRow';
 import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Expression/UserFilterHelper';
-import { LeafExpressionOperator, ColumnType, SortOrder } from '../Core/Enums';
+import { ColumnType, SortOrder } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'
 import { Helper } from '../Core/Helper'
@@ -40,7 +37,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
 
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter =  this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}

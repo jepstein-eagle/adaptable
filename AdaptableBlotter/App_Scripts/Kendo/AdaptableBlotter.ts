@@ -618,7 +618,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
 
         // dont need it but helps me to see what is happening!
-        // let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
+        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
 
         // for the moment alwyas giong to remove the current filters
         //   this.grid.dataSource.filter();
