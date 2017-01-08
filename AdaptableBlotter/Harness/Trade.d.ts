@@ -12,10 +12,11 @@
         isLive: boolean;
         fitchRating: string;
         moodysRating: string;
+        sandpRating: string;
         tradeDate: Date;
         settlementDate: Date;
         bloombergAsk: number;
-        bloombergBid: number;
+        bloombergBid: number;   
         delta: number;
         occasionalPrice: number;
         bookingGuid: string;

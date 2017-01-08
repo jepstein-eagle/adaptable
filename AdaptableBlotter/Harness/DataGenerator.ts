@@ -10,7 +10,7 @@ export class DataGenerator {
         return trades;
     }
 
-    private _numericCols: string[] = ["bid", "ask"]; 
+    private _numericCols: string[] = ["bid", "ask"];
 
     //Can't be bothered to create a ts file for kendo....
     startTickingDataKendo(grid: kendo.ui.Grid) {
@@ -36,7 +36,7 @@ export class DataGenerator {
             //grid.dataSource.sync();
         }, 5000)
     }
-    
+
     startTickingDataHypergrid(grid: any) {
         setInterval(() => {
             let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
@@ -55,6 +55,7 @@ export class DataGenerator {
         var bid = this.getMeaningfulDouble();
         var ask = this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1));
         var tradeDate = this.generateRandomDateAndTime(-5000, 1000);
+        var moodyRating = this.getRandomItem(this.getMoodysRatings())
         var trade =
             {
                 "tradeId": i,
@@ -67,10 +68,11 @@ export class DataGenerator {
                 "bid": bid,
                 "ask": ask,
                 "isLive": this.generateRandomBool(),
-                "fitchRating": this.getRandomItem(this.getFitchRatings()),
-                "moodysRating": this.getRandomItem(this.getMoodysRatings()),
+                "moodysRating": moodyRating,
+                "fitchRating": this.getFitchRatingForMoodyRating(moodyRating),
+                "sandpRating": this.getSandPRatingForFitchRating(moodyRating),
                 "tradeDate": tradeDate,
-                "settlementDate":this.addDays(tradeDate,3),
+                "settlementDate": this.addDays(tradeDate, 3),
                 "bloombergAsk": this.roundTo4Dp(ask + 0.01),
                 "bloombergBid": this.roundTo4Dp(bid - 0.01),
                 "delta": this.getMeaningfulDoubleTest(),
@@ -280,16 +282,6 @@ export class DataGenerator {
 
     protected getMoodysRatings(): string[] {
         var moodysRatings = [
-            "Baa1",
-            "Baa2",
-            "Baa3",
-            "Ba1",
-            "Ba3",
-            "B1",
-            "B2",
-            "B3",
-            "(P)B3",
-            "Ba2",
             "Aaa",
             "Aa1",
             "Aa2",
@@ -297,77 +289,118 @@ export class DataGenerator {
             "A1",
             "A2",
             "A3",
-            "Caa1",
-            "Caa2",
-            "Caa3",
+            "Baa1",
+            "Baa2",
+            "Baa3",
+            "Ba1",
+            "Ba2",
+            "Ba3",
+            "B1",
+            "B2",
+            "B3",
+            "Caa",
             "Ca",
             "C",
             "WR",
             "NR",
-            "Undefined"
         ];
         return moodysRatings;
     }
 
-    protected getFitchRatings(): string[] {
-        var fitchRatings = [
-            "AAA",
-            "AA",
-            "AA-",
-            "A+",
-            "A+(EXP)",
-            "A",
-            "A-",
-            "A(EXP)",
-            "A-(EXP)",
-            "BBB+",
-            "BBB",
-            "BBB-",
-            "BB+",
-            "BB",
-            "BB-",
-            "B",
-            "CCC",
-            "CC",
-            "C",
-            "D",
-            "NR",
-            "F1+",
-            "F1",
-            "F2",
-            "F3",
-            "WR",
-            "Undefined"
-        ];
-        return fitchRatings;
+
+
+    protected getFitchRatingForMoodyRating(moodysRating: string): string {
+        switch (moodysRating) {
+            case "Aaa":
+                return "AAA";
+            case "Aa1":
+                return "AA+";
+            case "Aa2":
+                return "AA";
+            case "Aaa3":
+                return "AA-";
+            case "A1":
+                return "A+";
+            case "A2":
+                return "A";
+            case "A3":
+                return "A-";
+            case "Baa1":
+                return "BBB+";
+            case "Baa2":
+                return "BBB";
+            case "Baa3":
+                return "BBB-";
+            case "Ba1":
+                return "BB+";
+            case "Ba2":
+                return "BB";
+            case "Ba3":
+                return "BB-";
+            case "B1":
+                return "B+";
+            case "B2":
+                return "B";
+            case "B3":
+                return "B-";
+            case "Caa":
+                return "CCC";
+            case "Ca":
+                return "CC";
+            case "C":
+                return "D";
+            case "WR":
+                return "SD";
+            case "NR":
+                return "NR";
+        }
     }
 
-    protected getSAndPRatings(): string[] {
-        var spRatings: string[] = [
-            "AAA",
-            "AA+",
-            "AA",
-            "AA-",
-            "A+",
-            "A",
-            "BBB+",
-            "BBB",
-            "BBB-",
-            "BB+",
-            "BB",
-            "BB-",
-            "B",
-            "CCC",
-            "CC",
-            "C",
-            "R",
-            "SD",
-            "N",
-            "NR",
-            "WR",
-            ""
-        ];
-        return spRatings;
+    protected getSandPRatingForFitchRating(moodysRating: string): string {
+        switch (moodysRating) {
+            case "Aaa":
+                return "AAA";
+            case "Aa1":
+                return "AA+";
+            case "Aa2":
+                return "AA";
+            case "Aaa3":
+                return "AA-";
+            case "A1":
+                return "A+";
+            case "A2":
+                return "A";
+            case "A3":
+                return "A-";
+            case "Baa1":
+                return "BBB+";
+            case "Baa2":
+                return "BBB";
+            case "Baa3":
+                return "BBB-";
+            case "Ba1":
+                return "BB+";
+            case "Ba2":
+                return "BB";
+            case "Ba3":
+                return "BB-";
+            case "B1":
+                return "B+";
+            case "B2":
+                return "B";
+            case "B3":
+                return "B-";
+            case "Caa":
+                return "CCC";
+            case "Ca":
+                return "CC";
+            case "C":
+                return "D";
+            case "WR":
+                return "SD";
+            case "NR":
+                return "NR";
+        }
     }
 
     protected getNames(): string[] {
