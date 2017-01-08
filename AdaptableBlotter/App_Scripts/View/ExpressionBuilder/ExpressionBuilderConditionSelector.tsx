@@ -10,6 +10,7 @@ import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'
 
 
@@ -100,7 +101,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
   
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
-        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => ExpressionHelper.ShouldShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
+        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShouldShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
         let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
@@ -144,8 +145,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                         <Col xs={4}>
                             <ExpressionBuilderUserFilter
-                                UserFilterExpressions={ExpressionHelper.GetUserFilters(availableExpressionIds, this.props.Blotter)}
-                                SelectedUserFilterExpressions={ExpressionHelper.GetUserFilters(this.state.SelectedUserFilterExpresions, this.props.Blotter)}
+                                UserFilterExpressions={UserFilterHelper.GetUserFilters(availableExpressionIds, this.props.Blotter)}
+                                SelectedUserFilterExpressions={UserFilterHelper.GetUserFilters(this.state.SelectedUserFilterExpresions, this.props.Blotter)}
                                 onUserFilterExpressionChange={(selectedValues) => this.onSelectedUserFilterExpressionsChange(selectedValues)} >
                             </ExpressionBuilderUserFilter>
                         </Col>

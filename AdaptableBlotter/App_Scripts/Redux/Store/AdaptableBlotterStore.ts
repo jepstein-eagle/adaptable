@@ -20,9 +20,8 @@ import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
-import * as FilterRedux from '../ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import createEngine from 'redux-storage-engine-localstorage';
-
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
@@ -49,7 +48,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     Alert: AlertRedux.AlertReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
-    ColumnFilter: FilterRedux.FilterReducer,
+    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
 
 });
 

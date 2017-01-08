@@ -13,6 +13,7 @@ import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'
@@ -46,7 +47,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let selectedColumnId: string = "select";
         if (this.state.EditedUserFilter != null) {
-            let editedColumn: string = ExpressionHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
+            let editedColumn: string = UserFilterHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
             }

@@ -7,6 +7,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
 
 
 interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
@@ -56,7 +57,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
 
     public Next(): void {
         this.props.Data.FriendlyName = this.state.FilterName
-        this.props.Data.ColumnType = ExpressionHelper.GetColumnTypeForUserFilter(this.props.Data, this.props.Columns)
+        this.props.Data.ColumnType = UserFilterHelper.GetColumnTypeForUserFilter(this.props.Data, this.props.Columns)
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.Blotter)
     }
     public Back(): void { }

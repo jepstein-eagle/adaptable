@@ -7,42 +7,42 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';
 
 
-export const FILTER_ADD_OR_UPDATE = 'FILTER_ADD_OR_UPDATE';
-export const FILTER_DELETE = 'FILTER_DELETE';
+export const COLUMN_FILTER_ADD_OR_UPDATE = 'COLUMN_FILTER_ADD_OR_UPDATE';
+export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
 
 
-export interface FilterAddEditAction extends Redux.Action {
+export interface ColumnFilterAddEditAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
-export interface FilterDeleteAction extends Redux.Action {
+export interface ColumnFilterDeleteAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
-export const AddEditFilter = (columnFilter: IColumnFilter): FilterAddEditAction => ({
-    type: FILTER_ADD_OR_UPDATE,
+export const AddEditColumnFilter = (columnFilter: IColumnFilter): ColumnFilterAddEditAction => ({
+    type: COLUMN_FILTER_ADD_OR_UPDATE,
     columnFilter
 })
 
-export const DeleteFilter = (columnFilter: IColumnFilter): FilterDeleteAction => ({
-    type: FILTER_DELETE,
+export const DeleteColumnFilter = (columnFilter: IColumnFilter): ColumnFilterDeleteAction => ({
+    type: COLUMN_FILTER_DELETE,
     columnFilter
 })
 
-const initialFilterState:
+const initialColumnFilterState:
     ColumnFilterState = {
         ColumnFilters: [],
     }
 
-export const FilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFilterState = initialFilterState, action: Redux.Action): ColumnFilterState => {
+export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFilterState = initialColumnFilterState, action: Redux.Action): ColumnFilterState => {
     let index: number;
     let columnFilters: IColumnFilter[]
 
 
     switch (action.type) {
 
-        case FILTER_ADD_OR_UPDATE: {
-            let actionTypedAddUpdate = (<FilterAddEditAction>action)
+        case COLUMN_FILTER_ADD_OR_UPDATE: {
+            let actionTypedAddUpdate = (<ColumnFilterAddEditAction>action)
             columnFilters = [].concat(state.ColumnFilters)
             index = columnFilters.findIndex(i => i.ColumnId == actionTypedAddUpdate.columnFilter.ColumnId)
             if (index != -1) {  // it exists
@@ -53,8 +53,8 @@ export const FilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFil
             return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
 
-        case FILTER_DELETE: {
-            let actionTypedDelete = (<FilterDeleteAction>action)
+        case COLUMN_FILTER_DELETE: {
+            let actionTypedDelete = (<ColumnFilterDeleteAction>action)
             columnFilters = [].concat(state.ColumnFilters)
             index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId)
             columnFilters.splice(index, 1);
