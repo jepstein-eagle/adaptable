@@ -86,6 +86,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
+   
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
@@ -141,7 +142,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.bind("columnMenuInit", (e: any) => {
-            let menu: any = e.container.find(".k-menu").data("kendoMenu");
+            let menu: any = e.container.find(".k-menu").data("kendoMenu");  
             var field = e.field;
             var popup = e.container.data('kendoPopup');
             let columnMenuItems: string[] = [];
@@ -164,6 +165,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
         })
 
+        grid.bind("filterInit", (e: any) => {
+            let a: string = "hello world";
+            alert("here")
+        });
 
         grid.bind("filterMenuInit", (e: any) => {
             /* 
@@ -179,6 +184,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Blotter: this
             };
             this.initUrlFilterUI(filterContext);
+
+            filterContext = null;
         });
 
 
@@ -190,7 +197,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public generateRandomInt(minValue: number, maxValue: number): number {
         return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
     }
-
 
     private initUrlFilterUI(filterContext: IColumnFilterContext) {
         // Remove default filter UI

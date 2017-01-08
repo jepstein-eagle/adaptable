@@ -317,7 +317,7 @@ export class DataGenerator {
                 return "AA+";
             case "Aa2":
                 return "AA";
-            case "Aaa3":
+            case "Aa3":
                 return "AA-";
             case "A1":
                 return "A+";
