@@ -5,7 +5,7 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
 import { IUserFilter } from '../Core/interface/IExpression';
 import { Expression } from '../Core/Expression/Expression';
-import { UserFilterHelper } from '../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo } from '../Core/Expression/PredefinedExpressionHelper';
 
 

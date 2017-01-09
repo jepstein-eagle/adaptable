@@ -1,5 +1,5 @@
-import { Expression } from './Expression'
-import { ExpressionHelper } from './ExpressionHelper'
+import { Expression } from '../Expression/Expression'
+import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'

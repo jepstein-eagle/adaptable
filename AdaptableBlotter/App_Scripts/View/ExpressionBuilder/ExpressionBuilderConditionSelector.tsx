@@ -10,7 +10,7 @@ import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'
 
 

@@ -39,6 +39,8 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
 
         let isNumericColumn: boolean = (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Number);
 
+        let isDateColumn: boolean = (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Date);
+
         let optionPopupTypes = EnumExtensions.getNamesAndValues(CellChangeType).filter(c => this.shouldShowCellChangeTypeValue(isNumericColumn, c.value)).map((enumNameAndValue: any) => {
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{this.getTextForCellChangeValue(enumNameAndValue.value)}</option>
         })
@@ -89,8 +91,20 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
                         </FormGroup>
                     }
 
-                    { /* if not numeric then show a string control for now */}
-                    {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn &&
+                    { /* if  date then show a date control */}
+                    {this.state.CellChangeType != CellChangeType.Any && isDateColumn &&
+                        <FormGroup>
+                            <Row style={smallMarginStyle}>
+                                <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                                <Col xs={9}>
+                                    <FormControl style={{ width: "Auto" }} type="date" placeholder="Enter a date" value={this.state.ChangeValue} onChange={(x) => this.onDateChangeValueChanged(x)} />
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    }
+
+                    { /* if not numeric or date then show a string control for now */}
+                    {this.state.CellChangeType != CellChangeType.Any && !isNumericColumn && !isDateColumn &&
                         <FormGroup>
                             <Row style={smallMarginStyle}>
                                 <Col componentClass={ControlLabel} xs={3}>Value: </Col>
@@ -129,6 +143,12 @@ export class AlertSettingsWizard extends React.Component<AlertSettingsWizardProp
     private onNumericChangeValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ ChangeValue: Number.parseFloat(e.value) } as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onDateChangeValueChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        let myDate: Date = new Date(e.value);
+        this.setState({ ChangeValue: myDate} as AlertSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onStringChangeValueChanged(event: React.FormEvent) {
