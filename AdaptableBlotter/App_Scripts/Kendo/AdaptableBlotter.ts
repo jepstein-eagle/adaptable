@@ -86,24 +86,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
-   
+
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, event)
         })
 
+
         grid.bind("dataBound", (e: any) => {
             this._onGridDataBound.Dispatch(this, e)
+        });
 
-
+        grid.bind("click", (e: any) => {
+            alert("hello");
         });
 
         grid.dataSource.bind("change", (e: any) => {
-
-            //    let filterable : any = grid.options.filterable;
-            //     filterable.ui = this.cityFilter;
-
             if (e.action == "itemchange") {
                 let itemsArray = e.items[0];
                 let changedValue = itemsArray[e.field];
@@ -139,10 +138,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // not sure yet if we want to use their or our menu, probably former
         // would be nice if can work out how to make it re-evaluate during runtime;
         // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
-
-
         grid.bind("columnMenuInit", (e: any) => {
-            let menu: any = e.container.find(".k-menu").data("kendoMenu");  
+            let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
             var popup = e.container.data('kendoPopup');
             let columnMenuItems: string[] = [];
@@ -171,34 +168,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         grid.bind("filterMenuInit", (e: any) => {
-            /* 
-            replacing filter screen with our own - good idea?  some ideas stolen from...
-            http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
-            https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
-            */
-            let filterContext: IColumnFilterContext = {
-                Container: e.container,
-                Popup: e.container.data("kendoPopup"),
-                DataSource: grid.dataSource,
-                Column: this.getColumnFromColumnId(e.field),
-                Blotter: this
-            };
-            this.initUrlFilterUI(filterContext);
-
-            filterContext = null;
+            // I'm sure this is not quite right.  We create the filter form on the first time we initialise filter for a column 
+            // and then set up the click event for future occasions (becuase this only normally gets called once on initiliasation)- feels mad.
+            let x: JQuery = grid.thead.find("[data-field='" + e.field + "'] .k-grid-filter");
+            x.bind("click", (s: any) => {
+                this.createFilterForm(e);
+            });
+            this.createFilterForm(e);
         });
-
 
         grid.bind("filter", (e: any) => {
             alert("I dont get called because Im not in this version")
         });
     }
 
-    public generateRandomInt(minValue: number, maxValue: number): number {
-        return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
-    }
-
-    private initUrlFilterUI(filterContext: IColumnFilterContext) {
+    private createFilterForm(e: any): void {
+        /* 
+           replacing filter screen with our own - good idea?  some ideas stolen from...
+           http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
+           https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
+           */
+        let filterContext: IColumnFilterContext = {
+            Container: e.container,
+            Popup: e.container.data("kendoPopup"),
+            DataSource: this.grid.dataSource,
+            Column: this.getColumnFromColumnId(e.field),
+            Blotter: this
+        };
+       
+       
         // Remove default filter UI
         filterContext.Container.off();
         filterContext.Container.empty();
