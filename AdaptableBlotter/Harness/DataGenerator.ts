@@ -54,7 +54,7 @@ export class DataGenerator {
     createTrade(i: number): ITrade {
         var bid = this.getMeaningfulDouble();
         var ask = this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1));
-        var tradeDate = this.generateRandomDateAndTime(-5000, 1000);
+        var tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         var moodyRating = this.getRandomItem(this.getMoodysRatings())
         var trade =
             {
