@@ -270,7 +270,7 @@ export class DataGenerator {
             "Italy",
             "Japan",
             "Kenya",
-            "Luxemborg",
+            "Luxembourg",
             "Portugal",
             "Qatar",
             "Russia",
