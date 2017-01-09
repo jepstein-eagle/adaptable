@@ -162,51 +162,43 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
         })
 
-        grid.bind("filterInit", (e: any) => {
-            let a: string = "hello world";
-            alert("here")
-        });
-
-        grid.bind("filterMenuInit", (e: any) => {
-            // I'm sure this is not quite right.  We create the filter form on the first time we initialise filter for a column 
-            // and then set up the click event for future occasions (becuase this only normally gets called once on initiliasation)- feels mad.
-            let x: JQuery = grid.thead.find("[data-field='" + e.field + "'] .k-grid-filter");
-            x.bind("click", (s: any) => {
-                this.createFilterForm(e);
-            });
+        grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
-        });
-
-        grid.bind("filter", (e: any) => {
-            alert("I dont get called because Im not in this version")
         });
     }
 
-    private createFilterForm(e: any): void {
+    private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {
         /* 
-           replacing filter screen with our own - good idea?  some ideas stolen from...
-           http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
-           https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
-           */
+       replacing filter screen with our own - good idea?  some ideas stolen from...
+       http://www.ideatoworking.com/Blogs/ID/34/How-To-Override-Kendo-UI-Grid-Filter
+       https://www.newventuresoftware.com/blog/kendo-ui-grid-custom-filtering---regex-column-filter
+       */
         let filterContext: IColumnFilterContext = {
-            Container: e.container,
-            Popup: e.container.data("kendoPopup"),
-            DataSource: this.grid.dataSource,
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this
         };
-       
-       
+
         // Remove default filter UI
-        filterContext.Container.off();
-        filterContext.Container.empty();
+        e.container.off();
+        e.container.empty();
+        //we repopuple the popup with a new react component with latest values for columns etc ...
+        e.container.data("kendoPopup").bind("open", () => this.populateFilterForm(filterContext))
+
+        let formId = "filterform" + e.field;
+        //we unmount our react component when popup is closing
+        e.container.data("kendoPopup").bind("close", () => {
+            var filterContainer = document.getElementById(formId);
+            ReactDOM.unmountComponentAtNode(filterContainer)
+        })
+
+        var filterContainer = document.getElementById(formId);
+        e.container.html('<div id="' + formId + '"></div>');
+    };
+
+    private populateFilterForm(filterContext: IColumnFilterContext): void {
         let formId = "filterform" + filterContext.Column.ColumnId;
-        filterContext.Container.html('<div id="' + formId + '"></div>');
         var filterContainer = document.getElementById(formId);
         ReactDOM.render(FilterFormReact(filterContext), filterContainer);
-        //   filterContext.container
-        //       .on('submit', $.proxy(onSubmit, filterContext))
-        //       .on('reset', $.proxy(onReset, filterContext));
     };
 
 

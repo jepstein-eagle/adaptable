@@ -16,12 +16,7 @@ export interface IColumnFilterItem {
     Index: number
 }
 
-
-
 export interface IColumnFilterContext {
-    Container: any;
-    Popup: any;
-    DataSource: any,
     Column: IColumn,
     Blotter: IAdaptableBlotter
 }
