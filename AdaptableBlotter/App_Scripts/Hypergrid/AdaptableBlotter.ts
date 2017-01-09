@@ -328,7 +328,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let column = this.grid.behavior.dataModel.schema.find((x: any) => x.name == columnId)
         if (column) {
             if (!column.hasOwnProperty('type')) {
-                console.log('There is no defined type. Defaulting to type string for column ' + columnId)
+                console.log('There is no defined type. Defaulting to type of the first value for column ' + columnId)
+                let columnObj = this.grid.behavior.columns.find((x: any) => x.name == columnId)
+                if (columnObj) {
+                    switch (columnObj.getType()) {
+                        case 'string':
+                            return ColumnType.String;
+                        case 'number':
+                        case 'int':
+                        case 'float':
+                            return ColumnType.Number;
+                        case 'boolean':
+                            return ColumnType.Boolean;
+                        case 'date':
+                            return ColumnType.Date;
+                        case 'object':
+                            return ColumnType.Object;
+                        default:
+                            break;
+                    }
+                }
                 return ColumnType.String;
             }
             let type = column.type;
@@ -581,7 +600,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public applyColumnFilters(): void { }
 
-       
+
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
