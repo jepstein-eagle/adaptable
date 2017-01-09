@@ -49,7 +49,15 @@ export module Helper {
             direction = -1
         }
         if (sortProperty) {
-            return values.sort((a, b) => (a[sortProperty] < b[sortProperty]) ? -1 * direction : (a[sortProperty] > b[sortProperty]) ? 1 * direction : 0);
+            return values.sort((a, b) => {
+                let aSortProperty = a[sortProperty]
+                let bSortProperty = b[sortProperty]
+                if (typeof (aSortProperty) == "string" && typeof (bSortProperty) == "string") {
+                    return aSortProperty.localeCompare(bSortProperty)
+                } else {
+                    return (aSortProperty < bSortProperty) ? -1 * direction : (aSortProperty > bSortProperty) ? 1 * direction : 0
+                }
+            });
         }
         else {
             return values.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
