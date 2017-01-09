@@ -94,17 +94,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
 
 
-        grid.bind("dataBound", (e: any) => {
-            this._onGridDataBound.Dispatch(this, e)
+        grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
+            this._onGridDataBound.Dispatch(this, this)
         });
 
-        grid.bind("click", (e: any) => {
-            alert("hello");
-        });
-
-        grid.dataSource.bind("change", (e: any) => {
+        grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
-                let itemsArray = e.items[0];
+                let itemsArray: any = e.items[0];
                 let changedValue = itemsArray[e.field];
                 let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
                 this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
@@ -138,7 +134,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // not sure yet if we want to use their or our menu, probably former
         // would be nice if can work out how to make it re-evaluate during runtime;
         // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
-        grid.bind("columnMenuInit", (e: any) => {
+        grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
             let menu: any = e.container.find(".k-menu").data("kendoMenu");
             var field = e.field;
             var popup = e.container.data('kendoPopup');
