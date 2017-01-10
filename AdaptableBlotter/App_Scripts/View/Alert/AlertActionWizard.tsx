@@ -34,7 +34,7 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
     render(): any {
 
         let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((enumNameAndValue: any) => {
-            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
+            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
         })
 
         let selectedPopup = this.state.PopupType.toString();
