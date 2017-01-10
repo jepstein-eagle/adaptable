@@ -28,6 +28,9 @@ import { ConditionalStyleHypergridStrategy } from '../Strategy/ConditionalStyleH
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
+import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
+import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -37,6 +40,8 @@ import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { QuickSearchDataSource } from './QuickSearchDataSource'
 import { AdvancedSearchDataSource } from './AdvancedSearchDataSource'
+import { UserFiltersDataSource } from './UserFiltersDataSource'
+import { FilterFormReact } from '../View/FilterForm';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -49,6 +54,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
+    private filterContainer: HTMLDivElement
 
     constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -74,6 +80,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+
+        this.filterContainer = this.container.ownerDocument.createElement("div")
+        this.filterContainer.id = "filterContainer"
+        this.filterContainer.style.position = 'absolute'
+        this.filterContainer.style.visibility = "hidden"
+        this.container.ownerDocument.body.appendChild(this.filterContainer)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -91,10 +105,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, e.detail.keyEvent)
         });
 
+
+
+        grid.addEventListener('fin-click', (e: any) => {
+            if (this.filterContainer.style.visibility == 'visible') {
+                this.filterContainer.style.visibility = 'hidden'
+            }
+            if (e.detail.primitiveEvent.isHeaderCell) {
+                let filterContext: IColumnFilterContext = {
+                    Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
+                    Blotter: this
+                };
+                this.filterContainer.style.visibility = 'visible'
+                this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
+                this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
+                ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+            }
+        });
+
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
             this.grid.behavior.reindex();
             throw 'reminder';
         });
+
+//                 grid.addEventListener("fin-context-menu", (e: any) => {
+// console.log("TOTO")
+//         });
 
         // grid.addEventListener('fin-click', function (e: any) {
         //     var cell = e.detail.gridCell;
@@ -115,6 +151,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return icon;
         }
+
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             //might need to use untranslatedX
@@ -143,6 +180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return this.grid.cellRenderers.get(declaredRendererName);
         };
+
         grid.addEventListener('fin-column-sort', (e: any) => {
             this.toggleSort(e.detail.column)
             //in case we want multi column
@@ -153,6 +191,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let currentDataSources = grid.behavior.dataModel.DataSources;
         //first AdvancedSearch that should filter most of the data
         currentDataSources.push(AdvancedSearchDataSource(this))
+        //then userfilters that should filter some more of the data
+        currentDataSources.push(UserFiltersDataSource(this))
         //then quick search that will filter occasionnaly
         currentDataSources.push(QuickSearchDataSource(this))
         //last has to be the customsort so we sort only the remaining data
@@ -598,9 +638,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public applyColumnFilters(): void { }
-
-
+    public applyColumnFilters(): void {
+        this.ReindexAndRepaint()
+     }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
