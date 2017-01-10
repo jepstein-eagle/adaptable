@@ -7,7 +7,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 
 
 interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {

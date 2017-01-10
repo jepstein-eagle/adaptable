@@ -13,7 +13,7 @@ import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { ColumnType, ExpressionMode } from '../../Core/Enums'

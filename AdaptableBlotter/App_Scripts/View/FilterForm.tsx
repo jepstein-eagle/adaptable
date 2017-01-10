@@ -9,7 +9,7 @@ import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
 import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
-import { UserFilterHelper } from '../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
 import { ColumnType, SortOrder } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'

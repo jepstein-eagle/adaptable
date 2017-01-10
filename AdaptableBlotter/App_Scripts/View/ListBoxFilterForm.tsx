@@ -42,12 +42,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
     }
 
     render() {
-       
-       let showAllElement: boolean = this.state.UiSelectedUserFilters.length > 0 || this.state.UiSelectedColumnValues.length >0;
-       
+
+        let showAllElement: boolean = this.state.UiSelectedUserFilters.length == 0 && this.state.UiSelectedColumnValues.length == 0;
+
         let allElement = <ListGroupItem key={"all"} style={userFilterItemStyle}
             onClick={() => this.onClickAllItem()}
-            active={false}
+            active={showAllElement}
             value={"all"} >{"(All)"}</ListGroupItem>
 
         let userFiltersItemsElements = this.props.UserFilters.map(x => {
@@ -99,9 +99,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         return <div>
             {header}
             <ListGroup fill style={divStyle}>
-                {showAllElement && 
-                     allElement 
-                }
+                {allElement}
                 {userFiltersItemsElements}
                 {columnValuesItemsElements}
             </ListGroup>
@@ -172,17 +170,17 @@ let divStyle = {
     'marginBottom': '0'
 }
 
-let userFilterItemStyle={
-    'width': '80%', 
-    'fontStyle': 'italic', 
+let userFilterItemStyle = {
+    'width': '80%',
+    'fontStyle': 'italic',
     'fontSize': 12,
     'padding': 8,
-    'margin' : 0
+    'margin': 0
 }
 
-let columnVItemStyle={
-    'width': '80%', 
+let columnVItemStyle = {
+    'width': '80%',
     'fontSize': 12,
     'padding': 8,
-    'margin' : 0
+    'margin': 0
 }

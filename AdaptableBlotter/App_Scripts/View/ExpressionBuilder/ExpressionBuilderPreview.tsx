@@ -7,7 +7,7 @@ import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Expression/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 

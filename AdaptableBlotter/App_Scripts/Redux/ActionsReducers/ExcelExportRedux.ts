@@ -32,8 +32,8 @@ export const AllPagesSetOperation = (AllPages: boolean): ExportSetAllPagesAction
 })
 
 const initialExportState: ExcelExportState = {
-    FileName: "AdaptableBlotterExport",
-    AllPages: true,
+    FileName: "Adaptable Blotter Export",
+    AllPages: true,     
 }
 
 export const ExcelExportReducer: Redux.Reducer<ExcelExportState> = (state: ExcelExportState = initialExportState, action: Redux.Action): ExcelExportState => {

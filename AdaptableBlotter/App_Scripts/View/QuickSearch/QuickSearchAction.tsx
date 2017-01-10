@@ -10,6 +10,7 @@ import { LeafExpressionOperator } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 
 
 interface QuickSearchActionProps extends React.ClassAttributes<QuickSearchActionComponent> {
@@ -72,7 +73,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
         let optionOperators = EnumExtensions.getNamesAndValues(LeafExpressionOperator).filter
             (nv => stringOperators.find(s => s == nv.value) != null).map((stringOperatorNameAndValue: any) => {
-                return <option key={stringOperatorNameAndValue.value} value={stringOperatorNameAndValue.value}>{stringOperatorNameAndValue.name}</option>
+                return <option key={stringOperatorNameAndValue.value} value={stringOperatorNameAndValue.value}>{ExpressionHelper.OperatorToFriendlyString(stringOperatorNameAndValue.value)}</option>
             })
 
         return (
