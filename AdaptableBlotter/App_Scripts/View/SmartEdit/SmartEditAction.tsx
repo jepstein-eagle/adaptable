@@ -60,7 +60,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle="primary" disabled={isNaN(this.props.SmartEditValue) } onClick={() => this.props.onApplySmartEdit() } >Apply to Grid</Button>
+                        <Button bsStyle="info" disabled={isNaN(this.props.SmartEditValue) } onClick={() => this.props.onApplySmartEdit() } >Apply to Grid</Button>
                     </Form>
                 </Panel>
                 <Panel header="Preview Results" bsStyle="success" style={divStyle}>

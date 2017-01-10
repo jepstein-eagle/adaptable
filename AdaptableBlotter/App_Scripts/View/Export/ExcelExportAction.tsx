@@ -4,10 +4,10 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLabel, Checkbox} from 'react-bootstrap';
-import {IColumn, IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
+import { FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLabel, Checkbox, Col } from 'react-bootstrap';
+import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 
-import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExcelExportRedux from '../../Redux/ActionsReducers/ExcelExportRedux'
 
 interface ExcelExportActionProps extends React.ClassAttributes<ExcelExportActionComponent> {
@@ -35,26 +35,31 @@ class ExcelExportActionComponent extends React.Component<ExcelExportActionProps,
     render() {
         var blotter = this.props.AdaptableBlotter;
         return (
-            <div >
-                <Panel header="Export" bsStyle="primary">
-                    <Form inline>
-                        <div style={divStyle}>
-                            <ControlLabel>Excel File Name: </ControlLabel>
-                            {'   '}
-                            <FormControl value={this.props.FileName} type="string" placeholder="Enter a Name for Exported Excel File"
-                                onChange={(e: React.FormEvent) => this.handleFileNameChange(e) }/>
-                        </div>
-                        <div style={divStyle} >
-                            <ControlLabel>Export All Pages: </ControlLabel>
-                            {'   '}
-                            <Checkbox disabled={!blotter.isGridPageable() } onChange={(e: React.FormEvent) => this.handleAllPagesChange(e) } checked={this.props.AllPages}></Checkbox>
-                        </div>
-                        <div style={divStyle}>
-                            <Button bsStyle="primary" disabled={(this.props.FileName == null) } onClick={() => this.props.onApplyExport() } >Export</Button>
-                        </div>
-                    </Form>
-                </Panel>
-            </div>
+            <Panel header="Export" bsStyle="primary">
+                <Form horizontal>
+                    <FormGroup controlId="fileName">
+                        <Col xs={4} componentClass={ControlLabel}>File Name: </Col>
+                        <Col xs={8}>
+                            <FormControl value={this.props.FileName} type="string" placeholder="Enter Name for Exported Excel File" onChange={e => this.handleFileNameChange(e)} />
+                        </Col>
+                    </FormGroup>
+                    {blotter.isGridPageable() ?
+                        <FormGroup controlId="allPages">
+                            <Col xs={4} componentClass={ControlLabel}>Export All Pages: </Col>
+                            <Col xs={8}>
+                                <Checkbox onChange={(e: React.FormEvent) => this.handleAllPagesChange(e)} checked={this.props.AllPages}></Checkbox>
+                            </Col>
+                        </FormGroup>
+                        : null}
+                    <FormGroup controlId="exportButton">
+                            <Col xs={4} ></Col>
+                       
+                        <Col xs={1} componentClass={ControlLabel}>
+                            <Button bsStyle="info" disabled={(this.props.FileName == null)} onClick={() => this.props.onApplyExport()} >Export</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
+            </Panel>
         );
     }
 }
