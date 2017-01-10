@@ -23,8 +23,8 @@ export let UserFiltersDataSource = (blotter: IAdaptableBlotter) => DataSourceInd
             if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, blotter)) {
                 return false
             }
-            return true
         }
+        return true
     },
     getRowCount: function () {
         return StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
