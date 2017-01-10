@@ -111,17 +111,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         }
 
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
-        let addConditionButtonDisabled: boolean = !this.firstTime && !hasConditions  || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
+        let addConditionButtonDisabled: boolean = !this.firstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
-
-
                 {this.firstTime ?
-                    <Well bsSize="small">Click 'Add Condition' button to start add Conditions for the Expression.  A Condition consists of a Column and as many criteria for that column as you wish to create.</Well>
+                    <Well bsSize="small">Click 'Add Condition' button to start add Conditions for the Expression.
+                    <p />A Condition consists of a Column and as many criteria for that column as you wish to create. <p />
+                        {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
+                            "This Expression can only contain one Condition." : "The Expression can contain multiple Condition."}
+                    </Well>
                     :
                     <FormGroup controlId="formInlineName">
                         <Col xs={3}>

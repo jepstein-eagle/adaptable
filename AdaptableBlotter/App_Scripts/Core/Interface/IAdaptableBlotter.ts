@@ -59,7 +59,7 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
 
     // Export
-    saveAsExcel(fileName: string, allPages: boolean): void
+    exportBlotter(): void
 
     // Print Preview
     printGrid(): void

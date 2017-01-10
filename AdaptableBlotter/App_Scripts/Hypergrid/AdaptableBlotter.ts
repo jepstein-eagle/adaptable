@@ -21,7 +21,7 @@ import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
-import { ExcelExportStrategy } from '../Strategy/ExcelExportStrategy'
+import { ExportStrategy } from '../Strategy/ExportStrategy'
 import { FlashingCellsHypergridStrategy } from '../Strategy/FlashingCellsHypergridStrategy'
 import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleHypergridStrategy } from '../Strategy/ConditionalStyleHypergridStrategy'
@@ -514,7 +514,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SetColumnIntoStore();
     }
 
-    public saveAsExcel(fileName: string, allPages: boolean): void {
+    public exportBlotter(): void {
     }
 
     public getDisplayValue(id: any, columnId: string): string {

@@ -156,20 +156,9 @@ var divStyle = {
     margin: '10px'
 };
 
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bolder',
-    fontSize: '16px'
-};
-
 var inputStyle: React.CSSProperties = {
     wordWrap: 'break-word',
     fontWeight: 'normal',
     textAlign: 'left',
 };
 
-var accordionStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'normal',
-
-};

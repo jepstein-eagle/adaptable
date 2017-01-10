@@ -98,7 +98,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
         return <div>
             {header}
-            <ListGroup fill style={divStyle}>
+            <ListGroup fill style={divStyle} >
                 {allElement}
                 {userFiltersItemsElements}
                 {columnValuesItemsElements}
@@ -173,14 +173,14 @@ let divStyle = {
 let userFilterItemStyle = {
     'width': '80%',
     'fontStyle': 'italic',
-    'fontSize': 12,
-    'padding': 8,
+    'fontSize': 'small',
+    'padding': '5%',
     'margin': 0
 }
 
 let columnVItemStyle = {
     'width': '80%',
-    'fontSize': 12,
-    'padding': 8,
+     'fontSize': 'small',
+    'padding': '5%',
     'margin': 0
 }

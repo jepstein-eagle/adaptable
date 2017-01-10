@@ -244,7 +244,7 @@ export module UserFilterHelper {
             Description: "Is Cell Populated",
             ColumnType: ColumnType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (stringToCheck: any): boolean => {
+            IsExpressionSatisfied: (stringToCheck: string): boolean => {
                 return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
             },
             IsPredefined: true

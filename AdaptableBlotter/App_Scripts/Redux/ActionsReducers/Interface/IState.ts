@@ -50,9 +50,10 @@ export interface ShortcutState {
     DateShortcuts: Array<IShortcut>;
 }
 
-export interface ExcelExportState {
+export interface ExportState {
     FileName: string;
     AllPages: boolean;
+    Filterable: boolean
 }
 
 export interface FlashingCellState {

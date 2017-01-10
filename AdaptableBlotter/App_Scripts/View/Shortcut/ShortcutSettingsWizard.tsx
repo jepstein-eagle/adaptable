@@ -42,7 +42,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    render(): any {
+    render() {
 
         // sort out keys
         var keyList: Array<string>
