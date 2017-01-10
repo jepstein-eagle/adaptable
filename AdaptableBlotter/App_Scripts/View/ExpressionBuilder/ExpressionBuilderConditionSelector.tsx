@@ -7,7 +7,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
-import { ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
@@ -36,7 +36,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     constructor(props: ExpressionBuilderConditionSelectorProps) {
         super(props);
         this.state = this.buildState(this.props)
+        this.firstTime = true;
     }
+
+    private firstTime: boolean;
+
     private buildState(theProps: ExpressionBuilderConditionSelectorProps): ExpressionBuilderConditionSelectorState {
         if (theProps.SelectedColumnId == "select") {
             return {
@@ -44,7 +48,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 SelectedColumnValues: [],
                 UserFilterExpresions: [],
                 SelectedUserFilterExpresions: [],
-                SelectedColumnRanges: []
+                SelectedColumnRanges: [],
             };
         }
         else {
@@ -83,7 +87,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 SelectedColumnValues: selectedColumnValues,
                 UserFilterExpresions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.map(f => f.Uid),
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
-                SelectedColumnRanges: selectedColumnRanges
+                SelectedColumnRanges: selectedColumnRanges,
             };
         }
     }
@@ -93,36 +97,47 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     render() {
+
         let optionColumns = this.props.ColumnsList.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-  
-        let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
         let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
-        let addConditionButtonDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn) || (this.props.SelectedColumnId == "select") || (!hasConditions);
+
+        if (this.firstTime) {// check it again
+            this.firstTime = this.props.SelectedColumnId == "select" && ExpressionHelper.IsExpressionEmpty(this.props.Expression);
+        }
+
+        let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
+        let addConditionButtonDisabled: boolean = !this.firstTime && !hasConditions  || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
         return <PanelWithButton headerText="Build Expression"
-            buttonClick={() => this.props.onSelectedColumnChange("select")} buttonDisabled={addConditionButtonDisabled}
+            buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
-                <FormGroup controlId="formInlineName">
-                    <Col xs={3}>
-                        {this.props.SelectedColumnId == "select" ?
-                            <ControlLabel>Step 1: Select Column</ControlLabel> :
-                            <div style={{ paddingTop: '7px' }}>Step 1: Select Column</div>
-                        }
-                    </Col>
-                    <Col xs={9}>
-                        <FormControl style={{ width: "Auto" }} componentClass="select" placeholder="select" value={this.props.SelectedColumnId} onChange={(x) => this.onColumnSelectChange(x)} disabled={columnDropdownDisabled} >
-                            <option value="select" key="select">Select a column</option>
-                            {optionColumns}
-                        </FormControl>
-                    </Col>
-                </FormGroup>
+
+
+                {this.firstTime ?
+                    <Well bsSize="small">Message Here</Well>
+                    :
+                    <FormGroup controlId="formInlineName">
+                        <Col xs={3}>
+                            {this.props.SelectedColumnId == "select" ?
+                                <ControlLabel>Step 1: Select Column</ControlLabel> :
+                                <div style={{ paddingTop: '7px' }}>Step 1: Select Column</div>
+                            }
+                        </Col>
+                        <Col xs={9}>
+                            <FormControl style={{ width: "Auto" }} componentClass="select" placeholder="select" value={this.props.SelectedColumnId} onChange={(x) => this.onColumnSelectChange(x)} disabled={columnDropdownDisabled} >
+                                <option value="select" key="select">Select a column</option>
+                                {optionColumns}
+                            </FormControl>
+                        </Col>
+                    </FormGroup>
+                }
             </Form>
 
             {this.props.SelectedColumnId == "select" ? null :
@@ -161,7 +176,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 </div>}
         </PanelWithButton>
     }
+
+    onSelectedColumnChanged() {
+        this.firstTime = false;
+        this.props.onSelectedColumnChange("select")
+    }
+
     onSelectedColumnRangesChange(selectedRanges: Array<IRangeExpression>) {
+
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let colRangesExpression = this.props.Expression.RangeExpressions
         let rangesCol = colRangesExpression.find(x => x.ColumnName == this.props.SelectedColumnId)

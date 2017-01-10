@@ -90,11 +90,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                     <Form inline >
                         <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
-                        <Col xs={3}>
-                            <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
+                        <Col xs={2}>
+                            <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
                         </Col>
                         <Col xs={5}>
-                            <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
+                            <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
                         </Col>
                     </Form>
                 </FormGroup>
