@@ -27,7 +27,7 @@ export let UserFiltersDataSource = (blotter: IAdaptableBlotter) => DataSourceInd
         return true
     },
     getRowCount: function () {
-        return StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
+        return blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0
             ? this.index.length : this.dataSource.getRowCount();
     }
 });
