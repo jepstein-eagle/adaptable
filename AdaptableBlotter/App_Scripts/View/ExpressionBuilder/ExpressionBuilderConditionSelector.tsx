@@ -121,7 +121,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
 
                 {this.firstTime ?
-                    <Well bsSize="small">Message Here</Well>
+                    <Well bsSize="small">Click 'Add Condition' button to start add Conditions for the Expression.  A Condition consists of a Column and as many criteria for that column as you wish to create.</Well>
                     :
                     <FormGroup controlId="formInlineName">
                         <Col xs={3}>
