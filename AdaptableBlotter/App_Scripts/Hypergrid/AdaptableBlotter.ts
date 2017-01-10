@@ -483,9 +483,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
-        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
-        for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+        //We bypass the whole DataSource Stuff as we need to get ALL the data
+        let data = this.grid.behavior.dataModel.getData()
+        for (var index = 0; index < data.length; index++) {
+            var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
             let rawValue = element[columnId]
             if (distinctCriteria == "rawValue") {
