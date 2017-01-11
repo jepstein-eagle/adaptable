@@ -38,9 +38,7 @@ import { ColumnType, SortOrder } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
-import { QuickSearchDataSource } from './QuickSearchDataSource'
-import { AdvancedSearchDataSource } from './AdvancedSearchDataSource'
-import { UserFiltersDataSource } from './UserFiltersDataSource'
+import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
 
 //icon to indicate toggle state
@@ -189,13 +187,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //We add our sorter pipe last into the existing pipeline
         let currentDataSources = grid.behavior.dataModel.DataSources;
-        //first AdvancedSearch that should filter most of the data
-        currentDataSources.push(AdvancedSearchDataSource(this))
-        //then userfilters that should filter some more of the data
-        currentDataSources.push(UserFiltersDataSource(this))
-        //then quick search that will filter occasionnaly
-        currentDataSources.push(QuickSearchDataSource(this))
-        //last has to be the customsort so we sort only the remaining data
+        currentDataSources.push(FilterAndSearchDataSource(this))
         currentDataSources.push(CustomSortDataSource(this))
 
         grid.setPipeline(currentDataSources, {
