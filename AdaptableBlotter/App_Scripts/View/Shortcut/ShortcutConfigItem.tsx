@@ -102,15 +102,3 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
     }
 }
 
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold',
-    backgroundColor: 'yellow',
-    padding: '0px',
-    margin: '0px'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

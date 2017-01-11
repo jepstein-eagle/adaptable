@@ -65,7 +65,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             onNewAdvancedSearch={() => this.onNewAdvancedSearch()}
                             onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
-                    <Nav style={divStyle}>
+                    <Nav >
                         {actionMenuItems}
                         <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
@@ -82,8 +82,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                                     <Row style={{ display: "flex" }}>
                                         <Col xs={1} >
                                             <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} />
+                                            { }
                                         </Col>
-                                        <Col xs={11} style={errorHeaderStyle}>
+                                        <Col xs={11}>
                                             <h4>Error</h4>
                                         </Col>
                                     </Row>
@@ -174,13 +175,9 @@ export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Pro
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;
 
-let titleStyle: React.CSSProperties = {
-    fontSize: "18px"
-}
-
 
 let errorGlypIconStyle: React.CSSProperties = {
-    fontSize: "20px"
+    fontSize: "large"
 }
 
 let buttonStyle: React.CSSProperties = {
@@ -188,10 +185,5 @@ let buttonStyle: React.CSSProperties = {
     focus: "none"
 }
 
-let divStyle: React.CSSProperties = {
-    margin: "20px"
-}
 
-let errorHeaderStyle: React.CSSProperties = {
-    margin: "3px"
-}
+

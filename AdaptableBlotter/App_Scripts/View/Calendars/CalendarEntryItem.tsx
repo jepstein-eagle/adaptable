@@ -23,13 +23,3 @@ export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {
         </li>
     }
 }
-
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

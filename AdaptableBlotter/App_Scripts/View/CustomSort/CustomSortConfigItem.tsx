@@ -20,7 +20,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={2}>{this.props.ColumnLabel}</Col>
-                <Col xs={7} style={divStyle}>
+                <Col xs={7} >
                     {this.props.CustomSort.CustomSortItems.join()}
                 </Col>
                 <Col xs={3}>
@@ -32,17 +32,4 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             </Row>
         </li>
     }
-}
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-var divStyle: React.CSSProperties = {
-    wordWrap: 'break-word'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
 }
