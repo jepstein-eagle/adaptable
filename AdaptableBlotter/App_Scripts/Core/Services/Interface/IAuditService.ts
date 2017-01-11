@@ -1,4 +1,4 @@
-import {IEvent} from '../../Interface/IEvent'
+import { IEvent } from '../../Interface/IEvent'
 
 
 export interface IDataChangedEvent {
@@ -6,22 +6,27 @@ export interface IDataChangedEvent {
     NewValue: any;
     ColumnName: string;
     IdentifierValue: any;
+    Timestamp: number
 }
 
-export interface IColumnDataValueList{
+export interface IColumnDataValueList {
     ColumnName: string;
-    DataValues : IDataValue[];
+    CellDataValueList: ICellDataValueList[];
 }
 
-export interface IDataValue {
+export interface ICellDataValueList {
+    IdentifierValue: any;
+    DataChangedInfos: IDataChangedInfo[],
+}
+
+export interface IDataChangedInfo {
     OldValue: any;
     NewValue: any;
-    IdentifierValue: any; 
+    Timestamp: number
 }
-
 
 
 export interface IAuditService {
-     CreateAuditEvent(identifierValue: any,  NewValue: any, ColumnName :string, forceDispatch?: boolean): void;
+    CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, forceDispatch?: boolean): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
 }

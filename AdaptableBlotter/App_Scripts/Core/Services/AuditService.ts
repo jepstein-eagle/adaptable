@@ -1,5 +1,5 @@
 
-import { IAuditService, IDataChangedEvent, IColumnDataValueList, IDataValue } from './Interface/IAuditService';
+import { IAuditService, IDataChangedEvent, IColumnDataValueList, ICellDataValueList, IDataChangedInfo } from './Interface/IAuditService';
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
@@ -11,13 +11,15 @@ This means that we are able to work out old and new values - though for the firs
 */
 export class AuditService implements IAuditService {
 
+    private _columnDataValueList: IColumnDataValueList[];
+
     constructor(private blotter: IAdaptableBlotter) {
 
         this._columnDataValueList = [];
     }
 
     public CreateAuditEvent(identifierValue: any, newValue: any, columnName: string, forceDispatch?: boolean): void {
-        var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnName: columnName, IdentifierValue: identifierValue };
+        var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnName: columnName, IdentifierValue: identifierValue, Timestamp: Date.now() };
         this.AddDataValuesToList(dataChangedEvent);
         // not sure why this is being called twice but we can prevent duplicate identical events at least
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue || forceDispatch) {
@@ -25,7 +27,6 @@ export class AuditService implements IAuditService {
         }
     }
 
-    private _columnDataValueList: IColumnDataValueList[];
 
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
         //   alert("column: " + dataChangedEvent.ColumnName + " new value: " + dataChangedEvent.NewValue + " where primary key: " + dataChangedEvent.IdentifierValue);
@@ -33,24 +34,25 @@ export class AuditService implements IAuditService {
 
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             columns.forEach(c => {
-                this._columnDataValueList.push({ ColumnName: c.ColumnId, DataValues: [] })
+                this._columnDataValueList.push({ ColumnName: c.ColumnId, CellDataValueList: [] })
             })
         }
 
-        // ok so this is probably totally shit but we want to add the value to the list if it doesnt yet exist, otherwise update it
+        // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnName;
-        var myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
-        let existingDataValue: IDataValue = myList.DataValues.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
-        if (existingDataValue != null) {
-            let previousOldValue: any = existingDataValue.NewValue;
-            existingDataValue.OldValue = previousOldValue;
-            existingDataValue.NewValue = dataChangedEvent.NewValue;
-            dataChangedEvent.OldValue = previousOldValue;
+        let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
+        let cellDataValueList: ICellDataValueList;
+        cellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
+        if (cellDataValueList != null) {
+            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length-1].NewValue;
+            let datachangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+            cellDataValueList.DataChangedInfos.push(datachangedInfo);
         }
-        else {
-            // this is the first time we have updated this so lets see if we can at least try to get the value...
+        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value...
             dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnName, dataChangedEvent.IdentifierValue);;
-            myList.DataValues.push({ OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, IdentifierValue: dataChangedEvent.IdentifierValue })
+            let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfos:  [datechangedInfo]}
+            myList.CellDataValueList.push( cellDataValueList);
         }
     }
 
