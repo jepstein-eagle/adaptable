@@ -158,7 +158,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let row = this.grid.behavior.dataModel.dataSource.getRow(y)
             let column = this.grid.behavior.getActiveColumns()[x]
             if (column && row) {
-                this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
+                this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
+                // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
             }
             let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
             let csBackgroundColorColumn = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorColumn')

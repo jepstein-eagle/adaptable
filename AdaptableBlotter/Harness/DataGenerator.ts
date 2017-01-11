@@ -47,6 +47,7 @@ export class DataGenerator {
             let initialNewValue = trade[columnName];
             let newValue = initialNewValue + numberToAdd;
             trade[columnName] = newValue;
+            grid.behavior.reindex();
             grid.repaint()
         }, 500)
     }
