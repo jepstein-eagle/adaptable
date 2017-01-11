@@ -126,9 +126,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             throw 'reminder';
         });
 
-//                 grid.addEventListener("fin-context-menu", (e: any) => {
-// console.log("TOTO")
-//         });
+        //                 grid.addEventListener("fin-context-menu", (e: any) => {
+        // console.log("TOTO")
+        //         });
 
         // grid.addEventListener('fin-click', function (e: any) {
         //     var cell = e.detail.gridCell;
@@ -528,8 +528,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
-        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
         if (rowIndex) {
             if (style.flashBackColor) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
@@ -549,7 +548,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
-        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
         if (rowIndex) {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
                 //here we don't call Repaint as we consider that we already are in the repaint loop
@@ -565,8 +564,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRowIndexHypergrid(rowIdentifierValue: any): number {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
-        let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        //11/01/17 We cannot use findRow as it returns the rowIndex from the original DataSource
+        //I leave the getIndexedData for now but we would need to optimize that.... since we create a big array every iteration
+        // let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        // let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        // return rowIndex
+        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => x[this.primaryKey] == rowIdentifierValue)
         return rowIndex
     }
 
@@ -634,7 +637,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
-     }
+    }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
