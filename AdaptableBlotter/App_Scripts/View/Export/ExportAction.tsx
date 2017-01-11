@@ -98,9 +98,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ExportAction = connect(mapStateToProps, mapDispatchToProps)(ExportActionComponent);
-
-var divStyle = {
-    overflowY: 'auto',
-    maxHeight: '400px',
-    margin: '10px'
-};

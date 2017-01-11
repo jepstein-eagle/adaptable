@@ -36,46 +36,45 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
         let optionPopupTypes = EnumExtensions.getNamesAndValues(PopupType).map((enumNameAndValue: any) => {
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
         })
-
         let selectedPopup = this.state.PopupType.toString();
 
         return <Panel header="Alert Action" bsStyle="primary">
             <Form horizontal>
-                <Row style={smallMarginStyle}>
+
+                <FormGroup controlId="email">
                     <Col componentClass={ControlLabel} xs={4}>Send Email: </Col>
                     <Col xs={8}>
                         <Checkbox onChange={(e) => this.onSendEmailChanged(e)} checked={this.state.SendEmail}></Checkbox>
                     </Col>
-                </Row>
+                </FormGroup>
 
                 { /* show recipients if showing email */}
                 {this.state.SendEmail &&
-                    <Row style={smallMarginStyle}>
+                    <FormGroup controlId="recipients">
                         <Col componentClass={ControlLabel} xs={4}>Email Recipients: </Col>
                         <Col xs={8}>
                             <FormControl value={this.state.EmailRecipients} type="string" placeholder="Enter recipient names" onChange={(x) => this.onEmailRecipientsChanged(x)} />
                         </Col>
-                    </Row>
+                    </FormGroup>
                 }
 
-                <Row style={smallMarginStyle}>
+                <FormGroup controlId="popup">
                     <Col componentClass={ControlLabel} xs={4}>Show Popup: </Col>
                     <Col xs={8}>
                         <Checkbox onChange={(e) => this.onShowPopupChanged(e)} checked={this.state.ShowPopup}></Checkbox>
                     </Col>
-                </Row>
-
+                </FormGroup>
 
                 { /* select popuptype if showing popup */}
                 {this.state.ShowPopup &&
-                    <Row style={smallMarginStyle}>
+                    <FormGroup controlId="popuptype">
                         <Col componentClass={ControlLabel} xs={4}>Popup Type: </Col>
                         <Col xs={8}>
                             <FormControl componentClass="select" placeholder="select" value={selectedPopup} onChange={(x) => this.onPopupTypeChanged(x)} >
                                 {optionPopupTypes}
                             </FormControl>
                         </Col>
-                    </Row>
+                    </FormGroup>
                 }
 
             </Form>
@@ -124,9 +123,4 @@ export class AlertActionWizard extends React.Component<AlertActionWizardProps, A
     }
     public Back(): void { }
     public StepName = "Alert Action"
-}
-
-
-let smallMarginStyle = {
-    margin: '5px'
 }
