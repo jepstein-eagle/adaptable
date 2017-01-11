@@ -529,7 +529,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex) {
+        if (rowIndex >= 0) {
             if (style.flashBackColor) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
                 if (timeout) {
@@ -549,7 +549,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex) {
+        if (rowIndex >= 0) {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
                 //here we don't call Repaint as we consider that we already are in the repaint loop
                 //There is never a timeout for CS

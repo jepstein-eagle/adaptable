@@ -25,7 +25,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let rowIndex = this.blotterBypass.getRowIndexHypergrid(dataChangedEvent.IdentifierValue)
-        if (rowIndex) {
+        if (rowIndex >= 0) {
             for (var index = 0; index < columns.length; index++) {
                 this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
                 this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
@@ -48,14 +48,14 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
 
     protected InitStyles(): void {
         //JO: temp fix
-        if(!this.blotterBypass){
+        if (!this.blotterBypass) {
             this.blotterBypass = this.blotter as AdaptableBlotter
         }
         let rowIds: string[] = this.blotter.getAllRowIds();
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         for (let rowId of rowIds) {
             let rowIndex = this.blotterBypass.getRowIndexHypergrid(rowId)
-            if (rowIndex) {
+            if (rowIndex >= 0) {
                 for (var index = 0; index < columns.length; index++) {
                     this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
                     this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
