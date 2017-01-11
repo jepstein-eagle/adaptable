@@ -5,19 +5,19 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
-import { IExcelExportStrategy } from '../Core/Interface/IExcelExportStrategy'
+import { IExportStrategy } from '../Core/Interface/IExportStrategy'
 import { MenuType } from '../Core/Enums';
 
 
-export class ExcelExportStrategy extends AdaptableStrategyBase implements IExcelExportStrategy {
+export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ExcelExportStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Export To Excel", this.Id, 'ExcelExportAction', MenuType.Action, "export");
+        super(StrategyIds.ExportStrategyId, blotter)
+        this.menuItemConfig = new MenuItemShowPopup("Export Blotter", this.Id, 'ExportAction', MenuType.Action, "export");
     }
 
-    public ExportToExcel(fileName: string, allPages: boolean): void {
-        this.blotter.saveAsExcel(fileName, allPages);
+    public ExportBlotter(): void {
+        this.blotter.exportBlotter();
     }
 
 

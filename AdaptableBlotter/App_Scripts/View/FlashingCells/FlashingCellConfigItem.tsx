@@ -72,13 +72,3 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
     }
 }
 
-
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

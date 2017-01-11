@@ -42,4 +42,10 @@ export module StringExtensions {
     export function IsNotNullOrEmpty(stringToCheck: string) {
         return !StringExtensions.IsNullOrEmpty(stringToCheck);
     }
+   
+    export function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string) {
+        return  stringToCheck.replace(/([A-Z])/g, ' $1').trim()
+    }
+
+   
 }

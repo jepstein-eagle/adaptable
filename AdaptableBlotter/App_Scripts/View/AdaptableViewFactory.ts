@@ -3,7 +3,7 @@ import { SmartEditAction } from './SmartEdit/SmartEditAction'
 import { ShortcutConfig } from './Shortcut/ShortcutConfig'
 import { PlusMinusConfig } from './PlusMinus/PlusMinusConfig'
 import { ColumnChooserAction } from './ColumnChooser/ColumnChooserAction'
-import { ExcelExportAction } from './Export/ExcelExportAction'
+import { ExportAction } from './Export/ExportAction'
 import { PrintPreviewAction } from './PrintPreview/PrintPreviewAction'
 import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
 import { CalendarsConfig } from './Calendars/CalendarsConfig'
@@ -20,7 +20,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ShortcutConfig: ShortcutConfig,
   PlusMinusConfig: PlusMinusConfig,
   ColumnChooserAction: ColumnChooserAction,
-  ExcelExportAction: ExcelExportAction,
+  ExportAction: ExportAction,
   FlashingCellsConfig: FlashingCellsConfig,
   CalendarsConfig: CalendarsConfig,
   ConditionalStyleConfig: ConditionalStyleConfig,

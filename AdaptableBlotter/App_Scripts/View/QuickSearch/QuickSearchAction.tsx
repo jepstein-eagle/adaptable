@@ -82,10 +82,9 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
 
                     <Form inline>
-                        <div style={divStyle}>
+                        <div >
                             <Panel header={"Search For"} bsStyle="info">
                                 <FormControl
-                                    style={inputStyle}
                                     value={this.state.EditedQuickSearchText}
                                     type="string"
                                     placeholder="Enter quick search text"
@@ -107,12 +106,11 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
                     <Form horizontal>
                         <div >
-                            <Panel header="Quick Search Options" style={divStyle} eventKey="1" bsStyle="info">
-
+                            <Panel header="Quick Search Options" eventKey="1" bsStyle="info">
 
                                 <FormGroup controlId="formInlineSearchOperator">
                                     <Col xs={4}>
-                                        <ControlLabel style={inputStyle}>Search Operator:</ControlLabel>
+                                        <ControlLabel >Search Operator:</ControlLabel>
                                     </Col>
                                     <Col xs={8}>
                                         <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
@@ -149,27 +147,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let QuickSearchAction = connect(mapStateToProps, mapDispatchToProps)(QuickSearchActionComponent);
-
-var divStyle = {
-    overflowY: 'auto',
-    maxHeight: '400px',
-    margin: '10px'
-};
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bolder',
-    fontSize: '16px'
-};
-
-var inputStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'normal',
-    textAlign: 'left',
-};
-
-var accordionStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'normal',
-
-};

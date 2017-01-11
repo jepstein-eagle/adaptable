@@ -81,11 +81,3 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
 }
 
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

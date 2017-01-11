@@ -8,7 +8,7 @@ export interface AdaptableBlotterState {
     Grid: AdaptableBlotterStates.GridState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
-    Export: AdaptableBlotterStates.ExcelExportState;
+    Export: AdaptableBlotterStates.ExportState;
     FlashingCell: AdaptableBlotterStates.FlashingCellState;
     Calendars: AdaptableBlotterStates.CalendarState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;

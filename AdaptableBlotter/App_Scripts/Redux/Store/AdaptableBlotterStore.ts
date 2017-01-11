@@ -11,7 +11,7 @@ import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
-import * as ExcelExportRedux from '../ActionsReducers/ExcelExportRedux'
+import * as ExportRedux from '../ActionsReducers/ExportRedux'
 import * as PrintPreviewRedux from '../ActionsReducers/PrintPreviewRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
@@ -25,7 +25,7 @@ import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
-import { IExcelExportStrategy } from '../../Core/Interface/IExcelExportStrategy'
+import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
 import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
@@ -39,7 +39,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Shortcut: ShortcutRedux.ShortcutReducer,
     Grid: GridRedux.GridReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
-    Export: ExcelExportRedux.ExcelExportReducer,
+    Export: ExportRedux.ExportReducer,
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
     Calendars: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
@@ -154,9 +154,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-                case ExcelExportRedux.EXPORT_APPLY: {
-                    let ExportStrategy = <IExcelExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExcelExportStrategyId));
-                    ExportStrategy.ExportToExcel(middlewareAPI.getState().Export.FileName, middlewareAPI.getState().Export.AllPages);
+                case ExportRedux.EXPORT_APPLY: {
+                    let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
+                    ExportStrategy.ExportBlotter();
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }

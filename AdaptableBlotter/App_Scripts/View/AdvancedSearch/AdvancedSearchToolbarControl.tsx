@@ -19,7 +19,6 @@ interface AdvancedSearchToolbarState {
 
 export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearchToolbarControlProps, AdvancedSearchToolbarState> {
 
-
     constructor() {
         super();
         this.state = { SelectedAdvancedSearch: "" }

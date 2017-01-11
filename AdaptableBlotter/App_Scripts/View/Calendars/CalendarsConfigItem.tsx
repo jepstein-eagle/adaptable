@@ -43,12 +43,3 @@ export class CalendarsConfigItem extends React.Component<CalendarsConfigItemProp
     }
 }
 
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

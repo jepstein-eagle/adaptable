@@ -42,7 +42,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    render(): any {
+    render() {
 
         // sort out keys
         var keyList: Array<string>
@@ -155,12 +155,4 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     public StepName = "Create Shortcut"
 }
 
-let listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '220px'
-};
 
-let divStyle = {
-    margin: '5px'
-}

@@ -23,7 +23,7 @@ import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
-import { ExcelExportStrategy } from '../Strategy/ExcelExportStrategy'
+import { ExportStrategy } from '../Strategy/ExportStrategy'
 import { FlashingCellsStrategy } from '../Strategy/FlashingCellsStrategy'
 import { CalendarStrategy } from '../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
@@ -41,6 +41,7 @@ import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColum
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
+import { ExportState } from '../Redux/ActionsReducers/Interface/IState'
 
 
 
@@ -73,7 +74,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, true))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
@@ -100,7 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
-                let itemsArray: any = e.items[0];
+                let itemsArray: any  = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
                 let changedValue = itemsArray[e.field];
                 let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
                 this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
@@ -459,11 +460,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public saveAsExcel(fileName: string, allPages: boolean): void {
-
-
-        this.grid.options.excel.fileName = fileName + ".xls";
-        this.grid.options.excel.allPages = allPages;
+    public exportBlotter(): void {
+        // get export state
+        let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
+        this.grid.options.excel.fileName = exportState.FileName + ".xls";
+        this.grid.options.excel.allPages = exportState.AllPages;
+        this.grid.options.excel.filterable = exportState.Filterable;
         this.grid.saveAsExcel();
     }
 
@@ -480,7 +482,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let record: any = this.grid.dataSource.getByUid(id);
+        let record: kendo.data.Model = this.grid.dataSource.getByUid(id);
         return this.getDisplayValueFromRecord(record, columnId)
         // let columnIndex = this.getColumnIndex(columnId)
         // let row = this.getRowByRowIdentifier(id)

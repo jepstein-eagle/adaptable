@@ -8,8 +8,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Modal, MenuItem, Checkbox, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
 import { ColumnType } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
@@ -77,13 +76,14 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         </Form>;
 
         let setAllOption = <Form horizontal>
-            <Row style={topRowStyle}>
+            <FormGroup controlId="formInlineName">
                 <Col xs={12}>
-                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
+                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)}
+                        checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
                         Turn On All Flashing Columns
                     </Checkbox>
                 </Col>
-            </Row>
+            </FormGroup>
         </Form>;
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
@@ -124,25 +124,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FlashingCellsConfig = connect(mapStateToProps, mapDispatchToProps)(FlashingCellsConfigComponent);
 
-var listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
-};
-
 let panelStyle = {
     width: '800px'
-}
-
-let topRowStyle = {
-    height: '50px',
-    margin: '0px',
-    alignItems: "right"
-}
-
-let rowStyle = {
-    height: '50px',
-    margin: '2px'
 }
 
 let divStyle = {

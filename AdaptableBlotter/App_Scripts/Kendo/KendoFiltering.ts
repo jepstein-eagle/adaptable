@@ -183,7 +183,6 @@ export module KendoFiltering {
                 return operandValue;
             case ColumnType.Object:
                 return operandValue;
-
         }
     }
 

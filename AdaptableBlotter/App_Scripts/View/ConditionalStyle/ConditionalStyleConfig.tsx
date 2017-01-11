@@ -138,22 +138,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ConditionalStyleConfig = connect(mapStateToProps, mapDispatchToProps)(ConditionalStyleConfigComponent);
 
-
-var listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
-};
-
-
-
 let panelStyle = {
     width: '800px'
-}
-
-let rowStyle = {
-    height: '50px',
-    margin: '2px'
 }
 
 let divStyle = {

@@ -25,7 +25,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
             FilterName: this.props.Data.FriendlyName,
         }
     }
-    render(): any {
+    render(){
 
         return <Panel header="Filter Settings" bsStyle="primary">
             <Form horizontal>

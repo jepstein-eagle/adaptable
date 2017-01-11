@@ -88,7 +88,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             }
 
             {UserFilterItems.length == 0 &&
-                <Well bsSize="small">Click 'Create User Filter' to start creating user filters.<br/><br/>
+                <Well bsSize="small">Click 'Create User Filter' to start creating user filters.<p/>
                 User filters are accessible when filtering columns or creating an expression (e.g. Advanced Search, Plus / Minus, Conditional Style etc).</Well>
             }
 
@@ -162,13 +162,4 @@ let listGroupStyle = {
 
 let panelStyle = {
     width: '800px'
-}
-
-var headerStyle: React.CSSProperties = {
-    wordWrap: 'break-word',
-    fontWeight: 'bold'
-};
-
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
 }
