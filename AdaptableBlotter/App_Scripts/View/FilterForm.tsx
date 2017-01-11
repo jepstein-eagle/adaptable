@@ -37,7 +37,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
         Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
 
-        let existingColumnFilter: IColumnFilter =  this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}
@@ -60,7 +60,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             };
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
-        this.props.onAddEditColumnFilter(columnFilter);
+        //delete if empty
+        if (predefinedExpressionInfo.ColumnValues.length == 0 && predefinedExpressionInfo.UserFilterUids.length == 0) {
+            this.props.onDeleteColumnFilter(columnFilter);
+            return
+        } else {
+            this.props.onAddEditColumnFilter(columnFilter);
+        }
     }
 
     onClickUserFilter(selectedFilterDisplayValues: string[]) {
@@ -78,9 +84,16 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
                 ExpressionRange: null,
                 UserFilterUids: selectedFilterDisplayValues
             };
+
         let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
-        this.props.onAddEditColumnFilter(columnFilter);
+        //delete if empty
+        if (predefinedExpressionInfo.ColumnValues.length == 0 && predefinedExpressionInfo.UserFilterUids.length == 0) {
+            this.props.onDeleteColumnFilter(columnFilter);
+            return
+        } else {
+            this.props.onAddEditColumnFilter(columnFilter);
+        }
     }
 }
 
