@@ -254,8 +254,3 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
 
 }
-
-let divStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}

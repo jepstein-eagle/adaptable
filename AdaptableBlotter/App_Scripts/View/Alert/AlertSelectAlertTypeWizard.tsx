@@ -29,11 +29,11 @@ export class AlertSelectAlertTypeWizard extends React.Component<AlertSelectAlert
         let haveFunctionExecutedAlert: boolean = (this.props.Alerts.find(a => a.NotificationType == NotificationType.FunctionExecuted) != null);
 
         return <Panel header="Raise Instant Alert" bsStyle="primary">
-            <Radio style={divStyle} value={NotificationType.CellEdited.toString()} checked={this.state.NotificationType == NotificationType.CellEdited} onChange={(e) => this.onNotificationTypeChange(e)}>When a cell is edited </Radio>
-            <Radio style={divStyle} value={NotificationType.CellUpdated.toString()} checked={this.state.NotificationType == NotificationType.CellUpdated} onChange={(e) => this.onNotificationTypeChange(e)}>When a cell is updated (whether its edited or the source changes)</Radio>
+            <Radio value={NotificationType.CellEdited.toString()} checked={this.state.NotificationType == NotificationType.CellEdited} onChange={(e) => this.onNotificationTypeChange(e)}>When a cell is edited </Radio>
+            <Radio value={NotificationType.CellUpdated.toString()} checked={this.state.NotificationType == NotificationType.CellUpdated} onChange={(e) => this.onNotificationTypeChange(e)}>When a cell is updated (whether its edited or the source changes)</Radio>
             { /* if we already have a UserDataEdited or FunctionExecuted alert then cannot add another one as they are all the same */}
-            <Radio style={divStyle} value={NotificationType.UserDataEdited.toString()} disabled={haveUserDataEditedAlert} checked={this.state.NotificationType == NotificationType.UserDataEdited} onChange={(e) => this.onNotificationTypeChange(e)}>When any type of user data is edited</Radio>
-            <Radio style={divStyle} value={NotificationType.FunctionExecuted.toString()} disabled={haveFunctionExecutedAlert} checked={this.state.NotificationType == NotificationType.FunctionExecuted} onChange={(e) => this.onNotificationTypeChange(e)}>When the blotter executes a function</Radio>
+            <Radio value={NotificationType.UserDataEdited.toString()} disabled={haveUserDataEditedAlert} checked={this.state.NotificationType == NotificationType.UserDataEdited} onChange={(e) => this.onNotificationTypeChange(e)}>When any type of user data is edited</Radio>
+            <Radio value={NotificationType.FunctionExecuted.toString()} disabled={haveFunctionExecutedAlert} checked={this.state.NotificationType == NotificationType.FunctionExecuted} onChange={(e) => this.onNotificationTypeChange(e)}>When the blotter executes a function</Radio>
         </Panel>
     }
 
@@ -57,8 +57,4 @@ export class AlertSelectAlertTypeWizard extends React.Component<AlertSelectAlert
     }
     public Back(): void { }
     public StepName = "Alert Type"
-}
-
-let divStyle = {
-    margin: '15px'
 }

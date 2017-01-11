@@ -155,12 +155,4 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     public StepName = "Create Shortcut"
 }
 
-let listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '220px'
-};
 
-let divStyle = {
-    margin: '5px'
-}

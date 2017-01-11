@@ -60,7 +60,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             </Row>
         </Form>;
 
-        return <Panel header={header} bsStyle="primary" style={panelStyle}>
+        return <Panel header={header} bsStyle="primary" >
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
@@ -79,7 +79,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                         </ListGroup>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button style={buttonLeftStyle} onClick={() => this.closeInformationModal()}>Close</Button>
+                        <Button style={buttonFloatRightStyle} onClick={() => this.closeInformationModal()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
                 : null}
@@ -120,26 +120,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CalendarsConfig = connect(mapStateToProps, mapDispatchToProps)(CalendarsConfigComponent);
 
-var listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
-};
 
-let panelStyle = {
-    width: '800px'
-}
-
-let rowStyle = {
-    height: '50px',
-    margin: '2px'
-}
 
 let divStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }
 
-let buttonLeftStyle = {
+let buttonFloatRightStyle = {
     float: 'right'
 };

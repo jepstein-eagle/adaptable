@@ -110,8 +110,3 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     public Back(): void { }
     public StepName = "Build Expression"
 }
-
-let divStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}

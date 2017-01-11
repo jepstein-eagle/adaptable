@@ -77,13 +77,14 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         </Form>;
 
         let setAllOption = <Form horizontal>
-            <Row style={topRowStyle}>
+            <FormGroup controlId="formInlineName">
                 <Col xs={12}>
-                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
+                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)} 
+                    checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
                         Turn On All Flashing Columns
                     </Checkbox>
                 </Col>
-            </Row>
+            </FormGroup>
         </Form>;
 
         return <Panel header={header} bsStyle="primary" style={panelStyle}>
@@ -124,25 +125,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FlashingCellsConfig = connect(mapStateToProps, mapDispatchToProps)(FlashingCellsConfigComponent);
 
-var listGroupStyle = {
-    'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
-};
-
 let panelStyle = {
     width: '800px'
-}
-
-let topRowStyle = {
-    height: '50px',
-    margin: '0px',
-    alignItems: "right"
-}
-
-let rowStyle = {
-    height: '50px',
-    margin: '2px'
 }
 
 let divStyle = {
