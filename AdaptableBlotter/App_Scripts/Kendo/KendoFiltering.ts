@@ -114,13 +114,23 @@ export module KendoFiltering {
                 let rangeFiltersNew: kendo.data.DataSourceFilters;
 
                 if (userFilter.IsPredefined) {  // predefined filters only map to ranges...
-                    rangeFiltersNew = createFilterFromPredefinedExpression(userFilter, column);
+                    rangeFiltersNew = createFilterFromPredefinedExpression(userFilter, column, blotter);
                 } else {
                     let rawValueExpression: Expression = getRawValueExpression(userFilter.Expression, column, blotter);
                     columnValueFiltersNew = createFilterFromColumnValuesExpression(rawValueExpression, column);
                     rangeFiltersNew = createFilterFromRangesExpression(userFilter.Expression, column);
-                }
 
+                    // its possible that the filter could wrap a user filter - though this is a bit meaningless...
+                    userFilter.Expression.UserFilters.forEach(uf => {
+                        let predefinedFilter: IUserFilter = userFilters.find(u => u.Uid == userFilter.Expression.UserFilters[0].UserFilterUids[0]);
+                        let returnedFilters: kendo.data.DataSourceFilters = createFilterFromPredefinedExpression(predefinedFilter, column, blotter)
+                        if (rangeFiltersNew) {
+                            rangeFiltersNew.filters.push(returnedFilters);
+                        } else {
+                            rangeFiltersNew = returnedFilters;
+                        }
+                    })
+                }
                 if (columnValueFiltersNew || rangeFiltersNew) {
                     if (columnValueFiltersNew) {
                         kendoUserFilters.filters.push(columnValueFiltersNew);
@@ -140,7 +150,7 @@ export module KendoFiltering {
 
     function createFilterFromBetweenRange(range: IRangeExpression, column: IColumn): kendo.data.DataSourceFilterItem[] {
         let newFilters: kendo.data.DataSourceFilterItem[] = [];
-        let fromFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: getTypedValueForOperand(range.Operand1, column)  };
+        let fromFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: getTypedValueForOperand(range.Operand1, column) };
         let toFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: getTypedValueForOperand(range.Operand2, column) };
         newFilters.push(fromFilterItem);
         newFilters.push(toFilterItem);
@@ -186,39 +196,47 @@ export module KendoFiltering {
         }
     }
 
-    function createFilterFromPredefinedExpression(userFilter: IUserFilter, column: IColumn): kendo.data.DataSourceFilters {
+    function createFilterFromPredefinedExpression(userFilter: IUserFilter, column: IColumn, blotter: IAdaptableBlotter): kendo.data.DataSourceFilters {
 
         let newFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };  // multiple range items are "and"
         let filterItem: kendo.data.DataSourceFilterItem;
+        let dateToCheck: Date;
 
         switch (userFilter.Uid) {
-            // Date Filters - dont seem to work...
             case UserFilterHelper.TODAY_USER_FILTER:
-                let todayDate: Date = new Date();
-                todayDate.setHours(0, 0, 0, 0);
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: todayDate };
+                dateToCheck = new Date();
+                dateToCheck.setHours(0, 0, 0, 0);
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
             case UserFilterHelper.IN_PAST_USER_FILTER:
-                let pastDate: Date = new Date();
-                pastDate.setHours(0, 0, 0, 0);
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: pastDate };
+                dateToCheck = new Date();
+                dateToCheck.setHours(0, 0, 0, 0);
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: dateToCheck };
                 break;
             case UserFilterHelper.IN_FUTURE_USER_FILTER:
-                let futureDate: Date = new Date();
-                futureDate.setHours(0, 0, 0, 0);
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: futureDate };
+                dateToCheck = new Date();
+                dateToCheck.setHours(0, 0, 0, 0);
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: dateToCheck };
                 break;
             case UserFilterHelper.YESTERDAY_USER_FILTER:
-                let yesterdayDate: Date = new Date();
-                yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-                yesterdayDate.setHours(0, 0, 0, 0);
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: yesterdayDate };
+                dateToCheck = new Date();
+                dateToCheck.setDate(dateToCheck.getDate() - 1);
+                dateToCheck.setHours(0, 0, 0, 0);
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
             case UserFilterHelper.TOMORROW_USER_FILTER:
-                let tomorrowDate: Date = new Date();
-                tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-                tomorrowDate.setHours(0, 0, 0, 0);
-                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: tomorrowDate };
+                dateToCheck = new Date();
+                dateToCheck.setDate(dateToCheck.getDate() + 1);
+                dateToCheck.setHours(0, 0, 0, 0);
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
+                break;
+            case UserFilterHelper.LAST_WORKING_DAY_USER_FILTER:
+                dateToCheck = blotter.CalendarService.GetLastWorkingDay();
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
+                break;
+            case UserFilterHelper.NEXT_WORKING_DAY_USER_FILTER:
+                dateToCheck = blotter.CalendarService.GetNextWorkingDay();
+                filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
 
             // Numeric Filters

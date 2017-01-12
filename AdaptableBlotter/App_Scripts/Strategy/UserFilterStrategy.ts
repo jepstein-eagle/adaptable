@@ -30,10 +30,11 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             // tell the search service that a filter has changed and it will decide if it needs to run search
             // get filter ids in old collection that are not in new one (as we dont care about new user filter expressions)
             if (this.userFilters != null && this.userFilters.length > 0) {
+            
                 let oldFilterUids: string[] = this.userFilters.filter(f => !f.IsPredefined).map(f => f.Uid);
                 this.blotter.SearchService.ApplySearchOnUserFilter(oldFilterUids);
 
-                // also rerun column filter - just do it every time 
+                // also rerun column filter - but do it every time that user filters are changed - which wont be often
                 this.blotter.applyColumnFilters();
             }
             this.userFilters = this.GetUserFilterState().UserFilters;

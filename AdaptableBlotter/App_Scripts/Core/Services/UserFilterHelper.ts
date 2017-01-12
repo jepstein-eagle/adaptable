@@ -83,6 +83,9 @@ export module UserFilterHelper {
     export const IN_FUTURE_USER_FILTER = 'InFuture'
     export const YESTERDAY_USER_FILTER = 'Yesterday'
     export const TOMORROW_USER_FILTER = 'Tomorrow'
+    export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
+    export const LAST_WORKING_DAY_USER_FILTER = 'LastWorkingDay'
+
     // Numeric
     export const POSITIVE_USER_FILTER = 'Positive'
     export const NEGATIVE_USER_FILTER = 'Negative'
@@ -107,7 +110,7 @@ export module UserFilterHelper {
             Description: "Is Date Today",
             ColumnType: ColumnType.Date,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
                 return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
@@ -120,7 +123,7 @@ export module UserFilterHelper {
             Description: "Is Date In Past",
             ColumnType: ColumnType.Date,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck < Date.now();
             },
             IsPredefined: true
@@ -132,7 +135,7 @@ export module UserFilterHelper {
             Description: "Is Date In Future",
             ColumnType: ColumnType.Date,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck > Date.now();
             },
             IsPredefined: true
@@ -144,7 +147,7 @@ export module UserFilterHelper {
             Description: "Is Date Yesterday",
             ColumnType: ColumnType.Date,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
                 return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
@@ -157,9 +160,33 @@ export module UserFilterHelper {
             Description: "Is Date Tomorrow",
             ColumnType: ColumnType.Date,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
                 return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
+            },
+            IsPredefined: true
+        });
+        
+        _predefinedExpressions.push({
+            Uid: NEXT_WORKING_DAY_USER_FILTER,
+            FriendlyName: "Next Working Day",
+            Description: "Is Next Working Day",
+            ColumnType: ColumnType.Date,
+            Expression: ExpressionHelper.CreateEmptyExpression(),
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
+            },
+            IsPredefined: true
+        });
+        
+        _predefinedExpressions.push({
+            Uid: LAST_WORKING_DAY_USER_FILTER,
+            FriendlyName: "Last Working Day",
+            Description: "Is Last Working Day",
+            ColumnType: ColumnType.Date,
+            Expression: ExpressionHelper.CreateEmptyExpression(),
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                return blotter.CalendarService.GetLastWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
             },
             IsPredefined: true
         });
@@ -171,7 +198,7 @@ export module UserFilterHelper {
             Description: "Is Number Positive",
             ColumnType: ColumnType.Number,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (numberToCheck: number): boolean => {
+            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck > 0);
             },
             IsPredefined: true
@@ -183,7 +210,7 @@ export module UserFilterHelper {
             Description: "Is Number Negative",
             ColumnType: ColumnType.Number,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (numberToCheck: number): boolean => {
+            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck < 0);
             },
             IsPredefined: true
@@ -195,7 +222,7 @@ export module UserFilterHelper {
             Description: "Is Number Zero",
             ColumnType: ColumnType.Number,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (numberToCheck: number): boolean => {
+            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == 0);
             },
             IsPredefined: true
@@ -207,7 +234,7 @@ export module UserFilterHelper {
             Description: "Is Cell Empty",
             ColumnType: ColumnType.Number,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (numberToCheck: number): boolean => {
+            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == null);
             },
             IsPredefined: true
@@ -219,7 +246,7 @@ export module UserFilterHelper {
             Description: "Is Cell Populated",
             ColumnType: ColumnType.Number,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (numberToCheck: number): boolean => {
+            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck != null);
             },
             IsPredefined: true
@@ -232,7 +259,7 @@ export module UserFilterHelper {
             Description: "Is Cell Empty",
             ColumnType: ColumnType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (stringToCheck: string): boolean => {
+            IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNullOrEmpty(stringToCheck));
             },
             IsPredefined: true
@@ -244,7 +271,7 @@ export module UserFilterHelper {
             Description: "Is Cell Populated",
             ColumnType: ColumnType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (stringToCheck: string): boolean => {
+            IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
             },
             IsPredefined: true
@@ -257,7 +284,7 @@ export module UserFilterHelper {
             Description: "Is Value True",
             ColumnType: ColumnType.Boolean,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
+            IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (boolToCheck);
             },
             IsPredefined: true
@@ -269,7 +296,7 @@ export module UserFilterHelper {
             Description: "Is Value False",
             ColumnType: ColumnType.Boolean,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
+            IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (!boolToCheck);
             },
             IsPredefined: true

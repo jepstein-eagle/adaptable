@@ -243,7 +243,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             colUserFilterExpression.push({ ColumnName: this.props.SelectedColumnId, UserFilterUids: selectedUserFilterExpressionUids })
         }
 
-        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { UserFilterExpressions: colUserFilterExpression }))
+        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { UserFilters: colUserFilterExpression }))
         this.setState({ SelectedUserFilterExpresions: selectedUserFilterExpressionUids } as ExpressionBuilderConditionSelectorState)
     }
 

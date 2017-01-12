@@ -77,9 +77,9 @@ const initialShortcutState: ShortcutState = {
         { ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
     ],
     DateShortcuts: [
-        { ShortcutKey: "T", ShortcutResult: "[Today Date]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "L", ShortcutResult: "[Last Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "N", ShortcutResult: "[Next Working Day]", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "T", ShortcutResult: "Today", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "L", ShortcutResult: "Last Working Day", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "N", ShortcutResult: "Next Working Day", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }
 

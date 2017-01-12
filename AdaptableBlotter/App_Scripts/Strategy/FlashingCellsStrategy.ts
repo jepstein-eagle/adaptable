@@ -31,6 +31,7 @@ protected FLASH_DOWN_STYLE: string = "FlashDown"
         this.InitState()
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        // TODO: test extension works
     }
 
     private InitState() {
@@ -40,7 +41,6 @@ protected FLASH_DOWN_STYLE: string = "FlashDown"
     }
 
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
-        // TODO:  Need to fix this : make sure that we only flash if its the right column...
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
         let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)
         if (flashingColumn != null && flashingColumn.IsLive) {

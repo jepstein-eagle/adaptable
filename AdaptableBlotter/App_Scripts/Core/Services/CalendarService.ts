@@ -106,7 +106,7 @@ export class CalendarService implements ICalendarService {
         // eventually we should use some kind of enum? or class that holds this
         var dynamicDate: Date;
 
-        if (dynamicDateName == "[Today Date]") {
+        if (dynamicDateName == "[Today]") {
             dynamicDate = new Date();
         }
         else if (dynamicDateName == "[Last Working Day]") {

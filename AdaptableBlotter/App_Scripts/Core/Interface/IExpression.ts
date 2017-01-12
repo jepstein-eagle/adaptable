@@ -1,5 +1,6 @@
 import { LeafExpressionOperator, ColumnType } from '../Enums'
 import { Expression } from '../Expression/Expression'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 
 
 //export interface IColumnValuesExpression {
@@ -18,7 +19,7 @@ export interface IUserFilter {
     FriendlyName: string;
     Description: string;
     ColumnType: ColumnType;
-    IsExpressionSatisfied(valueToCheck: any): boolean;
+    IsExpressionSatisfied(valueToCheck: any, blotter: IAdaptableBlotter): boolean;
     Expression: Expression,
     IsPredefined: boolean
 }
