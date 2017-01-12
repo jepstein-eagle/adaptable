@@ -152,30 +152,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            //might need to use untranslatedX
-            var x = config.x;
-            var y = config.normalizedY;
-            let row = this.grid.behavior.dataModel.dataSource.getRow(y)
-            let column = this.grid.behavior.getActiveColumns()[x]
-            if (column && row) {
-                this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
-                // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
-            }
-            let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-            let csBackgroundColorColumn = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorColumn')
-            let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
-            let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
-            let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
-            if (flashColor) {
-                config.backgroundColor = flashColor;
-            }
-            else if (csBackgroundColorColumn || csForeColorColumn) {
-                config.backgroundColor = csBackgroundColorColumn;
-                config.color = csForeColorColumn;
-            }
-            else if (csBackgroundColorRow || csForeColorRow) {
-                config.backgroundColor = csBackgroundColorRow;
-                config.color = csForeColorRow;
+            if (config.isGridRow) {
+                //might need to use untranslatedX
+                var x = config.x;
+                var y = config.normalizedY;
+                let row = this.grid.behavior.dataModel.dataSource.getRow(y)
+                let column = this.grid.behavior.getActiveColumns()[x]
+                if (column && row) {
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
+                    // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
+                }
+                let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+                let csBackgroundColorColumn = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorColumn')
+                let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
+                let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
+                let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
+                if (flashColor) {
+                    config.backgroundColor = flashColor;
+                }
+                else if (csBackgroundColorColumn || csForeColorColumn) {
+                    config.backgroundColor = csBackgroundColorColumn;
+                    config.color = csForeColorColumn;
+                }
+                else if (csBackgroundColorRow || csForeColorRow) {
+                    config.backgroundColor = csBackgroundColorRow;
+                    config.color = csForeColorRow;
+                }
             }
             return this.grid.cellRenderers.get(declaredRendererName);
         };
@@ -529,7 +531,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex) {
+        if (rowIndex >= 0) {
             if (style.flashBackColor) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
                 if (timeout) {
@@ -549,7 +551,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex) {
+        if (rowIndex >= 0) {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
                 //here we don't call Repaint as we consider that we already are in the repaint loop
                 //There is never a timeout for CS
