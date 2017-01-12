@@ -103,7 +103,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
 
     createAlert() {
         // have to use any as cannot cast from IStrategy to IAlertStrategy  :(
-        let alertStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AlertStrategyId);
+        let alertStrategy: IAlertStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AlertStrategyId) as IAlertStrategy;
         this.setState({ EditedAlert: alertStrategy.CreateEmptyAlert(), EditedIndexAlert: -1 });
     }
 

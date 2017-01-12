@@ -1,10 +1,7 @@
 import { IUserFilter } from '../../Core/interface/IExpression';
-import { Expression } from '../../Core/Expression/Expression';
-import {IAdaptableBlotter, IColumn} from './IAdaptableBlotter';
+import { IStrategy } from './IStrategy';
 
-
-
-export interface IUserFilterStrategy{
+export interface IUserFilterStrategy extends IStrategy{
         CreateEmptyUserFilter(): IUserFilter 
 }
 

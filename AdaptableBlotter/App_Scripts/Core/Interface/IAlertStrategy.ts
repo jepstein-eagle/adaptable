@@ -1,6 +1,8 @@
 import { NotificationType, CellChangeType, PopupType } from '../Enums';
+import { IStrategy } from './IStrategy';
 
-export interface IAlertStrategy{
+
+export interface IAlertStrategy extends IStrategy{
     CreateEmptyAlert(): IAlert
     CreateEmptyCellChangeRule(): ICellChangeRule
 }

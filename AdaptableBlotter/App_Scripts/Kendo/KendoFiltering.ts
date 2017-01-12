@@ -73,23 +73,26 @@ export module KendoFiltering {
             if (ranges.length == 1) {
                 let range: IRangeExpression = ranges[0];
                 if (range.Operator == LeafExpressionOperator.Between) {
-                    let newFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };  // multiple range items are "and"
-                    newFilters.filters.push(...createFilterFromBetweenRange(range, column));
-                    return newFilters;
+                    return createFilterFromBetweenRange(range, column);
                 } else {
                     return createFilterFromBasicRange(range, column);
                 }
             }
             else if (ranges.length > 1) {
                 let filterItems: kendo.data.DataSourceFilterItem[] = [];
+                let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
                 ranges.forEach(range => {
                     if (range.Operator == LeafExpressionOperator.Between) {
-                        filterItems.push(...createFilterFromBetweenRange(range, column));
+                        let betweenRange: kendo.data.DataSourceFilters = createFilterFromBetweenRange(range, column);
+                        kendoRangeFilters.filters.push(betweenRange);
                     } else {
-                        filterItems.push(createFilterFromBasicRange(range, column));
+                        let basicRange: kendo.data.DataSourceFilterItem = createFilterFromBasicRange(range, column);
+                        filterItems.push(basicRange);
                     }
                 })
-                let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "and", filters: filterItems };  // multiple range items are "and"
+                if (filterItems.length > 0) {
+                    kendoRangeFilters.filters.push(...filterItems);
+                }
                 return kendoRangeFilters;
             }
         }
@@ -148,13 +151,15 @@ export module KendoFiltering {
         return { operator: getKendoOperatorForLeafOperator(range.Operator), field: column.ColumnId, value: getTypedValueForOperand(range.Operand1, column) };
     }
 
-    function createFilterFromBetweenRange(range: IRangeExpression, column: IColumn): kendo.data.DataSourceFilterItem[] {
-        let newFilters: kendo.data.DataSourceFilterItem[] = [];
+    function createFilterFromBetweenRange(range: IRangeExpression, column: IColumn): kendo.data.DataSourceFilters {
+        let betweenFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };  // between range items have to be "and"
+        let betweenFilterItems: kendo.data.DataSourceFilterItem[] = [];
         let fromFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThan), field: column.ColumnId, value: getTypedValueForOperand(range.Operand1, column) };
         let toFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThan), field: column.ColumnId, value: getTypedValueForOperand(range.Operand2, column) };
-        newFilters.push(fromFilterItem);
-        newFilters.push(toFilterItem);
-        return newFilters;
+        betweenFilterItems.push(fromFilterItem);
+        betweenFilterItems.push(toFilterItem);
+        betweenFilters.filters.push(...betweenFilterItems);
+        return betweenFilters;
     }
 
     function getKendoOperatorForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
