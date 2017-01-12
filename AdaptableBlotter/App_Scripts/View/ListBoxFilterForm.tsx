@@ -171,7 +171,7 @@ let divStyle = {
 }
 
 let userFilterItemStyle = {
-    'width': '80%',
+    'width': '87%',
     'fontStyle': 'italic',
     'fontSize': 'small',
     'padding': '5%',
@@ -179,7 +179,7 @@ let userFilterItemStyle = {
 }
 
 let columnVItemStyle = {
-    'width': '80%',
+    'width': '87%',
      'fontSize': 'small',
     'padding': '5%',
     'margin': 0
