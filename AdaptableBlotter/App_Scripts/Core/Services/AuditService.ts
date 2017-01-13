@@ -29,7 +29,6 @@ export class AuditService implements IAuditService {
 
 
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
-        //   alert("column: " + dataChangedEvent.ColumnName + " new value: " + dataChangedEvent.NewValue + " where primary key: " + dataChangedEvent.IdentifierValue);
         if (this._columnDataValueList.length == 0) {
 
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -41,14 +40,13 @@ export class AuditService implements IAuditService {
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnName;
         let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
-        let cellDataValueList: ICellDataValueList;
-        cellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
+        let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
         if (cellDataValueList != null) {
             dataChangedEvent.OldValue = cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length-1].NewValue;
             let datachangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
             cellDataValueList.DataChangedInfos.push(datachangedInfo);
         }
-        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value...
+        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnName, dataChangedEvent.IdentifierValue);;
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
             cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfos:  [datechangedInfo]}
