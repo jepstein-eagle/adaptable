@@ -6,7 +6,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 export interface IPredefinedExpressionInfo {
     ColumnValues: Array<any>,
     UserFilterUids: string[],
-    ExpressionRange: IRangeExpression,
+    ExpressionRange: IRangeExpression
 }
 
 export module PredefinedExpressionHelper {
