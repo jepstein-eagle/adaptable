@@ -70,15 +70,15 @@ export module KendoFiltering {
         if (rangeExpression.length > 0) {
             let ranges: IRangeExpression[] = rangeExpression[0].Ranges;
 
-            if (ranges.length == 1) {
-                let range: IRangeExpression = ranges[0];
-                if (range.Operator == LeafExpressionOperator.Between) {
-                    return createFilterFromBetweenRange(range, column);
-                } else {
-                    return createFilterFromBasicRange(range, column);
-                }
-            }
-            else if (ranges.length > 1) {
+          //  if (ranges.length == 1) {
+         //       let range: IRangeExpression = ranges[0];
+         //       if (range.Operator == LeafExpressionOperator.Between) {
+          //          return createFilterFromBetweenRange(range, column);
+          //      } else {
+          //          return createFilterFromBasicRange(range, column);
+          //      }
+         //   }
+          //  else if (ranges.length > 1) {
                 let filterItems: kendo.data.DataSourceFilterItem[] = [];
                 let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
                 ranges.forEach(range => {
@@ -95,7 +95,7 @@ export module KendoFiltering {
                 }
                 return kendoRangeFilters;
             }
-        }
+      //  }
     }
 
 
@@ -123,7 +123,7 @@ export module KendoFiltering {
                     columnValueFiltersNew = createFilterFromColumnValuesExpression(rawValueExpression, column);
                     rangeFiltersNew = createFilterFromRangesExpression(userFilter.Expression, column);
 
-                    // its possible that the filter could wrap a user filter - though this is a bit meaningless...
+                    // its possible that the filter could (solely or additionally) wrap a user filter - though this is a bit meaningless...
                     userFilter.Expression.UserFilters.forEach(uf => {
                         let predefinedFilter: IUserFilter = userFilters.find(u => u.Uid == userFilter.Expression.UserFilters[0].UserFilterUids[0]);
                         let returnedFilters: kendo.data.DataSourceFilters = createFilterFromPredefinedExpression(predefinedFilter, column, blotter)
@@ -203,7 +203,7 @@ export module KendoFiltering {
 
     function createFilterFromPredefinedExpression(userFilter: IUserFilter, column: IColumn, blotter: IAdaptableBlotter): kendo.data.DataSourceFilters {
 
-        let newFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] };  // multiple range items are "and"
+        let newFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and"
         let filterItem: kendo.data.DataSourceFilterItem;
         let dateToCheck: Date;
 

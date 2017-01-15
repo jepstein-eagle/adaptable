@@ -50,7 +50,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             active={showAllElement}
             value={"all"} >{"(All)"}</ListGroupItem>
 
-        let userFiltersItemsElements = this.props.UserFilters.map(x => {
+        let userFiltersItemsElements = this.props.UserFilters.map((x, y) => {
             let isActive: boolean
             isActive = this.state.UiSelectedUserFilters.indexOf(x.rawValue) >= 0;
             let display: string = x.displayValue;
@@ -59,14 +59,16 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={value} style={userFilterItemStyle}
+                return <ListGroupItem key={y} style={userFilterItemStyle}
                     onClick={() => this.onClickItemUserFilter(x)}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
             }
         })
 
-        let columnValuesItemsElements = this.props.ColumnValues.map(x => {
+let userFiltersItemsElementsCount: number = userFiltersItemsElements.length;
+
+        let columnValuesItemsElements = this.props.ColumnValues.map((x,y) => {
             let isActive: boolean
             isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
             let display: string = x.displayValue;
@@ -75,7 +77,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={value} style={columnVItemStyle}
+                return <ListGroupItem key={y + userFiltersItemsElementsCount} style={columnVItemStyle}
                     onClick={() => this.onClickItemColumnValue(x)}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
