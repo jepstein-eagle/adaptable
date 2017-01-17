@@ -9,6 +9,7 @@ import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Extensions'
 import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
+import { IRangeExpression } from '../Interface/IExpression';
 
 /* At the moment this uses Expressions - rather than JQuery - and works for both Advanced and Quick Search
 Note:  Because Quick Search uses an expression - it only works on string columns at present - we can choose the operator but its always strings
@@ -38,7 +39,7 @@ export class SearchService implements ISearchService {
 
         // first make sure they are all visible (as might have been hidden in a previous search)
         this.blotter.showRows(rowIds);
-      
+
         let columns: IColumn[] = this.GetGridState().Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0) {
@@ -77,7 +78,7 @@ export class SearchService implements ISearchService {
             })
         })
 
-        if (userFiltersCurrentSearch.find(n =>userFilterIds.find(ne=>ne== n)!=null  )) {
+        if (userFiltersCurrentSearch.find(n => userFilterIds.find(ne => ne == n) != null)) {
             this.ApplySearchOnGrid();
         }
     }
@@ -136,15 +137,16 @@ export class SearchService implements ISearchService {
         let quickSearchText: string = this.GetQuickSearchState().QuickSearchText;
 
         if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
-            let predefinedExpressionInfo: IPredefinedExpressionInfo =
-                {
-                    ColumnValues: null,
-                    ExpressionRange: { Operator: this.GetQuickSearchState().QuickSearchOperator, Operand1: quickSearchText, Operand2: "" },
-                    UserFilterUids: null
-                };
             columns.filter(c => c.ColumnType == ColumnType.String).forEach(c => {
-                let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(c.ColumnId, predefinedExpressionInfo, this.blotter);
-                searchExpressions.push(predefinedExpression);
+                let quickSearchExpression = new Expression([], [], [],
+                    [{
+                        ColumnName: c.ColumnId, Ranges: [{
+                            Operator: this.GetQuickSearchState().QuickSearchOperator,
+                            Operand1: quickSearchText,
+                            Operand2: ""
+                        }]
+                    }])
+                searchExpressions.push(quickSearchExpression);
             });
         }
         return searchExpressions;
