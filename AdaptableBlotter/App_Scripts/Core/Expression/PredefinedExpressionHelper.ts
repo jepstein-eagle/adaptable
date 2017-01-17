@@ -15,7 +15,7 @@ export module PredefinedExpressionHelper {
         let columnValuesExpression = CreateColumnValuesExpression(columnName, predefinedExpression);
         let userFilter = CreateUserFilter(columnName, predefinedExpression, blotter);
         let rangeExpression = CreateRangeExpression(columnName, predefinedExpression);
-        return new Expression(columnValuesExpression, userFilter, rangeExpression);
+        return new Expression(columnValuesExpression, [], userFilter, rangeExpression);
     }
 
     function CreateColumnValuesExpression(columnName: string, predefinedExpression: IPredefinedExpressionInfo): Array<{ ColumnName: string, ColumnValues: Array<any> }> {
