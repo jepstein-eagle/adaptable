@@ -22,7 +22,10 @@ export module KendoFiltering {
         columnFilters.forEach(columnFilter => {
 
             let column: IColumn = blotter.getColumnFromColumnId(columnFilter.ColumnId);
-            let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnValuesExpression(columnFilter.Filter, column);
+            if (columnFilter.Filter.ColumnDisplayValuesExpressions.length > 0) {
+                throw "Cannot Filter on DisplayValue in Kendo"
+            }
+            let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnRawValuesExpression(columnFilter.Filter, column);
             let rangeFilters: kendo.data.DataSourceFilters = createFilterFromRangesExpression(columnFilter.Filter, column);
             let userFilters: kendo.data.DataSourceFilters = createFilterFromUserFiltersExpression(columnFilter.Filter, column, blotter);
 
@@ -44,8 +47,8 @@ export module KendoFiltering {
         return kendoFilters;
     }
 
-    function createFilterFromColumnValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
-        let columnValuesExpression = expression.ColumnDisplayValuesExpressions;
+    function createFilterFromColumnRawValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
+        let columnValuesExpression = expression.ColumnRawValuesExpressions;
         if (columnValuesExpression.length > 0) {
             let columnValues: string[] = columnValuesExpression[0].ColumnValues;
 
@@ -70,32 +73,32 @@ export module KendoFiltering {
         if (rangeExpression.length > 0) {
             let ranges: IRangeExpression[] = rangeExpression[0].Ranges;
 
-          //  if (ranges.length == 1) {
-         //       let range: IRangeExpression = ranges[0];
-         //       if (range.Operator == LeafExpressionOperator.Between) {
-          //          return createFilterFromBetweenRange(range, column);
-          //      } else {
-          //          return createFilterFromBasicRange(range, column);
-          //      }
-         //   }
-          //  else if (ranges.length > 1) {
-                let filterItems: kendo.data.DataSourceFilterItem[] = [];
-                let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
-                ranges.forEach(range => {
-                    if (range.Operator == LeafExpressionOperator.Between) {
-                        let betweenRange: kendo.data.DataSourceFilters = createFilterFromBetweenRange(range, column);
-                        kendoRangeFilters.filters.push(betweenRange);
-                    } else {
-                        let basicRange: kendo.data.DataSourceFilterItem = createFilterFromBasicRange(range, column);
-                        filterItems.push(basicRange);
-                    }
-                })
-                if (filterItems.length > 0) {
-                    kendoRangeFilters.filters.push(...filterItems);
+            //  if (ranges.length == 1) {
+            //       let range: IRangeExpression = ranges[0];
+            //       if (range.Operator == LeafExpressionOperator.Between) {
+            //          return createFilterFromBetweenRange(range, column);
+            //      } else {
+            //          return createFilterFromBasicRange(range, column);
+            //      }
+            //   }
+            //  else if (ranges.length > 1) {
+            let filterItems: kendo.data.DataSourceFilterItem[] = [];
+            let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
+            ranges.forEach(range => {
+                if (range.Operator == LeafExpressionOperator.Between) {
+                    let betweenRange: kendo.data.DataSourceFilters = createFilterFromBetweenRange(range, column);
+                    kendoRangeFilters.filters.push(betweenRange);
+                } else {
+                    let basicRange: kendo.data.DataSourceFilterItem = createFilterFromBasicRange(range, column);
+                    filterItems.push(basicRange);
                 }
-                return kendoRangeFilters;
+            })
+            if (filterItems.length > 0) {
+                kendoRangeFilters.filters.push(...filterItems);
             }
-      //  }
+            return kendoRangeFilters;
+        }
+        //  }
     }
 
 
@@ -120,7 +123,7 @@ export module KendoFiltering {
                     rangeFiltersNew = createFilterFromPredefinedExpression(userFilter, column, blotter);
                 } else {
                     let rawValueExpression: Expression = getRawValueExpression(userFilter.Expression, column, blotter);
-                    columnValueFiltersNew = createFilterFromColumnValuesExpression(rawValueExpression, column);
+                    columnValueFiltersNew = createFilterFromColumnRawValuesExpression(rawValueExpression, column);
                     rangeFiltersNew = createFilterFromRangesExpression(userFilter.Expression, column);
 
                     // its possible that the filter could (solely or additionally) wrap a user filter - though this is a bit meaningless...
@@ -302,8 +305,8 @@ export module KendoFiltering {
             let rawValue: any = columnValuePairs.find(cvp => cvp.displayValue == c).rawValue;
             rawValues.push(rawValue);
         })
-
-        return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId,rawValues,[],[],[])
+        
+        return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], rawValues, [], [])
     }
 
 } 

@@ -18,5 +18,6 @@ export interface IColumnFilterItem {
 
 export interface IColumnFilterContext {
     Column: IColumn,
-    Blotter: IAdaptableBlotter
+    Blotter: IAdaptableBlotter,
+    ColumnValueType: "displayValue" | "rawValue"
 }

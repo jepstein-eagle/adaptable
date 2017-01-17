@@ -112,7 +112,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (e.detail.primitiveEvent.isHeaderCell) {
                 let filterContext: IColumnFilterContext = {
                     Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
-                    Blotter: this
+                    Blotter: this,
+                    ColumnValueType : "displayValue"
                 };
                 this.filterContainer.style.visibility = 'visible'
                 this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
