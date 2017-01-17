@@ -5,8 +5,19 @@ import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 
-export module ExpressionHelper {
 
+export module ExpressionHelper {
+    export function CreateSingleColumnExpression(columnName: string,
+        ColumnDisplayValues: Array<string>,
+        ColumnRawalues: Array<any>,
+        UserFilterUids: Array<string>,
+        Ranges: Array<IRangeExpression>) {
+        return new Expression(ColumnDisplayValues && ColumnDisplayValues.length > 0 ? [{ ColumnName: columnName, ColumnValues: ColumnDisplayValues }] : [],
+            ColumnRawalues && ColumnRawalues.length > 0 ? [{ ColumnName: columnName, ColumnValues: ColumnRawalues }] : [],
+            UserFilterUids && UserFilterUids.length > 0 ? [{ ColumnName: columnName, UserFilterUids: UserFilterUids }] : [],
+            Ranges && Ranges.length > 0 ? [{ ColumnName: columnName, Ranges: Ranges }] : []
+        )
+    }
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, blotter: IAdaptableBlotter): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
@@ -25,7 +36,7 @@ export module ExpressionHelper {
             }
 
             // Column Raw Values
-            let columnRawValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+            let columnRawValues = Expression.ColumnRawValuesExpressions.find(x => x.ColumnName == columnId)
             if (columnRawValues) {
                 if (columnToString != "") {
                     columnToString += " OR "

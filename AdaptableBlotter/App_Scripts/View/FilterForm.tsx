@@ -8,7 +8,7 @@ import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Int
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
-import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Core/Expression/PredefinedExpressionHelper';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
 import { ColumnType, SortOrder } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
@@ -41,8 +41,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}
-                UiSelectedColumnValues={existingColumnFilter ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []}
-                UiSelectedUserFilters={existingColumnFilter ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
+                UiSelectedColumnValues={existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []}
+                UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
                 UserFilters={userFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
                 onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}>
@@ -52,16 +52,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     onClickColumValue(columnValues: string[]) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                ColumnValues: columnValues,
-                ExpressionRange: null,
-                UserFilterUids: existingColumnFilter ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
-            };
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+        let userFilterUids = existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ?
+            existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
+            
+        let expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
+
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
         //delete if empty
-        if (predefinedExpressionInfo.ColumnValues.length == 0 && predefinedExpressionInfo.UserFilterUids.length == 0) {
+        if (columnValues.length == 0 && userFilterUids.length == 0) {
             this.props.onDeleteColumnFilter(columnFilter);
             return
         } else {
@@ -69,26 +67,22 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         }
     }
 
-    onClickUserFilter(selectedFilterDisplayValues: string[]) {
+    onClickUserFilter(userFilterUids: string[]) {
 
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
-        if (selectedFilterDisplayValues.find(s => s == "All")) {
+        if (userFilterUids.find(s => s == "All")) {
             existingColumnFilter = null;
-            selectedFilterDisplayValues = [];
+            userFilterUids = [];
         }
+        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
 
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                ColumnValues: existingColumnFilter ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : [],
-                ExpressionRange: null,
-                UserFilterUids: selectedFilterDisplayValues
-            };
+        let expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
 
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.props.CurrentColumn.ColumnId, predefinedExpressionInfo, this.props.AdaptableBlotter);
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: predefinedExpression };
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
         //delete if empty
-        if (predefinedExpressionInfo.ColumnValues.length == 0 && predefinedExpressionInfo.UserFilterUids.length == 0) {
+        if (columnValues.length == 0 && userFilterUids.length == 0) {
             this.props.onDeleteColumnFilter(columnFilter);
             return
         } else {
