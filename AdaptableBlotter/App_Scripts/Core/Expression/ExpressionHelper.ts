@@ -250,11 +250,15 @@ export module ExpressionHelper {
     }
 
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
-        return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName).concat(Expression.UserFilters.map(x => x.ColumnName)).concat(Expression.RangeExpressions.map(x => x.ColumnName))))
+        return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName)
+            .concat(Expression.ColumnRawValuesExpressions.map(x => x.ColumnName))
+            .concat(Expression.UserFilters.map(x => x.ColumnName))
+            .concat(Expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
         return Expression.ColumnDisplayValuesExpressions.length == 0
+            && Expression.ColumnRawValuesExpressions.length == 0
             && Expression.UserFilters.length == 0
             && Expression.RangeExpressions.length == 0
     }
