@@ -4,6 +4,7 @@ import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { IPredefinedExpressionInfo } from '../Interface/IConditionalStyleStrategy';
 
 
 export module ExpressionHelper {
@@ -18,6 +19,15 @@ export module ExpressionHelper {
             Ranges && Ranges.length > 0 ? [{ ColumnName: columnName, Ranges: Ranges }] : []
         )
     }
+
+    export function CreateExpressionFromPredefinedExpressionInfo(columnName: string, predefinedExpressionInfo: IPredefinedExpressionInfo): Expression {
+        return ExpressionHelper.CreateSingleColumnExpression(columnName,
+            predefinedExpressionInfo.DisplayColumnValues,
+            predefinedExpressionInfo.RawColumnValues,
+            predefinedExpressionInfo.UserFilterUids,
+            predefinedExpressionInfo.ExpressionRange ? [predefinedExpressionInfo.ExpressionRange] : [])
+    }
+
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, blotter: IAdaptableBlotter): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
