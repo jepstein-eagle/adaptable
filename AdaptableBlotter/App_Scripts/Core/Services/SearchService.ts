@@ -3,7 +3,6 @@ import { ISearchService } from './Interface/ISearchService';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { MenuType, LeafExpressionOperator, ColumnType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
-import { PredefinedExpressionHelper, IPredefinedExpressionInfo, } from '../Expression/PredefinedExpressionHelper';
 import { Expression } from '../Expression/Expression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'

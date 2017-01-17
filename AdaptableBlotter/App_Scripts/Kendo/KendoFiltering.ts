@@ -6,7 +6,7 @@ import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
 import { IUserFilter } from '../Core/interface/IExpression';
 import { Expression } from '../Core/Expression/Expression';
 import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
-import { PredefinedExpressionHelper, IPredefinedExpressionInfo } from '../Core/Expression/PredefinedExpressionHelper';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 
 
 export module KendoFiltering {
@@ -303,14 +303,7 @@ export module KendoFiltering {
             rawValues.push(rawValue);
         })
 
-        // create and return a new epxression      
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                ColumnValues: rawValues,
-                ExpressionRange: null,
-                UserFilterUids: null
-            };
-        return PredefinedExpressionHelper.CreateExpression(column.ColumnId, predefinedExpressionInfo, blotter);
+        return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId,rawValues,[],[],[])
     }
 
 } 
