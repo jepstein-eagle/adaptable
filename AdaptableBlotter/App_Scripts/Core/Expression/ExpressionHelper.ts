@@ -18,10 +18,19 @@ export module ExpressionHelper {
             let columnFriendlyName = columns.find(x => x.ColumnId == columnId).FriendlyName
             let columnToString = ""
 
-            // Column Values
-            let columnValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
-            if (columnValues) {
-                columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
+            // Column Display Values
+            let columnDisplayValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+            if (columnDisplayValues) {
+                columnToString = ColumnValuesKeyValuePairToString(columnDisplayValues, columnFriendlyName)
+            }
+
+            // Column Raw Values
+            let columnRawValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+            if (columnRawValues) {
+                if (columnToString != "") {
+                    columnToString += " OR "
+                }
+                columnToString += ColumnValuesKeyValuePairToString(columnRawValues, columnFriendlyName)
             }
 
             // User Filters
@@ -30,7 +39,7 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString = ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(columnUserFilters.UserFilterUids, blotter), columnFriendlyName)
+                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(columnUserFilters.UserFilterUids, blotter), columnFriendlyName)
             }
 
             // Column Ranges
@@ -58,11 +67,20 @@ export module ExpressionHelper {
             //we need either a column value or user filter expression or range to match the column
             let isColumnSatisfied = false
 
-            // check for column values
-            let columnValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
-            if (columnValues) {
-                let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
-                isColumnSatisfied = columnValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
+            // check for display column values
+            let columnDisplayValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+            if (columnDisplayValues) {
+                let columnDisplayValue = getDisplayColumnValue(columnDisplayValues.ColumnName)
+                isColumnSatisfied = columnDisplayValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
+            }
+
+            // check for raw column values
+            if (!isColumnSatisfied) {
+                let columnRawValues = Expression.ColumnRawValuesExpressions.find(x => x.ColumnName == columnId)
+                if (columnRawValues) {
+                    let columnRawValue = getColumnValue(columnRawValues.ColumnName)
+                    isColumnSatisfied = columnRawValues.ColumnValues.findIndex(v => v == columnRawValue) != -1;
+                }
             }
 
             // Check for user filter expressions if column fails
@@ -260,7 +278,7 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyExpression(): Expression {
-        return new Expression([], [], [])
+        return new Expression([], [], [], [])
     }
 
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
