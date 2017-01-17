@@ -19,7 +19,7 @@ export module ExpressionHelper {
             let columnToString = ""
 
             // Column Values
-            let columnValues = Expression.ColumnValuesExpressions.find(x => x.ColumnName == columnId)
+            let columnValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
             if (columnValues) {
                 columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
@@ -59,7 +59,7 @@ export module ExpressionHelper {
             let isColumnSatisfied = false
 
             // check for column values
-            let columnValues = Expression.ColumnValuesExpressions.find(x => x.ColumnName == columnId)
+            let columnValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
             if (columnValues) {
                 let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnName)
                 isColumnSatisfied = columnValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
@@ -232,11 +232,11 @@ export module ExpressionHelper {
     }
 
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
-        return Array.from(new Set(Expression.ColumnValuesExpressions.map(x => x.ColumnName).concat(Expression.UserFilters.map(x => x.ColumnName)).concat(Expression.RangeExpressions.map(x => x.ColumnName))))
+        return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName).concat(Expression.UserFilters.map(x => x.ColumnName)).concat(Expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
-        return Expression.ColumnValuesExpressions.length == 0
+        return Expression.ColumnDisplayValuesExpressions.length == 0
             && Expression.UserFilters.length == 0
             && Expression.RangeExpressions.length == 0
     }

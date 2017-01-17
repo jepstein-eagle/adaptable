@@ -170,12 +170,12 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
 
     onDeleteColumnValue(columnId: string, value: any) {
-        let columnValues = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpressions.find(x => x.ColumnName == columnId)
+        let columnValues = this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
         let index = columnValues.ColumnValues.indexOf(value)
         columnValues.ColumnValues.splice(index, 1)
         if (columnValues.ColumnValues.length == 0) {
-            let columnValuesIndex = this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.ColumnValuesExpressions.splice(columnValuesIndex, 1)
+            let columnValuesIndex = this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.findIndex(x => x.ColumnName == columnId)
+            this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.splice(columnValuesIndex, 1)
         }
         this.onDeleteSearchExpressionItem();
     }

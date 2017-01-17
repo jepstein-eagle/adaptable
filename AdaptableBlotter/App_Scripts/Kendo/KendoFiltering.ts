@@ -45,7 +45,7 @@ export module KendoFiltering {
     }
 
     function createFilterFromColumnValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
-        let columnValuesExpression = expression.ColumnValuesExpressions;
+        let columnValuesExpression = expression.ColumnDisplayValuesExpressions;
         if (columnValuesExpression.length > 0) {
             let columnValues: string[] = columnValuesExpression[0].ColumnValues;
 
@@ -285,7 +285,7 @@ export module KendoFiltering {
 
     function getRawValueExpression(displayValueExpression: Expression, column: IColumn, blotter: AdaptableBlotter): Expression {
         // if no column values then get out
-        let columnValuesExpression: { ColumnName: string, ColumnValues: Array<any> } = displayValueExpression.ColumnValuesExpressions[0];
+        let columnValuesExpression: { ColumnName: string, ColumnValues: Array<any> } = displayValueExpression.ColumnDisplayValuesExpressions[0];
         if (!columnValuesExpression || columnValuesExpression.ColumnValues == null || columnValuesExpression.ColumnValues.length == 0) {
             return displayValueExpression;
         }

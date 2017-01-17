@@ -57,7 +57,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             let selectedColumnRanges: Array<IRangeExpression>
 
             // get column values
-            let keyValuePair = theProps.Expression.ColumnValuesExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
+            let keyValuePair = theProps.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
             if (keyValuePair) {
                 selectedColumnValues = keyValuePair.ColumnValues
             }
@@ -207,7 +207,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     onSelectedColumnValuesChange(selectedColumnValues: Array<any>) {
-        let colValuesExpression = this.props.Expression.ColumnValuesExpressions
+        let colValuesExpression = this.props.Expression.ColumnDisplayValuesExpressions
         let valuesCol = colValuesExpression.find(x => x.ColumnName == this.props.SelectedColumnId);
         if (valuesCol) {
             if (selectedColumnValues.length == 0) {
@@ -221,7 +221,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         else {
             colValuesExpression.push({ ColumnName: this.props.SelectedColumnId, ColumnValues: selectedColumnValues })
         }
-        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnValuesExpressions: colValuesExpression }))
+        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnDisplayValuesExpressions: colValuesExpression }))
         this.setState({ SelectedColumnValues: selectedColumnValues } as ExpressionBuilderConditionSelectorState)
     }
 

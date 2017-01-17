@@ -41,7 +41,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}
-                UiSelectedColumnValues={existingColumnFilter ? existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues : []}
+                UiSelectedColumnValues={existingColumnFilter ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []}
                 UiSelectedUserFilters={existingColumnFilter ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
                 UserFilters={userFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
@@ -80,7 +80,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         let predefinedExpressionInfo: IPredefinedExpressionInfo =
             {
-                ColumnValues: existingColumnFilter ? existingColumnFilter.Filter.ColumnValuesExpressions[0].ColumnValues : [],
+                ColumnValues: existingColumnFilter ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : [],
                 ExpressionRange: null,
                 UserFilterUids: selectedFilterDisplayValues
             };
