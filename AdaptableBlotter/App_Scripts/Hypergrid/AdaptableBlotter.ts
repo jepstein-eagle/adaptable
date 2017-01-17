@@ -152,6 +152,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+            if(config.isHeaderRow && config.isGridColumn)
+            {
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x=>x.ColumnId == config.columnName);
+                config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex>=0)];
+            }
             if (config.isGridRow) {
                 //might need to use untranslatedX
                 var x = config.x;
