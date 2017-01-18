@@ -295,7 +295,8 @@ export module KendoFiltering {
 
         // if strings and bools just return the expression
         if (column.ColumnType == ColumnType.String || column.ColumnType == ColumnType.Boolean) {
-            return displayValueExpression;
+            return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], columnValuesExpression.ColumnValues, [], [])
+            // return displayValueExpression;
         }
 
         // if numeric or date then get the underlying values
