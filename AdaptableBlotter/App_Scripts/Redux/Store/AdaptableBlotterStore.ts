@@ -21,6 +21,7 @@ import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
+import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
@@ -49,7 +50,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Alert: AlertRedux.AlertReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
-
+    Theme: ThemeRedux.MenuReducer
 });
 
 

@@ -12,6 +12,7 @@ import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { AlertConfig } from './Alert/AlertConfig'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
+import { ThemeConfig } from './Theme/ThemeConfig'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -29,6 +30,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchAction: AdvancedSearchAction,
   AlertConfig: AlertConfig,
   UserFilterConfig: UserFilterConfig,
+  ThemeConfig: ThemeConfig,
 }
 
 

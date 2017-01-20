@@ -95,3 +95,8 @@ export interface UserFilterState {
 export interface ColumnFilterState {
     ColumnFilters: Array<IColumnFilter>
 }
+
+export interface ThemeState {
+    CurrentTheme: string;
+    AvailableThemes: Array<string>
+}
