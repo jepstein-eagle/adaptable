@@ -1,29 +1,13 @@
-﻿//var webpack = require('webpack');
-//module.exports = {
-//    entry: [
-//      "./App_Scripts/MyReactComponent.js"
-//    ],
-//    output: {
-//        path: __dirname + '/dist/',
-//        filename: "bundle-webpack.js"
-//    },
-//    module: {
-//    },
-//    plugins: [
-//      new webpack.NoErrorsPlugin()
-//    ]
-
-//};
-
-var webpack = require('webpack');
+﻿var webpack = require('webpack');
+var path = require('path');
 var failPlugin = require('webpack-fail-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
         'adaptableblotterkendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
-        //adaptableblotterkendo : ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {
@@ -43,10 +27,12 @@ module.exports = {
     },
 
     plugins: [
-        failPlugin
-            //jo will be added later
-    // Add minification
-    //  new webpack.optimize.UglifyJsPlugin()
+        failPlugin,
+        //this makes sure we package it in the dist folder and make it available for the webpack dev server
+        new CopyWebpackPlugin([ { from: 'themes/**/*', to: '' } ])
+        //jo will be added later
+        // Add minification
+        //  new webpack.optimize.UglifyJsPlugin()
     ],
     module: {
         loaders: [
