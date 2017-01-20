@@ -2,6 +2,7 @@
 
 import * as Redux from 'redux';
 import { ThemeState } from './interface/IState'
+import { StaticThemes } from '../../../themes/index'
 const SET_CURRENT_THEME = 'SET_CURRENT_THEME';
 
 export interface SetCurrentThemeAction extends Redux.Action {
@@ -15,7 +16,7 @@ export const SetCurrentTheme = (Theme: string): SetCurrentThemeAction => ({
 
 const initialThemeState: ThemeState = {
     CurrentTheme: "Default",
-    AvailableThemes: ["Default", "None"]
+    AvailableThemes: [].concat(["Default", "None"], StaticThemes)
 }
 
 export const MenuReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {
