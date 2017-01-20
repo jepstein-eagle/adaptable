@@ -13,6 +13,7 @@ import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
+import { ThemeService } from '../Core/Services/ThemeService'
 import { SearchServiceHyperGrid } from '../Core/Services/SearchServiceHypergrid'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
@@ -53,6 +54,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
+    public ThemeService: ThemeService
     private filterContainer: HTMLDivElement
 
     constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
@@ -62,6 +64,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchServiceHyperGrid(this);
+        this.ThemeService = new ThemeService(this)
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
