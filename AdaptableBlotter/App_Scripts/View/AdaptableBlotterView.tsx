@@ -50,7 +50,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         }
 
         return (
-            <div >
+            <div className="adaptable_blotter_style">
 
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
                 <Navbar fluid  >
@@ -74,7 +74,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 </Navbar>
 
                 {/*  The error modal we show - e.g. in SmartEdit when no numeric columns are selected */}
-                <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose}  >
+                <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
                     <Modal.Body>
                         <Alert bsStyle="danger" onDismiss={this.props.onClose}>
                             <div>
@@ -82,7 +82,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                                     <Row style={{ display: "flex" }}>
                                         <Col xs={1} >
                                             <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} />
-                                            { }
+                                            {}
                                         </Col>
                                         <Col xs={11}>
                                             <h4>Error</h4>
