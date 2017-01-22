@@ -65,7 +65,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             onNewAdvancedSearch={() => this.onNewAdvancedSearch()}
                             onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
-                    <Nav >
+                    <Nav style={marginStyle} >
                         {actionMenuItems}
                         <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
@@ -185,5 +185,8 @@ let buttonStyle: React.CSSProperties = {
     focus: "none"
 }
 
+let marginStyle: React.CSSProperties = {
+    margin: '15px'
+}
 
 
