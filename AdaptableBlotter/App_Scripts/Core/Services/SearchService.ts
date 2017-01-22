@@ -91,7 +91,7 @@ export class SearchService implements ISearchService {
 
         // first evaluate if we have quick search text
         if (hasQuickSearchText) {
-            quickSearchMatchingIds.push(...this.blotter.performQuickSearch(this.GetQuickSearchState().QuickSearchText,this.GetQuickSearchState().QuickSearchOperator, rowIdentifiers));
+            quickSearchMatchingIds.push(...this.blotter.getQuickSearchRowIds(this.GetQuickSearchState().QuickSearchText,this.GetQuickSearchState().QuickSearchOperator, rowIdentifiers));
 
             if (hasAdvancedSearchExpression) {
                 quickSearchMatchingIds.forEach(id => {

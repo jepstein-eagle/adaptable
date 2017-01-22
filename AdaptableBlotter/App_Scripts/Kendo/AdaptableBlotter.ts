@@ -689,25 +689,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
-    public performQuickSearch(quickSearchText: string, searchOperator: LeafExpressionOperator, rowIds: string[]): string[] {
+    public getQuickSearchRowIds(quickSearchText: string, searchOperator: LeafExpressionOperator, rowIds: string[]): string[] {
 
         if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
             return [];
         }
 
         let caseInSensitiveText = quickSearchText.toLowerCase();
-
         let matchingRowIds: string[] = [];
-
-        let cols: kendo.ui.GridColumn[] = this.grid.columns;
+        let columnCount: number = this.grid.columns.length;
 
         rowIds.forEach(rowId => {
-
             var row = this.getRowByRowIdentifier(rowId);
-
             let rowFound: boolean = false;
 
-            for (let i = 0; i <= cols.length; i++) {
+            for (let i = 0; i <= columnCount; i++) {
                 var cell = this.getCellByColumnIndexAndRow(row, i);
                 let cellText: string = cell.text();
                 if (StringExtensions.IsNotNullOrEmpty(cellText)) {
@@ -717,12 +713,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
                     }
                     if (rowFound) {
+                         matchingRowIds.push(rowId);
                         break;
                     }
                 }
-            }
-            if (rowFound) {
-                matchingRowIds.push(rowId);
             }
         })
         return matchingRowIds;

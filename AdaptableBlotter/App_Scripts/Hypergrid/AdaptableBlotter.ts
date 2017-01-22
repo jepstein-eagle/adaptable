@@ -657,7 +657,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public performQuickSearch(quickSearchText: string, searchOperator:LeafExpressionOperator, rowIds: string[]):  string[] {return null}
+    public getQuickSearchRowIds(quickSearchText: string, searchOperator:LeafExpressionOperator, rowIds: string[]):  string[] {return null}
 }
 
 interface CellStyleHypergrid {
