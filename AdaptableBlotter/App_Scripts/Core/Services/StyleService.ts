@@ -39,7 +39,7 @@ export class StyleService {
             });
         }
         // quick search
-        this.addCSSRule(".QuickSearch", 'background-color: #ffff00 !important;color: #000000  !important')
+        this.addCSSRule(".QuickSearch", 'background-color: #FFFF99 !important;color: #000000  !important')
     }
 
     private clearCSSRules() {
