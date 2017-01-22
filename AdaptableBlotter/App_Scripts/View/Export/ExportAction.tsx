@@ -4,11 +4,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLabel, Checkbox, Col } from 'react-bootstrap';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Col } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { EnumExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 

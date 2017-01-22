@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
-import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
+import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

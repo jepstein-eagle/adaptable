@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, ListGroup, Well, Glyphicon } from 'react-bootstrap';
+import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -16,9 +16,8 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { ColumnType, ExpressionMode } from '../../Core/Enums'
+import {  ExpressionMode } from '../../Core/Enums'
 import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
-import { IStrategy } from '../../Core/Interface/IStrategy';
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
@@ -143,7 +142,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.DeleteUserFilter(userFilter)),

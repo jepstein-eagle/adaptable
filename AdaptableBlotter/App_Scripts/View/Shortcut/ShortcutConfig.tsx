@@ -4,7 +4,7 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ControlLabel, FormGroup, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, Checkbox } from 'react-bootstrap';
+import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'

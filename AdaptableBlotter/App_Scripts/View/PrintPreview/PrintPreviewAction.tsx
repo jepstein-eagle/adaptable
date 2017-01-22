@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLabel, Checkbox } from 'react-bootstrap';
+import { FormControl, Panel, Form, Button, Table, ControlLabel, Checkbox } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import * as PrintPreviewRedux from '../../Redux/ActionsReducers/PrintPreviewRedux'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

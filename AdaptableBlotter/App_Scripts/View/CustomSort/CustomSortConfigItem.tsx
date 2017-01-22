@@ -2,7 +2,7 @@ import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Button, Col, Row, ButtonGroup, Panel, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
