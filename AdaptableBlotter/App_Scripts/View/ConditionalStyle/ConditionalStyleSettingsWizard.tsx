@@ -1,13 +1,14 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
+import { IPredefinedExpressionInfo } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, ColumnType, LeafExpressionOperator } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
-import { IPredefinedExpressionInfo, PredefinedExpressionHelper } from '../../Core/Expression/PredefinedExpressionHelper';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ColorPicker } from '../ColorPicker';
 
@@ -55,9 +56,10 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             this.predefinedExpressions.push(
                 {
                     PredefinedExpressionInfo: {
-                        ColumnValues: null,
+                        DisplayColumnValues: null,
+                        RawColumnValues: null,
                         ExpressionRange: null,
-                        UserFilterUids: ["Positive"] ,
+                        UserFilterUids: ["Positive"],
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#008000', FriendlyName: "Positive numbers in green font", Id: "PositiveGreen",
 
                 });
@@ -66,9 +68,10 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
             this.predefinedExpressions.push(
                 {
                     PredefinedExpressionInfo: {
-                        ColumnValues: null,
+                        DisplayColumnValues: null,
+                        RawColumnValues: null,
                         ExpressionRange: null,
-                        UserFilterUids:[ "Negative"],
+                        UserFilterUids: ["Negative"],
                     }, BackColor: 'rgba(0,0,0,0)', ForeColor: '#FF0000', FriendlyName: "Negative numbers in red font", Id: "NegativeRed",
 
                 });
@@ -88,15 +91,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                 <FormGroup controlId="whereApplied">
 
-                    <Form inline >
-                        <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
-                        <Col xs={2}>
-                            <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
-                        </Col>
-                        <Col xs={5}>
-                            <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
-                        </Col>
-                    </Form>
+                    <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
+                    <Col xs={2}>
+                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
+                    </Col>
+                    <Col xs={5}>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
+                    </Col>
                 </FormGroup>
 
                 {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ?
@@ -201,7 +202,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     private onCreatePredefinedExpression() {
-        let predefinedExpression: Expression = PredefinedExpressionHelper.CreateExpression(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo, this.props.Blotter);
+        let predefinedExpression: Expression = ExpressionHelper.CreateExpressionFromPredefinedExpressionInfo(this.state.ColumnId, this.state.PredefinedStyleCondition.PredefinedExpressionInfo);
         this.state.BackColor = this.state.PredefinedStyleCondition.BackColor;
         this.state.ForeColor = this.state.PredefinedStyleCondition.ForeColor;
         this.state.Expression = predefinedExpression;

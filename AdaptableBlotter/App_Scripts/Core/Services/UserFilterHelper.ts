@@ -22,8 +22,8 @@ export module UserFilterHelper {
         }
 
         // see if there are any columnvalues and then get the first only
-        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
-            return userFilter.Expression.ColumnValuesExpressions[0].ColumnName == column.ColumnId;
+        if (userFilter.Expression.ColumnDisplayValuesExpressions != null && userFilter.Expression.ColumnDisplayValuesExpressions.length > 0) {
+            return userFilter.Expression.ColumnDisplayValuesExpressions[0].ColumnName == column.ColumnId;
         }
 
         // see if there are any user filter expressions and then get the first only
@@ -47,8 +47,8 @@ export module UserFilterHelper {
         }
 
         // see if there are any columnvalues and then get the first only
-        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
-            let columnID: string = userFilter.Expression.ColumnValuesExpressions[0].ColumnName;
+        if (userFilter.Expression.ColumnDisplayValuesExpressions != null && userFilter.Expression.ColumnDisplayValuesExpressions.length > 0) {
+            let columnID: string = userFilter.Expression.ColumnDisplayValuesExpressions[0].ColumnName;
             return Columns.find(c => c.ColumnId == columnID).ColumnType;
         }
 
@@ -62,8 +62,8 @@ export module UserFilterHelper {
     export function GetColumnIdForUserFilter(userFilter: IUserFilter): string {
 
         // see if there are any columnvalues and then get the first only
-        if (userFilter.Expression.ColumnValuesExpressions != null && userFilter.Expression.ColumnValuesExpressions.length > 0) {
-            return userFilter.Expression.ColumnValuesExpressions[0].ColumnName;
+        if (userFilter.Expression.ColumnDisplayValuesExpressions != null && userFilter.Expression.ColumnDisplayValuesExpressions.length > 0) {
+            return userFilter.Expression.ColumnDisplayValuesExpressions[0].ColumnName;
         }
 
         // see if there are any user filter expressionss and then get the first only

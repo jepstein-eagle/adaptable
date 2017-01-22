@@ -1,4 +1,4 @@
-import { ColumnType } from '../Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType} from '../Enums'
 import { IMenuItem, IStrategy } from './IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -71,6 +71,8 @@ export interface IAdaptableBlotter {
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+
+ getQuickSearchRowIds( rowIds: string[]): string[] 
 }
 
 export interface ISelectedCells {

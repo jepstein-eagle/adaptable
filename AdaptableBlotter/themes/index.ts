@@ -1,0 +1,1 @@
+export const StaticThemes: Array<string> = ['Cerulean','Cosmo','Cyborg','Darkly','Flatly','Journal','Lumen','Paper','Readable','Sandstone','Simplex','Slate','Spacelab','Superhero','United','Yeti']

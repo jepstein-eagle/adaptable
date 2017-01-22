@@ -13,6 +13,7 @@ import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
 import { AuditService } from '../Core/Services/AuditService'
 import { ISearchService } from '../Core/Services/Interface/ISearchService'
+import { ThemeService } from '../Core/Services/ThemeService'
 import { SearchServiceHyperGrid } from '../Core/Services/SearchServiceHypergrid'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
@@ -30,11 +31,12 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
+import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, SortOrder } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -52,6 +54,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
+    public ThemeService: ThemeService
     private filterContainer: HTMLDivElement
 
     constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
@@ -61,6 +64,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchServiceHyperGrid(this);
+        this.ThemeService = new ThemeService(this)
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -80,6 +84,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -112,7 +117,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (e.detail.primitiveEvent.isHeaderCell) {
                 let filterContext: IColumnFilterContext = {
                     Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
-                    Blotter: this
+                    Blotter: this,
+                    ColumnValueType : "displayValue"
                 };
                 this.filterContainer.style.visibility = 'visible'
                 this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
@@ -152,6 +158,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+            if(config.isHeaderRow && config.isGridColumn)
+            {
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x=>x.ColumnId == config.columnName);
+                config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex>=0)];
+            }
             if (config.isGridRow) {
                 //might need to use untranslatedX
                 var x = config.x;
@@ -644,6 +655,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }
+
+
+    public getQuickSearchRowIds(rowIds: string[]): string[] {
+        return null
+    }
+
+
 }
 
 interface CellStyleHypergrid {

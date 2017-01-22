@@ -38,7 +38,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         let previewLists = columnList.map(columnId => {
 
             // First lets do the column values
-            let columnValues = this.props.Expression.ColumnValuesExpressions.find(colValues => colValues.ColumnName == columnId)
+            let columnValues = this.props.Expression.ColumnDisplayValuesExpressions.find(colValues => colValues.ColumnName == columnId)
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
                 columnValuesListgroupItems = columnValues.ColumnValues.map(y => {

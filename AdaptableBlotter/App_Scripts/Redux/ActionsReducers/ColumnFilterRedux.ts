@@ -6,16 +6,10 @@ import { ColumnType } from '../../Core/Enums'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { StringExtensions } from '../../Core/Extensions';
 
-
 export const COLUMN_FILTER_ADD_OR_UPDATE = 'COLUMN_FILTER_ADD_OR_UPDATE';
 export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
 
-
 export interface ColumnFilterAddEditAction extends Redux.Action {
-    columnFilter: IColumnFilter
-}
-
-export interface ColumnFilterDeleteAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
@@ -23,6 +17,10 @@ export const AddEditColumnFilter = (columnFilter: IColumnFilter): ColumnFilterAd
     type: COLUMN_FILTER_ADD_OR_UPDATE,
     columnFilter
 })
+
+export interface ColumnFilterDeleteAction extends Redux.Action {
+    columnFilter: IColumnFilter
+}
 
 export const DeleteColumnFilter = (columnFilter: IColumnFilter): ColumnFilterDeleteAction => ({
     type: COLUMN_FILTER_DELETE,
@@ -37,7 +35,6 @@ const initialColumnFilterState:
 export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFilterState = initialColumnFilterState, action: Redux.Action): ColumnFilterState => {
     let index: number;
     let columnFilters: IColumnFilter[]
-
 
     switch (action.type) {
 
@@ -64,10 +61,6 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (state: Col
         default:
             return state
     }
-
-
-
-
 
 }
 

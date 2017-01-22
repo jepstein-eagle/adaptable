@@ -96,13 +96,6 @@ export class CalendarService implements ICalendarService {
 
             }
         ]
-
-
-        var xml = "<Calendar><Name>France</Name><Holidays><Holiday>Labour Day</Holiday><Holiday>Labour Day</Holiday></Holidays></Calendar>",
-  xmlDoc = $.parseXML( xml ),
-  $xml = $( xmlDoc ),
-  $title = $xml.find( "Calendar" );
-
     }
 
     

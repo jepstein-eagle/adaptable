@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, ListGroup, Well } from 'react-bootstrap';
+import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, Glyphicon, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as StrategyIds from '../../Core/StrategyIds'

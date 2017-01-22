@@ -16,6 +16,7 @@ interface ListBoxFilterFormProps extends ListGroupProps {
     UiSelectedUserFilters: Array<String>
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
+    ColumnValueType: "displayValue" | "rawValue"
 }
 
 interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
@@ -59,25 +60,31 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={y} style={userFilterItemStyle}
+                return <ListGroupItem key={"userFilter" + y} style={userFilterItemStyle}
                     onClick={() => this.onClickItemUserFilter(x)}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
             }
         })
 
-let userFiltersItemsElementsCount: number = userFiltersItemsElements.length;
-
-        let columnValuesItemsElements = this.props.ColumnValues.map((x,y) => {
+        let columnValuesItemsElements = this.props.ColumnValues.map((x, y) => {
             let isActive: boolean
-            isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
+            let value: any
+            if (this.props.ColumnValueType == "rawValue") {
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
+                value = x.rawValue;
+            }
+            else if (this.props.ColumnValueType == "displayValue") {
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.displayValue) >= 0;
+                value = x.displayValue;
+            }
+
             let display: string = x.displayValue;
-            let value = x.rawValue;
             if (StringExtensions.IsNotEmpty(this.state.FilterValue) && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
                 return null;
             }
             else {
-                return <ListGroupItem key={y + userFiltersItemsElementsCount} style={columnVItemStyle}
+                return <ListGroupItem key={"columnValue" + y} style={columnVItemStyle}
                     onClick={() => this.onClickItemColumnValue(x)}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
@@ -132,7 +139,14 @@ let userFiltersItemsElementsCount: number = userFiltersItemsElements.length;
     }
 
     onClickItemColumnValue(item: { rawValue: any, displayValue: string }) {
-        let index = this.state.UiSelectedColumnValues.indexOf(item.rawValue);
+        let index: number
+        if (this.props.ColumnValueType == "rawValue") {
+            index = this.state.UiSelectedColumnValues.indexOf(item.rawValue);
+        }
+        else if (this.props.ColumnValueType == "displayValue") {
+            index = this.state.UiSelectedColumnValues.indexOf(item.displayValue);
+        }
+
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedColumnValues];
             newArray.splice(index, 1);
@@ -140,7 +154,12 @@ let userFiltersItemsElementsCount: number = userFiltersItemsElements.length;
         }
         else {
             let newArray = [...this.state.UiSelectedColumnValues];
-            newArray.push(item.rawValue)
+            if (this.props.ColumnValueType == "rawValue") {
+                newArray.push(item.rawValue)
+            }
+            else if (this.props.ColumnValueType == "displayValue") {
+                newArray.push(item.displayValue)
+            }
             this.setState({ UiSelectedColumnValues: newArray } as ListBoxFilterFormState, () => this.raiseOnChangeColumnValues())
         }
     }
@@ -182,7 +201,7 @@ let userFilterItemStyle = {
 
 let columnVItemStyle = {
     'width': '87%',
-     'fontSize': 'small',
+    'fontSize': 'small',
     'padding': '5%',
     'margin': 0
 }

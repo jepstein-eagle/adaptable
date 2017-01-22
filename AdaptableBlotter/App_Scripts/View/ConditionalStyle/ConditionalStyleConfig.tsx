@@ -16,7 +16,6 @@ import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../PanelWithButton';
-import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithRow } from '../PanelWithRow';
 

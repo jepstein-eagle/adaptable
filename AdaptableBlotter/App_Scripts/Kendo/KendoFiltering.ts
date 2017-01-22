@@ -6,7 +6,7 @@ import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
 import { IUserFilter } from '../Core/interface/IExpression';
 import { Expression } from '../Core/Expression/Expression';
 import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
-import { PredefinedExpressionHelper, IPredefinedExpressionInfo } from '../Core/Expression/PredefinedExpressionHelper';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 
 
 export module KendoFiltering {
@@ -22,7 +22,10 @@ export module KendoFiltering {
         columnFilters.forEach(columnFilter => {
 
             let column: IColumn = blotter.getColumnFromColumnId(columnFilter.ColumnId);
-            let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnValuesExpression(columnFilter.Filter, column);
+            if (columnFilter.Filter.ColumnDisplayValuesExpressions.length > 0) {
+                throw "Cannot Filter on DisplayValue in Kendo"
+            }
+            let columnValueFilters: kendo.data.DataSourceFilters = createFilterFromColumnRawValuesExpression(columnFilter.Filter, column);
             let rangeFilters: kendo.data.DataSourceFilters = createFilterFromRangesExpression(columnFilter.Filter, column);
             let userFilters: kendo.data.DataSourceFilters = createFilterFromUserFiltersExpression(columnFilter.Filter, column, blotter);
 
@@ -44,8 +47,8 @@ export module KendoFiltering {
         return kendoFilters;
     }
 
-    function createFilterFromColumnValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
-        let columnValuesExpression = expression.ColumnValuesExpressions;
+    function createFilterFromColumnRawValuesExpression(expression: Expression, column: IColumn): kendo.data.DataSourceFilters {
+        let columnValuesExpression = expression.ColumnRawValuesExpressions;
         if (columnValuesExpression.length > 0) {
             let columnValues: string[] = columnValuesExpression[0].ColumnValues;
 
@@ -70,32 +73,32 @@ export module KendoFiltering {
         if (rangeExpression.length > 0) {
             let ranges: IRangeExpression[] = rangeExpression[0].Ranges;
 
-          //  if (ranges.length == 1) {
-         //       let range: IRangeExpression = ranges[0];
-         //       if (range.Operator == LeafExpressionOperator.Between) {
-          //          return createFilterFromBetweenRange(range, column);
-          //      } else {
-          //          return createFilterFromBasicRange(range, column);
-          //      }
-         //   }
-          //  else if (ranges.length > 1) {
-                let filterItems: kendo.data.DataSourceFilterItem[] = [];
-                let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
-                ranges.forEach(range => {
-                    if (range.Operator == LeafExpressionOperator.Between) {
-                        let betweenRange: kendo.data.DataSourceFilters = createFilterFromBetweenRange(range, column);
-                        kendoRangeFilters.filters.push(betweenRange);
-                    } else {
-                        let basicRange: kendo.data.DataSourceFilterItem = createFilterFromBasicRange(range, column);
-                        filterItems.push(basicRange);
-                    }
-                })
-                if (filterItems.length > 0) {
-                    kendoRangeFilters.filters.push(...filterItems);
+            //  if (ranges.length == 1) {
+            //       let range: IRangeExpression = ranges[0];
+            //       if (range.Operator == LeafExpressionOperator.Between) {
+            //          return createFilterFromBetweenRange(range, column);
+            //      } else {
+            //          return createFilterFromBasicRange(range, column);
+            //      }
+            //   }
+            //  else if (ranges.length > 1) {
+            let filterItems: kendo.data.DataSourceFilterItem[] = [];
+            let kendoRangeFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // multiple range items are "and" or "or"????
+            ranges.forEach(range => {
+                if (range.Operator == LeafExpressionOperator.Between) {
+                    let betweenRange: kendo.data.DataSourceFilters = createFilterFromBetweenRange(range, column);
+                    kendoRangeFilters.filters.push(betweenRange);
+                } else {
+                    let basicRange: kendo.data.DataSourceFilterItem = createFilterFromBasicRange(range, column);
+                    filterItems.push(basicRange);
                 }
-                return kendoRangeFilters;
+            })
+            if (filterItems.length > 0) {
+                kendoRangeFilters.filters.push(...filterItems);
             }
-      //  }
+            return kendoRangeFilters;
+        }
+        //  }
     }
 
 
@@ -120,7 +123,7 @@ export module KendoFiltering {
                     rangeFiltersNew = createFilterFromPredefinedExpression(userFilter, column, blotter);
                 } else {
                     let rawValueExpression: Expression = getRawValueExpression(userFilter.Expression, column, blotter);
-                    columnValueFiltersNew = createFilterFromColumnValuesExpression(rawValueExpression, column);
+                    columnValueFiltersNew = createFilterFromColumnRawValuesExpression(rawValueExpression, column);
                     rangeFiltersNew = createFilterFromRangesExpression(userFilter.Expression, column);
 
                     // its possible that the filter could (solely or additionally) wrap a user filter - though this is a bit meaningless...
@@ -285,14 +288,15 @@ export module KendoFiltering {
 
     function getRawValueExpression(displayValueExpression: Expression, column: IColumn, blotter: AdaptableBlotter): Expression {
         // if no column values then get out
-        let columnValuesExpression: { ColumnName: string, ColumnValues: Array<any> } = displayValueExpression.ColumnValuesExpressions[0];
+        let columnValuesExpression: { ColumnName: string, ColumnValues: Array<any> } = displayValueExpression.ColumnDisplayValuesExpressions[0];
         if (!columnValuesExpression || columnValuesExpression.ColumnValues == null || columnValuesExpression.ColumnValues.length == 0) {
             return displayValueExpression;
         }
 
         // if strings and bools just return the expression
         if (column.ColumnType == ColumnType.String || column.ColumnType == ColumnType.Boolean) {
-            return displayValueExpression;
+            return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], columnValuesExpression.ColumnValues, [], [])
+            // return displayValueExpression;
         }
 
         // if numeric or date then get the underlying values
@@ -302,15 +306,8 @@ export module KendoFiltering {
             let rawValue: any = columnValuePairs.find(cvp => cvp.displayValue == c).rawValue;
             rawValues.push(rawValue);
         })
-
-        // create and return a new epxression      
-        let predefinedExpressionInfo: IPredefinedExpressionInfo =
-            {
-                ColumnValues: rawValues,
-                ExpressionRange: null,
-                UserFilterUids: null
-            };
-        return PredefinedExpressionHelper.CreateExpression(column.ColumnId, predefinedExpressionInfo, blotter);
+        
+        return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], rawValues, [], [])
     }
 
 } 
