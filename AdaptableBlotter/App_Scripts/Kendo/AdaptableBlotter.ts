@@ -692,12 +692,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
         let quickSearchText: string = quickSearchState.QuickSearchText;
-        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
-        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
 
         if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
             return [];
         }
+
+        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
+        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
 
         let caseInSensitiveText = quickSearchText.toLowerCase();
         let matchingRowIds: string[] = [];
@@ -713,7 +714,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (StringExtensions.IsNotNullOrEmpty(cellText)) {
                     if (quickSearchOperator == LeafExpressionOperator.Contains) {
                         cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
-                    } else { 
+                    } else {
                         cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
                     }
                     if (cellMatch) {
@@ -743,7 +744,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else {
             return matchingRowIds;
         }
-
     }
+
 }
 
