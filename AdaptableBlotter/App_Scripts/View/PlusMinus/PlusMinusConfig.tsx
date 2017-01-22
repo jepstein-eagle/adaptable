@@ -80,7 +80,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
-                        <ControlLabel>Default Nudge Value for Blotter</ControlLabel>
+                        <ControlLabel >Default Nudge Value for Blotter</ControlLabel>
                     </Col>
                     <Col xs={8}>
                         <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />

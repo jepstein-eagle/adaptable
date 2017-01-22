@@ -7,7 +7,7 @@ import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
 
 
 interface PanelWithRowProps extends PanelProps {
-CellInfo:  [string, number][]
+    CellInfo: [string, number][]
 }
 
 
@@ -16,18 +16,16 @@ CellInfo:  [string, number][]
 //let { buttonContent, ...other } = this.props
 export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
     render() {
-       
-       let className = "panel-with-button"; // this will change...
 
-
+        let className = "panel-with-button"; // this will change...
 
         let optionColumns = this.props.CellInfo.map(x => {
-            return <Col key={x[1]+x[0]} xs={x[1]}>{x[0]}</Col>
+            return <Col key={x[1] + x[0]} xs={x[1]}>{x[0]}</Col>
         })
-       
+
         let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center"}}>
-              {optionColumns}
+            <Row style={{ display: "flex", alignItems: "center" }}>
+                {optionColumns}
             </Row>
         </Form>;
         return <Panel header={header} className={className} style={panelWithRowStyle} bsStyle={this.props.bsStyle}>
@@ -38,5 +36,5 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
 }
 
 let panelWithRowStyle = {
-   margin: '0px'
+    margin: '0px'
 }

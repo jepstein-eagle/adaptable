@@ -38,12 +38,13 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState'
+import { StringExtensions } from '../Core/Extensions'
 
 
 
@@ -686,6 +687,45 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
+    }
+
+    public performQuickSearch(quickSearchText: string, searchOperator: LeafExpressionOperator, rowIds: string[]): string[] {
+
+        if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
+            return [];
+        }
+
+        let caseInSensitiveText = quickSearchText.toLowerCase();
+
+        let matchingRowIds: string[] = [];
+
+        let cols: kendo.ui.GridColumn[] = this.grid.columns;
+
+        rowIds.forEach(rowId => {
+
+            var row = this.getRowByRowIdentifier(rowId);
+
+            let rowFound: boolean = false;
+
+            cols.forEach(col => {
+                if (!rowFound) {
+                    let columnIndex: number = this.getColumnIndex(col.field);
+                    var cell = this.getCellByColumnIndexAndRow(row, columnIndex);
+                    let cellText: string = cell.text();
+                    if (StringExtensions.IsNotNullOrEmpty(cellText)) {
+                        if (searchOperator == LeafExpressionOperator.Contains) {
+                            rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
+                        } else if (searchOperator == LeafExpressionOperator.StartsWith) {
+                            rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) ==0
+                        }
+                    }
+                }
+            })
+            if (rowFound) {
+                matchingRowIds.push(rowId);
+            }
+        })
+        return matchingRowIds;
     }
 }
 

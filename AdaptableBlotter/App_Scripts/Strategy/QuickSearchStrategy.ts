@@ -27,14 +27,14 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchText: string = this.GetQuickSearchState().QuickSearchText;
         if (StringExtensions.IsNotNull(this.quickSearchText) && this.quickSearchText != stateQuickSearchText) {
             this.quickSearchText = stateQuickSearchText;
-            this.blotter.SearchService.ApplySearchOnGrid();
+this.blotter.SearchService.ApplySearchOnGrid();
         }
 
         // Run search if the operator has changed and search is not empty
         let stateQuickSearchOperator: LeafExpressionOperator = this.GetQuickSearchState().QuickSearchOperator;
         if (this.quickSearchOperator != null && this.quickSearchOperator != stateQuickSearchOperator && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchOperator = stateQuickSearchOperator;
-            this.blotter.SearchService.ApplySearchOnGrid();
+           this.blotter.SearchService.ApplySearchOnGrid();
         }
     }
 
