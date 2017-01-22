@@ -51,7 +51,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
         return (
             <div className="adaptable_blotter_style">
-
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
                 <Navbar fluid  >
                     <Navbar.Header>
