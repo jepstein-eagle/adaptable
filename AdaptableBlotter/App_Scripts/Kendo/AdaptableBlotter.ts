@@ -707,20 +707,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             let rowFound: boolean = false;
 
-            cols.forEach(col => {
-                if (!rowFound) {
-                    let columnIndex: number = this.getColumnIndex(col.field);
-                    var cell = this.getCellByColumnIndexAndRow(row, columnIndex);
-                    let cellText: string = cell.text();
-                    if (StringExtensions.IsNotNullOrEmpty(cellText)) {
-                        if (searchOperator == LeafExpressionOperator.Contains) {
-                            rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
-                        } else if (searchOperator == LeafExpressionOperator.StartsWith) {
-                            rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) ==0
-                        }
+            for (let i = 0; i <= cols.length; i++) {
+                var cell = this.getCellByColumnIndexAndRow(row, i);
+                let cellText: string = cell.text();
+                if (StringExtensions.IsNotNullOrEmpty(cellText)) {
+                    if (searchOperator == LeafExpressionOperator.Contains) {
+                        rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
+                    } else { // if (searchOperator == LeafExpressionOperator.StartsWith) {
+                        rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
+                    }
+                    if (rowFound) {
+                        break;
                     }
                 }
-            })
+            }
             if (rowFound) {
                 matchingRowIds.push(rowId);
             }
