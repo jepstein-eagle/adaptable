@@ -1,7 +1,7 @@
 
 import { ISearchService } from './Interface/ISearchService';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, ColumnType } from '../Enums';
+import { MenuType, LeafExpressionOperator, ColumnType, QuickSearchDisplayType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { Expression } from '../Expression/Expression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
@@ -35,6 +35,9 @@ export class SearchService implements ISearchService {
 
         // first make sure they are all visible (as might have been hidden in a previous search)
         this.blotter.showRows(rowIds);
+        // always do this or only if colouring? but then what if did colour and no longer do so???
+        this.blotter.removeAllCellStylesWithRegex(new RegExp("^QuickSearch"));
+
 
         let columns: IColumn[] = this.GetGridState().Columns;
         // adding this check as things can get mixed up during 'clean user data'
@@ -91,7 +94,7 @@ export class SearchService implements ISearchService {
 
         // first evaluate if we have quick search text
         if (hasQuickSearchText) {
-            quickSearchMatchingIds.push(...this.blotter.getQuickSearchRowIds(this.GetQuickSearchState().QuickSearchText,this.GetQuickSearchState().QuickSearchOperator, rowIdentifiers));
+            quickSearchMatchingIds.push(...this.blotter.getQuickSearchRowIds(rowIdentifiers));
 
             if (hasAdvancedSearchExpression) {
                 quickSearchMatchingIds.forEach(id => {
@@ -120,7 +123,7 @@ export class SearchService implements ISearchService {
     private createAdvancedSearchExpressions(): Expression[] {
         let searchExpressions: Expression[] = [];
         let currentSearchId = this.GetAdvancedSearchState().CurrentAdvancedSearchId;
-        if (currentSearchId != "") {
+        if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
             let savedSearch: IAdvancedSearch = this.GetAdvancedSearchState().AdvancedSearches.find(s => s.Uid == currentSearchId);
             searchExpressions.push(savedSearch.Expression);
         }

@@ -1,11 +1,11 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import { QuickSearchState } from './Interface/IState';
-import { LeafExpressionOperator } from '../../Core/Enums';
+import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums';
 
 export const QUICK_SEARCH_SET_SEARCH_TEXT = 'QUICK_SEARCH_SET_SEARCH_TEXT';
-export const QUICK_SEARCH_SET_CASE_SENSITIVITY = 'QUICK_SEARCH_SET_CASE_SENSITIVITY';
 export const QUICK_SEARCH_SET_SEARCH_OPERATOR = 'QUICK_SEARCH_SET_SEARCH_OPERATOR';
+export const QUICK_SEARCH_SET_SEARCH_DISPLAY = 'QUICK_SEARCH_SET_SEARCH_DISPLAY';
 
 export interface QuickSearchSetSearchTextAction extends Redux.Action {
     quickSearchText: string
@@ -25,9 +25,19 @@ export const QuickSearchSetSearchOperator = (quickSearchOperator: LeafExpression
     quickSearchOperator
 })
 
+export interface QuickSearchSetSearchDisplayAction extends Redux.Action {
+    quickSearchDisplayType: QuickSearchDisplayType
+}
+
+export const QuickSearchSetSearchDisplay = (quickSearchDisplayType: QuickSearchDisplayType): QuickSearchSetSearchDisplayAction => ({
+    type: QUICK_SEARCH_SET_SEARCH_DISPLAY,
+    quickSearchDisplayType
+})
+
 const initialQuickSearchState: QuickSearchState = {
     QuickSearchText: "",
-    QuickSearchOperator: LeafExpressionOperator.StartsWith
+    QuickSearchOperator: LeafExpressionOperator.StartsWith,
+    QuickSearchDisplayType: QuickSearchDisplayType.ColourCell
 }
 
 export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: QuickSearchState = initialQuickSearchState, action: Redux.Action): QuickSearchState => {
@@ -36,6 +46,8 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: Quick
             return Object.assign({}, state, { QuickSearchText: (<QuickSearchSetSearchTextAction>action).quickSearchText })
         case QUICK_SEARCH_SET_SEARCH_OPERATOR:
             return Object.assign({}, state, { QuickSearchOperator: (<QuickSearchSetSearchOperatorAction>action).quickSearchOperator })
+        case QUICK_SEARCH_SET_SEARCH_DISPLAY:
+            return Object.assign({}, state, { QuickSearchDisplayType: (<QuickSearchSetSearchDisplayAction>action).quickSearchDisplayType })
         default:
             return state
     }

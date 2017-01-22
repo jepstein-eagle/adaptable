@@ -3,10 +3,10 @@ import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 
-interface QuickSearchToolbarControlProps extends React.ClassAttributes<QuickSearchToolbarControl> {
-    Blotter: IAdaptableBlotter
+interface QuickSearchToolbarControlProps extends IStrategyViewPopupProps<QuickSearchToolbarControl> {
     onSetQuickSearchText: (quickSearchText: string) => void;
 }
 
@@ -22,7 +22,7 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
         this.state = { EditedQuickSearchText: "" }
     }
     public componentDidMount() {
-        this.props.Blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.onQuickSearchStateChanged())
+        this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.subscribe(() => this.onQuickSearchStateChanged())
     }
 
     render(): any {
@@ -74,8 +74,8 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
     }
 
     onQuickSearchStateChanged() {
-        if (this.state != null && this.state.EditedQuickSearchText != this.props.Blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
-            this.setState({ EditedQuickSearchText: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
+        if (this.state != null && this.state.EditedQuickSearchText != this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
+            this.setState({ EditedQuickSearchText: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
         }
     }
 }

@@ -8,10 +8,10 @@ import { FormControl, Panel, Form, FormGroup, Button, Table, MenuItem, ControlLa
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import * as PrintPreviewRedux from '../../Redux/ActionsReducers/PrintPreviewRedux'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 
-interface PrintPreviewActionProps extends React.ClassAttributes<PrintPreviewActionComponent> {
-    AdaptableBlotter: IAdaptableBlotter;
+interface PrintPreviewActionProps extends IStrategyViewPopupProps<PrintPreviewActionComponent> {
     onApplyPrintPreview: () => PrintPreviewRedux.ApplyPrintPreviewAction,
 }
 

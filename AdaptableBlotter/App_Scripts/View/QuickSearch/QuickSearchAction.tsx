@@ -4,21 +4,23 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Accordion, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { LeafExpressionOperator } from '../../Core/Enums'
+import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 
-interface QuickSearchActionProps extends React.ClassAttributes<QuickSearchActionComponent> {
+interface QuickSearchActionProps extends IStrategyViewPopupProps<QuickSearchActionComponent> {
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
-    AdaptableBlotter: IAdaptableBlotter;
+    QuickSearchDisplayType: QuickSearchDisplayType;
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
+    onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
 }
 
 interface QuickSearchActionState {
@@ -60,6 +62,11 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
     onStringOperatorChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchOperator(Number.parseInt(e.value));
+    }
+
+    onDisplayTypeChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onSetSearchDisplayType(Number.parseInt(e.value));
     }
 
     render() {
@@ -105,16 +112,28 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                             <Panel header="Quick Search Options" eventKey="1" bsStyle="info">
 
                                 <FormGroup controlId="formInlineSearchOperator">
-                                    <Col xs={4}>
-                                        <ControlLabel >Search Operator:</ControlLabel>
+                                    <Col xs={3}>
+                                        <ControlLabel>Operator:</ControlLabel>
                                     </Col>
-                                    <Col xs={8}>
+                                    <Col xs={9}>
                                         <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                             <option value="select" key="select">Select operator</option>
                                             {optionOperators}
                                         </FormControl>
                                     </Col>
                                 </FormGroup>
+
+                                <FormGroup controlId="formInlineSearchDisplay">
+                                    <Col xs={3}>
+                                        <ControlLabel>Display:</ControlLabel>
+                                    </Col>
+                                    <Col xs={9}>
+                                        <Radio value={QuickSearchDisplayType.ColourCell.toString()} checked={this.props.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell} onChange={(e) => this.onDisplayTypeChange(e)}>Colour cells that match search text </Radio>
+                                        <Radio value={QuickSearchDisplayType.HideNonMatchingRow.toString()} checked={this.props.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow} onChange={(e) => this.onDisplayTypeChange(e)}>Display only rows with cells that match search text</Radio>
+                                        <Radio value={QuickSearchDisplayType.HideRowAndColourCell.toString()} checked={this.props.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell} onChange={(e) => this.onDisplayTypeChange(e)}>Display matching rows AND colour cells</Radio>
+                                    </Col>
+                                </FormGroup>
+
                             </Panel>
                         </div>
                     </Form>
@@ -131,7 +150,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AdaptableBlotter: ownProps.AdaptableBlotter,
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        QuickSearchOperator: state.QuickSearch.QuickSearchOperator
+        QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
+        QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
     };
 }
 
@@ -139,6 +159,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetQuickSearchText: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(quickSearchText)),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetSearchOperator(searchOperator)),
+        onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetSearchDisplay(searchDisplayType)),
     };
 }
 

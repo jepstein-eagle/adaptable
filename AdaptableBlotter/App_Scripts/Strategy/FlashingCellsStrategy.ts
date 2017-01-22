@@ -23,7 +23,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
     protected FLASH_UP_STYLE: string = "FlashUp"
-protected FLASH_DOWN_STYLE: string = "FlashDown"
+    protected FLASH_DOWN_STYLE: string = "FlashDown"
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
@@ -44,7 +44,7 @@ protected FLASH_DOWN_STYLE: string = "FlashDown"
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
         let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)
         if (flashingColumn != null && flashingColumn.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingColumn,flashingColumnIndex);
+            this.FlashCell(DataChangedEvent, flashingColumn, flashingColumnIndex);
         }
     }
 
@@ -56,7 +56,7 @@ protected FLASH_DOWN_STYLE: string = "FlashDown"
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
         //Jo : we know that this function is wrong as it's not cumulative
-        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle+index, flashingColumn.FlashingCellDuration.Duration)
+        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration.Duration)
     }
 
     getMenuItems(): IMenuItem[] {

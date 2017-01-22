@@ -36,7 +36,7 @@ import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFi
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -657,7 +657,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public getQuickSearchRowIds(quickSearchText: string, searchOperator:LeafExpressionOperator, rowIds: string[]):  string[] {return null}
+    public getQuickSearchRowIds(rowIds: string[]): string[] {
+        return null
+    }
+
+
 }
 
 interface CellStyleHypergrid {

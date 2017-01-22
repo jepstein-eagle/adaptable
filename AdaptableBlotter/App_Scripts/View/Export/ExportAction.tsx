@@ -9,10 +9,10 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { EnumExtensions } from '../../Core/Extensions';
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 
-interface ExportActionProps extends React.ClassAttributes<ExportActionComponent> {
-    AdaptableBlotter: IAdaptableBlotter;
+interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
     FileName: string,
     AllPages: boolean,
     Filterable: boolean,

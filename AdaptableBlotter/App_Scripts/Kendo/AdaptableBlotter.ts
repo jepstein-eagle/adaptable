@@ -38,12 +38,12 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { ExportState } from '../Redux/ActionsReducers/Interface/IState'
+import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
 
 
@@ -689,7 +689,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
-    public getQuickSearchRowIds(quickSearchText: string, searchOperator: LeafExpressionOperator, rowIds: string[]): string[] {
+    public getQuickSearchRowIds(rowIds: string[]): string[] {
+        let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+        let quickSearchText: string = quickSearchState.QuickSearchText;
+        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
+        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
 
         if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
             return [];
@@ -701,25 +705,45 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         rowIds.forEach(rowId => {
             var row = this.getRowByRowIdentifier(rowId);
-            let rowFound: boolean = false;
+            let cellMatch: boolean = false;
 
             for (let i = 0; i <= columnCount; i++) {
                 var cell = this.getCellByColumnIndexAndRow(row, i);
                 let cellText: string = cell.text();
                 if (StringExtensions.IsNotNullOrEmpty(cellText)) {
-                    if (searchOperator == LeafExpressionOperator.Contains) {
-                        rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
-                    } else { // if (searchOperator == LeafExpressionOperator.StartsWith) {
-                        rowFound = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
+                    if (quickSearchOperator == LeafExpressionOperator.Contains) {
+                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
+                    } else { 
+                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
                     }
-                    if (rowFound) {
-                         matchingRowIds.push(rowId);
-                        break;
+                    if (cellMatch) {
+                        switch (quickSearchDisplayType) {
+                            case QuickSearchDisplayType.ColourCell:
+                                this.addCellStyle(rowId, i, "QuickSearch")
+                                break;
+                            case QuickSearchDisplayType.HideNonMatchingRow:
+                                matchingRowIds.push(rowId);
+                                break;
+                            case QuickSearchDisplayType.HideRowAndColourCell:
+                                this.addCellStyle(rowId, i, "QuickSearch")
+                                matchingRowIds.push(rowId);
+                                break;
+                        }
+                        // now break out of the for loop if just hiding non matching rows
+                        if (quickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                            break;
+                        }
                     }
                 }
             }
         })
-        return matchingRowIds;
+        //  if only colouring cells then return all rows, otherwise return just the ones which have matched
+        if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+            return rowIds;
+        } else {
+            return matchingRowIds;
+        }
+
     }
 }
 

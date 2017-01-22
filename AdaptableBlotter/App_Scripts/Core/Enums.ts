@@ -38,7 +38,7 @@ export enum LeafExpressionOperator {
     Regex
 }
 
-export enum MenuType{
+export enum MenuType {
     Configuration,
     Action
 }
@@ -63,22 +63,29 @@ export enum ConditionalStyleScope {
     Row
 }
 
-export enum SortOrder{
+export enum SortOrder {
     Unknown,
     Ascending,
     Descending
 }
 
+export enum QuickSearchDisplayType {
+    HideNonMatchingRow,
+    ColourCell,
+    HideRowAndColourCell
+
+}
+
 
 // not sure about this...
-export enum NotificationType{
+export enum NotificationType {
     CellUpdated,
     CellEdited,
     UserDataEdited,
     FunctionExecuted
 }
 
-export enum CellChangeType{
+export enum CellChangeType {
     Any,
     Equals,
     NotEquals,
@@ -89,7 +96,7 @@ export enum CellChangeType{
 }
 
 
-export enum PopupType{
+export enum PopupType {
     DisappearAutomatically,
     ManualClose
 }

@@ -38,6 +38,8 @@ export class StyleService {
                 this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.BackColor + ' !important;color: ' + element.ForeColor + ' !important')
             });
         }
+        // quick search
+        this.addCSSRule(".QuickSearch", 'background-color: #ffff00 !important;color: #000000  !important')
     }
 
     private clearCSSRules() {

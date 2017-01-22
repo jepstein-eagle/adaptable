@@ -55,7 +55,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
                 <Navbar fluid  >
                     <Navbar.Header>
-                        {<QuickSearchToolbarControl Blotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onSetQuickSearch(quickSearchText)} />}
+                        {<QuickSearchToolbarControl AdaptableBlotter={this.props.AdaptableBlotter} onSetQuickSearchText={(quickSearchText: string) => this.onSetQuickSearch(quickSearchText)} />}
                     </Navbar.Header>
                     <Navbar.Header>
                         {<AdvancedSearchToolbarControl

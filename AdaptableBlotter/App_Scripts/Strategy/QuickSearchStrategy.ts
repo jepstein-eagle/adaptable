@@ -4,7 +4,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator } from '../Core/Enums';
+import { MenuType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 
@@ -12,6 +12,7 @@ import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     private quickSearchText: string
     private quickSearchOperator: LeafExpressionOperator
+    private quickSearchDisplayType: QuickSearchDisplayType
 
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
@@ -27,14 +28,21 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchText: string = this.GetQuickSearchState().QuickSearchText;
         if (StringExtensions.IsNotNull(this.quickSearchText) && this.quickSearchText != stateQuickSearchText) {
             this.quickSearchText = stateQuickSearchText;
-this.blotter.SearchService.ApplySearchOnGrid();
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
 
         // Run search if the operator has changed and search is not empty
         let stateQuickSearchOperator: LeafExpressionOperator = this.GetQuickSearchState().QuickSearchOperator;
         if (this.quickSearchOperator != null && this.quickSearchOperator != stateQuickSearchOperator && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchOperator = stateQuickSearchOperator;
-           this.blotter.SearchService.ApplySearchOnGrid();
+            this.blotter.SearchService.ApplySearchOnGrid();
+        }
+
+        // Run search if the display type has changed and search is not empty
+        let stateQuickSearchDisplayType: QuickSearchDisplayType = this.GetQuickSearchState().QuickSearchDisplayType;
+        if (this.GetQuickSearchState != null && this.quickSearchDisplayType != stateQuickSearchDisplayType && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
+            this.quickSearchDisplayType = stateQuickSearchDisplayType;
+            this.blotter.SearchService.ApplySearchOnGrid();
         }
     }
 
