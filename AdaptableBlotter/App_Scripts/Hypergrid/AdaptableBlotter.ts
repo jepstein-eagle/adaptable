@@ -164,11 +164,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex>=0)];
             }
             if (config.isGridRow) {
-                //might need to use untranslatedX
+                //need to use untranslatedX or find the column using the index property
                 var x = config.x;
                 var y = config.normalizedY;
                 let row = this.grid.behavior.dataModel.dataSource.getRow(y)
-                let column = this.grid.behavior.getActiveColumns()[x]
+                let column = this.grid.behavior.getActiveColumns().find((col:any)=>col.index == x)
                 if (column && row) {
                     this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
                     // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
@@ -462,9 +462,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnIndex(columnName: string): number {
-        //check that we are using the right collection.... maybe sometimes it will be using AllColumns, Active columns.... no idea...
-        //but need to get things done
-        return this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == columnName);
+        //be carefull this returns the index y of the cell. Not the actual index in the collection
+        return this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName).index;
     }
 
 
