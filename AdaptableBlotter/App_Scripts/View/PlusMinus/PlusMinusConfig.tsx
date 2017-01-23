@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, OverlayTrigger, Tooltip, ListGroup, Well } from 'react-bootstrap';
+import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
@@ -80,7 +80,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
-                        <ControlLabel>Default Nudge Value for Blotter</ControlLabel>
+                        <ControlLabel >Default Nudge Value for Blotter</ControlLabel>
                     </Col>
                     <Col xs={8}>
                         <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />

@@ -5,14 +5,13 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import {FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup} from 'react-bootstrap';
-
 import {AdaptableBlotterState} from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
-
 import {SmartEditOperation} from '../../Core/Enums'
 import {ISmartEditPreview, ISmartEditValueTuple} from '../../Core/Interface/ISmartEditStrategy'
+import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
-interface SmartEditActionProps extends React.ClassAttributes<SmartEditActionComponent> {
+interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
     SmartEditValue: number,
     SmartEditOperation: SmartEditOperation,
     Preview: ISmartEditPreview,

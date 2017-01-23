@@ -5,7 +5,7 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { SortOrder, ColumnType } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
-import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
+import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
 
 

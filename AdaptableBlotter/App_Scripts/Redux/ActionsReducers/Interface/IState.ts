@@ -1,4 +1,4 @@
-import { SmartEditOperation, LeafExpressionOperator } from '../../../Core/Enums'
+import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
 import { ISmartEditPreview } from '../../../Core/interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
 import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
@@ -76,6 +76,7 @@ export interface PrintPreviewState {
 export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
+    QuickSearchDisplayType: QuickSearchDisplayType
 }
 
 export interface AdvancedSearchState {

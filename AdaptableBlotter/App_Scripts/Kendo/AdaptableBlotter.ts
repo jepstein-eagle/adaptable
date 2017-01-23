@@ -38,12 +38,13 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { ExportState } from '../Redux/ActionsReducers/Interface/IState'
+import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { StringExtensions } from '../Core/Extensions'
 
 
 
@@ -687,5 +688,63 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }
+
+    public getQuickSearchRowIds(rowIds: string[]): string[] {
+        let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+        let quickSearchText: string = quickSearchState.QuickSearchText;
+
+        if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
+            return [];
+        }
+
+        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
+        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
+
+        let caseInSensitiveText = quickSearchText.toLowerCase();
+        let matchingRowIds: string[] = [];
+        let columnCount: number = this.grid.columns.length;
+
+        rowIds.forEach(rowId => {
+            var row = this.getRowByRowIdentifier(rowId);
+            let cellMatch: boolean = false;
+
+            for (let i = 0; i <= columnCount; i++) {
+                var cell = this.getCellByColumnIndexAndRow(row, i);
+                let cellText: string = cell.text();
+                if (StringExtensions.IsNotNullOrEmpty(cellText)) {
+                    if (quickSearchOperator == LeafExpressionOperator.Contains) {
+                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
+                    } else {
+                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
+                    }
+                    if (cellMatch) {
+                        switch (quickSearchDisplayType) {
+                            case QuickSearchDisplayType.ColourCell:
+                                this.addCellStyle(rowId, i, "QuickSearch")
+                                break;
+                            case QuickSearchDisplayType.HideNonMatchingRow:
+                                matchingRowIds.push(rowId);
+                                break;
+                            case QuickSearchDisplayType.HideRowAndColourCell:
+                                this.addCellStyle(rowId, i, "QuickSearch")
+                                matchingRowIds.push(rowId);
+                                break;
+                        }
+                        // now break out of the for loop if just hiding non matching rows
+                        if (quickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                            break;
+                        }
+                    }
+                }
+            }
+        })
+        //  if only colouring cells then return all rows, otherwise return just the ones which have matched
+        if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+            return rowIds;
+        } else {
+            return matchingRowIds;
+        }
+    }
+
 }
 

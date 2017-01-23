@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, Modal, MenuItem, SplitButton, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
@@ -91,15 +91,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                 <FormGroup controlId="whereApplied">
 
-                    <Form inline >
-                        <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
-                        <Col xs={2}>
-                            <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
-                        </Col>
-                        <Col xs={5}>
-                            <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
-                        </Col>
-                    </Form>
+                    <Col componentClass={ControlLabel} xs={4}>Apply To: </Col>
+                    <Col xs={2}>
+                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Row </Radio>
+                    </Col>
+                    <Col xs={5}>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onWhereAppliedSelectChanged(e)}> Column </Radio>
+                    </Col>
                 </FormGroup>
 
                 {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ?
