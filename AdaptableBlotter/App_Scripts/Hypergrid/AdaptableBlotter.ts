@@ -108,8 +108,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, e.detail.keyEvent)
         });
 
-
-
         grid.addEventListener('fin-click', (e: any) => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.filterContainer.style.visibility = 'hidden'
@@ -212,36 +210,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
-
-        // grid.dataSource.bind("change", (e: any) => {
-        //     if (e.action == "itemchange") {
-        //         let itemsArray = e.items[0];
-        //         let changedValue = itemsArray[e.field];
-        //         let identifierValue = //itemsArray["uid"];
-        //         this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
-        //     }
-        // });
-
-        // //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
-        // //can reevaluate the record when the DisplayValue is now computed. i.e. $2.000.000 instead of 2000000
-        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-        //     setTimeout(() => {
-        //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
-        //         for (let valueField in e.values) {
-        //             let changedValue = e.values[valueField];
-        //             let identifierValue = //e.model.uid;
-        //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField);
-        //         }
-        //     }, 5)
-        // })
-
-        // //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
-        // grid.bind("columnReorder", () => {
-        //     // we want to fire this after the DOM manipulation. 
-        //     // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
-        //     // http://www.telerik.com/forums/column-reorder-event-delay
-        //     setTimeout(() => this.SetColumnIntoStore(), 5);
-        // });
     }
 
     public SetColumnIntoStore() {
