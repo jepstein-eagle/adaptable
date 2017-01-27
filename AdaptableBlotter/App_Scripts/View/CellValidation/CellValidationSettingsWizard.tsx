@@ -158,6 +158,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     private onDateChangeValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let myDate: Date = new Date(e.value);
+        myDate.setHours(0, 0, 0, 0);
         this.setState({ ChangeValue: myDate } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
