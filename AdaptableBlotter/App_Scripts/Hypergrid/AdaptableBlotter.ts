@@ -42,6 +42,7 @@ import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
+import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -242,6 +243,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
+
+// TODO: get rid and do properly!
+     OnGridSave(): IEvent<IAdaptableBlotter, IDataChangedEvent>{return null;}
 
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];

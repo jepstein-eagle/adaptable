@@ -40,6 +40,8 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         }
     }
 
+
+
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
         let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)

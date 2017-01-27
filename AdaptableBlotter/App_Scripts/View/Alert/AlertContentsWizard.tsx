@@ -4,7 +4,8 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Checkbox, Button, Form, Row, Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IAlert, ICellChangeRule } from '../../Core/interface/IAlertStrategy';
+import { IAlert } from '../../Core/interface/IAlertStrategy';
+import { ICellChangeRule } from '../../Core/Interface/ICellValidationStrategy';
 import { NotificationType, ColumnType, CellChangeType, PopupType } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 

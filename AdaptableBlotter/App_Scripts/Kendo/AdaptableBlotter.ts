@@ -35,6 +35,7 @@ import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -42,10 +43,11 @@ import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../C
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
-
+import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -90,6 +92,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -104,6 +107,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
             this._onGridDataBound.Dispatch(this, this)
         });
+
+        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+            let dataChangedEvent: IDataChangedEvent
+            for (let col of this.grid.columns) {
+                if (e.values.hasOwnProperty(col.field)) {
+                    let newProp = col.field;
+                    let test: any = e.model; // dont like this - must be a better way!
+                    let oldValue: any = test[col.field];
+                    dataChangedEvent = { ColumnName: col.field, NewValue: e.values[col.field], OldValue: oldValue, Timestamp: Date.now(), IdentifierValue: e.model.uid };
+                    break;
+                }
+            }
+
+            // would like to do this with an event (see commented out line below) but dont know how to return a result to then prevent an edit
+            // this._onGridSave.Dispatch(this, dataChangedEvent);
+            // so for now Im going to call the strategy direclty and then fix properly...
+            let tempCellValidStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+            if (!tempCellValidStrategy.ValidateCellChange(dataChangedEvent)) {
+                e.preventDefault();
+            }
+        });
+
+        function hasOwnProperty(obj: any, prop: any) {
+            var proto = obj.__proto__ || obj.constructor.prototype;
+            return (prop in obj) &&
+                (!(prop in proto) || proto[prop] !== obj[prop]);
+        }
+
 
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
@@ -228,6 +259,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
+    }
+
+    private _onGridSave: EventDispatcher<IAdaptableBlotter, IDataChangedEvent> = new EventDispatcher<IAdaptableBlotter, IDataChangedEvent>();
+    OnGridSave(): IEvent<IAdaptableBlotter, IDataChangedEvent> {
+        return this._onGridSave;
     }
 
     public CreateMenu() {
