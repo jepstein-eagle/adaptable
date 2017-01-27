@@ -190,9 +190,11 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         }
     }
 
-     createCellValidationRuleDescription(cellValidationRule: ICellValidationRule): string {
+    createCellValidationRuleDescription(cellValidationRule: ICellValidationRule): string {
 
-        let scope: string = this.props.Columns.find(c => c.ColumnId == cellValidationRule.CellChangeRule.ColumnId).FriendlyName;
+        let cellValidationColumn: IColumn = this.props.Columns.find(c => c.ColumnId == cellValidationRule.CellChangeRule.ColumnId);
+
+        let scope: string = cellValidationColumn.FriendlyName;
 
         let valueDescription: string = "";
 
@@ -217,7 +219,11 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                     valueDescription = " % change is at least ";
                     break;
             }
-            valueDescription = valueDescription + cellValidationRule.CellChangeRule.ChangeValue;
+            let changeValueText: string = (cellValidationColumn.ColumnType == ColumnType.Boolean || cellValidationColumn.ColumnType == ColumnType.Number) ?
+                cellValidationRule.CellChangeRule.ChangeValue :
+                "'" + cellValidationRule.CellChangeRule.ChangeValue + "'"
+
+            valueDescription = valueDescription + changeValueText;
         } else {
             valueDescription = " with any change"
         }
