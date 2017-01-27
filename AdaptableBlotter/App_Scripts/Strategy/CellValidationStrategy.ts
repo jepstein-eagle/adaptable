@@ -17,7 +17,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Cell Validation", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
+        this.menuItemConfig = new MenuItemShowPopup("Validation Rules", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         //          this.blotter.OnGridSave().Subscribe((sender, gridSaveInfo) => this.CheckGridSaveInfo(gridSaveInfo))
     }
@@ -74,13 +74,11 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
             case CellChangeType.LessThan:
                 return dataChangedEvent.NewValue >= cellValidationRule.CellChangeRule.ChangeValue;
             case CellChangeType.PercentChange:
-                let percentChange: number = (dataChangedEvent.NewValue > dataChangedEvent.OldValue) ?
-                    Math.abs(100 - Math.abs(dataChangedEvent.NewValue * 100 / dataChangedEvent.OldValue)) :
-                    Math.abs(100 - Math.abs(dataChangedEvent.OldValue * 100 / dataChangedEvent.NewValue));
-                return percentChange <= cellValidationRule.CellChangeRule.ChangeValue;
+                let percentChange: number = Math.abs(100 - Math.abs(dataChangedEvent.NewValue * 100 / dataChangedEvent.OldValue))
+                return percentChange < cellValidationRule.CellChangeRule.ChangeValue;
             case CellChangeType.ValueChange:
                 let changeInValue: number = Math.abs(dataChangedEvent.NewValue - dataChangedEvent.OldValue);
-                return changeInValue <= cellValidationRule.CellChangeRule.ChangeValue;
+                return changeInValue < cellValidationRule.CellChangeRule.ChangeValue;
         }
         return true;
     }

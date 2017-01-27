@@ -224,6 +224,10 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 "'" + cellValidationRule.CellChangeRule.ChangeValue + "'"
 
             valueDescription = valueDescription + changeValueText;
+
+            if (cellValidationRule.CellChangeRule.CellChangeType == CellChangeType.PercentChange) {
+                valueDescription = valueDescription + '%';
+            }
         } else {
             valueDescription = " with any change"
         }

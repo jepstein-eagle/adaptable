@@ -68,7 +68,7 @@ export class DataGenerator {
                 "counterparty": this.getRandomItem(this.getCounterparties()),
                 "currency": this.getRandomItem(this.getCurrencies()),
                 "country": this.getRandomItem(this.getCountries()),
-                "marketPrice": this.getMeaningfulPositiveNegativeDouble(),
+                "marketPrice":100,// this.getMeaningfulPositiveNegativeDouble(),
                 "bid": bid,
                 "ask": ask,
                 "isLive": this.generateRandomBool(),
