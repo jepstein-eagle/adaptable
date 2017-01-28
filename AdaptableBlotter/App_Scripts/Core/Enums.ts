@@ -21,7 +21,7 @@ export enum ExpressionMode {
     MultiColumn
 }
 
-export enum LeafExpressionOperator {
+    export enum LeafExpressionOperator {
     Unknown,
     //Numeric and Date
     GreaterThan,
@@ -35,7 +35,11 @@ export enum LeafExpressionOperator {
     Contains,
     StartsWith,
     EndsWith,
-    Regex
+    Regex,
+    // Cell Validation
+     Any,
+    ValueChange,
+    PercentChange
 }
 
 export enum MenuType {
@@ -91,6 +95,7 @@ export enum CellChangeType {
     NotEquals,
     GreaterThan,
     LessThan,
+    NotBetween,
     ValueChange,
     PercentChange
 }

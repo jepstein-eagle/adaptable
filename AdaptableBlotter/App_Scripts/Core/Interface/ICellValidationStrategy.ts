@@ -1,6 +1,7 @@
 import { IStrategy } from './IStrategy';
-import { CellChangeType, CellValidationAction } from '../Enums';
+import { CellChangeType, CellValidationAction, ColumnType } from '../Enums';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
+import { IRangeExpression } from '../Interface/IExpression';
 
 
 export interface ICellValidationStrategy extends IStrategy {
@@ -9,16 +10,14 @@ export interface ICellValidationStrategy extends IStrategy {
 }
 
 export interface ICellValidationRule {
-        CellChangeRule: ICellChangeRule;
+        ColumnId: string;
+        RangeExpression: IRangeExpression,
         CellValidationAction: CellValidationAction;
         Description: string;
+        ColumnType: ColumnType
 }
 
-export interface ICellChangeRule {
-        ColumnId: string,
-        CellChangeType: CellChangeType,
-        ChangeValue: any,
-}
+
 
 
 

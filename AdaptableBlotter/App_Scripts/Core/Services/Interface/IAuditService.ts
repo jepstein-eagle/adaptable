@@ -1,4 +1,5 @@
 import { IEvent } from '../../Interface/IEvent'
+import {  ColumnType } from '../../Enums';
 
 
 export interface IDataChangedEvent {

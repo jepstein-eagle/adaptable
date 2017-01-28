@@ -1,6 +1,5 @@
 import { NotificationType, CellChangeType, PopupType } from '../Enums';
 import { IStrategy } from './IStrategy';
-import { ICellChangeRule } from './ICellValidationStrategy';
 
 
 export interface IAlertStrategy extends IStrategy{
@@ -16,7 +15,11 @@ export interface IAlert {
     CellChangeRule: ICellChangeRule
 }
 
-
+export interface ICellChangeRule {
+        ColumnId: string,
+        CellChangeType: CellChangeType,
+        ChangeValue: any,
+}
 
 export interface IAlertCommunicationInfo {
     SendEmail: boolean,

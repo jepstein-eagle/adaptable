@@ -17,7 +17,6 @@ import { AlertSettingsWizard } from './AlertSettingsWizard'
 import { AlertActionWizard } from './AlertActionWizard'
 import { AlertContentsWizard } from './AlertContentsWizard'
 import { IAlert, IAlertCommunicationInfo } from '../../Core/Interface/IAlertStrategy'
-import { ICellChangeRule } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';

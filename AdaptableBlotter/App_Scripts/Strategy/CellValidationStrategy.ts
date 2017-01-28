@@ -3,11 +3,11 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { MenuType, ColumnType, CellValidationAction, CellChangeType } from '../Core/Enums';
+import { MenuType, ColumnType, CellValidationAction, CellChangeType, LeafExpressionOperator } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellChangeRule } from '../Core/Interface/ICellValidationStrategy';
+import { IRangeExpression } from '../Core/Interface/IExpression';
 
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
@@ -38,7 +38,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     }
 
     public ValidateCellChange(dataChangedEvent: IDataChangedEvent): boolean {
-        let validationRules = this.CellValidationRules.filter(v => v.CellChangeRule.ColumnId == dataChangedEvent.ColumnName);
+        let validationRules = this.CellValidationRules.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
         if (validationRules.length > 0) {
             // first do prevent 
             for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Prevent)) {
@@ -62,45 +62,79 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     }
 
     private CheckValidationRulePasses(cellValidationRule: ICellValidationRule, dataChangedEvent: IDataChangedEvent): boolean {
-        switch (cellValidationRule.CellChangeRule.CellChangeType) {
-            case CellChangeType.Any:
-                return false;
-            case CellChangeType.Equals:
-                return dataChangedEvent.NewValue != cellValidationRule.CellChangeRule.ChangeValue;
-            case CellChangeType.NotEquals:
-                return dataChangedEvent.NewValue == cellValidationRule.CellChangeRule.ChangeValue;
-            case CellChangeType.GreaterThan:
-                return dataChangedEvent.NewValue <= cellValidationRule.CellChangeRule.ChangeValue;
-            case CellChangeType.LessThan:
-                return dataChangedEvent.NewValue >= cellValidationRule.CellChangeRule.ChangeValue;
-            case CellChangeType.PercentChange:
-                let percentChange: number = Math.abs(100 - Math.abs(dataChangedEvent.NewValue * 100 / dataChangedEvent.OldValue))
-                return percentChange < cellValidationRule.CellChangeRule.ChangeValue;
-            case CellChangeType.ValueChange:
-                let changeInValue: number = Math.abs(dataChangedEvent.NewValue - dataChangedEvent.OldValue);
-                return changeInValue < cellValidationRule.CellChangeRule.ChangeValue;
+        // if its any just get out before evaluating anything else
+        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.Any) {
+            return false;
+        }
+
+        // taken primarily from IsSatisfied in expresion - wonder if we can use that fully?
+        let operand1: any;
+        let operand2: any;
+        let newValue: any;
+        switch (cellValidationRule.ColumnType) {
+            case ColumnType.Date:
+                operand1 = Date.parse(cellValidationRule.RangeExpression.Operand1)
+                if (cellValidationRule.RangeExpression.Operand2 != "") {
+                    operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
+                }
+                let test: Date = dataChangedEvent.NewValue;
+                let wank: number = test.setHours(0, 0, 0, 0);
+                newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
+                break
+            case ColumnType.Number:
+                operand1 = Number(cellValidationRule.RangeExpression.Operand1)
+                if (cellValidationRule.RangeExpression.Operand2 != "") {
+                    operand2 = Number(cellValidationRule.RangeExpression.Operand2)
+                }
+                newValue = dataChangedEvent.NewValue;
+                break
+            case ColumnType.Boolean:
+            case ColumnType.Object:
+            case ColumnType.String:
+                operand1 = cellValidationRule.RangeExpression.Operand1.toLowerCase();
+                operand2 = cellValidationRule.RangeExpression.Operand2.toLowerCase();
+                newValue = dataChangedEvent.NewValue.toLowerCase();
+                break;
+        }
+
+        switch (cellValidationRule.RangeExpression.Operator) {
+              case LeafExpressionOperator.Equals:
+                return newValue != operand1;
+            case LeafExpressionOperator.NotEquals:
+                return newValue == operand1;
+            case LeafExpressionOperator.GreaterThan:
+                return newValue <= operand1;
+            case LeafExpressionOperator.LessThan:
+                return newValue >= operand1;
+          case LeafExpressionOperator.PercentChange:
+                let percentChange: number = Math.abs(100 - Math.abs(newValue * 100 / dataChangedEvent.OldValue))
+                return percentChange < Number(operand1);
+            case LeafExpressionOperator.ValueChange:
+                let changeInValue: number = Math.abs(newValue - dataChangedEvent.OldValue);
+                return changeInValue < Number(operand1);
         }
         return true;
     }
 
     public CreateEmptyCellValidationRule(): ICellValidationRule {
-        let newAlert: ICellValidationRule = {
+        let newValidationRule: ICellValidationRule = {
             CellValidationAction: CellValidationAction.Prevent,
-            CellChangeRule: this.CreateEmptyCellChangeRule(),
+            ColumnId: "select",
+            ColumnType: ColumnType.Object,
+            RangeExpression: this.createEmptyRangeExpression(), // to do
             Description: ""
         }
-        return newAlert;
+        return newValidationRule;
     }
 
-    public CreateEmptyCellChangeRule(): ICellChangeRule {
-        let newCellChangeRule: ICellChangeRule = {
-            ColumnId: "select",
-            ChangeValue: null,
-            CellChangeType: CellChangeType.Any
+    private createEmptyRangeExpression(): IRangeExpression {
+        let newRangeExpression: IRangeExpression = {
+            Operator: LeafExpressionOperator.Any,
+            Operand1: "",
+            Operand2: ""
         }
-        return newCellChangeRule;
+        return newRangeExpression;
     }
-
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
