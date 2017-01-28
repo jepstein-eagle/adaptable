@@ -42,16 +42,16 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         if (validationRules.length > 0) {
             // first do prevent 
             for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Prevent)) {
-                let hasPassed: boolean = this.CheckValidationRulePasses(validationRule, dataChangedEvent);
-                if (!hasPassed) {
+                let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
+                if (hasFailed) {
                     alert("Validation Rule Failed: " + validationRule.Description)
                     return false;
                 }
             }
             // now do warning 
             for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Warning)) {
-                let hasPassed: boolean = this.CheckValidationRulePasses(validationRule, dataChangedEvent);
-                if (!hasPassed) {
+                let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
+                if (hasFailed) {
                     if (!confirm("Rule: " + validationRule.Description + " has failed.  Do you want to continue?")) {
                         return false;
                     }
@@ -61,7 +61,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         return true;
     }
 
-    private CheckValidationRulePasses(cellValidationRule: ICellValidationRule, dataChangedEvent: IDataChangedEvent): boolean {
+    private IsFailedValidation(cellValidationRule: ICellValidationRule, dataChangedEvent: IDataChangedEvent): boolean {
         // if its any just get out before evaluating anything else
         if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.Any) {
             return false;
@@ -77,14 +77,12 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
                 if (cellValidationRule.RangeExpression.Operand2 != "") {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
-                let test: Date = dataChangedEvent.NewValue;
-                let wank: number = test.setHours(0, 0, 0, 0);
                 newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
                 if (cellValidationRule.RangeExpression.Operand2 != "") {
-                    operand2 = Number(cellValidationRule.RangeExpression.Operand2)
+                    operand2 = Number(cellValidationRule.RangeExpression.Operand2);
                 }
                 newValue = dataChangedEvent.NewValue;
                 break
@@ -98,24 +96,24 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         }
 
         switch (cellValidationRule.RangeExpression.Operator) {
-              case LeafExpressionOperator.Equals:
-                return newValue != operand1;
-            case LeafExpressionOperator.NotEquals:
+            case LeafExpressionOperator.Equals:
                 return newValue == operand1;
+            case LeafExpressionOperator.NotEquals:
+                return newValue != operand1;
             case LeafExpressionOperator.GreaterThan:
-                return newValue <= operand1;
+                return newValue > operand1;
             case LeafExpressionOperator.LessThan:
-                return newValue >= operand1;
-          case LeafExpressionOperator.PercentChange:
+                return newValue < operand1;
+            case LeafExpressionOperator.PercentChange:
                 let percentChange: number = Math.abs(100 - Math.abs(newValue * 100 / dataChangedEvent.OldValue))
-                return percentChange < Number(operand1);
+                return percentChange > Number(operand1);
             case LeafExpressionOperator.ValueChange:
                 let changeInValue: number = Math.abs(newValue - dataChangedEvent.OldValue);
-                return changeInValue < Number(operand1);
-                  case LeafExpressionOperator.Between:
-                return newValue >= operand1;
-                 case LeafExpressionOperator.NotBetween:
-                return newValue >= operand1;
+                return changeInValue > Number(operand1);
+            case LeafExpressionOperator.Between:
+                return (newValue > operand1 && newValue < operand2);
+            case LeafExpressionOperator.NotBetween:
+                return !(newValue > operand1 && newValue < operand2);
         }
         return true;
     }
