@@ -45,6 +45,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
             return <option key={operator} value={operator.toString()}>{this.getTextForCellChangeValue(operator)}</option>
         })
 
+
         return <Panel header="Validation Settings" bsStyle="primary">
 
             <Form horizontal>
@@ -52,8 +53,10 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 <FormGroup controlId="formAction">
                     <Row style={smallMarginStyle}>
                         <Col componentClass={ControlLabel} xs={3}>Action: </Col>
-                        <Col xs={9}>
+                        <Col xs={4}>
                             <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
+                        </Col>
+                        <Col xs={5}>
                             <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
                         </Col>
                     </Row>
@@ -85,9 +88,21 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Number &&
                     <FormGroup>
                         <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                            <Col componentClass={ControlLabel} xs={3}>{this.getTextForNumericValueLabel()}</Col>
                             <Col xs={9}>
                                 <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                }
+
+                { /* if  numeric and between operator then show a second numeric control */}
+                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) && this.state.ColumnType == ColumnType.Number &&
+                    <FormGroup>
+                        <Row style={smallMarginStyle}>
+                            <Col componentClass={ControlLabel} xs={3}>And: </Col>
+                            <Col xs={9}>
+                                <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
                             </Col>
                         </Row>
                     </FormGroup>
@@ -97,13 +112,27 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Date &&
                     <FormGroup>
                         <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                            <Col componentClass={ControlLabel} xs={3}>{this.getTextForDateValueLabel()}</Col>
                             <Col xs={9}>
                                 <FormControl style={{ width: "Auto" }} type="date" placeholder="Enter a date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
                             </Col>
                         </Row>
                     </FormGroup>
                 }
+
+                { /* if date and between operator then show a second date control */}
+                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) && this.state.ColumnType == ColumnType.Date &&
+                    <FormGroup>
+                        <Row style={smallMarginStyle}>
+                            <Col componentClass={ControlLabel} xs={3}>To: </Col>
+                            <Col xs={9}>
+                                <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="date" placeholder="Enter a date" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                }
+
+
 
                 { /* if not numeric or date then show a string control for now */}
                 {this.state.Operator != LeafExpressionOperator.Any && (this.state.ColumnType == ColumnType.String || this.state.ColumnType == ColumnType.Boolean) &&
@@ -138,6 +167,11 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
+    private onOperand2ValueChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
     private onCellValidationActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -154,9 +188,9 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
             case ColumnType.Boolean:
                 return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
             case ColumnType.Date:
-                return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between];
+                return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case ColumnType.Number:
-                return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
+                return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
         }
     }
 
@@ -182,6 +216,8 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 }
             case LeafExpressionOperator.Between:
                 return "New Value Is Between"
+            case LeafExpressionOperator.NotBetween:
+                return "New Value Is Not Between"
             case LeafExpressionOperator.ValueChange:
                 return "Value Change is At Least"
             case LeafExpressionOperator.PercentChange:
@@ -192,8 +228,6 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     createCellValidationRuleDescription(cellValidationRule: ICellValidationRule): string {
 
         let cellValidationColumn: IColumn = this.props.Columns.find(c => c.ColumnId == cellValidationRule.ColumnId);
-
-        let scope: string = cellValidationColumn.FriendlyName;
 
         let valueDescription: string = "";
 
@@ -217,20 +251,42 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 case LeafExpressionOperator.PercentChange:
                     valueDescription = " % change is at least ";
                     break;
+                case LeafExpressionOperator.Between:
+                    valueDescription = " new value between ";
+                    break;
+                case LeafExpressionOperator.NotBetween:
+                    valueDescription = " new value not between ";
+                    break;
             }
-            let changeValueText: string = (cellValidationColumn.ColumnType == ColumnType.Boolean || cellValidationColumn.ColumnType == ColumnType.Number) ?
+            let operand1Text: string = (cellValidationColumn.ColumnType == ColumnType.Boolean || cellValidationColumn.ColumnType == ColumnType.Number) ?
                 cellValidationRule.RangeExpression.Operand1 :
                 "'" + cellValidationRule.RangeExpression.Operand1 + "'"
 
-            valueDescription = valueDescription + changeValueText;
+            valueDescription = valueDescription + operand1Text;
 
             if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
                 valueDescription = valueDescription + '%';
             }
+
+            if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.RangeExpression.Operand2)) {
+                let operand2Text: string = (cellValidationColumn.ColumnType == ColumnType.Number) ?
+                    " and " + cellValidationRule.RangeExpression.Operand2 :
+                    " and '" + cellValidationRule.RangeExpression.Operand2 + "'";
+                valueDescription = valueDescription + operand2Text;
+
+            }
         } else {
             valueDescription = " any change in value"
         }
-        return "'" + scope + "' column: " + valueDescription;
+        return "'" + cellValidationColumn.FriendlyName + "' column: " + valueDescription;
+    }
+
+    private getTextForNumericValueLabel(): string {
+        return (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) ? "Between: " : "Value: ";
+    }
+
+    private getTextForDateValueLabel(): string {
+        return (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) ? "From: " : "Value: ";
     }
 
     private stateHasColumn(): boolean {

@@ -112,6 +112,10 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
             case LeafExpressionOperator.ValueChange:
                 let changeInValue: number = Math.abs(newValue - dataChangedEvent.OldValue);
                 return changeInValue < Number(operand1);
+                  case LeafExpressionOperator.Between:
+                return newValue >= operand1;
+                 case LeafExpressionOperator.NotBetween:
+                return newValue >= operand1;
         }
         return true;
     }

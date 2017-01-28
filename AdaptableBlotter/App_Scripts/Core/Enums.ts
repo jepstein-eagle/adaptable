@@ -39,7 +39,8 @@ export enum ExpressionMode {
     // Cell Validation
      Any,
     ValueChange,
-    PercentChange
+    PercentChange,
+    NotBetween
 }
 
 export enum MenuType {
