@@ -35,7 +35,7 @@ import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
-import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
+import { EditingRestrictionStrategy } from '../Strategy/EditingRestrictionStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -43,7 +43,7 @@ import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../C
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
+import { IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
@@ -92,7 +92,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.EditingRestrictionStrategyId, new EditingRestrictionStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -123,8 +123,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // would like to do this with an event (see commented out line below) but dont know how to return a result to then prevent an edit
             // this._onGridSave.Dispatch(this, dataChangedEvent);
             // so for now Im going to call the strategy direclty and then fix properly...
-            let tempCellValidStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-            if (!tempCellValidStrategy.ValidateCellChange(dataChangedEvent)) {
+            let tempCellValidStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
+            if (!tempCellValidStrategy.OnCellChanging(dataChangedEvent)) {
                 e.preventDefault();
             }
         });

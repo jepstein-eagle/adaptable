@@ -8,17 +8,17 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
-import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
+import { IEditingRestrictionRule } from '../../Core/interface/IEditingRestrictionStrategy';
 
 
-interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface EditingRestrictionExpressionWizardProps extends AdaptableWizardStepProps<IEditingRestrictionRule> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string
 }
 
-export class CellValidationExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: CellValidationExpressionWizardProps) {
+export class EditingRestrictionExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+    constructor(private props2: EditingRestrictionExpressionWizardProps) {
         super(props2)
         this.state = {
             Expression: props2.Data.OtherExpression,

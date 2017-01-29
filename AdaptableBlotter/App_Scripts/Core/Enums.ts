@@ -107,7 +107,7 @@ export enum PopupType {
     ManualClose
 }
 
-export enum CellValidationAction {
+export enum EditingRestrictionAction {
     Warning,
     Prevent
 }

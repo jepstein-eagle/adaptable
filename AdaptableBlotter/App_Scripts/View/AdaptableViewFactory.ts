@@ -13,7 +13,7 @@ import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { AlertConfig } from './Alert/AlertConfig'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import { ThemeConfig } from './Theme/ThemeConfig'
-import { CellValidationConfig } from './CellValidation/CellValidationConfig'
+import { EditingRestrictionConfig } from './EditingRestriction/EditingRestrictionConfig'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -32,7 +32,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   AlertConfig: AlertConfig,
   UserFilterConfig: UserFilterConfig,
   ThemeConfig: ThemeConfig,
-  CellValidationConfig: CellValidationConfig,
+  EditingRestrictionConfig: EditingRestrictionConfig,
 }
 
 

@@ -4,28 +4,28 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
+import { IEditingRestrictionRule } from '../../Core/interface/IEditingRestrictionStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
+import { ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
 
-interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface EditingRestrictionSettingsWizardProps extends AdaptableWizardStepProps<IEditingRestrictionRule> {
     Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
 }
-interface CellValidationSettingsWizardState {
+interface EditingRestrictionSettingsWizardState {
     ColumnId: string
     Operator: LeafExpressionOperator;
     Operand1: string;
     Operand2: string;
     ColumnType: ColumnType;
-    CellValidationAction: CellValidationAction;
+    EditingRestrictionAction: EditingRestrictionAction;
     HasOtherExpression: boolean;
 }
 
-export class CellValidationSettingsWizard extends React.Component<CellValidationSettingsWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: CellValidationSettingsWizardProps) {
+export class EditingRestrictionSettingsWizard extends React.Component<EditingRestrictionSettingsWizardProps, EditingRestrictionSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: EditingRestrictionSettingsWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
@@ -33,7 +33,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
             Operand1: this.props.Data.RangeExpression.Operand1,
             Operand2: this.props.Data.RangeExpression.Operand2,
             ColumnType: this.props.Data.ColumnType,
-            CellValidationAction: this.props.Data.CellValidationAction,
+            EditingRestrictionAction: this.props.Data.EditingRestrictionAction,
             HasOtherExpression: this.props.Data.HasOtherExpression
         }
     }
@@ -61,10 +61,10 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                     <Panel header="Validation Action" bsStyle="info" >
                         <FormGroup controlId="formAction">
                             <Col xs={3}>
-                                <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
+                                <Radio value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
                             </Col>
                             <Col xs={9}>
-                                <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show Warning</Radio>
+                                <Radio value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Show Warning</Radio>
                             </Col>
                         </FormGroup>
                     </Panel>
@@ -144,32 +144,32 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let columnType: ColumnType = (e.value == "select") ? ColumnType.Object : this.props.Columns.find(c => c.ColumnId == e.value).ColumnType;
-        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.All } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.All } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operator: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operand1: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperand2ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operand2: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
-    private onCellValidationActionChanged(event: React.FormEvent) {
+    private onEditingRestrictionActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ EditingRestrictionAction: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOtherExpressionOptionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ HasOtherExpression: e.checked } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
+        this.setState({ HasOtherExpression: e.checked } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
     }
 
     private isBetweenOperator(): boolean {
@@ -226,14 +226,14 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     }
 
 
-    createCellValidationRuleDescription(cellValidationRule: ICellValidationRule): string {
-        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.All) {
+    createEditingRestrictionRuleDescription(EditingRestrictionRule: IEditingRestrictionRule): string {
+        if (EditingRestrictionRule.RangeExpression.Operator == LeafExpressionOperator.All) {
             return "All changes";
         }
 
         let valueDescription: string = "";
 
-        switch (cellValidationRule.RangeExpression.Operator) {
+        switch (EditingRestrictionRule.RangeExpression.Operator) {
             case LeafExpressionOperator.Equals:
                 valueDescription = "New value = ";
                 break;
@@ -259,20 +259,20 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 valueDescription = "New value not between ";
                 break;
         }
-        let operand1Text: string = (cellValidationRule.ColumnType == ColumnType.Boolean || cellValidationRule.ColumnType == ColumnType.Number) ?
-            cellValidationRule.RangeExpression.Operand1 :
-            "'" + cellValidationRule.RangeExpression.Operand1 + "'"
+        let operand1Text: string = (EditingRestrictionRule.ColumnType == ColumnType.Boolean || EditingRestrictionRule.ColumnType == ColumnType.Number) ?
+            EditingRestrictionRule.RangeExpression.Operand1 :
+            "'" + EditingRestrictionRule.RangeExpression.Operand1 + "'"
 
         valueDescription = valueDescription + operand1Text;
 
-        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
+        if (EditingRestrictionRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
             valueDescription = valueDescription + '%';
         }
 
-        if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.RangeExpression.Operand2)) {
-            let operand2Text: string = (cellValidationRule.ColumnType == ColumnType.Number) ?
-                " and " + cellValidationRule.RangeExpression.Operand2 :
-                " and '" + cellValidationRule.RangeExpression.Operand2 + "'";
+        if (StringExtensions.IsNotNullOrEmpty(EditingRestrictionRule.RangeExpression.Operand2)) {
+            let operand2Text: string = (EditingRestrictionRule.ColumnType == ColumnType.Number) ?
+                " and " + EditingRestrictionRule.RangeExpression.Operand2 :
+                " and '" + EditingRestrictionRule.RangeExpression.Operand2 + "'";
             valueDescription = valueDescription + operand2Text;
         }
 
@@ -305,10 +305,10 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         }
         this.props.Data.RangeExpression = rangeExpression;
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.CellValidationAction = this.state.CellValidationAction;
+        this.props.Data.EditingRestrictionAction = this.state.EditingRestrictionAction;
         this.props.Data.ColumnType = this.state.ColumnType;
         this.props.Data.HasOtherExpression = this.state.HasOtherExpression;
-        this.props.Data.Description = this.createCellValidationRuleDescription(this.props.Data);
+        this.props.Data.Description = this.createEditingRestrictionRuleDescription(this.props.Data);
     }
     public Back(): void { }
     public StepName = "Create Editing Restriction"
