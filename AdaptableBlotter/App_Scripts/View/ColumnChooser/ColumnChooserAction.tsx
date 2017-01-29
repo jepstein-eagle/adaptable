@@ -10,6 +10,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { ColumnType } from '../../Core/Enums';
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {
@@ -20,7 +21,7 @@ interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooser
 class ColumnChooserActionComponent extends React.Component<ColumnChooserActionProps, {}> {
     render() {
 
-        return <Panel header="Column Chooser" bsStyle="primary">
+        return <PanelWithImage header="Column Chooser" bsStyle="primary" glyphicon="list-alt">
             <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible)}
                 SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
                 HeaderAvailable="Hidden Columns"
@@ -29,11 +30,11 @@ class ColumnChooserActionComponent extends React.Component<ColumnChooserActionPr
                 SortMember="FriendlyName"
                 ValueMember="FriendlyName"
                 onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>
-        </Panel>
+        </PanelWithImage>
     }
 
     private ColumnListChange(columnList: Array<string>) {
-        this.props.onNewColumnListOrder(columnList.map(friendlyName => this.props.Columns.find(x=>x.FriendlyName == friendlyName)))
+        this.props.onNewColumnListOrder(columnList.map(friendlyName => this.props.Columns.find(x => x.FriendlyName == friendlyName)))
     }
 }
 

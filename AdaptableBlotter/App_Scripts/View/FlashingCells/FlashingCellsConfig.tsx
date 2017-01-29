@@ -12,6 +12,7 @@ import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-boo
 import { ColumnType } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
@@ -66,15 +67,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 
         allFlashingColumns.sort(compareFlashingCellConfigItems);
 
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={9}>Flashing Cell Columns</Col>
-                <Col xs={3}>
-
-                </Col>
-            </Row>
-        </Form>;
-
+        
         let setAllOption = <Form horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12}>
@@ -86,14 +79,14 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FormGroup>
         </Form>;
 
-        return <Panel header={header} bsStyle="primary" style={panelStyle}>
+        return <PanelWithImage header={"Flashing Cell Columns"} bsStyle="primary" style={panelStyle} glyphicon="flash">
             {setAllOption}
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allFlashingColumns}
             </ListGroup>
 
-        </Panel>
+        </PanelWithImage>
     }
 }
 

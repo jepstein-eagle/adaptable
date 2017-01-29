@@ -8,6 +8,7 @@ import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Co
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
@@ -41,7 +42,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
         var blotter = this.props.AdaptableBlotter;
    
         return (
-            <Panel header="Export" bsStyle="primary">
+            <PanelWithImage header="Export" bsStyle="primary" glyphicon="export">
                 <Form horizontal>
                     <FormGroup controlId="fileName">
                         <Col xs={4} componentClass={ControlLabel}>File Name: </Col>
@@ -71,7 +72,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                         </Col>
                     </FormGroup>
                 </Form>
-            </Panel>
+            </PanelWithImage>
         );
     }
 }

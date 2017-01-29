@@ -3,13 +3,14 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
+import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 
 
 interface PanelWithButtonProps extends PanelProps {
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;
-    headerText : string
+    headerText: string
+    glyphicon?: string
     buttonDisabled?: boolean
 }
 
@@ -21,21 +22,26 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
     render() {
         let { buttonContent } = this.props
         let className = "panel-with-button"
-        if(this.props.className)
-        {
+        if (this.props.className) {
             className += " " + this.props.className
         }
-         if(buttonContent)
-        {
+        if (buttonContent) {
             className += " " + "panel-with-button-reduce-header-padding"
         }
-    
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center"}}>
-                <Col xs={7}>{this.props.headerText}</Col>
-                <Col xs={5}>
+
+
+        let header = <Form inline>
+            <Row style={{ display: "flex", alignItems: "center" }}>
+
+                <Col xs={9}>
+                    {this.props.glyphicon != null &&
+                        <Glyphicon glyph={this.props.glyphicon} style={glyphStyle} />
+                    }
+                    {this.props.headerText}
+                </Col>
+                <Col xs={3}>
                     {buttonContent &&
-                     
+
                         <Button bsSize="small" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
@@ -47,4 +53,9 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         </Panel>;
     }
 
+}
+
+let glyphStyle = {
+    marginRight: '10px',
+    padding: '0px'
 }

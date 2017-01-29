@@ -12,6 +12,7 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface QuickSearchActionProps extends IStrategyViewPopupProps<QuickSearchActionComponent> {
@@ -81,9 +82,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
         return (
             <div >
-                <Panel header="Quick Search" bsStyle="primary">
-
-
+                <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open">
                     <Form inline>
                         <div >
                             <Panel header={"Search For"} bsStyle="info">
@@ -137,10 +136,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                             </Panel>
                         </div>
                     </Form>
-
-
-
-                </Panel>
+                </PanelWithImage>
             </div>
         );
     }

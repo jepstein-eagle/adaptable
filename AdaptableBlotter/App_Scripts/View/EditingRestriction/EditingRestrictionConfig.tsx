@@ -81,7 +81,8 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         })
         return <PanelWithButton headerText="Editing Restrictions Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Editing Restriction"}
-            buttonClick={() => this.createEditingRestriction()}  >
+            buttonClick={() => this.createEditingRestriction()} 
+            glyphicon={"flag"} >
             {editingRestrictionItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

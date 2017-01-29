@@ -12,6 +12,7 @@ import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Modal } fro
 import { CalendarsConfigItem } from './CalendarsConfigItem'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigComponent> {
@@ -53,14 +54,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             </CalendarEntryItem>
         }) : null;
 
-        let header = <Form horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={9}>Calendars</Col>
-                <Col xs={3}></Col>
-            </Row>
-        </Form>;
-
-        return <Panel header={header} bsStyle="primary" >
+         return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar">
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
@@ -83,7 +77,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                     </Modal.Footer>
                 </Modal>
                 : null}
-        </Panel>
+        </PanelWithImage>
     }
 
     private _displayedCalendar: ICalendar;

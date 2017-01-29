@@ -10,6 +10,8 @@ import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import {SmartEditOperation} from '../../Core/Enums'
 import {ISmartEditPreview, ISmartEditValueTuple} from '../../Core/Interface/ISmartEditStrategy'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { PanelWithImage } from '../PanelWithImage';
+
 
 interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
     SmartEditValue: number,
@@ -46,7 +48,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         }
         return (
             <div >
-                <Panel header="Smart Edit Details" bsStyle="primary">
+                <PanelWithImage header="Smart Edit Details" bsStyle="primary" glyphicon="pencil">
                     <Form inline>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
@@ -61,7 +63,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                         {' '}
                         <Button bsStyle="info" disabled={isNaN(this.props.SmartEditValue) } onClick={() => this.props.onApplySmartEdit() } >Apply to Grid</Button>
                     </Form>
-                </Panel>
+                </PanelWithImage>
                 <Panel header="Preview Results" bsStyle="success" style={divStyle}>
                     <Table >
                         {header}

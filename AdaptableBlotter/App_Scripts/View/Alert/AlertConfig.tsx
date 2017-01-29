@@ -72,7 +72,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         })
         return <PanelWithButton headerText="Alerts Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Alert"}
-            buttonClick={() => this.createAlert()}  >
+            buttonClick={() => this.createAlert()}  glyphicon={"road"}>
             {alertItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

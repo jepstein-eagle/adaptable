@@ -60,7 +60,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         return <PanelWithButton headerText="Create Conditional Style"
             buttonContent={"Create Conditional Style"}
             buttonClick={() => this.onAdd()}
-            bsStyle="primary" style={panelStyle}>
+            bsStyle="primary" style={panelStyle} glyphicon={"tint"}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>

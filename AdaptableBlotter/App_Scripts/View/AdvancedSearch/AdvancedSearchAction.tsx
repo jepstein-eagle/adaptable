@@ -68,7 +68,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         return (
             <div >
                     <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                        buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  >
+                        buttonClick={() => this.onNewAdvancedSearch()} style={panelStyle}  glyphicon={"search"}>
 
                         {/* The main Search selection form */}
                         <div >
