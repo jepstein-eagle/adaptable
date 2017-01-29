@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox } from 'react-bootstrap';
+import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
@@ -49,88 +49,85 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         })
 
         let operatorTypes = this.getAvailableOperators().map((operator: LeafExpressionOperator) => {
-            return <option key={operator} value={operator.toString()}>{this.getTextForCellChangeValue(operator)}</option>
+            return <option key={operator} value={operator.toString()}>{this.getTextForLeafOperator(operator)}</option>
         })
 
         return <div>
             <Panel header="Editing Restriction Settings" bsStyle="primary">
 
-                    <Panel header="Editing Restriction Action" bsStyle="info" >
-                        <Form inline >
+                <Panel header="Editing Restriction Action" bsStyle="info" >
+                    <Form inline >
+                        <Col xs={5}>
+                            <Radio inline value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
+                        </Col>
+                        <Col xs={4}>
+                            <Radio inline value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Show Warning</Radio>
+                        </Col>
+                    </Form>
+                </Panel>
+
+                <Panel header="Editing Restriction Column" bsStyle="info" >
+                    <FormGroup controlId="formColumn">
+                        <Col xs={9}>
+                            <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
+                                <option value="select" key="select">Select a column</option>
+                                {optionColumns}
+                            </FormControl>
+                        </Col>
+                    </FormGroup>
+                </Panel>
+
+                <Panel header="Editing Restriction Condition" bsStyle="info">
+                    <FormGroup>
+                        <Col xs={4}>
+                            <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
+                                {operatorTypes}
+                            </FormControl>
+                        </Col>
+
+                        { /* if  numeric then show a numeric control */}
+                        {this.isNotAnyOperator() && this.isNotNegativeOperator() && this.state.ColumnType == ColumnType.Number &&
+                            <Col xs={4}>
+                                <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                            </Col>
+                        }
+
+                        { /* if numeric and between operator then show a second numeric control */}
+                        {this.isBetweenOperator() && this.state.ColumnType == ColumnType.Number &&
+                            <Col xs={4}>
+                                <FormControl value={this.state.Operand2} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                            </Col>
+                        }
+
+                        { /* if  date then show a date control */}
+                        {this.isNotAnyOperator() && this.state.ColumnType == ColumnType.Date &&
                             <Col xs={5}>
-                                <Radio inline value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
+                                <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
+                                {this.isBetweenOperator() &&
+                                    <FormControl value={this.state.Operand2} type="date" placeholder="Enter Date" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                                }
                             </Col>
+                        }
+
+
+                        { /* if string then show a text control  */}
+                        {this.isNotAnyOperator() && (this.state.ColumnType == ColumnType.String) &&
                             <Col xs={4}>
-                                <Radio inline value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Show Warning</Radio>
+                                <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                             </Col>
-                       </Form>
-                    </Panel>
+                        }
+                    </FormGroup>
+                </Panel>
 
-                    <Panel header="Editing Restriction Column" bsStyle="info" >
-                        <FormGroup controlId="formColumn">
-                            <Col xs={9}>
-                                <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
-                                    <option value="select" key="select">Select a column</option>
-                                    {optionColumns}
-                                </FormControl>
-                            </Col>
-                        </FormGroup>
-                    </Panel>
+                <Panel header="Editing Restriction Expression" bsStyle="info">
+                    <Form inline >
+                        <Col xs={12}>
+                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Base on other cell values (you create the Expression in the next step)</Checkbox>
+                        </Col>
+                    </Form>
 
-                    <Panel header="Editing Restriction Condition" bsStyle="info">
-                        <FormGroup>
-                            <Col xs={4}>
-                                <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
-                                    {operatorTypes}
-                                </FormControl>
-                            </Col>
-
-                            { /* if  numeric then show a numeric control */}
-                            {this.isNotAnyOperator() && this.isNotNegativeOperator() && this.state.ColumnType == ColumnType.Number &&
-                                <Col xs={4}>
-                                    <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
-                                </Col>
-                            }
-
-                            { /* if numeric and between operator then show a second numeric control */}
-                            {this.isBetweenOperator() && this.state.ColumnType == ColumnType.Number &&
-                                <Col xs={4}>
-                                    <FormControl value={this.state.Operand2} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
-                                </Col>
-                            }
-
-                            { /* if  date then show a date control */}
-                            {this.isNotAnyOperator() && this.state.ColumnType == ColumnType.Date &&
-                                <Col xs={4}>
-                                    <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
-                                </Col>
-                            }
-
-                            { /* if between operator then show a second date control */}
-                            {this.isBetweenOperator() && this.state.ColumnType == ColumnType.Date &&
-                                <Col xs={4}>
-                                    <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="date" placeholder="Enter Date" onChange={(x) => this.onOperand2ValueChanged(x)} />
-                                </Col>
-                            }
-
-                            { /* if string then show a text control  */}
-                            {this.isNotAnyOperator() && (this.state.ColumnType == ColumnType.String) &&
-                                <Col xs={4}>
-                                    <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
-                                </Col>
-                            }
-                        </FormGroup>
-                    </Panel>
-
-                    <Panel header="Editing Restriction Expression" bsStyle="info">
-                        <Form inline >
-                            <Col xs={12}>
-                                <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Base on other cell values (you create the Expression in the next step)</Checkbox>
-                            </Col>
-                       </Form>
-
-                    </Panel>
-             </Panel>
+                </Panel>
+            </Panel>
         </div>
 
     }
@@ -193,7 +190,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         }
     }
 
-    private getTextForCellChangeValue(leafExpressionOperator: LeafExpressionOperator): string {
+    private getTextForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
         switch (leafExpressionOperator) {
             case LeafExpressionOperator.All:
                 return "All Changes "
@@ -202,13 +199,13 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
             case LeafExpressionOperator.NotEquals:
                 return "Not Equals "
             case LeafExpressionOperator.GreaterThan:
-                if (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Date) {
+                if (this.stateHasColumn() && this.state.ColumnType == ColumnType.Date) {
                     return "After "
                 } else {
                     return "Greater Than "
                 }
             case LeafExpressionOperator.LessThan:
-                if (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Date) {
+                if (this.stateHasColumn() && this.state.ColumnType == ColumnType.Date) {
                     return "Before "
                 } else {
                     return "Less Than "
@@ -232,7 +229,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
 
     createEditingRestrictionDescription(editingRestriction: IEditingRestriction): string {
 
-        let valueDescription: string = this.getTextForCellChangeValue(editingRestriction.RangeExpression.Operator);
+        let valueDescription: string = this.getTextForLeafOperator(editingRestriction.RangeExpression.Operator);
 
         if (!this.operatorRequiresValue(editingRestriction.RangeExpression.Operator)) {
             return valueDescription;
