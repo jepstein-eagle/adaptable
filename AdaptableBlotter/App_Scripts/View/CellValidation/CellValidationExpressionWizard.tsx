@@ -30,5 +30,5 @@ export class CellValidationExpressionWizard extends ExpressionBuilderPage implem
         this.props2.Data.OtherExpression = this.state.Expression
     }
     public Back(): void { }
-    public StepName = "Cell Validation Create Expression"
+    public StepName = "Editing Restriction Create Expression"
 }

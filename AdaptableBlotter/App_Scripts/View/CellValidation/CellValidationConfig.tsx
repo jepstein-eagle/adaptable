@@ -49,7 +49,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Action", 2], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Restriction", 3], ["Expression", 3],["Action", 2], ["", 2]];
 
         let validationItems = this.props.CellValidationRules.map((x, index) => {
             return <li
@@ -79,8 +79,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                 </Row>
             </li>
         })
-        return <PanelWithButton headerText="Validation Rules Configuration" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Validation Rule"}
+        return <PanelWithButton headerText="Editing Restrictions Configuration" bsStyle="primary" style={panelStyle}
+            buttonContent={"Create Editing Restriction"}
             buttonClick={() => this.createCellValidationRule()}  >
             {validationItems.length > 0 &&
                 <div>
@@ -92,7 +92,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             }
 
             {validationItems.length == 0 &&
-                <Well bsSize="small">Click 'Create Validation Rule' to start creating validation rules.</Well>
+                <Well bsSize="small">Click 'Create Editing Restriction' to start creating editing restrictions.</Well>
             }
 
             {this.state.EditedCellValidationRule != null &&
