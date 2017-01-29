@@ -115,6 +115,8 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
                 return (newValue > operand1 && newValue < operand2);
             case LeafExpressionOperator.NotBetween:
                 return !(newValue > operand1 && newValue < operand2);
+            case LeafExpressionOperator.IsNegative:
+                return (newValue < 0);
         }
         return true;
     }

@@ -40,7 +40,8 @@ export enum ExpressionMode {
      All,
     ValueChange,
     PercentChange,
-    NotBetween
+    NotBetween,
+    IsNegative
 }
 
 export enum MenuType {

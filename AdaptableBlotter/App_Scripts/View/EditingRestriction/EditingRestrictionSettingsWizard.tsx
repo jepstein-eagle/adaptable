@@ -87,7 +87,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                             </Col>
 
                             { /* if  numeric then show a numeric control */}
-                            {this.isNotAnyOperator() && this.state.ColumnType == ColumnType.Number &&
+                            {this.isNotAnyOperator() && this.isNotNegativeOperator() && this.state.ColumnType == ColumnType.Number &&
                                 <Col xs={4}>
                                     <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 </Col>
@@ -127,7 +127,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                         <FormGroup controlId="formOtherExpression">
                             <Col xs={12}>
                                 <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasOtherExpression}>
-                                Base on other cell values (you create the Expression in the next step)
+                                    Base on other cell values (you create the Expression in the next step)
                                 </Checkbox>
                             </Col>
                         </FormGroup>
@@ -177,6 +177,10 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         return this.state.Operator != LeafExpressionOperator.All;
     }
 
+    private isNotNegativeOperator(): boolean {
+        return this.state.Operator != LeafExpressionOperator.IsNegative;
+    }
+
     private getAvailableOperators(): LeafExpressionOperator[] {
         if (!this.stateHasColumn()) {
             return [LeafExpressionOperator.All];
@@ -188,7 +192,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
             case ColumnType.Date:
                 return [LeafExpressionOperator.All, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case ColumnType.Number:
-                return [LeafExpressionOperator.All, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
+                return [LeafExpressionOperator.All, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.IsNegative, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
         }
     }
 
@@ -216,6 +220,8 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                 return "Between"
             case LeafExpressionOperator.NotBetween:
                 return "Not Between"
+            case LeafExpressionOperator.IsNegative:
+                return "Is Negative";
             case LeafExpressionOperator.ValueChange:
                 return "Change At Least"
             case LeafExpressionOperator.PercentChange:
@@ -226,6 +232,10 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
     createEditingRestrictionDescription(editingRestriction: IEditingRestriction): string {
         if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
             return "All changes";
+        }
+
+        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.IsNegative) {
+            return "Is Negative";
         }
 
         let valueDescription: string = "";
@@ -281,7 +291,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
 
     public canNext(): boolean {
         if (!this.stateHasColumn()) { return false };
-        if (this.state.Operator == LeafExpressionOperator.All) {
+        if (this.state.Operator == LeafExpressionOperator.All || this.state.Operator == LeafExpressionOperator.IsNegative) {
             return true;
         }
         if (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) {
@@ -306,7 +316,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         this.props.Data.HasOtherExpression = this.state.HasOtherExpression;
         this.props.Data.Description = this.createEditingRestrictionDescription(this.props.Data);
     }
-    
+
     public Back(): void { }
     public StepName = "Create Editing Restriction"
 }

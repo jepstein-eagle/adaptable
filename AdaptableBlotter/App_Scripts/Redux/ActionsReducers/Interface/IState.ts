@@ -12,7 +12,7 @@ import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy
 import { IAlert } from '../../../Core/interface/IAlertStrategy';
 import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
-import { IEditingRestrictionRule } from '../../../Core/interface/IEditingRestrictionStrategy';
+import { IEditingRestriction } from '../../../Core/interface/IEditingRestrictionStrategy';
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -103,5 +103,5 @@ export interface ThemeState {
 }
 
 export interface EditingRestrictionState {
-    EditingRestrictions: Array<IEditingRestrictionRule>
+    EditingRestrictions: Array<IEditingRestriction>
 }
