@@ -8,6 +8,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { IRangeExpression } from '../Core/Interface/IExpression';
+import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
@@ -41,7 +42,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         let validationRules = this.CellValidationRules.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
         if (validationRules.length > 0) {
             // first do prevent 
-            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.PreventEdit)) {
+            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Prevent)) {
                 let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
                 if (hasFailed) {
                     alert("Validation Rule Failed: " + validationRule.Description)
@@ -49,7 +50,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
                 }
             }
             // now do warning 
-            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.ShowWarning)) {
+            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Warning)) {
                 let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
                 if (hasFailed) {
                     if (!confirm("Rule: " + validationRule.Description + " has failed.  Do you want to continue?")) {
@@ -120,10 +121,12 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     public CreateEmptyCellValidationRule(): ICellValidationRule {
         let newValidationRule: ICellValidationRule = {
-            CellValidationAction: CellValidationAction.PreventEdit,
+            CellValidationAction: CellValidationAction.Prevent,
             ColumnId: "select",
             ColumnType: ColumnType.Object,
-            RangeExpression: this.createEmptyRangeExpression(), // to do
+            RangeExpression: this.createEmptyRangeExpression(), 
+           HasOtherExpression: false,
+            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: ""
         }
         return newValidationRule;

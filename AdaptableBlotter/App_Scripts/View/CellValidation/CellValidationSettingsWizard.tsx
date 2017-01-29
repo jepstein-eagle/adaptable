@@ -20,7 +20,8 @@ interface CellValidationSettingsWizardState {
     Operand1: string;
     Operand2: string;
     ColumnType: ColumnType;
-    CellValidationAction: CellValidationAction
+    CellValidationAction: CellValidationAction;
+    HasOtherExpression: boolean;
 }
 
 export class CellValidationSettingsWizard extends React.Component<CellValidationSettingsWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -32,11 +33,18 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
             Operand1: this.props.Data.RangeExpression.Operand1,
             Operand2: this.props.Data.RangeExpression.Operand2,
             ColumnType: this.props.Data.ColumnType,
-            CellValidationAction: this.props.Data.CellValidationAction
+            CellValidationAction: this.props.Data.CellValidationAction,
+            HasOtherExpression: this.props.Data.HasOtherExpression
         }
     }
 
+    public componentDidMount() {
+        // would rather not but only way I can see to force page to show Finish (which is default)
+        this.props.UpdateGoBackState(this.state.HasOtherExpression == false);
+    }
+
     render(): any {
+
         let optionColumns = this.props.Columns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
@@ -46,25 +54,25 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         })
 
 
-        return <div>
+        return <div style={smallMarginStyle}>
 
             <Form horizontal>
-                <Panel header="Validation Settings" bsStyle="primary">
+                <Panel header="Validation Settings" bsStyle="primary" >
 
                     <FormGroup controlId="formAction">
-                        <Row >
+                        <Row style={smallMarginStyle}>
                             <Col componentClass={ControlLabel} xs={3}>Action: </Col>
                             <Col xs={3}>
-                                <Radio value={CellValidationAction.PreventEdit.toString()} checked={this.state.CellValidationAction == CellValidationAction.PreventEdit} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
+                                <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
                             </Col>
                             <Col xs={6}>
-                                <Radio value={CellValidationAction.ShowWarning.toString()} checked={this.state.CellValidationAction == CellValidationAction.ShowWarning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
+                                <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show Warning</Radio>
                             </Col>
                         </Row>
                     </FormGroup>
 
                     <FormGroup controlId="formColumn">
-                        <Row >
+                        <Row style={smallMarginStyle}>
                             <Col componentClass={ControlLabel} xs={3}>Column: </Col>
                             <Col xs={9}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
@@ -77,7 +85,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                 </Panel>
                 <Panel header="Validation Condition" bsStyle="primary">
                     <FormGroup>
-                        <Row >
+                        <Row style={smallMarginStyle}>
                             <Col componentClass={ControlLabel} xs={3}>Apply: </Col>
                             <Col xs={9}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
@@ -90,7 +98,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                     { /* if  numeric then show a numeric control */}
                     {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Number &&
                         <FormGroup>
-                            <Row >
+                            <Row style={smallMarginStyle}>
                                 <Col componentClass={ControlLabel} xs={3}>{this.getTextForValueLabel()}</Col>
                                 <Col xs={4}>
                                     <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
@@ -108,7 +116,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                     { /* if  date then show a date control */}
                     {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Date &&
                         <FormGroup>
-                            <Row >
+                            <Row style={smallMarginStyle}>
                                 <Col componentClass={ControlLabel} xs={3}>{this.getTextForValueLabel()}</Col>
                                 <Col xs={4}>
                                     <FormControl style={{ width: "Auto" }} type="date" placeholder="Enter a date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
@@ -126,7 +134,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                     { /* if not numeric or date then show a string control for now */}
                     {this.state.Operator != LeafExpressionOperator.Any && (this.state.ColumnType == ColumnType.String || this.state.ColumnType == ColumnType.Boolean) &&
                         <FormGroup>
-                            <Row >
+                            <Row style={smallMarginStyle}>
                                 <Col componentClass={ControlLabel} xs={3}>Value: </Col>
                                 <Col xs={9}>
                                     <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
@@ -135,6 +143,21 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                         </FormGroup>
                     }
 
+                    <FormGroup controlId="formOtherExpression">
+                        <Row style={smallMarginStyle}>
+                            <Col componentClass={ControlLabel} xs={3}>Based On: </Col>
+                            <Col xs={9}>
+                                <Radio value="thisColumn" checked={this.state.HasOtherExpression == false}
+                                    onChange={(e) => this.onOtherExpressionOptionChanged(e)}>
+                                    This Column Only
+                                </Radio>
+                                <Radio value="otherExpression" checked={this.state.HasOtherExpression == true}
+                                    onChange={(e) => this.onOtherExpressionOptionChanged(e)}>
+                                    Other Column Values
+                                </Radio>
+                            </Col>
+                        </Row>
+                    </FormGroup>
 
                 </Panel>
             </Form>
@@ -145,27 +168,33 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let columnType: ColumnType = (e.value == "select") ? ColumnType.Object : this.props.Columns.find(c => c.ColumnId == e.value).ColumnType;
-        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Any } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Any } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ Operator: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onOperand2ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
     }
 
     private onCellValidationActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+    }
+
+    private onOtherExpressionOptionChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        let result: boolean = (e.value == "otherExpression")
+        this.setState({ HasOtherExpression: result } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(e.value == "thisColumn"))
     }
 
     private getAvailableOperators(): LeafExpressionOperator[] {
@@ -214,60 +243,58 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         }
     }
 
+    
     createCellValidationRuleDescription(cellValidationRule: ICellValidationRule): string {
-
-        let cellValidationColumn: IColumn = this.props.Columns.find(c => c.ColumnId == cellValidationRule.ColumnId);
+        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.Any) {
+            return " any change in value";
+        }
 
         let valueDescription: string = "";
 
-        if (cellValidationRule.RangeExpression.Operator != LeafExpressionOperator.Any) {
-            switch (cellValidationRule.RangeExpression.Operator) {
-                case LeafExpressionOperator.Equals:
-                    valueDescription = " new value = ";
-                    break;
-                case LeafExpressionOperator.NotEquals:
-                    valueDescription = " new value <> ";
-                    break;
-                case LeafExpressionOperator.GreaterThan:
-                    valueDescription = " new value > ";
-                    break;
-                case LeafExpressionOperator.LessThan:
-                    valueDescription = " new value < ";
-                    break;
-                case LeafExpressionOperator.ValueChange:
-                    valueDescription = " change in value >= ";
-                    break;
-                case LeafExpressionOperator.PercentChange:
-                    valueDescription = " % change is at least ";
-                    break;
-                case LeafExpressionOperator.Between:
-                    valueDescription = " new value between ";
-                    break;
-                case LeafExpressionOperator.NotBetween:
-                    valueDescription = " new value not between ";
-                    break;
-            }
-            let operand1Text: string = (cellValidationColumn.ColumnType == ColumnType.Boolean || cellValidationColumn.ColumnType == ColumnType.Number) ?
-                cellValidationRule.RangeExpression.Operand1 :
-                "'" + cellValidationRule.RangeExpression.Operand1 + "'"
-
-            valueDescription = valueDescription + operand1Text;
-
-            if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
-                valueDescription = valueDescription + '%';
-            }
-
-            if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.RangeExpression.Operand2)) {
-                let operand2Text: string = (cellValidationColumn.ColumnType == ColumnType.Number) ?
-                    " and " + cellValidationRule.RangeExpression.Operand2 :
-                    " and '" + cellValidationRule.RangeExpression.Operand2 + "'";
-                valueDescription = valueDescription + operand2Text;
-
-            }
-        } else {
-            valueDescription = " any change in value"
+        switch (cellValidationRule.RangeExpression.Operator) {
+            case LeafExpressionOperator.Equals:
+                valueDescription = " new value = ";
+                break;
+            case LeafExpressionOperator.NotEquals:
+                valueDescription = " new value <> ";
+                break;
+            case LeafExpressionOperator.GreaterThan:
+                valueDescription = " new value > ";
+                break;
+            case LeafExpressionOperator.LessThan:
+                valueDescription = " new value < ";
+                break;
+            case LeafExpressionOperator.ValueChange:
+                valueDescription = " change in value >= ";
+                break;
+            case LeafExpressionOperator.PercentChange:
+                valueDescription = " % change is at least ";
+                break;
+            case LeafExpressionOperator.Between:
+                valueDescription = " new value between ";
+                break;
+            case LeafExpressionOperator.NotBetween:
+                valueDescription = " new value not between ";
+                break;
         }
-        return "'" + cellValidationColumn.FriendlyName + "' column: " + valueDescription;
+        let operand1Text: string = (cellValidationRule.ColumnType == ColumnType.Boolean || cellValidationRule.ColumnType == ColumnType.Number) ?
+            cellValidationRule.RangeExpression.Operand1 :
+            "'" + cellValidationRule.RangeExpression.Operand1 + "'"
+
+        valueDescription = valueDescription + operand1Text;
+
+        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
+            valueDescription = valueDescription + '%';
+        }
+
+        if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.RangeExpression.Operand2)) {
+            let operand2Text: string = (cellValidationRule.ColumnType == ColumnType.Number) ?
+                " and " + cellValidationRule.RangeExpression.Operand2 :
+                " and '" + cellValidationRule.RangeExpression.Operand2 + "'";
+            valueDescription = valueDescription + operand2Text;
+        }
+
+        return valueDescription;
     }
 
     private getTextForValueLabel(): string {
@@ -291,8 +318,6 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         return StringExtensions.IsNotNullOrEmpty(this.state.Operand1);
     }
 
-
-
     public canBack(): boolean { return true; }
     public Next(): void {
         var rangeExpression: IRangeExpression = {
@@ -304,8 +329,12 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         this.props.Data.ColumnId = this.state.ColumnId;
         this.props.Data.CellValidationAction = this.state.CellValidationAction;
         this.props.Data.ColumnType = this.state.ColumnType;
+        this.props.Data.HasOtherExpression = this.state.HasOtherExpression;
         this.props.Data.Description = this.createCellValidationRuleDescription(this.props.Data);
     }
     public Back(): void { }
     public StepName = "Validation Setup"
+}
+let smallMarginStyle = {
+    margin: '3px'
 }

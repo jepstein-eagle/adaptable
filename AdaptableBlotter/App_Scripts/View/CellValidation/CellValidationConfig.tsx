@@ -20,7 +20,9 @@ import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
+import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
@@ -47,16 +49,22 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
 
 
-        let cellInfo: [string, number][] = [["Validation Rule", 7], ["Action", 2], ["", 3]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Action", 2], ["", 2]];
 
         let validationItems = this.props.CellValidationRules.map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row >
-                    <Col xs={7}>
+                    <Col xs={2}>
+                        {this.props.Columns.find(c=>c.ColumnId == x.ColumnId).FriendlyName }
+                    </Col>
+                     <Col xs={3}>
                         {x.Description}
                     </Col>
                     <Col xs={3}>
+                        {this.setExpressionDescription(x) }
+                    </Col>
+                    <Col xs={2}>
                         <FormControl componentClass="select" placeholder="select" value={x.CellValidationAction.toString()} onChange={(x) => this.onCellValidationActionChanged(index, x)} >
                             {cellValidationActionTypes}
                         </FormControl>
@@ -90,6 +98,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             {this.state.EditedCellValidationRule != null &&
                 <AdaptableWizard Steps={[
                     <CellValidationSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
+                    <CellValidationExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />,
                 ]}
                     Data={this.state.EditedCellValidationRule}
                     StepStartIndex={0}
@@ -125,6 +134,13 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidationRule: null, EditedIndexCellValidationRule: -1 });
     }
 
+     setExpressionDescription(cellValidationRule: ICellValidationRule):string {
+        return (cellValidationRule.HasOtherExpression) ?
+            ExpressionHelper.ConvertExpressionToString(cellValidationRule.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
+            "No Expression";
+    }
+
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -153,3 +169,5 @@ let listGroupStyle = {
 let panelStyle = {
     width: '800px'
 }
+
+

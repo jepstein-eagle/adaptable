@@ -3,7 +3,6 @@ import { ISearchService } from './Interface/ISearchService';
 import { AdaptableBlotter } from '../../Hypergrid/AdaptableBlotter';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { MenuType, LeafExpressionOperator, ColumnType } from '../Enums';
-import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
 

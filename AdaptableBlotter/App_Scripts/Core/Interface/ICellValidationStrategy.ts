@@ -2,6 +2,7 @@ import { IStrategy } from './IStrategy';
 import { CellValidationAction, ColumnType } from '../Enums';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { IRangeExpression } from '../Interface/IExpression';
+import { Expression } from '../Expression/Expression'
 
 
 export interface ICellValidationStrategy extends IStrategy {
@@ -14,10 +15,7 @@ export interface ICellValidationRule {
         RangeExpression: IRangeExpression,
         CellValidationAction: CellValidationAction;
         Description: string;
-        ColumnType: ColumnType
+        ColumnType: ColumnType;
+        HasOtherExpression: boolean;
+        OtherExpression: Expression;
 }
-
-
-
-
-
