@@ -1,4 +1,4 @@
-import { IEditingRestrictionStrategy, IEditingRestrictionRule } from '../Core/Interface/IEditingRestrictionStrategy';
+import { IEditingRestrictionStrategy, IEditingRestriction } from '../Core/Interface/IEditingRestrictionStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -13,39 +13,39 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 export class EditingRestrictionStrategy extends AdaptableStrategyBase implements IEditingRestrictionStrategy {
     private menuItemConfig: IMenuItem;
-    private EditingRestrictionRules: IEditingRestrictionRule[]
+    private EditingRestrictions: IEditingRestriction[]
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.EditingRestrictionStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Validation Rules", this.Id, 'EditingRestrictionConfig', MenuType.Configuration, "flag");
+        this.menuItemConfig = new MenuItemShowPopup("Editing Restrictions", this.Id, 'EditingRestrictionConfig', MenuType.Configuration, "flag");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         //          this.blotter.OnGridSave().Subscribe((sender, gridSaveInfo) => this.CheckGridSaveInfo(gridSaveInfo))
     }
 
     InitState() {
-        if (this.EditingRestrictionRules != this.GetEditingRestrictionState().EditingRestrictions) {
-            this.EditingRestrictionRules = this.GetEditingRestrictionState().EditingRestrictions;
+        if (this.EditingRestrictions != this.GetEditingRestrictionState().EditingRestrictions) {
+            this.EditingRestrictions = this.GetEditingRestrictionState().EditingRestrictions;
         }
     }
 
     public OnCellChanging(dataChangedEvent: IDataChangedEvent): boolean {
-        let validationRules = this.EditingRestrictionRules.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
-        if (validationRules.length > 0) {
+        let editingRestrictions = this.EditingRestrictions.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
+        if (editingRestrictions.length > 0) {
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
-            // first do cell validations which prevent edit
-            for (let validationRule of validationRules.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Prevent)) {
-                let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent, columns);
+            // first do restrictions which prevent edit
+            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Prevent)) {
+                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
                 if (hasFailed) {
-                    alert("Validation Rule Failed: " + validationRule.Description + this.getExpressionDescription(validationRule, columns))
+                    alert("Editing Restriction: " + editingRestriction.Description + this.getExpressionDescription(editingRestriction, columns))
                     return false;
                 }
             }
-            // then do cell validations which show a warning 
-            for (let validationRule of validationRules.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Warning)) {
-                let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent, columns);
+            // then do restrictions which show a warning 
+            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Warning)) {
+                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
                 if (hasFailed) {
-                    if (!confirm("Rule: " + validationRule.Description + this.getExpressionDescription(validationRule, columns) + " has failed.  Do you want to continue?")) {
+                    if (!confirm("Editing Restriction: " + editingRestriction.Description + this.getExpressionDescription(editingRestriction, columns) + " has failed.  Do you want to continue?")) {
                         return false;
                     }
                 }
@@ -54,17 +54,17 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         return true;
     }
 
-    private IsFailedValidation(EditingRestrictionRule: IEditingRestrictionRule, dataChangedEvent: IDataChangedEvent, columns: IColumn[]): boolean {
+    private IsEditingRestrictionRequired(editingRestriction: IEditingRestriction, dataChangedEvent: IDataChangedEvent, columns: IColumn[]): boolean {
         // first see if the Expression has passed (if there is one)
-        if (EditingRestrictionRule.HasOtherExpression) {
-            let isExpressionValid = ExpressionHelper.checkForExpression(EditingRestrictionRule.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
+        if (editingRestriction.HasOtherExpression) {
+            let isExpressionValid = ExpressionHelper.checkForExpression(editingRestriction.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
             if (!isExpressionValid) {
                 return false;
             }
         }
 
         // if its any just get out before evaluating anything else
-        if (EditingRestrictionRule.RangeExpression.Operator == LeafExpressionOperator.All) {
+        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
             return true;
         }
 
@@ -72,31 +72,31 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         let operand1: any;
         let operand2: any;
         let newValue: any;
-        switch (EditingRestrictionRule.ColumnType) {
+        switch (editingRestriction.ColumnType) {
             case ColumnType.Date:
-                operand1 = Date.parse(EditingRestrictionRule.RangeExpression.Operand1)
-                if (EditingRestrictionRule.RangeExpression.Operand2 != "") {
-                    operand2 = Date.parse(EditingRestrictionRule.RangeExpression.Operand2)
+                operand1 = Date.parse(editingRestriction.RangeExpression.Operand1)
+                if (editingRestriction.RangeExpression.Operand2 != "") {
+                    operand2 = Date.parse(editingRestriction.RangeExpression.Operand2)
                 }
                 newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
-                operand1 = Number(EditingRestrictionRule.RangeExpression.Operand1)
-                if (EditingRestrictionRule.RangeExpression.Operand2 != "") {
-                    operand2 = Number(EditingRestrictionRule.RangeExpression.Operand2);
+                operand1 = Number(editingRestriction.RangeExpression.Operand1)
+                if (editingRestriction.RangeExpression.Operand2 != "") {
+                    operand2 = Number(editingRestriction.RangeExpression.Operand2);
                 }
                 newValue = dataChangedEvent.NewValue;
                 break
             case ColumnType.Boolean:
             case ColumnType.Object:
             case ColumnType.String:
-                operand1 = EditingRestrictionRule.RangeExpression.Operand1.toLowerCase();
-                operand2 = EditingRestrictionRule.RangeExpression.Operand2.toLowerCase();
+                operand1 = editingRestriction.RangeExpression.Operand1.toLowerCase();
+                operand2 = editingRestriction.RangeExpression.Operand2.toLowerCase();
                 newValue = dataChangedEvent.NewValue.toLowerCase();
                 break;
         }
 
-        switch (EditingRestrictionRule.RangeExpression.Operator) {
+        switch (editingRestriction.RangeExpression.Operator) {
             case LeafExpressionOperator.Equals:
                 return newValue == operand1;
             case LeafExpressionOperator.NotEquals:
@@ -119,8 +119,8 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         return true;
     }
 
-    public CreateEmptyEditingRestrictionRule(): IEditingRestrictionRule {
-        let newValidationRule: IEditingRestrictionRule = {
+    public CreateEmptyEditingRestriction(): IEditingRestriction {
+        let newEditingRestriction: IEditingRestriction = {
             EditingRestrictionAction: EditingRestrictionAction.Prevent,
             ColumnId: "select",
             ColumnType: ColumnType.Object,
@@ -129,7 +129,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: ""
         }
-        return newValidationRule;
+        return newEditingRestriction;
     }
 
     private createEmptyRangeExpression(): IRangeExpression {
@@ -141,11 +141,10 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         return newRangeExpression;
     }
 
-    private getExpressionDescription(validationRule: IEditingRestrictionRule, columns: IColumn[]): string {
-        return (validationRule.OtherExpression) ?
-           " when " + ExpressionHelper.ConvertExpressionToString(validationRule.OtherExpression, columns, this.blotter) :
+    private getExpressionDescription(editingRestriction: IEditingRestriction, columns: IColumn[]): string {
+        return (editingRestriction.HasOtherExpression) ?
+           " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
             "";
-
     }
 
     getMenuItems(): IMenuItem[] {

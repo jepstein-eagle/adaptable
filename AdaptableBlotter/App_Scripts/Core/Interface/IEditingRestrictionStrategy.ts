@@ -7,10 +7,10 @@ import { Expression } from '../Expression/Expression'
 
 export interface IEditingRestrictionStrategy extends IStrategy {
         OnCellChanging(dataChangingEvent: IDataChangedEvent): boolean
-        CreateEmptyEditingRestrictionRule(): IEditingRestrictionRule
+        CreateEmptyEditingRestriction(): IEditingRestriction
 }
 
-export interface IEditingRestrictionRule {
+export interface IEditingRestriction {
         ColumnId: string;
         RangeExpression: IRangeExpression,
         EditingRestrictionAction: EditingRestrictionAction;

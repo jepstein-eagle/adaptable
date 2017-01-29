@@ -36,7 +36,7 @@ export enum ExpressionMode {
     StartsWith,
     EndsWith,
     Regex,
-    // Cell Validation
+    // Editing Restrictions
      All,
     ValueChange,
     PercentChange,

@@ -2,29 +2,29 @@
 
 import * as Redux from 'redux';
 import { EditingRestrictionState } from './interface/IState'
-import { IEditingRestrictionRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
 
-export const CELL_VALIDATION_ADD_OR_UPDATE = 'CELL_VALIDATION_ADD_OR_UPDATE';
-export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
+export const EDITING_RESTRICTION_ADD_OR_UPDATE = 'EDITING_RESTRICTION_ADD_OR_UPDATE';
+export const EDITING_RESTRICTION_DELETE = 'EDITING_RESTRICTION_DELETE';
 
 
-export interface EditingRestrictionRuleAddOrUpdateAction extends Redux.Action {
+export interface EditingRestrictionAddOrUpdateAction extends Redux.Action {
     Index: number,
-    EditingRestrictionRule: IEditingRestrictionRule
+    EditingRestriction: IEditingRestriction
 }
 
-export interface EditingRestrictionRuleDeleteAction extends Redux.Action {
+export interface EditingRestrictionDeleteAction extends Redux.Action {
     Index: number,
 }
 
-export const AddEditEditingRestrictionRule = (Index: number, EditingRestrictionRule: IEditingRestrictionRule): EditingRestrictionRuleAddOrUpdateAction => ({
-    type: CELL_VALIDATION_ADD_OR_UPDATE,
+export const AddEditEditingRestriction = (Index: number, EditingRestriction: IEditingRestriction): EditingRestrictionAddOrUpdateAction => ({
+    type: EDITING_RESTRICTION_ADD_OR_UPDATE,
     Index,
-    EditingRestrictionRule
+    EditingRestriction
 })
 
-export const DeleteEditingRestrictionRule = (Index: number): EditingRestrictionRuleDeleteAction => ({
-    type: CELL_VALIDATION_DELETE,
+export const DeleteEditingRestriction = (Index: number): EditingRestrictionDeleteAction => ({
+    type: EDITING_RESTRICTION_DELETE,
     Index,
 })
 
@@ -34,25 +34,25 @@ const initialEditingRestrictionState: EditingRestrictionState = {
 }
 
 export const EditingRestrictionReducer: Redux.Reducer<EditingRestrictionState> = (state: EditingRestrictionState = initialEditingRestrictionState, action: Redux.Action): EditingRestrictionState => {
-    let EditingRestrictionRules: IEditingRestrictionRule[]
+    let EditingRestrictions: IEditingRestriction[]
 
     switch (action.type) {
 
-        case CELL_VALIDATION_ADD_OR_UPDATE: {
-            let actionTyped = (<EditingRestrictionRuleAddOrUpdateAction>action)
-            EditingRestrictionRules = [].concat(state.EditingRestrictions)
+        case EDITING_RESTRICTION_ADD_OR_UPDATE: {
+            let actionTyped = (<EditingRestrictionAddOrUpdateAction>action)
+            EditingRestrictions = [].concat(state.EditingRestrictions)
             if (actionTyped.Index == -1) {
-                EditingRestrictionRules.push(actionTyped.EditingRestrictionRule)
+                EditingRestrictions.push(actionTyped.EditingRestriction)
             } else {
-                EditingRestrictionRules[actionTyped.Index] = actionTyped.EditingRestrictionRule
+                EditingRestrictions[actionTyped.Index] = actionTyped.EditingRestriction
             }
-            return Object.assign({}, state, { EditingRestrictionRules: EditingRestrictionRules })
+            return Object.assign({}, state, { EditingRestrictions: EditingRestrictions })
         }
 
-        case CELL_VALIDATION_DELETE: {
-            EditingRestrictionRules = [].concat(state.EditingRestrictions)
-            EditingRestrictionRules.splice((<EditingRestrictionRuleDeleteAction>action).Index, 1)
-            return Object.assign({}, state, { EditingRestrictionRules: EditingRestrictionRules })
+        case EDITING_RESTRICTION_DELETE: {
+            EditingRestrictions = [].concat(state.EditingRestrictions)
+            EditingRestrictions.splice((<EditingRestrictionDeleteAction>action).Index, 1)
+            return Object.assign({}, state, { EditingRestrictions: EditingRestrictions })
         }
 
         default:

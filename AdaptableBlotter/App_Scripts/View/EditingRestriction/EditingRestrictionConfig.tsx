@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IEditingRestrictionRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as EditingRestrictionRedux from '../../Redux/ActionsReducers/EditingRestrictionRedux'
@@ -26,21 +26,21 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 interface EditingRestrictionConfigProps extends IStrategyViewPopupProps<EditingRestrictionConfigComponent> {
-    EditingRestrictionRules: IEditingRestrictionRule[];
+    EditingRestrictions: IEditingRestriction[];
     Columns: Array<IColumn>
-    onDeleteEditingRestrictionRule: (Index: number) => EditingRestrictionRedux.EditingRestrictionRuleDeleteAction
-    onAddEditEditingRestrictionRule: (Index: number, EditingRestrictionRule: IEditingRestrictionRule) => EditingRestrictionRedux.EditingRestrictionRuleAddOrUpdateAction
+    onDeleteEditingRestriction: (Index: number) => EditingRestrictionRedux.EditingRestrictionDeleteAction
+    onAddEditEditingRestriction: (Index: number, EditingRestriction: IEditingRestriction) => EditingRestrictionRedux.EditingRestrictionAddOrUpdateAction
 }
 
 interface EditingRestrictionConfigState {
-    EditedEditingRestrictionRule: IEditingRestrictionRule
-    EditedIndexEditingRestrictionRule: number
+    EditedEditingRestriction: IEditingRestriction
+    EditedIndexEditingRestriction: number
 }
 
 class EditingRestrictionConfigComponent extends React.Component<EditingRestrictionConfigProps, EditingRestrictionConfigState> {
     constructor() {
         super();
-        this.state = { EditedEditingRestrictionRule: null, EditedIndexEditingRestrictionRule: -1 }
+        this.state = { EditedEditingRestriction: null, EditedIndexEditingRestriction: -1 }
     }
     render() {
 
@@ -51,7 +51,7 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
 
         let cellInfo: [string, number][] = [["Column", 2], ["Restriction", 3], ["Expression", 3],["Action", 2], ["", 2]];
 
-        let validationItems = this.props.EditingRestrictionRules.map((x, index) => {
+        let editingRestrictionItems = this.props.EditingRestrictions.map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row >
@@ -72,7 +72,7 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteEditingRestrictionRule(index)}
+                            deleteClick={() => this.props.onDeleteEditingRestriction(index)}
                             editClick={() => this.onEdit(index, x)}>
                         </EntityListActionButtons>
                     </Col>
@@ -81,26 +81,26 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         })
         return <PanelWithButton headerText="Editing Restrictions Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Editing Restriction"}
-            buttonClick={() => this.createEditingRestrictionRule()}  >
-            {validationItems.length > 0 &&
+            buttonClick={() => this.createEditingRestriction()}  >
+            {editingRestrictionItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                     <ListGroup style={listGroupStyle}>
-                        {validationItems}
+                        {editingRestrictionItems}
                     </ListGroup>
                 </div>
             }
 
-            {validationItems.length == 0 &&
+            {editingRestrictionItems.length == 0 &&
                 <Well bsSize="small">Click 'Create Editing Restriction' to start creating editing restrictions.</Well>
             }
 
-            {this.state.EditedEditingRestrictionRule != null &&
+            {this.state.EditedEditingRestriction != null &&
                 <AdaptableWizard Steps={[
                     <EditingRestrictionSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                     <EditingRestrictionExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />,
                 ]}
-                    Data={this.state.EditedEditingRestrictionRule}
+                    Data={this.state.EditedEditingRestriction}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.finishWizard()} ></AdaptableWizard>}
@@ -108,35 +108,35 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         </PanelWithButton>
     }
 
-    createEditingRestrictionRule() {
+    createEditingRestriction() {
         let EditingRestrictionStrategy: IEditingRestrictionStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
-        this.setState({ EditedEditingRestrictionRule: EditingRestrictionStrategy.CreateEmptyEditingRestrictionRule(), EditedIndexEditingRestrictionRule: -1 });
+        this.setState({ EditedEditingRestriction: EditingRestrictionStrategy.CreateEmptyEditingRestriction(), EditedIndexEditingRestriction: -1 });
     }
 
-    onEdit(index: number, EditingRestrictionRule: IEditingRestrictionRule) {
+    onEdit(index: number, EditingRestriction: IEditingRestriction) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedEditingRestrictionRule: Helper.cloneObject(EditingRestrictionRule), EditedIndexEditingRestrictionRule: index });
+        this.setState({ EditedEditingRestriction: Helper.cloneObject(EditingRestriction), EditedIndexEditingRestriction: index });
     }
 
     private onEditingRestrictionActionChanged(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let EditingRestrictionRule: IEditingRestrictionRule = this.props.EditingRestrictionRules[index];
-        EditingRestrictionRule.EditingRestrictionAction = Number.parseInt(e.value);
-        this.props.onAddEditEditingRestrictionRule(index, EditingRestrictionRule);
+        let EditingRestriction: IEditingRestriction = this.props.EditingRestrictions[index];
+        EditingRestriction.EditingRestrictionAction = Number.parseInt(e.value);
+        this.props.onAddEditEditingRestriction(index, EditingRestriction);
     }
 
     closeWizard() {
-        this.setState({ EditedEditingRestrictionRule: null, EditedIndexEditingRestrictionRule: -1 });
+        this.setState({ EditedEditingRestriction: null, EditedIndexEditingRestriction: -1 });
     }
 
     finishWizard() {
-        this.props.onAddEditEditingRestrictionRule(this.state.EditedIndexEditingRestrictionRule, this.state.EditedEditingRestrictionRule);
-        this.setState({ EditedEditingRestrictionRule: null, EditedIndexEditingRestrictionRule: -1 });
+        this.props.onAddEditEditingRestriction(this.state.EditedIndexEditingRestriction, this.state.EditedEditingRestriction);
+        this.setState({ EditedEditingRestriction: null, EditedIndexEditingRestriction: -1 });
     }
 
-     setExpressionDescription(EditingRestrictionRule: IEditingRestrictionRule):string {
-        return (EditingRestrictionRule.HasOtherExpression) ?
-            ExpressionHelper.ConvertExpressionToString(EditingRestrictionRule.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
+     setExpressionDescription(EditingRestriction: IEditingRestriction):string {
+        return (EditingRestriction.HasOtherExpression) ?
+            ExpressionHelper.ConvertExpressionToString(EditingRestriction.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
             "No Expression";
     }
 
@@ -146,15 +146,15 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        EditingRestrictionRules: state.EditingRestriction.EditingRestrictions
+        EditingRestrictions: state.EditingRestriction.EditingRestrictions
     };
 }
 
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteEditingRestrictionRule: (index: number) => dispatch(EditingRestrictionRedux.DeleteEditingRestrictionRule(index)),
-        onAddEditEditingRestrictionRule: (index: number, EditingRestrictionRule: IEditingRestrictionRule) => dispatch(EditingRestrictionRedux.AddEditEditingRestrictionRule(index, EditingRestrictionRule))
+        onDeleteEditingRestriction: (index: number) => dispatch(EditingRestrictionRedux.DeleteEditingRestriction(index)),
+        onAddEditEditingRestriction: (index: number, EditingRestriction: IEditingRestriction) => dispatch(EditingRestrictionRedux.AddEditEditingRestriction(index, EditingRestriction))
     };
 }
 

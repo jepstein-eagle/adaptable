@@ -4,13 +4,12 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IEditingRestrictionRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
-
-interface EditingRestrictionSettingsWizardProps extends AdaptableWizardStepProps<IEditingRestrictionRule> {
+interface EditingRestrictionSettingsWizardProps extends AdaptableWizardStepProps<IEditingRestriction> {
     Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
 }
@@ -53,12 +52,11 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
             return <option key={operator} value={operator.toString()}>{this.getTextForCellChangeValue(operator)}</option>
         })
 
-
         return <div>
-            <Panel header="Validation Settings" bsStyle="primary">
+            <Panel header="Editing Restriction Settings" bsStyle="primary">
 
                 <Form horizontal>
-                    <Panel header="Validation Action" bsStyle="info" >
+                    <Panel header="Editing Restriction Action" bsStyle="info" >
                         <FormGroup controlId="formAction">
                             <Col xs={3}>
                                 <Radio value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
@@ -69,7 +67,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                         </FormGroup>
                     </Panel>
 
-                    <Panel header="Validation Column" bsStyle="info" >
+                    <Panel header="Editing Restriction Column" bsStyle="info" >
                         <FormGroup controlId="formColumn">
                             <Col xs={9}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
@@ -80,7 +78,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                         </FormGroup>
                     </Panel>
 
-                    <Panel header="Validation Condition" bsStyle="info">
+                    <Panel header="Editing Restriction Condition" bsStyle="info">
                         <FormGroup>
                             <Col xs={4}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
@@ -125,7 +123,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                         </FormGroup>
                     </Panel>
 
-                    <Panel header="Validation Expression" bsStyle="info">
+                    <Panel header="Editing Restriction Expression" bsStyle="info">
                         <FormGroup controlId="formOtherExpression">
                             <Col xs={12}>
                                 <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasOtherExpression}>
@@ -225,15 +223,14 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         }
     }
 
-
-    createEditingRestrictionRuleDescription(EditingRestrictionRule: IEditingRestrictionRule): string {
-        if (EditingRestrictionRule.RangeExpression.Operator == LeafExpressionOperator.All) {
+    createEditingRestrictionDescription(editingRestriction: IEditingRestriction): string {
+        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
             return "All changes";
         }
 
         let valueDescription: string = "";
 
-        switch (EditingRestrictionRule.RangeExpression.Operator) {
+        switch (editingRestriction.RangeExpression.Operator) {
             case LeafExpressionOperator.Equals:
                 valueDescription = "New value = ";
                 break;
@@ -259,23 +256,22 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                 valueDescription = "New value not between ";
                 break;
         }
-        let operand1Text: string = (EditingRestrictionRule.ColumnType == ColumnType.Boolean || EditingRestrictionRule.ColumnType == ColumnType.Number) ?
-            EditingRestrictionRule.RangeExpression.Operand1 :
-            "'" + EditingRestrictionRule.RangeExpression.Operand1 + "'"
+        let operand1Text: string = (editingRestriction.ColumnType == ColumnType.Boolean || editingRestriction.ColumnType == ColumnType.Number) ?
+            editingRestriction.RangeExpression.Operand1 :
+            "'" + editingRestriction.RangeExpression.Operand1 + "'"
 
         valueDescription = valueDescription + operand1Text;
 
-        if (EditingRestrictionRule.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
+        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
             valueDescription = valueDescription + '%';
         }
 
-        if (StringExtensions.IsNotNullOrEmpty(EditingRestrictionRule.RangeExpression.Operand2)) {
-            let operand2Text: string = (EditingRestrictionRule.ColumnType == ColumnType.Number) ?
-                " and " + EditingRestrictionRule.RangeExpression.Operand2 :
-                " and '" + EditingRestrictionRule.RangeExpression.Operand2 + "'";
+        if (StringExtensions.IsNotNullOrEmpty(editingRestriction.RangeExpression.Operand2)) {
+            let operand2Text: string = (editingRestriction.ColumnType == ColumnType.Number) ?
+                " and " + editingRestriction.RangeExpression.Operand2 :
+                " and '" + editingRestriction.RangeExpression.Operand2 + "'";
             valueDescription = valueDescription + operand2Text;
         }
-
         return valueDescription;
     }
 
@@ -308,8 +304,9 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         this.props.Data.EditingRestrictionAction = this.state.EditingRestrictionAction;
         this.props.Data.ColumnType = this.state.ColumnType;
         this.props.Data.HasOtherExpression = this.state.HasOtherExpression;
-        this.props.Data.Description = this.createEditingRestrictionRuleDescription(this.props.Data);
+        this.props.Data.Description = this.createEditingRestrictionDescription(this.props.Data);
     }
+    
     public Back(): void { }
     public StepName = "Create Editing Restriction"
 }
