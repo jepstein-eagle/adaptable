@@ -20,7 +20,7 @@ interface EditingRestrictionSettingsWizardState {
     Operand2: string;
     ColumnType: ColumnType;
     EditingRestrictionAction: EditingRestrictionAction;
-    HasOtherExpression: boolean;
+    HasExpression: boolean;
 }
 
 export class EditingRestrictionSettingsWizard extends React.Component<EditingRestrictionSettingsWizardProps, EditingRestrictionSettingsWizardState> implements AdaptableWizardStep {
@@ -33,13 +33,13 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
             Operand2: this.props.Data.RangeExpression.Operand2,
             ColumnType: this.props.Data.ColumnType,
             EditingRestrictionAction: this.props.Data.EditingRestrictionAction,
-            HasOtherExpression: this.props.Data.HasOtherExpression
+            HasExpression: this.props.Data.HasExpression
         }
     }
 
     public componentDidMount() {
         // would rather not but only way I can see to force page to show Finish (which is default)
-        this.props.UpdateGoBackState(this.state.HasOtherExpression == false);
+        this.props.UpdateGoBackState(this.state.HasExpression == false);
     }
 
     render(): any {
@@ -114,8 +114,8 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                                 </Col>
                             }
 
-                            { /* if not numeric or date then show a text control for now */}
-                            {this.isNotAnyOperator() && (this.state.ColumnType == ColumnType.String || this.state.ColumnType == ColumnType.Boolean) &&
+                            { /* if string then show a text control  */}
+                            {this.isNotAnyOperator() && (this.state.ColumnType == ColumnType.String) &&
                                 <Col xs={4}>
                                     <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 </Col>
@@ -126,7 +126,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                     <Panel header="Editing Restriction Expression" bsStyle="info">
                         <FormGroup controlId="formOtherExpression">
                             <Col xs={12}>
-                                <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasOtherExpression}>
+                                <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>
                                     Base on other cell values (you create the Expression in the next step)
                                 </Checkbox>
                             </Col>
@@ -142,32 +142,32 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let columnType: ColumnType = (e.value == "select") ? ColumnType.Object : this.props.Columns.find(c => c.ColumnId == e.value).ColumnType;
-        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.All } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.All } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operator: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand1: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operand1: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperand2ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand2: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ Operand2: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onEditingRestrictionActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ EditingRestrictionAction: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasOtherExpression == false))
+        this.setState({ EditingRestrictionAction: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOtherExpressionOptionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ HasOtherExpression: e.checked } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
+        this.setState({ HasExpression: e.checked } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
     }
 
     private isBetweenOperator(): boolean {
@@ -186,8 +186,9 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
             return [LeafExpressionOperator.All];
         }
         switch (this.state.ColumnType) {
-            case ColumnType.String:
             case ColumnType.Boolean:
+                return [LeafExpressionOperator.All, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
+            case ColumnType.String:
                 return [LeafExpressionOperator.All, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
             case ColumnType.Date:
                 return [LeafExpressionOperator.All, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
@@ -199,73 +200,48 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
     private getTextForCellChangeValue(leafExpressionOperator: LeafExpressionOperator): string {
         switch (leafExpressionOperator) {
             case LeafExpressionOperator.All:
-                return "All Changes"
+                return "All Changes "
             case LeafExpressionOperator.Equals:
-                return "Equals"
+                return "Equals "
             case LeafExpressionOperator.NotEquals:
-                return "Not Equals"
+                return "Not Equals "
             case LeafExpressionOperator.GreaterThan:
                 if (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Date) {
-                    return "After"
+                    return "After "
                 } else {
-                    return "Greater Than"
+                    return "Greater Than "
                 }
             case LeafExpressionOperator.LessThan:
                 if (this.stateHasColumn() && this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType == ColumnType.Date) {
-                    return "Before"
+                    return "Before "
                 } else {
-                    return "Less Than"
+                    return "Less Than "
                 }
             case LeafExpressionOperator.Between:
-                return "Between"
+                return "Between "
             case LeafExpressionOperator.NotBetween:
-                return "Not Between"
+                return "Not Between "
             case LeafExpressionOperator.IsNegative:
-                return "Is Negative";
+                return "Is Negative ";
             case LeafExpressionOperator.ValueChange:
-                return "Change At Least"
+                return "Change At Least "
             case LeafExpressionOperator.PercentChange:
-                return "% Change At Least"
+                return "% Change At Least "
+            case LeafExpressionOperator.IsTrue:
+                return "Is True "
+            case LeafExpressionOperator.IsFalse:
+                return "Is False "
         }
     }
 
     createEditingRestrictionDescription(editingRestriction: IEditingRestriction): string {
-        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
-            return "All changes";
+
+        let valueDescription: string = this.getTextForCellChangeValue(editingRestriction.RangeExpression.Operator);
+
+        if (!this.operatorRequiresValue(editingRestriction.RangeExpression.Operator)) {
+            return valueDescription;
         }
 
-        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.IsNegative) {
-            return "Is Negative";
-        }
-
-        let valueDescription: string = "";
-
-        switch (editingRestriction.RangeExpression.Operator) {
-            case LeafExpressionOperator.Equals:
-                valueDescription = "New value = ";
-                break;
-            case LeafExpressionOperator.NotEquals:
-                valueDescription = "New value <> ";
-                break;
-            case LeafExpressionOperator.GreaterThan:
-                valueDescription = "New value > ";
-                break;
-            case LeafExpressionOperator.LessThan:
-                valueDescription = "New value < ";
-                break;
-            case LeafExpressionOperator.ValueChange:
-                valueDescription = "Change in value >= ";
-                break;
-            case LeafExpressionOperator.PercentChange:
-                valueDescription = "% change is at least ";
-                break;
-            case LeafExpressionOperator.Between:
-                valueDescription = "New value between ";
-                break;
-            case LeafExpressionOperator.NotBetween:
-                valueDescription = "New value not between ";
-                break;
-        }
         let operand1Text: string = (editingRestriction.ColumnType == ColumnType.Boolean || editingRestriction.ColumnType == ColumnType.Number) ?
             editingRestriction.RangeExpression.Operand1 :
             "'" + editingRestriction.RangeExpression.Operand1 + "'"
@@ -289,9 +265,13 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         return this.state.ColumnId != 'select'
     }
 
+    private operatorRequiresValue(operator: LeafExpressionOperator): boolean {
+        return operator != LeafExpressionOperator.All && operator != LeafExpressionOperator.IsNegative && operator != LeafExpressionOperator.IsTrue && operator != LeafExpressionOperator.IsFalse;
+    }
+
     public canNext(): boolean {
         if (!this.stateHasColumn()) { return false };
-        if (this.state.Operator == LeafExpressionOperator.All || this.state.Operator == LeafExpressionOperator.IsNegative) {
+        if (!this.operatorRequiresValue(this.state.Operator)) {
             return true;
         }
         if (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) {
@@ -313,7 +293,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         this.props.Data.ColumnId = this.state.ColumnId;
         this.props.Data.EditingRestrictionAction = this.state.EditingRestrictionAction;
         this.props.Data.ColumnType = this.state.ColumnType;
-        this.props.Data.HasOtherExpression = this.state.HasOtherExpression;
+        this.props.Data.HasExpression = this.state.HasExpression;
         this.props.Data.Description = this.createEditingRestrictionDescription(this.props.Data);
     }
 

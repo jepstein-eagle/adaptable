@@ -135,7 +135,7 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
     }
 
      setExpressionDescription(EditingRestriction: IEditingRestriction):string {
-        return (EditingRestriction.HasOtherExpression) ?
+        return (EditingRestriction.HasExpression) ?
             ExpressionHelper.ConvertExpressionToString(EditingRestriction.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
             "No Expression";
     }

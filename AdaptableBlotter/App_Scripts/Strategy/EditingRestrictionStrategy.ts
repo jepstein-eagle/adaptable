@@ -56,7 +56,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
 
     private IsEditingRestrictionRequired(editingRestriction: IEditingRestriction, dataChangedEvent: IDataChangedEvent, columns: IColumn[]): boolean {
         // first see if the Expression has passed (if there is one)
-        if (editingRestriction.HasOtherExpression) {
+        if (editingRestriction.HasExpression) {
             let isExpressionValid = ExpressionHelper.checkForExpression(editingRestriction.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
             if (!isExpressionValid) {
                 return false;
@@ -88,6 +88,8 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
                 newValue = dataChangedEvent.NewValue;
                 break
             case ColumnType.Boolean:
+                newValue = dataChangedEvent.NewValue;
+                break;
             case ColumnType.Object:
             case ColumnType.String:
                 operand1 = editingRestriction.RangeExpression.Operand1.toLowerCase();
@@ -117,6 +119,10 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
                 return !(newValue > operand1 && newValue < operand2);
             case LeafExpressionOperator.IsNegative:
                 return (newValue < 0);
+            case LeafExpressionOperator.IsTrue:
+                return (newValue == true);
+            case LeafExpressionOperator.IsFalse:
+                return (newValue == false);
         }
         return true;
     }
@@ -127,7 +133,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
             ColumnId: "select",
             ColumnType: ColumnType.Object,
             RangeExpression: this.createEmptyRangeExpression(),
-            HasOtherExpression: false,
+            HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: ""
         }
@@ -144,8 +150,8 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
     }
 
     private getExpressionDescription(editingRestriction: IEditingRestriction, columns: IColumn[]): string {
-        return (editingRestriction.HasOtherExpression) ?
-           " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
+        return (editingRestriction.HasExpression) ?
+            " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
             "";
     }
 

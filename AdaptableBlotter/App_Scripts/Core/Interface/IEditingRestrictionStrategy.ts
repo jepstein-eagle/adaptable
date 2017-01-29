@@ -16,6 +16,6 @@ export interface IEditingRestriction {
         EditingRestrictionAction: EditingRestrictionAction;
         Description: string;
         ColumnType: ColumnType;
-        HasOtherExpression: boolean;
+        HasExpression: boolean;
         OtherExpression: Expression;
 }
