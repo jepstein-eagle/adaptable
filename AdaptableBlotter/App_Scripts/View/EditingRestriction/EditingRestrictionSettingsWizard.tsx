@@ -55,16 +55,15 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         return <div>
             <Panel header="Editing Restriction Settings" bsStyle="primary">
 
-                <Form horizontal>
                     <Panel header="Editing Restriction Action" bsStyle="info" >
-                        <FormGroup controlId="formAction">
-                            <Col xs={3}>
-                                <Radio value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
+                        <Form inline >
+                            <Col xs={5}>
+                                <Radio inline value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
                             </Col>
-                            <Col xs={9}>
-                                <Radio value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Show Warning</Radio>
+                            <Col xs={4}>
+                                <Radio inline value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Show Warning</Radio>
                             </Col>
-                        </FormGroup>
+                       </Form>
                     </Panel>
 
                     <Panel header="Editing Restriction Column" bsStyle="info" >
@@ -124,17 +123,14 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                     </Panel>
 
                     <Panel header="Editing Restriction Expression" bsStyle="info">
-                        <FormGroup controlId="formOtherExpression">
+                        <Form inline >
                             <Col xs={12}>
-                                <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>
-                                    Base on other cell values (you create the Expression in the next step)
-                                </Checkbox>
+                                <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Base on other cell values (you create the Expression in the next step)</Checkbox>
                             </Col>
-                        </FormGroup>
+                       </Form>
 
                     </Panel>
-                </Form>
-            </Panel>
+             </Panel>
         </div>
 
     }

@@ -71,10 +71,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                 <Panel header="Shortcut Column Type" bsStyle="info">
                     <Form inline >
                         <Col xs={4}>
-                            <Radio value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}> Number </Radio>
+                            <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
                         </Col>
                         <Col xs={8}>
-                            <Radio value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}> Date </Radio>
+                            <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
                         </Col>
                     </Form>
                 </Panel>
