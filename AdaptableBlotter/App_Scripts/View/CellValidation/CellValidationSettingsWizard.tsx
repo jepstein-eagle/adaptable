@@ -6,7 +6,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { NotificationType, ColumnType, CellChangeType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
+import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
 
@@ -46,114 +46,105 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         })
 
 
-        return <Panel header="Validation Settings" bsStyle="primary">
+        return <div>
 
             <Form horizontal>
+                <Panel header="Validation Settings" bsStyle="primary">
 
-                <FormGroup controlId="formAction">
-                    <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={3}>Action: </Col>
-                        <Col xs={4}>
-                            <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
-                        </Col>
-                        <Col xs={5}>
-                            <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
-                        </Col>
-                    </Row>
-                </FormGroup>
-
-                <FormGroup controlId="formColumn">
-                    <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={3}>Column: </Col>
-                        <Col xs={9}>
-                            <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
-                                <option value="select" key="select">Select a column</option>
-                                {optionColumns}
-                            </FormControl>
-                        </Col>
-                    </Row>
-                </FormGroup>
-                <FormGroup>
-                    <Row style={smallMarginStyle}>
-                        <Col componentClass={ControlLabel} xs={3}>Condition: </Col>
-                        <Col xs={9}>
-                            <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
-                                {operatorTypes}
-                            </FormControl>
-                        </Col>
-                    </Row>
-                </FormGroup>
-
-                { /* if  numeric then show a numeric control */}
-                {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Number &&
-                    <FormGroup>
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>{this.getTextForNumericValueLabel()}</Col>
-                            <Col xs={9}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                    <FormGroup controlId="formAction">
+                        <Row >
+                            <Col componentClass={ControlLabel} xs={3}>Action: </Col>
+                            <Col xs={3}>
+                                <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
+                            </Col>
+                            <Col xs={6}>
+                                <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
                             </Col>
                         </Row>
                     </FormGroup>
-                }
 
-                { /* if  numeric and between operator then show a second numeric control */}
-                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) && this.state.ColumnType == ColumnType.Number &&
-                    <FormGroup>
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>And: </Col>
+                    <FormGroup controlId="formColumn">
+                        <Row >
+                            <Col componentClass={ControlLabel} xs={3}>Column: </Col>
                             <Col xs={9}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                                <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
+                                    <option value="select" key="select">Select a column</option>
+                                    {optionColumns}
+                                </FormControl>
                             </Col>
                         </Row>
                     </FormGroup>
-                }
-
-                { /* if  date then show a date control */}
-                {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Date &&
+                </Panel>
+                <Panel header="Validation Condition" bsStyle="primary">
                     <FormGroup>
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>{this.getTextForDateValueLabel()}</Col>
+                        <Row >
+                            <Col componentClass={ControlLabel} xs={3}>Apply: </Col>
                             <Col xs={9}>
-                                <FormControl style={{ width: "Auto" }} type="date" placeholder="Enter a date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
+                                <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
+                                    {operatorTypes}
+                                </FormControl>
                             </Col>
                         </Row>
                     </FormGroup>
-                }
 
-                { /* if date and between operator then show a second date control */}
-                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) && this.state.ColumnType == ColumnType.Date &&
-                    <FormGroup>
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>To: </Col>
-                            <Col xs={9}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="date" placeholder="Enter a date" onChange={(x) => this.onOperand2ValueChanged(x)} />
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                }
+                    { /* if  numeric then show a numeric control */}
+                    {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Number &&
+                        <FormGroup>
+                            <Row >
+                                <Col componentClass={ControlLabel} xs={3}>{this.getTextForValueLabel()}</Col>
+                                <Col xs={4}>
+                                    <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                                </Col>
+                                { /* if between operator then show a second numeric control */}
+                                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) &&
+                                    <Col xs={4}>
+                                        <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="number" placeholder="Enter a Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                                    </Col>
+                                }
+                            </Row>
+                        </FormGroup>
+                    }
+
+                    { /* if  date then show a date control */}
+                    {this.state.Operator != LeafExpressionOperator.Any && this.state.ColumnType == ColumnType.Date &&
+                        <FormGroup>
+                            <Row >
+                                <Col componentClass={ControlLabel} xs={3}>{this.getTextForValueLabel()}</Col>
+                                <Col xs={4}>
+                                    <FormControl style={{ width: "Auto" }} type="date" placeholder="Enter a date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
+                                </Col>
+                                { /* if between operator then show a second date control */}
+                                {(this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) &&
+                                    <Col xs={4}>
+                                        <FormControl style={{ width: "Auto" }} value={this.state.Operand2} type="date" placeholder="Enter a date" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                                    </Col>
+                                }
+                            </Row>
+                        </FormGroup>
+                    }
+
+                    { /* if not numeric or date then show a string control for now */}
+                    {this.state.Operator != LeafExpressionOperator.Any && (this.state.ColumnType == ColumnType.String || this.state.ColumnType == ColumnType.Boolean) &&
+                        <FormGroup>
+                            <Row >
+                                <Col componentClass={ControlLabel} xs={3}>Value: </Col>
+                                <Col xs={9}>
+                                    <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    }
 
 
-
-                { /* if not numeric or date then show a string control for now */}
-                {this.state.Operator != LeafExpressionOperator.Any && (this.state.ColumnType == ColumnType.String || this.state.ColumnType == ColumnType.Boolean) &&
-                    <FormGroup>
-                        <Row style={smallMarginStyle}>
-                            <Col componentClass={ControlLabel} xs={3}>Value: </Col>
-                            <Col xs={9}>
-                                <FormControl style={{ width: "Auto" }} value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                }
+                </Panel>
             </Form>
-
-        </Panel>
+        </div>
 
     }
 
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let columnType: ColumnType = this.props.Columns.find(c => c.ColumnId == e.value).ColumnType;
+        let columnType: ColumnType = (e.value == "select") ? ColumnType.Object : this.props.Columns.find(c => c.ColumnId == e.value).ColumnType;
         this.setState({ ColumnId: e.value, ColumnType: columnType, Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Any } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
@@ -179,11 +170,9 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
 
     private getAvailableOperators(): LeafExpressionOperator[] {
         if (!this.stateHasColumn()) {
-            return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
+            return [LeafExpressionOperator.Any];
         }
-        let columnType: ColumnType = this.props.Columns.find(c => c.ColumnId == this.state.ColumnId).ColumnType;
-
-        switch (columnType) {
+        switch (this.state.ColumnType) {
             case ColumnType.String:
             case ColumnType.Boolean:
                 return [LeafExpressionOperator.Any, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
@@ -281,12 +270,8 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         return "'" + cellValidationColumn.FriendlyName + "' column: " + valueDescription;
     }
 
-    private getTextForNumericValueLabel(): string {
-        return (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) ? "Between: " : "Value: ";
-    }
-
-    private getTextForDateValueLabel(): string {
-        return (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) ? "From: " : "Value: ";
+    private getTextForValueLabel(): string {
+        return (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) ? "Range: " : "Value: ";
     }
 
     private stateHasColumn(): boolean {
@@ -318,10 +303,5 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         this.props.Data.Description = this.createCellValidationRuleDescription(this.props.Data);
     }
     public Back(): void { }
-    public StepName = "Validation Settings"
-}
-
-
-let smallMarginStyle = {
-    margin: '10px'
+    public StepName = "Validation Setup"
 }

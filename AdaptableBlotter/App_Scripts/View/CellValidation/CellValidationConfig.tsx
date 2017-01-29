@@ -14,7 +14,7 @@ import { Helper } from '../../Core/Helper';
 import { ColumnType } from '../../Core/Enums';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { CellChangeType, PopupType, CellValidationAction } from '../../Core/Enums'
+import {  PopupType, CellValidationAction } from '../../Core/Enums'
 import { ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../PanelWithRow';

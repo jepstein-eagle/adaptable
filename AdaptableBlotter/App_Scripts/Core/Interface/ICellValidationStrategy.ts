@@ -1,5 +1,5 @@
 import { IStrategy } from './IStrategy';
-import { CellChangeType, CellValidationAction, ColumnType } from '../Enums';
+import { CellValidationAction, ColumnType } from '../Enums';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { IRangeExpression } from '../Interface/IExpression';
 
