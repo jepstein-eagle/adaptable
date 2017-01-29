@@ -108,8 +108,8 @@ export enum PopupType {
 }
 
 export enum CellValidationAction {
-    Warning,
-    Prevent
+    ShowWarning,
+    PreventEdit
 }
 
 

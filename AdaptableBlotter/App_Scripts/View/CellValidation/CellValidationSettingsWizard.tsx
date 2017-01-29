@@ -55,10 +55,10 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                         <Row >
                             <Col componentClass={ControlLabel} xs={3}>Action: </Col>
                             <Col xs={3}>
-                                <Radio value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
+                                <Radio value={CellValidationAction.PreventEdit.toString()} checked={this.state.CellValidationAction == CellValidationAction.PreventEdit} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent Edit</Radio>
                             </Col>
                             <Col xs={6}>
-                                <Radio value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
+                                <Radio value={CellValidationAction.ShowWarning.toString()} checked={this.state.CellValidationAction == CellValidationAction.ShowWarning} onChange={(e) => this.onCellValidationActionChanged(e)}>Show warning</Radio>
                             </Col>
                         </Row>
                     </FormGroup>
@@ -280,14 +280,18 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
 
     public canNext(): boolean {
         if (!this.stateHasColumn()) { return false };
-        if (this.state.Operator != LeafExpressionOperator.Any) {
-            return StringExtensions.IsNotNullOrEmpty(this.state.Operand1);
+        if (this.state.Operator == LeafExpressionOperator.Any) {
+            return true;
         }
-        //   if (this.state.Operator == LeafExpressionOperator.NotBetween) {
-        //      return StringExtensions.IsNotNullOrEmpty( this.state.Operand2);
-        //  }
-        return true;
+        if (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) {
+            if (StringExtensions.IsNullOrEmpty(this.state.Operand2)) {
+                return false;
+            }
+        }
+        return StringExtensions.IsNotNullOrEmpty(this.state.Operand1);
     }
+
+
 
     public canBack(): boolean { return true; }
     public Next(): void {

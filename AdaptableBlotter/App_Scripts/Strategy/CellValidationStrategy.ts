@@ -41,7 +41,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         let validationRules = this.CellValidationRules.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
         if (validationRules.length > 0) {
             // first do prevent 
-            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Prevent)) {
+            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.PreventEdit)) {
                 let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
                 if (hasFailed) {
                     alert("Validation Rule Failed: " + validationRule.Description)
@@ -49,7 +49,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
                 }
             }
             // now do warning 
-            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.Warning)) {
+            for (let validationRule of validationRules.filter(v => v.CellValidationAction == CellValidationAction.ShowWarning)) {
                 let hasFailed: boolean = this.IsFailedValidation(validationRule, dataChangedEvent);
                 if (hasFailed) {
                     if (!confirm("Rule: " + validationRule.Description + " has failed.  Do you want to continue?")) {
@@ -120,7 +120,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     public CreateEmptyCellValidationRule(): ICellValidationRule {
         let newValidationRule: ICellValidationRule = {
-            CellValidationAction: CellValidationAction.Prevent,
+            CellValidationAction: CellValidationAction.PreventEdit,
             ColumnId: "select",
             ColumnType: ColumnType.Object,
             RangeExpression: this.createEmptyRangeExpression(), // to do

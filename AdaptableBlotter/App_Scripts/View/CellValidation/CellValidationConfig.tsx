@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
+import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
@@ -14,12 +14,14 @@ import { Helper } from '../../Core/Helper';
 import { ColumnType } from '../../Core/Enums';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import {  PopupType, CellValidationAction } from '../../Core/Enums'
+import { PopupType, CellValidationAction } from '../../Core/Enums'
 import { ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
+import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidationRules: ICellValidationRule[];
@@ -40,6 +42,11 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
     render() {
 
+        let cellValidationActionTypes = EnumExtensions.getNamesAndValues(CellValidationAction).map((enumNameAndValue: any) => {
+            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
+        })
+
+
         let cellInfo: [string, number][] = [["Validation Rule", 7], ["Action", 2], ["", 3]];
 
         let validationItems = this.props.CellValidationRules.map((x, index) => {
@@ -49,17 +56,20 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     <Col xs={7}>
                         {x.Description}
                     </Col>
-                     <Col xs={2}>
-                        {CellValidationAction[ x.CellValidationAction]}
-                    </Col>
                     <Col xs={3}>
+                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationAction.toString()} onChange={(x) => this.onCellValidationActionChanged(index, x)} >
+                            {cellValidationActionTypes}
+                        </FormControl>
+
+                    </Col>
+                    <Col xs={2}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteCellValidationRule(index)}
                             editClick={() => this.onEdit(index, x)}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
-                </li>
+            </li>
         })
         return <PanelWithButton headerText="Validation Rules Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Validation Rule"}
@@ -80,7 +90,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             {this.state.EditedCellValidationRule != null &&
                 <AdaptableWizard Steps={[
                     <CellValidationSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                 ]}
+                ]}
                     Data={this.state.EditedCellValidationRule}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
@@ -94,11 +104,17 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidationRule: cellValidationStrategy.CreateEmptyCellValidationRule(), EditedIndexCellValidationRule: -1 });
     }
 
-       onEdit(index: number, cellValidationRule: ICellValidationRule) {
+    onEdit(index: number, cellValidationRule: ICellValidationRule) {
         //we clone the condition as we do not want to mutate the redux state here....
         this.setState({ EditedCellValidationRule: Helper.cloneObject(cellValidationRule), EditedIndexCellValidationRule: index });
     }
 
+    private onCellValidationActionChanged(index: number, event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        let cellValidationRule: ICellValidationRule = this.props.CellValidationRules[index];
+        cellValidationRule.CellValidationAction = Number.parseInt(e.value);
+        this.props.onAddEditCellValidationRule(index, cellValidationRule);
+    }
 
     closeWizard() {
         this.setState({ EditedCellValidationRule: null, EditedIndexCellValidationRule: -1 });
