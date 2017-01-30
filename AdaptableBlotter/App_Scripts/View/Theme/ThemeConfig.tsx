@@ -23,7 +23,7 @@ class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
             return <option value={x} key={x}>{x}</option>
         })
         return (
-            <PanelWithImage header="Theme" bsStyle="primary" glyphicon="leaf">
+            <PanelWithImage header="Theme Picker" bsStyle="primary" glyphicon="leaf">
                 <Form>
                     <FormControl componentClass="select" placeholder="select" value={this.props.CurrentTheme} onChange={(x) => this.onChangeTheme(x)} >
                         {optionThemes}

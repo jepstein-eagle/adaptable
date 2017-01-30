@@ -17,7 +17,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.EditingRestrictionStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Editing Restrictions", this.Id, 'EditingRestrictionConfig', MenuType.Configuration, "flag");
+        this.menuItemConfig = new MenuItemShowPopup("Edit Restrictions", this.Id, 'EditingRestrictionConfig', MenuType.Configuration, "flag");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         //          this.blotter.OnGridSave().Subscribe((sender, gridSaveInfo) => this.CheckGridSaveInfo(gridSaveInfo))
     }
@@ -37,7 +37,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
             for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Prevent)) {
                 let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
                 if (hasFailed) {
-                    alert("Editing Restriction: " + editingRestriction.Description + this.getExpressionDescription(editingRestriction, columns))
+                    alert(this.createAlertMessage(editingRestriction, columns));
                     return false;
                 }
             }
@@ -45,7 +45,7 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
             for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Warning)) {
                 let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
                 if (hasFailed) {
-                    if (!confirm("Editing Restriction: " + editingRestriction.Description + this.getExpressionDescription(editingRestriction, columns) + " has failed.  Do you want to continue?")) {
+                    if (!confirm(this.createAlertMessage(editingRestriction, columns) + "\nDo you want to continue?")) {
                         return false;
                     }
                 }
@@ -127,6 +127,14 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         return true;
     }
 
+    private createAlertMessage(editingRestriction: IEditingRestriction, columns: IColumn[]): string {
+        let columnFriendlyName: string = columns.find(c => c.ColumnId == editingRestriction.ColumnId).FriendlyName;
+        let expressionDescription: string = (editingRestriction.HasExpression) ?
+            " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
+            "";
+        return ("Edit Restriction for Column '" + columnFriendlyName + "': " + editingRestriction.Description + expressionDescription);
+    }
+
     public CreateEmptyEditingRestriction(): IEditingRestriction {
         let newEditingRestriction: IEditingRestriction = {
             EditingRestrictionAction: EditingRestrictionAction.Prevent,
@@ -147,12 +155,6 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
             Operand2: ""
         }
         return newRangeExpression;
-    }
-
-    private getExpressionDescription(editingRestriction: IEditingRestriction, columns: IColumn[]): string {
-        return (editingRestriction.HasExpression) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
-            "";
     }
 
     getMenuItems(): IMenuItem[] {

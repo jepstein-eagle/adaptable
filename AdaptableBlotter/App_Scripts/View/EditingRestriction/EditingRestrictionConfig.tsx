@@ -79,8 +79,8 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
                 </Row>
             </li>
         })
-        return <PanelWithButton headerText="Editing Restrictions Configuration" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Editing Restriction"}
+        return <PanelWithButton headerText="Edit Restrictions Configuration" bsStyle="primary" style={panelStyle}
+            buttonContent={"Create Edit Restriction"}
             buttonClick={() => this.createEditingRestriction()} 
             glyphicon={"flag"} >
             {editingRestrictionItems.length > 0 &&
@@ -93,7 +93,8 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
             }
 
             {editingRestrictionItems.length == 0 &&
-                <Well bsSize="small">Click 'Create Editing Restriction' to start creating editing restrictions.</Well>
+                <Well bsSize="small">Click 'Create Edit Restriction' to start creating rules that will either prevent an edit altogether
+                 or require a popup warning to be shown.</Well>
             }
 
             {this.state.EditedEditingRestriction != null &&

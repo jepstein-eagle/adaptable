@@ -53,9 +53,9 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
         })
 
         return <div>
-            <Panel header="Editing Restriction Settings" bsStyle="primary">
+            <Panel header="Edit Restriction Settings" bsStyle="primary">
 
-                <Panel header="Editing Restriction Action" bsStyle="info" >
+                <Panel header="Edit Restriction Action" bsStyle="info" >
                     <Form inline >
                         <Col xs={5}>
                             <Radio inline value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent Edit</Radio>
@@ -66,7 +66,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                     </Form>
                 </Panel>
 
-                <Panel header="Editing Restriction Column" bsStyle="info" >
+                <Panel header="Edit Restriction Column" bsStyle="info" >
                     <FormGroup controlId="formColumn">
                         <Col xs={9}>
                             <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
@@ -77,7 +77,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                     </FormGroup>
                 </Panel>
 
-                <Panel header="Editing Restriction Condition" bsStyle="info">
+                <Panel header="Edit Restriction Condition" bsStyle="info">
                     <FormGroup>
                         <Col xs={4}>
                             <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
@@ -119,10 +119,10 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                     </FormGroup>
                 </Panel>
 
-                <Panel header="Editing Restriction Expression" bsStyle="info">
+                <Panel header="Edit Restriction Expression" bsStyle="info">
                     <Form inline >
                         <Col xs={12}>
-                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Base on other cell values (you create the Expression in the next step)</Checkbox>
+                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Edit Restriction is additionally dependent on other cell values (you create Expression in next step)</Checkbox>
                         </Col>
                     </Form>
 
@@ -291,6 +291,6 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
     }
 
     public Back(): void { }
-    public StepName = "Create Editing Restriction"
+    public StepName = "Create Edit Restriction"
 }
 
