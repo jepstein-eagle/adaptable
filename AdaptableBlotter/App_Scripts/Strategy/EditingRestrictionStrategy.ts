@@ -28,106 +28,8 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         }
     }
 
-    public OnCellChanging(dataChangedEvent: IDataChangedEvent): boolean {
-        let editingRestrictions = this.EditingRestrictions.filter(v => v.ColumnId == dataChangedEvent.ColumnName);
-        if (editingRestrictions.length > 0) {
-            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-
-            // first do restrictions which prevent edit
-            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Prevent)) {
-                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
-                if (hasFailed) {
-                    alert(this.createAlertMessage(editingRestriction, columns));
-                    return false;
-                }
-            }
-            // then do restrictions which show a warning 
-            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Warning)) {
-                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
-                if (hasFailed) {
-                    if (!confirm(this.createAlertMessage(editingRestriction, columns) + "\nDo you want to continue?")) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private IsEditingRestrictionRequired(editingRestriction: IEditingRestriction, dataChangedEvent: IDataChangedEvent, columns: IColumn[]): boolean {
-        // first see if the Expression has passed (if there is one)
-        if (editingRestriction.HasExpression) {
-            let isExpressionValid = ExpressionHelper.checkForExpression(editingRestriction.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
-            if (!isExpressionValid) {
-                return false;
-            }
-        }
-
-        // if its any just get out before evaluating anything else
-        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
-            return true;
-        }
-
-        // taken primarily from IsSatisfied in expresion - wonder if we can use that fully?
-        let operand1: any;
-        let operand2: any;
-        let newValue: any;
-        switch (editingRestriction.ColumnType) {
-            case ColumnType.Date:
-                operand1 = Date.parse(editingRestriction.RangeExpression.Operand1)
-                if (editingRestriction.RangeExpression.Operand2 != "") {
-                    operand2 = Date.parse(editingRestriction.RangeExpression.Operand2)
-                }
-                newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
-                break
-            case ColumnType.Number:
-                operand1 = Number(editingRestriction.RangeExpression.Operand1)
-                if (editingRestriction.RangeExpression.Operand2 != "") {
-                    operand2 = Number(editingRestriction.RangeExpression.Operand2);
-                }
-                newValue = dataChangedEvent.NewValue;
-                break
-            case ColumnType.Boolean:
-                newValue = dataChangedEvent.NewValue;
-                break;
-            case ColumnType.Object:
-            case ColumnType.String:
-                operand1 = editingRestriction.RangeExpression.Operand1.toLowerCase();
-                operand2 = editingRestriction.RangeExpression.Operand2.toLowerCase();
-                newValue = dataChangedEvent.NewValue.toLowerCase();
-                break;
-        }
-
-        switch (editingRestriction.RangeExpression.Operator) {
-            case LeafExpressionOperator.Equals:
-                return newValue == operand1;
-            case LeafExpressionOperator.NotEquals:
-                return newValue != operand1;
-            case LeafExpressionOperator.GreaterThan:
-                return newValue > operand1;
-            case LeafExpressionOperator.LessThan:
-                return newValue < operand1;
-            case LeafExpressionOperator.PercentChange:
-                let percentChange: number = Math.abs(100 - Math.abs(newValue * 100 / dataChangedEvent.OldValue))
-                return percentChange > Number(operand1);
-            case LeafExpressionOperator.ValueChange:
-                let changeInValue: number = Math.abs(newValue - dataChangedEvent.OldValue);
-                return changeInValue > Number(operand1);
-            case LeafExpressionOperator.Between:
-                return (newValue > operand1 && newValue < operand2);
-            case LeafExpressionOperator.NotBetween:
-                return !(newValue > operand1 && newValue < operand2);
-            case LeafExpressionOperator.IsNegative:
-                return (newValue < 0);
-            case LeafExpressionOperator.IsTrue:
-                return (newValue == true);
-            case LeafExpressionOperator.IsFalse:
-                return (newValue == false);
-        }
-        return true;
-    }
-
-    private createAlertMessage(editingRestriction: IEditingRestriction, columns: IColumn[]): string {
+    public CreateEditingRestrictionMessage(editingRestriction: IEditingRestriction): string {
+        let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let columnFriendlyName: string = columns.find(c => c.ColumnId == editingRestriction.ColumnId).FriendlyName;
         let expressionDescription: string = (editingRestriction.HasExpression) ?
             " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
@@ -139,7 +41,6 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
         let newEditingRestriction: IEditingRestriction = {
             EditingRestrictionAction: EditingRestrictionAction.Prevent,
             ColumnId: "select",
-            ColumnType: ColumnType.Object,
             RangeExpression: this.createEmptyRangeExpression(),
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),

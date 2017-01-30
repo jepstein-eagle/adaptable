@@ -244,9 +244,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
-// TODO: get rid and do properly!
-     OnGridSave(): IEvent<IAdaptableBlotter, IDataChangedEvent>{return null;}
-
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));

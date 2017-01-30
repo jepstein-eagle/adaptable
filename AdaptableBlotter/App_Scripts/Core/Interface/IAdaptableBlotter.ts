@@ -70,8 +70,7 @@ export interface IAdaptableBlotter {
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
- OnGridSave(): IEvent<IAdaptableBlotter, IDataChangedEvent  >
-
+ 
  getQuickSearchRowIds( rowIds: string[]): string[] 
 }
 

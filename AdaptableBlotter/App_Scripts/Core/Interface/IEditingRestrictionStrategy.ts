@@ -3,11 +3,12 @@ import { EditingRestrictionAction, ColumnType } from '../Enums';
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { IRangeExpression } from '../Interface/IExpression';
 import { Expression } from '../Expression/Expression'
+import { IColumn } from '../Interface/IAdaptableBlotter';
 
 
 export interface IEditingRestrictionStrategy extends IStrategy {
-        OnCellChanging(dataChangingEvent: IDataChangedEvent): boolean
         CreateEmptyEditingRestriction(): IEditingRestriction
+        CreateEditingRestrictionMessage(editingRestriction: IEditingRestriction): string 
 }
 
 export interface IEditingRestriction {
@@ -15,7 +16,6 @@ export interface IEditingRestriction {
         RangeExpression: IRangeExpression,
         EditingRestrictionAction: EditingRestrictionAction;
         Description: string;
-        ColumnType: ColumnType;
         HasExpression: boolean;
         OtherExpression: Expression;
 }

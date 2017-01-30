@@ -39,15 +39,15 @@ import { EditingRestrictionStrategy } from '../Strategy/EditingRestrictionStrate
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, EditingRestrictionAction } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
+import { IEditingRestriction, IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -109,31 +109,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-            let dataChangedEvent: IDataChangedEvent
+            let dataChangedEvent: IDataChangingEvent
             for (let col of this.grid.columns) {
                 if (e.values.hasOwnProperty(col.field)) {
-                    let newProp = col.field;
-                    let test: any = e.model; // dont like this - must be a better way!
-                    let oldValue: any = test[col.field];
-                    dataChangedEvent = { ColumnName: col.field, NewValue: e.values[col.field], OldValue: oldValue, Timestamp: Date.now(), IdentifierValue: e.model.uid };
+                    dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
                     break;
                 }
             }
 
-            // would like to do this with an event (see commented out line below) but dont know how to return a result to then prevent an edit
-            // this._onGridSave.Dispatch(this, dataChangedEvent);
-            // so for now Im going to call the strategy direclty and then fix properly...
-            let tempCellValidStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
-            if (!tempCellValidStrategy.OnCellChanging(dataChangedEvent)) {
-                e.preventDefault();
+            let failedRestriction: IEditingRestriction = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRestriction != null) { // it failed
+                let editingRestrictionStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
+                let errorMessage: string = editingRestrictionStrategy.CreateEditingRestrictionMessage(failedRestriction);
+                if (failedRestriction.EditingRestrictionAction == EditingRestrictionAction.Prevent) {
+                    alert(errorMessage); // eventually use the error popup
+                    e.preventDefault();
+                } else { // its a warning
+                    if (!confirm(errorMessage + "\nDo you want to continue?")) {
+                        e.preventDefault();
+                    }
+                }
             }
         });
-
-        function hasOwnProperty(obj: any, prop: any) {
-            var proto = obj.__proto__ || obj.constructor.prototype;
-            return (prop in obj) &&
-                (!(prop in proto) || proto[prop] !== obj[prop]);
-        }
 
 
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
@@ -261,10 +258,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
-    private _onGridSave: EventDispatcher<IAdaptableBlotter, IDataChangedEvent> = new EventDispatcher<IAdaptableBlotter, IDataChangedEvent>();
-    OnGridSave(): IEvent<IAdaptableBlotter, IDataChangedEvent> {
-        return this._onGridSave;
-    }
 
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];
@@ -781,6 +774,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return matchingRowIds;
         }
     }
+
+
 
 }
 
