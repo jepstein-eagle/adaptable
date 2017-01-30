@@ -24,6 +24,10 @@ export interface IUIError {
     ErrorMsg: string;
 }
 
+export interface IUIWarning { // need some ok/cancel thing...
+    WarningMsg: string;
+}
+
 export interface IStrategyActionReturn<T> {
     ActionReturn?: T,
     Error?: IUIError

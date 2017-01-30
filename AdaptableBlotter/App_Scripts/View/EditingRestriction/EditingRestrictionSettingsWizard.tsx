@@ -117,8 +117,10 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
 
                 <Panel header="Expression" bsStyle="info">
                     <Form inline >
+                       <Col xs={12}> <HelpBlock>Create an Expression if restriction should be based on other values in row</HelpBlock>
+                       </Col>
                         <Col xs={12}>
-                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Edit Restriction is additionally dependent on other cell values (you create Expression in next step)</Checkbox>
+                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Edit Restriction requires an Expression (created in next step)</Checkbox>
                         </Col>
                     </Form>
 

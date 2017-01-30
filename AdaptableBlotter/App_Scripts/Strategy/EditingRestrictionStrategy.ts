@@ -6,7 +6,6 @@ import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType, ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { EditingRestrictionState } from '../Redux/ActionsReducers/Interface/IState';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { IRangeExpression } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
@@ -29,12 +28,13 @@ export class EditingRestrictionStrategy extends AdaptableStrategyBase implements
     }
 
     public CreateEditingRestrictionMessage(editingRestriction: IEditingRestriction): string {
+       let intro: string = "The following Editing Restriction was triggered:"
         let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let columnFriendlyName: string = columns.find(c => c.ColumnId == editingRestriction.ColumnId).FriendlyName;
         let expressionDescription: string = (editingRestriction.HasExpression) ?
             " when " + ExpressionHelper.ConvertExpressionToString(editingRestriction.OtherExpression, columns, this.blotter) :
             "";
-        return ("Edit Restriction for Column '" + columnFriendlyName + "': " + editingRestriction.Description + expressionDescription);
+        return (intro + "\nColumn: '" + columnFriendlyName + "'\nRestriction: " + editingRestriction.Description + expressionDescription);
     }
 
     public CreateEmptyEditingRestriction(): IEditingRestriction {

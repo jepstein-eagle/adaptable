@@ -1,6 +1,5 @@
 import { IStrategy } from './IStrategy';
 import { EditingRestrictionAction, ColumnType } from '../Enums';
-import { IDataChangedEvent } from '../Services/Interface/IAuditService'
 import { IRangeExpression } from '../Interface/IExpression';
 import { Expression } from '../Expression/Expression'
 import { IColumn } from '../Interface/IAdaptableBlotter';

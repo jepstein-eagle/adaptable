@@ -30,8 +30,10 @@ export interface MenuState {
 export interface PopupState {
     ShowPopup: boolean;
     ShowErrorPopup: boolean;
+    ShowWarningPopup: boolean;
     ComponentClassName: string;
     ErrorMsg: string;
+    WarningMsg: string;
     Params?: any
 }
 

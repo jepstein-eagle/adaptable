@@ -24,7 +24,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         let headerRow = <Form inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={12}>
-                    {<Glyphicon glyph={this.props.glyphicon} style={glyphStyle} />}
+                    {<Glyphicon glyph={this.props.glyphicon} style={marginRightStyle} />}
                     {this.props.header}
                 </Col>
             </Row>
@@ -36,7 +36,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
 
 }
 
-let glyphStyle = {
+let marginRightStyle = {
     marginRight: '10px',
     padding: '0px'
 }

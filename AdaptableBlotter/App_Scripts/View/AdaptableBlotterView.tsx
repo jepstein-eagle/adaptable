@@ -5,12 +5,14 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown, FormControl, Form, Col, Row, ControlLabel } from 'react-bootstrap';
+import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown, FormControl, Form, Col, Row, ControlLabel, ButtonToolbar } from 'react-bootstrap';
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
+import { EventDispatcher } from '../Core/EventDispatcher'
+import { IEvent } from '../Core/Interface/IEvent';
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
 import { PopupState, MenuState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -32,7 +34,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
 
-    render() {
+   render() {
 
         // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
         // in this version all action items are buttons and all config screens go in a dropdown
@@ -79,12 +81,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             <div>
                                 <Form horizontal>
                                     <Row style={{ display: "flex" }}>
-                                        <Col xs={1} >
-                                            <Glyphicon glyph="warning-sign" style={errorGlypIconStyle} />
-                                            {}
-                                        </Col>
-                                        <Col xs={11}>
-                                            <h4>Error</h4>
+                                        <Col xs={12} >
+                                            <Glyphicon glyph="exclamation-sign" style={glyphStyle} />
+                                            <ControlLabel style={headerStyle}> Error</ControlLabel>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -101,7 +100,43 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                                 })}
                             </p>
                             <p>
-                                <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
+                                <Button bsStyle="danger" onClick={this.props.onClose}>OK</Button>
+                            </p>
+                        </Alert>
+                    </Modal.Body>
+                </Modal>
+
+                {/*  The warning modal we show - e.g. in Edit Restricitons if warning is on */}
+                <Modal show={this.props.PopupState.ShowWarningPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
+                    <Modal.Body>
+                        <Alert bsStyle="warning" onDismiss={this.props.onClose}>
+                            <Form horizontal>
+                                <Row style={{ display: "flex" }}>
+                                    <Col xs={11} >
+                                        <Glyphicon glyph="warning-sign" style={glyphStyle} />
+                                        <ControlLabel style={headerStyle}> Warning</ControlLabel>
+                                    </Col>
+                                </Row>
+                            </Form>
+
+                            <p>
+                                {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
+                                    return (
+                                        <span key={index}>
+                                            {item}
+                                            <br />
+                                        </span>
+                                    )
+                                })}
+                            </p>
+                            <p>
+                                Do you want to continue?
+                            </p>
+                            <p>
+                                <ButtonToolbar>
+                                    <Button bsStyle="warning" onClick={ this.props.onClose}>Ok</Button>
+                                    <Button bsStyle="default" onClick={  this.props.onClose}>Cancel</Button>
+                                </ButtonToolbar>
                             </p>
                         </Alert>
                     </Modal.Body>
@@ -126,9 +161,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         };
     }
 
-    onTest() {
-        this.props.showPopup("CustomSortConfig");
-    }
+  
+
 
     // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
     onSetQuickSearch(quickSearchText: string) {
@@ -175,10 +209,6 @@ export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Pro
 </Provider>;
 
 
-let errorGlypIconStyle: React.CSSProperties = {
-    fontSize: "large"
-}
-
 let buttonStyle: React.CSSProperties = {
     active: "none",
     focus: "none"
@@ -188,4 +218,13 @@ let marginStyle: React.CSSProperties = {
     margin: '15px'
 }
 
+let glyphStyle = {
+    fontSize: "large",
+    marginRight: '5px',
+    padding: '0px'
+}
 
+let headerStyle = {
+    fontSize: "large",
+
+}

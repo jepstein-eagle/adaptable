@@ -6,9 +6,10 @@ import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { FilterFormReact } from '../View/FilterForm';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIWarning } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -122,12 +123,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let editingRestrictionStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
                 let errorMessage: string = editingRestrictionStrategy.CreateEditingRestrictionMessage(failedRestriction);
                 if (failedRestriction.EditingRestrictionAction == EditingRestrictionAction.Prevent) {
-                    alert(errorMessage); // eventually use the error popup
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
                     e.preventDefault();
                 } else { // its a warning
-                    if (!confirm(errorMessage + "\nDo you want to continue?")) {
-                        e.preventDefault();
+                    let warning: IUIWarning = {
+                        WarningMsg: errorMessage
                     }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.WarningPopupAction>(PopupRedux.WarningPopup(warning));
+                // need this to have a callback or some action we can do next
+                // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
+                // for now so video will work we will assume the user clicked OK!
+                 //   e.preventDefault();
                 }
             }
         });
