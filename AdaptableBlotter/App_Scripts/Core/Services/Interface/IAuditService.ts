@@ -1,6 +1,6 @@
 import { IEvent } from '../../Interface/IEvent'
 import { ColumnType } from '../../Enums';
-import { ICellValidationRule } from '../../Interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Interface/ICellValidationStrategy';
 
 
 export interface IDataChangingEvent {

@@ -4,26 +4,26 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../../Core/Enums';
+import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
-interface EditingRestrictionSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
 }
-interface EditingRestrictionSettingsWizardState {
+interface CellValidationSettingsWizardState {
     ColumnId: string
-    EditingRestrictionAction: EditingRestrictionAction;
+    CellValidationAction: CellValidationAction;
 }
 
-export class EditingRestrictionSettingsWizard extends React.Component<EditingRestrictionSettingsWizardProps, EditingRestrictionSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: EditingRestrictionSettingsWizardProps) {
+export class CellValidationSettingsWizard extends React.Component<CellValidationSettingsWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: CellValidationSettingsWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
-            EditingRestrictionAction: this.props.Data.EditingRestrictionAction,
+            CellValidationAction: this.props.Data.CellValidationAction,
         }
     }
 
@@ -39,10 +39,10 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
                 <Panel header="Action To Take When Validation Fails" bsStyle="info" >
                     <Form inline >
                         <Col xs={12}>
-                            <Radio inline value={EditingRestrictionAction.Prevent.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Prevent} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
+                            <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
                         <Col xs={12}>
-                            <Radio inline value={EditingRestrictionAction.Warning.toString()} checked={this.state.EditingRestrictionAction == EditingRestrictionAction.Warning} onChange={(e) => this.onEditingRestrictionActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
+                            <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
                         </Col>
                     </Form>
                 </Panel>
@@ -64,12 +64,12 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
 
     private onColumnSelectChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ColumnId: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onEditingRestrictionActionChanged(event: React.FormEvent) {
+    private onCellValidationActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ EditingRestrictionAction: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
     
     public canNext(): boolean {
@@ -79,7 +79,7 @@ export class EditingRestrictionSettingsWizard extends React.Component<EditingRes
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.EditingRestrictionAction = this.state.EditingRestrictionAction;
+        this.props.Data.CellValidationAction = this.state.CellValidationAction;
     }
 
     public Back(): void { }

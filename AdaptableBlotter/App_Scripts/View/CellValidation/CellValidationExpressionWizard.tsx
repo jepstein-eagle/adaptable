@@ -8,17 +8,17 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
-import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 
 
-interface EditingRestrictionExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string
 }
 
-export class EditingRestrictionExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: EditingRestrictionExpressionWizardProps) {
+export class CellValidationExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+    constructor(private props2: CellValidationExpressionWizardProps) {
         super(props2)
         this.state = {
             Expression: props2.Data.OtherExpression,
@@ -30,5 +30,5 @@ export class EditingRestrictionExpressionWizard extends ExpressionBuilderPage im
         this.props2.Data.OtherExpression = this.state.Expression
     }
     public Back(): void { }
-    public StepName = "Editing Restriction Create Expression"
+    public StepName = "Cell Validation Create Expression"
 }

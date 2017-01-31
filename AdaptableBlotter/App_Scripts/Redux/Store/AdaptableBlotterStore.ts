@@ -22,7 +22,7 @@ import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
-import * as EditingRestrictionRedux from '../ActionsReducers/EditingRestrictionRedux'
+import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
@@ -52,7 +52,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
-    EditingRestriction : EditingRestrictionRedux.EditingRestrictionReducer
+    CellValidation : CellValidationRedux.CellValidationReducer
 });
 
 

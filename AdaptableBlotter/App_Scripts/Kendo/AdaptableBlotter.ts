@@ -36,15 +36,15 @@ import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
-import { EditingRestrictionStrategy } from '../Strategy/EditingRestrictionStrategy'
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, EditingRestrictionAction } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
@@ -93,7 +93,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.EditingRestrictionStrategyId, new EditingRestrictionStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -117,13 +117,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
 
-            let failedRestrictions: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRestrictions.length >0) { // we have at least one failure or warning
-                let editingRestrictionStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length >0) { // we have at least one failure or warning
+                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
 
                 // first see if its an error = should only be one item in array if so
-                if (failedRestrictions[0].EditingRestrictionAction == EditingRestrictionAction.Prevent) {
-                    let errorMessage: string = editingRestrictionStrategy.CreateEditingRestrictionMessage(failedRestrictions[0]);
+                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                    let errorMessage: string = cellValidationStrategy.CreateCellValidationMessage(failedRules[0]);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
@@ -131,8 +131,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     e.preventDefault();
                 } else {
                     let warningMessage: string = "";
-                    failedRestrictions.forEach(f => {
-                        warningMessage = warningMessage  + editingRestrictionStrategy.CreateEditingRestrictionMessage(f)+ "\n";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage  + cellValidationStrategy.CreateCellValidationMessage(f)+ "\n";
                     })
                     let warning: IUIWarning = {
                         WarningMsg: warningMessage

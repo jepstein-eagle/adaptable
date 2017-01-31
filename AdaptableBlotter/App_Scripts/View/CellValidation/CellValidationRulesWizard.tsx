@@ -4,24 +4,24 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../../Core/Enums';
+import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 
-interface EditingRestrictionRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
 }
-interface EditingRestrictionSettingsWizardState {
+interface CellValidationSettingsWizardState {
     Operator: LeafExpressionOperator;
     Operand1: string;
     Operand2: string;
     HasExpression: boolean;
 }
 
-export class EditingRestrictionRulesWizard extends React.Component<EditingRestrictionRulesWizardProps, EditingRestrictionSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: EditingRestrictionRulesWizardProps) {
+export class CellValidationRulesWizard extends React.Component<CellValidationRulesWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: CellValidationRulesWizardProps) {
         super(props)
         this.state = {
             Operator: this.props.Data.RangeExpression.Operator,
@@ -99,7 +99,7 @@ export class EditingRestrictionRulesWizard extends React.Component<EditingRestri
 
                 <Panel header="Expression" bsStyle="info">
                     <Form inline >
-                        <Col xs={12}> <HelpBlock>An Expression is required if restriction dependent on other values in the row</HelpBlock>
+                        <Col xs={12}> <HelpBlock>An Expression is required if rule is dependent on other values in the row</HelpBlock>
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Create Expression (created in next step)</Checkbox>
@@ -115,28 +115,28 @@ export class EditingRestrictionRulesWizard extends React.Component<EditingRestri
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value) } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operator: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand1: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperand2ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand2: e.value } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onDisallowEditChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let operator: LeafExpressionOperator = (e.value == "None") ? LeafExpressionOperator.None : LeafExpressionOperator.Unknown;
-        this.setState({ Operator: operator } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOtherExpressionOptionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ HasExpression: e.checked } as EditingRestrictionSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
+        this.setState({ HasExpression: e.checked } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
     }
 
     private getColumnTypeFromState(): ColumnType {
@@ -217,28 +217,28 @@ export class EditingRestrictionRulesWizard extends React.Component<EditingRestri
         }
     }
 
-    createEditingRestrictionDescription(editingRestriction: ICellValidationRule): string {
+    createCellValidationDescription(CellValidation: ICellValidationRule): string {
 
-        let valueDescription: string = this.getTextForLeafOperator(editingRestriction.RangeExpression.Operator);
+        let valueDescription: string = this.getTextForLeafOperator(CellValidation.RangeExpression.Operator);
 
-        if (!this.operatorRequiresValue(editingRestriction.RangeExpression.Operator)) {
+        if (!this.operatorRequiresValue(CellValidation.RangeExpression.Operator)) {
             return valueDescription;
         }
-        let columnType: ColumnType = this.props.Columns.find(c => c.ColumnId == editingRestriction.ColumnId).ColumnType;
+        let columnType: ColumnType = this.props.Columns.find(c => c.ColumnId == CellValidation.ColumnId).ColumnType;
         let operand1Text: string = (columnType == ColumnType.Boolean || columnType == ColumnType.Number) ?
-            editingRestriction.RangeExpression.Operand1 :
-            "'" + editingRestriction.RangeExpression.Operand1 + "'"
+            CellValidation.RangeExpression.Operand1 :
+            "'" + CellValidation.RangeExpression.Operand1 + "'"
 
         valueDescription = valueDescription + operand1Text;
 
-        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
+        if (CellValidation.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
             valueDescription = valueDescription + '%';
         }
 
-        if (StringExtensions.IsNotNullOrEmpty(editingRestriction.RangeExpression.Operand2)) {
+        if (StringExtensions.IsNotNullOrEmpty(CellValidation.RangeExpression.Operand2)) {
             let operand2Text: string = (columnType == ColumnType.Number) ?
-                " and " + editingRestriction.RangeExpression.Operand2 :
-                " and '" + editingRestriction.RangeExpression.Operand2 + "'";
+                " and " + CellValidation.RangeExpression.Operand2 :
+                " and '" + CellValidation.RangeExpression.Operand2 + "'";
             valueDescription = valueDescription + operand2Text;
         }
         return valueDescription;
@@ -274,7 +274,7 @@ export class EditingRestrictionRulesWizard extends React.Component<EditingRestri
         }
         this.props.Data.RangeExpression = rangeExpression;
         this.props.Data.HasExpression = this.state.HasExpression;
-        this.props.Data.Description = this.createEditingRestrictionDescription(this.props.Data);
+        this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
     }
 
     public Back(): void { }
