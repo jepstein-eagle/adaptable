@@ -45,7 +45,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
     public Back(): void { }
-    public StepName = "Column Picker"
+    public StepName = "Choose Custom Sort Column"
 }
 var listGroupStyle = {
     'overflowY': 'auto',

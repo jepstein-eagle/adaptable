@@ -18,6 +18,8 @@ interface CellValidationSettingsWizardState {
     Operand1: string;
     Operand2: string;
     HasExpression: boolean;
+    CellValidationAction: CellValidationAction;
+
 }
 
 export class CellValidationRulesWizard extends React.Component<CellValidationRulesWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -27,7 +29,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operator: this.props.Data.RangeExpression.Operator,
             Operand1: this.props.Data.RangeExpression.Operand1,
             Operand2: this.props.Data.RangeExpression.Operand2,
-            HasExpression: this.props.Data.HasExpression
+            HasExpression: this.props.Data.HasExpression,
+            CellValidationAction: this.props.Data.CellValidationAction,
+
         }
     }
 
@@ -42,17 +46,33 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             return <option key={operator} value={operator.toString()}>{this.getTextForLeafOperator(operator)}</option>
         })
 
+        let columnFriendlyName: string = this.props.Columns.find(c=>c.ColumnId==this.props.Data.ColumnId).FriendlyName;
+
+        let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
+
         return <div>
             <Panel header="Cell Validation Settings" bsStyle="primary">
 
-
-                <Panel header="Validation Rule" bsStyle="info">
-                    <Form >
+                <Panel header="Action To Take When Validation Fails" bsStyle="info" >
+                    <Form inline >
                         <Col xs={12}>
-                            <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow all edits for this column</Radio>
+                            <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
                         <Col xs={12}>
-                            <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new value matches this rule:</Radio>
+                            <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
+                        </Col>
+                    </Form>
+                </Panel>
+
+
+
+                <Panel header={validationRuleHeader} bsStyle="info">
+                    <Form >
+                        <Col xs={12}>
+                            <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
+                        </Col>
+                        <Col xs={12}>
+                            <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edit where the new value matches rule:</Radio>
                         </Col>
                         <Col xs={12}> <HelpBlock></HelpBlock>                        </Col>
                     </Form>
@@ -112,6 +132,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     }
 
+
+    private onCellValidationActionChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
@@ -181,7 +206,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case LeafExpressionOperator.None:
                 return "No Changes Allowed"
             case LeafExpressionOperator.Unknown:
-                return "Select "
+                return "Select Rule Operator"
             case LeafExpressionOperator.Equals:
                 return "Equals "
             case LeafExpressionOperator.NotEquals:
@@ -275,6 +300,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.props.Data.RangeExpression = rangeExpression;
         this.props.Data.HasExpression = this.state.HasExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
+        this.props.Data.CellValidationAction = this.state.CellValidationAction;
+
     }
 
     public Back(): void { }

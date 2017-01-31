@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
+import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
@@ -15,7 +15,6 @@ interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICe
 }
 interface CellValidationSettingsWizardState {
     ColumnId: string
-    CellValidationAction: CellValidationAction;
 }
 
 export class CellValidationSettingsWizard extends React.Component<CellValidationSettingsWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -23,37 +22,26 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
-            CellValidationAction: this.props.Data.CellValidationAction,
         }
     }
 
     render(): any {
 
-        let optionColumns = this.props.Columns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
+        var columnsItems = this.props.Columns.map((Column: IColumn) => {
+            return <ListGroupItem key={Column.ColumnId}
+                onClick={() => this.onClickColum(Column)}
+                active={this.state.ColumnId == null ? false : Column.ColumnId == this.state.ColumnId}>{Column.FriendlyName}</ListGroupItem>
         })
 
         return <div>
             <Panel header="Cell Validation Settings" bsStyle="primary">
 
-                <Panel header="Action To Take When Validation Fails" bsStyle="info" >
-                    <Form inline >
-                        <Col xs={12}>
-                            <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
-                        </Col>
-                        <Col xs={12}>
-                            <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
-                        </Col>
-                    </Form>
-                </Panel>
-
-                <Panel header="Column" bsStyle="info" >
+                    <Panel header="Select a Column" bsStyle="info" >
                     <FormGroup controlId="formColumn">
-                        <Col xs={9}>
-                            <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChanged(x)} >
-                                <option value="select" key="select">Select a column</option>
-                                {optionColumns}
-                            </FormControl>
+                        <Col xs={12}>
+                            <ListGroup style={listGroupStyle}>
+                                {columnsItems}
+                            </ListGroup>
                         </Col>
                     </FormGroup>
                 </Panel>
@@ -62,16 +50,11 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
         </div>
     }
 
-    private onColumnSelectChanged(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ ColumnId: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+    private onClickColum(column: IColumn) {
+        this.setState({ ColumnId: column.ColumnId } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onCellValidationActionChanged(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
-    }
-    
+
     public canNext(): boolean {
         return (this.state.ColumnId != 'select');
     }
@@ -79,10 +62,14 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.CellValidationAction = this.state.CellValidationAction;
     }
 
     public Back(): void { }
-    public StepName = "Cell Validation Settings"
+    public StepName = "Cell Validation Column "
 }
 
+var listGroupStyle = {
+    'overflowY': 'auto',
+    'maxHeight': '400px',
+    'height': '400px'
+};
