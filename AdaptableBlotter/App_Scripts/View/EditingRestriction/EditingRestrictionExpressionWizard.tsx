@@ -8,10 +8,10 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
-import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
 
 
-interface EditingRestrictionExpressionWizardProps extends AdaptableWizardStepProps<IEditingRestriction> {
+interface EditingRestrictionExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     ColumnList: Array<IColumn>
     Blotter: IAdaptableBlotter
     SelectedColumnId: string

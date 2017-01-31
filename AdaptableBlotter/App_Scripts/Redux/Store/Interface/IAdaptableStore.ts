@@ -17,7 +17,7 @@ export interface AdaptableBlotterState {
     UserFilter: AdaptableBlotterStates.UserFilterState;
     ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
     Theme: AdaptableBlotterStates.ThemeState;
-    EditingRestriction: AdaptableBlotterStates.EditingRestrictionState;
+    CellValidation: AdaptableBlotterStates.CellValidationState;
 }
 
 export interface IAdaptableBlotterStore {

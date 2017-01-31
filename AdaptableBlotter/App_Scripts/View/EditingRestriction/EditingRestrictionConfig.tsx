@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
+import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as EditingRestrictionRedux from '../../Redux/ActionsReducers/EditingRestrictionRedux'
@@ -21,19 +21,20 @@ import { PanelWithRow } from '../PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { EditingRestrictionSettingsWizard } from './EditingRestrictionSettingsWizard'
 import { EditingRestrictionExpressionWizard } from './EditingRestrictionExpressionWizard'
+import { EditingRestrictionRulesWizard } from './EditingRestrictionRulesWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 interface EditingRestrictionConfigProps extends IStrategyViewPopupProps<EditingRestrictionConfigComponent> {
-    EditingRestrictions: IEditingRestriction[];
+    CellValidations: ICellValidationRule[];
     Columns: Array<IColumn>
     onDeleteEditingRestriction: (Index: number) => EditingRestrictionRedux.EditingRestrictionDeleteAction
-    onAddEditEditingRestriction: (Index: number, EditingRestriction: IEditingRestriction) => EditingRestrictionRedux.EditingRestrictionAddOrUpdateAction
+    onAddEditEditingRestriction: (Index: number, EditingRestriction: ICellValidationRule) => EditingRestrictionRedux.EditingRestrictionAddOrUpdateAction
 }
 
 interface EditingRestrictionConfigState {
-    EditedEditingRestriction: IEditingRestriction
+    EditedEditingRestriction: ICellValidationRule
     EditedIndexEditingRestriction: number
 }
 
@@ -49,9 +50,9 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Restriction", 3], ["Expression", 3],["Action", 2], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Action", 2], ["", 2]];
 
-        let editingRestrictionItems = this.props.EditingRestrictions.map((x, index) => {
+        let editingRestrictionItems = this.props.CellValidations.map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row >
@@ -79,8 +80,8 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
                 </Row>
             </li>
         })
-        return <PanelWithButton headerText="Edit Restrictions Configuration" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Edit Restriction"}
+        return <PanelWithButton headerText="Cell Validation Configuration" bsStyle="primary" style={panelStyle}
+            buttonContent={"Create Cell Validation Rule"}
             buttonClick={() => this.createEditingRestriction()} 
             glyphicon={"flag"} >
             {editingRestrictionItems.length > 0 &&
@@ -93,13 +94,13 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
             }
 
             {editingRestrictionItems.length == 0 &&
-                <Well bsSize="small">Click 'Create Edit Restriction' to start creating rules that will either prevent an edit altogether
-                 or require a popup warning to be shown.</Well>
+                <Well bsSize="small">Click 'Create Cell Validation Rule' to start creating rules for valid cell edits.\nEdits that fail can be prevented altogether or allowed after user sees a warning.</Well>
             }
 
             {this.state.EditedEditingRestriction != null &&
                 <AdaptableWizard Steps={[
                     <EditingRestrictionSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
+                    <EditingRestrictionRulesWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
                     <EditingRestrictionExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />,
                 ]}
                     Data={this.state.EditedEditingRestriction}
@@ -115,14 +116,14 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         this.setState({ EditedEditingRestriction: EditingRestrictionStrategy.CreateEmptyEditingRestriction(), EditedIndexEditingRestriction: -1 });
     }
 
-    onEdit(index: number, EditingRestriction: IEditingRestriction) {
+    onEdit(index: number, EditingRestriction: ICellValidationRule) {
         //we clone the condition as we do not want to mutate the redux state here....
         this.setState({ EditedEditingRestriction: Helper.cloneObject(EditingRestriction), EditedIndexEditingRestriction: index });
     }
 
     private onEditingRestrictionActionChanged(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let EditingRestriction: IEditingRestriction = this.props.EditingRestrictions[index];
+        let EditingRestriction: ICellValidationRule = this.props.CellValidations[index];
         EditingRestriction.EditingRestrictionAction = Number.parseInt(e.value);
         this.props.onAddEditEditingRestriction(index, EditingRestriction);
     }
@@ -136,7 +137,7 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
         this.setState({ EditedEditingRestriction: null, EditedIndexEditingRestriction: -1 });
     }
 
-     setExpressionDescription(EditingRestriction: IEditingRestriction):string {
+     setExpressionDescription(EditingRestriction: ICellValidationRule):string {
         return (EditingRestriction.HasExpression) ?
             ExpressionHelper.ConvertExpressionToString(EditingRestriction.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
             "No Expression";
@@ -148,7 +149,7 @@ class EditingRestrictionConfigComponent extends React.Component<EditingRestricti
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        EditingRestrictions: state.EditingRestriction.EditingRestrictions
+        CellValidations: state.CellValidation.CellValidations
     };
 }
 
@@ -156,7 +157,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteEditingRestriction: (index: number) => dispatch(EditingRestrictionRedux.DeleteEditingRestriction(index)),
-        onAddEditEditingRestriction: (index: number, EditingRestriction: IEditingRestriction) => dispatch(EditingRestrictionRedux.AddEditEditingRestriction(index, EditingRestriction))
+        onAddEditEditingRestriction: (index: number, EditingRestriction: ICellValidationRule) => dispatch(EditingRestrictionRedux.AddEditEditingRestriction(index, EditingRestriction))
     };
 }
 

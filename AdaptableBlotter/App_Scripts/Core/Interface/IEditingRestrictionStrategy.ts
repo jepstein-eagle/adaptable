@@ -6,11 +6,11 @@ import { IColumn } from '../Interface/IAdaptableBlotter';
 
 
 export interface IEditingRestrictionStrategy extends IStrategy {
-        CreateEmptyEditingRestriction(): IEditingRestriction
-        CreateEditingRestrictionMessage(editingRestriction: IEditingRestriction): string 
+        CreateEmptyEditingRestriction(): ICellValidationRule
+        CreateEditingRestrictionMessage(editingRestriction: ICellValidationRule): string 
 }
 
-export interface IEditingRestriction {
+export interface ICellValidationRule {
         ColumnId: string;
         RangeExpression: IRangeExpression,
         EditingRestrictionAction: EditingRestrictionAction;

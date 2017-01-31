@@ -1,6 +1,6 @@
 import { IEvent } from '../../Interface/IEvent'
-import {  ColumnType } from '../../Enums';
-import { IEditingRestriction } from '../../Interface/IEditingRestrictionStrategy';
+import { ColumnType } from '../../Enums';
+import { ICellValidationRule } from '../../Interface/IEditingRestrictionStrategy';
 
 
 export interface IDataChangingEvent {
@@ -37,6 +37,6 @@ export interface IDataChangedInfo {
 export interface IAuditService {
     CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, forceDispatch?: boolean): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
-       CheckCellChanging(dataChangingEvent: IDataChangingEvent): IEditingRestriction
-     
+    CheckCellChanging(dataChangingEvent: IDataChangingEvent): ICellValidationRule[]
+
 }

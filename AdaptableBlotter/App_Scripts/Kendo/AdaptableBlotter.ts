@@ -44,7 +44,7 @@ import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, EditingRest
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { IEditingRestriction, IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
+import { ICellValidationRule, IEditingRestrictionStrategy } from '../Core/Interface/IEditingRestrictionStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
@@ -104,7 +104,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, event)
         })
 
-
         grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
             this._onGridDataBound.Dispatch(this, this)
         });
@@ -118,25 +117,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
 
-            let failedRestriction: IEditingRestriction = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRestriction != null) { // it failed
+            let failedRestrictions: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRestrictions.length >0) { // we have at least one failure or warning
                 let editingRestrictionStrategy: IEditingRestrictionStrategy = this.Strategies.get(StrategyIds.EditingRestrictionStrategyId) as IEditingRestrictionStrategy;
-                let errorMessage: string = editingRestrictionStrategy.CreateEditingRestrictionMessage(failedRestriction);
-                if (failedRestriction.EditingRestrictionAction == EditingRestrictionAction.Prevent) {
+
+                // first see if its an error = should only be one item in array if so
+                if (failedRestrictions[0].EditingRestrictionAction == EditingRestrictionAction.Prevent) {
+                    let errorMessage: string = editingRestrictionStrategy.CreateEditingRestrictionMessage(failedRestrictions[0]);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
                     e.preventDefault();
-                } else { // its a warning
+                } else {
+                    let warningMessage: string = "";
+                    failedRestrictions.forEach(f => {
+                        warningMessage = warningMessage  + editingRestrictionStrategy.CreateEditingRestrictionMessage(f)+ "\n";
+                    })
                     let warning: IUIWarning = {
-                        WarningMsg: errorMessage
+                        WarningMsg: warningMessage
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.WarningPopupAction>(PopupRedux.WarningPopup(warning));
-                // need this to have a callback or some action we can do next
-                // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
-                // for now so video will work we will assume the user clicked OK!
-                 //   e.preventDefault();
+                    // need this to have a callback or some action we can do next
+                    // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
+                    // for now so video will work we will assume the user clicked OK!
+                    //   e.preventDefault();
                 }
             }
         });

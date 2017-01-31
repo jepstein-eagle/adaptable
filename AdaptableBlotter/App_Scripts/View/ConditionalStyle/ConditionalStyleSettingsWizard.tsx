@@ -116,9 +116,9 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         <FormGroup controlId="expressionType">
                             <Col xs={4} componentClass={ControlLabel}>Expression Type: </Col>
                             <Col xs={8}>
-                                <Radio inline value="custom" checked={this.state.IsPredefinedExpression == false}
+                                <Radio  value="custom" checked={this.state.IsPredefinedExpression == false}
                                     onChange={(e) => this.onExpressionOptionChange(e)}>Custom Expression (created in next step)</Radio>
-                                <Radio inline value="predefined" checked={this.state.IsPredefinedExpression == true}
+                                <Radio  value="predefined" checked={this.state.IsPredefinedExpression == true}
                                     onChange={(e) => this.onExpressionOptionChange(e)}>Existing Expression</Radio>
                             </Col>
                         </FormGroup>

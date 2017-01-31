@@ -1,8 +1,8 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Redux from 'redux';
-import { EditingRestrictionState } from './interface/IState'
-import { IEditingRestriction } from '../../Core/interface/IEditingRestrictionStrategy';
+import { CellValidationState } from './interface/IState'
+import { ICellValidationRule } from '../../Core/interface/IEditingRestrictionStrategy';
 
 export const EDITING_RESTRICTION_ADD_OR_UPDATE = 'EDITING_RESTRICTION_ADD_OR_UPDATE';
 export const EDITING_RESTRICTION_DELETE = 'EDITING_RESTRICTION_DELETE';
@@ -10,14 +10,14 @@ export const EDITING_RESTRICTION_DELETE = 'EDITING_RESTRICTION_DELETE';
 
 export interface EditingRestrictionAddOrUpdateAction extends Redux.Action {
     Index: number,
-    EditingRestriction: IEditingRestriction
+    EditingRestriction: ICellValidationRule
 }
 
 export interface EditingRestrictionDeleteAction extends Redux.Action {
     Index: number,
 }
 
-export const AddEditEditingRestriction = (Index: number, EditingRestriction: IEditingRestriction): EditingRestrictionAddOrUpdateAction => ({
+export const AddEditEditingRestriction = (Index: number, EditingRestriction: ICellValidationRule): EditingRestrictionAddOrUpdateAction => ({
     type: EDITING_RESTRICTION_ADD_OR_UPDATE,
     Index,
     EditingRestriction
@@ -29,30 +29,30 @@ export const DeleteEditingRestriction = (Index: number): EditingRestrictionDelet
 })
 
 
-const initialEditingRestrictionState: EditingRestrictionState = {
-    EditingRestrictions: []
+const initialEditingRestrictionState: CellValidationState = {
+    CellValidations: []
 }
 
-export const EditingRestrictionReducer: Redux.Reducer<EditingRestrictionState> = (state: EditingRestrictionState = initialEditingRestrictionState, action: Redux.Action): EditingRestrictionState => {
-    let EditingRestrictions: IEditingRestriction[]
+export const EditingRestrictionReducer: Redux.Reducer<CellValidationState> = (state: CellValidationState = initialEditingRestrictionState, action: Redux.Action): CellValidationState => {
+    let CellValidations: ICellValidationRule[]
 
     switch (action.type) {
 
         case EDITING_RESTRICTION_ADD_OR_UPDATE: {
             let actionTyped = (<EditingRestrictionAddOrUpdateAction>action)
-            EditingRestrictions = [].concat(state.EditingRestrictions)
+            CellValidations = [].concat(state.CellValidations)
             if (actionTyped.Index == -1) {
-                EditingRestrictions.push(actionTyped.EditingRestriction)
+                CellValidations.push(actionTyped.EditingRestriction)
             } else {
-                EditingRestrictions[actionTyped.Index] = actionTyped.EditingRestriction
+                CellValidations[actionTyped.Index] = actionTyped.EditingRestriction
             }
-            return Object.assign({}, state, { EditingRestrictions: EditingRestrictions })
+            return Object.assign({}, state, { CellValidations: CellValidations })
         }
 
         case EDITING_RESTRICTION_DELETE: {
-            EditingRestrictions = [].concat(state.EditingRestrictions)
-            EditingRestrictions.splice((<EditingRestrictionDeleteAction>action).Index, 1)
-            return Object.assign({}, state, { EditingRestrictions: EditingRestrictions })
+            CellValidations = [].concat(state.CellValidations)
+            CellValidations.splice((<EditingRestrictionDeleteAction>action).Index, 1)
+            return Object.assign({}, state, { CellValidations: CellValidations })
         }
 
         default:

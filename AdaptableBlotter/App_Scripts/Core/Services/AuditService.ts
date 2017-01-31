@@ -3,11 +3,12 @@ import { IAuditService, IDataChangedEvent, IDataChangingEvent, IColumnDataValueL
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
-import { MenuType, ColumnType, EditingRestrictionAction, LeafExpressionOperator } from '../Enums';
-import { EditingRestrictionState } from '../../Redux/ActionsReducers/Interface/IState';
+import { MenuType, ColumnType, EditingRestrictionAction, LeafExpressionOperator, SortOrder } from '../Enums';
+import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
-import { IEditingRestriction } from '../Interface/IEditingRestrictionStrategy';
+import { Helper } from '../Helper'
+import { ICellValidationRule } from '../Interface/IEditingRestrictionStrategy';
 
 
 /*
@@ -82,41 +83,64 @@ export class AuditService implements IAuditService {
     }
 
     // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-    public CheckCellChanging(dataChangedEvent: IDataChangingEvent): IEditingRestriction {
-        let editingRestrictions = this.GetEditingRestrictionState().EditingRestrictions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
-        if (editingRestrictions.length > 0) {
+    public CheckCellChanging(dataChangedEvent: IDataChangingEvent): ICellValidationRule[] {
+        let editingRules = this.GetEditingRestrictionState().CellValidations.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
+        let failedWarningRestrictions: ICellValidationRule[] = [];
+        if (editingRules.length > 0) {
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
-            // first do restrictions which prevent edit
-            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Prevent)) {
-                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
-                if (hasFailed) {
-                    return editingRestriction;
+            // first check the rules which have expressions
+            let expressionRestrictions: ICellValidationRule[] = editingRules.filter(r => r.HasExpression);
+            let checkNoExpressionRestrictions: boolean = true;
+
+            if (expressionRestrictions.length > 0) {
+                checkNoExpressionRestrictions = false;
+
+                // loop through all restrictions with an expression (checking the prevent restrictions first)
+                // if the expression is satisfied check if validation rule passes; if it fails then return immediately (if its prevent) or put the rule in return array (if its warning).
+                // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
+                for (let expressionRestriction of expressionRestrictions) {
+                    let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRestriction.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
+                    if (!isSatisfiedExpression) {
+                        checkNoExpressionRestrictions = true;
+                    } else {
+                        if (!this.IsCellValidationRuleValid(expressionRestriction, dataChangedEvent, columns)) {
+                            // if we fail then get out if its prevent and keep the restriction and stop looping if its warning...
+                            if (expressionRestriction.EditingRestrictionAction == EditingRestrictionAction.Prevent) {
+                                return [expressionRestriction];
+                            } else {
+                                failedWarningRestrictions.push(expressionRestriction);
+                            }
+                        }
+                    }
                 }
-            }
-            // then do restrictions which show a warning 
-            for (let editingRestriction of editingRestrictions.filter(v => v.EditingRestrictionAction == EditingRestrictionAction.Warning)) {
-                let hasFailed: boolean = this.IsEditingRestrictionRequired(editingRestriction, dataChangedEvent, columns);
-                if (hasFailed) {
-                    return editingRestriction;
+
+                // now check the rules without expressions
+                if (checkNoExpressionRestrictions) {
+                    let noExpressionRestrictions: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
+
+                    for (let noExpressionRestriction of noExpressionRestrictions) {
+                        if (!this.IsCellValidationRuleValid(noExpressionRestriction, dataChangedEvent, columns)) {
+                            if (noExpressionRestriction.EditingRestrictionAction == EditingRestrictionAction.Prevent) {
+                                return [noExpressionRestriction];
+                            } else {
+                                failedWarningRestrictions.push(noExpressionRestriction);
+                            }
+
+                        }
+                    }
                 }
             }
         }
-        return null;
+        return failedWarningRestrictions;
     }
 
-    private IsEditingRestrictionRequired(editingRestriction: IEditingRestriction, dataChangedEvent: IDataChangingEvent, columns: IColumn[]): boolean {
-        // first see if the Expression has passed (if there is one)
-        if (editingRestriction.HasExpression) {
-            let isExpressionValid = ExpressionHelper.checkForExpression(editingRestriction.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
-            if (!isExpressionValid) {
-                return false;
-            }
-        }
 
-        // if its any just get out before evaluating anything else
-        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.All) {
-            return true;
+
+    private IsCellValidationRuleValid(editingRestriction: ICellValidationRule, dataChangedEvent: IDataChangingEvent, columns: IColumn[]): boolean {
+         // if its none then validation fails immediately
+        if (editingRestriction.RangeExpression.Operator == LeafExpressionOperator.None) {
+            return false;
         }
 
         let columnType: ColumnType = columns.find(c => c.ColumnId == dataChangedEvent.ColumnId).ColumnType;
@@ -171,6 +195,8 @@ export class AuditService implements IAuditService {
                 return (newValue > operand1 && newValue < operand2);
             case LeafExpressionOperator.NotBetween:
                 return !(newValue > operand1 && newValue < operand2);
+            case LeafExpressionOperator.IsPositive:
+                return (newValue > 0);
             case LeafExpressionOperator.IsNegative:
                 return (newValue < 0);
             case LeafExpressionOperator.IsTrue:
@@ -178,12 +204,12 @@ export class AuditService implements IAuditService {
             case LeafExpressionOperator.IsFalse:
                 return (newValue == false);
         }
-        return true;
+        return false;
     }
 
 
-    private GetEditingRestrictionState(): EditingRestrictionState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().EditingRestriction;
+    private GetEditingRestrictionState(): CellValidationState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
     }
 
 

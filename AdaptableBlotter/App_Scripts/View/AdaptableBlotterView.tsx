@@ -34,7 +34,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
 
-   render() {
+    render() {
 
         // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
         // in this version all action items are buttons and all config screens go in a dropdown
@@ -119,23 +119,22 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                                 </Row>
                             </Form>
 
-                            <p>
-                                {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
-                                    return (
+                            {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
+                                return (
+                                    <p>
                                         <span key={index}>
                                             {item}
-                                            <br />
                                         </span>
-                                    )
-                                })}
-                            </p>
+                                    </p>
+                                )
+                            })}
                             <p>
                                 Do you want to continue?
                             </p>
                             <p>
                                 <ButtonToolbar>
-                                    <Button bsStyle="warning" onClick={ this.props.onClose}>Ok</Button>
-                                    <Button bsStyle="default" onClick={  this.props.onClose}>Cancel</Button>
+                                    <Button bsStyle="warning" onClick={this.props.onClose}>Ok</Button>
+                                    <Button bsStyle="default" onClick={this.props.onClose}>Cancel</Button>
                                 </ButtonToolbar>
                             </p>
                         </Alert>
@@ -161,7 +160,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         };
     }
 
-  
+
 
 
     // note: we dont do a search here, we just update the quick search state via Redux and the QuickSearchService will listen to the change and act accordingly.
