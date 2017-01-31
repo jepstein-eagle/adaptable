@@ -8,6 +8,7 @@ import { ICellValidationRule } from '../../Core/interface/ICellValidationStrateg
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { SingleListBox } from '../SingleListBox'
 
 interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Blotter: IAdaptableBlotter
@@ -27,36 +28,34 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
 
     render(): any {
 
-        var columnsItems = this.props.Columns.map((Column: IColumn) => {
-            return <ListGroupItem key={Column.ColumnId}
-                onClick={() => this.onClickColum(Column)}
-                active={this.state.ColumnId == null ? false : Column.ColumnId == this.state.ColumnId}>{Column.FriendlyName}</ListGroupItem>
-        })
+        let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <div>
-            <Panel header="Cell Validation Settings" bsStyle="primary">
+            <Panel header="Select a Column" bsStyle="primary">
 
-                    <Panel header="Select a Column" bsStyle="info" >
-                    <FormGroup controlId="formColumn">
-                        <Col xs={12}>
-                            <ListGroup style={listGroupStyle}>
-                                {columnsItems}
-                            </ListGroup>
-                        </Col>
-                    </FormGroup>
-                </Panel>
+                <Col xs={2}></Col>
 
+                <Col xs={8}>
+
+                    <SingleListBox style={divStyle}
+                        Values={this.props.Columns}
+                        UiSelectedValues={selectedColumnValues}
+                        DisplayMember="FriendlyName"
+                        ValueMember="ColumnId"
+                        SortMember=""
+                        onSelectedChange={(list) => this.onColumnSelectedChanged(list)}>
+                    </SingleListBox>
+                </Col>
             </Panel>
         </div>
     }
 
-    private onClickColum(column: IColumn) {
-        this.setState({ ColumnId: column.ColumnId } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
+        this.setState({ ColumnId: selectedColumnValues[0] } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-
     public canNext(): boolean {
-        return (this.state.ColumnId != 'select');
+        return (StringExtensions.IsNotNullOrEmpty(this.state.ColumnId));
     }
 
     public canBack(): boolean { return true; }
@@ -68,8 +67,8 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     public StepName = "Cell Validation Column "
 }
 
-var listGroupStyle = {
+let divStyle = {
     'overflowY': 'auto',
-    'maxHeight': '400px',
-    'height': '400px'
-};
+    'height': '400px',
+    'marginBottom': '0'
+}

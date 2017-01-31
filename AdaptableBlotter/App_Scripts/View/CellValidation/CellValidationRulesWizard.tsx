@@ -53,12 +53,12 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         return <div>
             <Panel header="Cell Validation Settings" bsStyle="primary">
 
-                <Panel header="Action To Take When Validation Fails" bsStyle="info" >
-                    <Form inline >
-                        <Col xs={12}>
+                <Panel header="Action To Take When Validation Fails" bsStyle="info"  >
+                    <Form inline>
+                        <Col xs={12}  style={divStyle}>
                             <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
-                        <Col xs={12}>
+                        <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
                         </Col>
                     </Form>
@@ -68,18 +68,17 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
                 <Panel header={validationRuleHeader} bsStyle="info">
                     <Form >
-                        <Col xs={12}>
+                        <Col xs={12}  style={divStyle}>
                             <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
                         </Col>
-                        <Col xs={12}>
+                        <Col xs={12}  style={divStyle}>
                             <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edit where the new value matches rule:</Radio>
                         </Col>
-                        <Col xs={12}> <HelpBlock></HelpBlock>                        </Col>
                     </Form>
 
                     { /* if not None operator then show operator dropdown */}
                     {this.isNotNoneOperator() &&
-                        <FormGroup>
+                        <FormGroup  style={divStyle}>
                             <Col xs={6}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
                                     {operatorTypes}
@@ -119,7 +118,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
                 <Panel header="Expression" bsStyle="info">
                     <Form inline >
-                        <Col xs={12}> <HelpBlock>An Expression is required if rule is dependent on other values in the row</HelpBlock>
+                        <Col xs={12}> <HelpBlock>An Expression is used if the rule is dependent on other values in the row.<br/>The rule will only be activated and checked if the Expression passes.</HelpBlock>
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Create Expression (created in next step)</Checkbox>
@@ -306,5 +305,10 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     public Back(): void { }
     public StepName = "Cell Validation Rule"
+}
+
+
+let divStyle = {
+    margin: '10px'
 }
 

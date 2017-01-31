@@ -40,7 +40,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     public CreateEmptyCellValidation(): ICellValidationRule {
         let newCellValidation: ICellValidationRule = {
             CellValidationAction: CellValidationAction.Prevent,
-            ColumnId: "select",
+            ColumnId:"",
             RangeExpression: this.createEmptyRangeExpression(),
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),
