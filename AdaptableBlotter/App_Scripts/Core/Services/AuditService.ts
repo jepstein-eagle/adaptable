@@ -114,20 +114,20 @@ export class AuditService implements IAuditService {
                         }
                     }
                 }
+            }
 
-                // now check the rules without expressions
-                if (checkNoExpressionRules) {
-                    let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
+            // now check the rules without expressions
+            if (checkNoExpressionRules) {
+                let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
 
-                    for (let noExpressionRule of noExpressionRules) {
-                        if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
-                            if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
-                                return [noExpressionRule];
-                            } else {
-                                failedWarningRules.push(noExpressionRule);
-                            }
-
+                for (let noExpressionRule of noExpressionRules) {
+                    if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
+                        if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                            return [noExpressionRule];
+                        } else {
+                            failedWarningRules.push(noExpressionRule);
                         }
+
                     }
                 }
             }
@@ -138,7 +138,7 @@ export class AuditService implements IAuditService {
 
 
     private IsCellValidationRuleValid(cellValidationRule: ICellValidationRule, dataChangedEvent: IDataChangingEvent, columns: IColumn[]): boolean {
-         // if its none then validation fails immediately
+        // if its none then validation fails immediately
         if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.None) {
             return false;
         }

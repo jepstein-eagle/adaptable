@@ -121,10 +121,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
                             {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
                                 return (
-                                    <p>
-                                        <span key={index}>
+                                    <p key={index}>
                                             {item}
-                                        </span>
                                     </p>
                                 )
                             })}
