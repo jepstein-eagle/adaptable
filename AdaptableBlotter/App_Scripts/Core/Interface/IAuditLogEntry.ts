@@ -22,6 +22,6 @@ export interface IAuditLogEntry {
         info: string
         data: any
     }
-    adaptableblotter_state_change?: deepDiff.IDiff[]
+    adaptableblotter_state_change?: string
     adaptableblotter_number_of_missed_ping?: number
 }

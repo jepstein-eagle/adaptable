@@ -110,7 +110,9 @@ export class AuditLogService {
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: "JOJOJOJOJO",
-            adaptableblotter_state_change: stateChanges
+            //we want to loose the type since you cannot have same field name with different types in logstash. So log it as a string...
+            //it makes sense anyway
+            adaptableblotter_state_change: this.convertToText(stateChanges)
         });
     }
 
@@ -124,7 +126,8 @@ export class AuditLogService {
                 action: action,
                 info: info,
                 //not sure if it's best to leave undefined or null.... I think null is better
-                data: data ? data : null
+                //same as adaptableblotter_state_change we log the obj as a string
+                data: data ? this.convertToText(data) : null
             }
         });
     }
@@ -190,17 +193,10 @@ export class AuditLogService {
             //we make the request async
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json");
-            //we want to loose the type since you cannot have same field name with different types in logstash. So
-            xhr.send(JSON.stringify(obj, (key: string, value: any) => this.buildJSON(key, value)));
+            
+            xhr.send(JSON.stringify(obj));
             obj = this.auditLogQueue.shift()
         }
-    }
-
-    private buildJSON(key: string, value: any): any {
-        if (key == "adaptableblotter_state_change") {
-            return this.convertToText(value);
-        }
-        return value;
     }
 
     private convertToText(obj: any): string {
