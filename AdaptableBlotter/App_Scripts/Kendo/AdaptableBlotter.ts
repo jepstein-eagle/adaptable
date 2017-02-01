@@ -121,7 +121,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRules.length >0) { // we have at least one failure or warning
+            if (failedRules.length > 0) { // we have at least one failure or warning
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
 
                 // first see if its an error = should only be one item in array if so
@@ -135,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 } else {
                     let warningMessage: string = "";
                     failedRules.forEach(f => {
-                        warningMessage = warningMessage  + cellValidationStrategy.CreateCellValidationMessage(f)+ "\n";
+                        warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
                     })
                     let warning: IUIWarning = {
                         WarningMsg: warningMessage
@@ -145,7 +145,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
                     // for now so video will work we will assume the user clicked OK!
                     //   e.preventDefault();
+
+                    //TODO : handle bypass or not.... for now I'm assuming we are bypassing the alert all the time
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                        dataChangedEvent.ColumnId,
+                        (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
                 }
+            }
+            //no failed validation so we raise the edit auditlog
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                    dataChangedEvent.ColumnId,
+                    (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
             }
         });
 
