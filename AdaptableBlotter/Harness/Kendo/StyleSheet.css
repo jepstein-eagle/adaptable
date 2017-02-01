@@ -21,7 +21,7 @@ button.placeholder:before {
 }
 
 .small-padding-panel > [class*='panel-body'] {
-    padding: 5px;
+    padding:5px;
 }
 
 .panel-with-button-reduce-header-padding > [class*='panel-heading'] {

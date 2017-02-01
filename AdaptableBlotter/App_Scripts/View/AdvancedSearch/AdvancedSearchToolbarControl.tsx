@@ -38,7 +38,7 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
 
         return (
             <Form className='navbar-form'>
-                <div style={{ ... { border: '1px solid lightgrey' }, ...{ padding: '5px' } }}>
+                <Panel className="small-padding-panel" >
                      <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
                     <FormControl componentClass="select" placeholder="select"
                         value={this.currentAdvancedSearch}
@@ -61,7 +61,7 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">New Advanced Search</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.onNewAdvancedSearch()}>New</Button>
                     </OverlayTrigger>
-                </div>
+                    </Panel>
             </Form>
 
         );
