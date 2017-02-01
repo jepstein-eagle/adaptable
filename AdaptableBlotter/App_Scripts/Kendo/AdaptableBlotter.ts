@@ -318,7 +318,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let item = this.grid.dataItem(row);
         let uuid = this.getPrimaryKeyValueFromRecord(item);
         let idx = activeCell.index();
-        let col = <string>(this.grid.options.columns[idx].field);
+        let col = <string>(this.grid.columns[idx].field);
         return {
             Id: uuid, ColumnId: col, Value: item.get(col)
         };
@@ -339,7 +339,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var item = this.grid.dataItem(row);
             var uuid = this.getPrimaryKeyValueFromRecord(item);
             var idx = $(element).index();
-            var col = <string>(this.grid.options.columns[idx].field);
+            var col = <string>(this.grid.columns[idx].field);
             var value = item.get(col);
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {
