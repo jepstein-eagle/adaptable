@@ -17,6 +17,7 @@ import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
 import { StyleService } from '../Core/Services/StyleService'
 import { ThemeService } from '../Core/Services/ThemeService'
+import { AuditLogService } from '../Core/Services/AuditLogService'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -58,6 +59,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public StyleService: StyleService
     public ThemeService: ThemeService
+    public AuditLogService: AuditLogService
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -68,6 +70,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchService(this);
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this);
+        this.AuditLogService = new AuditLogService(this);
 
 
         //we build the list of strategies

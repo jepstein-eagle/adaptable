@@ -29,7 +29,7 @@ module.exports = {
     plugins: [
         failPlugin,
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
-        new CopyWebpackPlugin([ { from: 'themes/**/*', to: '' } ])
+        new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }])
         //jo will be added later
         // Add minification
         //  new webpack.optimize.UglifyJsPlugin()
@@ -40,5 +40,13 @@ module.exports = {
             // note that babel-loader is configured to run after ts-loader
             { test: /\.ts(x?)$/, loader: 'babel-loader!ts-loader' }
         ]
+    },
+    devServer: {
+        proxy: {
+            '/auditlog': {
+                target: 'http://localhost:6767',
+                secure: false
+            }
+        }
     }
 }

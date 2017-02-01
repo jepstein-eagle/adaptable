@@ -101,6 +101,13 @@ export enum PopupType {
     ManualClose
 }
 
+export enum AuditLogTrigger{
+    CellEdit,
+    StateChange,
+    AdaptableBlotterFunction,
+    Ping
+}
+
 
 
 
