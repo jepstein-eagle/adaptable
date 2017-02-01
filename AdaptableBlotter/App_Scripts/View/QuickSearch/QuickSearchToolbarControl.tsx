@@ -27,7 +27,8 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
 
     render(): any {
         return <Form className='navbar-form'>
-            <Panel>
+           <div style={{... {border: '1px solid lightgrey'}, ...{padding:'5px'} }}>
+               
                 <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
                 <FormControl
                     type="text"
@@ -44,7 +45,7 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
                     <Button bsSize='small' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
                 </OverlayTrigger>
-            </Panel>
+            </div>
         </Form>
 
     }
@@ -81,6 +82,6 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
 }
 
 var labelStyle = {
-    margin: '5px'
+    marginRight: '3px'
 };
 

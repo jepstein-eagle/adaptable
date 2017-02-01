@@ -69,21 +69,21 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                             <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
                         </Col>
                         <Col xs={12} style={divStyle}>
-                            <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edit where the new value matches rule:</Radio>
+                            <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
                         </Col>
                     </Form>
 
-                    { /* if not None operator then show operator dropdown */}
-                    {!this.checkOperator(LeafExpressionOperator.None) &&
-                        <FormGroup style={divStyle}>
-                            <Col xs={6}>
-                                <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
+                    { /* if not None operator then show operator dropdown */}               
+                          <FormGroup style={divStyle}>
+                            <Col xs={1}></Col>
+                              <Col xs={6}>
+                                <FormControl disabled={this.checkOperator(LeafExpressionOperator.None)} componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
                                     {operatorTypes}
                                 </FormControl>
                             </Col>
 
                             { /* if  numeric then show a numeric control */}
-                            {!this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnTypeFromState() == ColumnType.Number &&
+                            {!this.checkOperator(LeafExpressionOperator.None)&& !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnTypeFromState() == ColumnType.Number &&
                                 <Col xs={5}>
                                     <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                     {this.isBetweenOperator() &&
@@ -93,7 +93,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                             }
 
                             { /* if  date then show a date control */}
-                            {!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.Date &&
+                            {!this.checkOperator(LeafExpressionOperator.None)&&!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.Date &&
                                 <Col xs={5}>
                                     <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
                                     {this.isBetweenOperator() &&
@@ -103,13 +103,13 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                             }
 
                             { /* if string then show a text control  */}
-                            {!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.String &&
+                            {!this.checkOperator(LeafExpressionOperator.None)&&!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.String &&
                                 <Col xs={5}>
                                     <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 </Col>
                             }
                         </FormGroup>
-                    }
+                    
                 </Panel>
 
                 <Panel header="Expression" bsStyle="info">

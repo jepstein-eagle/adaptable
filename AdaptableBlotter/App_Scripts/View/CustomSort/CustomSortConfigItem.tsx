@@ -21,7 +21,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={2}>{this.props.ColumnLabel}</Col>
                 <Col xs={7} >
-                    {this.props.CustomSort.CustomSortItems.join()}
+                    {this.props.CustomSort.CustomSortItems.join(', ')}
                 </Col>
                 <Col xs={3}>
                     <EntityListActionButtons

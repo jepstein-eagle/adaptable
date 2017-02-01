@@ -67,8 +67,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
                     </Navbar.Header>
                     <Nav style={marginStyle} >
-                        {actionMenuItems}
-                        <NavDropdown key="Configure" title="Configure Functions..." id="basic-nav-dropdown">
+
+                        <NavDropdown key="functions" title="Adaptable Blotter Functions..." id="basic-nav-dropdown">
+                            {actionMenuItems}
+                        </NavDropdown>
+
+                        <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
                         </NavDropdown>
                     </Nav>
@@ -122,7 +126,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                             {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
                                 return (
                                     <p key={index}>
-                                            {item}
+                                        {item}
                                     </p>
                                 )
                             })}
@@ -212,7 +216,7 @@ let buttonStyle: React.CSSProperties = {
 }
 
 let marginStyle: React.CSSProperties = {
-    margin: '15px'
+    margin: '3px'
 }
 
 let glyphStyle = {
