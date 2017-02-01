@@ -35,7 +35,16 @@ export enum LeafExpressionOperator {
     Contains,
     StartsWith,
     EndsWith,
-    Regex
+    Regex,
+    // Cell Validations
+    None,
+    ValueChange,
+    PercentChange,
+    NotBetween,
+    IsPositive,
+    IsNegative,
+    IsTrue,
+    IsFalse
 }
 
 export enum MenuType {
@@ -91,6 +100,7 @@ export enum CellChangeType {
     NotEquals,
     GreaterThan,
     LessThan,
+    NotBetween,
     ValueChange,
     PercentChange
 }
@@ -106,6 +116,11 @@ export enum AuditLogTrigger{
     StateChange,
     AdaptableBlotterFunction,
     Ping
+}
+
+export enum CellValidationAction {
+    Warning,
+    Prevent
 }
 
 

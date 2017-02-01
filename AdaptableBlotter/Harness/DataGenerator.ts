@@ -47,6 +47,9 @@ export class DataGenerator {
             let initialNewValue = trade[columnName];
             let newValue = initialNewValue + numberToAdd;
             trade[columnName] = newValue;
+            trade["delta"] = this.roundTo4Dp(trade["ask"] - trade["bid"]);
+            trade["bloombergAsk"] = this.roundTo4Dp(trade["ask"] + 0.01);
+            trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] + 0.01);
             grid.behavior.reindex();
             grid.repaint()
         }, 500)
@@ -76,7 +79,7 @@ export class DataGenerator {
                 "settlementDate": this.addDays(tradeDate, 3),
                 "bloombergAsk": this.roundTo4Dp(ask + 0.01),
                 "bloombergBid": this.roundTo4Dp(bid - 0.01),
-                "delta": this.getMeaningfulDoubleTest(),
+                "delta": this.roundTo4Dp(ask - bid),
                 "occasionalPrice": this.generateRandomNullableDouble(),
                 "bookingGuid": this.generateUuid(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),

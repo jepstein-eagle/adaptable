@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <!-- Optional theme -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">-->
-    <script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
-    <script src="adaptableblotter/harness-bundle.js"></script>
+   <script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
+   <!-- when offline:   <script src="Offline//fin-hypergrid.js"></script> -->
+     <script src="adaptableblotter/harness-bundle.js"></script>
 
 </head>
 
@@ -95,19 +96,31 @@
         grid.addProperties({ editOnKeydown: false })
         let behavior = grid.behavior;
 
-        grid.localization.add('notional', notionalLocalizer);
-        grid.localization.add('notional2', new grid.localization.NumberFormatter('fr-FR', {
+     //   grid.localization.add('notional', notionalLocalizer);
+        grid.localization.add('UKCurrencyFormat', new grid.localization.NumberFormatter('en-EN', {
             style: 'currency',
-            currency: 'EUR'
+            currency: 'GBP'
         }));
+
+var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        grid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
+
         //Add Edit for Notional column
         behavior.setColumnProperties(1, {
             editor: 'textfield',// case-insensitive
-            format: 'notional2'
+            format: 'UKCurrencyFormat'
         });
-        //Add Edit for Trade DAte column
-        behavior.setColumnProperties(12, {
+        
+        //Add Edit for Trade Date column
+        behavior.setColumnProperties(13, {
+            editor: 'textfield', // Date should work in Chrome apparently but it doesnt
+            format: 'shortDateFormat'
+        });
+       
+        //Add Edit for Settlement Date column
+        behavior.setColumnProperties(14, {
             editor: 'textfield',
+            format: 'shortDateFormat'
         });
 
         var container = document.getElementById('content');

@@ -40,8 +40,10 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         }
     }
 
+
+
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
-        let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnName);
+        let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnId);
         let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)
         if (flashingColumn != null && flashingColumn.IsLive) {
             this.FlashCell(DataChangedEvent, flashingColumn, flashingColumnIndex);
@@ -54,7 +56,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
-        let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnName);
+        let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnId);
         //Jo : we know that this function is wrong as it's not cumulative
         this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration.Duration)
     }

@@ -16,7 +16,7 @@ import { AlertSelectAlertTypeWizard } from './AlertSelectAlertTypeWizard'
 import { AlertSettingsWizard } from './AlertSettingsWizard'
 import { AlertActionWizard } from './AlertActionWizard'
 import { AlertContentsWizard } from './AlertContentsWizard'
-import { IAlert, ICellChangeRule, IAlertCommunicationInfo } from '../../Core/Interface/IAlertStrategy'
+import { IAlert, IAlertCommunicationInfo } from '../../Core/Interface/IAlertStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
@@ -72,7 +72,7 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
         })
         return <PanelWithButton headerText="Alerts Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Alert"}
-            buttonClick={() => this.createAlert()}  >
+            buttonClick={() => this.createAlert()}  glyphicon={"road"}>
             {alertItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -102,7 +102,6 @@ class AlertConfigComponent extends React.Component<AlertConfigProps, AlertConfig
     }
 
     createAlert() {
-        // have to use any as cannot cast from IStrategy to IAlertStrategy  :(
         let alertStrategy: IAlertStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AlertStrategyId) as IAlertStrategy;
         this.setState({ EditedAlert: alertStrategy.CreateEmptyAlert(), EditedIndexAlert: -1 });
     }

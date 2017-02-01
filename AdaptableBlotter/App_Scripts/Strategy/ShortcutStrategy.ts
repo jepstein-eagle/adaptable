@@ -42,7 +42,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
             switch (columnType) {
                 case ColumnType.Number: {
                     //Find Shortcut
-                    let shortcut = this.NumericShortcuts.find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                    let shortcut = this.NumericShortcuts.filter(s=>s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
                     if (shortcut) {
                         var NumberToReplace: Number;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -64,7 +64,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                 }
                 case ColumnType.Date: {
                     //Find Shortcut
-                    let shortcut = this.DateShortcuts.find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                    let shortcut = this.DateShortcuts.filter(s=>s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
                     if (shortcut) {
                         // Date we ONLY replace so dont need to worry about editing values
                         var DateToReplace: Date;

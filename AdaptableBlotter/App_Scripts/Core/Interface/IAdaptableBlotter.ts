@@ -8,9 +8,6 @@ import { ISearchService } from '../Services/Interface/ISearchService'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
 
-
-
-
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
@@ -73,7 +70,7 @@ export interface IAdaptableBlotter {
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-
+ 
  getQuickSearchRowIds( rowIds: string[]): string[] 
 }
 

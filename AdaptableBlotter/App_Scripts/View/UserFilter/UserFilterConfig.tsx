@@ -76,7 +76,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         return <PanelWithButton headerText="User Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create User Filter"}
-            buttonClick={() => this.onCreateUserFilter()}  >
+            buttonClick={() => this.onCreateUserFilter()}  glyphicon={"filter"}>
             {UserFilterItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

@@ -5,10 +5,10 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Panel, Form, FormControl } from 'react-bootstrap';
-
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { PanelWithImage } from '../PanelWithImage';
 
 
 interface ThemeConfigProps extends IStrategyViewPopupProps<ThemeConfigComponent> {
@@ -23,13 +23,13 @@ class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
             return <option value={x} key={x}>{x}</option>
         })
         return (
-            <Panel header="Theme" bsStyle="primary">
+            <PanelWithImage header="Theme Picker" bsStyle="primary" glyphicon="leaf">
                 <Form>
                     <FormControl componentClass="select" placeholder="select" value={this.props.CurrentTheme} onChange={(x) => this.onChangeTheme(x)} >
                         {optionThemes}
                     </FormControl>
                 </Form>
-            </Panel>
+            </PanelWithImage>
         );
     }
 

@@ -6,9 +6,10 @@ import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { FilterFormReact } from '../View/FilterForm';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIWarning } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -36,17 +37,19 @@ import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
-
+import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -93,6 +96,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -103,10 +107,48 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, event)
         })
 
-
         grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
             this._onGridDataBound.Dispatch(this, this)
         });
+
+        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+            let dataChangedEvent: IDataChangingEvent
+            for (let col of this.grid.columns) {
+                if (e.values.hasOwnProperty(col.field)) {
+                    dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
+                    break;
+                }
+            }
+
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length >0) { // we have at least one failure or warning
+                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+
+                // first see if its an error = should only be one item in array if so
+                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                    let errorMessage: string = cellValidationStrategy.CreateCellValidationMessage(failedRules[0]);
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+                    e.preventDefault();
+                } else {
+                    let warningMessage: string = "";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage  + cellValidationStrategy.CreateCellValidationMessage(f)+ "\n";
+                    })
+                    let warning: IUIWarning = {
+                        WarningMsg: warningMessage
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.WarningPopupAction>(PopupRedux.WarningPopup(warning));
+                    // need this to have a callback or some action we can do next
+                    // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
+                    // for now so video will work we will assume the user clicked OK!
+                    //   e.preventDefault();
+                }
+            }
+        });
+
 
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
@@ -232,6 +274,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
+
 
     public CreateMenu() {
         let menuItems: IMenuItem[] = [];
@@ -748,6 +791,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return matchingRowIds;
         }
     }
+
+
 
 }
 

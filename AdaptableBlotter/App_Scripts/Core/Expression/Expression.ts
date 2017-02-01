@@ -1,4 +1,4 @@
-import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
+import { IRangeExpression } from '../Interface/IExpression';
 
 export class Expression {
     constructor(

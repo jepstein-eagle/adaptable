@@ -2,7 +2,7 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ListGroup, Radio, ListGroupItem, Panel, Form, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import { Radio, Panel, Form, ControlLabel, FormControl, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -71,10 +71,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                 <Panel header="Shortcut Column Type" bsStyle="info">
                     <Form inline >
                         <Col xs={4}>
-                            <Radio value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}> Number </Radio>
+                            <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
                         </Col>
                         <Col xs={8}>
-                            <Radio value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}> Date </Radio>
+                            <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
                         </Col>
                     </Form>
                 </Panel>

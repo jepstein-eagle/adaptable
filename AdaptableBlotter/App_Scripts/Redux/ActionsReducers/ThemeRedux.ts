@@ -19,7 +19,7 @@ const initialThemeState: ThemeState = {
     AvailableThemes: [].concat(["Default", "None"], StaticThemes)
 }
 
-export const MenuReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {
+export const ThemeReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {
     switch (action.type) {
         case SET_CURRENT_THEME:
             return Object.assign({}, state, { CurrentTheme: (<SetCurrentThemeAction>action).Theme })

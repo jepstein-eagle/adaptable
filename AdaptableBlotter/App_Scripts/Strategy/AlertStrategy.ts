@@ -1,4 +1,4 @@
-import { IAlert, IAlertStrategy, ICellChangeRule, IAlertCommunicationInfo } from '../Core/Interface/IAlertStrategy';
+import { IAlert, IAlertStrategy, IAlertCommunicationInfo, ICellChangeRule } from '../Core/Interface/IAlertStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'

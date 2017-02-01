@@ -12,7 +12,7 @@ import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy
 import { IAlert } from '../../../Core/interface/IAlertStrategy';
 import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
-
+import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -30,8 +30,10 @@ export interface MenuState {
 export interface PopupState {
     ShowPopup: boolean;
     ShowErrorPopup: boolean;
+    ShowWarningPopup: boolean;
     ComponentClassName: string;
     ErrorMsg: string;
+    WarningMsg: string;
     Params?: any
 }
 
@@ -100,4 +102,8 @@ export interface ColumnFilterState {
 export interface ThemeState {
     CurrentTheme: string;
     AvailableThemes: Array<string>
+}
+
+export interface CellValidationState {
+    CellValidations: Array<ICellValidationRule>
 }

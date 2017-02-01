@@ -16,9 +16,9 @@ export interface IAlert {
 }
 
 export interface ICellChangeRule {
-    ColumnId: string,
-    CellChangeType: CellChangeType,
-    ChangeValue: any,
+        ColumnId: string,
+        CellChangeType: CellChangeType,
+        ChangeValue: any,
 }
 
 export interface IAlertCommunicationInfo {

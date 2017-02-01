@@ -2,11 +2,12 @@
 
 import * as Redux from 'redux';
 import { PopupState} from './Interface/IState';
-import {IUIError} from '../../Core/Interface/IStrategy';
+import {IUIError, IUIWarning} from '../../Core/Interface/IStrategy';
 
 const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';
 const ERROR_POPUP = 'ERROR_POPUP';
+const WARNING_POPUP = 'WARNING_POPUP';
 const CLEAR_POPUP = 'CLEAR_POPUP';
 
 export interface ShowPopupAction extends Redux.Action {
@@ -20,6 +21,10 @@ export interface HidePopupAction extends Redux.Action {
 
 export interface ErrorPopupAction extends Redux.Action {
     Error: IUIError
+}
+
+export interface WarningPopupAction extends Redux.Action {
+    Warning: IUIWarning
 }
 
 export interface ClearPopupAction extends Redux.Action {
@@ -47,6 +52,11 @@ export const ErrorPopup = (Error: IUIError): ErrorPopupAction => ({
     Error
 })
 
+export const WarningPopup = (Warning: IUIWarning): WarningPopupAction => ({
+    type: WARNING_POPUP,
+    Warning
+})
+
 export const ClearPopup = (): ClearPopupAction => ({
     type: CLEAR_POPUP
 })
@@ -54,8 +64,10 @@ export const ClearPopup = (): ClearPopupAction => ({
 const initialPopupState: PopupState = {
     ShowPopup: false,
     ShowErrorPopup: false,
+    ShowWarningPopup: false,
     ComponentClassName: "",
     ErrorMsg: "",
+    WarningMsg: "",
     Params: null
 }
 
@@ -68,6 +80,9 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             return initialPopupState
         case ERROR_POPUP:
             return  Object.assign({}, initialPopupState, {  ShowErrorPopup: true, ErrorMsg: (<ErrorPopupAction>action).Error.ErrorMsg })
+         case CLEAR_POPUP:
+        case WARNING_POPUP:
+            return  Object.assign({}, initialPopupState, {  ShowWarningPopup: true, WarningMsg: (<WarningPopupAction>action).Warning.WarningMsg })
          case CLEAR_POPUP:
              return initialPopupState
         default:
