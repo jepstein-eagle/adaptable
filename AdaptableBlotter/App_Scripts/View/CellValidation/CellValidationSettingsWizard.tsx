@@ -1,13 +1,11 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Col, Panel } from 'react-bootstrap';
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
-import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
-import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions';
 import { SingleListBox } from '../SingleListBox'
 
 interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

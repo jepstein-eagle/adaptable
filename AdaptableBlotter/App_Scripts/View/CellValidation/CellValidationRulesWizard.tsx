@@ -7,7 +7,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
-import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions';
 
 interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Blotter: IAdaptableBlotter
@@ -19,7 +19,6 @@ interface CellValidationSettingsWizardState {
     Operand2: string;
     HasExpression: boolean;
     CellValidationAction: CellValidationAction;
-
 }
 
 export class CellValidationRulesWizard extends React.Component<CellValidationRulesWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -31,7 +30,6 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operand2: this.props.Data.RangeExpression.Operand2,
             HasExpression: this.props.Data.HasExpression,
             CellValidationAction: this.props.Data.CellValidationAction,
-
         }
     }
 
@@ -46,7 +44,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             return <option key={operator} value={operator.toString()}>{this.getTextForLeafOperator(operator)}</option>
         })
 
-        let columnFriendlyName: string = this.props.Columns.find(c=>c.ColumnId==this.props.Data.ColumnId).FriendlyName;
+        let columnFriendlyName: string = this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName;
 
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
 
@@ -55,7 +53,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
                 <Panel header="Action To Take When Validation Fails" bsStyle="info"  >
                     <Form inline>
-                        <Col xs={12}  style={divStyle}>
+                        <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
                         <Col xs={12} style={divStyle}>
@@ -65,20 +63,19 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                 </Panel>
 
 
-
                 <Panel header={validationRuleHeader} bsStyle="info">
                     <Form >
-                        <Col xs={12}  style={divStyle}>
+                        <Col xs={12} style={divStyle}>
                             <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
                         </Col>
-                        <Col xs={12}  style={divStyle}>
+                        <Col xs={12} style={divStyle}>
                             <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edit where the new value matches rule:</Radio>
                         </Col>
                     </Form>
 
                     { /* if not None operator then show operator dropdown */}
-                    {this.isNotNoneOperator() &&
-                        <FormGroup  style={divStyle}>
+                    {!this.checkOperator(LeafExpressionOperator.None) &&
+                        <FormGroup style={divStyle}>
                             <Col xs={6}>
                                 <FormControl componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
                                     {operatorTypes}
@@ -86,7 +83,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                             </Col>
 
                             { /* if  numeric then show a numeric control */}
-                            {this.isNotUnknownOperator() && this.isNotPositiveOperator() && this.isNotNegativeOperator() && this.getColumnTypeFromState() == ColumnType.Number &&
+                            {!this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnTypeFromState() == ColumnType.Number &&
                                 <Col xs={5}>
                                     <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                     {this.isBetweenOperator() &&
@@ -96,7 +93,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                             }
 
                             { /* if  date then show a date control */}
-                            {this.isNotUnknownOperator() && this.getColumnTypeFromState() == ColumnType.Date &&
+                            {!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.Date &&
                                 <Col xs={5}>
                                     <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
                                     {this.isBetweenOperator() &&
@@ -105,9 +102,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                                 </Col>
                             }
 
-
                             { /* if string then show a text control  */}
-                            {this.isNotUnknownOperator() && this.getColumnTypeFromState() == ColumnType.String &&
+                            {!this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.String &&
                                 <Col xs={5}>
                                     <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 </Col>
@@ -118,7 +114,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
                 <Panel header="Expression" bsStyle="info">
                     <Form inline >
-                        <Col xs={12}> <HelpBlock>An Expression is used if the rule is dependent on other values in the row.<br/>The rule will only be activated and checked if the Expression passes.</HelpBlock>
+                        <Col xs={12}> <HelpBlock>An Expression is used if the rule is dependent on other values in the row.<br />The rule will only be activated and checked if the Expression passes.</HelpBlock>
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Create Expression (created in next step)</Checkbox>
@@ -167,24 +163,12 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).ColumnType;
     }
 
+    private checkOperator(operator: LeafExpressionOperator): boolean {
+        return this.state.Operator == operator;
+    }
+
     private isBetweenOperator(): boolean {
-        return this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween;
-    }
-
-    private isNotNoneOperator(): boolean {
-        return this.state.Operator != LeafExpressionOperator.None;
-    }
-
-    private isNotUnknownOperator(): boolean {
-        return this.state.Operator != LeafExpressionOperator.Unknown;
-    }
-
-    private isNotPositiveOperator(): boolean {
-        return this.state.Operator != LeafExpressionOperator.IsPositive;
-    }
-
-    private isNotNegativeOperator(): boolean {
-        return this.state.Operator != LeafExpressionOperator.IsNegative;
+        return this.checkOperator(LeafExpressionOperator.Between) || this.checkOperator(LeafExpressionOperator.NotBetween);
     }
 
     private getAvailableOperators(): LeafExpressionOperator[] {
@@ -231,9 +215,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case LeafExpressionOperator.IsNegative:
                 return "Is Negative ";
             case LeafExpressionOperator.ValueChange:
-                return "Change In Value Is At Least "
+                return "Change In Value Less Than "
             case LeafExpressionOperator.PercentChange:
-                return "% Change Is At Least "
+                return "% Change Is Less Than "
             case LeafExpressionOperator.IsTrue:
                 return "Is True "
             case LeafExpressionOperator.IsFalse:
@@ -277,14 +261,12 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             return true;
         }
 
-        if (this.state.Operator == LeafExpressionOperator.Unknown) {
+        if (this.checkOperator(LeafExpressionOperator.Unknown)) {
             return false;
         }
 
-        if (this.state.Operator == LeafExpressionOperator.Between || this.state.Operator == LeafExpressionOperator.NotBetween) {
-            if (StringExtensions.IsNullOrEmpty(this.state.Operand2)) {
-                return false;
-            }
+        if (this.isBetweenOperator() && StringExtensions.IsNullOrEmpty(this.state.Operand2)) {
+            return false;
         }
         return StringExtensions.IsNotNullOrEmpty(this.state.Operand1);
     }

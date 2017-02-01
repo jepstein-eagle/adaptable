@@ -49,7 +49,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Action", 2], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Failure Action", 2], ["", 2]];
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             return <li

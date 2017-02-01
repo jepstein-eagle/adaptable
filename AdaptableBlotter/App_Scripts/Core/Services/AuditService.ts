@@ -186,11 +186,11 @@ export class AuditService implements IAuditService {
             case LeafExpressionOperator.PercentChange:
                 let oldPercentValue: any = this.getExistingDataValue(dataChangedEvent);
                 let percentChange: number = Math.abs(100 - Math.abs(newValue * 100 / oldPercentValue))
-                return percentChange > Number(operand1);
+                return percentChange < Number(operand1);
             case LeafExpressionOperator.ValueChange:
                 let oldChangeValue: any = this.getExistingDataValue(dataChangedEvent);
                 let changeInValue: number = Math.abs(newValue - oldChangeValue);
-                return changeInValue > Number(operand1);
+                return changeInValue < Number(operand1);
             case LeafExpressionOperator.Between:
                 return (newValue > operand1 && newValue < operand2);
             case LeafExpressionOperator.NotBetween:
