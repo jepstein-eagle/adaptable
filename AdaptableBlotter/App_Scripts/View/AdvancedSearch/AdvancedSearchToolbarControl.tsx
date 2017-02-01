@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 
 
@@ -24,7 +24,7 @@ export class AdvancedSearchToolbarControl extends React.Component<AdvancedSearch
         this.state = { SelectedAdvancedSearch: "" }
     }
 
-private currentAdvancedSearch: string 
+    private currentAdvancedSearch: string
 
     render(): any {
 
@@ -38,8 +38,8 @@ private currentAdvancedSearch: string
 
         return (
             <Form className='navbar-form'>
-                <Panel>
-                    <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
+                <div style={{ ... { border: '1px solid lightgrey' }, ...{ padding: '5px' } }}>
+                     <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
                     <FormControl componentClass="select" placeholder="select"
                         value={this.currentAdvancedSearch}
                         onChange={(x) => this.onSelectedSearchChanged(x)} >
@@ -49,7 +49,7 @@ private currentAdvancedSearch: string
 
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='info' disabled={this.currentAdvancedSearch == "select"}  onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
+                        <Button bsSize='small' bsStyle='info' disabled={this.currentAdvancedSearch == "select"} onClick={() => this.onEditAdvancedSearch()}>Edit</Button>
                     </OverlayTrigger>
 
                     {' '}
@@ -61,7 +61,7 @@ private currentAdvancedSearch: string
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">New Advanced Search</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.onNewAdvancedSearch()}>New</Button>
                     </OverlayTrigger>
-                </Panel>
+                </div>
             </Form>
 
         );
@@ -71,7 +71,7 @@ private currentAdvancedSearch: string
         let e = event.target as HTMLInputElement;
         let advancedSearchId = (e.value == "select") ? "" : e.value;
         this.props.onSelectAdvancedSearch(advancedSearchId);
-       this.setState({ SelectedAdvancedSearch: advancedSearchId });
+        this.setState({ SelectedAdvancedSearch: advancedSearchId });
     }
 
     onClearAdvancedSearch() {
@@ -92,5 +92,9 @@ private currentAdvancedSearch: string
 
 
 var labelStyle = {
-    margin: '5px'
+    marginRight: '3px'
 };
+
+var borderStyle = {
+    border: '2px'
+}

@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 501; i++) {
+        for (var i = 1; i < 201; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }

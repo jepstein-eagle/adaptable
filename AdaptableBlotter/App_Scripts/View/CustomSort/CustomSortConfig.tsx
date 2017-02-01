@@ -49,7 +49,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
  let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
 
 
-        return <PanelWithButton headerText="Custom Sorts"
+        return <PanelWithButton headerText="Custom Sorts" style={panelStyle}
             buttonClick={() => this.CreateCustomSort()}
             buttonContent="Create Custom Sort" bsStyle="primary" glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
@@ -126,4 +126,8 @@ export let CustomSortConfig = connect(mapStateToProps, mapDispatchToProps)(Custo
 let divStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px'
+}
+
+let panelStyle = {
+    width: '800px'
 }
