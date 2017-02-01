@@ -63,6 +63,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     }
                 }
             }
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "HandleKeyDown",
+                "KeyPressed:" + Helper.getStringRepresentionFromKey(keyEvent),
+                newValues)
+
             this.blotter.setValueBatch(newValues);
 
             if (this.reSelectCells) {

@@ -8,6 +8,7 @@ import { MenuType, LeafExpressionOperator, ColumnType } from '../Core/Enums';
 import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { Helper } from '../Core/Helper';
+import { StringExtensions } from '../Core/Extensions'
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -27,6 +28,13 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             // whenever ANYTHING changes in the search state, lets just run the CurrentAdvancedSearch
             // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
+
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "ApplySearchOnGrid",
+                StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearchId) ?
+                    "No current Advanced Search" : "Current search Id:" + this.GetAdvancedSearchState().CurrentAdvancedSearchId,
+                this.AdvancedSearchState.AdvancedSearches.find(x => x.Uid == this.GetAdvancedSearchState().CurrentAdvancedSearchId))
+
             this.blotter.SearchService.ApplySearchOnGrid()
         }
     }

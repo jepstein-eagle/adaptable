@@ -28,6 +28,10 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     removeCustomSorts() {
         if (this.CustomSorts) {
             this.CustomSorts.forEach(customSort => {
+                this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                    "RemoveCustomSort",
+                    "ColumnId:" + customSort.ColumnId,
+                    customSort)
                 this.blotter.removeCustomSort(customSort.ColumnId)
             });
         }
@@ -35,6 +39,10 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
 
     applyCustomSorts() {
         this.CustomSorts.forEach(customSort => {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "SetCustomSort",
+                "ColumnId:" + customSort.ColumnId,
+                customSort)
             this.blotter.setCustomSort(customSort.ColumnId, CreateCompareCustomSort(customSort, this.blotter))
         });
     }

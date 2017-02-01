@@ -1,19 +1,19 @@
-import {MenuItemShowPopup} from '../Core/MenuItem'
-import {AdaptableStrategyBase} from '../Core/AdaptableStrategyBase'
-import {AdaptableViewFactory} from '../View/AdaptableViewFactory'
+import { MenuItemShowPopup } from '../Core/MenuItem'
+import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
-import {SmartEditOperation, ColumnType} from '../Core/Enums'
-import {IMenuItem} from '../Core/Interface/IStrategy';
-import {IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter'
-import {ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn} from '../Core/Interface/ISmartEditStrategy'
-import {MenuType} from '../Core/Enums';
+import { SmartEditOperation, ColumnType } from '../Core/Enums'
+import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { ISmartEditStrategy, ISmartEditValueTuple, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
+import { MenuType } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction',MenuType.Action,"pencil");
+        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
     }
 
     public ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation): void {
@@ -34,13 +34,19 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                         newValue = smartEditValue
                         break;
                 }
-                
-               // if(this.blotter.AuditService.CheckCellChanging(dataChangedEvent)){
+
+                // if(this.blotter.AuditService.CheckCellChanging(dataChangedEvent)){
                 newValues.push({ id: pair[0], columnId: columnValuePair.columnID, value: newValue })
                 //this.blotter.setValue(pair[0], columnValuePair.columnID, newValue)
-             // }
+                // }
             }
         }
+
+        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+            "ApplySmartEdit",
+            "",
+            { SmartEditValue: smartEditValue, SmartEditOperation: smartEditOperation, NewValues: newValues })
+
         this.blotter.setValueBatch(newValues)
     }
 

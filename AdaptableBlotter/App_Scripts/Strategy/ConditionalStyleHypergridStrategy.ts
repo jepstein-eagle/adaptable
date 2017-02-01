@@ -36,9 +36,19 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
 
                 if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                            "AddRowStyle",
+                            "PrimaryKey: " + dataChangedEvent.IdentifierValue,
+                            { BackColor: c.BackColor, ForeColor: c.ForeColor })
+
                         this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { csBackColorRow: c.BackColor, csForeColorRow: c.ForeColor })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                            "AddCellStyle",
+                            "PrimaryKey: " + dataChangedEvent.IdentifierValue,
+                            { BackColor: c.BackColor, ForeColor: c.ForeColor })
+
                         this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { csBackColorColumn: c.BackColor, csForeColorColumn: c.ForeColor })
                     }
                 }
@@ -85,6 +95,11 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                                "AddRowStyle",
+                                "PrimaryKey: " + rowId,
+                                { BackColor: columnCS.BackColor, ForeColor: columnCS.ForeColor })
+
                             this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { csBackColorColumn: columnCS.BackColor, csForeColorColumn: columnCS.ForeColor })
                             break
                         }
@@ -93,6 +108,11 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                            "AddRowStyle",
+                            "PrimaryKey: " + rowId,
+                            { BackColor: rowCS.BackColor, ForeColor: rowCS.ForeColor })
+
                         this.blotterBypass.addRowStyleHypergrid(rowId, { csBackColorRow: rowCS.BackColor, csForeColorRow: rowCS.ForeColor })
                         break
                     }
