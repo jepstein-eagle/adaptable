@@ -35,20 +35,13 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
 
 interface AdvancedSearchActionInternalState {
     EditedAdvancedSearch: IAdvancedSearch
-    SelectedAdvancedSearch: IAdvancedSearch
     SelectedColumnId: string
 }
 
 class AdvancedSearchActionComponent extends React.Component<AdvancedSearchActionProps, AdvancedSearchActionInternalState> {
-    private IsDeleting: boolean = false;
-
     constructor(props: AdvancedSearchActionProps) {
         super(props);
-        this.state = this.computeInternalState(props)
-    }
-
-    componentWillReceiveProps(nextProps: AdvancedSearchActionProps, nextContext: any) {
-        this.setState(this.computeInternalState(nextProps));
+        this.state = { EditedAdvancedSearch: null, SelectedColumnId: "select" };
     }
 
     componentDidMount() {
@@ -57,16 +50,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         }
     }
 
-    private computeInternalState(props: AdvancedSearchActionProps): AdvancedSearchActionInternalState {
-        let selectedAdvancedSearch: IAdvancedSearch = props.AdvancedSearches.find(a => a.Uid == props.CurrentAdvancedSearchUid);
+    private getClonedSelectedAdvancedSearch() {
         //we clone the object since there are methods that change directly the object from the state and 
         //I'm rewrtting enough of the component like that
+        let selectedAdvancedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(a => a.Uid == this.props.CurrentAdvancedSearchUid);
         if (selectedAdvancedSearch) {
-            return { EditedAdvancedSearch: null, SelectedAdvancedSearch: Helper.cloneObject(selectedAdvancedSearch), SelectedColumnId: "select" };
+            selectedAdvancedSearch = Helper.cloneObject(selectedAdvancedSearch)
         }
-        else {
-            return { EditedAdvancedSearch: null, SelectedAdvancedSearch: null, SelectedColumnId: "select" };
-        }
+        return selectedAdvancedSearch
     }
 
     render() {
@@ -74,7 +65,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
         })
 
-        let currentAdvancedSearch: string = this.state.SelectedAdvancedSearch != null ? this.state.SelectedAdvancedSearch.Uid : "select";
+
+        let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch()
+        let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
 
         return (
             <div >
@@ -97,11 +90,11 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                             </Col>
                             <Col xs={4}>
                                 <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
-                                    <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} bsStyle='info' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
+                                    <Button bsSize='small' style={smallButtonStyle} disabled={selectedAdvancedSearch == null} bsStyle='info' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
                                 </OverlayTrigger>
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                    <Button bsSize='small' style={smallButtonStyle} disabled={this.state.SelectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                                    <Button bsSize='small' style={smallButtonStyle} disabled={selectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
                                 </OverlayTrigger>
                             </Col>
                         </FormGroup>
@@ -126,13 +119,13 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 </PanelWithButton>
 
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
-                {this.state.SelectedAdvancedSearch != null &&
+                {selectedAdvancedSearch != null &&
 
                     <PanelWithButton headerText="Search Details" bsStyle="primary"
                         buttonContent={"Edit Search"}
                         buttonClick={() => this.onEditAdvancedSearch()}>
                         <div style={previewDivStyle}>
-                            <ExpressionBuilderPreview Expression={this.state.SelectedAdvancedSearch.Expression}
+                            <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
                                 Blotter={this.props.AdaptableBlotter}
                                 onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                                 SelectedColumnId={this.state.SelectedColumnId}
@@ -160,7 +153,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show
     onEditAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
@@ -171,49 +164,48 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // Delete search:  sets the selected search to null and calles Redux Delete Advanced Search
     onDeleteAdvancedSearch() {
-        if (confirm("Are you sure you want to delete Advanced Search: '" + this.state.SelectedAdvancedSearch.Name + "'?")) {
-            this.props.onDeleteAdvancedSearch(this.state.SelectedAdvancedSearch);
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
+        if (confirm("Are you sure you want to delete Advanced Search: '" + clonedSearch.Name + "'?")) {
+            this.props.onDeleteAdvancedSearch(clonedSearch);
         }
     }
 
     onDeleteColumnValue(columnId: string, value: any) {
-        let columnValues = this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
+        let columnValues = clonedSearch.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
         let index = columnValues.ColumnValues.indexOf(value)
         columnValues.ColumnValues.splice(index, 1)
         if (columnValues.ColumnValues.length == 0) {
-            let columnValuesIndex = this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.ColumnDisplayValuesExpressions.splice(columnValuesIndex, 1)
+            let columnValuesIndex = clonedSearch.Expression.ColumnDisplayValuesExpressions.findIndex(x => x.ColumnName == columnId)
+            clonedSearch.Expression.ColumnDisplayValuesExpressions.splice(columnValuesIndex, 1)
         }
-        this.onDeleteSearchExpressionItem();
+        this.props.onAddUpdateAdvancedSearch(clonedSearch);
     }
 
     onDeleteUserFilterExpression(columnId: string, index: number) {
-        let columnUserFilterExpressions = this.state.SelectedAdvancedSearch.Expression.UserFilters.find(x => x.ColumnName == columnId)
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
+        let columnUserFilterExpressions = clonedSearch.Expression.UserFilters.find(x => x.ColumnName == columnId)
         columnUserFilterExpressions.UserFilterUids.splice(index, 1)
         if (columnUserFilterExpressions.UserFilterUids.length == 0) {
-            let columnUserFilterExpressionIndex = this.state.SelectedAdvancedSearch.Expression.UserFilters.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.UserFilters.splice(columnUserFilterExpressionIndex, 1)
+            let columnUserFilterExpressionIndex = clonedSearch.Expression.UserFilters.findIndex(x => x.ColumnName == columnId)
+            clonedSearch.Expression.UserFilters.splice(columnUserFilterExpressionIndex, 1)
         }
-        this.onDeleteSearchExpressionItem();
+        this.props.onAddUpdateAdvancedSearch(clonedSearch);
     }
 
     onDeleteRange(columnId: string, index: number) {
-        let columnRanges = this.state.SelectedAdvancedSearch.Expression.RangeExpressions.find(x => x.ColumnName == columnId)
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
+        let columnRanges = clonedSearch.Expression.RangeExpressions.find(x => x.ColumnName == columnId)
         columnRanges.Ranges.splice(index, 1)
         if (columnRanges.Ranges.length == 0) {
-            let columnRangesIndex = this.state.SelectedAdvancedSearch.Expression.RangeExpressions.findIndex(x => x.ColumnName == columnId)
-            this.state.SelectedAdvancedSearch.Expression.RangeExpressions.splice(columnRangesIndex, 1)
+            let columnRangesIndex = clonedSearch.Expression.RangeExpressions.findIndex(x => x.ColumnName == columnId)
+            clonedSearch.Expression.RangeExpressions.splice(columnRangesIndex, 1)
         }
-        this.onDeleteSearchExpressionItem();
-    }
-
-    onDeleteSearchExpressionItem(): void {
-        this.IsDeleting = true;
-        this.props.onAddUpdateAdvancedSearch(this.state.SelectedAdvancedSearch);
+        this.props.onAddUpdateAdvancedSearch(clonedSearch);
     }
 
     onSelectedColumnChange(columnName: string) {
-        let clonedSearch: IAdvancedSearch = Helper.cloneObject(this.state.SelectedAdvancedSearch);
+        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
         this.setState({ SelectedColumnId: columnName, EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
