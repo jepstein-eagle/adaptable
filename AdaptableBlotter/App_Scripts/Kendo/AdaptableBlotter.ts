@@ -527,7 +527,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
         // get export state
         let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
-        this.grid.options.excel.fileName = exportState.FileName + ".xls";
+        this.grid.options.excel.fileName = exportState.FileName + ".xlsx";
         this.grid.options.excel.allPages = exportState.AllPages;
         this.grid.options.excel.filterable = exportState.Filterable;
         this.grid.saveAsExcel();
