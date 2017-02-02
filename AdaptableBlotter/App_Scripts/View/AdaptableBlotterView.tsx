@@ -9,7 +9,6 @@ import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavI
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { IEvent } from '../Core/Interface/IEvent';
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
@@ -27,7 +26,6 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     AdaptableBlotter: IAdaptableBlotter;
     onClose: () => PopupRedux.HidePopupAction;
     showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.ShowPopupAction;
-    onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
 }
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
