@@ -6,11 +6,12 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition, IPredefinedStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { IPredefinedExpressionInfo } from '../../Core/Interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, ColumnType, LeafExpressionOperator } from '../../Core/Enums';
+import { ConditionalStyleScope, ColumnType, LeafExpressionOperator, SortOrder } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ColorPicker } from '../ColorPicker';
+import { Helper } from '../../Core/Helper'
 
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
@@ -47,7 +48,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
     render(): any {
 
-        let optionColumns = this.props.Columns.map(x => {
+        let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Columns, "FriendlyName")
+        let optionColumns = sortedColumns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 

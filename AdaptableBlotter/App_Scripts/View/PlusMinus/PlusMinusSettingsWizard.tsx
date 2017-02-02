@@ -5,8 +5,9 @@ import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, 
 import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
-import { ColumnType } from '../../Core/Enums';
+import { ColumnType, SortOrder } from '../../Core/Enums';
 import { InformationPopover } from '../InformationPopover';
+import { Helper } from '../../Core/Helper'
 
 
 interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
@@ -31,7 +32,8 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         }
     }
     render(): any {
-        let optionColumns = this.props.Columns.filter(x => x.ColumnType == ColumnType.Number).map(x => {
+        let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Columns.filter(x => x.ColumnType == ColumnType.Number), "FriendlyName")
+        let optionColumns = sortedColumns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 

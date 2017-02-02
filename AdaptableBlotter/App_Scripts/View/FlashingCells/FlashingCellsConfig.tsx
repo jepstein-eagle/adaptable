@@ -9,10 +9,11 @@ import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRe
 import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
-import { ColumnType } from '../../Core/Enums'
+import { ColumnType, SortOrder } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithImage } from '../PanelWithImage';
+import { Helper } from '../../Core/Helper'
 
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
@@ -35,6 +36,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         let flashingCellDurations: IFlashingCellDuration[] = flashingCelllStrategy.GetFlashingCellDurations();
 
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
+        numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
         let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return flashingColumn.ColumnName
@@ -65,9 +67,6 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FlashingCellConfigItem>
         });
 
-        allFlashingColumns.sort(compareFlashingCellConfigItems);
-
-        
         let setAllOption = <Form horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12}>
@@ -88,14 +87,6 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 
         </PanelWithImage>
     }
-}
-
-function compareFlashingCellConfigItems(a: any, b: any) {
-    if (a.props.FlashingColumn.ColumnName < b.props.FlashingColumn.ColumnName)
-        return -1;
-    if (a.props.FlashingColumn.ColumnName > b.props.FlashingColumn.ColumnName)
-        return 1;
-    return 0;
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

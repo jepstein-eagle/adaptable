@@ -11,8 +11,8 @@ import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, F
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
-import { ColumnType, ExpressionMode } from '../../Core/Enums'
-
+import { ColumnType, ExpressionMode, SortOrder } from '../../Core/Enums'
+import { Helper } from '../../Core/Helper'
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
@@ -97,8 +97,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     render() {
-
-        let optionColumns = this.props.ColumnsList.map(x => {
+        
+        let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnsList, "FriendlyName")
+        let optionColumns = sortedColumns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 

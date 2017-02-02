@@ -6,6 +6,9 @@ import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { SelectionMode } from '../../Core/Enums';
+import { SingleListBox } from '../SingleListBox'
+import { StringExtensions } from '../../Core/Extensions';
 
 
 interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -13,42 +16,42 @@ interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSo
 
 }
 interface CustomSortColumnWizardState {
-    SelectedColumn: IColumn
+    SelectedColumnId: string
 }
 
 export class CustomSortColumnWizard extends React.Component<CustomSortColumnWizardProps, CustomSortColumnWizardState> implements AdaptableWizardStep {
     constructor(props: CustomSortColumnWizardProps) {
         super(props);
-        if (this.props.Data.ColumnId != "") {
-            this.state = { SelectedColumn: this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId) }
-        }
-        else {
-            this.state = { SelectedColumn: null }
-        }
+        this.state = { SelectedColumnId: this.props.Data.ColumnId }
     }
     render(): any {
-        var columnsItems = this.props.Columns.map((Column: IColumn) => {
-            return <ListGroupItem key={Column.ColumnId}
-                onClick={() => this.onClickColum(Column)}
-                active={this.state.SelectedColumn == null ? false : Column.ColumnId == this.state.SelectedColumn.ColumnId}>{Column.FriendlyName}</ListGroupItem>
-        })
+        let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId) ? [] : [this.state.SelectedColumnId];
+
         return <Panel header="Select a Column" bsStyle="primary">
-            <ListGroup style={listGroupStyle}>
-                {columnsItems}
-            </ListGroup>
+            <SingleListBox style={divStyle}
+                Values={this.props.Columns}
+                UiSelectedValues={selectedColumnValues}
+                DisplayMember="FriendlyName"
+                ValueMember="ColumnId"
+                SortMember="FriendlyName"
+                onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
+                SelectionMode={SelectionMode.Single}>
+            </SingleListBox>
         </Panel>
     }
-    onClickColum(column: IColumn) {
-        this.setState({ SelectedColumn: column }, () => this.props.UpdateGoBackState())
+
+    private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
+        this.setState({ SelectedColumnId: selectedColumnValues[0] }, () => this.props.UpdateGoBackState())
     }
-    public canNext(): boolean { return this.state.SelectedColumn != null; }
+    public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)); }
     public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumn.ColumnId }
+    public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
     public Back(): void { }
     public StepName = "Choose Custom Sort Column"
 }
-var listGroupStyle = {
+
+let divStyle = {
     'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px'
-};
+    'height': '400px',
+    'marginBottom': '0'
+}

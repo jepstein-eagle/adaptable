@@ -38,12 +38,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         if (this.props.ColumnValueType == "rawValue") {
             // get the values for the column and then sort by raw value
             columnValuePairs = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "rawValue");
-            Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
+            columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
         }
         else if (this.props.ColumnValueType == "displayValue") {
             // get the values for the column and then sort by raw value
             columnValuePairs = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, "displayValue");
-            Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
+            columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, "rawValue")
         }
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
