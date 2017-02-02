@@ -44,12 +44,13 @@ export module Helper {
     }
 
     export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
+        let newValues = [].concat(values)
         let direction = 1
         if (sortOrder == SortOrder.Descending) {
             direction = -1
         }
         if (sortProperty) {
-            return values.sort((a, b) => {
+            return newValues.sort((a, b) => {
                 let aSortProperty = a[sortProperty]
                 let bSortProperty = b[sortProperty]
                 if (typeof (aSortProperty) == "string" && typeof (bSortProperty) == "string") {
@@ -60,7 +61,7 @@ export module Helper {
             });
         }
         else {
-            return values.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
+            return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
         }
     }
 
