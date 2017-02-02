@@ -6,9 +6,11 @@
         counterparty: string;
         currency: string;
         country: string;
-        marketPrice: number;
+        changeOnYear: number;
+        price: number;
         bid: number;
         ask: number;
+        bidOfferSpread: number;
         isLive: boolean;
         fitchRating: string;
         moodysRating: string;
@@ -17,8 +19,7 @@
         settlementDate: Date;
         bloombergAsk: number;
         bloombergBid: number;   
-        delta: number;
-        occasionalPrice: number;
+        percentChange: number;
         bookingGuid: string;
         lastUpdated: Date;
         lastUpdatedBy: string;

@@ -30,9 +30,33 @@ export class AuditService implements IAuditService {
         // not sure why this is being called twice but we can prevent duplicate identical events at least
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue || forceDispatch) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
+     //       this.TempDoBidOfferStuffForVideos(dataChangedEvent);
         }
     }
 
+    private TempDoBidOfferStuffForVideos(dataChangedEvent: IDataChangedEvent): void {
+        if (dataChangedEvent.ColumnId == 'bidOfferSpread') {
+            // first get price
+            let priceDataChangeEvent: IDataChangingEvent = {
+                NewValue: null,
+                ColumnId: 'price',
+                IdentifierValue: dataChangedEvent.IdentifierValue
+            }
+            let price: number = this.getExistingDataValue(priceDataChangeEvent);
+            let bidOfferSpread: number = dataChangedEvent.NewValue;
+            let ask: number = price + bidOfferSpread / 2;
+            let bid: number = price - bidOfferSpread / 2;
+            let bloombergAsk: number = ask + 0.01;
+            let bloombergBid: number = bid - 0.01;
+
+            let newValues: { id: any, columnId: string, value: any }[] = [];
+            newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bid", value: bid });
+            newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "ask", value: ask })
+        //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergAsk", value: bloombergAsk })
+        //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergBid", value: bloombergBid })
+            this.blotter.setValueBatch(newValues);
+        }
+    }
 
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
         this.checkListExists();
@@ -53,7 +77,6 @@ export class AuditService implements IAuditService {
             myList.CellDataValueList.push(cellDataValueList);
         }
     }
-
 
     private getExistingDataValue(dataChangingEvent: IDataChangingEvent): any {
         this.checkListExists();
