@@ -1,34 +1,39 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
+import { Provider, connect } from 'react-redux';
+
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
+import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 
-
-interface QuickSearchToolbarControlProps extends IStrategyViewPopupProps<QuickSearchToolbarControl> {
-    onSetQuickSearchText: (quickSearchText: string) => void;
+interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
+    onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
+    QuickSearchText: string
 }
 
-interface QuickSearchToolbarState {
+interface QuickSearchToolbarControlComponentState {
     EditedQuickSearchText: string
 }
 
-export class QuickSearchToolbarControl extends React.Component<QuickSearchToolbarControlProps, QuickSearchToolbarState> {
-
+class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, QuickSearchToolbarControlComponentState> {
 
     constructor() {
         super();
-        this.state = { EditedQuickSearchText: "" }
+        this.state = { EditedQuickSearchText: this.props.QuickSearchText }
     }
-    public componentDidMount() {
-        this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.subscribe(() => this.onQuickSearchStateChanged())
+    componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
+        this.setState({
+            EditedQuickSearchText: nextProps.QuickSearchText
+        });
     }
 
     render(): any {
         return <Form className='navbar-form'>
-          <Panel className="small-padding-panel" >
-                      <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
+            <Panel className="small-padding-panel" >
+                <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
                 <FormControl
                     type="text"
                     placeholder="Enter Search Text"
@@ -43,8 +48,8 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
                     <Button bsSize='small' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
-                </OverlayTrigger> 
-                </Panel>
+                </OverlayTrigger>
+            </Panel>
         </Form>
 
     }
@@ -69,16 +74,25 @@ export class QuickSearchToolbarControl extends React.Component<QuickSearchToolba
     }
 
     onClearQuickSearch() {
-        this.setState({ EditedQuickSearchText: "" });
+        //Jo:no need to update state since we'll get the update from redux
+        // this.setState({ EditedQuickSearchText: "" });
         this.props.onSetQuickSearchText("");
     }
-
-    onQuickSearchStateChanged() {
-        if (this.state != null && this.state.EditedQuickSearchText != this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText) {
-            this.setState({ EditedQuickSearchText: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText });
-        }
-    }
 }
+
+function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+    return {
+        QuickSearchText: state.QuickSearch.QuickSearchText
+    };
+}
+
+function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+    return {
+        onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText))
+    };
+}
+
+export let QuickSearchToolbarControl = connect(mapStateToProps, mapDispatchToProps)(QuickSearchToolbarControlComponent);
 
 var labelStyle = {
     marginRight: '3px'
