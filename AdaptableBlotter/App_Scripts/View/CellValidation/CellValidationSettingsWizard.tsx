@@ -6,6 +6,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { StringExtensions } from '../../Core/Extensions';
+import { SelectionMode } from '../../Core/Enums';
 import { SingleListBox } from '../SingleListBox'
 
 interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
@@ -40,8 +41,9 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
                         UiSelectedValues={selectedColumnValues}
                         DisplayMember="FriendlyName"
                         ValueMember="ColumnId"
-                        SortMember=""
-                        onSelectedChange={(list) => this.onColumnSelectedChanged(list)}>
+                        SortMember="FriendlyName"
+                        onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
+                        SelectionMode={SelectionMode.Single}>
                     </SingleListBox>
                 </Col>
             </Panel>

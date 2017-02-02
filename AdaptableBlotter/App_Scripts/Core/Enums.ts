@@ -123,6 +123,9 @@ export enum CellValidationAction {
     Prevent
 }
 
-
+export enum SelectionMode{
+    Multi,
+    Single
+}
 
 

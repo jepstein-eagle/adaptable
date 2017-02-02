@@ -4,7 +4,7 @@ import * as React from "react";
 import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
-import { ColumnType } from '../../Core/Enums'
+import { ColumnType, SelectionMode } from '../../Core/Enums'
 
 
 interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
@@ -22,7 +22,8 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
                 DisplayMember="displayValue"
                 ValueMember="displayValue"
                 SortMember="rawValue"
-                onSelectedChange={(list) => this.props.onColumnValuesChange(list)}>
+                onSelectedChange={(list) => this.props.onColumnValuesChange(list)}
+                SelectionMode={SelectionMode.Multi}>
             </SingleListBox>
         </PanelWithButton>
     }
@@ -31,5 +32,5 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
 let divStyle = {
     'overflowY': 'auto',
     'height': '335px',
-    'marginBottom' : '0'
+    'marginBottom': '0'
 }
