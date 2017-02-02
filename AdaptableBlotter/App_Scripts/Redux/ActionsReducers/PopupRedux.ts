@@ -8,7 +8,7 @@ const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';
 const ERROR_POPUP = 'ERROR_POPUP';
 const WARNING_POPUP = 'WARNING_POPUP';
-const CLEAR_POPUP = 'CLEAR_POPUP';
+const CLEAR_POPUP_PARAM = 'CLEAR_POPUP_PARAM';
 
 export interface ShowPopupAction extends Redux.Action {
     ComponentClassName: string,
@@ -27,7 +27,7 @@ export interface WarningPopupAction extends Redux.Action {
     Warning: IUIWarning
 }
 
-export interface ClearPopupAction extends Redux.Action {
+export interface ClearPopupParamAction extends Redux.Action {
 
 }
 
@@ -57,8 +57,8 @@ export const WarningPopup = (Warning: IUIWarning): WarningPopupAction => ({
     Warning
 })
 
-export const ClearPopup = (): ClearPopupAction => ({
-    type: CLEAR_POPUP
+export const ClearPopupParam = (): ClearPopupParamAction => ({
+    type: CLEAR_POPUP_PARAM
 })
 
 const initialPopupState: PopupState = {
@@ -80,11 +80,10 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             return initialPopupState
         case ERROR_POPUP:
             return  Object.assign({}, initialPopupState, {  ShowErrorPopup: true, ErrorMsg: (<ErrorPopupAction>action).Error.ErrorMsg })
-         case CLEAR_POPUP:
         case WARNING_POPUP:
             return  Object.assign({}, initialPopupState, {  ShowWarningPopup: true, WarningMsg: (<WarningPopupAction>action).Warning.WarningMsg })
-         case CLEAR_POPUP:
-             return initialPopupState
+         case CLEAR_POPUP_PARAM:
+             return  Object.assign({}, state, { Params: null })
         default:
             return state
     }

@@ -12,10 +12,10 @@ import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
-                    // since html cannot render a button within a button.
-                    // https://github.com/react-bootstrap/react-bootstrap/issues/1445
-                    // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-                    // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
+// since html cannot render a button within a button.
+// https://github.com/react-bootstrap/react-bootstrap/issues/1445
+// I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
+// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Blotter: IAdaptableBlotter
@@ -52,7 +52,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             <Form inline>
                                 {y}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)}><Glyphicon glyph="trash" /></Button>
+                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteColumnValue(columnId, y); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                 </OverlayTrigger>
                             </Form>
                         </div>
@@ -73,7 +73,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                                 <Form inline>
                                     {ne.FriendlyName}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteUserFilterExpression(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteUserFilterExpression(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                     </OverlayTrigger>
                                 </Form>
                             </div>
@@ -94,7 +94,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                                     <Form inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
                                     </Form>
                                 </div>
@@ -106,7 +106,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                                     <Form inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
                                     </Form>
                                 </div>
@@ -120,7 +120,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                                     <Form inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
                                     </Form>
                                 </div>
@@ -132,7 +132,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                                     <Form inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)}><Glyphicon glyph="trash" /></Button>
+                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
                                     </Form>
                                 </div>

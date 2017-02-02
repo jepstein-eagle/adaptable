@@ -19,7 +19,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     constructor(props: AdvancedSearchSettingsWizardProps) {
         super(props)
         this.state = {
-            AdvancedSearchName: this.props.Data.Name,
+            AdvancedSearchName: props.Data.Name,
         }
     }
     render(): any {
