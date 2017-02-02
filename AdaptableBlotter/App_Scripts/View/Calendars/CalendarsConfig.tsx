@@ -13,22 +13,23 @@ import { CalendarsConfigItem } from './CalendarsConfigItem'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithImage } from '../PanelWithImage';
-
+import { Helper } from '../../Core/Helper';
+import { SortOrder } from '../../Core/Enums';
 
 interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigComponent> {
+    CurrentCalendar: string
     onSelectCalendar: (selectedCalendar: ICalendar) => CalendarsRedux.CalendarSetDefaultCalendarAction,
 }
 
 interface CalendarsConfigInternalState {
-    isShowingInformation: boolean
+    DisplayedCalendar: ICalendar
 }
 
 class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, CalendarsConfigInternalState> {
 
     constructor() {
         super();
-        this.state = { isShowingInformation: false }
-        this._displayedCalendar = null;
+        this.state = { DisplayedCalendar: null }
     }
 
     render() {
@@ -37,34 +38,36 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             return <CalendarsConfigItem
                 Calendar={calendar}
                 key={calendar.CalendarName}
-                AdaptableBlotter={this.props.AdaptableBlotter}
                 onSelect={(calendar) => this.props.onSelectCalendar(calendar)}
-                onShowInformation={(calendar) => this.onShowInformation(calendar)}>
+                onShowInformation={(calendar) => this.onShowInformation(calendar)}
+                CurrentCalendar={this.props.CurrentCalendar}>
             </CalendarsConfigItem>
         });
 
         let cellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
         let calendarEntryCellInfo: [string, number][] = [["Holiday Name", 6], ["Date", 6]];
-        let sortedCalendarEntries = (this._displayedCalendar != null) ? this._displayedCalendar.CalendarEntries.sort(compareCalendarEntries) : null;
+        let sortedCalendarEntries = (this.state.DisplayedCalendar != null) ?
+            Helper.sortArrayWithProperty(SortOrder.Ascending, this.state.DisplayedCalendar.CalendarEntries, "HolidayDate")
+            : null;
 
-        let calendarEntryItems = (this._displayedCalendar != null) ? sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
+        let calendarEntryItems = (this.state.DisplayedCalendar != null) ? sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
             return <CalendarEntryItem
                 CalendarEntry={calendarEntry}
                 key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
             </CalendarEntryItem>
         }) : null;
 
-         return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar">
+        return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar">
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
             </ListGroup>
 
-            {this.state.isShowingInformation ?
+            {this.state.DisplayedCalendar ?
 
-                <Modal show={this.state.isShowingInformation} onHide={() => this.closeInformationModal()}>
+                <Modal show={this.state.DisplayedCalendar != null} onHide={() => this.closeInformationModal()} className="adaptable_blotter_style">
                     <Modal.Header closeButton>
-                        <Modal.Title>Calendar Details: {this._displayedCalendar.CalendarName}</Modal.Title>
+                        <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
                         <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="info" />
@@ -80,29 +83,18 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
         </PanelWithImage>
     }
 
-    private _displayedCalendar: ICalendar;
-
     closeInformationModal() {
-        this.setState({ isShowingInformation: false });
+        this.setState({ DisplayedCalendar: null });
     }
 
     private onShowInformation(calendar: ICalendar) {
-        this._displayedCalendar = calendar;
-        this.setState({ isShowingInformation: true });
+        this.setState({ DisplayedCalendar: calendar });
     }
-
-}
-
-function compareCalendarEntries(a: ICalendarEntry, b: ICalendarEntry) {
-    if (a.HolidayDate < b.HolidayDate)
-        return -1;
-    if (a.HolidayDate > b.HolidayDate)
-        return 1;
-    return 0;
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
+        CurrentCalendar: state.Calendars.CurrentCalendar
     };
 }
 
