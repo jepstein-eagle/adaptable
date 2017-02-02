@@ -65,39 +65,6 @@
         var trades = dataGen.getTrades();
 
 
-        /*
-                    var dS = new kendo.data.DataSource({
-                        data: trades,
-                        schema: {
-                            model: {
-                                fields: {
-                                    tradeId: { type: "number" },
-                                    notional: { type: "number" },
-                                    counterparty: { type: "string" },
-                                    currency: { type: "string" },
-                                    country: { type: "string" },
-                                    marketPrice: { type: "number" },
-                                    bid: { type: "number" },
-                                    ask: { type: "number" },
-                                    tradeDate: { type: "date" },
-                                    isLive: { type: "boolean" },
-                                    fitchRating: { type: "string" },
-                                    moodysRating: { type: "string" },
-                                    settlementDate: { type: "date" },
-                                    bloombergAsk: { type: "number" },
-                                    bloombergBid: { type: "number" },
-                                    delta: { type: "number", editable: false },
-                                    occasionalPrice: { type: "number" },
-                                    bookingGuid: { type: "string" },
-                                    lastUpdated: { type: "date" },
-                                    lastUpdatedBy: { type: "string" }
-                                }
-                            }
-                        },
-                        //  aggregate:[{ field: "bid", aggregate: "sum" },{field:"bid", aggregate: "count" },]
-                    }
-                    );
-        */
         $("#grid")
             .kendoGrid({
                 dataSource: {
@@ -111,9 +78,11 @@
                                 counterparty: { type: "string" },
                                 currency: { type: "string" },
                                 country: { type: "string" },
-                                marketPrice: { type: "number" },
-                                bid: { type: "number" },
-                                ask: { type: "number" },
+                                changeOnYear: { type: "number" },
+                                price: { type: "number" },
+                                bidOfferSpread: { type: "number" },
+                                bid: { type: "number", editable: false },
+                                ask: { type: "number", editable: false },
                                 tradeDate: { type: "date" },
                                 isLive: { type: "boolean" },
                                 fitchRating: { type: "string" },
@@ -121,8 +90,7 @@
                                 settlementDate: { type: "date" },
                                 bloombergAsk: { type: "number" },
                                 bloombergBid: { type: "number" },
-                                delta: { type: "number", editable: false },
-                                occasionalPrice: { type: "number" },
+                                percentChange: { type: "number" },
                                 bookingGuid: { type: "string" },
                                 lastUpdated: { type: "date" },
                                 lastUpdatedBy: { type: "string" }
@@ -137,18 +105,19 @@
                     { field: "counterparty", title: "Counterparty", filterable: { multi: true, search: true } },
                     { field: "currency", title: "Currency", width: 100 },
                     { field: "country", title: "Country", filterable: { multi: true, search: true }, width: 200 },
-                    { field: "marketPrice", title: "Market Price", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
                     { field: "tradeDate", title: "Trade Date", format: "{0:dd MMM yyyy}", width: 200 },
                     { field: "settlementDate", title: "Settlement Date", format: "{0:dd MMM yyyy}" },
                     { field: "fitchRating", title: "Fitch Rating", filterable: { multi: true, search: true, search: true } },
                     { field: "moodysRating", title: "Moodys Rating" },
+                    { field: "price", title: "Price", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
+                    { field: "bidOfferSpread", title: "Bid Offer Spread", format: "{0:n}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
                     { field: "bid", title: "Bid", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
                     { field: "ask", title: "Ask", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
                     { field: "bloombergBid", title: "Bloomberg Bid", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
                     { field: "bloombergAsk", title: "Bloomberg Ask", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
-                    { field: "isLive", title: "Is Live"},
-                    { field: "delta", format: "{0:n2}", title: "Delta", attributes: { class: "numberColumn" } },
-                    { field: "occasionalPrice", title: "Occasional Price", format: "{0:p}", attributes: { class: "numberColumn" } },
+                    { field: "isLive", title: "Is Live" },
+                    { field: "changeOnYear", title: "Change On Year", format: "{0:n4}", attributes: { class: "numberColumn" }, editor: setEditDecimals },
+                    { field: "percentChange", title: "Percent Change", format: "{0:p}", attributes: { class: "numberColumn" } },
                     { field: "lastUpdated", title: "Last Update", format: "{0:dd MMM yyyy}", width: "450px" },
                     { field: "lastUpdatedBy", title: "Last Updated By" }
                 ],

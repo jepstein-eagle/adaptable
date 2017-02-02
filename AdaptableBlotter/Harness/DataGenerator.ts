@@ -10,7 +10,7 @@ export class DataGenerator {
         return trades;
     }
 
-    private _numericCols: string[] = ["bid", "ask"];
+    private _numericCols: string[] = ["price", "bid", "ask"];
 
     //Can't be bothered to create a ts file for kendo....
     startTickingDataKendo(grid: kendo.ui.Grid) {
@@ -43,21 +43,26 @@ export class DataGenerator {
             //pick a random trade in the first ten
             let trade = this.getRandomItem(grid.behavior.getData(), 10);
             //pick a random colum in the numeric col
-            let columnName = this.getRandomItem(this._numericCols);
+            let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
             let newValue = initialNewValue + numberToAdd;
             trade[columnName] = newValue;
-            trade["delta"] = this.roundTo4Dp(trade["ask"] - trade["bid"]);
+ 
+            trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] /2);
+            trade["bid"] = this.roundTo4Dp(trade["price"] + trade["bidOfferSpread"] /2);
+           
             trade["bloombergAsk"] = this.roundTo4Dp(trade["ask"] + 0.01);
-            trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] + 0.01);
+            trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             grid.behavior.reindex();
             grid.repaint()
         }, 500)
     }
 
     createTrade(i: number): ITrade {
-        var bid = this.getMeaningfulDouble();
-        var ask = this.roundTo4Dp(bid + this.getMeaningfulDoubleInRange(0, 1));
+        var price = this.getMeaningfulDouble();
+        var bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
+        var ask = price + bidOfferSpread / 2;
+        var bid = price - bidOfferSpread / 2;
         var tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         var moodyRating = this.getRandomItem(this.getMoodysRatings())
         var trade =
@@ -68,9 +73,11 @@ export class DataGenerator {
                 "counterparty": this.getRandomItem(this.getCounterparties()),
                 "currency": this.getRandomItem(this.getCurrencies()),
                 "country": this.getRandomItem(this.getCountries()),
-                "marketPrice": this.getMeaningfulPositiveNegativeDouble(),
+                "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
+                "price": price,
                 "bid": bid,
                 "ask": ask,
+                "bidOfferSpread": bidOfferSpread,
                 "isLive": this.generateRandomBool(),
                 "moodysRating": moodyRating,
                 "fitchRating": this.getFitchRatingForMoodyRating(moodyRating),
@@ -79,8 +86,7 @@ export class DataGenerator {
                 "settlementDate": this.addDays(tradeDate, 3),
                 "bloombergAsk": this.roundTo4Dp(ask + 0.01),
                 "bloombergBid": this.roundTo4Dp(bid - 0.01),
-                "delta": this.roundTo4Dp(ask - bid),
-                "occasionalPrice": this.generateRandomNullableDouble(),
+                "percentChange": this.generateRandomNullableDouble(),
                 "bookingGuid": this.generateUuid(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames())
@@ -221,6 +227,19 @@ export class DataGenerator {
             10000000
         ];
         return notionals;
+    }
+    protected getBidOfferSpreads(): number[] {
+        var counterparties = [
+           0.1,
+           0.15,
+           0.2,
+           0.25,
+           0.3,
+           0.35,
+           0.4,
+           0.5
+        ];
+        return counterparties;
     }
     protected getCounterparties(): string[] {
         var counterparties = [
