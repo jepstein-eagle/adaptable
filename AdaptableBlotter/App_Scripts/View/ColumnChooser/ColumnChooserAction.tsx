@@ -53,4 +53,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ColumnChooserAction = connect(mapStateToProps, mapDispatchToProps)(ColumnChooserActionComponent);
-

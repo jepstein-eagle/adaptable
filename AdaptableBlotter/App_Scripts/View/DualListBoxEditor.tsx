@@ -152,57 +152,55 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
 
         return (
-            <Grid>
-                <Row>
-                    <Col xs={4}>
-                        <Panel header={this.props.HeaderAvailable} className="no-padding-panel" bsStyle="info">
-                            <div>
-                                {headerFirstListBox}
-                                <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailable}
-                                    onDragEnter={(event) => this.DragEnterAvailable(event)}
-                                    onDragOver={(event) => this.DragOverAvailable(event)}
-                                    onDragLeave={(event) => this.DragLeaveAvailable(event)}>
-                                    {columnValuesElements}
-                                </ListGroup>
-                            </div>
-                        </Panel>
-                    </Col>
-                    <Col xs={2} style={colButtonStyle} >
-                        <ButtonGroup>
-                            <Button disabled={this.state.AvailableValues.length == 0}
-                                onClick={() => this.AddAll()} block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
-                            <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
-                                onClick={() => this.Add()} block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
-                            <Button style={{ marginTop: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
-                                onClick={() => this.Remove()} block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
-                            <Button disabled={this.state.SelectedValues.length == 0}
-                                onClick={() => this.RemoveAll()} block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
-                        </ButtonGroup>
-                    </Col>
-                    <Col xs={4} >
-                        <Panel header={this.props.HeaderSelected} bsStyle="info">
-                            <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
-                                onDragEnter={(event) => this.DragEnterSelected(event)}
-                                onDragOver={(event) => this.DragOverSelected(event)}
-                                onDragLeave={(event) => this.DragLeaveSelected(event)}>
-                                {itemsElements}
+            <Row style={rowStyle}>
+                <Col xs={4}>
+                    <Panel header={this.props.HeaderAvailable} className="no-padding-panel" bsStyle="info">
+                        <div>
+                            {headerFirstListBox}
+                            <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailable}
+                                onDragEnter={(event) => this.DragEnterAvailable(event)}
+                                onDragOver={(event) => this.DragOverAvailable(event)}
+                                onDragLeave={(event) => this.DragLeaveAvailable(event)}>
+                                {columnValuesElements}
                             </ListGroup>
-                        </Panel>
-                    </Col>
-                    <Col xs={2} style={colButtonStyle} >
-                        <ButtonGroup>
-                            <Button block disabled={!this.canGoTopOrUp()}
-                                onClick={() => this.Top()}><Glyphicon glyph="triangle-top" /> Top</Button>
-                            <Button style={{ marginBottom: "10px" }} block disabled={!this.canGoTopOrUp()}
-                                onClick={() => this.Up()}><Glyphicon glyph="menu-up" /> Up</Button>
-                            <Button style={{ marginTop: "10px" }} block disabled={!this.canGoDownOrBottom()}
-                                onClick={() => this.Down()}><Glyphicon glyph="menu-down" /> Down</Button>
-                            <Button block disabled={!this.canGoDownOrBottom()}
-                                onClick={() => this.Bottom()}><Glyphicon glyph="triangle-bottom" /> Bottom</Button>
-                        </ButtonGroup>
-                    </Col>
-                </Row>
-            </Grid>
+                        </div>
+                    </Panel>
+                </Col>
+                <Col xs={2} style={colButtonStyle} >
+                    <ButtonGroup>
+                        <Button disabled={this.state.AvailableValues.length == 0}
+                            onClick={() => this.AddAll()} block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
+                        <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
+                            onClick={() => this.Add()} block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
+                        <Button style={{ marginTop: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
+                            onClick={() => this.Remove()} block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
+                        <Button disabled={this.state.SelectedValues.length == 0}
+                            onClick={() => this.RemoveAll()} block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
+                    </ButtonGroup>
+                </Col>
+                <Col xs={4} >
+                    <Panel header={this.props.HeaderSelected} bsStyle="info">
+                        <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
+                            onDragEnter={(event) => this.DragEnterSelected(event)}
+                            onDragOver={(event) => this.DragOverSelected(event)}
+                            onDragLeave={(event) => this.DragLeaveSelected(event)}>
+                            {itemsElements}
+                        </ListGroup>
+                    </Panel>
+                </Col>
+                <Col xs={2} style={colButtonStyle} >
+                    <ButtonGroup>
+                        <Button block disabled={!this.canGoTopOrUp()}
+                            onClick={() => this.Top()}><Glyphicon glyph="triangle-top" /> Top</Button>
+                        <Button style={{ marginBottom: "10px" }} block disabled={!this.canGoTopOrUp()}
+                            onClick={() => this.Up()}><Glyphicon glyph="menu-up" /> Up</Button>
+                        <Button style={{ marginTop: "10px" }} block disabled={!this.canGoDownOrBottom()}
+                            onClick={() => this.Down()}><Glyphicon glyph="menu-down" /> Down</Button>
+                        <Button block disabled={!this.canGoDownOrBottom()}
+                            onClick={() => this.Bottom()}><Glyphicon glyph="triangle-bottom" /> Bottom</Button>
+                    </ButtonGroup>
+                </Col>
+            </Row>
         );
     }
 
@@ -632,7 +630,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
 
 }
-
+var rowStyle = {
+    'minWidth': '800px',
+};
 var listGroupStyleAvailable = {
     'overflowY': 'auto',
     'maxHeight': '261px',
