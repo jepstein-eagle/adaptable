@@ -57,12 +57,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         <QuickSearchToolbarControl />
                     </Navbar.Header>
                     <Navbar.Header>
-                        {<AdvancedSearchToolbarControl
-                            Blotter={this.props.AdaptableBlotter}
-                            AdvancedSearches={this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches}
-                            onSelectAdvancedSearch={(advancedSearchId: string) => this.onSetAdvancedSearch(advancedSearchId)}
-                            onNewAdvancedSearch={() => this.onNewAdvancedSearch()}
-                            onEditAdvancedSearch={() => this.onEditAdvancedSearch()} />}
+                        {<AdvancedSearchToolbarControl />}
                     </Navbar.Header>
                     <Nav style={marginStyle} >
 
@@ -159,22 +154,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             this.props.AdaptableBlotter.onMenuClicked(menuItem)
         };
     }
-
-
-    // note: we dont do a search here, we just update the advanced search state via Redux and the AdvancedSearchService will listen to the change and act accordingly.
-    onSetAdvancedSearch(advancedSearchId: string) {
-        this.props.onSelectAdvancedSearch(advancedSearchId);
-    }
-
-    onEditAdvancedSearch() {
-        this.props.showPopup("AdvancedSearchAction");
-    }
-
-    onNewAdvancedSearch() {
-        // we need some way of passing in a argument to a screens
-        // that way we can tell the advancedsearchscreen it needs to start the new search wizard
-        this.props.showPopup("AdvancedSearchAction", "New");
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -189,7 +168,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClose: () => dispatch(PopupRedux.HidePopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
-        onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
     };
 }
 
@@ -198,12 +176,6 @@ let AdaptableBlotterReact: React.ComponentClass<any> = connect(mapStateToProps, 
 export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;
-
-
-let buttonStyle: React.CSSProperties = {
-    active: "none",
-    focus: "none"
-}
 
 let marginStyle: React.CSSProperties = {
     margin: '3px'

@@ -22,7 +22,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     constructor() {
         super();
-        this.state = { EditedQuickSearchText: this.props.QuickSearchText }
+        this.state = { EditedQuickSearchText: "" }
     }
     componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
         this.setState({
