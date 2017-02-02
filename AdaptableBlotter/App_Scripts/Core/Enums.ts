@@ -111,11 +111,21 @@ export enum PopupType {
     ManualClose
 }
 
+export enum AuditLogTrigger{
+    CellEdit,
+    StateChange,
+    AdaptableBlotterFunction,
+    Ping
+}
+
 export enum CellValidationAction {
     Warning,
     Prevent
 }
 
-
+export enum SelectionMode{
+    Multi,
+    Single
+}
 
 

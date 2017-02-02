@@ -42,7 +42,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
             switch (columnType) {
                 case ColumnType.Number: {
                     //Find Shortcut
-                    let shortcut = this.NumericShortcuts.filter(s=>s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                    let shortcut = this.NumericShortcuts.filter(s => s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
                     if (shortcut) {
                         var NumberToReplace: Number;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -53,6 +53,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                         else {
                             NumberToReplace = this.CalculateShortcut(activeCell.Value, shortcut.ShortcutResult, shortcut.ShortcutAction);
                         }
+
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                            "HandleKeyDown",
+                            "Key Pressed: " + Helper.getStringRepresentionFromKey(keyEvent),
+                            { Shortcut: shortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+
                         //in hypergrid this methods closes the editor.... that's a design choice
                         //we can set the editor value instead but I feel that it's best to close it down for now....
                         //Also there is a bug for now when editOnKey is ON for Hypergrid. It's disabled as a consequence see index.html
@@ -64,7 +70,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                 }
                 case ColumnType.Date: {
                     //Find Shortcut
-                    let shortcut = this.DateShortcuts.filter(s=>s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
+                    let shortcut = this.DateShortcuts.filter(s => s.IsLive).find(x => Helper.getStringRepresentionFromKey(keyEvent) == x.ShortcutKey.toLowerCase())
                     if (shortcut) {
                         // Date we ONLY replace so dont need to worry about editing values
                         var DateToReplace: Date;
@@ -73,6 +79,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
                         } else {
                             DateToReplace = shortcut.ShortcutResult;
                         }
+                        
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                            "HandleKeyDown",
+                            "Key Pressed: " + Helper.getStringRepresentionFromKey(keyEvent),
+                            { Shortcut: shortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+
                         this.blotter.setValue(activeCell.Id, activeCell.ColumnId, DateToReplace);
                         // useful feature - prevents the main thing happening you want to on the keypress.
                         keyEvent.preventDefault();

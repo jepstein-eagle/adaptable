@@ -56,7 +56,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
     render() {
         return (
-            <Modal show={true} onHide={this.props.onHide}>
+            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style">
                 <Modal.Header closeButton>
                     <Modal.Title>Step {this.state.IndexState + 1 + " of " + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
                 </Modal.Header>

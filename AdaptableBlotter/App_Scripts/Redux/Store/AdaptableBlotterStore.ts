@@ -2,6 +2,7 @@
 
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
+import * as DeepDiff from 'deep-diff'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
@@ -93,7 +94,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     constructor(private blotter: IAdaptableBlotter) {
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
-            Redux.applyMiddleware(/*snooper,*/ adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
+            Redux.applyMiddleware(/*snooper,*/ diffStateAuditMiddleware(blotter), adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
             (<any>window).devToolsExtension ? (<any>window).devToolsExtension() : f => f
         )(Redux.createStore);
 
@@ -124,6 +125,32 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 //         }
 //     }
 // }
+
+var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+    return function (next: Redux.Dispatch<AdaptableBlotterState>) {
+        return function (action: Redux.Action) {
+            let oldState = middlewareAPI.getState()
+
+            let ret = next(action);
+            if (action.type == ReduxStorage.LOAD) {
+                let newState = middlewareAPI.getState()
+                let diff = DeepDiff.diff(oldState, newState)
+                if (diff) {
+                    adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff)
+                }
+            }
+            else if (action.type != ReduxStorage.SAVE) {
+                let newState = middlewareAPI.getState()
+                let diff = DeepDiff.diff(oldState, newState)
+                if (diff) {
+                    adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff)
+                }
+            }
+
+            return ret;
+        }
+    }
+}
 
 var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {

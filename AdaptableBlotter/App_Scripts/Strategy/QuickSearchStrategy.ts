@@ -28,6 +28,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchText: string = this.GetQuickSearchState().QuickSearchText;
         if (StringExtensions.IsNotNull(this.quickSearchText) && this.quickSearchText != stateQuickSearchText) {
             this.quickSearchText = stateQuickSearchText;
+
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "ApplyQuickSearch",
+                "QuickSearch Text has changed",
+                this.quickSearchText)
+
             this.blotter.SearchService.ApplySearchOnGrid();
         }
 
@@ -35,6 +41,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchOperator: LeafExpressionOperator = this.GetQuickSearchState().QuickSearchOperator;
         if (this.quickSearchOperator != null && this.quickSearchOperator != stateQuickSearchOperator && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchOperator = stateQuickSearchOperator;
+
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "ApplyQuickSearch",
+                "QuickSearch Operator has changed",
+                LeafExpressionOperator[this.quickSearchOperator])
+
             this.blotter.SearchService.ApplySearchOnGrid();
         }
 
@@ -42,6 +54,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         let stateQuickSearchDisplayType: QuickSearchDisplayType = this.GetQuickSearchState().QuickSearchDisplayType;
         if (this.GetQuickSearchState != null && this.quickSearchDisplayType != stateQuickSearchDisplayType && StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
             this.quickSearchDisplayType = stateQuickSearchDisplayType;
+
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                "ApplyQuickSearch",
+                "QuickSearch DisplayType has changed",
+                QuickSearchDisplayType[this.quickSearchDisplayType])
+
             this.blotter.SearchService.ApplySearchOnGrid();
         }
     }

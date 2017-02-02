@@ -18,6 +18,7 @@ import { ISearchService } from '../Core/Services/Interface/ISearchService'
 import { SearchService } from '../Core/Services/SearchService'
 import { StyleService } from '../Core/Services/StyleService'
 import { ThemeService } from '../Core/Services/ThemeService'
+import { AuditLogService } from '../Core/Services/AuditLogService'
 import * as StrategyIds from '../Core/StrategyIds'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -61,6 +62,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public StyleService: StyleService
     public ThemeService: ThemeService
+    public AuditLogService: AuditLogService
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -71,6 +73,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchService(this);
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this);
+        this.AuditLogService = new AuditLogService(this);
 
 
         //we build the list of strategies
@@ -118,7 +121,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRules.length >0) { // we have at least one failure or warning
+            if (failedRules.length > 0) { // we have at least one failure or warning
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
 
                 // first see if its an error = should only be one item in array if so
@@ -132,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 } else {
                     let warningMessage: string = "";
                     failedRules.forEach(f => {
-                        warningMessage = warningMessage  + cellValidationStrategy.CreateCellValidationMessage(f)+ "\n";
+                        warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
                     })
                     let warning: IUIWarning = {
                         WarningMsg: warningMessage
@@ -142,7 +145,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
                     // for now so video will work we will assume the user clicked OK!
                     //   e.preventDefault();
+
+                    //TODO : handle bypass or not.... for now I'm assuming we are bypassing the alert all the time
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                        dataChangedEvent.ColumnId,
+                        (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
                 }
+            }
+            //no failed validation so we raise the edit auditlog
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                    dataChangedEvent.ColumnId,
+                    (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
             }
         });
 
@@ -304,7 +318,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let item = this.grid.dataItem(row);
         let uuid = this.getPrimaryKeyValueFromRecord(item);
         let idx = activeCell.index();
-        let col = <string>(this.grid.options.columns[idx].field);
+        let col = <string>(this.grid.columns[idx].field);
         return {
             Id: uuid, ColumnId: col, Value: item.get(col)
         };
@@ -325,7 +339,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var item = this.grid.dataItem(row);
             var uuid = this.getPrimaryKeyValueFromRecord(item);
             var idx = $(element).index();
-            var col = <string>(this.grid.options.columns[idx].field);
+            var col = <string>(this.grid.columns[idx].field);
             var value = item.get(col);
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {

@@ -3,11 +3,10 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { SortOrder, ColumnType } from '../Core/Enums'
+import { SortOrder, ColumnType, SelectionMode } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
-
 
 interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
@@ -17,6 +16,7 @@ interface SingleListBoxProps extends ListGroupProps {
     DisplayMember?: string
     ValueMember?: string
     SortMember?: string
+    SelectionMode : SelectionMode
 }
 
 interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
@@ -118,6 +118,10 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         }
         else {
             let newArray = [...this.state.UiSelectedValues];
+            if(this.props.SelectionMode == SelectionMode.Single)
+            {
+                newArray = []
+            }
             if (this.props.ValueMember) {
                 newArray.push(item[this.props.ValueMember])
             }
