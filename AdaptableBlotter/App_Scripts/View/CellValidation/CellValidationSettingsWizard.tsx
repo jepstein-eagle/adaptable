@@ -29,25 +29,17 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
 
         let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
-        return <div>
-            <Panel header="Select a Column" bsStyle="primary">
-
-                <Col xs={2}></Col>
-
-                <Col xs={8}>
-
-                    <SingleListBox style={divStyle}
-                        Values={this.props.Columns}
-                        UiSelectedValues={selectedColumnValues}
-                        DisplayMember="FriendlyName"
-                        ValueMember="ColumnId"
-                        SortMember="FriendlyName"
-                        onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
-                        SelectionMode={SelectionMode.Single}>
-                    </SingleListBox>
-                </Col>
-            </Panel>
-        </div>
+        return <Panel header="Select a Column" bsStyle="primary">
+            <SingleListBox style={divStyle}
+                Values={this.props.Columns}
+                UiSelectedValues={selectedColumnValues}
+                DisplayMember="FriendlyName"
+                ValueMember="ColumnId"
+                SortMember="FriendlyName"
+                onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
+                SelectionMode={SelectionMode.Single}>
+            </SingleListBox>
+        </Panel>
     }
 
     private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
