@@ -53,7 +53,7 @@ export module Helper {
                 let aSortProperty = a[sortProperty]
                 let bSortProperty = b[sortProperty]
                 if (typeof (aSortProperty) == "string" && typeof (bSortProperty) == "string") {
-                    return aSortProperty.localeCompare(bSortProperty)
+                    return aSortProperty.localeCompare(bSortProperty) * direction
                 } else {
                     return (aSortProperty < bSortProperty) ? -1 * direction : (aSortProperty > bSortProperty) ? 1 * direction : 0
                 }
