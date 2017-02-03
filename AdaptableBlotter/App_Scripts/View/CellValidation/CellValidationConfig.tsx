@@ -30,6 +30,7 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     Columns: Array<IColumn>
     onDeleteCellValidation: (Index: number) => CellValidationRedux.CellValidationDeleteAction
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddOrUpdateAction
+    onChangeCellValidationAction: (index: number, CellValidationAction: CellValidationAction) => CellValidationRedux.ChangeCellValidationActionAction
 }
 
 interface CellValidationConfigState {
@@ -122,9 +123,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
     private onCellValidationActionChanged(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        let CellValidation: ICellValidationRule = this.props.CellValidations[index];
-        CellValidation.CellValidationAction = Number.parseInt(e.value);
-        this.props.onAddEditCellValidation(index, CellValidation);
+        this.props.onChangeCellValidationAction(index, Number.parseInt(e.value));
     }
 
     closeWizard() {
@@ -156,7 +155,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteCellValidation: (index: number) => dispatch(CellValidationRedux.DeleteCellValidation(index)),
-        onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.AddEditCellValidation(index, CellValidation))
+        onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.AddEditCellValidation(index, CellValidation)),
+        onChangeCellValidationAction: (index: number, CellValidationAction: CellValidationAction) => dispatch(CellValidationRedux.ChangeCellValidationAction(index, CellValidationAction))
     };
 }
 
