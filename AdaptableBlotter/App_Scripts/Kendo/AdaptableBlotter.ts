@@ -140,18 +140,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let confirmation: IUIConfirmation = {
                         CancelText:"Cancel",
                         ConfirmationMsg: warningMessage,
-                        ConfirmationText: "Bypass Rule"
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId,(e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
-                    // need this to have a callback or some action we can do next
-                    // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
-                    // for now so video will work we will assume the user clicked OK!
-                    //   e.preventDefault();
-
-                    //TODO : handle bypass or not.... for now I'm assuming we are bypassing the alert all the time
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
-                        dataChangedEvent.ColumnId,
-                        (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    e.preventDefault();
                 }
             }
             //no failed validation so we raise the edit auditlog

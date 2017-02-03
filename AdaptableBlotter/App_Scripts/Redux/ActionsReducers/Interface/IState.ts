@@ -28,17 +28,35 @@ export interface MenuState {
 }
 
 export interface PopupState {
+    ActionConfigurationPopup: IActionConfigurationPopup
+    ErrorPopup: IErrorPopup
+    WarningPopup: IWarningPopup
+    ConfirmationPopup: IConfirmationPopup
+}
+
+export interface IActionConfigurationPopup {
     ShowPopup: boolean;
-    ShowErrorPopup: boolean;
-    ShowWarningPopup: boolean;
-    ShowConfirmationPopup: boolean;
     ComponentClassName: string;
+    Params: any
+}
+
+export interface IErrorPopup {
+    ShowErrorPopup: boolean;
     ErrorMsg: string;
+}
+
+export interface IWarningPopup {
+    ShowWarningPopup: boolean;
     WarningMsg: string;
+}
+
+export interface IConfirmationPopup {
+    ShowConfirmationPopup: boolean;
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;
-    Params?: any
+    ConfirmAction : Redux.Action;
+    CancelAction : Redux.Action;
 }
 
 export interface SmartEditState {

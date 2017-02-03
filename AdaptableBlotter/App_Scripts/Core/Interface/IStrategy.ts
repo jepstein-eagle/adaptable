@@ -32,6 +32,8 @@ export interface IUIConfirmation {
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;
+    ConfirmAction: Redux.Action;
+    CancelAction: Redux.Action;
 }
 
 export interface IStrategyActionReturn<T> {
