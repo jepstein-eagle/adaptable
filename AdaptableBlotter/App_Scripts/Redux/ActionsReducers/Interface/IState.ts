@@ -60,7 +60,7 @@ export interface IConfirmationPopup {
 }
 
 export interface SmartEditState {
-    SmartEditValue: number
+    SmartEditValue: string
     SmartEditOperation: SmartEditOperation
     Preview: ISmartEditPreview
 }

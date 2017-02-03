@@ -14,7 +14,7 @@ export interface ApplySmarteditAction extends Redux.Action {
 }
 
 export interface SmartEditSetValueAction extends Redux.Action {
-    value: number
+    value: string
 }
 
 export interface SmartEditSetOperationAction extends Redux.Action {
@@ -33,7 +33,7 @@ export const ApplySmartedit = (): ApplySmarteditAction => ({
     type: SMARTEDIT_APPLY
 })
 
-export const SmartEditSetValue = (value: number): SmartEditSetValueAction => ({
+export const SmartEditSetValue = (value: string): SmartEditSetValueAction => ({
     type: SMARTEDIT_SETVALUE,
     value
 })
@@ -53,7 +53,7 @@ export const SmartEditSetPreview = (Preview: ISmartEditPreview): SmartEditSetPre
 })
 
 const initialSmartEditState: SmartEditState = {
-    SmartEditValue: 1,
+    SmartEditValue: "1",
     SmartEditOperation: SmartEditOperation.Sum,
     Preview: null
 }
