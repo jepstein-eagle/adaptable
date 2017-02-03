@@ -19,6 +19,8 @@ import { IMenuItem } from '../Core/interface/IStrategy'
 import { MenuType } from '../Core/Enums';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
+import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
+import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -69,37 +71,13 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     </Nav>
                 </Navbar>
 
-                {/*  The error modal we show - e.g. in SmartEdit when no numeric columns are selected */}
-                <Modal show={this.props.PopupState.ShowErrorPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
-                    <Modal.Body>
-                        <Alert bsStyle="danger" onDismiss={this.props.onClose}>
-                            <div>
-                                <Form horizontal>
-                                    <Row style={{ display: "flex" }}>
-                                        <Col xs={12} >
-                                            <Glyphicon glyph="exclamation-sign" style={glyphStyle} />
-                                            <ControlLabel style={headerStyle}> Error</ControlLabel>
-                                        </Col>
-                                    </Row>
-                                </Form>
-                            </div>
+                <AdaptableBlotterPopupError ErrorMsg={this.props.PopupState.ErrorMsg}
+                    onClose={this.props.onClose}
+                    ShowErrorPopup={this.props.PopupState.ShowErrorPopup} />
 
-                            <p>
-                                {this.props.PopupState.ErrorMsg.split("\n").map(function (item, index) {
-                                    return (
-                                        <span key={index}>
-                                            {item}
-                                            <br />
-                                        </span>
-                                    )
-                                })}
-                            </p>
-                            <p>
-                                <Button bsStyle="danger" onClick={this.props.onClose}>OK</Button>
-                            </p>
-                        </Alert>
-                    </Modal.Body>
-                </Modal>
+                <AdaptableBlotterPopupWarning ErrorMsg={this.props.PopupState.WarningMsg}
+                    onClose={this.props.onClose}
+                    ShowErrorPopup={this.props.PopupState.ShowWarningPopup} />
 
                 {/*  The warning modal we show - e.g. in Edit Restricitons if warning is on */}
                 <Modal show={this.props.PopupState.ShowWarningPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
