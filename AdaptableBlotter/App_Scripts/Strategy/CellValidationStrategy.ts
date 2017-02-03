@@ -12,19 +12,10 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
     private menuItemConfig: IMenuItem;
-    private CellValidations: ICellValidationRule[]
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Cell Validation", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
-        //          this.blotter.OnGridSave().Subscribe((sender, gridSaveInfo) => this.CheckGridSaveInfo(gridSaveInfo))
-    }
-
-    InitState() {
-        if (this.CellValidations != this.GetCellValidationState().CellValidations) {
-            this.CellValidations = this.GetCellValidationState().CellValidations;
-        }
     }
 
     public CreateCellValidationMessage(CellValidation: ICellValidationRule): string {
@@ -62,9 +53,6 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         return [this.menuItemConfig];
     }
 
-    private GetCellValidationState(): CellValidationState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
-    }
 }
 
 
