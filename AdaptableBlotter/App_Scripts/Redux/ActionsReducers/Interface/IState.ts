@@ -31,9 +31,13 @@ export interface PopupState {
     ShowPopup: boolean;
     ShowErrorPopup: boolean;
     ShowWarningPopup: boolean;
+    ShowConfirmationPopup: boolean;
     ComponentClassName: string;
     ErrorMsg: string;
     WarningMsg: string;
+    ConfirmationMsg: string;
+    ConfirmationText: string;
+    CancelText: string;
     Params?: any
 }
 

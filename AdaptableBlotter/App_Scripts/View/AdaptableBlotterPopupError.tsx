@@ -1,41 +1,30 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
-import { Modal, Alert, Form, Row, Col, Glyphicon, Label, Button } from 'react-bootstrap';
-
+//we use that syntax to import the default export from the module.... Took me a while to find the syntax
+import SweetAlert from 'react-bootstrap-sweetalert'
 
 interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<AdaptableBlotterPopupError> {
-    ShowErrorPopup: boolean
+    ShowPopup: boolean
     onClose: Function
-    ErrorMsg: string
+    Msg: string
 }
 
 export class AdaptableBlotterPopupError extends React.Component<AdaptableBlotterPopupErrorProps, {}> {
-    render() {
-        return <Modal show={this.props.ShowErrorPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
-            <Modal.Body>
-                <Alert bsStyle="danger" onDismiss={this.props.onClose}>
-                    
-                    <h3><Glyphicon glyph="exclamation-sign" bsSize="large" /><strong> Error</strong></h3>
 
-                    <p>
-                        {this.props.ErrorMsg.split("\n").map(function (item, index) {
-                            return (
-                                <span key={index}>
-                                    {item}
-                                    <br />
-                                </span>
-                            )
-                        })}
-                    </p>
-                    <p>
-                        <Button bsStyle="danger" onClick={() => this.props.onClose()}>OK</Button>
-                    </p>
-                </Alert>
-            </Modal.Body>
-        </Modal>
+    render() {
+        return this.props.ShowPopup && <SweetAlert danger confirmBtnBsStyle="danger" title="Error" onConfirm={() => this.props.onClose()} >
+            <p>
+                {this.props.Msg.split("\n").map(function (item, index) {
+                    return (
+                        <span key={index}>
+                            {item}
+                            <br />
+                        </span>
+                    )
+                })}
+            </p>
+        </SweetAlert>
     }
 
 }

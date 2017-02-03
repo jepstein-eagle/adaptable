@@ -171,6 +171,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         state.SmartEdit.SmartEditOperation);
 
                     if (apiReturn.Error) {
+                        //We close the SmartEditPopup
+                        middlewareAPI.dispatch(PopupRedux.HidePopup());
+                        //We show the Error Popup
                         middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
                     }
                     else {

@@ -21,13 +21,17 @@ import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarContr
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
+import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfirmation'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
     MenuState: MenuState;
     AdaptableBlotter: IAdaptableBlotter;
-    onClose: () => PopupRedux.HidePopupAction;
     showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.ShowPopupAction;
+    onClosePopup: () => PopupRedux.HidePopupAction;
+    onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
+    onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
+    onCloseConfirmationPopup: () => PopupRedux.HideConfirmationPopupAction;
 }
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
@@ -71,51 +75,25 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     </Nav>
                 </Navbar>
 
-                <AdaptableBlotterPopupError ErrorMsg={this.props.PopupState.ErrorMsg}
-                    onClose={this.props.onClose}
-                    ShowErrorPopup={this.props.PopupState.ShowErrorPopup} />
+                <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorMsg}
+                    onClose={this.props.onCloseErrorPopup}
+                    ShowPopup={this.props.PopupState.ShowErrorPopup} />
 
-                <AdaptableBlotterPopupWarning ErrorMsg={this.props.PopupState.WarningMsg}
-                    onClose={this.props.onClose}
-                    ShowErrorPopup={this.props.PopupState.ShowWarningPopup} />
+                <AdaptableBlotterPopupWarning Msg={this.props.PopupState.WarningMsg}
+                    onClose={this.props.onCloseWarningPopup}
+                    ShowPopup={this.props.PopupState.ShowWarningPopup} />
 
-                {/*  The warning modal we show - e.g. in Edit Restricitons if warning is on */}
-                <Modal show={this.props.PopupState.ShowWarningPopup} onHide={this.props.onClose} className="adaptable_blotter_style" >
-                    <Modal.Body>
-                        <Alert bsStyle="warning" onDismiss={this.props.onClose}>
-                            <Form horizontal>
-                                <Row style={{ display: "flex" }}>
-                                    <Col xs={11} >
-                                        <Glyphicon glyph="warning-sign" style={glyphStyle} />
-                                        <ControlLabel style={headerStyle}> Warning</ControlLabel>
-                                    </Col>
-                                </Row>
-                            </Form>
-
-                            {this.props.PopupState.WarningMsg.split("\n").map(function (item, index) {
-                                return (
-                                    <p key={index}>
-                                        {item}
-                                    </p>
-                                )
-                            })}
-                            <p>
-                                Do you want to continue?
-                            </p>
-                            <p>
-                                <ButtonToolbar>
-                                    <Button bsStyle="warning" onClick={this.props.onClose}>Ok</Button>
-                                    <Button bsStyle="default" onClick={this.props.onClose}>Cancel</Button>
-                                </ButtonToolbar>
-                            </p>
-                        </Alert>
-                    </Modal.Body>
-                </Modal>
+                <AdaptableBlotterPopupConfirmation Msg={this.props.PopupState.ConfirmationMsg}
+                    ShowPopup={this.props.PopupState.ShowConfirmationPopup}
+                    CancelText={this.props.PopupState.CancelText}
+                    ConfirmText={this.props.PopupState.ConfirmationText}
+                    onCancel={this.props.onCloseConfirmationPopup}
+                    onConfirm={this.props.onCloseConfirmationPopup} />
 
                 {/*  The main model window where action and configuration screens are 'hosted' */}
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ShowPopup}
                     ComponentClassName={this.props.PopupState.ComponentClassName}
-                    onHide={this.props.onClose}
+                    onHide={this.props.onClosePopup}
                     AdaptableBlotter={this.props.AdaptableBlotter} />
             </div>
 
@@ -142,7 +120,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClose: () => dispatch(PopupRedux.HidePopup()),
+        onClosePopup: () => dispatch(PopupRedux.HidePopup()),
+        onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
+        onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
+        onCloseConfirmationPopup: () => dispatch(PopupRedux.HideConfirmationPopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
     };
 }
