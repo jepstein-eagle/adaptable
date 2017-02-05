@@ -59,7 +59,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     </Navbar.Header>
                     <Nav style={marginStyle} >
 
-                        <NavDropdown key="functions" title="Adaptable Blotter Functions..." id="basic-nav-dropdown">
+                        <NavDropdown key="functions" title="Functions..." id="basic-nav-dropdown">
                             {actionMenuItems}
                         </NavDropdown>
 

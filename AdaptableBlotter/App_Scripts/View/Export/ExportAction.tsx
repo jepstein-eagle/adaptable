@@ -50,14 +50,14 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                             <FormControl value={this.props.FileName} type="string" placeholder="Enter Name for Exported File" onChange={e => this.handleFileNameChanged(e)} />
                         </Col>
                     </FormGroup>
-                    {blotter.isGridPageable() ?
+                    {blotter.isGridPageable() &&
                         <FormGroup controlId="allPages">
                             <Col xs={4} componentClass={ControlLabel}>Export All Pages: </Col>
                             <Col xs={8}>
                                 <Checkbox onChange={(e: React.FormEvent) => this.handleAllPagesChanged(e)} checked={this.props.AllPages}></Checkbox>
                             </Col>
                         </FormGroup>
-                        : null}
+                       }
                    <FormGroup controlId="filterable">
                             <Col xs={4} componentClass={ControlLabel}>Excel File Filterable: </Col>
                             <Col xs={8}>

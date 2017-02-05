@@ -121,7 +121,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             <Form horizontal>
                 {this.firstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
-                    <p />A Column Condition consists of <br/>(i) a Column and <br/>(ii) as many Criteria for that Column as you wish to create. <p />
+                    <p />A Column Condition consists of <br/>   (i) a Column and <br/>   (ii) as many Criteria for that Column as you wish to create. <p />
                     <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
                             "This Expression can only contain one Column Condition." : "The Expression can contain multiple Column Conditions."}

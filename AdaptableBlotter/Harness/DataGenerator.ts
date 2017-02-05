@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 301; i++) {
+        for (var i = 1; i < 19; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -41,11 +41,11 @@ export class DataGenerator {
         setInterval(() => {
             let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
             //pick a random trade in the first ten
-            let trade = this.getRandomItem(grid.behavior.getData(), 10);
+            let trade = this.getRandomItem(grid.behavior.getData(), 30);
             //pick a random colum in the numeric col
             let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
-            let newValue = initialNewValue + numberToAdd;
+            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
             trade[columnName] = newValue;
  
             trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] /2);
@@ -55,14 +55,14 @@ export class DataGenerator {
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             grid.behavior.reindex();
             grid.repaint()
-        }, 500)
+        }, 100)
     }
 
     createTrade(i: number): ITrade {
         var price = this.getMeaningfulDouble();
         var bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
-        var ask = price + bidOfferSpread / 2;
-        var bid = price - bidOfferSpread / 2;
+        var ask =this.roundTo4Dp( price + bidOfferSpread / 2);
+        var bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         var tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         var moodyRating = this.getRandomItem(this.getMoodysRatings())
         var trade =

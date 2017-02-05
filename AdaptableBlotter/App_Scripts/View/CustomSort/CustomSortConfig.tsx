@@ -46,7 +46,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 ColumnLabel={column.FriendlyName}></CustomSortConfigItem>
         });
 
- let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
 
 
         return <PanelWithButton headerText="Custom Sorts" style={panelStyle}
@@ -54,19 +54,20 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             buttonContent="Create Custom Sort" bsStyle="primary" glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
-                :   <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 
             <ListGroup style={divStyle}>
                 {customSorts}
             </ListGroup>
-            {this.state.isEditing ?
+            {this.state.isEditing &&
                 <AdaptableWizard Steps={[<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
                 <CustomSortValuesWizard Blotter={this.props.AdaptableBlotter} Columns={this.props.Columns} />]}
                     Data={this._editedCustomSort}
                     StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard> : null}
+                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+            }
         </PanelWithButton>
     }
     private _columnValues: any[];

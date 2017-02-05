@@ -1,20 +1,23 @@
-import {IStrategyActionReturn,IStrategy} from './IStrategy';
-import {SmartEditOperation} from '../Enums';
+import { IStrategyActionReturn, IStrategy } from './IStrategy';
+import { SmartEditOperation } from '../Enums';
+import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
 
-export interface ISmartEditPreview{
+
+export interface ISmartEditPreview {
     ColumnId: string,
-    InitialValueLabel :string,
-    ComputedValueLabel: string,
-    Values: ISmartEditValueTuple[]
+    PreviewResults: ISmartEditPreviewResult[]
 }
 
-export interface ISmartEditValueTuple{
-    Id: any, InitialValue: number, ComputedValue:number
+export interface ISmartEditPreviewResult {
+    Id: any,
+    InitialValue: number,
+    ComputedValue: number,
+    ValidationRules: ICellValidationRule[]
 }
 
 export interface ISmartEditStrategy extends IStrategy {
     BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
-    ApplySmartEdit(smartEditValue: number, smartEditOperation: SmartEditOperation) : void;
+    ApplySmartEdit(preview: ISmartEditPreview): void;
 }
 
 export interface ISmartEditPreviewReturn extends IStrategyActionReturn<ISmartEditPreview> {

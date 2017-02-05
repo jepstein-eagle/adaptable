@@ -178,13 +178,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return next(action);
                 }
-                case SmartEditRedux.SMARTEDIT_APPLY: {
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    SmartEditStrategy.ApplySmartEdit(middlewareAPI.getState().SmartEdit.SmartEditValue, middlewareAPI.getState().SmartEdit.SmartEditOperation);
-                    middlewareAPI.dispatch(PopupRedux.HidePopup());
-                    return next(action);
-                }
-                case ExportRedux.EXPORT_APPLY: {
+                  case ExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     ExportStrategy.ExportBlotter();
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
@@ -196,11 +190,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-                // case QuickSearchRedux.QUICK_SEARCH_SET_SEARCH_TEXT: {
-                //     let mytext: string = middlewareAPI.getState().QuickSearch.QuickSearchText;
-                //     adaptableBlotter.applySearch(null, mytext);
-                //     return next(action);
-                // }
+         
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:

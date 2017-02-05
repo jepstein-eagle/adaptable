@@ -63,7 +63,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                 {allCalendars}
             </ListGroup>
 
-            {this.state.DisplayedCalendar ?
+            {this.state.DisplayedCalendar &&
 
                 <Modal show={this.state.DisplayedCalendar != null} onHide={() => this.closeInformationModal()} className="adaptable_blotter_style">
                     <Modal.Header closeButton>
@@ -79,7 +79,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                         <Button style={buttonFloatRightStyle} onClick={() => this.closeInformationModal()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-                : null}
+            }
         </PanelWithImage>
     }
 

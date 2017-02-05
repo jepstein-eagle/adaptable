@@ -102,7 +102,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                     </Col>
                 </FormGroup>
 
-                {this.state.ConditionalStyleScope == ConditionalStyleScope.Column ?
+                {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
                     <div>
                         <FormGroup controlId="formColumn">
                             <Col componentClass={ControlLabel} xs={4}>Select Column: </Col>
@@ -118,14 +118,14 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         <FormGroup controlId="expressionType">
                             <Col xs={4} componentClass={ControlLabel}>Expression Type: </Col>
                             <Col xs={8}>
-                                <Radio  value="custom" checked={this.state.IsPredefinedExpression == false}
+                                <Radio value="custom" checked={this.state.IsPredefinedExpression == false}
                                     onChange={(e) => this.onExpressionOptionChange(e)}>Custom Expression (created in next step)</Radio>
-                                <Radio  value="predefined" checked={this.state.IsPredefinedExpression == true}
+                                <Radio value="predefined" checked={this.state.IsPredefinedExpression == true}
                                     onChange={(e) => this.onExpressionOptionChange(e)}>Existing Expression</Radio>
                             </Col>
                         </FormGroup>
                     </div>
-                    : null}
+                }
 
                 {this.state.IsPredefinedExpression ?
 
