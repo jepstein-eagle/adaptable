@@ -18,6 +18,7 @@ import { SortOrder } from '../../Core/Enums';
 
 interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigComponent> {
     CurrentCalendar: string
+    AvailableCalendars: ICalendar[]
     onSelectCalendar: (selectedCalendar: ICalendar) => CalendarsRedux.CalendarSetDefaultCalendarAction,
 }
 
@@ -34,7 +35,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
 
     render() {
 
-        let allCalendars = this.props.AdaptableBlotter.CalendarService.AvailableCalendars.map((calendar: ICalendar) => {
+        let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
             return <CalendarsConfigItem
                 Calendar={calendar}
                 key={calendar.CalendarName}
@@ -94,7 +95,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentCalendar: state.Calendars.CurrentCalendar
+        CurrentCalendar: state.Calendars.CurrentCalendar,
+        AvailableCalendars: state.Calendars.AvailableCalendars
     };
 }
 

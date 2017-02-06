@@ -86,6 +86,7 @@ export interface FlashingCellState {
 
 export interface CalendarState {
     CurrentCalendar: string;
+    AvailableCalendars : ICalendar[]
 }
 
 export interface ConditionalStyleState {
