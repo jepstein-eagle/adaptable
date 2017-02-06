@@ -7,6 +7,7 @@ import { ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/ISt
 export class StyleService {
     private FlashingCellState: FlashingCellState
     private ConditionalStyleState: ConditionalStyleState
+    private QuickSearchBackColor: string
     private sheet: CSSStyleSheet
     private style: HTMLStyleElement
     constructor(private blotter: IAdaptableBlotter) {
@@ -27,9 +28,11 @@ export class StyleService {
 
 
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
-            || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
+            || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
+            || this.QuickSearchBackColor != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
+            this.QuickSearchBackColor = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor
             this.clearCSSRules()
             this.FlashingCellState.FlashingColumns.forEach((element, index) => {
                 this.addCSSRule(".Ab-FlashUp" + index, 'background-color: ' + element.UpBackColor + ' !important')
@@ -40,7 +43,7 @@ export class StyleService {
 
             });
             // quick search
-            this.addCSSRule(".Ab-QuickSearch", 'background-color: #FFFFCC !important;color: #000000  !important')
+            this.addCSSRule(".Ab-QuickSearch", 'background-color: ' + this.QuickSearchBackColor + ' !important')
         }
     }
 

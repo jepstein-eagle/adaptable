@@ -13,15 +13,18 @@ import { EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
+import { ColorPicker } from '../ColorPicker';
 
 
 interface QuickSearchActionProps extends IStrategyViewPopupProps<QuickSearchActionComponent> {
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
+    QuickSearchBackColor: string,
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
+    onSetSearchBackColor: (backColor: string) => QuickSearchRedux.QuickSearchSetBackColorAction
 }
 
 interface QuickSearchActionState {
@@ -68,6 +71,11 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
     onDisplayTypeChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchDisplayType(Number.parseInt(e.value));
+    }
+
+    onBackColorChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.props.onSetSearchBackColor(e.value);
     }
 
     render() {
@@ -133,6 +141,15 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                     </Col>
                                 </FormGroup>
 
+                                <FormGroup controlId="formInlineSearchBackColor">
+                                    <Col xs={3}>
+                                        <ControlLabel>BackColor:</ControlLabel>
+                                    </Col>
+                                    <Col xs={2}>
+                                        <ColorPicker value={this.props.QuickSearchBackColor} onChange={(x) => this.onBackColorChange(x)} />
+                                    </Col>
+                                </FormGroup>
+
                             </Panel>
                         </div>
                     </Form>
@@ -148,6 +165,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchText: state.QuickSearch.QuickSearchText,
         QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
+        QuickSearchBackColor: state.QuickSearch.QuickSearchBackColor,
     };
 }
 
@@ -156,6 +174,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSetQuickSearchText: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(quickSearchText)),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetSearchOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetSearchDisplay(searchDisplayType)),
+        onSetSearchBackColor: (backColor: string) => dispatch(QuickSearchRedux.QuickSearchSetBackColor(backColor)),
     };
 }
 

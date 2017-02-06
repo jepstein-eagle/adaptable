@@ -101,6 +101,7 @@ export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
+    QuickSearchBackColor:  string
 }
 
 export interface AdvancedSearchState {
