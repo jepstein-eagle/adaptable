@@ -102,7 +102,6 @@ export class AuditLogService {
                 }
             });
         }
-
     }
 
     public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[]) {
@@ -200,30 +199,30 @@ export class AuditLogService {
     }
 
     private convertToText(obj: any): string {
-        let string = [];
+        let stringArray: string[] = [];
 
         if (obj == undefined) {
             return String(obj);
         } else if (Array.isArray(obj)) {
             for (let prop in obj) {
-                string.push(this.convertToText(obj[prop]));
+                stringArray.push(this.convertToText(obj[prop]));
             }
-            return "[" + string.join(",") + "]";
+            return "[" + stringArray.join(",") + "]";
         }
         if (typeof (obj) == "object") {
             for (let prop in obj) {
                 if (obj.hasOwnProperty(prop))
-                    string.push(prop + ": " + this.convertToText(obj[prop]));
+                    stringArray.push(prop + ": " + this.convertToText(obj[prop]));
             }
-            return "{" + string.join(",") + "}";
+            return "{" + stringArray.join(",") + "}";
             //is function
         } else if (typeof (obj) == "function") {
-            string.push(obj.toString())
+            stringArray.push(obj.toString())
 
         } else {
-            string.push(String(obj))
+            stringArray.push(String(obj))
         }
 
-        return string.join(",");
+        return stringArray.join(",");
     }
 }
