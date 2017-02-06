@@ -300,10 +300,10 @@ export module KendoFiltering {
         }
 
         // if numeric or date then get the underlying values
-        let columnValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(column.ColumnId, DistinctCriteriaPairValue.rawValue);
+        let columnValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(column.ColumnId, DistinctCriteriaPairValue.RawValue);
         let rawValues: any[] = [];
         columnValuesExpression.ColumnValues.forEach(c => {
-            let rawValue: any = columnValuePairs.find(cvp => cvp.displayValue == c).rawValue;
+            let rawValue: any = columnValuePairs.find(cvp => cvp.DisplayValue == c).RawValue;
             rawValues.push(rawValue);
         })
 

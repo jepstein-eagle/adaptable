@@ -5,7 +5,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
@@ -32,19 +32,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         // get user filter expressions appropriate for this column
         let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Uid, this.props.CurrentColumn));
-        let userFilterItems: { rawValue: any, displayValue: string }[] = userFilters.map((uf, index) => { return { rawValue: uf.Uid, displayValue: uf.FriendlyName } })
+        let userFilterItems: IRawValueDisplayValuePair[] = userFilters.map((uf, index) => { return { RawValue: uf.Uid, DisplayValue: uf.FriendlyName } })
 
-        let columnValuePairs: Array<{ rawValue: any, displayValue: string }>
+        let columnValuePairs: Array<IRawValueDisplayValuePair>
         // get the values for the column and then sort by raw value
         columnValuePairs = this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.ColumnValueType);
-        columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.rawValue])
+        columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: String[]
-        if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
+        if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []
         }
-        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
+        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
@@ -65,10 +65,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
 
         let expression: Expression
-        if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
+        if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilterUids, [])
         }
-        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
+        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
         }
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
@@ -93,10 +93,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
 
         let expression: Expression
-        if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
+        if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilterUids, [])
         }
-        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
+        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
         }
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };

@@ -128,8 +128,8 @@ export enum SelectionMode {
     Single
 }
 
-
+//make sure enum items match IRawValueDisplayValuePair
 export enum DistinctCriteriaPairValue {
-    rawValue,
-    displayValue
+    RawValue,
+    DisplayValue
 }

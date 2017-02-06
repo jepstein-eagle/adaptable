@@ -88,7 +88,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 selectedColumnRanges = []
             }
             return {
-                ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.displayValue),
+                ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue),
                 SelectedColumnValues: selectedColumnValues,
                 UserFilterExpresions: this.props.UserFilters.map(f => f.Uid),
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,

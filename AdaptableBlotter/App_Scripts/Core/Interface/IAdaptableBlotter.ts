@@ -89,7 +89,8 @@ export interface IColumn {
     Visible: boolean
 }
 
+//make sure property names match DistinctCriteriaPairValue
 export interface IRawValueDisplayValuePair {
-    rawValue: any,
-    displayValue: string
+    RawValue: any,
+    DisplayValue: string
 }

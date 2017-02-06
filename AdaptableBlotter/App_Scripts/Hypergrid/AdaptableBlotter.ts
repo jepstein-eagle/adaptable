@@ -38,7 +38,7 @@ import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -120,7 +120,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let filterContext: IColumnFilterContext = {
                     Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                     Blotter: this,
-                    ColumnValueType: "displayValue"
+                    ColumnValueType: DistinctCriteriaPairValue.DisplayValue
                 };
                 this.filterContainer.style.visibility = 'visible'
                 this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
@@ -457,19 +457,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.repaint();
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<{ rawValue: any, displayValue: string }> {
-        let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.grid.behavior.dataModel.getData()
         for (var index = 0; index < data.length; index++) {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
             let rawValue = element[columnId]
-            if (distinctCriteria == DistinctCriteriaPairValue.rawValue) {
-                returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayString });
+            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
             }
-            else if (distinctCriteria == DistinctCriteriaPairValue.displayValue) {
-                returnMap.set(displayString, { rawValue: rawValue, displayValue: displayString });
+            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
             }
         }
         return Array.from(returnMap.values());

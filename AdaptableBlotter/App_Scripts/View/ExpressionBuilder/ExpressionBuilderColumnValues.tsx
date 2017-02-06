@@ -4,7 +4,7 @@ import * as React from "react";
 import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
-import { ColumnType, SelectionMode } from '../../Core/Enums'
+import { ColumnType, SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 
 
 interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
@@ -19,9 +19,9 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
         return <PanelWithButton headerText={"Values"} className="no-padding-panel" bsStyle="info">
             <SingleListBox style={divStyle} Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
-                DisplayMember="displayValue"
-                ValueMember="displayValue"
-                SortMember="rawValue"
+                DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
                 onSelectedChange={(list) => this.props.onColumnValuesChange(list)}
                 SelectionMode={SelectionMode.Multi}>
             </SingleListBox>

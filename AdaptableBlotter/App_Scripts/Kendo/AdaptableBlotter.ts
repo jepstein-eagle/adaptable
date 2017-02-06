@@ -230,7 +230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let filterContext: IColumnFilterContext = {
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this,
-            ColumnValueType: "rawValue"
+            ColumnValueType: DistinctCriteriaPairValue.RawValue
         };
 
         // Remove default filter UI
@@ -490,11 +490,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)
             let rawValue = row[columnId]
-            if (distinctCriteria == DistinctCriteriaPairValue.rawValue) {
-                returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayValue });
+            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
             }
-            else if (distinctCriteria == DistinctCriteriaPairValue.displayValue) {
-                returnMap.set(displayValue, { rawValue: rawValue, displayValue: displayValue });
+            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
             }
 
         })

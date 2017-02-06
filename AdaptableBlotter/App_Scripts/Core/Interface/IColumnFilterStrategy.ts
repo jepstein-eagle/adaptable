@@ -1,5 +1,6 @@
 import { Expression } from '../../Core/Expression/Expression';
 import { IAdaptableBlotter, IColumn } from './IAdaptableBlotter';
+import { DistinctCriteriaPairValue } from '../Enums'
 
 export interface IColumnFilterStrategy {
 }
@@ -19,5 +20,5 @@ export interface IColumnFilterItem {
 export interface IColumnFilterContext {
     Column: IColumn,
     Blotter: IAdaptableBlotter,
-    ColumnValueType: "displayValue" | "rawValue"
+    ColumnValueType: DistinctCriteriaPairValue
 }
