@@ -7,6 +7,7 @@ import { ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/ISt
 export class StyleService {
     private FlashingCellState: FlashingCellState
     private ConditionalStyleState: ConditionalStyleState
+    private QuickSearchBackColor: string
     private sheet: CSSStyleSheet
     private style: HTMLStyleElement
     constructor(private blotter: IAdaptableBlotter) {
@@ -27,20 +28,22 @@ export class StyleService {
 
 
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
-            || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
+            || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
+            || this.QuickSearchBackColor != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
+            this.QuickSearchBackColor = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor
             this.clearCSSRules()
             this.FlashingCellState.FlashingColumns.forEach((element, index) => {
-                this.addCSSRule(".FlashUp" + index, 'background-color: ' + element.UpBackColor + ' !important')
-                this.addCSSRule(".FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
+                this.addCSSRule(".Ab-FlashUp" + index, 'background-color: ' + element.UpBackColor + ' !important')
+                this.addCSSRule(".Ab-FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
             });
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((element, index) => {
                 this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.BackColor + ' !important;color: ' + element.ForeColor + ' !important')
 
             });
             // quick search
-            this.addCSSRule(".QuickSearch", 'background-color: #FFFFCC !important;color: #000000  !important')
+            this.addCSSRule(".Ab-QuickSearch", 'background-color: ' + this.QuickSearchBackColor + ' !important')
         }
     }
 

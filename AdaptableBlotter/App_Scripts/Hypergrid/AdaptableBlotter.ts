@@ -397,7 +397,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.abortEditing()
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.grid.repaint()
+        this.ReindexAndRepaint()
     }
 
     public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
@@ -407,7 +407,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             row[element.columnId] = element.value
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.grid.repaint()
+        this.ReindexAndRepaint()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {

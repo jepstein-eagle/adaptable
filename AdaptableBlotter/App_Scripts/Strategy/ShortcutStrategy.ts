@@ -37,7 +37,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase {
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
 
         let activeCell = this.blotter.getActiveCell();
-        if (activeCell) {
+        let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)
+        if (activeCell && !isReadOnly) {
             let columnType: ColumnType = this.blotter.getColumnType(activeCell.ColumnId);
             switch (columnType) {
                 case ColumnType.Number: {
