@@ -18,6 +18,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
   render() {
     if (this.props.ComponentClassName) {
       var bodyElement: any = AdaptableViewFactory[this.props.ComponentClassName];
+      //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       var body = React.createElement(bodyElement,
         {
           getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria),
