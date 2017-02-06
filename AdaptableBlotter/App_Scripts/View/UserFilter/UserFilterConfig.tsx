@@ -111,7 +111,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
     }
 
     onCreateUserFilter() {
-        let userFilterStrategy: IUserFilterStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.UserFilterStrategyId) as IUserFilterStrategy;
+        let userFilterStrategy: IUserFilterStrategy = this.props.getStrategy(StrategyIds.UserFilterStrategyId) as IUserFilterStrategy;
         let emptyFilter: IUserFilter = userFilterStrategy.CreateEmptyUserFilter();
         this.setState({ EditedUserFilter: emptyFilter });
     }

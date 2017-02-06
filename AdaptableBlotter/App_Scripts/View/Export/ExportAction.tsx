@@ -39,8 +39,6 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
     }
 
     render() {
-        var blotter = this.props.AdaptableBlotter;
-   
         return (
             <PanelWithImage header="Export" bsStyle="primary" glyphicon="export">
                 <Form horizontal>
@@ -50,7 +48,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                             <FormControl value={this.props.FileName} type="string" placeholder="Enter Name for Exported File" onChange={e => this.handleFileNameChanged(e)} />
                         </Col>
                     </FormGroup>
-                    {blotter.isGridPageable() &&
+                    {this.props.isGridPageable() &&
                         <FormGroup controlId="allPages">
                             <Col xs={4} componentClass={ControlLabel}>Export All Pages: </Col>
                             <Col xs={8}>
@@ -79,7 +77,6 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        AdaptableBlotter: ownProps.AdaptableBlotter,
         FileName: state.Export.FileName,
         AllPages: state.Export.AllPages,
         Filterable: state.Export.Filterable,

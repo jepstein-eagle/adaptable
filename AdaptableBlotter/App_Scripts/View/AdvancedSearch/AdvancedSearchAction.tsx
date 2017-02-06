@@ -148,7 +148,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
-        let advancedSearchStrategy: any = this.props.AdaptableBlotter.Strategies.get(StrategyIds.AdvancedSearchStrategyId);
+        let advancedSearchStrategy: any = this.props.getStrategy(StrategyIds.AdvancedSearchStrategyId);
         let _newAdvancedSearch: IAdvancedSearch = advancedSearchStrategy.CreateEmptyAdvancedSearch();
         this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
@@ -233,7 +233,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        AdaptableBlotter: ownProps.AdaptableBlotter,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns,

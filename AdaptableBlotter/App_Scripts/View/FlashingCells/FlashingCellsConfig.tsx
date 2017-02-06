@@ -30,8 +30,7 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
-        // have to use any because the cast fails as its not an enclosing jsx object - that must be fixable
-        let flashingCelllStrategy: IFlashingCellsStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.FlashingCellsStrategyId) as IFlashingCellsStrategy;
+        let flashingCelllStrategy = this.props.getStrategy(StrategyIds.FlashingCellsStrategyId) as IFlashingCellsStrategy;
 
         let flashingCellDurations: IFlashingCellDuration[] = flashingCelllStrategy.GetFlashingCellDurations();
 

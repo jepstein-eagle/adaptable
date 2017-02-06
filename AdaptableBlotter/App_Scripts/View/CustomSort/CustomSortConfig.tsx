@@ -108,7 +108,6 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CustomSorts: state.CustomSort.CustomSorts,
-        AdaptableBlotter: ownProps.AdaptableBlotter,
         Columns: state.Grid.Columns
     };
 }

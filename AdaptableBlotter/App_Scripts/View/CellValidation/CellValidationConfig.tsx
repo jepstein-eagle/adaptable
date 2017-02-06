@@ -117,7 +117,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
 
     createCellValidation() {
-        let CellValidationStrategy: ICellValidationStrategy = this.props.AdaptableBlotter.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+        let CellValidationStrategy: ICellValidationStrategy = this.props.getStrategy(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
         this.setState({ EditedCellValidation: CellValidationStrategy.CreateEmptyCellValidation(), EditedIndexCellValidation: -1 });
     }
 

@@ -126,7 +126,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         NumericShortcuts: state.Shortcut.NumericShortcuts,
         DateShortcuts: state.Shortcut.DateShortcuts,
-        AdaptableBlotter: ownProps.AdaptableBlotter
     };
 }
 

@@ -21,19 +21,16 @@ class PrintPreviewActionComponent extends React.Component<PrintPreviewActionProp
         this.props.onApplyPrintPreview();
     }
 
-    
         render() {
             return (
                 <div >
                 </div>
             );
         }
-       
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        AdaptableBlotter: ownProps.AdaptableBlotter,
     };
 }
 

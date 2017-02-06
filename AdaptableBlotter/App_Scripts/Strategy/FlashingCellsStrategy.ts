@@ -16,9 +16,6 @@ import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux
     2.  The user cannot choose the flash colours; for now its just green and red, which are then hardcoded as styles in index.html.  
     All the user can choose is which numeric columns will flash and the duration 
  */
-
-
-
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
@@ -39,8 +36,6 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
         }
     }
-
-
 
     private handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
         let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnId);

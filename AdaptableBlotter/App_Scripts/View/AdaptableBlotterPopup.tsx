@@ -5,6 +5,7 @@ import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../Core/Enums'
 import { AdaptableViewFactory } from './AdaptableViewFactory';
+import { IStrategy } from '../Core/Interface/IStrategy';
 
 interface IAdaptableBlotterPopupProps {
   showModal: boolean;
@@ -19,8 +20,9 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       var bodyElement: any = AdaptableViewFactory[this.props.ComponentClassName];
       var body = React.createElement(bodyElement,
         {
-          AdaptableBlotter: this.props.AdaptableBlotter,
-          getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria)
+          getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria),
+          getStrategy: (strategyId: string) => this.props.AdaptableBlotter.Strategies.get(strategyId),
+          isGridPageable: () => this.props.AdaptableBlotter.isGridPageable
         });
     }
     //TODO: There is a CSS style in our App that makes the popup to autosize. Need to check how to do it directly from code
