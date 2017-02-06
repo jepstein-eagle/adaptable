@@ -36,7 +36,7 @@ export class SearchService implements ISearchService {
         // first make sure they are all visible (as might have been hidden in a previous search)
         this.blotter.showRows(rowIds);
         // always do this or only if colouring? but then what if did colour and no longer do so???
-        this.blotter.removeAllCellStylesWithRegex(new RegExp("^QuickSearch"));
+        this.blotter.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
 
 
         let columns: IColumn[] = this.GetGridState().Columns;

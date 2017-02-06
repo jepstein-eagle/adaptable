@@ -774,13 +774,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (cellMatch) {
                         switch (quickSearchDisplayType) {
                             case QuickSearchDisplayType.ColourCell:
-                                this.addCellStyle(rowId, i, "QuickSearch")
+                                this.addCellStyle(rowId, i, "Ab-QuickSearch")
                                 break;
                             case QuickSearchDisplayType.HideNonMatchingRow:
                                 matchingRowIds.push(rowId);
                                 break;
                             case QuickSearchDisplayType.HideRowAndColourCell:
-                                this.addCellStyle(rowId, i, "QuickSearch")
+                                this.addCellStyle(rowId, i, "Ab-QuickSearch")
                                 matchingRowIds.push(rowId);
                                 break;
                         }
