@@ -19,7 +19,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
     }
 
-    public ApplySmartEdit( smartEditPreview: ISmartEditPreview): void {
+    public ApplySmartEdit(smartEditPreview: ISmartEditPreview): void {
         let newValues: { id: any, columnId: string, value: any }[] = [];
 
         smartEditPreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
@@ -84,7 +84,6 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                         break;
                 }
 
-
                 let dataChangedEvent: IDataChangedEvent = {
                     OldValue: Number(columnValuePair.value),
                     NewValue: newValue,
@@ -108,7 +107,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         }
     }
 
-       private GetSmartEditState(): SmartEditState {
+    private GetSmartEditState(): SmartEditState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
     }
 

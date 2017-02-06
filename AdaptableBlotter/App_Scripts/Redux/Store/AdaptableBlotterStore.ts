@@ -53,7 +53,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
-    CellValidation : CellValidationRedux.CellValidationReducer
+    CellValidation: CellValidationRedux.CellValidationReducer
 });
 
 
@@ -156,6 +156,28 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
+                    let actionTyped = <GridRedux.SetValueAction>action
+                    //We set the value in the grid
+                    adaptableBlotter.setValue(actionTyped.PrimaryKey, actionTyped.ColumnId, actionTyped.NewValue)
+                    //We AuditLog the Edit
+                    adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.PrimaryKey, actionTyped.ColumnId, actionTyped.OldValue, actionTyped.NewValue)
+                    return next(action);
+                }
+                case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
+                    let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
+                    if (confirmationAction) {
+                        middlewareAPI.dispatch(confirmationAction);
+                    }
+                    return next(action);
+                }
+                case PopupRedux.CANCEL_CONFIRMATIONPOPUP: {
+                    let cancelAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
+                    if (cancelAction) {
+                        middlewareAPI.dispatch(cancelAction);
+                    }
+                    return next(action);
+                }
                 //here we have all actions that triggers a refresh of the SmartEditPreview
                 case SmartEditRedux.SMARTEDIT_SETOPERATION:
                 case SmartEditRedux.SMARTEDIT_SETVALUE:
@@ -167,18 +189,21 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
 
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue,
+                    let apiReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue),
                         state.SmartEdit.SmartEditOperation);
 
                     if (apiReturn.Error) {
+                        //We close the SmartEditPopup
+                        middlewareAPI.dispatch(PopupRedux.HidePopup());
+                        //We show the Error Popup
                         middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
                     }
                     else {
                         middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn.ActionReturn));
                     }
-                    return next(action);
+                    return returnAction;
                 }
-                  case ExportRedux.EXPORT_APPLY: {
+                case ExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     ExportStrategy.ExportBlotter();
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
@@ -190,7 +215,6 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-         
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:

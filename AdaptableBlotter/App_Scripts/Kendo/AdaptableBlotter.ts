@@ -9,7 +9,7 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIWarning } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -137,19 +137,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     failedRules.forEach(f => {
                         warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
                     })
-                    let warning: IUIWarning = {
-                        WarningMsg: warningMessage
+                    let confirmation: IUIConfirmation = {
+                        CancelText:"Cancel",
+                        ConfirmationMsg: warningMessage,
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId,(e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.WarningPopupAction>(PopupRedux.WarningPopup(warning));
-                    // need this to have a callback or some action we can do next
-                    // as in:  http://stackoverflow.com/questions/33138045/is-it-considered-good-practice-to-pass-callbacks-to-redux-async-action
-                    // for now so video will work we will assume the user clicked OK!
-                    //   e.preventDefault();
-
-                    //TODO : handle bypass or not.... for now I'm assuming we are bypassing the alert all the time
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
-                        dataChangedEvent.ColumnId,
-                        (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    e.preventDefault();
                 }
             }
             //no failed validation so we raise the edit auditlog

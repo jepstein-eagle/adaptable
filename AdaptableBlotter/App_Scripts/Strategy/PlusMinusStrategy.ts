@@ -39,7 +39,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             let selectedCell = this.blotter.getSelectedCells()
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
-                    if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number) {
+                    if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
                         let newValue: { id: any, columnId: string, value: any }
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)

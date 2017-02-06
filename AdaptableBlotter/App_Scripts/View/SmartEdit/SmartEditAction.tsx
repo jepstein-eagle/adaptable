@@ -18,14 +18,15 @@ import { ErrorPopover } from '../ErrorPopover';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy';
 import * as StrategyIds from '../../Core/StrategyIds'
+import { StringExtensions } from '../../Core/Extensions';
 
 
 interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
-    SmartEditValue: number,
+    SmartEditValue: string,
     SmartEditOperation: SmartEditOperation,
     Preview: ISmartEditPreview,
     Columns: IColumn[],
-    onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditSetValueAction;
+    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
     onWindowClose: () => PopupRedux.HidePopupAction,
@@ -46,7 +47,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     render() {
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
 
-        if (this.props.Preview && !isNaN(this.props.SmartEditValue)) {
+        if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
                 return <tr key={previewResult.Id}>
@@ -78,11 +79,11 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Ratio)}>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute)}>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
                                 </DropdownButton>
-                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
+                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle="info" disabled={isNaN(this.props.SmartEditValue)} onClick={() => this.onApplySmartEdit()} >Apply to Grid</Button>
+                        <Button bsStyle="info" disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue)} onClick={() => this.onApplySmartEdit()} >Apply to Grid</Button>
                     </Form>
                 </PanelWithImage>
                 <Panel header={previewHeader} bsStyle="success" style={divStyle}>
@@ -99,7 +100,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     private onSmartEditValueChange(event: React.FormEvent) {
         const e = event.target as HTMLInputElement;
-        this.props.onSmartEditValueChange(parseFloat(e.value));
+        this.props.onSmartEditValueChange(e.value);
     }
 
     private getValidationErrorMessage(CellValidation: ICellValidationRule): string {
@@ -128,7 +129,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
+        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
         fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
         onWindowClose: () => dispatch(PopupRedux.HidePopup())
