@@ -19,6 +19,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
 interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
@@ -26,6 +27,7 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     SmartEditOperation: SmartEditOperation,
     Preview: ISmartEditPreview,
     Columns: IColumn[],
+    UserFilters: IUserFilter[]
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
@@ -105,7 +107,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     private getValidationErrorMessage(CellValidation: ICellValidationRule): string {
         let expressionDescription: string = (CellValidation.HasExpression) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
+            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
             "";
         return (CellValidation.Description + expressionDescription);
     }
@@ -122,7 +124,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
         Preview: state.SmartEdit.Preview,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+        UserFilters : state.UserFilter.UserFilters
     };
 }
 

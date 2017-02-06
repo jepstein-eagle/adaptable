@@ -23,11 +23,13 @@ import { CellValidationExpressionWizard } from './CellValidationExpressionWizard
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IUserFilter } from '../../Core/interface/IExpression';
 
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];
-    Columns: Array<IColumn>
+    Columns: Array<IColumn>,
+    UserFilters: IUserFilter[]
     onDeleteCellValidation: (Index: number) => CellValidationRedux.CellValidationDeleteAction
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddOrUpdateAction
     onChangeCellValidationAction: (index: number, CellValidationAction: CellValidationAction) => CellValidationRedux.ChangeCellValidationActionAction
@@ -50,20 +52,20 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3],["Failure Action", 2], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3], ["Failure Action", 2], ["", 2]];
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row >
                     <Col xs={2}>
-                        {this.props.Columns.find(c=>c.ColumnId == x.ColumnId).FriendlyName }
+                        {this.props.Columns.find(c => c.ColumnId == x.ColumnId).FriendlyName}
                     </Col>
-                     <Col xs={3}>
+                    <Col xs={3}>
                         {x.Description}
                     </Col>
                     <Col xs={3}>
-                        {this.setExpressionDescription(x) }
+                        {this.setExpressionDescription(x)}
                     </Col>
                     <Col xs={2}>
                         <FormControl componentClass="select" placeholder="select" value={x.CellValidationAction.toString()} onChange={(x) => this.onCellValidationActionChanged(index, x)} >
@@ -82,7 +84,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
         return <PanelWithButton headerText="Cell Validation Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Cell Validation Rule"}
-            buttonClick={() => this.createCellValidation()} 
+            buttonClick={() => this.createCellValidation()}
             glyphicon={"flag"} >
             {CellValidationItems.length > 0 &&
                 <div>
@@ -99,9 +101,12 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
             {this.state.EditedCellValidation != null &&
                 <AdaptableWizard Steps={[
-                    <CellValidationSettingsWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                    <CellValidationRulesWizard Columns={this.props.Columns} Blotter={this.props.AdaptableBlotter} />,
-                    <CellValidationExpressionWizard ColumnList={this.props.Columns} Blotter={this.props.AdaptableBlotter} SelectedColumnId={null} />,
+                    <CellValidationSettingsWizard Columns={this.props.Columns} />,
+                    <CellValidationRulesWizard Columns={this.props.Columns} />,
+                    <CellValidationExpressionWizard ColumnList={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SelectedColumnId={null}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                 ]}
                     Data={this.state.EditedCellValidation}
                     StepStartIndex={0}
@@ -135,9 +140,9 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1 });
     }
 
-     setExpressionDescription(CellValidation: ICellValidationRule):string {
+    setExpressionDescription(CellValidation: ICellValidationRule): string {
         return (CellValidation.HasExpression) ?
-            ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.AdaptableBlotter) :
+            ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
             "No Expression";
     }
 
@@ -147,6 +152,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters,
         CellValidations: state.CellValidation.CellValidations
     };
 }

@@ -18,11 +18,12 @@ import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../PanelWithButton';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithRow } from '../PanelWithRow';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
+    UserFilters: IUserFilter[],
     onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
     onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
     onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
@@ -48,7 +49,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
                 key={conditionalStyleCondition.Uid}
-                Blotter={this.props.AdaptableBlotter}
+                UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
                 onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition)}
@@ -64,7 +65,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
-                :  <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 
             <ListGroup style={divStyle}>
@@ -75,12 +76,12 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 <AdaptableWizard Steps={
                     [
                         <ConditionalStyleSettingsWizard
-                            Columns={this.props.Columns}
-                            Blotter={this.props.AdaptableBlotter} />,
+                            Columns={this.props.Columns} />,
                         <ConditionalStyleExpressionWizard
                             ColumnList={this.props.Columns}
-                            Blotter={this.props.AdaptableBlotter}
-                            SelectedColumnId={null} />
+                            UserFilters={this.props.UserFilters}
+                            SelectedColumnId={null}
+                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
                     StepStartIndex={0}
@@ -122,7 +123,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyleConditions: state.ConditionalStyle.ConditionalStyleConditions,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 

@@ -18,11 +18,12 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { PanelWithRow } from '../PanelWithRow';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
     Columns: IColumn[],
+    UserFilters: IUserFilter[],
     PlusMinusConditions: IPlusMinusCondition[]
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditColumnsDefaultNudgeAction
@@ -63,7 +64,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e)} />
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
+                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)}
                     </Col>
                     <Col xs={2}>
                         <EntityListActionButtons
@@ -100,12 +101,12 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             {this.state.EditedPlusMinusCondition != null &&
                 <AdaptableWizard Steps={
                     [<PlusMinusSettingsWizard
-                        Columns={this.props.Columns}
-                        Blotter={this.props.AdaptableBlotter} />,
+                        Columns={this.props.Columns} />,
                     <PlusMinusExpressionWizard
                         ColumnList={this.props.Columns}
-                        Blotter={this.props.AdaptableBlotter}
-                        SelectedColumnId={null} />]}
+                        UserFilters={this.props.UserFilters}
+                        SelectedColumnId={null}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
                     Data={this.state.EditedPlusMinusCondition}
                     StepStartIndex={0}
                     onHide={() => this.closeWizard()}
@@ -153,7 +154,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DefaultNudgeValue: state.PlusMinus.DefaultNudge,
         PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 

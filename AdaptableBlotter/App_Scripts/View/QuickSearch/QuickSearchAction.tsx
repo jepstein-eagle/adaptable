@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
@@ -79,8 +79,6 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
     }
 
     render() {
-        var blotter = this.props.AdaptableBlotter;
-
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
 
         let optionOperators = EnumExtensions.getNamesAndValues(LeafExpressionOperator).filter
@@ -161,7 +159,6 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        AdaptableBlotter: ownProps.AdaptableBlotter,
         QuickSearchText: state.QuickSearch.QuickSearchText,
         QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,

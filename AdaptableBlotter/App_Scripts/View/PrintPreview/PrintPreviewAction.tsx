@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { FormControl, Panel, Form, Button, Table, ControlLabel, Checkbox } from 'react-bootstrap';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as PrintPreviewRedux from '../../Redux/ActionsReducers/PrintPreviewRedux'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'

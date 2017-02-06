@@ -3,17 +3,19 @@
 import * as React from "react";
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
 interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     ColumnList: Array<IColumn>
-    Blotter: IAdaptableBlotter
+    UserFilters: IUserFilter[]
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     SelectedColumnId: string
 }
 
@@ -22,7 +24,7 @@ export class CellValidationExpressionWizard extends ExpressionBuilderPage implem
         super(props2)
         this.state = {
             Expression: props2.Data.OtherExpression,
-             SelectedColumnId: "select"
+            SelectedColumnId: "select"
         }
     }
 

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { IRangeExpression, IUserFilter } from '../../Core/Interface/IExpression'
 import { PanelWithButton } from '../PanelWithButton'
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
@@ -11,16 +11,17 @@ import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, F
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
-import { ColumnType, ExpressionMode, SortOrder } from '../../Core/Enums'
+import { ColumnType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
-    Blotter: IAdaptableBlotter
     Expression: Expression
     ExpressionMode: ExpressionMode
     onExpressionChange: (Expression: Expression) => void
     onSelectedColumnChange: (ColumnName: string) => void
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    UserFilters: IUserFilter[]
     SelectedColumnId: string
 }
 
@@ -37,6 +38,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         super(props);
         this.state = this.buildState(this.props)
         this.firstTime = true;
+    }
+
+    componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
+        this.setState(this.buildState(nextProps))
     }
 
     private firstTime: boolean;
@@ -83,21 +88,17 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 selectedColumnRanges = []
             }
             return {
-                ColumnValues: theProps.Blotter.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, "displayValue"),
+                ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.displayValue),
                 SelectedColumnValues: selectedColumnValues,
-                UserFilterExpresions: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.map(f => f.Uid),
+                UserFilterExpresions: this.props.UserFilters.map(f => f.Uid),
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
             };
         }
     }
 
-    componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
-        this.setState(this.buildState(nextProps))
-    }
-
     render() {
-        
+
         let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnsList, "FriendlyName")
         let optionColumns = sortedColumns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
@@ -105,7 +106,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(f, selectedColumn, this.props.Blotter));
+        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn));
 
         if (this.firstTime) {// check it again
             this.firstTime = this.props.SelectedColumnId == "select" && ExpressionHelper.IsExpressionEmpty(this.props.Expression);
@@ -121,8 +122,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             <Form horizontal>
                 {this.firstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
-                    <p />A Column Condition consists of <br/>   (i) a Column and <br/>   (ii) as many Criteria for that Column as you wish to create. <p />
-                    <p />Criteria can include a mix of column values, column filters or ranges.<p />
+                    <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
+                        <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
                             "This Expression can only contain one Column Condition." : "The Expression can contain multiple Column Conditions."}
                     </Well>
@@ -164,8 +165,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                         <Col xs={4}>
                             <ExpressionBuilderUserFilter
-                                UserFilterExpressions={UserFilterHelper.GetUserFilters(availableExpressionIds, this.props.Blotter)}
-                                SelectedUserFilterExpressions={UserFilterHelper.GetUserFilters(this.state.SelectedUserFilterExpresions, this.props.Blotter)}
+                                UserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, availableExpressionIds)}
+                                SelectedUserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, this.state.SelectedUserFilterExpresions)}
                                 onUserFilterExpressionChange={(selectedValues) => this.onSelectedUserFilterExpressionsChange(selectedValues)} >
                             </ExpressionBuilderUserFilter>
                         </Col>

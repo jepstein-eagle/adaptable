@@ -7,7 +7,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -20,7 +20,7 @@ import { Helper } from '../../Core/Helper';
 import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -30,7 +30,8 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onClearPopupParams: () => PopupRedux.ClearPopupParamAction,
-    PopupParams: any
+    PopupParams: any,
+    UserFilters: IUserFilter[]
 }
 
 interface AdvancedSearchActionInternalState {
@@ -106,8 +107,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                             [
                                 <AdvancedSearchExpressionWizard
                                     ColumnList={this.props.Columns}
-                                    Blotter={this.props.AdaptableBlotter}
-                                    SelectedColumnId={this.state.SelectedColumnId} />,
+                                    UserFilters={this.props.UserFilters}
+                                    SelectedColumnId={this.state.SelectedColumnId}
+                                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                                 <AdvancedSearchSettingsWizard />
                             ]}
                             Data={this.state.EditedAdvancedSearch}
@@ -126,7 +128,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                         buttonClick={() => this.onEditAdvancedSearch()}>
                         <div style={previewDivStyle}>
                             <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
-                                Blotter={this.props.AdaptableBlotter}
+                                UserFilters={this.props.UserFilters}
                                 onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                                 SelectedColumnId={this.state.SelectedColumnId}
                                 ColumnsList={this.props.Columns}
@@ -235,7 +237,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns,
-        PopupParams: state.Popup.ActionConfigurationPopup.Params
+        PopupParams: state.Popup.ActionConfigurationPopup.Params,
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 

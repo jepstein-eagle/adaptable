@@ -2,18 +2,20 @@
 
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
-import { ExpressionMode } from '../../Core/Enums'
+import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IUserFilter } from '../../Core/Interface/IExpression'
 
 interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
-    Blotter: IAdaptableBlotter
+    UserFilters: Array<IUserFilter>
     SelectedColumnId: string
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
 }
@@ -31,17 +33,18 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             <Row>
                 <Col xs={9}>
                     <ExpressionBuilderConditionSelector ColumnsList={this.props.ColumnList}
-                        Blotter={this.props.Blotter}
+                        UserFilters={this.props.UserFilters}
                         Expression={this.state.Expression}
                         ExpressionMode={ (this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
                         onExpressionChange={(expression) => this.onChangeExpression(expression)}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                        SelectedColumnId={this.state.SelectedColumnId}>
+                        SelectedColumnId={this.state.SelectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
                     </ExpressionBuilderConditionSelector>
                 </Col>
                 <Col xs={3}>
                     <ExpressionBuilderPreview Expression={this.state.Expression}
-                        Blotter={this.props.Blotter}
+                        UserFilters={this.props.UserFilters}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                         SelectedColumnId={this.state.SelectedColumnId}
                         ColumnsList={this.props.ColumnList}

@@ -7,7 +7,7 @@ import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlott
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
-import { ColumnType } from '../../Core/Enums';
+import { ColumnType, DistinctCriteriaPairValue } from '../../Core/Enums';
 
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -24,7 +24,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
         this.state = {
-            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, "displayValue"),
+            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.displayValue),
             SelectedValues: this.props.Data.CustomSortItems,
             IsEdit: this.props.Data.CustomSortItems.length > 0
         }
@@ -39,9 +39,9 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
             SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
             HeaderSelected="Custom Sort Order"
-            DisplayMember="displayValue"
-            SortMember="rawValue"
-            ValueMember="displayValue"
+            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.displayValue]}
+            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.rawValue]}
+            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.displayValue]}
             onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
     }
     OnSelectedValuesChange(newValues: Array<string>) {

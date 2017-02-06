@@ -109,11 +109,6 @@ export interface AdvancedSearchState {
     CurrentAdvancedSearchId: string
 }
 
-
-export interface AlertState {
-    Alerts: Array<IAlert>;
-}
-
 export interface UserFilterState {
     UserFilters: Array<IUserFilter>;
 }

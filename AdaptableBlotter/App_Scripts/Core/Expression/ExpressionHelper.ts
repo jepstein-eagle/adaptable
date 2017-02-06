@@ -28,7 +28,7 @@ export module ExpressionHelper {
             predefinedExpressionInfo.ExpressionRange ? [predefinedExpressionInfo.ExpressionRange] : [])
     }
 
-    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, blotter: IAdaptableBlotter): string {
+    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, userFilters: IUserFilter[]): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
             return "Any";
@@ -60,7 +60,7 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(columnUserFilters.UserFilterUids, blotter), columnFriendlyName)
+                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids), columnFriendlyName)
             }
 
             // Column Ranges
@@ -80,7 +80,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], blotter: IAdaptableBlotter): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], userFilters: IUserFilter[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -108,14 +108,14 @@ export module ExpressionHelper {
             if (!isColumnSatisfied) {
                 let columnUserFilters = Expression.UserFilters.find(x => x.ColumnName == columnId)
                 if (columnUserFilters) {
-                    let userFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(columnUserFilters.UserFilterUids, blotter);
-                    for (let userFilter of userFilters) {
+                    let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids);
+                    for (let userFilter of filteredUserFilters) {
                         // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (userFilter.IsPredefined) {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);
                         } else {
-                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, blotter);
+                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, userFilters, blotter);
                         }
                         if (isColumnSatisfied) {
                             break;

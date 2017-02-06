@@ -1,4 +1,4 @@
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType} from '../Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
 import { IMenuItem, IStrategy } from './IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -25,7 +25,7 @@ export interface IAdaptableBlotter {
     setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
     CreateMenu(): void
     SetColumnIntoStore(): void
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }>
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
@@ -70,8 +70,8 @@ export interface IAdaptableBlotter {
     onMenuClicked(menuItem: IMenuItem): void
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
- 
- getQuickSearchRowIds( rowIds: string[]): string[] 
+
+    getQuickSearchRowIds(rowIds: string[]): string[]
 }
 
 export interface ISelectedCells {
@@ -87,4 +87,9 @@ export interface IColumn {
     FriendlyName: string
     ColumnType: ColumnType
     Visible: boolean
-}  
+}
+
+export interface IRawValueDisplayValuePair {
+    rawValue: any,
+    displayValue: string
+}

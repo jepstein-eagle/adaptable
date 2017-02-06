@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Col, Panel } from 'react-bootstrap';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { StringExtensions } from '../../Core/Extensions';
@@ -10,7 +10,6 @@ import { SelectionMode } from '../../Core/Enums';
 import { SingleListBox } from '../SingleListBox'
 
 interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Blotter: IAdaptableBlotter
     Columns: Array<IColumn>
 }
 interface CellValidationSettingsWizardState {

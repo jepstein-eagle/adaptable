@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression/Expression';
@@ -10,6 +10,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
+import { IUserFilter } from '../../Core/Interface/IExpression'
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -18,8 +19,8 @@ import { StringExtensions } from '../../Core/Extensions';
 // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
 
 interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
-    Blotter: IAdaptableBlotter
     Expression: Expression
+    UserFilters : IUserFilter[]
     onSelectedColumnChange: (ColumnName: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
@@ -65,7 +66,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnUserFilterExpressions = this.props.Expression.UserFilters.find(ne => ne.ColumnName == columnId)
             let columnUserFilterExpressionsListgroupItems: JSX.Element[]
             if (columnUserFilterExpressions) {
-                let userFilterExpressions = UserFilterHelper.GetUserFilters(columnUserFilterExpressions.UserFilterUids, this.props.Blotter);
+                let userFilterExpressions = UserFilterHelper.GetUserFilters(this.props.UserFilters, columnUserFilterExpressions.UserFilterUids);
                 if (userFilterExpressions) {
                     columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
                         return <ListGroupItem key={ne.Uid}>

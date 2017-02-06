@@ -1,16 +1,18 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
 interface PlusMinusExpressionWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     ColumnList: Array<IColumn>
-    Blotter: IAdaptableBlotter
+    UserFilters: IUserFilter[]
     SelectedColumnId: string
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
 }
 
 export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

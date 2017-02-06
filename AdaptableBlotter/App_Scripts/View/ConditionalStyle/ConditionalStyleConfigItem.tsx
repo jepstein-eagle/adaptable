@@ -5,16 +5,17 @@ import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl } from 'react-bootstrap';
 import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { ColorPicker } from '../ColorPicker';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 
 interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
-    Blotter: IAdaptableBlotter;
     Columns: IColumn[];
+    UserFilters: IUserFilter[]
     onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
@@ -51,7 +52,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     <ColorPicker value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
                 <Col xs={4}>
-                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.Blotter)}
+                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
                 </Col>
 
                 <Col md={2} >

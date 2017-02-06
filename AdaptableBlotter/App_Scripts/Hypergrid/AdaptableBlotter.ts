@@ -37,7 +37,7 @@ import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFi
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -120,7 +120,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let filterContext: IColumnFilterContext = {
                     Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                     Blotter: this,
-                    ColumnValueType : "displayValue"
+                    ColumnValueType: "displayValue"
                 };
                 this.filterContainer.style.visibility = 'visible'
                 this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
@@ -160,17 +160,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            if(config.isHeaderRow && config.isGridColumn)
-            {
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x=>x.ColumnId == config.columnName);
-                config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex>=0)];
+            if (config.isHeaderRow && config.isGridColumn) {
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.columnName);
+                config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0)];
             }
             if (config.isGridRow) {
                 //need to use untranslatedX or find the column using the index property
                 var x = config.x;
                 var y = config.normalizedY;
                 let row = this.grid.behavior.dataModel.dataSource.getRow(y)
-                let column = this.grid.behavior.getActiveColumns().find((col:any)=>col.index == x)
+                let column = this.grid.behavior.getActiveColumns().find((col: any) => col.index == x)
                 if (column && row) {
                     this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
                     // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
@@ -458,7 +457,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.repaint();
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<{ rawValue: any, displayValue: string }> {
         let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.grid.behavior.dataModel.getData()
@@ -466,10 +465,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
             let rawValue = element[columnId]
-            if (distinctCriteria == "rawValue") {
+            if (distinctCriteria == DistinctCriteriaPairValue.rawValue) {
                 returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayString });
             }
-            else if (distinctCriteria == "displayValue") {
+            else if (distinctCriteria == DistinctCriteriaPairValue.displayValue) {
                 returnMap.set(displayString, { rawValue: rawValue, displayValue: displayString });
             }
         }

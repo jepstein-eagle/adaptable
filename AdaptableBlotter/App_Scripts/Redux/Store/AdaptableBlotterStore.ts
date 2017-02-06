@@ -19,7 +19,6 @@ import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
-import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
@@ -49,7 +48,6 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-    Alert: AlertRedux.AlertReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,

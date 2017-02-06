@@ -9,12 +9,12 @@ import { StringExtensions } from '../Extensions'
 
 export module UserFilterHelper {
 
-    export function GetUserFilters(userFilterUids: string[], blotter: IAdaptableBlotter): IUserFilter[] {
-        return blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.filter(f => userFilterUids.find(uid => uid == f.Uid) != null)
+    export function GetUserFilters(UserFilters: IUserFilter[], userFilterUids: string[]): IUserFilter[] {
+        return UserFilters.filter(f => userFilterUids.find(uid => uid == f.Uid) != null)
     }
 
-    export function ShowUserFilterForColumn(expressionUid: string, column: IColumn, blotter: IAdaptableBlotter): boolean {
-        let userFilter: IUserFilter = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters.find(f => f.Uid == expressionUid);
+    export function ShowUserFilterForColumn(UserFilters: IUserFilter[], expressionUid: string, column: IColumn): boolean {
+        let userFilter: IUserFilter = UserFilters.find(f => f.Uid == expressionUid);
 
         // predefined expressions return if its right column type
         if (userFilter.IsPredefined) {

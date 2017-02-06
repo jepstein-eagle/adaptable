@@ -10,7 +10,6 @@ import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
-import { AlertConfig } from './Alert/AlertConfig'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import { ThemeConfig } from './Theme/ThemeConfig'
 import { CellValidationConfig } from './CellValidation/CellValidationConfig'
@@ -29,7 +28,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   PrintPreviewAction: PrintPreviewAction,
   QuickSearchAction: QuickSearchAction,
   AdvancedSearchAction: AdvancedSearchAction,
-  AlertConfig: AlertConfig,
   UserFilterConfig: UserFilterConfig,
   ThemeConfig: ThemeConfig,
   CellValidationConfig: CellValidationConfig,

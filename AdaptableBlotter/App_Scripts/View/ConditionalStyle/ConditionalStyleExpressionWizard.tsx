@@ -3,17 +3,19 @@
 import * as React from "react";
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
 interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     ColumnList: Array<IColumn>
-    Blotter: IAdaptableBlotter
+    UserFilters: IUserFilter[]
     SelectedColumnId: string
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
 }
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

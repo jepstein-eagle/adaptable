@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { SortOrder, ColumnType } from '../Core/Enums'
+import { SortOrder, ColumnType,DistinctCriteriaPairValue } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
@@ -16,7 +16,7 @@ interface ListBoxFilterFormProps extends ListGroupProps {
     UiSelectedUserFilters: Array<String>
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
-    ColumnValueType: "displayValue" | "rawValue"
+    ColumnValueType: DistinctCriteriaPairValue
 }
 
 interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
@@ -70,11 +70,11 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         let columnValuesItemsElements = this.props.ColumnValues.map((x, y) => {
             let isActive: boolean
             let value: any
-            if (this.props.ColumnValueType == "rawValue") {
+            if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
                 isActive = this.state.UiSelectedColumnValues.indexOf(x.rawValue) >= 0;
                 value = x.rawValue;
             }
-            else if (this.props.ColumnValueType == "displayValue") {
+            else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
                 isActive = this.state.UiSelectedColumnValues.indexOf(x.displayValue) >= 0;
                 value = x.displayValue;
             }
@@ -140,10 +140,10 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     onClickItemColumnValue(item: { rawValue: any, displayValue: string }) {
         let index: number
-        if (this.props.ColumnValueType == "rawValue") {
+        if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
             index = this.state.UiSelectedColumnValues.indexOf(item.rawValue);
         }
-        else if (this.props.ColumnValueType == "displayValue") {
+        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
             index = this.state.UiSelectedColumnValues.indexOf(item.displayValue);
         }
 
@@ -154,10 +154,10 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         }
         else {
             let newArray = [...this.state.UiSelectedColumnValues];
-            if (this.props.ColumnValueType == "rawValue") {
+            if (this.props.ColumnValueType == DistinctCriteriaPairValue.rawValue) {
                 newArray.push(item.rawValue)
             }
-            else if (this.props.ColumnValueType == "displayValue") {
+            else if (this.props.ColumnValueType == DistinctCriteriaPairValue.displayValue) {
                 newArray.push(item.displayValue)
             }
             this.setState({ UiSelectedColumnValues: newArray } as ListBoxFilterFormState, () => this.raiseOnChangeColumnValues())

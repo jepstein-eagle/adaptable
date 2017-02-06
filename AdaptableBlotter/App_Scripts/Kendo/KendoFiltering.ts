@@ -1,5 +1,5 @@
 import { IRangeExpression } from '../Core/Interface/IExpression';
-import { LeafExpressionOperator, ColumnType } from '../Core/Enums'
+import { LeafExpressionOperator, ColumnType, DistinctCriteriaPairValue } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
@@ -300,13 +300,13 @@ export module KendoFiltering {
         }
 
         // if numeric or date then get the underlying values
-        let columnValuePairs: Array<{ rawValue: any, displayValue: string }> = blotter.getColumnValueDisplayValuePairDistinctList(column.ColumnId, "rawValue");
+        let columnValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(column.ColumnId, DistinctCriteriaPairValue.rawValue);
         let rawValues: any[] = [];
         columnValuesExpression.ColumnValues.forEach(c => {
             let rawValue: any = columnValuePairs.find(cvp => cvp.displayValue == c).rawValue;
             rawValues.push(rawValue);
         })
-        
+
         return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], rawValues, [], [])
     }
 

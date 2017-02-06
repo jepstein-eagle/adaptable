@@ -2,7 +2,6 @@
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
 
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'

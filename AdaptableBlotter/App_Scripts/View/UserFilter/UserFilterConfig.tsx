@@ -16,7 +16,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import {  ExpressionMode } from '../../Core/Enums'
+import { ExpressionMode } from '../../Core/Enums'
 import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
@@ -62,7 +62,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                         {x.FriendlyName}
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.AdaptableBlotter)}
+                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)}
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
@@ -76,7 +76,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         return <PanelWithButton headerText="User Filters Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create User Filter"}
-            buttonClick={() => this.onCreateUserFilter()}  glyphicon={"filter"}>
+            buttonClick={() => this.onCreateUserFilter()} glyphicon={"filter"}>
             {UserFilterItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -87,19 +87,20 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             }
 
             {UserFilterItems.length == 0 &&
-                <Well bsSize="small">Click 'Create User Filter' to start creating user filters.<p/>
-                User filters are accessible when filtering columns or creating an expression (e.g. Advanced Search, Plus / Minus, Conditional Style etc).</Well>
+                <Well bsSize="small">Click 'Create User Filter' to start creating user filters.<p />
+                    User filters are accessible when filtering columns or creating an expression (e.g. Advanced Search, Plus / Minus, Conditional Style etc).</Well>
             }
 
             {this.state.EditedUserFilter != null &&
                 <AdaptableWizard Steps={[
                     <UserFilterExpressionWizard
-                        Blotter={this.props.AdaptableBlotter}
+                        UserFilters={this.props.UserFilters}
                         ColumnList={this.props.Columns}
                         ExpressionMode={ExpressionMode.SingleColumn}
-                        SelectedColumnId={selectedColumnId} />,
+                        SelectedColumnId={selectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                     <UserFilterSettingsWizard
-                        Blotter={this.props.AdaptableBlotter}
+                        UserFilters={this.props.UserFilters}
                         Columns={this.props.Columns} />,
                 ]}
                     Data={this.state.EditedUserFilter}
@@ -138,7 +139,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         UserFilters: state.UserFilter.UserFilters,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
     };
 }
 

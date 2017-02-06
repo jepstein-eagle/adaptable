@@ -1,15 +1,17 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
-
+import { IUserFilter } from '../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
 interface AdvancedSearchExpressionWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     ColumnList: Array<IColumn>
-    Blotter: IAdaptableBlotter
+    UserFilters: IUserFilter[]
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     SelectedColumnId: string
 }
 

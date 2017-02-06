@@ -33,7 +33,6 @@ import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
 import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
-import { AlertStrategy } from '../Strategy/AlertStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
@@ -41,8 +40,8 @@ import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction, DistinctCriteriaPairValue } from '../Core/Enums'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
@@ -92,7 +91,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
@@ -138,11 +136,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
                     })
                     let confirmation: IUIConfirmation = {
-                        CancelText:"Cancel",
+                        CancelText: "Cancel",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId,(e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
@@ -487,15 +485,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.setDataSource(this.grid.dataSource);
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: "rawValue" | "displayValue"): Array<{ rawValue: any, displayValue: string }> {
-        let returnMap = new Map<string, { rawValue: any, displayValue: string }>();
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
         this.grid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)
             let rawValue = row[columnId]
-            if (distinctCriteria == "rawValue") {
+            if (distinctCriteria == DistinctCriteriaPairValue.rawValue) {
                 returnMap.set(rawValue, { rawValue: rawValue, displayValue: displayValue });
             }
-            else if (distinctCriteria == "displayValue") {
+            else if (distinctCriteria == DistinctCriteriaPairValue.displayValue) {
                 returnMap.set(displayValue, { rawValue: rawValue, displayValue: displayValue });
             }
 

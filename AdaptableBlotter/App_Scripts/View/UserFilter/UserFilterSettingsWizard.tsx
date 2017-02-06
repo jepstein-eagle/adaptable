@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Form, Col, Panel } from 'react-bootstrap';
-import { IColumn, IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
@@ -11,7 +11,7 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 
 
 interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    Blotter: IAdaptableBlotter,
+    UserFilters: IUserFilter[]
     Columns: Array<IColumn>
 }
 interface UserFilterSettingsWizardState {
@@ -58,7 +58,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     public Next(): void {
         this.props.Data.FriendlyName = this.state.FilterName
         this.props.Data.ColumnType = UserFilterHelper.GetColumnTypeForUserFilter(this.props.Data, this.props.Columns)
-        this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.Blotter)
+        this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }
     public Back(): void { }
     public StepName = "User Filter Settings"
