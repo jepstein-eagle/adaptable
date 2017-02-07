@@ -31,7 +31,7 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
-    onWindowClose: () => PopupRedux.HidePopupAction,
+    onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction,
 }
 
 class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}> {
@@ -79,7 +79,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                                 <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
                                     <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Sum)}>{SmartEditOperation[SmartEditOperation.Sum]}</MenuItem>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Ratio)}>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
-                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute)}>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
+                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute)}>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
                                 </DropdownButton>
                                 <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
@@ -113,9 +113,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     }
 
     private onApplySmartEdit(): void {
-        let smartEditStrategy: ISmartEditStrategy = this.props.getStrategy(StrategyIds.SmartEditStrategyId) as ISmartEditStrategy;
-        smartEditStrategy.ApplySmartEdit();
-        this.props.onWindowClose();
+        this.props.onApplySmartEdit()
     }
 }
 
@@ -125,7 +123,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
         Preview: state.SmartEdit.Preview,
         Columns: state.Grid.Columns,
-        UserFilters : state.UserFilter.UserFilters
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 
@@ -135,7 +133,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
         fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
-        onWindowClose: () => dispatch(PopupRedux.HidePopup())
+        onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit()),
     };
 }
 

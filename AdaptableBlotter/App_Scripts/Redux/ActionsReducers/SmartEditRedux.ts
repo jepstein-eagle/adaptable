@@ -3,12 +3,14 @@ import { SmartEditState } from './Interface/IState';
 import { ISmartEditStrategy, ISmartEditPreview } from '../../Core/Interface/ISmartEditStrategy';
 import { SmartEditOperation } from '../../Core/Enums';
 
-
+export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_SETVALUE = 'SMARTEDIT_SETVALUE';
 export const SMARTEDIT_SETOPERATION = 'SMARTEDIT_SETOPERATION';
 export const SMARTEDIT_FETCHPREVIEW = 'SMARTEDIT_FETCHPREVIEW';
 export const SMARTEDIT_SETPREVIEW = 'SMARTEDIT_SETPREVIEW';
 
+export interface ApplySmarteditAction extends Redux.Action {
+}
 
 export interface SmartEditSetValueAction extends Redux.Action {
     value: string
@@ -25,6 +27,9 @@ export interface SmartEditSetPreviewAction extends Redux.Action {
     Preview: ISmartEditPreview
 }
 
+export const ApplySmartedit = (): ApplySmarteditAction => ({
+    type: SMARTEDIT_APPLY
+})
 
 export const SmartEditSetValue = (value: string): SmartEditSetValueAction => ({
     type: SMARTEDIT_SETVALUE,
@@ -53,6 +58,9 @@ const initialSmartEditState: SmartEditState = {
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
     switch (action.type) {
+        case SMARTEDIT_APPLY:
+            //we apply logic in the middleware since it's an API call
+            return Object.assign({}, state, { Preview: null })
         case SMARTEDIT_SETVALUE:
             return Object.assign({}, state, { SmartEditValue: (<SmartEditSetValueAction>action).value })
         case SMARTEDIT_SETOPERATION:

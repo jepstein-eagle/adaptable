@@ -201,6 +201,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return returnAction;
                 }
+
+                case SmartEditRedux.SMARTEDIT_APPLY: {
+                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
+                    SmartEditStrategy.ApplySmartEdit();
+                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    return next(action);
+                }
                 case ExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     ExportStrategy.ExportBlotter();
