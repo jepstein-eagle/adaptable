@@ -16,7 +16,7 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithButton } from '../PanelWithButton';
-
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
@@ -30,16 +30,14 @@ interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComp
 }
 
 interface ShortcutConfigInternalState {
-    isEditing: boolean;
+    EditedShortcut: IShortcut;
     WizardStartIndex: number
 }
 
 class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, ShortcutConfigInternalState> {
-
-    testColumnTypes: Array<ColumnType>;
     constructor() {
         super();
-        this.state = { isEditing: false, WizardStartIndex: 0 }
+        this.state = { EditedShortcut: null, WizardStartIndex: 0 }
     }
 
     render() {
@@ -82,43 +80,40 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                 {dateShortcuts}
             </ListGroup>
 
-            {this.state.isEditing ?
+            {this.state.EditedShortcut ?
                 <AdaptableWizard Steps={
                     [
-                        <ShortcutSettingsWizard DateKeysAvailable={this._editedShortcut.ShortcutKey ?
-                            keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
+                        <ShortcutSettingsWizard DateKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                            keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
                             : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
-                            NumericKeysAvailable={this._editedShortcut.ShortcutKey ?
-                                keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this._editedShortcut.ShortcutKey).sort()
+                            NumericKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                                keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
                                 : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
 
                     ]}
-                    Data={this._editedShortcut}
+                    Data={this.state.EditedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard> : null}
         </PanelWithButton>
     }
 
-    private _editedShortcut: IShortcut;
-
     closeWizard() {
-        this.setState({ isEditing: false, WizardStartIndex: 0 });
+        this.setState({ EditedShortcut: null, WizardStartIndex: 0 });
     }
     WizardFinish() {
-        if (this._editedShortcut.ColumnType == ColumnType.Number) {
-            this.props.onAddShortcut(this._editedShortcut)
+        if (this.state.EditedShortcut.ColumnType == ColumnType.Number) {
+            this.props.onAddShortcut(this.state.EditedShortcut)
         }
-        else if (this._editedShortcut.ColumnType == ColumnType.Date) {
-            this.props.onAddShortcut(this._editedShortcut)
+        else if (this.state.EditedShortcut.ColumnType == ColumnType.Date) {
+            this.props.onAddShortcut(this.state.EditedShortcut)
         }
 
-        this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedShortcut = null; });
+        this.setState({ EditedShortcut: null, WizardStartIndex: 0 });
     }
 
     CreateShortcut() {
-        this._editedShortcut = { ShortcutKey: null, ShortcutResult: null, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: false, IsDynamic: false };
-        this.setState({ isEditing: true, WizardStartIndex: 0 });
+        this.setState({ EditedShortcut: ObjectFactory.CreateEmptyShortcut(), WizardStartIndex: 0 });
     }
 }
 

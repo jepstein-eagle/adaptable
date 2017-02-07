@@ -2,10 +2,11 @@ import { Helper } from './Helper';
 import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
-import { CellValidationAction, LeafExpressionOperator, ColumnType } from '../Core/Enums';
+import { CellValidationAction, LeafExpressionOperator, ColumnType, ShortcutAction } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
+import { IShortcut } from './Interface/IShortcutStrategy';
 
 export module ObjectFactory {
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
@@ -56,6 +57,18 @@ export module ObjectFactory {
             { Name: "3/4 Second", Duration: 250 },
             { Name: "1 Second", Duration: 1000 },
         ]
+    }
+
+    export function CreateEmptyShortcut(): IShortcut {
+        return {
+            ShortcutKey: null,
+            ShortcutResult: null,
+            ColumnType: ColumnType.Number,
+            ShortcutAction: ShortcutAction.Multiply,
+            IsLive: true,
+            IsPredefined: false,
+            IsDynamic: false
+        }
     }
 }
 
