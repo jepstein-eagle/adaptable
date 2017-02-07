@@ -26,6 +26,7 @@ interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<
 }
 
 interface ExpressionBuilderConditionSelectorState {
+    IsFirstTime: boolean
     ColumnValues: Array<any>
     SelectedColumnValues: Array<any>
     UserFilterExpresions: Array<string>
@@ -37,14 +38,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     constructor(props: ExpressionBuilderConditionSelectorProps) {
         super(props);
         this.state = this.buildState(this.props)
-        this.firstTime = true;
+
     }
 
     componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
         this.setState(this.buildState(nextProps))
     }
-
-    private firstTime: boolean;
 
     private buildState(theProps: ExpressionBuilderConditionSelectorProps): ExpressionBuilderConditionSelectorState {
         if (theProps.SelectedColumnId == "select") {
@@ -54,6 +53,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 UserFilterExpresions: [],
                 SelectedUserFilterExpresions: [],
                 SelectedColumnRanges: [],
+                IsFirstTime: theProps.SelectedColumnId == "select"
+                && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
+                && (this.state ? this.state.IsFirstTime : true)
             };
         }
         else {
@@ -93,6 +95,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 UserFilterExpresions: this.props.UserFilters.map(f => f.Uid),
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
+                IsFirstTime: theProps.SelectedColumnId == "select"
+                && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
+                && (this.state ? this.state.IsFirstTime : true)
             };
         }
     }
@@ -108,19 +113,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
         let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn));
 
-        if (this.firstTime) {// check it again
-            this.firstTime = this.props.SelectedColumnId == "select" && ExpressionHelper.IsExpressionEmpty(this.props.Expression);
-        }
-
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
-        let addConditionButtonDisabled: boolean = !this.firstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
+        let addConditionButtonDisabled: boolean = !this.state.IsFirstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
             buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
             <Form horizontal>
-                {this.firstTime ?
+                {this.state.IsFirstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
@@ -183,8 +184,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     onSelectedColumnChanged() {
-        this.firstTime = false;
-        this.props.onSelectedColumnChange("select")
+        this.setState({ IsFirstTime: false } as ExpressionBuilderConditionSelectorState, () => this.props.onSelectedColumnChange("select"))
     }
 
     onSelectedColumnRangesChange(selectedRanges: Array<IRangeExpression>) {
