@@ -114,7 +114,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     private onApplySmartEdit(): void {
         let smartEditStrategy: ISmartEditStrategy = this.props.getStrategy(StrategyIds.SmartEditStrategyId) as ISmartEditStrategy;
-        smartEditStrategy.ApplySmartEdit(this.props.Preview);
+        smartEditStrategy.ApplySmartEdit();
         this.props.onWindowClose();
     }
 }

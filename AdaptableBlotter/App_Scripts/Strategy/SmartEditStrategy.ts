@@ -19,11 +19,12 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
     }
 
-    public ApplySmartEdit(smartEditPreview: ISmartEditPreview): void {
+    public ApplySmartEdit(): void {
+        let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
         let newValues: { id: any, columnId: string, value: any }[] = [];
 
-        smartEditPreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-            newValues.push({ id: pr.Id, columnId: smartEditPreview.ColumnId, value: pr.ComputedValue })
+        thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
+            newValues.push({ id: pr.Id, columnId: thePreview.ColumnId, value: pr.ComputedValue })
         })
 
         this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,

@@ -17,7 +17,7 @@ export interface ISmartEditPreviewResult {
 
 export interface ISmartEditStrategy extends IStrategy {
     BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
-    ApplySmartEdit(preview: ISmartEditPreview): void;
+    ApplySmartEdit(): void;
 }
 
 export interface ISmartEditPreviewReturn extends IStrategyActionReturn<ISmartEditPreview> {
