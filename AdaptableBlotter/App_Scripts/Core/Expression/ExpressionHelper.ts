@@ -307,17 +307,14 @@ export module ExpressionHelper {
     }
 
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
-        let returnVal: boolean = (
-
-            this.IsSatisfied(
-                Expression,
-                blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
-                blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
-                columns,
-                blotter
-            ))
-
-        return returnVal;
+        return IsSatisfied(
+            Expression,
+            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
+            blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
+            columns,
+            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter
+        );
     }
 
 
