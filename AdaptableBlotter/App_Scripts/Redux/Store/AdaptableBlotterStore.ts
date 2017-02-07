@@ -170,7 +170,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     return next(action);
                 }
                 case PopupRedux.CANCEL_CONFIRMATIONPOPUP: {
-                    let cancelAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
+                    let cancelAction = middlewareAPI.getState().Popup.ConfirmationPopup.CancelAction
                     if (cancelAction) {
                         middlewareAPI.dispatch(cancelAction);
                     }
@@ -204,7 +204,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    SmartEditStrategy.ApplySmartEdit();
+                    SmartEditStrategy.ApplySmartEdit((<SmartEditRedux.ApplySmarteditAction>action).bypassCellValidationWarnings);
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }

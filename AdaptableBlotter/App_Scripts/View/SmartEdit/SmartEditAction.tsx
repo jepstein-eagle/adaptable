@@ -8,7 +8,7 @@ import { FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, Men
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { SmartEditOperation } from '../../Core/Enums'
+import { SmartEditOperation, CellValidationAction } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Core/Interface/ISmartEditStrategy'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
@@ -20,18 +20,19 @@ import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-
+import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 
 interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
-    SmartEditValue: string,
-    SmartEditOperation: SmartEditOperation,
-    Preview: ISmartEditPreview,
-    Columns: IColumn[],
-    UserFilters: IUserFilter[]
+    SmartEditValue: string;
+    SmartEditOperation: SmartEditOperation;
+    Preview: ISmartEditPreview;
+    Columns: IColumn[];
+    UserFilters: IUserFilter[];
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
-    onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction,
+    onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
+    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ConfirmationPopupAction;
 }
 
 class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}> {
@@ -48,16 +49,20 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     render() {
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
-
+        let globalHasValidationPrevent = false
+        let globalHasValidationWarning = false
         if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
+                globalHasValidationPrevent = globalHasValidationPrevent || previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Prevent).length > 0
+                globalHasValidationWarning = globalHasValidationWarning || previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Warning).length > 0
+
                 return <tr key={previewResult.Id}>
                     <td>{previewResult.InitialValue}</td>
                     <td>{previewResult.ComputedValue}</td>
                     {hasValidationErrors ?
                         <td>
-                            <ErrorPopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules[0])} />
+                            <ErrorPopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} />
                         </td>
                         : <td> <Glyphicon glyph="ok" /> </td>}
                 </tr>
@@ -69,6 +74,16 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                     <th>Valid Edit</th>
                 </tr>
             </thead>;
+        }
+        let globalValidationMessage: string
+        if (globalHasValidationPrevent && globalHasValidationWarning) {
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). You will be asked to confirm update for the Cell Validation Warning. Cell Validation Prevent update will be ignored"
+        }
+        else if (globalHasValidationWarning) {
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). You will be asked to confirm update";
+        }
+        else if (globalHasValidationPrevent) {
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). Cell Validation Prevent update will be ignored";
         }
         return (
             <div >
@@ -85,7 +100,12 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle="info" disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue)} onClick={() => this.onApplySmartEdit()} >Apply to Grid</Button>
+                        <Button bsStyle={(globalHasValidationPrevent || globalHasValidationWarning) ? "warning" : "info"}
+                            disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue)}
+                            onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
+                        {' '}
+                        {(globalHasValidationPrevent || globalHasValidationWarning) &&
+                            <ErrorPopover headerText={"Validation Error"} bodyText={globalValidationMessage} />}
                     </Form>
                 </PanelWithImage>
                 <Panel header={previewHeader} bsStyle="success" style={divStyle}>
@@ -105,15 +125,31 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         this.props.onSmartEditValueChange(e.value);
     }
 
-    private getValidationErrorMessage(CellValidation: ICellValidationRule): string {
-        let expressionDescription: string = (CellValidation.HasExpression) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
-            "";
-        return (CellValidation.Description + expressionDescription);
+    private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
+        let returnString: string[] = []
+        for (let CellValidation of CellValidations) {
+            let expressionDescription: string = (CellValidation.HasExpression) ?
+                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
+                "";
+            returnString.push(CellValidation.Description + expressionDescription)
+        }
+
+        return returnString.join("\n");
     }
 
     private onApplySmartEdit(): void {
         this.props.onApplySmartEdit()
+    }
+
+    private onConfirmWarningCellValidation() {
+        let confirmation: IUIConfirmation = {
+            CancelText: "No",
+            ConfirmationMsg: "When applying new values, do you want to bypass the Warning Cell Validation? If no those records will be ignored.",
+            ConfirmationText: "Bypass Rules",
+            CancelAction: SmartEditRedux.ApplySmartedit(false),
+            ConfirmAction: SmartEditRedux.ApplySmartedit(true)
+        }
+        this.props.onConfirmWarningCellValidation(confirmation)
     }
 }
 
@@ -127,13 +163,13 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
         fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
-        onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit()),
+        onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
+        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ConfirmationPopup(confirmation)),
     };
 }
 

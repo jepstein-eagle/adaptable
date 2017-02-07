@@ -2,7 +2,7 @@ import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
-import { SmartEditOperation, ColumnType } from '../Core/Enums'
+import { SmartEditOperation, ColumnType, CellValidationAction } from '../Core/Enums'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
@@ -19,13 +19,21 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
     }
 
-    public ApplySmartEdit(): void {
+    public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
         let newValues: { id: any, columnId: string, value: any }[] = [];
-
-        thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-            newValues.push({ id: pr.Id, columnId: thePreview.ColumnId, value: pr.ComputedValue })
-        })
+        if (bypassCellValidationWarnings) {
+            for (let previewResult of thePreview.PreviewResults) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationAction == CellValidationAction.Prevent).length == 0) {
+                    newValues.push({ id: previewResult.Id, columnId: thePreview.ColumnId, value: previewResult.ComputedValue })
+                }
+            }
+        }
+        else {
+            thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
+                newValues.push({ id: pr.Id, columnId: thePreview.ColumnId, value: pr.ComputedValue })
+            })
+        }
 
         this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
             "ApplySmartEdit",

@@ -10,6 +10,7 @@ export const SMARTEDIT_FETCHPREVIEW = 'SMARTEDIT_FETCHPREVIEW';
 export const SMARTEDIT_SETPREVIEW = 'SMARTEDIT_SETPREVIEW';
 
 export interface ApplySmarteditAction extends Redux.Action {
+    bypassCellValidationWarnings: boolean
 }
 
 export interface SmartEditSetValueAction extends Redux.Action {
@@ -27,8 +28,9 @@ export interface SmartEditSetPreviewAction extends Redux.Action {
     Preview: ISmartEditPreview
 }
 
-export const ApplySmartedit = (): ApplySmarteditAction => ({
-    type: SMARTEDIT_APPLY
+export const ApplySmartedit = (bypassCellValidationWarnings: boolean): ApplySmarteditAction => ({
+    type: SMARTEDIT_APPLY,
+    bypassCellValidationWarnings
 })
 
 export const SmartEditSetValue = (value: string): SmartEditSetValueAction => ({
