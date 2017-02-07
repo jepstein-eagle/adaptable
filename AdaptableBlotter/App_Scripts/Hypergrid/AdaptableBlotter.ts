@@ -208,7 +208,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return icon;
         }
 
-
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             if (config.isHeaderRow && config.isGridColumn) {
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.columnName);
@@ -489,7 +488,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-        return false;
+        //TODO : implement the logic when the editor is looked up at runtime when overriding getCellEditorAt
+        let colprop = this.grid.behavior.getColumnProperties(this.getColumnIndex(columnId))
+        if (colprop.editor) {
+            return false;
+        }
+        else {
+            return true
+        }
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
