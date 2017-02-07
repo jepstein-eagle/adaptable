@@ -86,7 +86,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let dataChangedEvent: IDataChangedEvent = {
                     OldValue: Number(columnValuePair.value),
-                    NewValue: newValue,
+                    NewValue: newValue.toFixed(12),
                     ColumnId: columnValuePair.columnID,
                     IdentifierValue: pair[0],
                     Timestamp: Date.now(),
