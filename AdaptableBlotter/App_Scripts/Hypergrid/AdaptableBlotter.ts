@@ -5,9 +5,10 @@ import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -32,18 +33,21 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationAction } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -89,6 +93,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -129,9 +134,54 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
 
+        grid.addEventListener("fin-before-cell-edit", (event: any) => {
+            let dataChangedEvent: IDataChangingEvent
+            //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
+            //so we use our methods....
+            var visibleRow = grid.renderer.visibleRows[event.detail.gridCell.y];
+            let row = this.grid.behavior.dataModel.getRow(visibleRow.rowIndex)
+            dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) }
+
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length > 0) { // we have at least one failure or warning
+                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+
+                // first see if its an error = should only be one item in array if so
+                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                    let errorMessage: string = cellValidationStrategy.CreateCellValidationMessage(failedRules[0]);
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+                    event.preventDefault();
+                } else {
+                    let warningMessage: string = "";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
+                    })
+                    let confirmation: IUIConfirmation = {
+                        CancelText: "Cancel",
+                        ConfirmationMsg: warningMessage,
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    event.preventDefault();
+                }
+            }
+            //no failed validation so we raise the edit auditlog
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                    dataChangedEvent.ColumnId,
+                    (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+            }
+        });
+
+        //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
             this.grid.behavior.reindex();
-            throw 'reminder';
         });
 
         //                 grid.addEventListener("fin-context-menu", (e: any) => {
