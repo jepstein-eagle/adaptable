@@ -9,6 +9,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortConfigItem } from './CustomSortConfigItem'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
@@ -26,14 +27,14 @@ interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfig
 }
 
 interface CustomSortConfigInternalState {
-    isEditing: boolean
+    EditedCustomSort: ICustomSort
     WizardStartIndex: number
 }
 
 class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, CustomSortConfigInternalState> {
     constructor() {
         super();
-        this.state = { isEditing: false, WizardStartIndex: 0 }
+        this.state = { EditedCustomSort: null, WizardStartIndex: 0 }
 
     }
     render() {
@@ -60,48 +61,40 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             <ListGroup style={divStyle}>
                 {customSorts}
             </ListGroup>
-            {this.state.isEditing &&
+            {this.state.EditedCustomSort &&
                 <AdaptableWizard Steps={[<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
                 <CustomSortValuesWizard Columns={this.props.Columns} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-                    Data={this._editedCustomSort}
+                    Data={this.state.EditedCustomSort}
                     StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>
             }
         </PanelWithButton>
     }
-    private _columnValues: any[];
-    private _editedCustomSort: ICustomSort;
     private wizardSteps: JSX.Element[]
 
     closeWizard() {
-        this.setState({ isEditing: false, WizardStartIndex: 0 });
+        this.setState({ EditedCustomSort: null, WizardStartIndex: 0 });
     }
     WizardFinish() {
-        if (this.props.CustomSorts.find(x => x.ColumnId == this._editedCustomSort.ColumnId)) {
-            this.props.onEditCustomSort(this._editedCustomSort)
+        if (this.props.CustomSorts.find(x => x.ColumnId == this.state.EditedCustomSort.ColumnId)) {
+            this.props.onEditCustomSort(this.state.EditedCustomSort)
         }
         else {
-            this.props.onAddCustomSort(this._editedCustomSort)
+            this.props.onAddCustomSort(this.state.EditedCustomSort)
         }
 
 
-        this.setState({ isEditing: false, WizardStartIndex: 0 }, () => { this._editedCustomSort = null; this._columnValues = []; });
+        this.setState({ EditedCustomSort: null, WizardStartIndex: 0 });
     }
 
     private onEditCustomSort(customSort: ICustomSort) {
-        this._editedCustomSort = customSort;
-        this.setState({ isEditing: true, WizardStartIndex: 1 });
+        //so we dont mutate original object
+        this.setState({ EditedCustomSort: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
 
     CreateCustomSort() {
-        this._editedCustomSort = { ColumnId: "", CustomSortItems: [] };
-        this.setState({ isEditing: true, WizardStartIndex: 0 });
-    }
-
-    onCustomSortChange(selectedValues: Array<string>) {
-        this._editedCustomSort.CustomSortItems = selectedValues;
-        //we don't update store at this time since it will update the sort in the grid and it takes a bit of time as we need to reinint the fucking grid......
+        this.setState({ EditedCustomSort: { ColumnId: "", CustomSortItems: [] }, WizardStartIndex: 0 });
     }
 }
 
