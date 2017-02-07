@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as Redux from "redux";
-import { Button, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
+import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
 
 
@@ -28,13 +28,9 @@ export class ErrorPopover extends React.Component<ErrorPopoverProps, {}> {
             </Popover>);
 
         return <OverlayTrigger trigger="hover" rootClose placement="bottom" overlay={popoverClickRootClose}>
-            <Button style={buttonNoMarginStyle} bsStyle="danger" bsSize="xsmall">
+            <Label bsStyle="danger">
                 <Glyphicon glyph="exclamation-sign" />
-            </Button>
+            </Label>
         </OverlayTrigger>
     }
-}
-
-let buttonNoMarginStyle = {
-    margin: '0px',
 }
