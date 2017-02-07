@@ -59,17 +59,4 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
-
-    public GetFlashingCellDurations(): IFlashingCellDuration[] {
-        return [
-            { Name: "1/4 Second", Duration: 250 },
-            { Name: "1/2 Second", Duration: 500 },
-            { Name: "3/4 Second", Duration: 250 },
-            { Name: "1 Second", Duration: 1000 },
-        ]
-    }
-
-    public CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
-        return { IsLive: false, ColumnName: column.ColumnId, FlashingCellDuration: this.GetFlashingCellDurations().find(f => f.Name == "1/2 Second"), UpBackColor: '#008000', DownBackColor: '#FF0000' };
-    }
 }

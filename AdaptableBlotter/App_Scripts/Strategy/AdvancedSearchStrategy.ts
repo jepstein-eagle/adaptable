@@ -39,14 +39,6 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         }
     }
 
-    public CreateEmptyAdvancedSearch(): IAdvancedSearch {
-        return {
-            Uid: Helper.generateUid(),
-            Name: "",
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-        }
-    }
-
     private GetAdvancedSearchState(): AdvancedSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }

@@ -45,23 +45,6 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
         }
     }
 
-    public CreateEmptyUserFilter(): IUserFilter {
-
-        let userFilter: IUserFilter = {
-            Uid: Helper.generateUid(),
-            FriendlyName: "",
-            Description: "",
-            ColumnType: ColumnType.String,
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (value: any): boolean => {
-                return null;
-            },
-            IsPredefined: false
-        };
-
-        return userFilter;
-    }
-
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }

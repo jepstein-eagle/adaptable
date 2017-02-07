@@ -14,7 +14,7 @@ import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithImage } from '../PanelWithImage';
 import { Helper } from '../../Core/Helper'
-
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -30,9 +30,7 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
-        let flashingCelllStrategy = this.props.getStrategy(StrategyIds.FlashingCellsStrategyId) as IFlashingCellsStrategy;
-
-        let flashingCellDurations: IFlashingCellDuration[] = flashingCelllStrategy.GetFlashingCellDurations();
+        let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
 
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
@@ -49,8 +47,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         });
 
         numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc => {
-            let flashingColumn: IFlashingColumn = flashingCelllStrategy.CreateDefaultFlashingColumn(nc);
-            allPotentialFlashingColumns.push(flashingColumn);
+            allPotentialFlashingColumns.push(ObjectFactory.CreateDefaultFlashingColumn(nc));
         })
 
         let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {

@@ -6,7 +6,6 @@ import { IColumn } from '../Interface/IAdaptableBlotter';
 
 
 export interface ICellValidationStrategy extends IStrategy {
-        CreateEmptyCellValidation(): ICellValidationRule
         CreateCellValidationMessage(cellValidationRule: ICellValidationRule): string 
 }
 

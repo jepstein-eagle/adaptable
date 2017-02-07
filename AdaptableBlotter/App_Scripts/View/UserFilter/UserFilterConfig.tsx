@@ -22,7 +22,7 @@ import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../PanelWithRow';
-
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
@@ -111,9 +111,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
     }
 
     onCreateUserFilter() {
-        let userFilterStrategy: IUserFilterStrategy = this.props.getStrategy(StrategyIds.UserFilterStrategyId) as IUserFilterStrategy;
-        let emptyFilter: IUserFilter = userFilterStrategy.CreateEmptyUserFilter();
-        this.setState({ EditedUserFilter: emptyFilter });
+        this.setState({ EditedUserFilter: ObjectFactory.CreateEmptyUserFilter() });
     }
 
     onEditUserFilter(userFilter: IUserFilter) {

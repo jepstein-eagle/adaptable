@@ -16,8 +16,6 @@ export interface IFlashingCellDuration {
 }
 
 export interface IFlashingCellsStrategy extends IStrategy {
-    GetFlashingCellDurations(): IFlashingCellDuration[];
-    CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn ;
 }
 
 

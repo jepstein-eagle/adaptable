@@ -6,6 +6,5 @@ import { IStrategy } from '../../Core/Interface/IStrategy';
 
 export interface IStrategyViewPopupProps<View> extends React.ClassAttributes<View> {
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    getStrategy: (strategyId: string) => IStrategy
     isGridPageable: () => boolean
 }

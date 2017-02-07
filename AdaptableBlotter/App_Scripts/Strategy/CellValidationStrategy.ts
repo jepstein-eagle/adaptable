@@ -28,28 +28,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
             "";
         return (intro + "\nColumn: '" + columnFriendlyName + "'\nCell Validation Rule: " + CellValidation.Description + expressionDescription);
     }
-
-    public CreateEmptyCellValidation(): ICellValidationRule {
-        let newCellValidation: ICellValidationRule = {
-            CellValidationAction: CellValidationAction.Prevent,
-            ColumnId:"",
-            RangeExpression: this.createEmptyRangeExpression(),
-            HasExpression: false,
-            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
-            Description: ""
-        }
-        return newCellValidation;
-    }
-
-    private createEmptyRangeExpression(): IRangeExpression {
-        let newRangeExpression: IRangeExpression = {
-            Operator: LeafExpressionOperator.None,
-            Operand1: "",
-            Operand2: ""
-        }
-        return newRangeExpression;
-    }
-
+    
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }

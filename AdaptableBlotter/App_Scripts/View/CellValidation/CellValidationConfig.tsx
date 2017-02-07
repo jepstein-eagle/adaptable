@@ -24,7 +24,7 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
-
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];
@@ -117,8 +117,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
 
     createCellValidation() {
-        let CellValidationStrategy: ICellValidationStrategy = this.props.getStrategy(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-        this.setState({ EditedCellValidation: CellValidationStrategy.CreateEmptyCellValidation(), EditedIndexCellValidation: -1 });
+        this.setState({ EditedCellValidation: ObjectFactory.CreateEmptyCellValidation(), EditedIndexCellValidation: -1 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {

@@ -17,6 +17,7 @@ import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper } from '../../Core/Helper';
+import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
@@ -148,9 +149,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
-        let advancedSearchStrategy: any = this.props.getStrategy(StrategyIds.AdvancedSearchStrategyId);
-        let _newAdvancedSearch: IAdvancedSearch = advancedSearchStrategy.CreateEmptyAdvancedSearch();
-        this.setState({ EditedAdvancedSearch: _newAdvancedSearch, SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: ObjectFactory.CreateEmptyAdvancedSearch(), SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
     }
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show
