@@ -29,7 +29,7 @@ export class AuditService implements IAuditService {
         this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
-     //       this.TempDoBidOfferStuffForVideos(dataChangedEvent);
+            //       this.TempDoBidOfferStuffForVideos(dataChangedEvent);
         }
     }
 
@@ -51,8 +51,8 @@ export class AuditService implements IAuditService {
             let newValues: { id: any, columnId: string, value: any }[] = [];
             newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bid", value: bid });
             newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "ask", value: ask })
-        //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergAsk", value: bloombergAsk })
-        //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergBid", value: bloombergBid })
+            //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergAsk", value: bloombergAsk })
+            //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergBid", value: bloombergBid })
             this.blotter.setValueBatch(newValues);
         }
     }
@@ -113,44 +113,36 @@ export class AuditService implements IAuditService {
 
             // first check the rules which have expressions
             let expressionRules: ICellValidationRule[] = editingRules.filter(r => r.HasExpression);
-            let checkNoExpressionRules: boolean = true;
 
             if (expressionRules.length > 0) {
-                checkNoExpressionRules = false;
 
                 // loop through all rules with an expression (checking the prevent rules first)
                 // if the expression is satisfied check if validation rule passes; if it fails then return immediately (if its prevent) or put the rule in return array (if its warning).
                 // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
                 for (let expressionRule of expressionRules) {
                     let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRule.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
-                    if (!isSatisfiedExpression) {
-                        checkNoExpressionRules = true;
-                    } else {
-                        if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
-                            // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
-                            if (expressionRule.CellValidationAction == CellValidationAction.Prevent) {
-                                return [expressionRule];
-                            } else {
-                                failedWarningRules.push(expressionRule);
-                            }
+                    if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
+                        // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
+                        if (expressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                            return [expressionRule];
+                        } else {
+                            failedWarningRules.push(expressionRule);
                         }
                     }
+
                 }
             }
 
             // now check the rules without expressions
-            if (checkNoExpressionRules) {
-                let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
-
-                for (let noExpressionRule of noExpressionRules) {
-                    if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
-                        if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
-                            return [noExpressionRule];
-                        } else {
-                            failedWarningRules.push(noExpressionRule);
-                        }
-
+            let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
+            for (let noExpressionRule of noExpressionRules) {
+                if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
+                    if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                        return [noExpressionRule];
+                    } else {
+                        failedWarningRules.push(noExpressionRule);
                     }
+
                 }
             }
         }
