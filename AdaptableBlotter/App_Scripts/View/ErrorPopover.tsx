@@ -24,7 +24,14 @@ export class ErrorPopover extends React.Component<ErrorPopoverProps, {}> {
     render() {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
-                {this.props.bodyText}
+                {this.props.bodyText.split("\n").map(function (item, index) {
+                    return (
+                        <span key={index}>
+                            {item}
+                            <br />
+                        </span>
+                    )
+                })}
             </Popover>);
 
         return <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
