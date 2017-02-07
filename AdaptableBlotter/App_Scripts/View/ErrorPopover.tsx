@@ -27,7 +27,7 @@ export class ErrorPopover extends React.Component<ErrorPopoverProps, {}> {
                 {this.props.bodyText}
             </Popover>);
 
-        return <OverlayTrigger trigger="hover" rootClose placement="bottom" overlay={popoverClickRootClose}>
+        return <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
             <Label bsStyle="danger">
                 <Glyphicon glyph="exclamation-sign" />
             </Label>
