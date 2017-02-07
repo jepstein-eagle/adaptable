@@ -228,8 +228,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
                 let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
                 let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
+                let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
                 if (flashColor) {
                     config.backgroundColor = flashColor;
+                }
+                else if (quickSearchBackColor) {
+                    config.backgroundColor = quickSearchBackColor;
                 }
                 else if (csBackgroundColorColumn || csForeColorColumn) {
                     config.backgroundColor = csBackgroundColorColumn;
@@ -575,6 +579,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
                 }
             }
+            if (style.quickSearchBackColor) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
+            }
             //There is never a timeout for CS
             if (style.csBackColorColumn) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
@@ -586,7 +593,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
         if (rowIndex >= 0) {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
@@ -623,7 +629,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow'): void {
+    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
         if (style == 'flash') {
             this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
             this.grid.repaint()
@@ -637,6 +643,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorRow', undefined)
             this.grid.behavior.setCellProperty(x, y, 'csForeColorRow', undefined)
             this.grid.repaint()
+        }
+        if (style == 'QuickSearch') {
+            this.grid.behavior.setCellProperty(x, y, 'quickSearchBackColor', undefined)
         }
     }
 
@@ -695,5 +704,6 @@ interface CellStyleHypergrid {
     csBackColorColumn?: string,
     csForeColorRow?: string,
     csBackColorRow?: string,
-    flashBackColor?: string
+    flashBackColor?: string,
+    quickSearchBackColor?: string
 }
