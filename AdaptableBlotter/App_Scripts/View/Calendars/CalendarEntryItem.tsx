@@ -18,7 +18,7 @@ export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col md={6} >{this.props.CalendarEntry.HolidayName}</Col>
-                <Col md={6} >{this.props.CalendarEntry.HolidayDate.toDateString()}</Col>
+                <Col md={6} >{new Date(this.props.CalendarEntry.HolidayDate).toDateString()}</Col>
             </Row>
         </li>
     }
