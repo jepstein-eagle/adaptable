@@ -211,7 +211,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             if (config.isHeaderRow && !config.isHandleColumn) {
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.columnName);
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                 config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0)];
             }
             if (config.isDataRow) {
