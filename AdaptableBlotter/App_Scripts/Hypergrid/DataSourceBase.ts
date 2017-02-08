@@ -244,7 +244,7 @@ export let DataSourceBase = (<any>window).fin.Hypergrid.Base.extend('DataSourceI
 
     dump: function (max:number) {
         max = Math.min(this.getRowCount(), max || Math.max(100, this.getRowCount()));
-        var data = [];
+        var data: any[] = [];
         var fields: any[] = this.schema ? this.schema.map(function (cs:any) { return cs.name; }) : this.getHeaders();
         var cCount = this.getColumnCount();
         var viewMakesSense = this.viewMakesSense;
