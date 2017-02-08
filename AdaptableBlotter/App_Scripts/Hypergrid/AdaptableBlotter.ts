@@ -64,7 +64,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
 
-    constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
+    constructor(private grid: any, private container: HTMLElement, private primaryKey: string, private userName?: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -138,8 +138,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let dataChangedEvent: IDataChangingEvent
             //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
             //so we use our methods....
-            var visibleRow = grid.renderer.visibleRows[event.detail.gridCell.y];
-            let row = this.grid.behavior.dataModel.getRow(visibleRow.rowIndex)
+            // var visibleRow = grid.renderer.visibleRows[event.detail.input.event.visibleRow.rowIndex];
+            //they now attached correct row somewhere else....
+            let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex)
             dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) }
 
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
@@ -209,14 +210,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            if (config.isHeaderRow && config.isGridColumn) {
+            if (config.isHeaderRow && !config.isHandleColumn) {
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.columnName);
                 config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0)];
             }
-            if (config.isGridRow) {
-                //need to use untranslatedX or find the column using the index property
-                var x = config.x;
-                var y = config.normalizedY;
+            if (config.isDataRow) {
+                var x = config.dataCell.x;
+                var y = config.dataCell.y;
                 let row = this.grid.behavior.dataModel.dataSource.getRow(y)
                 let column = this.grid.behavior.getActiveColumns().find((col: any) => col.index == x)
                 if (column && row) {
@@ -266,6 +266,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
+    }
+
+    get UserName(): string {
+        return this.userName || "anonymous";
     }
 
     public SetColumnIntoStore() {
