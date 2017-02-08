@@ -65,14 +65,15 @@ export class AuditService implements IAuditService {
         let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
         let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
         if (cellDataValueList != null) {
-            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length - 1].NewValue;
-            let datachangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList.DataChangedInfos.push(datachangedInfo);
+            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfo.NewValue;
+            cellDataValueList.DataChangedInfo.OldValue = dataChangedEvent.OldValue
+            cellDataValueList.DataChangedInfo.NewValue = dataChangedEvent.NewValue
+            cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfos: [datechangedInfo] }
+            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
             myList.CellDataValueList.push(cellDataValueList);
         }
     }
@@ -83,7 +84,7 @@ export class AuditService implements IAuditService {
         let myList = this._columnDataValueList.find(c => c.ColumnName == dataChangingEvent.ColumnId);
         let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangingEvent.IdentifierValue);
         if (cellDataValueList != null) {
-            return cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length - 1].NewValue;
+            return cellDataValueList.DataChangedInfo.NewValue;
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             return this.blotter.GetDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;

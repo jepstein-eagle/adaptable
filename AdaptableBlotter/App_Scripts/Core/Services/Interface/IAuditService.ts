@@ -24,7 +24,7 @@ export interface IColumnDataValueList {
 
 export interface ICellDataValueList {
     IdentifierValue: any;
-    DataChangedInfos: IDataChangedInfo[],
+    DataChangedInfo: IDataChangedInfo,
 }
 
 export interface IDataChangedInfo {
