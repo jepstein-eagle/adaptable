@@ -8,7 +8,7 @@
 
     <link href="adaptableblotter/adaptableblotter-style.css" rel="stylesheet" />
     <link href="HypergridHarnessStyleSheet.css" rel="stylesheet" />
-    
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="Offline/css/bootstrap.min.css">
 
@@ -16,57 +16,21 @@
     <link rel="stylesheet" href="Offline/css/bootstrap-theme.min.css">
     <script src="Offline//fin-hypergrid.js"></script>
     <script src="adaptableblotter/harness-bundle.js"></script>
-
+    <script src="indexharnesshypergrid.js"></script>
 </head>
 
 <body>
     <div>
         <!--<h3>Adaptable Blotter</h3> -->
         <div id="content" style="margin:15px;"></div>
-</div>
+    </div>
 
-<script src="adaptableblotter/adaptableblotterhypergrid-bundle.js"></script>
-<p/>
-<div id="grid"></div>
+    <script src="adaptableblotter/adaptableblotterhypergrid-bundle.js"></script>
+    <p/>
+    <div id="grid"></div>
 
-<script>
+    <script>
         InitBlotter()
-        function handleClickEdit() {
-            InitBlotter()
-        }
-        function capitalize(string) {
-            return (/[a-z]/.test(string) ? string : string.toLowerCase())
-                .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
-                .replace(/[A-Z]/g, ' $&')
-                .trim();
-        }
-        function replacer(a, b, c) {
-            return b.toUpperCase() + c;
-        }
-        function getSchema(data) {
-            var schema = [],
-                firstRow = Array.isArray(data) && data[0];
-
-            firstRow = (typeof firstRow === 'object') ? firstRow : {};
-            for (var p in firstRow) {
-                if (firstRow.hasOwnProperty(p)) {
-                    schema.push({ name: p, header: capitalize(p) });
-                }
-            }
-            return schema;
-        }
-        function InitBlotter() {
-            var dataGen = new harness.DataGenerator();
-            var trades = dataGen.getTrades();
-
-
-            var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-            var container = document.getElementById('content');
-            var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, "Jonathan");
-            //dataGen.startTickingDataKendo(grid);
-        }
-
-
     </script>
 </body>
 
