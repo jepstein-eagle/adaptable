@@ -63,7 +63,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
 
-    constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
+    constructor(private grid: kendo.ui.Grid, private container: HTMLElement, private userName?: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -155,7 +155,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
 
-
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
                 let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
@@ -219,6 +218,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
+    }
+
+    get UserName(): string {
+        return this.userName || "anonymous";
     }
 
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {

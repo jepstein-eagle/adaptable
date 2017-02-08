@@ -16,6 +16,7 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
+    UserName: string
 
     getSelectedCells(): ISelectedCells
     getColumnType(columnId: string): ColumnType
