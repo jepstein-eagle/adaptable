@@ -104,14 +104,15 @@ export class AuditLogService {
         }
     }
 
-    public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[]) {
+    public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[], actionType : string) {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: this.blotter.UserName,
             //we want to loose the type since you cannot have same field name with different types in logstash. So log it as a string...
             //it makes sense anyway
-            adaptableblotter_state_change: this.convertToText(stateChanges)
+            adaptableblotter_state_change: this.convertToText(stateChanges),
+            adaptableblotter_state_change_action: actionType
         });
     }
 
