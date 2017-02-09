@@ -36,7 +36,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
         if (keyEventString == "-" || keyEventString == "+") {
-            let newValues: ICellInfo[] = [];
+            let successfulValues: ICellInfo[] = [];
             let side = 1
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
@@ -89,7 +89,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                                 warningValues.push(newValue);
                             }
                         } else {
-                            newValues.push(newValue)
+                            successfulValues.push(newValue)
                         }
                     }
                 }
@@ -97,14 +97,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             // first inform if any failed with prevent
             this.ShowErrorPreventMessage(failedPreventEdits);
-            // then show any which failed with warnings (unlikely we get both prevent and warning but if we do, then we do...)
-            this.ShowWarningMessages(failedWarningEdits, warningValues, keyEventString);
-            // finally, whatever happens, always push the ones - if any - that passed
-            this.ApplyPlusMinus(keyEventString, newValues);
-
-            if (this.reSelectCells) {  // not sure this is quite right as warning values are not included even if they pass and it doesnt work post-alert
-                //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
-                this.blotter.selectCells(newValues);
+            if (failedWarningEdits.length > 0) {
+                this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues, keyEventString);
+            } else {
+                this.ApplyPlusMinus(keyEventString, successfulValues);
             }
         }
     }
@@ -128,9 +124,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-    private ShowWarningMessages(failedRules: ICellValidationRule[], warningValues: ICellInfo[], keyEventString: string): void {
+    private ShowWarningMessages(failedRules: ICellValidationRule[], warningValues: ICellInfo[], successfulValues: ICellInfo[], keyEventString: string): void {
         if (failedRules.length > 0) {
-             let warningMessages: string[] = []
+            let allValues = warningValues.concat(...successfulValues);
+
+            let warningMessages: string[] = []
             failedRules.forEach(fr => {
                 let warningMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
                 let existingMessage = warningMessages.find(w => w == warningMessage);
@@ -139,25 +137,30 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 }
             })
             let warningMessage: string = failedRules.length + " Nudge(s) failed Cell Validation:\n" + warningMessages.toString();;
-          
-             let confirmation: IUIConfirmation = {
+
+            let confirmation: IUIConfirmation = {
                 CancelText: "Cancel",
                 ConfirmationMsg: warningMessage,
                 ConfirmationText: "Perform Nudge Anyway",
-                CancelAction: null,
-                ConfirmAction: PlusMinusRedux.ApplyPlusMinus(warningValues, keyEventString)
+                CancelAction: PlusMinusRedux.ApplyPlusMinus(successfulValues, keyEventString),
+                ConfirmAction: PlusMinusRedux.ApplyPlusMinus(allValues, keyEventString)
             }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
         }
     }
 
-    public ApplyPlusMinus(keyEventString: string, newValues: ICellInfo[]): void {
-        if (newValues.length > 0) {
+    public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
+        if (successfulValues.length > 0) {
             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
                 "HandleKeyDown",
                 "KeyPressed:" + keyEventString,
-                newValues)
-            this.blotter.setValueBatch(newValues);
+                successfulValues)
+            this.blotter.setValueBatch(successfulValues);
+
+            if (this.reSelectCells) {  // not sure this is quite right as warning values are not included even if they pass and it doesnt work post-alert
+                //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
+                this.blotter.selectCells(successfulValues);
+            }
         }
     }
 
