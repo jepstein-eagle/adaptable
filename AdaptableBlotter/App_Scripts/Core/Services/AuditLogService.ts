@@ -118,7 +118,7 @@ export class AuditLogService {
 
     public AddAdaptableBlotterFunctionLog(functionName: string, action: string, info: string, data?: any) {
         this.auditLogQueue.push({
-            adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
+            adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.AdaptableBlotterFunction],
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: this.blotter.UserName,
             adaptableblotter_function: {
