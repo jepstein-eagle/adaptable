@@ -132,19 +132,10 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Midd
             let oldState = middlewareAPI.getState()
 
             let ret = next(action);
-            if (action.type == ReduxStorage.LOAD) {
+            if (action.type != ReduxStorage.SAVE) {
                 let newState = middlewareAPI.getState()
                 let diff = DeepDiff.diff(oldState, newState)
-                if (diff) {
-                    adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff)
-                }
-            }
-            else if (action.type != ReduxStorage.SAVE) {
-                let newState = middlewareAPI.getState()
-                let diff = DeepDiff.diff(oldState, newState)
-                if (diff) {
-                    adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff)
-                }
+                adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
             }
 
             return ret;
