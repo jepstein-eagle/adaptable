@@ -302,10 +302,7 @@ export module ExpressionHelper {
         })
     }
 
-    export function CreateEmptyExpression(): Expression {
-        return new Expression([], [], [], [])
-    }
-
+   
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,

@@ -52,6 +52,12 @@ export enum MenuType {
     Action
 }
 
+export enum PopoverType {
+    Info,
+    Warning,
+    Error
+}
+
 // Enums used in Strategies
 export enum SmartEditOperation {
     Sum,

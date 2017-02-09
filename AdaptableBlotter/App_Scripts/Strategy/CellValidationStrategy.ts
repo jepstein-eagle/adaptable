@@ -18,18 +18,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         this.menuItemConfig = new MenuItemShowPopup("Cell Validation", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
     }
 
-    public CreateCellValidationMessage(CellValidation: ICellValidationRule): string {
-       let intro: string = "The following Cell Validation Rule was broken:"
-        let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let userFilters: IUserFilter[] = this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
-        let columnFriendlyName: string = columns.find(c => c.ColumnId == CellValidation.ColumnId).FriendlyName;
-        let expressionDescription: string = (CellValidation.HasExpression) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, columns, userFilters) :
-            "";
-        return (intro + "\nColumn: '" + columnFriendlyName + "'\nCell Validation Rule: " + CellValidation.Description + expressionDescription);
-    }
-    
-    getMenuItems(): IMenuItem[] {
+      getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];
     }
 

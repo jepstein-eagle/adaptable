@@ -8,7 +8,7 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -46,8 +46,8 @@ import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
+import { IDataChangingEvent, IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { ObjectFactory } from '../Core/ObjectFactory';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -108,7 +108,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //like that we avoid the need to have different logic for different grids....
             this._onKeyDown.Dispatch(this, e.detail.primitiveEvent)
         });
-
+        
         //we'll see if we need to handle differently keydown when in edit mode internally or not....
         //I think we don't need to but hey.... you never know
         grid.addEventListener("fin-editor-keydown", (e: any) => {
@@ -149,7 +149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
-                    let errorMessage: string = cellValidationStrategy.CreateCellValidationMessage(failedRules[0]);
+                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
@@ -158,14 +158,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 } else {
                     let warningMessage: string = "";
                     failedRules.forEach(f => {
-                        warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
+                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                     })
+                    let cellInfo: ICellInfo = {
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
+                    }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
@@ -347,7 +352,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return "";
     }
 
-    getActiveCell(): { Id: any, ColumnId: string, Value: any } {
+    getActiveCell(): ICellInfo{
         let currentCell = this.grid.selectionModel.getLastSelection();
 
         if (currentCell) {
@@ -444,9 +449,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return ColumnType.String;
     }
 
-    public setValue(id: any, columnId: string, value: any): void {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
-        row[columnId] = value
+    public setValue(cellInfo: ICellInfo): void {
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, cellInfo.Id)
+        row[cellInfo.ColumnId] = cellInfo.Value;
         //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
@@ -456,11 +461,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint()
     }
 
-    public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+    public setValueBatch(batchValues: ICellInfo[]): void {
         //no need to have a batch mode so far.... we'll see in the future performance
         for (let element of batchValues) {
-            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.id)
-            row[element.columnId] = element.value
+            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.Id)
+            row[element.ColumnId] = element.Value
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
@@ -476,7 +481,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public selectCells(cells: { id: any, columnId: string }[]): void {
+    public selectCells(cells: ICellInfo[]): void {
     }
 
     public getColumnHeader(columnId: string): string {

@@ -1,5 +1,5 @@
 import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
-import { IMenuItem, IStrategy } from './IStrategy'
+import { IMenuItem, IStrategy, ICellInfo } from './IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -7,6 +7,7 @@ import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
+
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -22,19 +23,19 @@ export interface IAdaptableBlotter {
     getColumnType(columnId: string): ColumnType
     getColumnHeader(columnId: string): string
     getColumnIndex(columnName: string): number
-    setValue(id: any, columnId: string, value: any): void
-    setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void
+    setValue(cellInfo: ICellInfo): void
+    setValueBatch(batchValues: ICellInfo[]): void
     CreateMenu(): void
     SetColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
     gridHasCurrentEditValue(): boolean
-    selectCells(cells: { id: any, columnId: string }[]): void
+    selectCells(cells: ICellInfo[]): void
     isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
-    getActiveCell(): { Id: any, ColumnId: string, Value: any }
+    getActiveCell(): ICellInfo
     isGridPageable(): boolean
     getPrimaryKeyValueFromRecord(record: any): any
 

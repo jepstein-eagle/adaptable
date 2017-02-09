@@ -30,7 +30,7 @@ export class AuditLogService {
         setInterval(() => this.flushAuditQueue(), 1000)
     }
 
-    public AddEditCellAuditLog(primarykey: string, columnId: string, oldValue: any, newValue: any) {
+    public AddEditCellAuditLog(  primarykey: string, columnId: string, oldValue: any, newValue: any) {
         if (typeof oldValue == "string" && typeof newValue == "string") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
