@@ -144,7 +144,9 @@ export class AuditService implements IAuditService {
                 if (cellValidationRule.RangeExpression.Operand2 != "") {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
-                newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
+                newValue= Date.parse(dataChangedEvent.NewValue);
+                // is this always right or do we need line below?
+              //  newValue = newDateValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
