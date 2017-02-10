@@ -92,6 +92,11 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationAction == CellValidationAction.Prevent;
                 let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationAction == CellValidationAction.Warning;
 
+                this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                    "HandleKeyDown",
+                    "Key Pressed: " + keyEventString,
+                    { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+
                 if (hasErrorPrevent) {
                     this.ShowErrorPreventMessage(validationRules[0]);
                 } else {
@@ -126,14 +131,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     public ApplyShortcut(shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any): void {
+
         this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-            "HandleKeyDown",
-            "Key Pressed: " + keyEventString,
+            "ApplyShortcut",
+            "",
             { Shortcut: shortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
-      
-        //in hypergrid this methods closes the editor.... that's a design choice
-        //we can set the editor value instead but I feel that it's best to close it down for now....
-        //Also there is a bug for now when editOnKey is ON for Hypergrid. It's disabled as a consequence see index.html
+
         this.blotter.setValueBatch([{ Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue }]);
     }
 
