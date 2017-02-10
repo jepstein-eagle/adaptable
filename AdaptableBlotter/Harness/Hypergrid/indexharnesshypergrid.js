@@ -1,7 +1,6 @@
 function ThemeChange(blotter, grid) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        console.log("new Theme : " + themeName)
         if(themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero")
         {
             grid.addProperties(darkTheme);

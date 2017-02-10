@@ -81,10 +81,24 @@ messages: {
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
     var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, "Jonathan");
+    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))
 }
 
 function setEditDecimals(container, options) {
     $("<input name='" + options.field + "'/>")
         .appendTo(container)
         .kendoNumericTextBox({ decimals: 4 });
+}
+var themeName = ""
+function ThemeChange(blotter, grid) {
+    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
+        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
+        if(themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero")
+        {
+            // grid.addProperties(darkTheme);
+        }
+        else{
+            // grid.addProperties(lightTheme);
+        }
+    }
 }
