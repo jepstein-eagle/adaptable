@@ -81,6 +81,47 @@ function InitBlotter() {
         format: 'USDCurrencyFormat'
     });
 
+    //Add Edit for DeskId column
+    behavior.setColumnProperties(2, {
+        editor: 'textfield',// case-insensitive
+        format: 'number' // also case-insensitive
+    });
+
+    //Add Edit for counterparty column
+    behavior.setColumnProperties(3, {
+        editor: 'textfield',// case-insensitive
+    });
+
+    //Add Edit for Currency column
+    behavior.setColumnProperties(4, {
+        editor: 'textfield',// case-insensitive
+    });
+
+    //Add Edit for Country column
+    behavior.setColumnProperties(5, {
+        editor: 'textfield',// case-insensitive
+    });
+
+    //Add Edit for b/o spread column
+    behavior.setColumnProperties(10, {
+        editor: 'Number',// case-insensitive
+    });
+
+    //Add Edit for moodys column
+    behavior.setColumnProperties(12, {
+        editor: 'textfield',// case-insensitive
+    });
+
+    //Add Edit for fitch column
+    behavior.setColumnProperties(13, {
+        editor: 'textfield',// case-insensitive
+    });
+
+    //Add Edit for snp column
+    behavior.setColumnProperties(14, {
+        editor: 'textfield',// case-insensitive
+    });
+
     //Add Edit for Trade Date column
     behavior.setColumnProperties(15, {
         editor: 'textfield', // Date should work in Chrome apparently but it doesnt
@@ -95,8 +136,6 @@ function InitBlotter() {
 
     var container = document.getElementById('content');
     var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, "tradeId", "Jonathan");
-    //dataGen.startTickingDataKendo(grid);
-
 
     let theme = {
         font: '15px Tahoma, Geneva, sans-serif',
@@ -126,17 +165,13 @@ function InitBlotter() {
 
         fixedRowAlign: 'center',
         fixedColAlign: 'center',
-        //cellPadding: 15,
+        cellPadding: 15,
         gridLinesH: false,
         gridLinesV: false,
 
         defaultRowHeight: 30,
         defaultFixedRowHeight: 15,
-        //defaultColumnWidth: 100,
-        //defaultFixedColumnWidth: 100,
-
-        //for immediate painting, set these values to 0, true respectively
-
+        showRowNumbers: false,
         editorActivationKeys: ['alt', 'esc'],
         columnAutosizing: true,
         readOnly: false
