@@ -62,9 +62,14 @@ function InitBlotter() {
     let behavior = grid.behavior;
 
     //   grid.localization.add('notional', notionalLocalizer);
-    grid.localization.add('UKCurrencyFormat', new grid.localization.NumberFormatter('en-EN', {
+    // grid.localization.add('UKCurrencyFormat', new grid.localization.NumberFormatter('en-EN', {
+    //     style: 'currency',
+    //     currency: 'GBP'
+    // }));
+    grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',
-        currency: 'GBP'
+        currency: 'USD',
+        maximumSignificantDigits: 0
     }));
 
     var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -73,7 +78,7 @@ function InitBlotter() {
     //Add Edit for Notional column
     behavior.setColumnProperties(1, {
         editor: 'textfield',// case-insensitive
-        format: 'UKCurrencyFormat'
+        format: 'USDCurrencyFormat'
     });
 
     //Add Edit for Trade Date column
