@@ -38,6 +38,7 @@ export interface IAdaptableBlotter {
     getActiveCell(): ICellInfo
     isGridPageable(): boolean
     getPrimaryKeyValueFromRecord(record: any): any
+    cancelEdit() : any
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void

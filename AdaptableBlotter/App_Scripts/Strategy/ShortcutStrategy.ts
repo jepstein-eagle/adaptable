@@ -96,6 +96,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     "HandleKeyDown",
                     "Key Pressed: " + keyEventString,
                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+                
+                //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
+                this.blotter.cancelEdit()
 
                 if (hasErrorPrevent) {
                     this.ShowErrorPreventMessage(validationRules[0]);
@@ -161,7 +164,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
     }
-
 
     getMenuItems(): IMenuItem[] {
         return [this.menuItemConfig];

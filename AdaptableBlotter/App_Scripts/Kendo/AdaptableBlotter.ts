@@ -407,6 +407,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public cancelEdit()
+    {
+        this.grid.closeCell()
+    }
+
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
             let record: any = this.grid.dataSource.getByUid(id);
