@@ -449,7 +449,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return ColumnType.String;
     }
 
-    public setValue(id: any, columnId: string, value: any): void {
+    public setValue(cellInfo: ICellInfo): void {
         //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
