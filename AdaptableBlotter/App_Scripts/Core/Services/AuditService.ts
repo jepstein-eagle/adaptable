@@ -9,7 +9,7 @@ import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { Helper } from '../Helper'
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
-
+import * as StrategyIds from '../StrategyIds'
 
 /*
 For now this is a very rough and ready Audit Service which will recieve notifications of changes in data - either via an event fired in the blotter or through other strategies.
@@ -29,10 +29,11 @@ export class AuditService implements IAuditService {
         this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
+            //       this.TempDoBidOfferStuffForVideos(dataChangedEvent);
         }
     }
 
-      private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
+    private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
         this.checkListExists();
 
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
@@ -100,6 +101,10 @@ export class AuditService implements IAuditService {
                     if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                                "CheckCellChanging",
+                                "Failed",
+                                { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent })
                             return [expressionRule];
                         } else {
                             failedWarningRules.push(expressionRule);
@@ -114,6 +119,10 @@ export class AuditService implements IAuditService {
             for (let noExpressionRule of noExpressionRules) {
                 if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                            "CheckCellChanging",
+                            "Failed",
+                            { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent })
                         return [noExpressionRule];
                     } else {
                         failedWarningRules.push(noExpressionRule);
@@ -121,6 +130,18 @@ export class AuditService implements IAuditService {
 
                 }
             }
+        }
+        if (failedWarningRules.length > 0) {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                "CheckCellChanging",
+                "Warning",
+                { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent })
+        }
+        else {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                "CheckCellChanging",
+                "Ok",
+                { DataChangingEvent: dataChangedEvent })
         }
         return failedWarningRules;
     }
@@ -144,9 +165,7 @@ export class AuditService implements IAuditService {
                 if (cellValidationRule.RangeExpression.Operand2 != "") {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
-                newValue= Date.parse(dataChangedEvent.NewValue);
-                // is this always right or do we need line below?
-              //  newValue = newDateValue.setHours(0, 0, 0, 0)
+                newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
