@@ -1,3 +1,17 @@
+function ThemeChange(blotter, grid) {
+    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
+        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
+        console.log("new Theme : " + themeName)
+        if(themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero")
+        {
+            grid.addProperties(darkTheme);
+        }
+        else{
+            grid.addProperties(lightTheme);
+        }
+    }
+}
+var themeName = ""
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -7,6 +21,7 @@ function capitalize(string) {
 function replacer(a, b, c) {
     return b.toUpperCase() + c;
 }
+
 function getSchema(data) {
     var schema = [],
         firstRow = Array.isArray(data) && data[0];
@@ -136,85 +151,87 @@ function InitBlotter() {
 
     var container = document.getElementById('content');
     var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, "tradeId", "Jonathan");
+    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
 
-    let theme = {
-        font: '15px Tahoma, Geneva, sans-serif',
-        color: 'rgb(25, 25, 25)',
-        backgroundColor: 'rgb(241, 241, 241)',
-        foregroundSelectionColor: 'rgb(25, 25, 25)',
-        backgroundSelectionColor: 'rgb(183, 219, 255)',
-
-        columnHeaderFont: '15px Tahoma, Geneva, sans-serif',
-        columnHeaderColor: 'rgb(25, 25, 25)',
-        columnHeaderBackgroundColor: 'rgb(223, 227, 232)',
-        columnHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
-        columnHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
-
-        rowHeaderFont: '15px Tahoma, Geneva, sans-serif',
-        rowHeaderColor: 'rgb(25, 25, 25)',
-        rowHeaderBackgroundColor: 'rgb(223, 227, 232)',
-        rowHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
-        rowHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
-
-        backgroundColor2: 'rgb(201, 201, 201)',
-        lineColor: 'rgb(199, 199, 199)',
-        voffset: 0,
-        scrollbarHoverOver: 'visible',
-        scrollbarHoverOff: 'visible',
-        scrollingEnabled: true,
-
-        fixedRowAlign: 'center',
-        fixedColAlign: 'center',
-        cellPadding: 15,
-        gridLinesH: false,
-        gridLinesV: false,
-
-        defaultRowHeight: 30,
-        defaultFixedRowHeight: 15,
-        showRowNumbers: false,
-        editorActivationKeys: ['alt', 'esc'],
-        columnAutosizing: true,
-        readOnly: false
-    }
-
-    var themeDark = {
-        font: '15px Roboto Condensed',
-        color: 'white',
-        backgroundColor: '#07071E',
-        foregroundSelectionColor: 'white',
-        backgroundSelectionColor: '#3D77FE',
-
-        columnHeaderFont: '14px Roboto Condensed',
-        columnHeaderColor: 'white',
-        columnHeaderBackgroundColor: '#07071E',
-        columnHeaderForegroundSelectionColor: 'white',
-        columnHeaderBackgroundSelectionColor: '#3D77FE',
-
-        rowHeaderFont: '14px Roboto Condensed',
-        rowHeaderColor: 'white',
-        rowHeaderBackgroundColor: '#07071E',
-        rowHeaderForegroundSelectionColor: 'white',
-        rowHeaderBackgroundSelectionColor: '#3D77FE',
-
-        backgroundColor2: 'rgb(201, 201, 201)',
-        lineColor: 'rgb(199, 199, 199)',
-        voffset: 0,
-        scrollbarHoverOver: 'visible',
-        scrollbarHoverOff: 'visible',
-        scrollingEnabled: true,
-
-        fixedRowAlign: 'center',
-        fixedColAlign: 'center',
-        cellPadding: 15,
-        gridLinesH: false,
-        gridLinesV: false,
-
-        defaultRowHeight: 30,
-        defaultFixedRowHeight: 15,
-        showRowNumbers: false,
-        editorActivationKeys: ['alt', 'esc'],
-        columnAutosizing: true,
-        readOnly: false
-    };
-    grid.addProperties(theme);
+    grid.addProperties(lightTheme);
 }
+
+var lightTheme = {
+    font: '15px Tahoma, Geneva, sans-serif',
+    color: 'rgb(25, 25, 25)',
+    backgroundColor: 'rgb(241, 241, 241)',
+    foregroundSelectionColor: 'rgb(25, 25, 25)',
+    backgroundSelectionColor: 'rgb(183, 219, 255)',
+
+    columnHeaderFont: '15px Tahoma, Geneva, sans-serif',
+    columnHeaderColor: 'rgb(25, 25, 25)',
+    columnHeaderBackgroundColor: 'rgb(223, 227, 232)',
+    columnHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
+    columnHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
+
+    rowHeaderFont: '15px Tahoma, Geneva, sans-serif',
+    rowHeaderColor: 'rgb(25, 25, 25)',
+    rowHeaderBackgroundColor: 'rgb(223, 227, 232)',
+    rowHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
+    rowHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
+
+    backgroundColor2: 'rgb(201, 201, 201)',
+    lineColor: 'rgb(199, 199, 199)',
+    voffset: 0,
+    scrollbarHoverOver: 'visible',
+    scrollbarHoverOff: 'visible',
+    scrollingEnabled: true,
+
+    fixedRowAlign: 'center',
+    fixedColAlign: 'center',
+    cellPadding: 15,
+    gridLinesH: false,
+    gridLinesV: false,
+
+    defaultRowHeight: 30,
+    defaultFixedRowHeight: 15,
+    showRowNumbers: false,
+    editorActivationKeys: ['alt', 'esc'],
+    columnAutosizing: true,
+    readOnly: false
+}
+
+var darkTheme = {
+    font: '15px Roboto Condensed',
+    color: 'white',
+    backgroundColor: '#07071E',
+    foregroundSelectionColor: 'white',
+    backgroundSelectionColor: '#3D77FE',
+
+    columnHeaderFont: '14px Roboto Condensed',
+    columnHeaderColor: 'white',
+    columnHeaderBackgroundColor: '#07071E',
+    columnHeaderForegroundSelectionColor: 'white',
+    columnHeaderBackgroundSelectionColor: '#3D77FE',
+
+    rowHeaderFont: '14px Roboto Condensed',
+    rowHeaderColor: 'white',
+    rowHeaderBackgroundColor: '#07071E',
+    rowHeaderForegroundSelectionColor: 'white',
+    rowHeaderBackgroundSelectionColor: '#3D77FE',
+
+    backgroundColor2: 'rgb(201, 201, 201)',
+    lineColor: 'rgb(199, 199, 199)',
+    voffset: 0,
+    scrollbarHoverOver: 'visible',
+    scrollbarHoverOff: 'visible',
+    scrollingEnabled: true,
+
+    fixedRowAlign: 'center',
+    fixedColAlign: 'center',
+    cellPadding: 15,
+    gridLinesH: false,
+    gridLinesV: false,
+
+    defaultRowHeight: 30,
+    defaultFixedRowHeight: 15,
+    showRowNumbers: false,
+    editorActivationKeys: ['alt', 'esc'],
+    columnAutosizing: true,
+    readOnly: false
+};
