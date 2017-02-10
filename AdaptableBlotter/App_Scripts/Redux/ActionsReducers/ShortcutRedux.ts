@@ -1,10 +1,12 @@
 /// <reference path="../../../typings/index.d.ts" />
 
-import {ShortcutState} from './Interface/IState';
-import {IShortcut} from '../../Core/Interface/IShortcutStrategy';
-import {ColumnType, ShortcutAction} from '../../Core/Enums';
+import { ShortcutState } from './Interface/IState';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
+import { ICellInfo } from '../../Core/Interface/IStrategy';
+import { ColumnType, ShortcutAction } from '../../Core/Enums';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
+export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
 export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
 export const SHORTCUT_CHANGE_KEY = 'SHORTCUT_CHANGE_KEY';
@@ -12,7 +14,15 @@ export const SHORTCUT_CHANGE_OPERATION = 'SHORTCUT_CHANGE_OPERATION';
 export const SHORTCUT_CHANGE_RESULT = 'SHORTCUT_CHANGE_RESULT';
 
 export interface ShortcutSelectAction extends Redux.Action {
-    Shortcut: IShortcut
+    Shortcut: IShortcut,
+
+}
+
+export interface ShortcutApplyAction extends Redux.Action {
+    Shortcut: IShortcut,
+    CellInfo: ICellInfo,
+    KeyEventString: string,
+    NewValue: any
 }
 
 export interface ShortcutAddAction extends Redux.Action {
@@ -43,6 +53,13 @@ export const SelectShortcut = (Shortcut: IShortcut): ShortcutSelectAction => ({
     Shortcut
 })
 
+export const ApplyShortcut = (Shortcut: IShortcut, CellInfo: ICellInfo, KeyEventString: string, NewValue: any): ShortcutApplyAction => ({
+    type: SHORTCUT_APPLY,
+    Shortcut,
+    CellInfo,
+    KeyEventString,
+    NewValue
+})
 export const AddShortcut = (Shortcut: IShortcut): ShortcutAddAction => ({
     type: SHORTCUT_ADD,
     Shortcut
@@ -86,6 +103,11 @@ const initialShortcutState: ShortcutState = {
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
     switch (action.type) {
+        case SHORTCUT_APPLY:
+            //we apply logic in the middleware since it's an API call
+            return Object.assign({}, state)
+
+
         case SHORTCUT_CHANGE_KEY: {
             let actionTyped = <ShortcutChangeKeyAction>action
             let shortcut = actionTyped.Shortcut

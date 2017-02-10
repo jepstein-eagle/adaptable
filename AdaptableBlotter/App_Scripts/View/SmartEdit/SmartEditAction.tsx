@@ -8,15 +8,14 @@ import { FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, Men
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { SmartEditOperation, CellValidationAction } from '../../Core/Enums'
+import { SmartEditOperation, CellValidationAction, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Core/Interface/ISmartEditStrategy'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
 import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ErrorPopover } from '../ErrorPopover';
+import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
@@ -51,20 +50,33 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false
         let globalHasValidationWarning = false
+        let globalHasOnlyValidationPrevent = true
         if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                globalHasValidationPrevent = globalHasValidationPrevent || previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Prevent).length > 0
-                globalHasValidationWarning = globalHasValidationWarning || previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Warning).length > 0
+                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Prevent).length > 0
+                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Warning).length > 0
+                globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
+                globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
+                if (!hasValidationErrors || localHasValidationWarning) {
+                    globalHasOnlyValidationPrevent = false;
+                }
 
                 return <tr key={previewResult.Id}>
                     <td>{previewResult.InitialValue}</td>
                     <td>{previewResult.ComputedValue}</td>
                     {hasValidationErrors ?
                         <td>
-                            <ErrorPopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} />
+                            {localHasValidationPrevent == true &&
+                                <AdaptablePopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} popoverType={PopoverType.Error} />
+                            }
+                            {localHasValidationWarning == true &&
+                                <AdaptablePopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} popoverType={PopoverType.Warning} />
+                            }
                         </td>
-                        : <td> <Glyphicon glyph="ok" /> </td>}
+                        :
+                        <td> <Glyphicon glyph="ok" /> </td>
+                    }
                 </tr>
             });
             var header = <thead>
@@ -75,15 +87,19 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                 </tr>
             </thead>;
         }
+
         let globalValidationMessage: string
-        if (globalHasValidationPrevent && globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). You will be asked to confirm update for the Cell Validation Warning. Cell Validation Prevent update will be ignored"
+        if (globalHasOnlyValidationPrevent) {
+            globalValidationMessage = "All Cell Validations have failed (see Preview for details)."
+        }
+        else if (globalHasValidationPrevent && globalHasValidationWarning) {
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm the updates which are set to 'warning' before they will be applied; those which are set to 'prevent' will be ignored."
         }
         else if (globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). You will be asked to confirm update";
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm these updates before they will be applied.";
         }
         else if (globalHasValidationPrevent) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for detail). Cell Validation Prevent update will be ignored";
+            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nThese updates will be ignored.";
         }
         return (
             <div >
@@ -100,12 +116,14 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle={(globalHasValidationPrevent || globalHasValidationWarning) ? "warning" : "info"}
-                            disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue)}
+                        <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
+                            disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || globalHasOnlyValidationPrevent}
                             onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
                         {' '}
-                        {(globalHasValidationPrevent || globalHasValidationWarning) &&
-                            <ErrorPopover headerText={"Validation Error"} bodyText={globalValidationMessage} />}
+                        {(globalHasValidationWarning) &&
+                            <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Warning} />}
+                        {(!globalHasValidationWarning && globalHasValidationPrevent) &&
+                            <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Error} />}
                     </Form>
                 </PanelWithImage>
                 <Panel header={previewHeader} bsStyle="success" style={divStyle}>
@@ -143,13 +161,23 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     private onConfirmWarningCellValidation() {
         let confirmation: IUIConfirmation = {
-            CancelText: "No",
-            ConfirmationMsg: "When applying new values, do you want to bypass the Warning Cell Validation? If no those records will be ignored.",
-            ConfirmationText: "Bypass Rules",
+            CancelText: "Cancel",
+            ConfirmationMsg: "This edit breaks Cell Validation rules that you have set.\nClick 'OK' to bypass these rules.\nClick 'Cancel' if you wish not to proceed with the edit.",
+            ConfirmationText: "OK",
             CancelAction: SmartEditRedux.ApplySmartedit(false),
             ConfirmAction: SmartEditRedux.ApplySmartedit(true)
         }
         this.props.onConfirmWarningCellValidation(confirmation)
+    }
+
+    private getButtonStyle(globalHasOnlyValidationPrevent: boolean, globalHasValidationPrevent: boolean, globalHasValidationWarning: boolean): string {
+        if (globalHasOnlyValidationPrevent) {
+            return "default";
+        }
+        if (globalHasValidationWarning || globalHasValidationPrevent) {
+            return "warning";
+        }
+        return "info";
     }
 }
 

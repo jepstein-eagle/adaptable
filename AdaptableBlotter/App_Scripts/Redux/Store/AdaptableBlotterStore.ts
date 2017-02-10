@@ -27,11 +27,13 @@ import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
+import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
 import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
+import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError } from '../../Core/interface/IStrategy'
+import { IUIError, ICellInfo } from '../../Core/interface/IStrategy'
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -148,9 +150,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
                     let actionTyped = <GridRedux.SetValueAction>action
                     //We set the value in the grid
-                    adaptableBlotter.setValue(actionTyped.PrimaryKey, actionTyped.ColumnId, actionTyped.NewValue)
+                    adaptableBlotter.setValue(actionTyped.CellInfo)
                     //We AuditLog the Edit
-                    adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.PrimaryKey, actionTyped.ColumnId, actionTyped.OldValue, actionTyped.NewValue)
+                    adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
                 case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
@@ -197,6 +199,19 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     SmartEditStrategy.ApplySmartEdit((<SmartEditRedux.ApplySmarteditAction>action).bypassCellValidationWarnings);
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    return next(action);
+                }
+                case PlusMinusRedux.PLUSMINUS_APPLY: {
+                    let plusMinusStrategy = <IPlusMinusStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
+                    let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
+                    plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
+                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    return next(action);
+                }
+                 case ShortcutRedux.SHORTCUT_APPLY: {
+                    let shortcutStrategy = <IShortcutStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ShortcutStrategyId));
+                    let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
+                    shortcutStrategy.ApplyShortcut(actionTyped.Shortcut, actionTyped.CellInfo, actionTyped.KeyEventString, actionTyped.NewValue);
                     return next(action);
                 }
                 case ExportRedux.EXPORT_APPLY: {

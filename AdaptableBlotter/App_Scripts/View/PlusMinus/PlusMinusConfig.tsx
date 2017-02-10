@@ -19,6 +19,7 @@ import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -118,7 +119,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         let _editedColumnNudgeValue = {
             ColumnId: "select",
             DefaultNudge: this.props.DefaultNudgeValue,
-            Expression: ExpressionHelper.CreateEmptyExpression()
+            Expression: ObjectFactory.CreateEmptyExpression()
         }
         this.setState({ EditedPlusMinusCondition: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
     }

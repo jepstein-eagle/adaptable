@@ -16,7 +16,7 @@ import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../PanelWithButton';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 
@@ -98,7 +98,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             BackColor: '#ffffff',
             ForeColor: '#000000',
             ConditionalStyleScope: ConditionalStyleScope.Column,
-            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Expression: ObjectFactory.CreateEmptyExpression(),
             IsPredefinedExpression: false,
             PredefinedStyleCondition: null
         }
