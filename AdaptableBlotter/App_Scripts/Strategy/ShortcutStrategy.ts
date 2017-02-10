@@ -159,7 +159,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             CancelText: "Cancel",
             ConfirmationMsg: warningMessage,
             ConfirmationText: "Perform Shortcut Anyway",
-            CancelAction: ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
+            //We cancel the edit before applying the shortcut so if cancel then there is fuck all to do
+            CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
             ConfirmAction: ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, newValue)
         }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
