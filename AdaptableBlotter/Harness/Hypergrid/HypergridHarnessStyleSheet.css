@@ -2,3 +2,11 @@
     position: relative;
     height: 800px;
 }
+
+.finbar-horizontal div.thumb{
+    background-color: black !important
+}
+
+.finbar-vertical div.thumb{
+    background-color: black !important
+}
