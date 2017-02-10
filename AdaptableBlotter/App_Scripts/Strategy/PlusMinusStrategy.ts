@@ -152,7 +152,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
         if (successfulValues.length > 0) {
             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                "HandleKeyDown",
+                "ApplyPlusMinus",
                 "KeyPressed:" + keyEventString,
                 successfulValues)
             this.blotter.setValueBatch(successfulValues);
