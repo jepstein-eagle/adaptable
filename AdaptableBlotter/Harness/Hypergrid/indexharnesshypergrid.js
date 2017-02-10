@@ -177,39 +177,44 @@ function InitBlotter() {
         readOnly: false
     }
 
-    var bgColor = '#07071E';
-    var fixedAreasBGColor = bgColor;
-
-    var font = "24px Roboto Condensed";
-    var headingFont = "14px Roboto Condensed";
-    var headingFGColor = '#3D77FE';
-
-    var lnfOverrides = {
-        font: font,
-        topLeftFont: headingFont,
-        fixedRowFont: headingFont,
-        fixedColumnFont: font,
-        backgroundColor2: bgColor,
-        backgroundColor: bgColor,
-        topLeftBackgroundColor: fixedAreasBGColor,
-        fixedColumnBackgroundColor: fixedAreasBGColor,
-        fixedRowBackgroundColor: fixedAreasBGColor,
+    var themeDark = {
+        font: '15px Roboto Condensed',
         color: 'white',
-        topLeftColor: headingFGColor,
-        fixedColumnColor: 'white',
-        fixedRowColor: headingFGColor,
-        lineColor: 'red',
-        gridLinesV: true,
-        gridLinesH: true,
-        fixedColumnFGSelColor: 'white',
-        fixedColumnBGSelColor: '#3D77FE',
-        fixedRowFGSelColor: 'white',
-        fixedRowBGSelColor: '#3D77FE',
-        columnAutosizing: false,
-        defaultFixedRowHeight: 40,
-        //cellBorderStyle: 'red',
-        //cellBorderThickness: 1
-        renderer: 'CellRenderer'
+        backgroundColor: '#07071E',
+        foregroundSelectionColor: 'white',
+        backgroundSelectionColor: '#3D77FE',
+
+        columnHeaderFont: '14px Roboto Condensed',
+        columnHeaderColor: 'white',
+        columnHeaderBackgroundColor: '#07071E',
+        columnHeaderForegroundSelectionColor: 'white',
+        columnHeaderBackgroundSelectionColor: '#3D77FE',
+
+        rowHeaderFont: '14px Roboto Condensed',
+        rowHeaderColor: 'white',
+        rowHeaderBackgroundColor: '#07071E',
+        rowHeaderForegroundSelectionColor: 'white',
+        rowHeaderBackgroundSelectionColor: '#3D77FE',
+
+        backgroundColor2: 'rgb(201, 201, 201)',
+        lineColor: 'rgb(199, 199, 199)',
+        voffset: 0,
+        scrollbarHoverOver: 'visible',
+        scrollbarHoverOff: 'visible',
+        scrollingEnabled: true,
+
+        fixedRowAlign: 'center',
+        fixedColAlign: 'center',
+        cellPadding: 15,
+        gridLinesH: false,
+        gridLinesV: false,
+
+        defaultRowHeight: 30,
+        defaultFixedRowHeight: 15,
+        showRowNumbers: false,
+        editorActivationKeys: ['alt', 'esc'],
+        columnAutosizing: true,
+        readOnly: false
     };
     grid.addProperties(theme);
 }
