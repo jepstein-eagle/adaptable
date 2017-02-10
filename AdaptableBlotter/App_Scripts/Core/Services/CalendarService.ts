@@ -62,7 +62,8 @@ export class CalendarService implements ICalendarService {
         let calendarStore = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars
         let currentHoliday = calendarStore.AvailableCalendars.find(c => c.CalendarName == calendarStore.CurrentCalendar);
         for (var holiday of currentHoliday.CalendarEntries) {
-            if (holiday.HolidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {
+            let holidayDate = new Date(holiday.HolidayDate)
+            if (holidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {
                 return false;
             }
         }

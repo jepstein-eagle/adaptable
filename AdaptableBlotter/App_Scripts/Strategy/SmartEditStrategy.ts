@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { SmartEditOperation, ColumnType, CellValidationAction } from '../Core/Enums'
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IMenuItem , ICellInfo} from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
 import { MenuType } from '../Core/Enums';
@@ -21,17 +21,17 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
-        let newValues: { id: any, columnId: string, value: any }[] = [];
+        let newValues:ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
                 if (previewResult.ValidationRules.filter(p => p.CellValidationAction == CellValidationAction.Prevent).length == 0) {
-                    newValues.push({ id: previewResult.Id, columnId: thePreview.ColumnId, value: previewResult.ComputedValue })
+                    newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
                 }
             }
         }
         else {
             thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-                newValues.push({ id: pr.Id, columnId: thePreview.ColumnId, value: pr.ComputedValue })
+                newValues.push({ Id: pr.Id, ColumnId: thePreview.ColumnId, Value: pr.ComputedValue })
             })
         }
 

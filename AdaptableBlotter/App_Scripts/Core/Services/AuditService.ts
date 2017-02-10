@@ -9,7 +9,7 @@ import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { Helper } from '../Helper'
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
-
+import * as StrategyIds from '../StrategyIds'
 
 /*
 For now this is a very rough and ready Audit Service which will recieve notifications of changes in data - either via an event fired in the blotter or through other strategies.
@@ -33,30 +33,6 @@ export class AuditService implements IAuditService {
         }
     }
 
-    private TempDoBidOfferStuffForVideos(dataChangedEvent: IDataChangedEvent): void {
-        if (dataChangedEvent.ColumnId == 'bidOfferSpread') {
-            // first get price
-            let priceDataChangeEvent: IDataChangingEvent = {
-                NewValue: null,
-                ColumnId: 'price',
-                IdentifierValue: dataChangedEvent.IdentifierValue
-            }
-            let price: number = this.getExistingDataValue(priceDataChangeEvent);
-            let bidOfferSpread: number = dataChangedEvent.NewValue;
-            let ask: number = price + bidOfferSpread / 2;
-            let bid: number = price - bidOfferSpread / 2;
-            let bloombergAsk: number = ask + 0.01;
-            let bloombergBid: number = bid - 0.01;
-
-            let newValues: { id: any, columnId: string, value: any }[] = [];
-            newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bid", value: bid });
-            newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "ask", value: ask })
-            //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergAsk", value: bloombergAsk })
-            //    newValues.push({ id: dataChangedEvent.IdentifierValue, columnId: "bloombergBid", value: bloombergBid })
-            this.blotter.setValueBatch(newValues);
-        }
-    }
-
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
         this.checkListExists();
 
@@ -65,14 +41,15 @@ export class AuditService implements IAuditService {
         let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
         let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
         if (cellDataValueList != null) {
-            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length - 1].NewValue;
-            let datachangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList.DataChangedInfos.push(datachangedInfo);
+            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfo.NewValue;
+            cellDataValueList.DataChangedInfo.OldValue = dataChangedEvent.OldValue
+            cellDataValueList.DataChangedInfo.NewValue = dataChangedEvent.NewValue
+            cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfos: [datechangedInfo] }
+            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
             myList.CellDataValueList.push(cellDataValueList);
         }
     }
@@ -83,7 +60,7 @@ export class AuditService implements IAuditService {
         let myList = this._columnDataValueList.find(c => c.ColumnName == dataChangingEvent.ColumnId);
         let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangingEvent.IdentifierValue);
         if (cellDataValueList != null) {
-            return cellDataValueList.DataChangedInfos[cellDataValueList.DataChangedInfos.length - 1].NewValue;
+            return cellDataValueList.DataChangedInfo.NewValue;
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             return this.blotter.GetDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
@@ -124,6 +101,10 @@ export class AuditService implements IAuditService {
                     if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                                "CheckCellChanging",
+                                "Failed",
+                                { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent })
                             return [expressionRule];
                         } else {
                             failedWarningRules.push(expressionRule);
@@ -138,6 +119,10 @@ export class AuditService implements IAuditService {
             for (let noExpressionRule of noExpressionRules) {
                 if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                            "CheckCellChanging",
+                            "Failed",
+                            { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent })
                         return [noExpressionRule];
                     } else {
                         failedWarningRules.push(noExpressionRule);
@@ -145,6 +130,18 @@ export class AuditService implements IAuditService {
 
                 }
             }
+        }
+        if (failedWarningRules.length > 0) {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                "CheckCellChanging",
+                "Warning",
+                { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent })
+        }
+        else {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                "CheckCellChanging",
+                "Ok",
+                { DataChangingEvent: dataChangedEvent })
         }
         return failedWarningRules;
     }

@@ -4,6 +4,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
+import { PopoverType } from '../Core/Enums';
 
 
 /*
@@ -13,14 +14,14 @@ Very basic - for now! - info box that allows us to show Error where required.
 2. BodyText - the main message
 */
 
-
-interface ErrorPopoverProps extends React.ClassAttributes<ErrorPopover> {
+interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string
-    bodyText: string
+    bodyText: string,
+    popoverType: PopoverType
 }
 
 
-export class ErrorPopover extends React.Component<ErrorPopoverProps, {}> {
+export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
     render() {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
@@ -35,9 +36,34 @@ export class ErrorPopover extends React.Component<ErrorPopoverProps, {}> {
             </Popover>);
 
         return <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
-            <Label bsStyle="danger">
-                <Glyphicon glyph="exclamation-sign" />
+            <Label bsStyle={this.getStyle()}>
+                <Glyphicon glyph={this.getGlyphName()} />
             </Label>
         </OverlayTrigger>
     }
+
+
+    private getStyle(): string {
+        switch (this.props.popoverType) {
+            case PopoverType.Error:
+                return "danger";
+            case PopoverType.Warning:
+                return "warning";
+            case PopoverType.Info:
+                return "info";
+        }
+
+
+    }
+
+    private getGlyphName(): string {
+        switch (this.props.popoverType) {
+            case PopoverType.Error:
+                return "exclamation-sign";
+            case PopoverType.Warning:
+                return "warning-sign";
+            case PopoverType.Info:
+             return "info-sign";
+           }
+      }
 }

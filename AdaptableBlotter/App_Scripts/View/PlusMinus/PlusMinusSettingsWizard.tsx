@@ -5,8 +5,8 @@ import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, 
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
-import { ColumnType, SortOrder } from '../../Core/Enums';
-import { InformationPopover } from '../InformationPopover';
+import { ColumnType, SortOrder, PopoverType } from '../../Core/Enums';
+import { AdaptablePopover } from '../AdaptablePopover';
 import { Helper } from '../../Core/Helper'
 
 
@@ -61,7 +61,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Column Expression {' '}
-                            <InformationPopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} />
+                            <AdaptablePopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} popoverType={PopoverType.Warning} />
                             </Radio>
                     </Col>
                 </FormGroup>

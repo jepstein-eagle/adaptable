@@ -129,7 +129,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     private onCellValidationActionChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperatorChanged(event: React.FormEvent) {

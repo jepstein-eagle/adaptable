@@ -9,7 +9,7 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -49,6 +49,7 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
+import { ObjectFactory } from '../Core/ObjectFactory';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -63,7 +64,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
 
-    constructor(private grid: kendo.ui.Grid, private container: HTMLElement) {
+    constructor(private grid: kendo.ui.Grid, private container: HTMLElement, private userName?: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -124,7 +125,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
-                    let errorMessage: string = cellValidationStrategy.CreateCellValidationMessage(failedRules[0]);
+                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
@@ -133,14 +134,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 } else {
                     let warningMessage: string = "";
                     failedRules.forEach(f => {
-                        warningMessage = warningMessage + cellValidationStrategy.CreateCellValidationMessage(f) + "\n";
+                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                     })
+                    let cellInfo: ICellInfo = {
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
+                    }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
                     }
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
@@ -154,7 +160,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
             }
         });
-
 
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
@@ -219,6 +224,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
+    }
+
+    get UserName(): string {
+        return this.userName || "anonymous";
     }
 
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {
@@ -307,7 +316,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return record["uid"]
     }
 
-    getActiveCell(): { Id: any, ColumnId: string, Value: any } {
+    getActiveCell(): ICellInfo {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
         let item = this.grid.dataItem(row);
@@ -377,24 +386,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public setValue(id: any, columnId: string, value: any): void {
-        this.grid.dataSource.getByUid(id).set(columnId, value);
+    public setValue(cellInfo: ICellInfo): void {
+        this.grid.dataSource.getByUid(cellInfo.Id).set(cellInfo.ColumnId, cellInfo.Value);
     }
 
-    public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+    public setValueBatch(batchValues: ICellInfo[]): void {
         // first update the model, then sync the grid, then tell the AuditService (which will fire an event picked up by Flashing Cells)
         for (var item of batchValues) {
-            let model: any = this.grid.dataSource.getByUid(item.id);
-            model[item.columnId] = item.value;
+            let model: any = this.grid.dataSource.getByUid(item.Id);
+            model[item.ColumnId] = item.Value;
         }
 
         // this line triggers a Databound changed event 
         this.grid.dataSource.sync();
 
         for (var item of batchValues) {
-            let model: any = this.grid.dataSource.getByUid(item.id);
-            this.AuditService.CreateAuditEvent(item.id, item.value, item.columnId);
+          // todo: work out why we have this line?  seems superfluous....
+            let model: any = this.grid.dataSource.getByUid(item.Id);
+            this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId);
         }
+    }
+
+    public cancelEdit()
+    {
+        this.grid.closeCell()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
@@ -407,11 +422,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public selectCells(cells: { id: any, columnId: string }[]): void {
+    public selectCells(cells: ICellInfo[]): void {
         let selectorQuery: JQuery
         for (let cell of cells) {
-            let columnIndex = this.getColumnIndex(cell.columnId);
-            var row = this.getRowByRowIdentifier(cell.id);
+            let columnIndex = this.getColumnIndex(cell.ColumnId);
+            var row = this.getRowByRowIdentifier(cell.Id);
             let cellSelect = this.getCellByColumnIndexAndRow(row, columnIndex)
             if (selectorQuery == null) {
                 selectorQuery = cellSelect

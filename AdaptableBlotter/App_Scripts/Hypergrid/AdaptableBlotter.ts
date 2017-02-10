@@ -5,9 +5,10 @@ import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy } from '../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { IAuditService } from '../Core/Services/Interface/IAuditService'
@@ -32,18 +33,21 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationAction } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { IDataChangingEvent, IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
+import { ObjectFactory } from '../Core/ObjectFactory';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -60,7 +64,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
 
-    constructor(private grid: any, private container: HTMLElement, private primaryKey: string) {
+    constructor(private grid: any, private container: HTMLElement, private primaryKey: string, private userName?: string) {
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -89,6 +93,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -129,9 +134,60 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
 
+        grid.addEventListener("fin-before-cell-edit", (event: any) => {
+            let dataChangedEvent: IDataChangingEvent
+            //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
+            //so we use our methods....
+            // var visibleRow = grid.renderer.visibleRows[event.detail.input.event.visibleRow.rowIndex];
+            //they now attached correct row somewhere else....
+            let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex)
+            dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) }
+
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length > 0) { // we have at least one failure or warning
+                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+
+                // first see if its an error = should only be one item in array if so
+                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+                    event.preventDefault();
+                } else {
+                    let warningMessage: string = "";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                    })
+                    let cellInfo: ICellInfo = {
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
+                    }
+                    let confirmation: IUIConfirmation = {
+                        CancelText: "Cancel",
+                        ConfirmationMsg: warningMessage,
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
+                    }
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    event.preventDefault();
+                }
+            }
+            //no failed validation so we raise the edit auditlog
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                    dataChangedEvent.ColumnId,
+                    (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
+            }
+        });
+
+        //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
             this.grid.behavior.reindex();
-            throw 'reminder';
         });
 
         //                 grid.addEventListener("fin-context-menu", (e: any) => {
@@ -158,16 +214,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return icon;
         }
 
-
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            if (config.isHeaderRow && config.isGridColumn) {
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.columnName);
+            if (config.isHeaderRow && !config.isHandleColumn) {
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                 config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0)];
             }
-            if (config.isGridRow) {
-                //need to use untranslatedX or find the column using the index property
-                var x = config.x;
-                var y = config.normalizedY;
+            if (config.isDataRow) {
+                var x = config.dataCell.x;
+                var y = config.dataCell.y;
                 let row = this.grid.behavior.dataModel.dataSource.getRow(y)
                 let column = this.grid.behavior.getActiveColumns().find((col: any) => col.index == x)
                 if (column && row) {
@@ -179,8 +233,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
                 let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
                 let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
+                let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
                 if (flashColor) {
                     config.backgroundColor = flashColor;
+                }
+                else if (quickSearchBackColor) {
+                    config.backgroundColor = quickSearchBackColor;
                 }
                 else if (csBackgroundColorColumn || csForeColorColumn) {
                     config.backgroundColor = csBackgroundColorColumn;
@@ -213,6 +271,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.SetColumnIntoStore(), 5);
         });
+    }
+
+    get UserName(): string {
+        return this.userName || "anonymous";
     }
 
     public SetColumnIntoStore() {
@@ -290,7 +352,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return "";
     }
 
-    getActiveCell(): { Id: any, ColumnId: string, Value: any } {
+    getActiveCell(): ICellInfo {
         let currentCell = this.grid.selectionModel.getLastSelection();
 
         if (currentCell) {
@@ -387,26 +449,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return ColumnType.String;
     }
 
-    public setValue(id: any, columnId: string, value: any): void {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
-        row[columnId] = value
+    public setValue(cellInfo: ICellInfo): void {
         //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
-        this.grid.abortEditing()
+        this.cancelEdit()
+
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, cellInfo.Id)
+        row[cellInfo.ColumnId] = cellInfo.Value;
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
     }
 
-    public setValueBatch(batchValues: { id: any, columnId: string, value: any }[]): void {
+    public setValueBatch(batchValues: ICellInfo[]): void {
         //no need to have a batch mode so far.... we'll see in the future performance
         for (let element of batchValues) {
-            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.id)
-            row[element.columnId] = element.value
+            let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.Id)
+            row[element.ColumnId] = element.Value
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
+    }
+
+    public cancelEdit(){
+        this.grid.abortEditing()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
@@ -419,7 +486,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public selectCells(cells: { id: any, columnId: string }[]): void {
+    public selectCells(cells: ICellInfo[]): void {
     }
 
     public getColumnHeader(columnId: string): string {
@@ -439,7 +506,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-        return false;
+        //TODO : implement the logic when the editor is looked up at runtime when overriding getCellEditorAt
+        let colprop = this.grid.behavior.getColumnProperties(this.getColumnIndex(columnId))
+        if (colprop.editor) {
+            return false;
+        }
+        else {
+            return true
+        }
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
@@ -519,6 +593,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
                 }
             }
+            if (style.quickSearchBackColor) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
+            }
             //There is never a timeout for CS
             if (style.csBackColorColumn) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
@@ -530,7 +607,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
         if (rowIndex >= 0) {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
@@ -567,7 +643,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow'): void {
+    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
         if (style == 'flash') {
             this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
             this.grid.repaint()
@@ -581,6 +657,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorRow', undefined)
             this.grid.behavior.setCellProperty(x, y, 'csForeColorRow', undefined)
             this.grid.repaint()
+        }
+        if (style == 'QuickSearch') {
+            this.grid.behavior.setCellProperty(x, y, 'quickSearchBackColor', undefined)
         }
     }
 
@@ -639,5 +718,6 @@ interface CellStyleHypergrid {
     csBackColorColumn?: string,
     csForeColorRow?: string,
     csBackColorRow?: string,
-    flashBackColor?: string
+    flashBackColor?: string,
+    quickSearchBackColor?: string
 }

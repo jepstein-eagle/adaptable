@@ -1,21 +1,23 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { AdaptableBlotter } from '../Hypergrid/AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
 import { IAdvancedSearch } from '../Core/interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../Core/Extensions'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { LeafExpressionOperator } from '../Core/Enums'
+import { LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase
-export let FilterAndSearchDataSource = (blotter: IAdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
+export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
     blotter: blotter,
     apply: function () {
+        this.clearColorQuickSearch();
         let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
         let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
         if (StringExtensions.IsNotNullOrEmpty(currentSearchId)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
             this.buildIndex(this.filterTest);
+            this.colorQuickSearch();
         } else {
             this.clearIndex();
         }
@@ -45,34 +47,67 @@ export let FilterAndSearchDataSource = (blotter: IAdaptableBlotter) => DataSourc
 
         //we assess quicksearch
         if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
-            let quickSearchLowerCase = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText.toLowerCase()
-            for (let prop in rowObject) {
-                let stringValueLowerCase = String(rowObject[prop]).toLowerCase()
+            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
+            let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
+
+            let recordReturnValue = false
+            for (let column of columns) {
+                let stringValueLowerCase = String(rowObject[column.ColumnId]).toLowerCase()
+                let columnIndex = blotter.getColumnIndex(column.ColumnId)
                 switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
                     case LeafExpressionOperator.Contains:
                         {
                             if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                return true;
+                                //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                    this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                                }
+                                //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                                    return true;
+                                }
+                                recordReturnValue = true
                             }
                         }
                         break;
                     case LeafExpressionOperator.StartsWith:
                         {
                             if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                return true;
+                                //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                    this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                                }
+                                //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                                    return true;
+                                }
+                                recordReturnValue = true
                             }
                         }
                         break;
                     case LeafExpressionOperator.EndsWith:
                         {
-                            if (stringValueLowerCase.endsWith(quickSearchLowerCase)) {
+                            //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                            }
+                            //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
                                 return true;
                             }
+                            recordReturnValue = true
                         }
                         break;
                 }
             }
-            return false
+            //if we color only then we just return true....
+            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                return true;
+            }
+            return recordReturnValue
         }
         return true;
     },
@@ -84,9 +119,22 @@ export let FilterAndSearchDataSource = (blotter: IAdaptableBlotter) => DataSourc
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
             return this.index.length;
         }
-        else
-        {
+        else {
             return this.dataSource.getRowCount()
         }
+    },
+    colorQuickSearch: function () {
+        for (let record of this.quickSearchColor) {
+            blotter.addCellStyleHypergrid(record.rowID, record.columnIndex, record.style)
+        }
+    },
+    clearColorQuickSearch: function () {
+        if (this.quickSearchColor) {
+            for (let record of this.quickSearchColor) {
+                let rowIndex = blotter.getRowIndexHypergrid(record.rowID)
+                blotter.removeCellStyleByIndex(record.columnIndex, rowIndex, "QuickSearch")
+            }
+        }
+        this.quickSearchColor = [];
     }
 });

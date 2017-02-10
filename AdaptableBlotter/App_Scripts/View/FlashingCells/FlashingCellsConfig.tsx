@@ -35,21 +35,19 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
-        let existingFlashingColumnNames: string[] = this.props.FlashingColumns.map((flashingColumn: IFlashingColumn) => {
-            return flashingColumn.ColumnName
-        });
-
         let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Up Color", 2], ["Down Color", 2]];
-
+        
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
-        this.props.FlashingColumns.forEach(fc => {
-            allPotentialFlashingColumns.push(fc);
-        });
-
-        numericColumns.filter(c => existingFlashingColumnNames.findIndex(e => e == c.ColumnId) < 0).forEach(nc => {
-            allPotentialFlashingColumns.push(ObjectFactory.CreateDefaultFlashingColumn(nc));
+        numericColumns.forEach(nc => {
+            let existingfc = this.props.FlashingColumns.find(e => e.ColumnName == nc.ColumnId)
+            if (!existingfc) {
+                allPotentialFlashingColumns.push(ObjectFactory.CreateDefaultFlashingColumn(nc))
+            }
+            else {
+                allPotentialFlashingColumns.push(existingfc);
+            }
         })
-
+        
         let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return <FlashingCellConfigItem
                 FlashingColumn={flashingColumn}

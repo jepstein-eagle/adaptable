@@ -3,6 +3,10 @@
 import * as Redux from 'redux';
 import { GridState } from './interface/IState'
 import { IColumn } from '../../Core/interface/IAdaptableBlotter'
+import { ICellInfo } from '../../Core/interface/IStrategy'
+
+
+
 const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
 export const SET_GRIDVALUE_LIKE_EDIT = 'SET_GRIDVALUE_LIKE_EDIT';
 
@@ -11,22 +15,20 @@ export interface SetColumnsAction extends Redux.Action {
 }
 
 export interface SetValueAction extends Redux.Action {
-    PrimaryKey: any,
-    ColumnId: string,
+    CellInfo: ICellInfo,
     OldValue: any,
-    NewValue: any
+ 
 }
 export const SetColumns = (Columns: IColumn[]): SetColumnsAction => ({
     type: SET_GRIDCOLUMNS,
     Columns
 })
 
-export const SetValueLikeEdit = (PrimaryKey: any, ColumnId: string, OldValue: any, NewValue: any): SetValueAction => ({
+export const SetValueLikeEdit = (CellInfo: ICellInfo, OldValue: any): SetValueAction => ({
     type: SET_GRIDVALUE_LIKE_EDIT,
-    PrimaryKey,
-    ColumnId,
+   CellInfo,
     OldValue,
-    NewValue
+   
 })
 
 

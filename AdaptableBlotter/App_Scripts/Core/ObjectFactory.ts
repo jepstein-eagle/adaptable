@@ -4,16 +4,17 @@ import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
 import { CellValidationAction, LeafExpressionOperator, ColumnType, ShortcutAction } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
-import { IColumn } from '../Core/Interface/IAdaptableBlotter'
+import {IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
 import { IShortcut } from './Interface/IShortcutStrategy';
+import { Expression } from './Expression/Expression'
 
 export module ObjectFactory {
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
             Uid: Helper.generateUid(),
             Name: "",
-            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Expression: CreateEmptyExpression(),
         }
     }
 
@@ -27,7 +28,7 @@ export module ObjectFactory {
                 Operand2: ""
             },
             HasExpression: false,
-            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
+            OtherExpression: CreateEmptyExpression(),
             Description: ""
         }
     }
@@ -38,7 +39,7 @@ export module ObjectFactory {
             FriendlyName: "",
             Description: "",
             ColumnType: ColumnType.String,
-            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Expression: CreateEmptyExpression(),
             IsExpressionSatisfied: (value: any): boolean => {
                 return null;
             },
@@ -70,5 +71,25 @@ export module ObjectFactory {
             IsDynamic: false
         }
     }
+
+     export function CreateEmptyExpression(): Expression {
+        return new Expression([], [], [], [])
+    }
+
+ export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter :IAdaptableBlotter, showIntro=true): string {
+       let intro: string =(showIntro)? "The following Cell Validation was broken:": "";
+        let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
+        let columnFriendlyName: string = columns.find(c => c.ColumnId == CellValidation.ColumnId).FriendlyName;
+        let expressionDescription: string = (CellValidation.HasExpression) ?
+            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, columns, userFilters) :
+            "";
+        return (intro + "\nColumn: '" + columnFriendlyName + "'\nRule: " + CellValidation.Description + expressionDescription);
+    }
+
+
+
+    
+
 }
 

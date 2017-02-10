@@ -13,6 +13,6 @@ export interface ICalendar {
 
 export interface ICalendarEntry {
     HolidayName: string;
-    HolidayDate: Date;
+    HolidayDate: string;
 }
 

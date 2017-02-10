@@ -9,7 +9,6 @@ import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy'
 import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
-import { IAlert } from '../../../Core/interface/IAlertStrategy';
 import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';

@@ -40,3 +40,10 @@ export interface IStrategyActionReturn<T> {
     ActionReturn?: T,
     Error?: IUIError
 }
+
+
+export interface ICellInfo{
+          Id: any, 
+          ColumnId: string, 
+          Value: any 
+}
