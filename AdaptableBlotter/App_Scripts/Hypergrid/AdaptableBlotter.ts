@@ -445,12 +445,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(id: any, columnId: string, value: any): void {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
-        row[columnId] = value
         //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
         this.grid.abortEditing()
+
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, id)
+        row[columnId] = value
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
