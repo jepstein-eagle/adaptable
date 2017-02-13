@@ -37,7 +37,7 @@ export class AuditLogService {
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.UserName,
                 adaptableblotter_editcell: {
-                    primarykey: primarykey,
+                    primarykey: String(primarykey),
                     column_id: columnId,
                     old_value_string: oldValue,
                     new_value_string: newValue
@@ -50,7 +50,7 @@ export class AuditLogService {
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.UserName,
                 adaptableblotter_editcell: {
-                    primarykey: primarykey,
+                    primarykey: String(primarykey),
                     column_id: columnId,
                     old_value_string: String(oldValue),
                     new_value_string: String(newValue),
@@ -65,7 +65,7 @@ export class AuditLogService {
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.UserName,
                 adaptableblotter_editcell: {
-                    primarykey: primarykey,
+                    primarykey: String(primarykey),
                     column_id: columnId,
                     old_value_string: String(oldValue),
                     new_value_string: String(newValue),
@@ -80,7 +80,7 @@ export class AuditLogService {
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.UserName,
                 adaptableblotter_editcell: {
-                    primarykey: primarykey,
+                    primarykey: String(primarykey),
                     column_id: columnId,
                     old_value_string: String(oldValue),
                     new_value_string: String(newValue),
@@ -95,7 +95,7 @@ export class AuditLogService {
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.UserName,
                 adaptableblotter_editcell: {
-                    primarykey: primarykey,
+                    primarykey: String(primarykey),
                     column_id: columnId,
                     old_value_string: String(oldValue),
                     new_value_string: String(newValue)
