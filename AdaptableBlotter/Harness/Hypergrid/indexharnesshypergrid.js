@@ -83,7 +83,7 @@ function InitBlotter() {
     grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',
         currency: 'USD',
-        maximumSignificantDigits: 0
+        maximumFractionDigits: 0
     }));
 
     var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
