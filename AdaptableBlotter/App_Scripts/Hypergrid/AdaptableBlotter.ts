@@ -456,7 +456,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.cancelEdit()
 
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, cellInfo.Id)
+        let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
+
+        this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
+            cellInfo.ColumnId,
+            oldValue, cellInfo.Value)
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
@@ -466,13 +471,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //no need to have a batch mode so far.... we'll see in the future performance
         for (let element of batchValues) {
             let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, element.Id)
+            let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
+            this.AuditLogService.AddEditCellAuditLog(element.Id,
+                element.ColumnId,
+                oldValue, element.Value)
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
     }
 
-    public cancelEdit(){
+    public cancelEdit() {
         this.grid.abortEditing()
     }
 

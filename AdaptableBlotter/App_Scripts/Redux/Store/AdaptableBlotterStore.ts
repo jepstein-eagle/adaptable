@@ -152,7 +152,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     //We set the value in the grid
                     adaptableBlotter.setValue(actionTyped.CellInfo)
                     //We AuditLog the Edit
-                    adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
+                    //13/02: we now do the AuditLog in the SeValue function
+                    // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
                 case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
