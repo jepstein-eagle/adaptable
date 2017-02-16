@@ -45,7 +45,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/auditlog': {
-                target: 'http://localhost:6767',
+                target: 'http://127.0.0.1:6767',
                 secure: false
             }
         }
