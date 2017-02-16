@@ -156,19 +156,19 @@ function InitBlotter() {
 }
 
 var lightTheme = {
-    font: '15px Tahoma, Geneva, sans-serif',
+    font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: 'rgb(25, 25, 25)',
     backgroundColor: 'rgb(241, 241, 241)',
     foregroundSelectionColor: 'rgb(25, 25, 25)',
     backgroundSelectionColor: 'rgb(183, 219, 255)',
 
-    columnHeaderFont: '15px Tahoma, Geneva, sans-serif',
+    columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: 'rgb(25, 25, 25)',
     columnHeaderBackgroundColor: 'rgb(223, 227, 232)',
     columnHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
     columnHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
 
-    rowHeaderFont: '15px Tahoma, Geneva, sans-serif',
+    rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     rowHeaderColor: 'rgb(25, 25, 25)',
     rowHeaderBackgroundColor: 'rgb(223, 227, 232)',
     rowHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
@@ -196,19 +196,19 @@ var lightTheme = {
 }
 
 var darkTheme = {
-    font: '15px Roboto Condensed',
+    font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: 'white',
     backgroundColor: '#07071E',
     foregroundSelectionColor: 'white',
     backgroundSelectionColor: '#3D77FE',
 
-    columnHeaderFont: '14px Roboto Condensed',
+    columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: 'white',
     columnHeaderBackgroundColor: '#07071E',
     columnHeaderForegroundSelectionColor: 'white',
     columnHeaderBackgroundSelectionColor: '#3D77FE',
 
-    rowHeaderFont: '14px Roboto Condensed',
+    rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     rowHeaderColor: 'white',
     rowHeaderBackgroundColor: '#07071E',
     rowHeaderForegroundSelectionColor: 'white',
