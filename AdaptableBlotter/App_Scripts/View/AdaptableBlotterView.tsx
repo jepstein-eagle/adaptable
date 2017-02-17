@@ -19,6 +19,7 @@ import { IMenuItem } from '../Core/interface/IStrategy'
 import { MenuType } from '../Core/Enums';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
+import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfirmation'
@@ -64,6 +65,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Navbar.Header>
                         {<AdvancedSearchToolbarControl />}
                     </Navbar.Header>
+                    <Navbar.Header>
+                        {<LayoutToolbarControl />}
+                    </Navbar.Header>
                     <Nav style={marginStyle} >
 
                         <NavDropdown key="functions" title="Functions..." id="basic-nav-dropdown">
@@ -73,6 +77,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
                         </NavDropdown>
+
                     </Nav>
                 </Navbar>
 

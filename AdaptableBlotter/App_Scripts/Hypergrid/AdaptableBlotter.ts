@@ -279,12 +279,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SetColumnIntoStore() {
         // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
-        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any) => {
+        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any, index: number) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
-                Visible: true
+                Visible: true,
+                Index: index
             }
         });
         let hiddenColumns: IColumn[] = this.grid.behavior.getHiddenColumns().map((x: any) => {
@@ -292,7 +293,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
-                Visible: false
+                Visible: false,
+                Index: -1
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
@@ -472,7 +474,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint()
     }
 
-    public cancelEdit(){
+    public cancelEdit() {
         this.grid.abortEditing()
     }
 
@@ -708,6 +710,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
+    }
+
+    public loadCurrentLayout(): void {
+
     }
 
 

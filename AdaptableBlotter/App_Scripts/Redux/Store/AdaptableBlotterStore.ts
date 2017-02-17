@@ -22,6 +22,7 @@ import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
+import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -53,7 +54,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
-    CellValidation: CellValidationRedux.CellValidationReducer
+    CellValidation: CellValidationRedux.CellValidationReducer,
+    Layout: LayoutRedux.LayoutReducer
 });
 
 

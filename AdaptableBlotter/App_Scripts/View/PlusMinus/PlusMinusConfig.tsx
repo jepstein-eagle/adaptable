@@ -78,7 +78,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         })
 
         return <PanelWithButton headerText="Plus/Minus Configuration" bsStyle="primary" style={panelStyle} buttonContent={"Create Column Nudge Value"}
-            buttonClick={() => this.createColumnNudgeValue()} glyphicon={"plus-sign"} >
+            buttonClick={() => this.createColumnNudgeValue()} showAddButtonGlyph={true}  glyphicon={"plus-sign"} >
             <Form horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>

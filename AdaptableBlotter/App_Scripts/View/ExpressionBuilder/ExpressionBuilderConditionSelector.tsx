@@ -119,7 +119,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
-            buttonContent={"Add Condition"} bsStyle="primary" style={{ height: '575px' }}>
+            buttonContent={"Add Condition"} bsStyle="primary"  showAddButtonGlyph={false} style={{ height: '575px' }}>
             <Form horizontal>
                 {this.state.IsFirstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.

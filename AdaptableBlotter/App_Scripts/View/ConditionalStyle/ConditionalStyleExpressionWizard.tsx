@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
-
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
@@ -10,6 +9,7 @@ import { IConditionalStyleCondition } from '../../Core/interface/IConditionalSty
 import { Expression } from '../../Core/Expression/Expression';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
+import { StringExtensions } from '../../Core/Extensions';
 
 interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     ColumnList: Array<IColumn>
@@ -23,7 +23,7 @@ export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage impl
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,
-            SelectedColumnId: props2.Data.ColumnId
+            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : "select"
         }
     }
 

@@ -12,6 +12,7 @@ import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy
 import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
+import { ILayout } from '../../../Core/interface/ILayoutStrategy';
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -124,4 +125,9 @@ export interface ThemeState {
 
 export interface CellValidationState {
     CellValidations: Array<ICellValidationRule>
+}
+
+export interface LayoutState {
+    CurrentLayout: string;
+    AvailableLayouts : ILayout[]
 }

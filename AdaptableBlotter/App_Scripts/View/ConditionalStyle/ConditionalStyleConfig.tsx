@@ -13,6 +13,7 @@ import { ConditionalStyleScope } from '../../Core/Enums'
 import { ConditionalStyleConfigItem } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
+import { ConditionalStyleColumnWizard } from './ConditionalStyleColumnWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../PanelWithButton';
@@ -61,7 +62,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         return <PanelWithButton headerText="Create Conditional Style"
             buttonContent={"Create Conditional Style"}
             buttonClick={() => this.onAdd()}
-            bsStyle="primary" style={panelStyle} glyphicon={"tint"}>
+            bsStyle="primary" style={panelStyle} showAddButtonGlyph={true} glyphicon={"tint"}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
@@ -75,8 +76,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             {this.state.EditedConditionalStyleCondition != null &&
                 <AdaptableWizard Steps={
                     [
-                        <ConditionalStyleSettingsWizard
-                            Columns={this.props.Columns} />,
+                        <ConditionalStyleColumnWizard Columns={this.props.Columns} />,
+                        <ConditionalStyleSettingsWizard />,
                         <ConditionalStyleExpressionWizard
                             ColumnList={this.props.Columns}
                             UserFilters={this.props.UserFilters}
@@ -92,16 +93,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     onAdd() {
-        let _editedConditionalStyle: IConditionalStyleCondition = {
-            Uid: Helper.generateUid(),
-            ColumnId: "select",
-            BackColor: '#ffffff',
-            ForeColor: '#000000',
-            ConditionalStyleScope: ConditionalStyleScope.Column,
-            Expression: ObjectFactory.CreateEmptyExpression(),
-            IsPredefinedExpression: false,
-            PredefinedStyleCondition: null
-        }
+        let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
         this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
     }
 

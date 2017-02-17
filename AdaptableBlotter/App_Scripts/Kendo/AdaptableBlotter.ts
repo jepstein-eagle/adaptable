@@ -6,6 +6,7 @@ import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { FilterFormReact } from '../View/FilterForm';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
@@ -37,6 +38,7 @@ import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
+import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -44,9 +46,10 @@ import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidat
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ILayout } from '../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { ExportState, QuickSearchState, LayoutState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
@@ -96,6 +99,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -269,16 +273,50 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SetColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map(x => {
+        let columns: IColumn[] = this.grid.columns.map((x, index) => {
+            let isVisible: boolean = x.hasOwnProperty('hidden') ? !x.hidden : true;
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
                 ColumnType: this.getColumnType(x.field),
-                Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
+                Visible: isVisible,
+                Index: isVisible ? index : -1
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
+
+    public loadCurrentLayout(): void {
+        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
+
+        let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
+
+        // must be a better way to do this but I want to create a default column collection if not already existing
+        if (currentLayout==null) {
+          this.SetColumnIntoStore();
+            let newLayout: ILayout = { Name: "Default", Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(newLayout));
+            return;
+        }
+
+        let layoutColumns: IColumn[] = currentLayout.Columns.sort(c => c.Index);
+        let gridColumns: kendo.ui.GridColumn[] = this.grid.columns;
+        layoutColumns.forEach(layoutColumn => {
+            let gridColumn: kendo.ui.GridColumn = gridColumns.find(gridColumn => gridColumn.field == layoutColumn.ColumnId);
+            this.grid.reorderColumn(layoutColumn.Index, gridColumn);
+            this.grid.showColumn(gridColumn.field);
+        })
+
+        // hide any which are in the grid columns but not in the layout
+        gridColumns.forEach(gridColumn => {
+            let layoutColumn: IColumn = layoutColumns.find(lc => lc.ColumnId == gridColumn.field);
+            if (layoutColumn == null) {
+                this.grid.hideColumn(gridColumn.field);
+            }
+        })
+    }
+
+
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
@@ -401,14 +439,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.dataSource.sync();
 
         for (var item of batchValues) {
-          // todo: work out why we have this line?  seems superfluous....
+            // todo: work out why we have this line?  seems superfluous....
             let model: any = this.grid.dataSource.getByUid(item.Id);
             this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId);
         }
     }
 
-    public cancelEdit()
-    {
+    public cancelEdit() {
         this.grid.closeCell()
     }
 

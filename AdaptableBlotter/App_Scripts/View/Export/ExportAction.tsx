@@ -55,14 +55,14 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                                 <Checkbox onChange={(e: React.FormEvent) => this.handleAllPagesChanged(e)} checked={this.props.AllPages}></Checkbox>
                             </Col>
                         </FormGroup>
-                       }
-                   <FormGroup controlId="filterable">
-                            <Col xs={4} componentClass={ControlLabel}>Excel File Filterable: </Col>
-                            <Col xs={8}>
-                                <Checkbox onChange={(e: React.FormEvent) => this.handleFilterableChanged(e)} checked={this.props.Filterable}></Checkbox>
-                            </Col>
-                        </FormGroup>
-                          <FormGroup controlId="exportButton">
+                    }
+                    <FormGroup controlId="filterable">
+                        <Col xs={4} componentClass={ControlLabel}>Excel File Filterable: </Col>
+                        <Col xs={8}>
+                            <Checkbox onChange={(e: React.FormEvent) => this.handleFilterableChanged(e)} checked={this.props.Filterable}></Checkbox>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId="exportButton">
                         <Col xs={4} ></Col>
 
                         <Col xs={1} componentClass={ControlLabel}>

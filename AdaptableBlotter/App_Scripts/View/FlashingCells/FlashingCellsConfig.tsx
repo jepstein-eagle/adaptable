@@ -19,8 +19,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
     FlashingColumns: Array<IFlashingColumn>,
     Columns: IColumn[],
-    onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingColumnSelectAction,
-    onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingColumnSelectAllAction,
+    onSelectColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingColumnSelectAction,
+    onSelectAllColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingColumnSelectAllAction,
     onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => FlashingCellsRedux.FlashingColumnDurationChangeAction
     onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => FlashingCellsRedux.FlashingColumnDownColorChangeAction
     onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => FlashingCellsRedux.FlashingColumnUpColorChangeAction
@@ -54,7 +54,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
                 key={flashingColumn.ColumnName}
                 Columns={this.props.Columns}
                 FlashingCellDurations={flashingCellDurations}
-                onSelect={(flashingColumn) => this.props.onSelectFlashingColumn(flashingColumn)}
+                onSelect={(flashingColumn) => this.props.onSelectColumn(flashingColumn)}
                 onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}
                 onChangeDownColorFlashingColumn={(flashingColumn, DownColor) => this.props.onChangeDownColorFlashingColumn(flashingColumn, DownColor)}
                 onChangeUpColorFlashingColumn={(flashingColumn, UpColor) => this.props.onChangeUpColorFlashingColumn(flashingColumn, UpColor)}>
@@ -63,11 +63,9 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 
         let setAllOption = <Form horizontal>
             <FormGroup controlId="formInlineName">
-                <Col xs={12}>
-                    <Checkbox onChange={() => this.props.onSelectAllFlashingColumns(allPotentialFlashingColumns)}
-                        checked={allPotentialFlashingColumns.every(f => f.IsLive)} >
-                        Turn On All Flashing Columns
-                    </Checkbox>
+                <Col xs={12} style={topCheckBoxStyle}>
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns)}
+                        checked={allPotentialFlashingColumns.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </Form>;
@@ -92,8 +90,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectFlashingColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.SelectFlashingCellColumn(flashingCell)),
-        onSelectAllFlashingColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.SelectAllFlashingCellColumn(numericColumns)),
+        onSelectColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.SelectFlashingCellColumn(flashingCell)),
+        onSelectAllColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.SelectAllFlashingCellColumn(numericColumns)),
         onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => dispatch(FlashingCellsRedux.ChangeFlashingDuration(flashingCell, newFlashDuration)),
         onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => dispatch(FlashingCellsRedux.ChangeFlashingDownColor(flashingCell, DownColor)),
         onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => dispatch(FlashingCellsRedux.ChangeFlashingUpColor(flashingCell, UpColor))
@@ -109,4 +107,8 @@ let panelStyle = {
 let divStyle = {
     'overflowY': 'auto',
     'maxHeight': '300px'
+}
+
+let topCheckBoxStyle = {
+   'margin': '7px'
 }

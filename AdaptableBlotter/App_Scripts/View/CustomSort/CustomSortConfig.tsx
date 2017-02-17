@@ -52,7 +52,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
 
         return <PanelWithButton headerText="Custom Sorts" style={panelStyle}
             buttonClick={() => this.CreateCustomSort()}
-            buttonContent="Create Custom Sort" bsStyle="primary" glyphicon={"sort-by-attributes"}>
+            buttonContent="Create Custom Sort" bsStyle="primary"  showAddButtonGlyph={true} glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

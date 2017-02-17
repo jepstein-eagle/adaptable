@@ -6,6 +6,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { ColumnType } from '../../Core/Enums';
+import { StringExtensions } from '../../Core/Extensions';
 
 
 interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
@@ -46,10 +47,10 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     }
 
     public canNext(): boolean {
-        return this.state.AdvancedSearchName != "";
+        return StringExtensions.IsNotEmpty(this.state.AdvancedSearchName);
     }
-    
-   
+
+
     public canBack(): boolean { return true; }
 
     public Next(): void {

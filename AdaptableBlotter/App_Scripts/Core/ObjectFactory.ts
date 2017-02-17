@@ -2,14 +2,16 @@ import { Helper } from './Helper';
 import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
-import { CellValidationAction, LeafExpressionOperator, ColumnType, ShortcutAction } from '../Core/Enums';
+import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
+import { CellValidationAction, LeafExpressionOperator, ColumnType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
-import {IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
 import { IShortcut } from './Interface/IShortcutStrategy';
 import { Expression } from './Expression/Expression'
 
 export module ObjectFactory {
+
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
             Uid: Helper.generateUid(),
@@ -72,12 +74,12 @@ export module ObjectFactory {
         }
     }
 
-     export function CreateEmptyExpression(): Expression {
+    export function CreateEmptyExpression(): Expression {
         return new Expression([], [], [], [])
     }
 
- export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter :IAdaptableBlotter, showIntro=true): string {
-       let intro: string =(showIntro)? "The following Cell Validation was broken:": "";
+    export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
+        let intro: string = (showIntro) ? "The following Cell Validation was broken:" : "";
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
         let columnFriendlyName: string = columns.find(c => c.ColumnId == CellValidation.ColumnId).FriendlyName;
@@ -87,9 +89,20 @@ export module ObjectFactory {
         return (intro + "\nColumn: '" + columnFriendlyName + "'\nRule: " + CellValidation.Description + expressionDescription);
     }
 
+    export function CreateEmptyConditionalStyle(): IConditionalStyleCondition {
+        return {
+            Uid: Helper.generateUid(),
+            ColumnId: "",
+            BackColor: '#ffffff',
+            ForeColor: '#000000',
+            ConditionalStyleScope: ConditionalStyleScope.Column,
+            Expression: CreateEmptyExpression(),
+        }
+    }
 
 
-    
+
+
 
 }
 

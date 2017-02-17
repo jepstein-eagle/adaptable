@@ -11,24 +11,10 @@ export interface IConditionalStyleCondition {
     ColumnId: string
     ConditionalStyleScope: ConditionalStyleScope
     Expression: Expression
-    IsPredefinedExpression: boolean
-    PredefinedStyleCondition: IPredefinedStyleCondition
-    BackColor: string
+     BackColor: string
     ForeColor: string
 }
 
 
-export interface IPredefinedStyleCondition {
-    Id: string
-    PredefinedExpressionInfo: IPredefinedExpressionInfo
-    FriendlyName: string
-    BackColor: string
-    ForeColor: string
-}
 
-export interface IPredefinedExpressionInfo {
-    DisplayColumnValues: Array<string>,
-    RawColumnValues: Array<any>,
-    UserFilterUids: string[],
-    ExpressionRange: IRangeExpression
-}
+

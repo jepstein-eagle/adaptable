@@ -74,7 +74,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         return (
             <div >
                 <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                    buttonClick={() => this.onNewAdvancedSearch()} glyphicon={"search"}>
+                    buttonClick={() => this.onNewAdvancedSearch()}  showAddButtonGlyph={false}  glyphicon={"search"}>
 
                     {/* The main Search selection form */}
                     <div >
@@ -124,7 +124,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <PanelWithButton headerText="Search Details" bsStyle="primary"
+                    <PanelWithButton headerText="Search Details" bsStyle="primary"  showAddButtonGlyph={false}  
                         buttonContent={"Edit Search"}
                         buttonClick={() => this.onEditAdvancedSearch()}>
                         <div style={previewDivStyle}>

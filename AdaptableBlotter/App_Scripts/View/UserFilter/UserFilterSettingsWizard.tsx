@@ -8,6 +8,7 @@ import { IUserFilter } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { StringExtensions } from '../../Core/Extensions';
 
 
 interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
@@ -25,7 +26,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
             FilterName: this.props.Data.FriendlyName,
         }
     }
-    render(){
+    render() {
 
         return <Panel header="Filter Settings" bsStyle="primary">
             <Form horizontal>
@@ -49,7 +50,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     }
 
     public canNext(): boolean {
-        return this.state.FilterName != "";
+        return StringExtensions.IsNotEmpty(this.state.FilterName);
     }
 
 

@@ -12,6 +12,7 @@ interface PanelWithButtonProps extends PanelProps {
     headerText: string
     glyphicon?: string
     buttonDisabled?: boolean
+    showAddButtonGlyph: boolean
 }
 
 
@@ -35,7 +36,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
 
                 <Col xs={9}>
                     {this.props.glyphicon != null &&
-                        <Glyphicon glyph={this.props.glyphicon} style={glyphStyle} />
+                        <Glyphicon glyph={this.props.glyphicon} style={glyphBigRightMarginStyle} />
                     }
                     {this.props.headerText}
                 </Col>
@@ -43,6 +44,9 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                     {buttonContent &&
 
                         <Button bsSize="small" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+                            {this.props.showAddButtonGlyph &&
+                                <Glyphicon glyph="plus" style={glyphSmallRightMarginStyle} />
+                            }
                             {buttonContent}
                         </Button>}
                 </Col>
@@ -55,7 +59,12 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
 
 }
 
-let glyphStyle = {
+let glyphBigRightMarginStyle = {
     marginRight: '10px',
+    padding: '0px'
+}
+
+let glyphSmallRightMarginStyle = {
+    marginRight: '5px',
     padding: '0px'
 }
