@@ -32,17 +32,16 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     render(): any {
         return <Form className='navbar-form'>
             <Panel className="small-padding-panel" >
-                <ControlLabel style={labelStyle}>Quick Search:</ControlLabel>
                 <FormControl
                     type="text"
-                    placeholder="Enter Search Text"
+                    placeholder="Enter Quick Search Text"
                     value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
                     />{' '}
 
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Search</Button>
+                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run Quick Search</Button>
                 </OverlayTrigger>
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>

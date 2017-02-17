@@ -27,8 +27,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         return <Form className='navbar-form'>
             <Panel className="small-padding-panel" >
-                <ControlLabel style={labelStyle}>Layout:</ControlLabel>
-                <FormControl componentClass="select" placeholder="select"
+                 <FormControl componentClass="select" placeholder="select"
                     value={this.props.CurrentLayout}
                     onChange={(x) => this.onSelectedLayoutChanged(x)} >
                     {availableLayouts}
@@ -36,7 +35,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save a new Layout using the Blotter's current column order and visibility</Tooltip>}>
-                    <Button bsSize='small' bsStyle='info' onClick={() => this.onSaveNewLayoutClicked()}>Save New...</Button>
+                    <Button bsSize='small' bsStyle='info' onClick={() => this.onSaveNewLayoutClicked()}>Save New Layout...</Button>
                 </OverlayTrigger>
 
             </Panel>

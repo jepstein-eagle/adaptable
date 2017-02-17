@@ -30,7 +30,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         return (
             <Form className='navbar-form'>
                 <Panel className="small-padding-panel" >
-                    <ControlLabel style={labelStyle}>Advanced Search:</ControlLabel>
                     <FormControl componentClass="select" placeholder="select"
                         value={currentAdvancedSearchId}
                         onChange={(x) => this.onSelectedSearchChanged(x)} >
@@ -40,7 +39,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit</Button>
+                        <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit Advanced Search</Button>
                     </OverlayTrigger>
 
                     {' '}

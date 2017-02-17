@@ -294,7 +294,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // must be a better way to do this but I want to create a default column collection if not already existing
         if (currentLayout==null) {
           this.SetColumnIntoStore();
-            let newLayout: ILayout = { Name: "Default", Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
+            let newLayout: ILayout = { Name: "Default Layout", Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
             this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(newLayout));
             return;
         }
