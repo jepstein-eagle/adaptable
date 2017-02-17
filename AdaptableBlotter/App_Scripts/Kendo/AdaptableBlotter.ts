@@ -425,14 +425,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(cellInfo: ICellInfo): void {
-        this.grid.dataSource.getByUid(cellInfo.Id).set(cellInfo.ColumnId, cellInfo.Value);
+        let model = this.grid.dataSource.getByUid(cellInfo.Id)
+        let oldValue = model.get(cellInfo.ColumnId)
+        model.set(cellInfo.ColumnId, cellInfo.Value);
+
+        this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
+            cellInfo.ColumnId,
+            oldValue, cellInfo.Value)
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
         // first update the model, then sync the grid, then tell the AuditService (which will fire an event picked up by Flashing Cells)
         for (var item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.Id);
+            let oldValue = model[item.ColumnId]
             model[item.ColumnId] = item.Value;
+
+            this.AuditLogService.AddEditCellAuditLog(item.Id,
+                item.ColumnId,
+                oldValue, item.Value)
         }
 
         // this line triggers a Databound changed event 
