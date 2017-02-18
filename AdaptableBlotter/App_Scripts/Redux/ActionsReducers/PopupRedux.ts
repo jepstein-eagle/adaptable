@@ -1,17 +1,19 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as Redux from 'redux';
-import { PopupState, IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup } from './Interface/IState';
-import { IUIError, IUIWarning, IUIConfirmation } from '../../Core/Interface/IStrategy';
+import { PopupState, IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup } from './Interface/IState';
+import { IUIError, IUIWarning, IUIConfirmation, IUIPrompt } from '../../Core/Interface/IStrategy';
 
 const SHOW_POPUP = 'SHOW_POPUP';
 const HIDE_POPUP = 'HIDE_POPUP';
 const HIDE_WARNINGPOPUP = 'HIDE_WARNINGPOPUP';
+const HIDE_PROMPTPOPUP = 'HIDE_PROMPTPOPUP';
 const HIDE_ERRORPOPUP = 'HIDE_ERRORPOPUP';
 export const CONFIRM_CONFIRMATIONPOPUP = 'CONFIRM_CONFIRMATIONPOPUP';
 export const CANCEL_CONFIRMATIONPOPUP = 'CANCEL_CONFIRMATIONPOPUP';
 const ERROR_POPUP = 'ERROR_POPUP';
 const WARNING_POPUP = 'WARNING_POPUP';
+const PROMPT_POPUP = 'PROMPT_POPUP';
 const CONFIRMATION_POPUP = 'CONFIRMATION_POPUP';
 const CLEAR_POPUP_PARAM = 'CLEAR_POPUP_PARAM';
 
@@ -26,6 +28,8 @@ export interface HideErrorPopupAction extends Redux.Action { }
 
 export interface HideWarningPopupAction extends Redux.Action { }
 
+export interface HidePromptPopupAction extends Redux.Action { }
+
 export interface ConfirmConfirmationPopupAction extends Redux.Action { }
 
 export interface CancelConfirmationPopupAction extends Redux.Action { }
@@ -33,6 +37,8 @@ export interface CancelConfirmationPopupAction extends Redux.Action { }
 export interface ErrorPopupAction extends Redux.Action { Error: IUIError }
 
 export interface WarningPopupAction extends Redux.Action { Warning: IUIWarning }
+
+export interface PromptPopupAction extends Redux.Action { Prompt: IUIPrompt }
 
 export interface ConfirmationPopupAction extends Redux.Action { Confirmation: IUIConfirmation }
 
@@ -56,6 +62,10 @@ export const HideWarningPopup = (): HideWarningPopupAction => ({
     type: HIDE_WARNINGPOPUP
 })
 
+export const HidePromptPopup = (): HidePromptPopupAction => ({
+    type: HIDE_PROMPTPOPUP
+})
+
 export const ConfirmConfirmationPopup = (): ConfirmConfirmationPopupAction => ({
     type: CONFIRM_CONFIRMATIONPOPUP
 })
@@ -72,6 +82,11 @@ export const ErrorPopup = (Error: IUIError): ErrorPopupAction => ({
 export const WarningPopup = (Warning: IUIWarning): WarningPopupAction => ({
     type: WARNING_POPUP,
     Warning
+})
+
+export const PromptPopup = (Prompt: IUIPrompt): PromptPopupAction => ({
+    type: PROMPT_POPUP,
+    Prompt
 })
 
 export const ConfirmationPopup = (Confirmation: IUIConfirmation): ConfirmationPopupAction => ({
@@ -105,6 +120,12 @@ const initialPopupState: PopupState = {
         CancelText: "",
         CancelAction: null,
         ConfirmAction: null
+    },
+    PromptPopup: {
+        ShowPromptPopup: false,
+        PromptTitle: "",
+        PromptMsg: "",
+        InputText: "",
     }
 }
 
@@ -127,6 +148,11 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             let newWarningPopup: IWarningPopup = { ShowWarningPopup: false, WarningMsg: "" }
             return Object.assign({}, state, { WarningPopup: newWarningPopup })
         }
+        case HIDE_PROMPTPOPUP: {
+            let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", InputText: "", }
+            return Object.assign({}, state, { PromptPopup: newPromptPopup })
+        }
+
         case CONFIRM_CONFIRMATIONPOPUP: {
             //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
             let newConfirmationPopup: IConfirmationPopup = {
@@ -160,6 +186,16 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
         case WARNING_POPUP: {
             let newWarningPopup: IWarningPopup = { ShowWarningPopup: true, WarningMsg: (<WarningPopupAction>action).Warning.WarningMsg }
             return Object.assign({}, state, { WarningPopup: newWarningPopup })
+        }
+        case PROMPT_POPUP: {
+            let actionTyped = (<PromptPopupAction>action)
+            let newPromptPopup: IPromptPopup = {
+                ShowPromptPopup: true,
+                PromptTitle: actionTyped.Prompt.PromptTitle,
+                PromptMsg: actionTyped.Prompt.PromptMsg,
+                InputText: actionTyped.Prompt.InputText,
+            }
+            return Object.assign({}, state, { PromptPopup: newPromptPopup })
         }
         case CONFIRMATION_POPUP: {
             let actionTyped = (<ConfirmationPopupAction>action)

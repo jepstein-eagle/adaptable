@@ -37,14 +37,20 @@ export interface IUIConfirmation {
     CancelAction: Redux.Action;
 }
 
+export interface IUIPrompt {
+    PromptTitle: string;
+    PromptMsg: string;
+    InputText: string;
+}
+
 export interface IStrategyActionReturn<T> {
     ActionReturn?: T,
     Error?: IUIError
 }
 
 
-export interface ICellInfo{
-          Id: any, 
-          ColumnId: string, 
-          Value: any 
+export interface ICellInfo {
+    Id: any,
+    ColumnId: string,
+    Value: any
 }

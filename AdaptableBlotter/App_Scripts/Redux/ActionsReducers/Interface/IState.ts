@@ -32,6 +32,7 @@ export interface PopupState {
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
     ConfirmationPopup: IConfirmationPopup
+    PromptPopup: IPromptPopup
 }
 
 export interface IActionConfigurationPopup {
@@ -58,6 +59,13 @@ export interface IConfirmationPopup {
     CancelText: string;
     ConfirmAction : Redux.Action;
     CancelAction : Redux.Action;
+}
+
+export interface IPromptPopup {
+    ShowPromptPopup: boolean;
+    PromptTitle: string;
+    PromptMsg: string;
+    InputText: string;
 }
 
 export interface SmartEditState {

@@ -8,10 +8,14 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import { IUIPrompt } from '../../Core/Interface/IStrategy';
+
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
     onSaveLayout: (layout: ILayout) => LayoutRedux.SaveLayoutAction,
+     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PromptPopupAction,
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string
@@ -43,11 +47,18 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSaveNewLayoutClicked() {
-        let layoutName: string = prompt("Please enter a name for the new layout"); // TODO: use a nice form...
-        if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-            let newLayout: ILayout = { Name: layoutName, Columns: this.props.Columns.filter(c => c.Visible) };
-            this.props.onSaveLayout(newLayout);
-        }
+        let prompt: IUIPrompt = {
+            PromptTitle: "Save New Layout",
+            PromptMsg: "Please enter a layout name",
+            InputText: "",
+          }
+        this.props.onShowPrompt(prompt)
+       
+       
+   //      if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
+   //         let newLayout: ILayout = { Name: layoutName, Columns: this.props.Columns.filter(c => c.Visible) };
+   //         this.props.onSaveLayout(newLayout);
+    //    }
     }
 
     private onSelectedLayoutChanged(event: React.FormEvent) {
@@ -68,8 +79,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
-        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout))
-    };
+        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout)),
+        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PromptPopup(prompt)),
+   };
 }
 
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);

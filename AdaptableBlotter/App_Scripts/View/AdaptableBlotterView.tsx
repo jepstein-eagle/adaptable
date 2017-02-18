@@ -22,6 +22,7 @@ import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToo
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
+import { AdaptableBlotterPopupPrompt } from './AdaptableBlotterPopupPrompt'
 import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfirmation'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -32,6 +33,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePopup: () => PopupRedux.HidePopupAction;
     onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
     onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
+    onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
+    onConfirmPromptPopup: () => PopupRedux.HidePromptPopupAction;
     onConfirmConfirmationPopup: () => PopupRedux.ConfirmConfirmationPopupAction;
     onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
 }
@@ -89,9 +92,16 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onClose={this.props.onCloseWarningPopup}
                     ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
 
-                <AdaptableBlotterPopupConfirmation 
-                Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
-                Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
+                <AdaptableBlotterPopupPrompt
+                    Msg={this.props.PopupState.PromptPopup.PromptMsg}
+                    Title={this.props.PopupState.PromptPopup.PromptTitle}
+                    onClose={this.props.onClosePromptPopup}
+                    onConfirm={this.props.onConfirmPromptPopup}
+                    ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup} />
+
+                <AdaptableBlotterPopupConfirmation
+                    Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
+                    Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
                     ShowPopup={this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup}
                     CancelText={this.props.PopupState.ConfirmationPopup.CancelText}
                     ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}
@@ -131,6 +141,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClosePopup: () => dispatch(PopupRedux.HidePopup()),
         onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
         onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
+        onClosePromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
+        onConfirmPromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
         onConfirmConfirmationPopup: () => dispatch(PopupRedux.ConfirmConfirmationPopup()),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.CancelConfirmationPopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),

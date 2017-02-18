@@ -12,7 +12,9 @@ interface AdaptableBlotterPopupWarningProps extends React.ClassAttributes<Adapta
 
 export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlotterPopupWarningProps, {}> {
     render() {
-        return this.props.ShowPopup && <SweetAlert warning confirmBtnBsStyle="warning" title="Warning" onConfirm={() => this.props.onClose()} >
+        return this.props.ShowPopup && <SweetAlert 
+        warning 
+        confirmBtnBsStyle="warning" title="Warning" onConfirm={() => this.props.onClose()} >
             <p>
                 {this.props.Msg.split("\n").map(function (item, index) {
                     return (

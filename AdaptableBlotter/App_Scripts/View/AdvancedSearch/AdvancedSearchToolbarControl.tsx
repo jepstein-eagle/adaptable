@@ -38,17 +38,17 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     </FormControl>
 
                     {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Advanced Search</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Current Advanced Search</Tooltip>}>
                         <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit Advanced Search</Button>
                     </OverlayTrigger>
 
                     {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Advanced Search</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Current Advanced Search</Tooltip>}>
                         <Button bsSize='small' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onSelectAdvancedSearch("")}>Clear</Button>
                     </OverlayTrigger>
 
                     {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">New Advanced Search</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.props.onNewAdvancedSearch()}>New</Button>
                     </OverlayTrigger>
                 </Panel>

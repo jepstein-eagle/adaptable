@@ -54,7 +54,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                         </Col>
                         <Col xs={2}>
                             <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Layout</Tooltip>}>
-                                <Button bsSize='small' style={smallButtonStyle} disabled={this.props.CurrentLayout == "Default Layout"}
+                                <Button bsSize='small' bsStyle="info" style={smallButtonStyle} disabled={this.props.CurrentLayout == "Default Layout"}
                                     onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
                             </OverlayTrigger>
                         </Col>
