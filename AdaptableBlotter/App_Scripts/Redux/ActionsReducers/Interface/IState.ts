@@ -52,6 +52,7 @@ export interface IWarningPopup {
 
 export interface IConfirmationPopup {
     ShowConfirmationPopup: boolean;
+    ConfirmationTitle: string;
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;

@@ -89,7 +89,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onClose={this.props.onCloseWarningPopup}
                     ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
 
-                <AdaptableBlotterPopupConfirmation Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
+                <AdaptableBlotterPopupConfirmation 
+                Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
+                Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
                     ShowPopup={this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup}
                     CancelText={this.props.PopupState.ConfirmationPopup.CancelText}
                     ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}

@@ -8,6 +8,7 @@ interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttributes<A
     ShowPopup: boolean
     onConfirm: Function
     onCancel: Function
+    Title: string
     Msg: string
     ConfirmText: string
     CancelText: string
@@ -22,7 +23,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
             confirmBtnText={this.props.ConfirmText}
             cancelBtnBsStyle="default"
             cancelBtnText={this.props.CancelText}
-            title="Do you want to continue?"
+            title={this.props.Title}
             onConfirm={() => this.props.onConfirm()}
             onCancel={() => this.props.onCancel()} >
             <p>

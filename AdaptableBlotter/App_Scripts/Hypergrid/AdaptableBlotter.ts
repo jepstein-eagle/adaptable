@@ -167,6 +167,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
+                        ConfirmationTitle: "Do you want to continue?",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,

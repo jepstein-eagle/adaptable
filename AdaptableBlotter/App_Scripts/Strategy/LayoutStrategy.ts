@@ -13,7 +13,7 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.LayoutStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Layouts", this.Id, 'LayoutAction', MenuType.Action, "th");
+        this.menuItemConfig = new MenuItemShowPopup("Layouts", this.Id, 'LayoutConfig', MenuType.Action, "th");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }

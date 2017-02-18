@@ -29,6 +29,7 @@ export interface IUIWarning {
 }
 
 export interface IUIConfirmation {
+    ConfirmationTitle: string;
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;

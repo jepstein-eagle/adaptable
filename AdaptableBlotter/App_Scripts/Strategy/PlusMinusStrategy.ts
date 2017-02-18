@@ -140,6 +140,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let confirmation: IUIConfirmation = {
                 CancelText: "Cancel",
+               ConfirmationTitle: "Do you want to continue?",
                 ConfirmationMsg: warningMessage,
                 ConfirmationText: "Perform Nudge Anyway",
                 CancelAction: PlusMinusRedux.ApplyPlusMinus(successfulValues, keyEventString),

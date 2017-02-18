@@ -3,30 +3,33 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import { Provider, connect } from 'react-redux';
-import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock } from 'react-bootstrap';
+import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
+import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 
 
-interface LayoutActionProps extends IStrategyViewPopupProps<LayoutActionComponent> {
+interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],
     CurrentLayout: string,
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
     onSaveLayout: (layout: ILayout) => LayoutRedux.SaveLayoutAction,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ConfirmationPopupAction,
 }
 
-interface LayoutActionState {
+interface LayoutConfigState {
     NewLayoutName: string
 }
 
-class LayoutActionComponent extends React.Component<LayoutActionProps, LayoutActionState> {
+class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutConfigState> {
     constructor() {
         super();
         this.state = { NewLayoutName: "" }
@@ -42,12 +45,18 @@ class LayoutActionComponent extends React.Component<LayoutActionProps, LayoutAct
 
                 <Panel header="Load Layout" bsStyle="info">
                     <FormGroup controlId="load">
-                        <Col xs={3} componentClass={ControlLabel}>Layout: </Col>
-                        <Col xs={9}>
+                        <Col xs={4} componentClass={ControlLabel}>Current Layout: </Col>
+                        <Col xs={6}>
                             <FormControl componentClass="select" placeholder="select" value={this.props.CurrentLayout}
                                 onChange={(x) => this.onLayoutSelectionChanged(x)} >
                                 {optionLayouts}
                             </FormControl>
+                        </Col>
+                        <Col xs={2}>
+                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Layout</Tooltip>}>
+                                <Button bsSize='small' style={smallButtonStyle} disabled={this.props.CurrentLayout == "Default Layout"}
+                                    onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
+                            </OverlayTrigger>
                         </Col>
                     </FormGroup>
                 </Panel>
@@ -97,6 +106,19 @@ class LayoutActionComponent extends React.Component<LayoutActionProps, LayoutAct
         this.setState({ NewLayoutName: "" });
     }
 
+    private onDeleteLayoutClicked() {
+
+        let confirmation: IUIConfirmation = {
+            CancelText: "Cancel",
+            ConfirmationTitle: "Delete Layout",
+            ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?",
+            ConfirmationText: "Delete",
+            CancelAction: null,
+            ConfirmAction: LayoutRedux.DeleteLayout(this.props.CurrentLayout)
+        }
+        this.props.onConfirmWarning(confirmation)
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -112,7 +134,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
         onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout)),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ConfirmationPopup(confirmation)),
     };
 }
 
-export let LayoutAction = connect(mapStateToProps, mapDispatchToProps)(LayoutActionComponent);
+export let LayoutConfig = connect(mapStateToProps, mapDispatchToProps)(LayoutConfigComponent);
+
+let smallButtonStyle = {
+    margin: '2px'
+}

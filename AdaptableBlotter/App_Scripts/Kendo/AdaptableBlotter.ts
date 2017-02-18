@@ -147,6 +147,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
+                        ConfirmationTitle: "Do you want to continue?",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
@@ -287,24 +288,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public loadCurrentLayout(): void {
+       let defaultLayout: string = "Default Layout";
+       
         let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
 
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
 
         // must be a better way to do this but I want to create a default column collection if not already existing
-        if (currentLayout==null) {
-          this.SetColumnIntoStore();
-            let newLayout: ILayout = { Name: "Default Layout", Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
-            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(newLayout));
-            return;
+        if (currentLayout == null) {
+            let haveDefaultLayout = layoutState.AvailableLayouts.find(l => l.Name == defaultLayout);
+            if (haveDefaultLayout) {
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
+                return;
+            } else {
+
+                this.SetColumnIntoStore();
+                let newLayout: ILayout = { Name: defaultLayout, Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(newLayout));
+                return;
+            }
         }
 
         let layoutColumns: IColumn[] = currentLayout.Columns.sort(c => c.Index);
         let gridColumns: kendo.ui.GridColumn[] = this.grid.columns;
+
         layoutColumns.forEach(layoutColumn => {
             let gridColumn: kendo.ui.GridColumn = gridColumns.find(gridColumn => gridColumn.field == layoutColumn.ColumnId);
-            this.grid.reorderColumn(layoutColumn.Index, gridColumn);
             this.grid.showColumn(gridColumn.field);
+            this.grid.reorderColumn(layoutColumn.Index, gridColumn);
         })
 
         // hide any which are in the grid columns but not in the layout

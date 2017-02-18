@@ -100,6 +100,7 @@ const initialPopupState: PopupState = {
     ConfirmationPopup: {
         ShowConfirmationPopup: false,
         ConfirmationMsg: "",
+        ConfirmationTitle: "",
         ConfirmationText: "",
         CancelText: "",
         CancelAction: null,
@@ -131,6 +132,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             let newConfirmationPopup: IConfirmationPopup = {
                 ShowConfirmationPopup: false,
                 ConfirmationMsg: "",
+                ConfirmationTitle: "",
                 ConfirmationText: "",
                 CancelText: "",
                 ConfirmAction: null,
@@ -143,6 +145,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             let newConfirmationPopup: IConfirmationPopup = {
                 ShowConfirmationPopup: false,
                 ConfirmationMsg: "",
+                ConfirmationTitle: "",
                 ConfirmationText: "",
                 CancelText: "",
                 ConfirmAction: null,
@@ -163,6 +166,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             let newConfirmationPopup: IConfirmationPopup = {
                 ShowConfirmationPopup: true,
                 ConfirmationMsg: actionTyped.Confirmation.ConfirmationMsg,
+                ConfirmationTitle: actionTyped.Confirmation.ConfirmationTitle,
                 ConfirmationText: actionTyped.Confirmation.ConfirmationText,
                 CancelText: actionTyped.Confirmation.CancelText,
                 ConfirmAction: actionTyped.Confirmation.ConfirmAction,
