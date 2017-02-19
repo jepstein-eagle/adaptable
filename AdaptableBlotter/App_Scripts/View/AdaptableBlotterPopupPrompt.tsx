@@ -35,8 +35,7 @@ export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotte
 
     onValueConfirmed(inputValue: any) {
       // cannot work out how to get the value "back" to calling function in a react way...
-      alert(inputValue);
-        this.props.onConfirm(inputValue)
+         this.props.onConfirm(inputValue)
         this.props.onClose();
     }
 }
