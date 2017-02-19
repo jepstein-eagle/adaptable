@@ -16,21 +16,26 @@ interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<Adaptab
     onConfirm: Function
 }
 
+
 export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotterPopupPromptProps, {}> {
-    render() {
+     render() {
         return this.props.ShowPopup && <SweetAlert
             input
             showCancel
             placeholder={this.props.Msg}
             cancelBtnBsStyle="default"
             title={this.props.Title}
-            onConfirm={() => this.onValueConfirmed()}
+            onConfirm={(inputValue:any) => this.onValueConfirmed(inputValue)}
             onCancel={() => this.props.onClose()}
-        >
+         >
         </SweetAlert>
     }
 
-    onValueConfirmed() {
-       this.props.onClose();
+
+
+    onValueConfirmed(inputValue: any) {
+      // cannot work out how to get the value "back" to calling function in a react way...
+      alert(inputValue);
+        this.props.onClose();
     }
 }
