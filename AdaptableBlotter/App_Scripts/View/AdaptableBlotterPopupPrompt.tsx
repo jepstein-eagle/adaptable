@@ -7,7 +7,6 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 
 
-
 interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {
     ShowPopup: boolean
     Title: string
@@ -34,7 +33,7 @@ export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotte
 
 
     onValueConfirmed(inputValue: any) {
-      // cannot work out how to get the value "back" to calling function in a react way...
+      // cannot work out how most appropriately to get the value "back" to calling function in a react way...
          this.props.onConfirm(inputValue)
         this.props.onClose();
     }
