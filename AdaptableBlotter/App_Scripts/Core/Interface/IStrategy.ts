@@ -40,7 +40,7 @@ export interface IUIConfirmation {
 export interface IUIPrompt {
     PromptTitle: string;
     PromptMsg: string;
-    InputText: string;
+   
 }
 
 export interface IStrategyActionReturn<T> {

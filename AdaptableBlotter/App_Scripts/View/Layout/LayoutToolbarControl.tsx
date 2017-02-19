@@ -15,7 +15,7 @@ import { IUIPrompt } from '../../Core/Interface/IStrategy';
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
     onSaveLayout: (layout: ILayout) => LayoutRedux.SaveLayoutAction,
-     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PromptPopupAction,
+     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string
@@ -50,7 +50,6 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let prompt: IUIPrompt = {
             PromptTitle: "Save New Layout",
             PromptMsg: "Please enter a layout name",
-            InputText: "",
           }
         this.props.onShowPrompt(prompt)
        
@@ -80,7 +79,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
         onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout)),
-        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PromptPopup(prompt)),
+        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
    };
 }
 

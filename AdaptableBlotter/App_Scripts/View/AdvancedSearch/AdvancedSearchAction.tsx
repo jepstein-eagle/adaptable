@@ -33,7 +33,7 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onClearPopupParams: () => PopupRedux.ClearPopupParamAction,
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ConfirmationPopupAction,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
     PopupParams: any,
     UserFilters: IUserFilter[]
 }
@@ -256,7 +256,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
         onClearPopupParams: () => dispatch(PopupRedux.ClearPopupParam()),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ConfirmationPopup(confirmation)),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }
 

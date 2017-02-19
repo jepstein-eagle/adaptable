@@ -31,7 +31,7 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
     onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
-    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ConfirmationPopupAction;
+    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction;
 }
 
 class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}> {
@@ -198,7 +198,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
         fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
-        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ConfirmationPopup(confirmation)),
+        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }
 

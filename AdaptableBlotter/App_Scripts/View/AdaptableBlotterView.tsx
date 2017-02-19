@@ -33,8 +33,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePopup: () => PopupRedux.HidePopupAction;
     onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
     onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
-    onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
     onConfirmPromptPopup: () => PopupRedux.HidePromptPopupAction;
+    onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
     onConfirmConfirmationPopup: () => PopupRedux.ConfirmConfirmationPopupAction;
     onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
 }

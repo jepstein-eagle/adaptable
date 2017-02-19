@@ -147,7 +147,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         let error: IUIError = {
             ErrorMsg: ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter)
         }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {
@@ -164,7 +164,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
             ConfirmAction: ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, newValue)
         }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
     }
 
     getMenuItems(): IMenuItem[] {

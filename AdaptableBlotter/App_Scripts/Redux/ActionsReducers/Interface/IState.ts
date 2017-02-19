@@ -65,7 +65,6 @@ export interface IPromptPopup {
     ShowPromptPopup: boolean;
     PromptTitle: string;
     PromptMsg: string;
-    InputText: string;
 }
 
 export interface SmartEditState {
