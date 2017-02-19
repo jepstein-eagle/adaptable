@@ -34,7 +34,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
             <Panel className="small-padding-panel" >
                 <FormControl
                     type="text"
-                    placeholder="Enter Quick Search Text"
+                    placeholder="Quick Search Text"
                     value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)}

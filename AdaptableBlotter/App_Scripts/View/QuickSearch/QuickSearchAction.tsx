@@ -95,7 +95,7 @@ class QuickSearchActionComponent extends React.Component<QuickSearchActionProps,
                                 <FormControl
                                     value={this.state.EditedQuickSearchText}
                                     type="string"
-                                    placeholder="Enter quick search text"
+                                    placeholder="Quick Search Text"
                                     onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)}
                                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)} />
                                 {' '}
