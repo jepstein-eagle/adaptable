@@ -54,11 +54,12 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
           }
         this.props.onShowPrompt(prompt)
        
-       
-   //      if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-   //         let newLayout: ILayout = { Name: layoutName, Columns: this.props.Columns.filter(c => c.Visible) };
-   //         this.props.onSaveLayout(newLayout);
-    //    }
+       alert("here")
+       let layoutName:string = ""
+         if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
+            let newLayout: ILayout = { Name: layoutName, Columns: this.props.Columns.filter(c => c.Visible) };
+            this.props.onSaveLayout(newLayout);
+        }
     }
 
     private onSelectedLayoutChanged(event: React.FormEvent) {

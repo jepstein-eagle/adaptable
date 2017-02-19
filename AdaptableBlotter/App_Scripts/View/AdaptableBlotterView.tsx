@@ -142,7 +142,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
         onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
         onClosePromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
-        onConfirmPromptPopup: () => dispatch(PopupRedux.ConfirmPromptPopup()),
+        onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.ConfirmPromptPopup(inputText)),
         onConfirmConfirmationPopup: () => dispatch(PopupRedux.ConfirmConfirmationPopup()),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.CancelConfirmationPopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),

@@ -158,13 +158,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
-                case PopupRedux.CONFIRM_PROMPTPOPUP: {
-                    let confirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction
-                    if (confirmationAction) {
-                        middlewareAPI.dispatch(confirmationAction);
-                    }
-                    return next(action);
-                } case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
+                case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
                     let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
                     if (confirmationAction) {
                         middlewareAPI.dispatch(confirmationAction);
@@ -217,7 +211,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-                 case ShortcutRedux.SHORTCUT_APPLY: {
+                case ShortcutRedux.SHORTCUT_APPLY: {
                     let shortcutStrategy = <IShortcutStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ShortcutStrategyId));
                     let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
                     shortcutStrategy.ApplyShortcut(actionTyped.Shortcut, actionTyped.CellInfo, actionTyped.KeyEventString, actionTyped.NewValue);

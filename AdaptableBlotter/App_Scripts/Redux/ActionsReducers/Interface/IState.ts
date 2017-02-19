@@ -57,16 +57,16 @@ export interface IConfirmationPopup {
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;
-    ConfirmAction : Redux.Action;
-    CancelAction : Redux.Action;
+    ConfirmAction: Redux.Action;
+    CancelAction: Redux.Action;
 }
 
 export interface IPromptPopup {
     ShowPromptPopup: boolean;
     PromptTitle: string;
     PromptMsg: string;
- ConfirmAction : Redux.Action;
-   }
+    InputText: string
+}
 
 export interface SmartEditState {
     SmartEditValue: string
@@ -95,7 +95,7 @@ export interface FlashingCellState {
 
 export interface CalendarState {
     CurrentCalendar: string;
-    AvailableCalendars : ICalendar[]
+    AvailableCalendars: ICalendar[]
 }
 
 export interface ConditionalStyleState {
@@ -111,7 +111,7 @@ export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
-    QuickSearchBackColor:  string
+    QuickSearchBackColor: string
 }
 
 export interface AdvancedSearchState {
@@ -138,5 +138,5 @@ export interface CellValidationState {
 
 export interface LayoutState {
     CurrentLayout: string;
-    AvailableLayouts : ILayout[]
+    AvailableLayouts: ILayout[]
 }
