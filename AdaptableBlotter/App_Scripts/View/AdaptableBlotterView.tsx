@@ -33,7 +33,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePopup: () => PopupRedux.HidePopupAction;
     onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
     onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
-    onConfirmPromptPopup: () => PopupRedux.HidePromptPopupAction;
+    onConfirmPromptPopup: () => PopupRedux.ConfirmPromptPopupAction;
     onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
     onConfirmConfirmationPopup: () => PopupRedux.ConfirmConfirmationPopupAction;
     onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
@@ -142,7 +142,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
         onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
         onClosePromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
-        onConfirmPromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
+        onConfirmPromptPopup: () => dispatch(PopupRedux.ConfirmPromptPopup()),
         onConfirmConfirmationPopup: () => dispatch(PopupRedux.ConfirmConfirmationPopup()),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.CancelConfirmationPopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),

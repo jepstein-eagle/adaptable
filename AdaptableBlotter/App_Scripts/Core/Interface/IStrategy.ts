@@ -40,7 +40,7 @@ export interface IUIConfirmation {
 export interface IUIPrompt {
     PromptTitle: string;
     PromptMsg: string;
-   
+     ConfirmAction: Redux.Action;
 }
 
 export interface IStrategyActionReturn<T> {

@@ -65,7 +65,8 @@ export interface IPromptPopup {
     ShowPromptPopup: boolean;
     PromptTitle: string;
     PromptMsg: string;
-}
+ ConfirmAction : Redux.Action;
+   }
 
 export interface SmartEditState {
     SmartEditValue: string

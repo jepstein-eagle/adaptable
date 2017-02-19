@@ -158,7 +158,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
-                case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
+                case PopupRedux.CONFIRM_PROMPTPOPUP: {
+                    let confirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction
+                    if (confirmationAction) {
+                        middlewareAPI.dispatch(confirmationAction);
+                    }
+                    return next(action);
+                } case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
                     let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
                     if (confirmationAction) {
                         middlewareAPI.dispatch(confirmationAction);
