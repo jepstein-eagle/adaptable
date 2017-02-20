@@ -54,6 +54,7 @@ import { ExportState, QuickSearchState, LayoutState } from '../Redux/ActionsRedu
 import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
+import { GridState } from '../Redux/ActionsReducers/Interface/IState'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -289,32 +290,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public saveDefaultLayout(): void {
-        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
-        if (layoutState.AvailableLayouts.length == 0) {  // no layouts so need to create a default
-            let defaultLayout: string = "Default Layout";
+        if (this.AdaptableBlotterStore.TheStore.getState().Layout.AvailableLayouts.length == 0) {  // no layouts so need to create a default
             this.SetColumnIntoStore();
-            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(x => x.ColumnId), defaultLayout));
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default Layout"));
         }
     }
 
     public loadCurrentLayout(): void {
-
         let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
-
-        // must be a better way to do this but I want to create a default column collection if not already existing
-        if (currentLayout == null) {
+        
+        if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
             let defaultLayout: string = "Default Layout";
-            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) {  // we have deleted a layout and so will use the default
+            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) { 
                 this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
             }
             return;
         }
-
-        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId));
+        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.GetGridState().Columns.find(x => x.ColumnId == columnId));
         this.AdaptableBlotterStore.TheStore.dispatch<ColumnChooserRedux.SetNewColumnListOrderAction>(ColumnChooserRedux.SetNewColumnListOrder(columns));
     }
-
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
     OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
@@ -485,7 +480,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnHeader(columnId: string): string {
-        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
+        let column = this.GetGridState().Columns.find(x => x.ColumnId == columnId);
         if (column) {
             return column.FriendlyName
         }
@@ -499,7 +494,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnFromColumnId(columnId: string): IColumn {
-        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnId);
+        return this.GetGridState().Columns.find(c => c.ColumnId == columnId);
     }
 
     public isColumnReadonly(columnId: string): boolean {
@@ -857,6 +852,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else {
             return matchingRowIds;
         }
+    }
+
+      private GetGridState(): GridState {
+        return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 
 
