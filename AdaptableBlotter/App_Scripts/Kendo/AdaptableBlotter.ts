@@ -288,23 +288,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public loadCurrentLayout(): void {
-       let defaultLayout: string = "Default Layout";
-       
-        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
 
+        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
 
         // must be a better way to do this but I want to create a default column collection if not already existing
-        if (currentLayout == null) {
-            let haveDefaultLayout = layoutState.AvailableLayouts.find(l => l.Name == defaultLayout);
-            if (haveDefaultLayout) {
+        if (currentLayout == null) { 
+            let defaultLayout: string = "Default Layout";
+            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) {  // we have deleted a layout and so will use the default
                 this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
                 return;
-            } else {
-
+            } else { // this should only happen at startup the first time...
                 this.SetColumnIntoStore();
                 let newLayout: ILayout = { Name: defaultLayout, Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
-                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout( this.AdaptableBlotterStore.TheStore.getState().Grid.Columns, defaultLayout));
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.AdaptableBlotterStore.TheStore.getState().Grid.Columns, defaultLayout));
                 return;
             }
         }
@@ -325,6 +322,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.grid.hideColumn(gridColumn.field);
             }
         })
+        this.SetColumnIntoStore();
     }
 
 
