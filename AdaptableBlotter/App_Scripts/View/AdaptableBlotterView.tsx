@@ -41,6 +41,10 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
 
+ componentDidMount() {
+       this.props.AdaptableBlotter.saveDefaultLayout();
+    }
+
     render() {
 
         // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version

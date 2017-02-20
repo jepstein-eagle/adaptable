@@ -249,7 +249,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
                     adaptableBlotter.SetColumnIntoStore();
-                    return returnAction;
+                      return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action

@@ -722,9 +722,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public loadCurrentLayout(): void {
+    public saveDefaultLayout(): void { }
 
-    }
+    public loadCurrentLayout(): void { }
 
 
 }

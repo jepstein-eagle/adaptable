@@ -50,7 +50,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let prompt: IUIPrompt = {
             PromptTitle: "Save New Layout",
             PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible), "")
+            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible).map(x=>x.ColumnId), "")
         }
         this.props.onShowPrompt(prompt)
     }

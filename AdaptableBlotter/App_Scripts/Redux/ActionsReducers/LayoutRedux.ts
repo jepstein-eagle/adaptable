@@ -21,11 +21,11 @@ export const LoadLayout = (LayoutName: string): LoadLayoutAction => ({
 })
 
 export interface SaveLayoutAction extends InputAction{
-    Columns: IColumn[],
+    Columns: string[],
     
 }
 
-export const SaveLayout = (Columns: IColumn[], InputText: string): SaveLayoutAction => ({
+export const SaveLayout = (Columns: string[], InputText: string): SaveLayoutAction => ({
     type: SAVE_LAYOUT,
     Columns,
     InputText

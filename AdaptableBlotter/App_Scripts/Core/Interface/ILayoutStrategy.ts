@@ -8,7 +8,7 @@ export interface ILayoutStrategy extends IStrategy {
 
 export interface ILayout {
     Name: string;
-    Columns: IColumn[];
+    Columns: string[];
 }
 
 

@@ -8,6 +8,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
@@ -287,44 +288,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
+    public saveDefaultLayout(): void {
+        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
+        if (layoutState.AvailableLayouts.length == 0) {  // no layouts so need to create a default
+            let defaultLayout: string = "Default Layout";
+            this.SetColumnIntoStore();
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(x => x.ColumnId), defaultLayout));
+        }
+    }
+
     public loadCurrentLayout(): void {
 
         let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
 
         // must be a better way to do this but I want to create a default column collection if not already existing
-        if (currentLayout == null) { 
+        if (currentLayout == null) {
             let defaultLayout: string = "Default Layout";
             if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) {  // we have deleted a layout and so will use the default
                 this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
-                return;
-            } else { // this should only happen at startup the first time...
-                this.SetColumnIntoStore();
-                let newLayout: ILayout = { Name: defaultLayout, Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
-                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.AdaptableBlotterStore.TheStore.getState().Grid.Columns, defaultLayout));
-                return;
             }
+            return;
         }
 
-        let layoutColumns: IColumn[] = currentLayout.Columns.sort(c => c.Index);
-        let gridColumns: kendo.ui.GridColumn[] = this.grid.columns;
-
-        layoutColumns.forEach(layoutColumn => {
-            let gridColumn: kendo.ui.GridColumn = gridColumns.find(gridColumn => gridColumn.field == layoutColumn.ColumnId);
-            this.grid.showColumn(gridColumn.field);
-            this.grid.reorderColumn(layoutColumn.Index, gridColumn);
-        })
-
-        // hide any which are in the grid columns but not in the layout
-        gridColumns.forEach(gridColumn => {
-            let layoutColumn: IColumn = layoutColumns.find(lc => lc.ColumnId == gridColumn.field);
-            if (layoutColumn == null) {
-                this.grid.hideColumn(gridColumn.field);
-            }
-        })
-        this.SetColumnIntoStore();
+        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId));
+        this.AdaptableBlotterStore.TheStore.dispatch<ColumnChooserRedux.SetNewColumnListOrderAction>(ColumnChooserRedux.SetNewColumnListOrder(columns));
     }
-
 
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
