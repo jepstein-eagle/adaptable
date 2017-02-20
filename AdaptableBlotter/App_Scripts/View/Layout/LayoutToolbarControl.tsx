@@ -9,14 +9,14 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { IUIPrompt } from '../../Core/Interface/IStrategy';
+import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
     // onSaveLayout: (columns: IColumn[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
-    Columns: IColumn[],
+     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string
 }
@@ -31,7 +31,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         return <Form className='navbar-form'>
             <Panel className="small-padding-panel" >
-                <FormControl componentClass="select" placeholder="select"
+                <ControlLabel>Layout:</ControlLabel>
+                {' '}<FormControl componentClass="select" placeholder="select"
                     value={this.props.CurrentLayout}
                     onChange={(x) => this.onSelectedLayoutChanged(x)} >
                     {availableLayouts}
@@ -39,18 +40,35 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save a new Layout using the Blotter's current column order and visibility</Tooltip>}>
-                    <Button bsSize='small' bsStyle='info' onClick={() => this.onSaveNewLayoutClicked()}>Save New Layout...</Button>
+                    <Button bsSize='small' bsStyle='primary' onClick={() => this.onSaveNewLayoutClicked()}>Save As New</Button>
+                </OverlayTrigger>
+                {' '}
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Layout</Tooltip>}>
+                    <Button bsSize='small' bsStyle='danger' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
                 </OverlayTrigger>
 
             </Panel>
         </Form>
     }
 
+   private onDeleteLayoutClicked() {
+
+        let confirmation: IUIConfirmation = {
+            CancelText: "Cancel",
+            ConfirmationTitle: "Delete Layout",
+            ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?",
+            ConfirmationText: "Delete",
+            CancelAction: null,
+            ConfirmAction: LayoutRedux.DeleteLayout(this.props.CurrentLayout)
+        }
+        this.props.onConfirmWarning(confirmation)
+    }
+
     private onSaveNewLayoutClicked() {
         let prompt: IUIPrompt = {
             PromptTitle: "Save New Layout",
             PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible).map(x=>x.ColumnId), "")
+            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
         }
         this.props.onShowPrompt(prompt)
     }
@@ -73,9 +91,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
-        //   onSaveLayout: (columns: IColumn[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
-    };
+         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+   };
 }
 
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);

@@ -32,20 +32,22 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     render(): any {
         return <Form className='navbar-form'>
             <Panel className="small-padding-panel" >
+               <ControlLabel>Quick Search:</ControlLabel>
+                {' '}
                 <FormControl
                     type="text"
-                    placeholder="Quick Search Text"
+                    placeholder="Search Text"
                     value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
                     />{' '}
 
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run Quick Search</Button>
+                    <Button bsSize='small' bsStyle='primary' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run</Button>
                 </OverlayTrigger>
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                    <Button bsSize='small' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
+                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
                 </OverlayTrigger>
             </Panel>
         </Form>

@@ -292,7 +292,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public saveDefaultLayout(): void {
         if (this.AdaptableBlotterStore.TheStore.getState().Layout.AvailableLayouts.length == 0) {  // no layouts so need to create a default
             this.SetColumnIntoStore();
-            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default Layout"));
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default"));
         }
     }
 
@@ -301,7 +301,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
         
         if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
-            let defaultLayout: string = "Default Layout";
+            let defaultLayout: string = "Default";
             if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) { 
                 this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
             }
