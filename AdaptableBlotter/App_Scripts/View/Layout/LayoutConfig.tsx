@@ -21,7 +21,7 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     CurrentLayout: string,
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
-    onSaveLayout: (layout: ILayout) => LayoutRedux.SaveLayoutAction,
+    onSaveLayout: (columns: IColumn[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
 }
 
@@ -101,8 +101,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
     }
 
     private onSaveLayoutClicked() {
-        let newLayout: ILayout = { Name: this.state.NewLayoutName, Columns: this.props.Columns.filter(c => c.Visible) };
-        this.props.onSaveLayout(newLayout);
+        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible),this.state.NewLayoutName );
         this.setState({ NewLayoutName: "" });
     }
 
@@ -133,7 +132,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
-        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout)),
+        onSaveLayout: (Columns: IColumn[], LayoutName: string) => dispatch(LayoutRedux.SaveLayout(Columns, LayoutName)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }

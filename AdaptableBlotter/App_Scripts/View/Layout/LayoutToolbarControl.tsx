@@ -14,7 +14,7 @@ import { IUIPrompt } from '../../Core/Interface/IStrategy';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
-    onSaveLayout: (layout: ILayout) => LayoutRedux.SaveLayoutAction,
+    // onSaveLayout: (columns: IColumn[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
@@ -47,25 +47,12 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSaveNewLayoutClicked() {
-        // I need to work out how to get a value back from the prompt ideally 
-        // i know that is not very react so I have tried to set the InputText value of the Prompt Popup in Confirm but that doesnt feel marginRight
-        // and it doesnt help me anyway as I cannot get hold of the value here
-        // there MUST be a non hacky way to do it which uses One directional flow
-
         let prompt: IUIPrompt = {
             PromptTitle: "Save New Layout",
             PromptMsg: "Please enter a layout name",
+            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible), "")
         }
         this.props.onShowPrompt(prompt)
-
-       // I want to do this only if the prompt has returned a value which I can then access in order to save teh layout
-       // i tried passing in a save function but that is wrong because we might not always want the prompt to do an action; 
-       // it should just be responsible for gettting an input value and making it available in some way....
-        let layoutName: string = ""
-        if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-            let newLayout: ILayout = { Name: layoutName, Columns: this.props.Columns.filter(c => c.Visible) };
-            this.props.onSaveLayout(newLayout);
-        }
     }
 
     private onSelectedLayoutChanged(event: React.FormEvent) {
@@ -86,7 +73,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
-        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.SaveLayout(layout)),
+        //   onSaveLayout: (columns: IColumn[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
     };
 }

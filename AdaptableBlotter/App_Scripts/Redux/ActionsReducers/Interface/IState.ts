@@ -1,4 +1,5 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { InputAction } from '../../../Core/interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
 import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
@@ -13,6 +14,8 @@ import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/interface/ILayoutStrategy';
+
+
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -65,7 +68,7 @@ export interface IPromptPopup {
     ShowPromptPopup: boolean;
     PromptTitle: string;
     PromptMsg: string;
-    InputText: string
+    ConfirmAction: InputAction;
 }
 
 export interface SmartEditState {

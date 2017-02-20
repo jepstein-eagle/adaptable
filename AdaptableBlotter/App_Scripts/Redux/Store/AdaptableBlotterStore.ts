@@ -34,7 +34,11 @@ import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrateg
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError, ICellInfo } from '../../Core/interface/IStrategy'
+import { IUIError, ICellInfo, InputAction } from '../../Core/interface/IStrategy'
+
+
+
+
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -156,6 +160,15 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     //We AuditLog the Edit
                     //13/02: we now do the AuditLog in the SeValue function
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
+                    return next(action);
+                }
+                case PopupRedux.CONFIRM_PROMPTPOPUP: {
+                    let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
+                    if (promptConfirmationAction) {
+                        let inputText: string = (<InputAction>action).InputText;
+                        promptConfirmationAction.InputText = inputText;
+                        middlewareAPI.dispatch(promptConfirmationAction);
+                    }
                     return next(action);
                 }
                 case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {

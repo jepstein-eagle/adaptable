@@ -3,6 +3,9 @@
 import * as Redux from 'redux';
 import { LayoutState } from './interface/IState'
 import { ILayout } from '../../Core/interface/ILayoutStrategy';
+import { IColumn } from '../../Core/interface/IAdaptableBlotter'
+import { InputAction } from '../../Core/Interface/IStrategy';
+
 
 const LOAD_LAYOUT = 'LOAD_LAYOUT';
 const SAVE_LAYOUT = 'SAVE_LAYOUT';
@@ -17,13 +20,15 @@ export const LoadLayout = (LayoutName: string): LoadLayoutAction => ({
     LayoutName
 })
 
-export interface SaveLayoutAction extends Redux.Action {
-    Layout: ILayout;
+export interface SaveLayoutAction extends InputAction{
+    Columns: IColumn[],
+    
 }
 
-export const SaveLayout = (Layout: ILayout): SaveLayoutAction => ({
+export const SaveLayout = (Columns: IColumn[], InputText: string): SaveLayoutAction => ({
     type: SAVE_LAYOUT,
-    Layout
+    Columns,
+    InputText
 })
 
 export interface LayoutDeleteAction extends Redux.Action {
@@ -48,7 +53,8 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
         case LOAD_LAYOUT:
             return Object.assign({}, state, { CurrentLayout: (<LoadLayoutAction>action).LayoutName })
         case SAVE_LAYOUT:
-            let newLayout = (<SaveLayoutAction>action).Layout
+            let actionTypedSave = (<SaveLayoutAction>action)
+            let newLayout: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.InputText }
             layouts = [].concat(state.AvailableLayouts);
             layouts.push(newLayout);
             return Object.assign({}, state, { CurrentLayout: newLayout.Name, AvailableLayouts: layouts });

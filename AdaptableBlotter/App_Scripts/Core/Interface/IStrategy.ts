@@ -37,9 +37,16 @@ export interface IUIConfirmation {
     CancelAction: Redux.Action;
 }
 
+
+export interface InputAction extends Redux.Action {
+    InputText: string
+}
+
+
 export interface IUIPrompt {
     PromptTitle: string;
     PromptMsg: string;
+    ConfirmAction: InputAction;
 }
 
 export interface IStrategyActionReturn<T> {

@@ -304,7 +304,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                 this.SetColumnIntoStore();
                 let newLayout: ILayout = { Name: defaultLayout, Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns };
-                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(newLayout));
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout( this.AdaptableBlotterStore.TheStore.getState().Grid.Columns, defaultLayout));
                 return;
             }
         }
