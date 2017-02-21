@@ -74,5 +74,25 @@ export module Helper {
         }, {});
     }
 
+    function inArray(array: any[], el: any) {
+        for (var i = array.length; i--;) {
+            if (array[i] === el) return true;
+        }
+        return false;
+    }
+
+    //This deliberately only checks contents equality and not positional so [1, 2, 3]== [1, 3, 2]
+    export function areArraysEqual(arr1: any[], arr2: any[]) {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+        for (var i = arr1.length; i--;) {
+            if (!this.inArray(arr2, arr1[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 

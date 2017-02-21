@@ -51,7 +51,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
 
             let recordReturnValue = false
-            for (let column of columns) {
+            for (let column of columns.filter(c=>c.Visible)) {
                 let stringValueLowerCase = String(rowObject[column.ColumnId]).toLowerCase()
                 let columnIndex = blotter.getColumnIndex(column.ColumnId)
                 switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
