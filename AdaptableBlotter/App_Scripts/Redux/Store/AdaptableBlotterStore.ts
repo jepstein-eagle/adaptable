@@ -88,7 +88,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
-        let middlewareReduxStorage : Redux.Middleware
+        let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
         //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
@@ -254,8 +254,17 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case INIT_STATE:
                 case RESET_STATE: {
                     let returnAction = next(action);
+                    //we create all the menus
                     adaptableBlotter.CreateMenu();
+                    //we set the column list from the datasource
                     adaptableBlotter.SetColumnIntoStore();
+                    //create the default layout so we can revert to it if needed
+                    if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
+                        middlewareAPI.dispatch(LayoutRedux.AddLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                    }
+                    else {
+                        middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                    }
                     return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:

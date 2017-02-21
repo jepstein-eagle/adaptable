@@ -80,7 +80,12 @@ messages: {
         });
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, { userName: "Jonathan" });
+    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
+            primaryKey: "tradeId",
+            userName: "Jonathan",
+            enableAuditLog: false,
+            enableRemoteConfigServer: false
+        });
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))
 }
 

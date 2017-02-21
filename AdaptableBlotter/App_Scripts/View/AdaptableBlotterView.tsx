@@ -39,12 +39,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
 }
 
+//PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
-
-    componentDidMount() {
-        this.props.AdaptableBlotter.createDefaultLayout();
-    }
-
     render() {
 
         // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
