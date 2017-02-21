@@ -11,6 +11,7 @@ import { Expression } from '../../Core/Expression/Expression';
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
+    BlotterOptions: IAdaptableBlotterOptions
     Strategies: IAdaptableStrategyCollection
 
     CalendarService: ICalendarService

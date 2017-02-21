@@ -68,11 +68,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -238,7 +238,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     get UserName(): string {
-        return this.blotterOptions.userName;
+        return this.BlotterOptions.userName;
     }
 
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {

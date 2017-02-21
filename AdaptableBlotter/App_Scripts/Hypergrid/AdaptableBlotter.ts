@@ -69,7 +69,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
 
@@ -284,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     get UserName(): string {
-        return this.blotterOptions.userName;
+        return this.BlotterOptions.userName;
     }
 
     public SetColumnIntoStore() {
@@ -350,7 +350,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: any): any {
-        return record[this.blotterOptions.primaryKey]
+        return record[this.BlotterOptions.primaryKey]
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -467,7 +467,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
         this.cancelEdit()
 
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, cellInfo.Id)
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
 
@@ -482,7 +482,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValueBatch(batchValues: ICellInfo[]): void {
         //no need to have a batch mode so far.... we'll see in the future performance
         for (let element of batchValues) {
-            let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, element.Id)
+            let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
             this.AuditLogService.AddEditCellAuditLog(element.Id,
@@ -499,7 +499,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            let record = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
+            let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
             return (columnName: string) => { return record[columnName]; }
         }
         else {
@@ -590,7 +590,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
+        let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
         return this.getDisplayValueFromRecord(row, columnId)
     }
 
@@ -649,7 +649,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         // let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         // return rowIndex
-        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => x[this.blotterOptions.primaryKey] == rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => x[this.BlotterOptions.primaryKey] == rowIdentifierValue)
         return rowIndex
     }
 
@@ -695,7 +695,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let count = ds.getRowCount();
         let result = new Array(count);
         for (var y = 0; y < count; y++) {
-            result[y] = ds.getRow(y)[this.blotterOptions.primaryKey];
+            result[y] = ds.getRow(y)[this.BlotterOptions.primaryKey];
         }
         return result
     }
