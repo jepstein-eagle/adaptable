@@ -82,7 +82,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                 </Row>
             </li>
         })
-        return <PanelWithButton headerText="Cell Validation Configuration" bsStyle="primary" style={panelStyle}
+        return <PanelWithButton headerText="Cell Validation" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Cell Validation Rule"}
             buttonClick={() => this.createCellValidation()}
              showAddButtonGlyph={true}  

@@ -60,7 +60,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     </OverlayTrigger>
                     {' '}
                     <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='danger' onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+                        <Button bsSize='small' bsStyle='danger' disabled={currentAdvancedSearchId == "select"} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
                     </OverlayTrigger>
                 </Panel>
             </Form>

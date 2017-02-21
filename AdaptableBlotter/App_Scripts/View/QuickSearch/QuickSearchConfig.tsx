@@ -16,7 +16,7 @@ import { PanelWithImage } from '../PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
 
 
-interface QuickSearchActionProps extends IStrategyViewPopupProps<QuickSearchActionComponent> {
+interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
@@ -27,11 +27,11 @@ interface QuickSearchActionProps extends IStrategyViewPopupProps<QuickSearchActi
     onSetSearchBackColor: (backColor: string) => QuickSearchRedux.QuickSearchSetBackColorAction
 }
 
-interface QuickSearchActionState {
+interface QuickSearchConfigState {
     EditedQuickSearchText: string
 }
 
-class QuickSearchActionComponent extends React.Component<QuickSearchActionProps, QuickSearchActionState> {
+class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps, QuickSearchConfigState> {
 
     constructor() {
         super();
@@ -175,4 +175,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let QuickSearchAction = connect(mapStateToProps, mapDispatchToProps)(QuickSearchActionComponent);
+export let QuickSearchConfig = connect(mapStateToProps, mapDispatchToProps)(QuickSearchConfigComponent);
