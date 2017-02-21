@@ -80,7 +80,7 @@ messages: {
         });
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, "Jonathan");
+    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, { userName: "Jonathan" });
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))
 }
 

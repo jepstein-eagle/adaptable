@@ -44,7 +44,7 @@ import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
 import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction, DistinctCriteriaPairValue } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ILayout } from '../Core/Interface/ILayoutStrategy';
@@ -55,7 +55,7 @@ import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
 import { GridState } from '../Redux/ActionsReducers/Interface/IState'
-
+import {DefaultAdaptableBlotterOptions} from '../Core/DefaultAdaptableBlotterOptions'
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -68,8 +68,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
+    private blotterOptions: IAdaptableBlotterOptions
 
-    constructor(private grid: kendo.ui.Grid, private container: HTMLElement, private userName?: string) {
+    constructor(private grid: kendo.ui.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+        //we init with defaults then overrides with options passed in the constructor
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -234,7 +238,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     get UserName(): string {
-        return this.userName || "anonymous";
+        return this.blotterOptions.userName;
     }
 
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {

@@ -101,3 +101,10 @@ export interface IRawValueDisplayValuePair {
     RawValue: any,
     DisplayValue: string
 }
+
+export interface IAdaptableBlotterOptions{
+    enableAuditLog? : boolean,
+    enableRemoteConfigServer?: boolean,
+    userName?: string,
+    primaryKey? : string
+}

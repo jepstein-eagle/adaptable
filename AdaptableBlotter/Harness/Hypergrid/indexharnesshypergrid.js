@@ -1,11 +1,10 @@
 function ThemeChange(blotter, grid) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if(themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero")
-        {
+        if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
             grid.addProperties(darkTheme);
         }
-        else{
+        else {
             grid.addProperties(lightTheme);
         }
     }
@@ -149,7 +148,7 @@ function InitBlotter() {
     });
 
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, "tradeId", "Jonathan");
+    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, { primaryKey: "tradeId", userName: "Jonathan" });
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
 
     grid.addProperties(lightTheme);
