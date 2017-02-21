@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
+import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/interface/ICellValidationStrategy';
@@ -85,6 +85,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         return <PanelWithButton headerText="Cell Validation Configuration" bsStyle="primary" style={panelStyle}
             buttonContent={"Create Cell Validation Rule"}
             buttonClick={() => this.createCellValidation()}
+             showAddButtonGlyph={true}  
             glyphicon={"flag"} >
             {CellValidationItems.length > 0 &&
                 <div>
@@ -96,7 +97,10 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             }
 
             {CellValidationItems.length == 0 &&
-                <Well bsSize="small">Click 'Create Cell Validation Rule' to start creating rules for valid cell edits.\nEdits that fail can be prevented altogether or allowed after user sees a warning.</Well>
+                <Well bsSize="small">
+                    <HelpBlock>Click 'Create Cell Validation Rule' to start creating rules for valid cell edits.</HelpBlock>
+                    <HelpBlock>Edits that fail can be prevented altogether or allowed after user sees a warning.</HelpBlock>
+                </Well>
             }
 
             {this.state.EditedCellValidation != null &&

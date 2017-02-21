@@ -29,11 +29,24 @@ export interface IUIWarning {
 }
 
 export interface IUIConfirmation {
+    ConfirmationTitle: string;
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
+}
+
+
+export interface InputAction extends Redux.Action {
+    InputText: string
+}
+
+
+export interface IUIPrompt {
+    PromptTitle: string;
+    PromptMsg: string;
+    ConfirmAction: InputAction;
 }
 
 export interface IStrategyActionReturn<T> {
@@ -42,8 +55,8 @@ export interface IStrategyActionReturn<T> {
 }
 
 
-export interface ICellInfo{
-          Id: any, 
-          ColumnId: string, 
-          Value: any 
+export interface ICellInfo {
+    Id: any,
+    ColumnId: string,
+    Value: any
 }

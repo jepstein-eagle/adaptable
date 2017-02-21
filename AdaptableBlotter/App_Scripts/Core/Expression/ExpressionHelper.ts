@@ -4,7 +4,6 @@ import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { ColumnType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { IPredefinedExpressionInfo } from '../Interface/IConditionalStyleStrategy';
 
 
 export module ExpressionHelper {
@@ -20,13 +19,7 @@ export module ExpressionHelper {
         )
     }
 
-    export function CreateExpressionFromPredefinedExpressionInfo(columnName: string, predefinedExpressionInfo: IPredefinedExpressionInfo): Expression {
-        return ExpressionHelper.CreateSingleColumnExpression(columnName,
-            predefinedExpressionInfo.DisplayColumnValues,
-            predefinedExpressionInfo.RawColumnValues,
-            predefinedExpressionInfo.UserFilterUids,
-            predefinedExpressionInfo.ExpressionRange ? [predefinedExpressionInfo.ExpressionRange] : [])
-    }
+ 
 
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, userFilters: IUserFilter[]): string {
         let returnValue = ""
@@ -110,7 +103,7 @@ export module ExpressionHelper {
                 if (columnUserFilters) {
                     let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids);
                     for (let userFilter of filteredUserFilters) {
-                        // Predefined NamedValueExpressions have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
+                        // Predefined userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (userFilter.IsPredefined) {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);

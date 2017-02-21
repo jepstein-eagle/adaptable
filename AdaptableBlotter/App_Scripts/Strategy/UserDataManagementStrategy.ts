@@ -7,6 +7,8 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType } from '../Core/Enums';
+import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
+
 
 const cleanUserData: string = "CleanUserData"
 
@@ -23,13 +25,14 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
 
     public onAction(action: string) {
         if (action == cleanUserData) {
-            
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                "Clean User Data",
-                "",
-                null)
 
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id, "Clean User Data", "", null)
+
+            // setting the layout as default first because this will then have the columns ready for when they are deleted and re=added
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout("Default"));
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData());
+            this.blotter.saveDefaultLayout();
+
         }
     }
 }

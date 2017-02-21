@@ -22,6 +22,8 @@ import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilder
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUIConfirmation } from '../../Core/Interface/IStrategy';
+
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -31,6 +33,7 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onClearPopupParams: () => PopupRedux.ClearPopupParamAction,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
     PopupParams: any,
     UserFilters: IUserFilter[]
 }
@@ -74,7 +77,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         return (
             <div >
                 <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                    buttonClick={() => this.onNewAdvancedSearch()} glyphicon={"search"}>
+                    buttonClick={() => this.onNewAdvancedSearch()} showAddButtonGlyph={false} glyphicon={"search"}>
 
                     {/* The main Search selection form */}
                     <div >
@@ -124,7 +127,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <PanelWithButton headerText="Search Details" bsStyle="primary"
+                    <PanelWithButton headerText="Search Details" bsStyle="primary" showAddButtonGlyph={false}
                         buttonContent={"Edit Search"}
                         buttonClick={() => this.onEditAdvancedSearch()}>
                         <div style={previewDivStyle}>
@@ -166,9 +169,16 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     // Delete search:  sets the selected search to null and calles Redux Delete Advanced Search
     onDeleteAdvancedSearch() {
         let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
-        if (confirm("Are you sure you want to delete Advanced Search: '" + clonedSearch.Name + "'?")) {
-            this.props.onDeleteAdvancedSearch(clonedSearch);
+
+        let confirmation: IUIConfirmation = {
+            CancelText: "Cancel",
+            ConfirmationTitle: "Delete Advanced Search",
+            ConfirmationMsg: "Are you sure you want to delete '" + clonedSearch.Name + "'?",
+            ConfirmationText: "Delete",
+            CancelAction: null,
+            ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(clonedSearch)
         }
+        this.props.onConfirmWarning(confirmation)
     }
 
     onDeleteColumnValue(columnId: string, value: any) {
@@ -246,6 +256,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
         onClearPopupParams: () => dispatch(PopupRedux.ClearPopupParam()),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }
 

@@ -47,7 +47,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} showAddButtonGlyph={false} className="no-padding-panel" bsStyle="info">
             <ListBoxFilterForm ColumnValues={columnValuePairs}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}

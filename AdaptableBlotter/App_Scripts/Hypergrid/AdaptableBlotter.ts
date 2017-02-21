@@ -153,7 +153,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
                     event.preventDefault();
                 } else {
                     let warningMessage: string = "";
@@ -167,12 +167,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
+                        ConfirmationTitle: "Do you want to continue?",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
                         ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }
@@ -279,12 +280,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SetColumnIntoStore() {
         // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
-        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any) => {
+        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any, index: number) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
-                Visible: true
+                Visible: true,
+                Index: index
             }
         });
         let hiddenColumns: IColumn[] = this.grid.behavior.getHiddenColumns().map((x: any) => {
@@ -292,7 +294,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 ColumnType: this.getColumnType(x.name),
-                Visible: false
+                Visible: false,
+                Index: -1
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
@@ -718,6 +721,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
     }
+
+    public saveDefaultLayout(): void { }
+
+    public loadCurrentLayout(): void { }
 
 
 }

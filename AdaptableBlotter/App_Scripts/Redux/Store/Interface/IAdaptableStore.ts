@@ -17,6 +17,7 @@ export interface AdaptableBlotterState {
     ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
     Theme: AdaptableBlotterStates.ThemeState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
+    Layout: AdaptableBlotterStates.LayoutState;
 }
 
 export interface IAdaptableBlotterStore {

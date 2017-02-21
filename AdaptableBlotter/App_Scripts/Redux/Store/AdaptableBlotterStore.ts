@@ -24,6 +24,7 @@ import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
+import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
@@ -34,7 +35,11 @@ import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrateg
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError, ICellInfo } from '../../Core/interface/IStrategy'
+import { IUIError, ICellInfo, InputAction } from '../../Core/interface/IStrategy'
+
+
+
+
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -54,7 +59,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     UserFilter: UserFilterRedux.UserFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
-    CellValidation: CellValidationRedux.CellValidationReducer
+    CellValidation: CellValidationRedux.CellValidationReducer,
+    Layout: LayoutRedux.LayoutReducer
 });
 
 
@@ -157,6 +163,15 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
+                case PopupRedux.CONFIRM_PROMPTPOPUP: {
+                    let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
+                    if (promptConfirmationAction) {
+                        let inputText: string = (<InputAction>action).InputText;
+                        promptConfirmationAction.InputText = inputText;
+                        middlewareAPI.dispatch(promptConfirmationAction);
+                    }
+                    return next(action);
+                }
                 case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
                     let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
                     if (confirmationAction) {
@@ -189,7 +204,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         //We close the SmartEditPopup
                         middlewareAPI.dispatch(PopupRedux.HidePopup());
                         //We show the Error Popup
-                        middlewareAPI.dispatch(PopupRedux.ErrorPopup(apiReturn.Error));
+                        middlewareAPI.dispatch(PopupRedux.ShowErrorPopup(apiReturn.Error));
                     }
                     else {
                         middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn.ActionReturn));
@@ -235,7 +250,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
                     adaptableBlotter.SetColumnIntoStore();
-                    return returnAction;
+                      return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action

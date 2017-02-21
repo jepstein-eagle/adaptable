@@ -31,7 +31,7 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
     fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
     onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
-    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ConfirmationPopupAction;
+    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction;
 }
 
 class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}> {
@@ -162,6 +162,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     private onConfirmWarningCellValidation() {
         let confirmation: IUIConfirmation = {
             CancelText: "Cancel",
+            ConfirmationTitle: "Do you want to continue?",
             ConfirmationMsg: "This edit breaks Cell Validation rules that you have set.\nClick 'OK' to bypass these rules.\nClick 'Cancel' if you wish not to proceed with the edit.",
             ConfirmationText: "OK",
             CancelAction: SmartEditRedux.ApplySmartedit(false),
@@ -197,7 +198,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
         fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
-        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ConfirmationPopup(confirmation)),
+        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }
 

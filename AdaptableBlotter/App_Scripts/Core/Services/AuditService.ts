@@ -10,6 +10,7 @@ import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { Helper } from '../Helper'
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
 import * as StrategyIds from '../StrategyIds'
+import { StringExtensions } from '../../Core/Extensions';
 
 /*
 For now this is a very rough and ready Audit Service which will recieve notifications of changes in data - either via an event fired in the blotter or through other strategies.
@@ -162,14 +163,14 @@ export class AuditService implements IAuditService {
         switch (columnType) {
             case ColumnType.Date:
                 operand1 = Date.parse(cellValidationRule.RangeExpression.Operand1)
-                if (cellValidationRule.RangeExpression.Operand2 != "") {
+                if (StringExtensions.IsNotEmpty( cellValidationRule.RangeExpression.Operand2 )) {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
                 newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
-                if (cellValidationRule.RangeExpression.Operand2 != "") {
+                if (StringExtensions.IsNotEmpty( cellValidationRule.RangeExpression.Operand2 )) {
                     operand2 = Number(cellValidationRule.RangeExpression.Operand2);
                 }
                 newValue = dataChangedEvent.NewValue;

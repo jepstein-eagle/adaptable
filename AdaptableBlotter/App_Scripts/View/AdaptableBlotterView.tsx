@@ -19,8 +19,10 @@ import { IMenuItem } from '../Core/interface/IStrategy'
 import { MenuType } from '../Core/Enums';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
+import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
+import { AdaptableBlotterPopupPrompt } from './AdaptableBlotterPopupPrompt'
 import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfirmation'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -31,11 +33,17 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePopup: () => PopupRedux.HidePopupAction;
     onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
     onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
+    onConfirmPromptPopup: () => PopupRedux.ConfirmPromptPopupAction;
+    onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
     onConfirmConfirmationPopup: () => PopupRedux.ConfirmConfirmationPopupAction;
     onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
 }
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
+
+ componentDidMount() {
+       this.props.AdaptableBlotter.saveDefaultLayout();
+    }
 
     render() {
 
@@ -64,6 +72,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Navbar.Header>
                         {<AdvancedSearchToolbarControl />}
                     </Navbar.Header>
+                    <Navbar.Header>
+                        {<LayoutToolbarControl />}
+                    </Navbar.Header>
                     <Nav style={marginStyle} >
 
                         <NavDropdown key="functions" title="Functions..." id="basic-nav-dropdown">
@@ -73,6 +84,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
                             {configMenuItems}
                         </NavDropdown>
+
                     </Nav>
                 </Navbar>
 
@@ -84,7 +96,16 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onClose={this.props.onCloseWarningPopup}
                     ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
 
-                <AdaptableBlotterPopupConfirmation Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
+                <AdaptableBlotterPopupPrompt
+                    Msg={this.props.PopupState.PromptPopup.PromptMsg}
+                    Title={this.props.PopupState.PromptPopup.PromptTitle}
+                    onClose={this.props.onClosePromptPopup}
+                    onConfirm={this.props.onConfirmPromptPopup}
+                    ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup} />
+
+                <AdaptableBlotterPopupConfirmation
+                    Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
+                    Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
                     ShowPopup={this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup}
                     CancelText={this.props.PopupState.ConfirmationPopup.CancelText}
                     ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}
@@ -124,6 +145,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClosePopup: () => dispatch(PopupRedux.HidePopup()),
         onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
         onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
+        onClosePromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
+        onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.ConfirmPromptPopup(inputText)),
         onConfirmConfirmationPopup: () => dispatch(PopupRedux.ConfirmConfirmationPopup()),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.CancelConfirmationPopup()),
         showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),

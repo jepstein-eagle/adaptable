@@ -1,4 +1,5 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { InputAction } from '../../../Core/interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
 import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
@@ -12,6 +13,9 @@ import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy
 import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
+import { ILayout } from '../../../Core/interface/ILayoutStrategy';
+
+
 
 export interface PlusMinusState {
     DefaultNudge: number
@@ -31,6 +35,7 @@ export interface PopupState {
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
     ConfirmationPopup: IConfirmationPopup
+    PromptPopup: IPromptPopup
 }
 
 export interface IActionConfigurationPopup {
@@ -51,11 +56,19 @@ export interface IWarningPopup {
 
 export interface IConfirmationPopup {
     ShowConfirmationPopup: boolean;
+    ConfirmationTitle: string;
     ConfirmationMsg: string;
     ConfirmationText: string;
     CancelText: string;
-    ConfirmAction : Redux.Action;
-    CancelAction : Redux.Action;
+    ConfirmAction: Redux.Action;
+    CancelAction: Redux.Action;
+}
+
+export interface IPromptPopup {
+    ShowPromptPopup: boolean;
+    PromptTitle: string;
+    PromptMsg: string;
+    ConfirmAction: InputAction;
 }
 
 export interface SmartEditState {
@@ -85,7 +98,7 @@ export interface FlashingCellState {
 
 export interface CalendarState {
     CurrentCalendar: string;
-    AvailableCalendars : ICalendar[]
+    AvailableCalendars: ICalendar[]
 }
 
 export interface ConditionalStyleState {
@@ -101,7 +114,7 @@ export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
-    QuickSearchBackColor:  string
+    QuickSearchBackColor: string
 }
 
 export interface AdvancedSearchState {
@@ -124,4 +137,9 @@ export interface ThemeState {
 
 export interface CellValidationState {
     CellValidations: Array<ICellValidationRule>
+}
+
+export interface LayoutState {
+    CurrentLayout: string;
+    AvailableLayouts: ILayout[]
 }

@@ -71,7 +71,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
         return <PanelWithButton headerText="Shortcuts"
             buttonClick={() => this.CreateShortcut()}
-            buttonContent={"Create Shortcut"} bsStyle="primary" style={panelStyle} glyphicon={"road"}>
+            buttonContent={"Create Shortcut"} bsStyle="primary"  showAddButtonGlyph={true}  style={panelStyle} glyphicon={"road"}>
 
 
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

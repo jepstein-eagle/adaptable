@@ -6,7 +6,9 @@ import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { FilterFormReact } from '../View/FilterForm';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
@@ -37,6 +39,7 @@ import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
+import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -44,12 +47,14 @@ import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidat
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
+import { ILayout } from '../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { ExportState, QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { ExportState, QuickSearchState, LayoutState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
+import { GridState } from '../Redux/ActionsReducers/Interface/IState'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -96,6 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -129,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ErrorPopupAction>(PopupRedux.ErrorPopup(error));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
                     e.preventDefault();
                 } else {
                     let warningMessage: string = "";
@@ -143,12 +149,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel",
+                        ConfirmationTitle: "Do you want to continue?",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
                         ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ConfirmationPopupAction>(PopupRedux.ConfirmationPopup(confirmation));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     e.preventDefault();
                 }
@@ -269,15 +276,39 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SetColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map(x => {
+        let columns: IColumn[] = this.grid.columns.map((x, index) => {
+            let isVisible: boolean = x.hasOwnProperty('hidden') ? !x.hidden : true;
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
                 ColumnType: this.getColumnType(x.field),
-                Visible: x.hasOwnProperty('hidden') ? !x.hidden : true
+                Visible: isVisible,
+                Index: isVisible ? index : -1
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+    }
+
+    public saveDefaultLayout(): void {
+        if (this.AdaptableBlotterStore.TheStore.getState().Layout.AvailableLayouts.length == 0) {  // no layouts so need to create a default
+            this.SetColumnIntoStore();
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default"));
+        }
+    }
+
+    public loadCurrentLayout(): void {
+        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
+        let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
+        
+        if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
+            let defaultLayout: string = "Default";
+            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) { 
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
+            }
+            return;
+        }
+        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.GetGridState().Columns.find(x => x.ColumnId == columnId));
+        this.AdaptableBlotterStore.TheStore.dispatch<ColumnChooserRedux.SetNewColumnListOrderAction>(ColumnChooserRedux.SetNewColumnListOrder(columns));
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -449,7 +480,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnHeader(columnId: string): string {
-        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
+        let column = this.GetGridState().Columns.find(x => x.ColumnId == columnId);
         if (column) {
             return column.FriendlyName
         }
@@ -463,7 +494,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnFromColumnId(columnId: string): IColumn {
-        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnId);
+        return this.GetGridState().Columns.find(c => c.ColumnId == columnId);
     }
 
     public isColumnReadonly(columnId: string): boolean {
@@ -821,6 +852,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else {
             return matchingRowIds;
         }
+    }
+
+      private GetGridState(): GridState {
+        return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 
 
