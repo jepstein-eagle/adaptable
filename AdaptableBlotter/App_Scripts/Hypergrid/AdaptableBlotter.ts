@@ -283,10 +283,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    get UserName(): string {
-        return this.BlotterOptions.userName;
-    }
-
     public SetColumnIntoStore() {
         // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
         let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any, index: number) => {

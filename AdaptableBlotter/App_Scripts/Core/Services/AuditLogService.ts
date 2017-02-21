@@ -24,7 +24,7 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.UserName,
+                adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_editcell: {
                     primarykey: String(primarykey),
                     column_id: columnId,
@@ -37,7 +37,7 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.UserName,
+                adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_editcell: {
                     primarykey: String(primarykey),
                     column_id: columnId,
@@ -52,7 +52,7 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.UserName,
+                adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_editcell: {
                     primarykey: String(primarykey),
                     column_id: columnId,
@@ -67,7 +67,7 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.UserName,
+                adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_editcell: {
                     primarykey: String(primarykey),
                     column_id: columnId,
@@ -82,7 +82,7 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.UserName,
+                adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_editcell: {
                     primarykey: String(primarykey),
                     column_id: columnId,
@@ -97,7 +97,7 @@ export class AuditLogService {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.UserName,
+            adaptableblotter_username: this.blotter.BlotterOptions.userName,
             //we want to loose the type since you cannot have same field name with different types in logstash. So log it as a string...
             //it makes sense anyway
             adaptableblotter_state_change: this.convertToText(stateChanges),
@@ -109,7 +109,7 @@ export class AuditLogService {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.AdaptableBlotterFunction],
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.UserName,
+            adaptableblotter_username: this.blotter.BlotterOptions.userName,
             adaptableblotter_function: {
                 name: functionName,
                 action: action,
@@ -125,7 +125,7 @@ export class AuditLogService {
         let pingMessage: IAuditLogEntry = {
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.Ping],
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.UserName,
+            adaptableblotter_username: this.blotter.BlotterOptions.userName,
             adaptableblotter_number_of_missed_ping: this.numberOfMissedPing
         }
         let xhr = new XMLHttpRequest();

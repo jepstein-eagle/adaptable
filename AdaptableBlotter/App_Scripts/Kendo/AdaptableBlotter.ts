@@ -237,10 +237,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    get UserName(): string {
-        return this.BlotterOptions.userName;
-    }
-
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {
         /* 
        replacing filter screen with our own - good idea?  some ideas stolen from...

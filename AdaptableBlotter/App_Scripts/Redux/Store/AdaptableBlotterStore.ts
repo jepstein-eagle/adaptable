@@ -88,16 +88,22 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
-        let engineReduxStorage = createEngine('my-adaptable-blotter-key');
-        let engineReduxStorageRemote = createEngineRemote("/adaptableblotter-config", blotter.UserName);
-
+        let middlewareReduxStorage : Redux.Middleware
+        let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
+        let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
         //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
-        // let middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorageRemote);
-        // let reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
-        // let loadStorage = ReduxStorage.createLoader(engineReduxStorageRemote);
-        let middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
-        let reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
-        let loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+        if (blotter.BlotterOptions.enableRemoteConfigServer) {
+            let engineReduxStorageRemote = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName);
+            middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorageRemote);
+            reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+            loadStorage = ReduxStorage.createLoader(engineReduxStorageRemote);
+        }
+        else {
+            let engineReduxStorage = createEngine('my-adaptable-blotter-key');
+            middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
+            reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+            loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+        }
 
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
@@ -250,7 +256,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let returnAction = next(action);
                     adaptableBlotter.CreateMenu();
                     adaptableBlotter.SetColumnIntoStore();
-                      return returnAction;
+                    return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
