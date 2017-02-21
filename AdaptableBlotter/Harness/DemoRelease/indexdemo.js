@@ -124,7 +124,15 @@ function InitBlotter() {
     var container = document.getElementById('content');
     //tradeId is the primary for the datasource
     //Jonathan is the username for the demo. Can be plugged to an authent service if required
-    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, { primaryKey: "tradeId", userName: "Jonathan" });
+    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(
+        grid,
+        container,
+        {
+            primaryKey: "tradeId",
+            userName: "Jonathan",
+            enableAuditLog: false,
+            enableRemoteConfigServer: false
+        });
     //We subscribe to the AB theme change so we update the theme of the grid (only light or dark for demo)
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
     grid.addProperties(lightTheme);

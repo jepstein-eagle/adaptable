@@ -72,7 +72,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
-
+        //we init with defaults then overrides with options passed in the constructor
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
