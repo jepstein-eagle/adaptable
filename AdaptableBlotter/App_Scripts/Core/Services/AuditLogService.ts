@@ -6,31 +6,20 @@ import * as DeepDiff from 'deep-diff'
 // import * as SockJS from 'sockjs-client'
 
 export class AuditLogService {
-    //need AuditLog Object
     private auditLogQueue: Array<IAuditLogEntry>
     private canSendLog: boolean = true
     private numberOfMissedPing: number = 0
-    // private sockJS: any
 
     constructor(private blotter: IAdaptableBlotter) {
         this.auditLogQueue = []
-        // //need to implement HTTPS and create proper server for websocket
-        // this.sockJS = new SockJS('http://127.0.0.1:9999/auditlog');
-        // this.sockJS.onopen = (e: any) => {
-        //     console.log('open');
-        // };
-        // this.sockJS.onmessage = (e: MessageEvent) => {
-        //     console.log('message', e.data);
-        // };
-        // this.sockJS.onclose = (e: any) => {
-        //     console.log('close');
-        // };
-        this.ping()
-        setInterval(() => this.ping(), 60000)
-        setInterval(() => this.flushAuditQueue(), 1000)
+        if (blotter.BlotterOptions.enableAuditLog) {
+            this.ping()
+            setInterval(() => this.ping(), 60000)
+            setInterval(() => this.flushAuditQueue(), 1000)
+        }
     }
 
-    public AddEditCellAuditLog(  primarykey: string, columnId: string, oldValue: any, newValue: any) {
+    public AddEditCellAuditLog(primarykey: string, columnId: string, oldValue: any, newValue: any) {
         if (typeof oldValue == "string" && typeof newValue == "string") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
@@ -104,7 +93,7 @@ export class AuditLogService {
         }
     }
 
-    public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[], actionType : string) {
+    public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[], actionType: string) {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
             adaptableblotter_client_timestamp: new Date(),
@@ -193,7 +182,7 @@ export class AuditLogService {
             //we make the request async
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json");
-            
+
             xhr.send(JSON.stringify(obj));
             obj = this.auditLogQueue.shift()
         }
