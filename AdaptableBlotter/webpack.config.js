@@ -47,6 +47,10 @@ module.exports = {
             '/auditlog': {
                 target: 'http://127.0.0.1:6767',
                 secure: false
+            },
+            '/adaptableblotter-config': {
+                target: 'http://127.0.0.1:3000',
+                secure: false
             }
         }
     }

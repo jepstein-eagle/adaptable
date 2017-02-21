@@ -3,6 +3,8 @@
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import * as DeepDiff from 'deep-diff'
+import createEngine from 'redux-storage-engine-localstorage';
+import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
@@ -23,7 +25,6 @@ import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
-import createEngine from 'redux-storage-engine-localstorage';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
@@ -78,20 +79,20 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
     return rootReducer(state, action)
 }
 
-
-
-//TODO: need to make this members of AdaptableBlotterStore so we can have mutiple instances
-const engineReduxStorage = createEngine('my-adaptable-blotter-key');
-//TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
-const middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
-const reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
-const loadStorage = ReduxStorage.createLoader(engineReduxStorage);
-
-
-
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     constructor(private blotter: IAdaptableBlotter) {
+        let engineReduxStorage = createEngine('my-adaptable-blotter-key');
+        let engineReduxStorageRemote = createEngineRemote("/adaptableblotter-config", blotter.UserName);
+
+        //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
+        // let middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorageRemote);
+        // let reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+        // let loadStorage = ReduxStorage.createLoader(engineReduxStorageRemote);
+        let middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
+        let reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+        let loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
             Redux.applyMiddleware(/*snooper,*/ diffStateAuditMiddleware(blotter), adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
@@ -209,7 +210,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.HidePopup());
                     return next(action);
                 }
-                 case ShortcutRedux.SHORTCUT_APPLY: {
+                case ShortcutRedux.SHORTCUT_APPLY: {
                     let shortcutStrategy = <IShortcutStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ShortcutStrategyId));
                     let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
                     shortcutStrategy.ApplyShortcut(actionTyped.Shortcut, actionTyped.CellInfo, actionTyped.KeyEventString, actionTyped.NewValue);

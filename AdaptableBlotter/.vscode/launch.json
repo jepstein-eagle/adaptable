@@ -17,6 +17,13 @@
             "port": 9222,
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Debug Config server",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/configserver/index.js",
+            "cwd": "${workspaceRoot}"
         }
     ]
 }
