@@ -59,7 +59,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             </ConditionalStyleConfigItem>
         });
 
-        return <PanelWithButton headerText="Create Conditional Style"
+        return <PanelWithButton headerText="Conditional Style"
             buttonContent={"Create Conditional Style"}
             buttonClick={() => this.onAdd()}
             bsStyle="primary" style={panelStyle} showAddButtonGlyph={true} glyphicon={"tint"}>

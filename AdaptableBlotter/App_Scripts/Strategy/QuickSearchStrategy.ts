@@ -3,21 +3,24 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums';
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { MenuType, LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
-import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { QuickSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
+import { Helper } from '../Core/Helper'
 
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     private quickSearchText: string
     private quickSearchOperator: LeafExpressionOperator
     private quickSearchDisplayType: QuickSearchDisplayType
+    private visibleColumns: string[]
 
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Quick Search", this.Id, 'QuickSearchAction', MenuType.Configuration, "eye-open");
+        this.menuItemConfig = new MenuItemShowPopup("Quick Search", this.Id, 'QuickSearchConfig', MenuType.Configuration, "eye-open");
+        // this.visibleColumns = [];
         this.quickSearchText = "";
         this.quickSearchOperator = this.GetQuickSearchState().QuickSearchOperator
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
@@ -62,10 +65,42 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
 
             this.blotter.SearchService.ApplySearchOnGrid();
         }
+
+        if (this.visibleColumns == null) {
+            this.visibleColumns = this.getVisibleColumnIds();
+        }
+        
+        // Run quick search if its been set and the actual visible columns have changed (not their order as that doesnt matter)
+        if (StringExtensions.IsNotNullOrEmpty(this.quickSearchText)) {
+
+            let stateVisibleColumns: string[] = this.getVisibleColumnIds();
+
+            if (!Helper.areArraysEqual(this.visibleColumns, this.getVisibleColumnIds())) {
+                this.visibleColumns = stateVisibleColumns;
+
+                this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+                    "ApplyQuickSearch",
+                    "Columns have changed changed"
+                )
+                this.blotter.SearchService.ApplySearchOnGrid();
+            }
+        }
     }
+
+    private getVisibleColumnIds(): string[] {
+        return this.GetGridState().Columns.filter(c => c.Visible).map(c => {
+            return c.ColumnId;
+        })
+    }
+
+   
 
     private GetQuickSearchState(): QuickSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+    }
+
+    private GetGridState(): GridState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 
     getMenuItems(): IMenuItem[] {

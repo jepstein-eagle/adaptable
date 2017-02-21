@@ -277,7 +277,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
         let columns: IColumn[] = this.grid.columns.map((x, index) => {
-            let isVisible: boolean = x.hasOwnProperty('hidden') ? !x.hidden : true;
+            let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
@@ -289,20 +289,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
-    public saveDefaultLayout(): void {
+    public createDefaultLayout(): void {
         if (this.AdaptableBlotterStore.TheStore.getState().Layout.AvailableLayouts.length == 0) {  // no layouts so need to create a default
             this.SetColumnIntoStore();
-            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.SaveLayoutAction>(LayoutRedux.SaveLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default"));
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.AddLayoutAction>(LayoutRedux.AddLayout(this.GetGridState().Columns.map(x => x.ColumnId), "Default"));
         }
     }
 
     public loadCurrentLayout(): void {
         let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
         let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
-        
+
         if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
             let defaultLayout: string = "Default";
-            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) { 
+            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) {
                 this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
             }
             return;
@@ -357,6 +357,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return {
             Id: uuid, ColumnId: col, Value: item.get(col)
         };
+    }
+
+    private isGridColumnVisible(gridColumn: kendo.ui.GridColumn) {
+        return gridColumn.hasOwnProperty('hidden') ? !gridColumn.hidden : true;
     }
 
     private getcurrentEditedCell(): JQuery {
@@ -810,14 +814,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let caseInSensitiveText = quickSearchText.toLowerCase();
         let matchingRowIds: string[] = [];
-        let columnCount: number = this.grid.columns.length;
+
+        let visibleColumnIndices: number[] = this.grid.columns.filter(c => this.isGridColumnVisible(c)).map(c => { return this.getColumnIndex(c.field) });
 
         rowIds.forEach(rowId => {
             var row = this.getRowByRowIdentifier(rowId);
             let cellMatch: boolean = false;
 
-            for (let i = 0; i <= columnCount; i++) {
-                var cell = this.getCellByColumnIndexAndRow(row, i);
+            for (let visibleColumnIndex of visibleColumnIndices) {
+                var cell = this.getCellByColumnIndexAndRow(row, visibleColumnIndex);
                 let cellText: string = cell.text();
                 if (StringExtensions.IsNotNullOrEmpty(cellText)) {
                     if (quickSearchOperator == LeafExpressionOperator.Contains) {
@@ -828,13 +833,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (cellMatch) {
                         switch (quickSearchDisplayType) {
                             case QuickSearchDisplayType.ColourCell:
-                                this.addCellStyle(rowId, i, "Ab-QuickSearch")
+                                this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
                                 break;
                             case QuickSearchDisplayType.HideNonMatchingRow:
                                 matchingRowIds.push(rowId);
                                 break;
                             case QuickSearchDisplayType.HideRowAndColourCell:
-                                this.addCellStyle(rowId, i, "Ab-QuickSearch")
+                                this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
                                 matchingRowIds.push(rowId);
                                 break;
                         }
@@ -846,6 +851,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         })
+
         //  if only colouring cells then return all rows, otherwise return just the ones which have matched
         if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
             return rowIds;
@@ -854,7 +860,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-      private GetGridState(): GridState {
+    private GetGridState(): GridState {
         return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 

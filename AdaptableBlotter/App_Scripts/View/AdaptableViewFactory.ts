@@ -8,7 +8,7 @@ import { PrintPreviewAction } from './PrintPreview/PrintPreviewAction'
 import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
 import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
-import { QuickSearchAction } from './QuickSearch/QuickSearchAction'
+import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import { ThemeConfig } from './Theme/ThemeConfig'
@@ -27,7 +27,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalendarsConfig: CalendarsConfig,
   ConditionalStyleConfig: ConditionalStyleConfig,
   PrintPreviewAction: PrintPreviewAction,
-  QuickSearchAction: QuickSearchAction,
+  QuickSearchConfig: QuickSearchConfig,
   AdvancedSearchAction: AdvancedSearchAction,
   UserFilterConfig: UserFilterConfig,
   ThemeConfig: ThemeConfig,

@@ -1,5 +1,4 @@
 /// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -21,7 +20,7 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     CurrentLayout: string,
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
-    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
+    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.AddLayoutAction,
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
 }
 
@@ -132,7 +131,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
-        onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.SaveLayout(Columns, LayoutName)),
+        onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.AddLayout(Columns, LayoutName)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }

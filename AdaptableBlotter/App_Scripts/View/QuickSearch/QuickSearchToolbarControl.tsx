@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -10,6 +10,7 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
+    onShowQuickSearchConfig: () => PopupRedux.ShowPopupAction;
     QuickSearchText: string
 }
 
@@ -32,7 +33,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     render(): any {
         return <Form className='navbar-form'>
             <Panel className="small-padding-panel" >
-               <ControlLabel>Quick Search:</ControlLabel>
+                <ControlLabel>Quick Search:</ControlLabel>
                 {' '}
                 <FormControl
                     type="text"
@@ -40,7 +41,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
                     onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
-                    />{' '}
+                />{' '}
 
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
                     <Button bsSize='small' bsStyle='primary' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run</Button>
@@ -48,6 +49,12 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
                     <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
+                </OverlayTrigger>
+                {' '}
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Quick Search Settings</Tooltip>}>
+                    <Button bsSize='small' bsStyle='default' onClick={() => this.props.onShowQuickSearchConfig()}>
+                        <Glyphicon glyph="wrench" />
+                    </Button>
                 </OverlayTrigger>
             </Panel>
         </Form>
@@ -88,7 +95,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText))
+        onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
+        onShowQuickSearchConfig: () => dispatch(PopupRedux.ShowPopup("QuickSearchConfig")),
+
     };
 }
 

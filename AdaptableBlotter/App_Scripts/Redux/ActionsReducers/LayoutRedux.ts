@@ -8,6 +8,7 @@ import { InputAction } from '../../Core/Interface/IStrategy';
 
 
 const LOAD_LAYOUT = 'LOAD_LAYOUT';
+const ADD_LAYOUT = 'ADD_LAYOUT';
 const SAVE_LAYOUT = 'SAVE_LAYOUT';
 const DELETE_LAYOUT = 'DELETE_LAYOUT';
 
@@ -20,22 +21,33 @@ export const LoadLayout = (LayoutName: string): LoadLayoutAction => ({
     LayoutName
 })
 
-export interface SaveLayoutAction extends InputAction{
+export interface AddLayoutAction extends InputAction {
     Columns: string[],
-    
+
 }
 
-export const SaveLayout = (Columns: string[], InputText: string): SaveLayoutAction => ({
-    type: SAVE_LAYOUT,
+export const AddLayout = (Columns: string[], InputText: string): AddLayoutAction => ({
+    type: ADD_LAYOUT,
     Columns,
     InputText
 })
 
-export interface LayoutDeleteAction extends Redux.Action {
+export interface SaveLayoutAction extends Redux.Action {
+    LayoutName: string,
+    Columns: string[],
+}
+
+export const SaveLayout = (Columns: string[], LayoutName: string): SaveLayoutAction => ({
+    type: SAVE_LAYOUT,
+    Columns,
+    LayoutName
+})
+
+export interface DeleteLayoutAction extends Redux.Action {
     LayoutName: string
 }
 
-export const DeleteLayout = (LayoutName: string): LayoutDeleteAction => ({
+export const DeleteLayout = (LayoutName: string): DeleteLayoutAction => ({
     type: DELETE_LAYOUT,
     LayoutName
 })
@@ -52,18 +64,25 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
     switch (action.type) {
         case LOAD_LAYOUT:
             return Object.assign({}, state, { CurrentLayout: (<LoadLayoutAction>action).LayoutName })
-        case SAVE_LAYOUT:
-            let actionTypedSave = (<SaveLayoutAction>action)
-            let newLayout: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.InputText }
+        case ADD_LAYOUT:
+            let actionTypedAdd = (<AddLayoutAction>action)
+            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText }
             layouts = [].concat(state.AvailableLayouts);
-            layouts.push(newLayout);
-            return Object.assign({}, state, { CurrentLayout: newLayout.Name, AvailableLayouts: layouts });
+            layouts.push(layoutToAdd);
+            return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
         case DELETE_LAYOUT:
-            let actionTypedDelete = (<LayoutDeleteAction>action)
+            let actionTypedDelete = (<DeleteLayoutAction>action)
             layouts = [].concat(state.AvailableLayouts)
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
             return Object.assign({}, state, { CurrentLayout: "", AvailableLayouts: layouts })
+        case SAVE_LAYOUT:
+            let actionTypedSave = <SaveLayoutAction>action;
+            layouts = [].concat(state.AvailableLayouts);
+            index = layouts.findIndex(a => a.Name == actionTypedSave.LayoutName)
+            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.LayoutName }
+            layouts[index] = layoutToSave;
+            return Object.assign({}, state, { AvailableLayouts: layouts });
         default:
             return state
     }

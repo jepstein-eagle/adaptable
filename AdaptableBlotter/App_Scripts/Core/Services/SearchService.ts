@@ -39,7 +39,7 @@ export class SearchService implements ISearchService {
         this.blotter.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
 
 
-        let columns: IColumn[] = this.GetGridState().Columns;
+        let columns: IColumn[] = this.GetGridState().Columns.filter(c=>c.Visible);
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0) {
 

@@ -22,6 +22,8 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
         if (this.CurrentLayout != this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout) {
             this.CurrentLayout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
             this.blotter.loadCurrentLayout();
+            // and run search too - is this the responsibility of this strategy to do this? or for search to listen to layouts?
+             this.blotter.SearchService.ApplySearchOnGrid();
         }
     }
 

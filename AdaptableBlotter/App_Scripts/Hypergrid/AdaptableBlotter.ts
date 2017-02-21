@@ -5,7 +5,9 @@ import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
@@ -34,6 +36,7 @@ import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
+import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
@@ -48,6 +51,9 @@ import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
+import { ILayout } from '../Core/Interface/ILayoutStrategy';
+import { LayoutState } from '../Redux/ActionsReducers/Interface/IState'
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -94,6 +100,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+  this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -722,9 +729,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public saveDefaultLayout(): void { }
+    public createDefaultLayout(): void {  
+        if (this.AdaptableBlotterStore.TheStore.getState().Layout.AvailableLayouts.length == 0) {  // no layouts so need to create a default
+            this.SetColumnIntoStore();
+            this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.AddLayoutAction>(LayoutRedux.AddLayout(this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+        }}
 
-    public loadCurrentLayout(): void { }
+    public loadCurrentLayout(): void { 
+          let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
+        let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
+        
+        if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
+            let defaultLayout: string = "Default";
+            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) { 
+                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
+            }
+            return;
+        }
+        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId));
+        this.AdaptableBlotterStore.TheStore.dispatch<ColumnChooserRedux.SetNewColumnListOrderAction>(ColumnChooserRedux.SetNewColumnListOrder(columns));
+    }
 
 
 }

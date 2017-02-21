@@ -14,9 +14,9 @@ import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
-    // onSaveLayout: (columns: IColumn[], layoutName: string) => LayoutRedux.SaveLayoutAction,
+    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
-     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,Columns: IColumn[],
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction, Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string
 }
@@ -39,8 +39,12 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 </FormControl>
 
                 {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save a new Layout using the Blotter's current column order and visibility</Tooltip>}>
-                    <Button bsSize='small' bsStyle='primary' onClick={() => this.onSaveNewLayoutClicked()}>Save As New</Button>
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save Changes to Current Layout</Tooltip>}>
+                    <Button bsSize='small' bsStyle='primary' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onSaveLayoutClicked()}>Save</Button>
+                </OverlayTrigger>
+                {' '}
+                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create a new Layout using the Blotter's current column order and visibility</Tooltip>}>
+                    <Button bsSize='small' bsStyle='success' onClick={() => this.onAddLayoutClicked()}>New</Button>
                 </OverlayTrigger>
                 {' '}
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Layout</Tooltip>}>
@@ -51,7 +55,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         </Form>
     }
 
-   private onDeleteLayoutClicked() {
+    private onSaveLayoutClicked() {
+        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
+    }
+
+    private onDeleteLayoutClicked() {
 
         let confirmation: IUIConfirmation = {
             CancelText: "Cancel",
@@ -64,11 +72,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onConfirmWarning(confirmation)
     }
 
-    private onSaveNewLayoutClicked() {
+    private onAddLayoutClicked() {
         let prompt: IUIPrompt = {
-            PromptTitle: "Save New Layout",
+            PromptTitle: "Create New Layout",
             PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.SaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
+            ConfirmAction: LayoutRedux.AddLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
         }
         this.props.onShowPrompt(prompt)
     }
@@ -91,9 +99,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
+        onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
-         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
-   };
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+    };
 }
 
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);

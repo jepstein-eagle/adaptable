@@ -50,7 +50,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
 
 
-        return <PanelWithButton headerText="Custom Sorts" style={panelStyle}
+        return <PanelWithButton headerText="Custom Sort" style={panelStyle}
             buttonClick={() => this.CreateCustomSort()}
             buttonContent="Create Custom Sort" bsStyle="primary"  showAddButtonGlyph={true} glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?

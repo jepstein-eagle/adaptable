@@ -31,7 +31,7 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
             // setting the layout as default first because this will then have the columns ready for when they are deleted and re=added
             this.blotter.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout("Default"));
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData());
-            this.blotter.saveDefaultLayout();
+            this.blotter.createDefaultLayout();
 
         }
     }
