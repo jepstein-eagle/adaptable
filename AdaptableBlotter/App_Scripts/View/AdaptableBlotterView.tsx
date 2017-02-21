@@ -41,8 +41,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
 
- componentDidMount() {
-       this.props.AdaptableBlotter.saveDefaultLayout();
+    componentDidMount() {
+        this.props.AdaptableBlotter.createDefaultLayout();
     }
 
     render() {

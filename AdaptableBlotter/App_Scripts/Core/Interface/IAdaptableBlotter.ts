@@ -76,7 +76,7 @@ export interface IAdaptableBlotter {
 
     getQuickSearchRowIds(rowIds: string[]): string[]
 
-saveDefaultLayout(): void
+createDefaultLayout(): void
     loadCurrentLayout():void
 }
 
