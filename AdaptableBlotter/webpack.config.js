@@ -11,7 +11,7 @@ module.exports = {
         harness: "./harness/DataGenerator.ts"
     },
     output: {
-        path: __dirname + '/dist/',
+        path: __dirname + '/dist/adaptableblotter',
         filename: "[name]-bundle.js",
         publicPath: "/adaptableblotter/",
         library: "[name]",
@@ -31,9 +31,6 @@ module.exports = {
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
         new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }])
-        //jo will be added later
-        // Add minification
-        //  new webpack.optimize.UglifyJsPlugin()
     ],
     module: {
         loaders: [
