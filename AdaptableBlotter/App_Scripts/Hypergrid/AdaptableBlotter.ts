@@ -592,7 +592,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.getDisplayValueFromRecord(row, columnId)
     }
 
-    private getDisplayValueFromRecord(row: any, columnId: string) {
+    public getDisplayValueFromRecord(row: any, columnId: string) {
         let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
         let formatter = column.getFormatter()
         return formatter(row[columnId])
