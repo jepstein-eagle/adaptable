@@ -72,7 +72,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                         if (activeShortcut.IsDynamic) {
                             valueToReplace = this.blotter.CalendarService.GetDynamicDate(activeShortcut.ShortcutResult);
                         } else {
-                            valueToReplace = activeShortcut.ShortcutResult;
+                            valueToReplace = new Date(activeShortcut.ShortcutResult);
                         }
                     }
                     break;
@@ -96,7 +96,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     "HandleKeyDown",
                     "Key Pressed: " + keyEventString,
                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
-                
+
                 //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
                 this.blotter.cancelEdit()
 
@@ -157,7 +157,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         })
         let confirmation: IUIConfirmation = {
             CancelText: "Cancel",
-           ConfirmationTitle: "Do you want to continue?",
+            ConfirmationTitle: "Do you want to continue?",
             ConfirmationMsg: warningMessage,
             ConfirmationText: "Perform Shortcut Anyway",
             //We cancel the edit before applying the shortcut so if cancel then there is fuck all to do
