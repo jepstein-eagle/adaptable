@@ -148,7 +148,22 @@ function InitBlotter() {
     });
 
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, { primaryKey: "tradeId", userName: "Jonathan" });
+    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
+        primaryKey: "tradeId",
+        userName: "Jonathan",
+        enableAuditLog: false,
+        enableRemoteConfigServer: false
+    });
+    var origgetCell = grid.behavior.dataModel.getCell;
+    grid.behavior.dataModel.getCell = (config, declaredRendererName) => {
+        if (config.isDataRow) {
+            var y = config.dataCell.y;
+            if (y % 2) {
+                config.backgroundColor = config.altbackground;
+            }
+        }
+        return origgetCell(config, declaredRendererName);
+    };
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
 
     grid.addProperties(lightTheme);
@@ -156,20 +171,21 @@ function InitBlotter() {
 
 var lightTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    color: 'rgb(25, 25, 25)',
-    backgroundColor: 'rgb(241, 241, 241)',
-    foregroundSelectionColor: 'rgb(25, 25, 25)',
-    backgroundSelectionColor: 'rgb(183, 219, 255)',
+    color: '#003f59',
+    backgroundColor: 'white',
+    altbackground: '#e6f2f8',
+    foregroundSelectionColor: 'white',
+    backgroundSelectionColor: '#0d6a92',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    columnHeaderColor: 'rgb(25, 25, 25)',
-    columnHeaderBackgroundColor: 'rgb(223, 227, 232)',
+    columnHeaderColor: '#00435e',
+    columnHeaderBackgroundColor: '#d9ecf5',
     columnHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
     columnHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
 
     rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    rowHeaderColor: 'rgb(25, 25, 25)',
-    rowHeaderBackgroundColor: 'rgb(223, 227, 232)',
+    rowHeaderColor: '#00435e',
+    rowHeaderBackgroundColor: '#d9ecf5',
     rowHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
     rowHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
 
@@ -198,6 +214,7 @@ var darkTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: 'white',
     backgroundColor: '#07071E',
+    altbackground: '#07071E',
     foregroundSelectionColor: 'white',
     backgroundSelectionColor: '#3D77FE',
 
