@@ -13,7 +13,7 @@ import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
-    onLoadLayout: (layoutName: string) => LayoutRedux.LoadLayoutAction
+    onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction, Columns: IColumn[],
@@ -98,7 +98,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LoadLayout(layoutName)),
+        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.SetCurrentLayout(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),

@@ -75,8 +75,6 @@ export interface IAdaptableBlotter {
     OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     getQuickSearchRowIds(rowIds: string[]): string[]
-
-    loadCurrentLayout():void
 }
 
 export interface ISelectedCells {

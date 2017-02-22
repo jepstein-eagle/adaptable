@@ -728,23 +728,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
     }
-
-    public loadCurrentLayout(): void {
-        let layoutState: LayoutState = this.AdaptableBlotterStore.TheStore.getState().Layout;
-        let currentLayout: ILayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
-
-        if (currentLayout == null) {  // if we have deleted a layout, then revert to default (if its been created)
-            let defaultLayout: string = "Default";
-            if (layoutState.AvailableLayouts.find(l => l.Name == defaultLayout)) {
-                this.AdaptableBlotterStore.TheStore.dispatch<LayoutRedux.LoadLayoutAction>(LayoutRedux.LoadLayout(defaultLayout));
-            }
-            return;
-        }
-        let columns: IColumn[] = currentLayout.Columns.map(columnId => this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId));
-        this.AdaptableBlotterStore.TheStore.dispatch<ColumnChooserRedux.SetNewColumnListOrderAction>(ColumnChooserRedux.SetNewColumnListOrder(columns));
-    }
-
-
 }
 
 interface CellStyleHypergrid {

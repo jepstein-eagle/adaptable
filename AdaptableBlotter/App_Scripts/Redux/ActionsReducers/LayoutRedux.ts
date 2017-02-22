@@ -7,17 +7,17 @@ import { IColumn } from '../../Core/interface/IAdaptableBlotter'
 import { InputAction } from '../../Core/Interface/IStrategy';
 
 
-const LOAD_LAYOUT = 'LOAD_LAYOUT';
+export const SET_CURRENT_LAYOUT = 'SET_CURRENT_LAYOUT';
 const ADD_LAYOUT = 'ADD_LAYOUT';
 const SAVE_LAYOUT = 'SAVE_LAYOUT';
-const DELETE_LAYOUT = 'DELETE_LAYOUT';
+export const DELETE_LAYOUT = 'DELETE_LAYOUT';
 
-export interface LoadLayoutAction extends Redux.Action {
+export interface SetCurrentLayoutAction extends Redux.Action {
     LayoutName: string;
 }
 
-export const LoadLayout = (LayoutName: string): LoadLayoutAction => ({
-    type: LOAD_LAYOUT,
+export const SetCurrentLayout = (LayoutName: string): SetCurrentLayoutAction => ({
+    type: SET_CURRENT_LAYOUT,
     LayoutName
 })
 
@@ -62,8 +62,8 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
     let index: number;
     let layouts: ILayout[]
     switch (action.type) {
-        case LOAD_LAYOUT:
-            return Object.assign({}, state, { CurrentLayout: (<LoadLayoutAction>action).LayoutName })
+        case SET_CURRENT_LAYOUT:
+            return Object.assign({}, state, { CurrentLayout: (<SetCurrentLayoutAction>action).LayoutName })
         case ADD_LAYOUT:
             let actionTypedAdd = (<AddLayoutAction>action)
             let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText }

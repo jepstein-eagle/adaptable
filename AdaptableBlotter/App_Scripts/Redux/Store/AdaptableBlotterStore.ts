@@ -160,6 +160,25 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case LayoutRedux.SET_CURRENT_LAYOUT: {
+                    let returnAction = next(action);
+
+                    let layoutState = middlewareAPI.getState().Layout;
+                    let currentLayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
+                    if (currentLayout) {
+                        let columns = currentLayout.Columns.map(columnId => middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == columnId));
+                        middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
+
+                        // and run search too - is this the responsibility of this strategy to do this? or for search to listen to layouts?
+                        adaptableBlotter.SearchService.ApplySearchOnGrid();
+                    }
+                    return returnAction;
+                }
+                case LayoutRedux.DELETE_LAYOUT: {
+                    let returnAction = next(action);
+                     middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"))
+                    return returnAction;
+                }
                 case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
                     let actionTyped = <GridRedux.SetValueAction>action
                     //We set the value in the grid
@@ -261,9 +280,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     //create the default layout so we can revert to it if needed
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
                         middlewareAPI.dispatch(LayoutRedux.AddLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"));
                     }
                     else {
+                        //update default layout with latest columns
                         middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout(middlewareAPI.getState().Layout.CurrentLayout));
                     }
                     return returnAction;
                 }
