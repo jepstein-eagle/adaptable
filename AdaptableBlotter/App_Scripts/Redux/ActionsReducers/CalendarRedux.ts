@@ -14,7 +14,7 @@ export const CalendarSetDefaultCalendar = (calendarName: string): CalendarSetDef
 })
 
 const initialCalendarState: CalendarState = {
-    CurrentCalendar: "United Kingdom",
+    CurrentCalendar: "United States",
     AvailableCalendars : [
         {
             CalendarName: "United Kingdom", CalendarEntries: [
