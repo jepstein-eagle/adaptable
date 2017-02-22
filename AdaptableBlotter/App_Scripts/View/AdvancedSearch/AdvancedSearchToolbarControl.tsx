@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -18,10 +18,17 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onEditAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
-
 }
 
-class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
+interface AdvancedSearchToolbarControlComponentState {
+    isCollapsed: boolean
+}
+
+class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, AdvancedSearchToolbarControlComponentState> {
+    constructor() {
+        super();
+        this.state = { isCollapsed: true }
+    }
     render(): any {
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
@@ -32,40 +39,58 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
             "select" : this.props.CurrentAdvancedSearchUid
 
+        let advancedSearchContent = <FormGroup controlId="formAdvancedSearch">
+            <FormControl componentClass="select" placeholder="select"
+                value={currentAdvancedSearchId}
+                onChange={(x) => this.onSelectedSearchChanged(x)} >
+                <option value="select" key="select">Select a Search</option>
+                {advancedSearches}
+            </FormControl>
+
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Current Advanced Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='primary' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit</Button>
+            </OverlayTrigger>
+
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear (but do not delete) Current Advanced Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onSelectAdvancedSearch("")}>Clear</Button>
+            </OverlayTrigger>
+
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='success' onClick={() => this.props.onNewAdvancedSearch()}>New</Button>
+            </OverlayTrigger>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Advanced Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='danger' disabled={currentAdvancedSearchId == "select"} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
+            </OverlayTrigger>
+        </FormGroup>
+
         return (
-            <AdaptableBlotterForm className='navbar-form'>
-                <Panel className="small-padding-panel" >
+            <Panel className="small-padding-panel" >
+                <AdaptableBlotterForm className='navbar-form' inline>
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
-                    <FormControl componentClass="select" placeholder="select"
-                        value={currentAdvancedSearchId}
-                        onChange={(x) => this.onSelectedSearchChanged(x)} >
-                        <option value="select" key="select">Select a Search</option>
-                        {advancedSearches}
-                    </FormControl>
-
+                    {!this.state.isCollapsed ? advancedSearchContent :
+                        <ControlLabel>{savedSearch?savedSearch.Name:""}</ControlLabel>}
                     {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Current Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='primary' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit</Button>
-                    </OverlayTrigger>
-
-                    {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear (but do not delete) Current Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onSelectAdvancedSearch("")}>Clear</Button>
-                    </OverlayTrigger>
-
-                    {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='success' onClick={() => this.props.onNewAdvancedSearch()}>New</Button>
-                    </OverlayTrigger>
-                    {' '}
-                    <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Advanced Search</Tooltip>}>
-                        <Button bsSize='small' bsStyle='danger' disabled={currentAdvancedSearchId == "select"} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-                    </OverlayTrigger>
-                </Panel>
-            </AdaptableBlotterForm>
-
+                    {this.state.isCollapsed ?
+                        <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+                            <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                        </OverlayTrigger>
+                        :
+                        <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
+                            <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                        </OverlayTrigger>
+                    }
+                </AdaptableBlotterForm>
+            </Panel>
         );
+    }
+
+    expandCollapseClicked() {
+        this.setState({ isCollapsed: !this.state.isCollapsed });
     }
 
     onSelectedSearchChanged(event: React.FormEvent) {

@@ -5,7 +5,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, NavDropdown, FormControl, Form, Col, Row, ControlLabel, ButtonToolbar } from 'react-bootstrap';
+import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, Dropdown, FormControl, Form, Col, Row, ControlLabel, ButtonToolbar } from 'react-bootstrap';
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -43,44 +43,32 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
 
-        // a, rather basic, top menu. done for early demo purposes and which needs soon to be replaced by a proper, configurable, 'dashboard' like in WPF version
-        // in this version all action items are buttons and all config screens go in a dropdown
-        // plus i've added very simple quick search and advanced search controls
-        if (this.props.MenuState.MenuItems) {
-            var actionMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Action).map((menuItem: IMenuItem) => {
-                return <NavItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</NavItem>
-            });
-        }
-
-        if (this.props.MenuState.MenuItems) {
-            var configMenuItems = this.props.MenuState.MenuItems.filter(m => m.MenuType == MenuType.Configuration).map((menuItem: IMenuItem) => {
-                return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
-            });
-        }
+        var configMenuItems = this.props.MenuState.MenuItems.map((menuItem: IMenuItem) => {
+            return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+        });
 
         return (
             <div className="adaptable_blotter_style">
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
-                <Navbar fluid  >
-                    <Navbar.Header>
+                <Navbar fluid >
+                    <Navbar.Brand>
+                        <Dropdown id="dropdown-functions">
+                            <Dropdown.Toggle>
+                                <Glyphicon glyph="th-list" />{' '}Functions...
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {configMenuItems}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Navbar.Brand>
+                    <Nav>
                         <QuickSearchToolbarControl />
-                    </Navbar.Header>
-                    <Navbar.Header>
-                        {<AdvancedSearchToolbarControl />}
-                    </Navbar.Header>
-                    <Navbar.Header>
-                        {<LayoutToolbarControl />}
-                    </Navbar.Header>
-                    <Nav style={marginStyle} >
-
-                        <NavDropdown key="functions" title="Functions..." id="basic-nav-dropdown">
-                            {actionMenuItems}
-                        </NavDropdown>
-
-                        <NavDropdown key="Configure" title="Configure..." id="basic-nav-dropdown">
-                            {configMenuItems}
-                        </NavDropdown>
-
+                    </Nav>
+                    <Nav>
+                        <AdvancedSearchToolbarControl />
+                    </Nav>
+                    <Nav>
+                        <LayoutToolbarControl />
                     </Nav>
                 </Navbar>
 

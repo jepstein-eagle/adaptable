@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -16,54 +16,73 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
 }
 
 interface QuickSearchToolbarControlComponentState {
-    EditedQuickSearchText: string
+    EditedQuickSearchText: string,
+    isCollapsed: boolean
 }
 
 class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, QuickSearchToolbarControlComponentState> {
 
     constructor() {
         super();
-        this.state = { EditedQuickSearchText: "" }
+        this.state = { EditedQuickSearchText: "", isCollapsed: true }
     }
     componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
         this.setState({
-            EditedQuickSearchText: nextProps.QuickSearchText
+            EditedQuickSearchText: nextProps.QuickSearchText, isCollapsed: this.state.isCollapsed
         });
     }
 
     render(): any {
-        return <AdaptableBlotterForm className='navbar-form' onSubmit={()=>this.onSetQuickSearch()}>
-            <Panel className="small-padding-panel" >
+        let quicksearchContent: any = <FormGroup controlId="formQuickSearch">
+            <FormControl
+                type="text"
+                placeholder="Search Text"
+                value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
+                onChange={(x) => this.onUpdateQuickSearchText(x)}
+            />{' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='primary' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run</Button>
+            </OverlayTrigger>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
+            </OverlayTrigger>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Quick Search Settings</Tooltip>}>
+                <Button bsSize='small' bsStyle='default' onClick={() => this.props.onShowQuickSearchConfig()}>
+                    <Glyphicon glyph="wrench" />
+                </Button>
+            </OverlayTrigger></FormGroup>
+
+        return <Panel className="small-padding-panel">
+            <AdaptableBlotterForm className='navbar-form' inline onSubmit={() => this.onSetQuickSearch()}>
                 <ControlLabel>Quick Search:</ControlLabel>
                 {' '}
-                <FormControl
-                    type="text"
-                    placeholder="Search Text"
-                    value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
-                    onChange={(x) => this.onUpdateQuickSearchText(x)}
-                />{' '}
-
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                    <Button bsSize='small' bsStyle='primary' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run</Button>
-                </OverlayTrigger>
+                {!this.state.isCollapsed ? quicksearchContent:
+                <ControlLabel>{this.props.QuickSearchText}</ControlLabel>}
                 {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                    <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
-                </OverlayTrigger>
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Quick Search Settings</Tooltip>}>
-                    <Button bsSize='small' bsStyle='default' onClick={() => this.props.onShowQuickSearchConfig()}>
-                        <Glyphicon glyph="wrench" />
-                    </Button>
-                </OverlayTrigger>
-            </Panel>
-        </AdaptableBlotterForm>
+                {this.state.isCollapsed ?
+                    <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                    </OverlayTrigger>
+                    :
+                    <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
+                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                    </OverlayTrigger>
+                }
+            </AdaptableBlotterForm>
+        </Panel>
 
+
+    }
+
+    expandCollapseClicked() {
+        this.setState({ isCollapsed: !this.state.isCollapsed } as QuickSearchToolbarControlComponentState);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ EditedQuickSearchText: e.value });
+        this.setState({ EditedQuickSearchText: e.value } as QuickSearchToolbarControlComponentState);
     }
 
     onSetQuickSearch() {

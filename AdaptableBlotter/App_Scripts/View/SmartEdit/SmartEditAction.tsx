@@ -45,8 +45,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     public componentDidMount() {
         this.props.fetchSelectedCells();
     }
-
-
+    
     render() {
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false

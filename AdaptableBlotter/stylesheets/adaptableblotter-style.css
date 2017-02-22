@@ -24,6 +24,10 @@ button.placeholder:before {
     padding: 5px;
 }
 
+.small-padding-panel {
+    margin-bottom: 0px!important; 
+}
+
 .panel-with-button-reduce-header-padding > [class*='panel-heading'] {
 	padding-top: 5px;
 	padding-bottom: 5px;

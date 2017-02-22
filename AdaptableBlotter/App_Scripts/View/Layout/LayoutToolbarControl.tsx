@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -21,40 +21,65 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     CurrentLayout: string
 }
 
-class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
+interface LayoutToolbarControlComponentState {
+    isCollapsed: boolean
+}
 
+class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, LayoutToolbarControlComponentState> {
+    constructor() {
+        super();
+        this.state = { isCollapsed: true }
+    }
     render(): any {
 
         let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
-        return <AdaptableBlotterForm className='navbar-form'>
-            <Panel className="small-padding-panel" >
+        let layoutContent = <FormGroup controlId="formAdvancedSearch">
+            <FormControl componentClass="select" placeholder="select"
+                value={this.props.CurrentLayout}
+                onChange={(x) => this.onSelectedLayoutChanged(x)} >
+                {availableLayouts}
+            </FormControl>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save Changes to Current Layout</Tooltip>}>
+                <Button bsSize='small' bsStyle='primary' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onSaveLayoutClicked()}>Save</Button>
+            </OverlayTrigger>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create a new Layout using the Blotter's current column order and visibility</Tooltip>}>
+                <Button bsSize='small' bsStyle='success' onClick={() => this.onAddLayoutClicked()}>New</Button>
+            </OverlayTrigger>
+            {' '}
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Layout</Tooltip>}>
+                <Button bsSize='small' bsStyle='danger' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
+            </OverlayTrigger>
+        </FormGroup>
+
+        return <Panel className="small-padding-panel" >
+            <AdaptableBlotterForm className='navbar-form' inline>
                 <ControlLabel>Layout:</ControlLabel>
-                {' '}<FormControl componentClass="select" placeholder="select"
-                    value={this.props.CurrentLayout}
-                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
-                    {availableLayouts}
-                </FormControl>
+                {' '}
+                {!this.state.isCollapsed ? layoutContent:
+                <ControlLabel>{this.props.CurrentLayout}</ControlLabel>}
+                {' '}
+                {this.state.isCollapsed ?
+                    <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                    </OverlayTrigger>
+                    :
+                    <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
+                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                    </OverlayTrigger>
+                }
+            </AdaptableBlotterForm>
+        </Panel>
 
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save Changes to Current Layout</Tooltip>}>
-                    <Button bsSize='small' bsStyle='primary' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onSaveLayoutClicked()}>Save</Button>
-                </OverlayTrigger>
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create a new Layout using the Blotter's current column order and visibility</Tooltip>}>
-                    <Button bsSize='small' bsStyle='success' onClick={() => this.onAddLayoutClicked()}>New</Button>
-                </OverlayTrigger>
-                {' '}
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Layout</Tooltip>}>
-                    <Button bsSize='small' bsStyle='danger' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
-                </OverlayTrigger>
-
-            </Panel>
-        </AdaptableBlotterForm>
     }
 
+    expandCollapseClicked() {
+        this.setState({ isCollapsed: !this.state.isCollapsed });
+    }
     private onSaveLayoutClicked() {
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
     }
