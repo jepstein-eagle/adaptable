@@ -8,7 +8,7 @@ import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
 import { ColumnType, SortOrder, PopoverType } from '../../Core/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { Helper } from '../../Core/Helper'
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     Columns: Array<IColumn>
@@ -37,7 +37,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         })
 
         return <Panel header="Plus/Minus Settings" bsStyle="primary">
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formColumn">
                     <Col componentClass={ControlLabel} xs={3}>Select Column: </Col>
                     <Col xs={9}>
@@ -65,7 +65,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                             </Radio>
                     </Col>
                 </FormGroup>
-            </Form>
+            </AdaptableBlotterForm>
         </Panel>
     }
 

@@ -7,7 +7,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { ColumnType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
 }
@@ -26,7 +26,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     render(): any {
 
         return <Panel header="Advanced Search Settings" bsStyle="primary">
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="searchName">
                     <Col xs={3} componentClass={ControlLabel}>Search Name: </Col>
                     <Col xs={9}>
@@ -35,7 +35,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
                     </Col>
                 </FormGroup>
 
-            </Form>
+            </AdaptableBlotterForm>
         </Panel>
 
     }

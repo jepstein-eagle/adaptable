@@ -13,7 +13,7 @@ import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],
@@ -61,7 +61,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                 </Panel>
 
                 <Panel header="Save As New Layout" bsStyle="info">
-                    <Form horizontal>
+                    <AdaptableBlotterForm horizontal>
                         <Row>
                             <Col xs={12} >
                                 <Well bsSize="small">
@@ -82,7 +82,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                                 <Button bsStyle="info" disabled={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)} onClick={() => this.onSaveLayoutClicked()} >Save</Button>
                             </Col>
                         </Row>
-                    </Form>
+                    </AdaptableBlotterForm>
                 </Panel>
 
             </PanelWithImage>

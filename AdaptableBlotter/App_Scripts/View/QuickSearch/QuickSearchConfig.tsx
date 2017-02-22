@@ -14,7 +14,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
     QuickSearchText: string;
@@ -89,7 +89,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         return (
             <div >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open">
-                    <Form inline>
+                    <AdaptableBlotterForm inline>
                         <div >
                             <Panel header={"Search For"} bsStyle="info">
                                 <FormControl
@@ -110,9 +110,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                             </Panel>
 
                         </div>
-                    </Form>
+                    </AdaptableBlotterForm>
 
-                    <Form horizontal>
+                    <AdaptableBlotterForm horizontal>
                         <div >
                             <Panel header="Quick Search Options" eventKey="1" bsStyle="info">
 
@@ -150,7 +150,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
                             </Panel>
                         </div>
-                    </Form>
+                    </AdaptableBlotterForm>
                 </PanelWithImage>
             </div>
         );

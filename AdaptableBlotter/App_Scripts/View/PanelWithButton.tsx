@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
-
+import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 
 interface PanelWithButtonProps extends PanelProps {
     buttonContent?: React.ReactNode;
@@ -31,7 +31,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         }
 
 
-        let header = <Form inline>
+        let header = <AdaptableBlotterForm inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
 
                 <Col xs={9}>
@@ -51,7 +51,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                         </Button>}
                 </Col>
             </Row>
-        </Form>;
+        </AdaptableBlotterForm>;
         return <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;

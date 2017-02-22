@@ -5,7 +5,7 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { Form, Row, Col, FormGroup, InputGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
 import { SortOrder } from '../Core/Enums'
-
+import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 
 interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxFilterSortComponent> {
     FilterValue: string
@@ -16,7 +16,7 @@ interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxF
 
 export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSortComponentProps, {}> {
     render() {
-        return <Form horizontal>
+        return <AdaptableBlotterForm horizontal>
             <FormGroup style={{ margin: 0 }}>
                 <InputGroup>
                     <FormControl
@@ -39,7 +39,7 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
 
                 </InputGroup>
             </FormGroup>
-        </Form>
+        </AdaptableBlotterForm>
     }
 
     handleChangeFilterValue(x: React.FormEvent) {

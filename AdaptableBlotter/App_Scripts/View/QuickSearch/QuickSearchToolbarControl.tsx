@@ -7,6 +7,7 @@ import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
@@ -31,7 +32,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     }
 
     render(): any {
-        return <Form className='navbar-form'>
+        return <AdaptableBlotterForm className='navbar-form' onSubmit={()=>this.onSetQuickSearch()}>
             <Panel className="small-padding-panel" >
                 <ControlLabel>Quick Search:</ControlLabel>
                 {' '}
@@ -40,7 +41,6 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     placeholder="Search Text"
                     value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
-                    onKeyDown={(x) => this.onKeyDownQuickSearch(x)}
                 />{' '}
 
                 <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
@@ -57,23 +57,13 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     </Button>
                 </OverlayTrigger>
             </Panel>
-        </Form>
+        </AdaptableBlotterForm>
 
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.setState({ EditedQuickSearchText: e.value });
-    }
-
-    // doing 2 things here 
-    // 1. stopping reload of blotter on pressing enter in form
-    // 2.  triggering the apply quick search (in other words making it as though I pressed the search button)
-    onKeyDownQuickSearch(event: React.KeyboardEvent) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-            this.onSetQuickSearch();
-        }
     }
 
     onSetQuickSearch() {

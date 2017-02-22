@@ -15,6 +15,7 @@ import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithImage } from '../PanelWithImage';
 import { Helper } from '../../Core/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -61,14 +62,14 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FlashingCellConfigItem>
         });
 
-        let setAllOption = <Form horizontal>
+        let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} style={topCheckBoxStyle}>
                     <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns)}
                         checked={allPotentialFlashingColumns.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
-        </Form>;
+        </AdaptableBlotterForm>;
 
         return <PanelWithImage header={"Flashing Cell Columns"} bsStyle="primary" style={panelStyle} glyphicon="flash">
             {setAllOption}

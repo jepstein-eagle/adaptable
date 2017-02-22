@@ -11,6 +11,7 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression'
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -50,12 +51,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
                     return <ListGroupItem key={y} >
                         <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                            <Form inline>
+                            <AdaptableBlotterForm inline>
                                 {y}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                     <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteColumnValue(columnId, y); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                 </OverlayTrigger>
-                            </Form>
+                            </AdaptableBlotterForm>
                         </div>
                     </ListGroupItem>
                 })
@@ -71,12 +72,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
                         return <ListGroupItem key={ne.Uid}>
                             <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                <Form inline>
+                                <AdaptableBlotterForm inline>
                                     {ne.FriendlyName}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                         <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteUserFilterExpression(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                     </OverlayTrigger>
-                                </Form>
+                                </AdaptableBlotterForm>
                             </div>
                         </ListGroupItem>
                     })
@@ -92,24 +93,24 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
                                 <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                    <Form inline>
+                                    <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
-                                    </Form>
+                                    </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
                                 <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                    <Form inline>
+                                    <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
-                                    </Form>
+                                    </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
@@ -118,24 +119,24 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
                                 <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                    <Form inline>
+                                    <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
-                                    </Form>
+                                    </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
                                 <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                    <Form inline>
+                                    <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } } }><Glyphicon glyph="trash" /></Button>
                                         </OverlayTrigger>
-                                    </Form>
+                                    </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }

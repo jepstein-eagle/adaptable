@@ -9,7 +9,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
     FileName: string,
@@ -41,7 +41,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
     render() {
         return (
             <PanelWithImage header="Export" bsStyle="primary" glyphicon="export">
-                <Form horizontal>
+                <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="fileName">
                         <Col xs={4} componentClass={ControlLabel}>File Name: </Col>
                         <Col xs={8}>
@@ -69,7 +69,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                             <Button bsStyle="info" disabled={(this.props.FileName == null)} onClick={() => this.props.onApplyExport()} >Export</Button>
                         </Col>
                     </FormGroup>
-                </Form>
+                </AdaptableBlotterForm>
             </PanelWithImage>
         );
     }

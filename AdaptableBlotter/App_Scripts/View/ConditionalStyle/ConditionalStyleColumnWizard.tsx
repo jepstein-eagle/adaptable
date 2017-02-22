@@ -13,7 +13,7 @@ import { ColorPicker } from '../ColorPicker';
 import { Helper } from '../../Core/Helper'
 import { SingleListBox } from '../SingleListBox'
 import { StringExtensions } from '../../Core/Extensions';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ConditionalStyleColumnWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Columns: Array<IColumn>
@@ -41,7 +41,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
         return <div>
             <Panel header="Select Scope" bsStyle="primary">
 
-                <Form inline>
+                <AdaptableBlotterForm inline>
                     <Col xs={12} style={radioMarginStyle}>
                         <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Single Column (select below) </Radio>
                     </Col>
@@ -50,7 +50,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
                     </Col>
                      <Col xs={12} style={radioMarginStyle}>
                      </Col>
-                </Form>
+                </AdaptableBlotterForm>
 
 
                 {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&

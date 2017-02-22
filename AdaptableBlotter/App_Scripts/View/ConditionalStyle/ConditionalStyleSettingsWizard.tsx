@@ -11,7 +11,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ColorPicker } from '../ColorPicker';
 import { Helper } from '../../Core/Helper'
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
 }
@@ -35,7 +35,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
 
         return <Panel header="Style Colours" bsStyle="primary">
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
 
                 <div>
                     <FormGroup controlId="colorBackStyle">
@@ -53,7 +53,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                 </div>
 
 
-            </Form>
+            </AdaptableBlotterForm>
         </Panel>
     }
 

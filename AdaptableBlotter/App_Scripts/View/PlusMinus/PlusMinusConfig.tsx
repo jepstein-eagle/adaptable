@@ -20,6 +20,7 @@ import { EntityListActionButtons } from '../EntityListActionButtons';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -79,7 +80,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
         return <PanelWithButton headerText="Plus / Minus" bsStyle="primary" style={panelStyle} buttonContent={"Create Column Nudge Value"}
             buttonClick={() => this.createColumnNudgeValue()} showAddButtonGlyph={true}  glyphicon={"plus-sign"} >
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
                         <ControlLabel >Default Nudge Value for Blotter</ControlLabel>
@@ -88,7 +89,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />
                     </Col>
                 </FormGroup>
-            </Form>
+            </AdaptableBlotterForm>
 
             {optionColumnsItems.length == 0 ?
                 <Well bsSize="small">Click 'Create Column Nudge Value' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>

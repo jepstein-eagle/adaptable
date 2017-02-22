@@ -9,7 +9,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchUid: string;
@@ -33,7 +33,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             "select" : this.props.CurrentAdvancedSearchUid
 
         return (
-            <Form className='navbar-form'>
+            <AdaptableBlotterForm className='navbar-form'>
                 <Panel className="small-padding-panel" >
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
@@ -63,7 +63,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                         <Button bsSize='small' bsStyle='danger' disabled={currentAdvancedSearchId == "select"} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
                     </OverlayTrigger>
                 </Panel>
-            </Form>
+            </AdaptableBlotterForm>
 
         );
     }

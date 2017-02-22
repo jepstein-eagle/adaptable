@@ -7,7 +7,7 @@ import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../PanelWithButton'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     ColumnType: ColumnType
@@ -31,7 +31,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Between)}</MenuItem>
                 </DropdownButton>
                 if (x.Operator == LeafExpressionOperator.Between) {
-                    return <Form key={index}>
+                    return <AdaptableBlotterForm key={index}>
                         <FormGroup controlId={"Range1" + index}>
                             <InputGroup>
                                 {numericAndDateOption}
@@ -57,10 +57,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                 }
                             </InputGroup>
                         </FormGroup>
-                    </Form>
+                    </AdaptableBlotterForm>
                 }
                 else {
-                    return <Form key={index}>
+                    return <AdaptableBlotterForm key={index}>
                         <FormGroup controlId={"Range" + index}>
                             <InputGroup>
                                 {numericAndDateOption}
@@ -77,7 +77,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                 </InputGroup.Button>
                             </InputGroup>
                         </FormGroup>
-                    </Form>
+                    </AdaptableBlotterForm>
                 }
             })
         }
@@ -90,7 +90,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Regex)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Regex)}</MenuItem>
                 </DropdownButton>
-                return <Form key={index} >
+                return <AdaptableBlotterForm key={index} >
                     <FormGroup controlId={"Range" + index}>
                         <InputGroup>
                             {stringOption}
@@ -102,7 +102,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             </InputGroup.Button>
                         </InputGroup>
                     </FormGroup>
-                </Form>
+                </AdaptableBlotterForm>
             })
         }
 

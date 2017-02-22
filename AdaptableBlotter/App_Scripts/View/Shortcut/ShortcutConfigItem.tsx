@@ -8,7 +8,7 @@ import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, 
 import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../EntityListActionButtons';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
     Shortcut: IShortcut
@@ -32,7 +32,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                     <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
                 <Col md={2} >
-                    <Form inline key={this.props.Shortcut.ShortcutKey}>
+                    <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
                             <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
                                 {this.props.AvailableKeys.map(x => {
@@ -40,7 +40,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 })}
                             </FormControl>
                         </FormGroup>
-                    </Form>
+                    </AdaptableBlotterForm>
                 </Col>
                 <Col md={2} >
                     {ColumnType[this.props.Shortcut.ColumnType]}

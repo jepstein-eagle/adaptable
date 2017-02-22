@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
-
+import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 
 interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
@@ -21,14 +21,14 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
             className += " " + this.props.className
         }
 
-        let headerRow = <Form inline>
+        let headerRow = <AdaptableBlotterForm inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={12}>
                     {<Glyphicon glyph={this.props.glyphicon} style={marginRightStyle} />}
                     {this.props.header}
                 </Col>
             </Row>
-        </Form>;
+        </AdaptableBlotterForm>;
         return <Panel header={headerRow} className={className} style={this.props.style} bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;

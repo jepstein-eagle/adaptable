@@ -10,7 +10,7 @@ import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
@@ -29,7 +29,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
-        return <Form className='navbar-form'>
+        return <AdaptableBlotterForm className='navbar-form'>
             <Panel className="small-padding-panel" >
                 <ControlLabel>Layout:</ControlLabel>
                 {' '}<FormControl componentClass="select" placeholder="select"
@@ -52,7 +52,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 </OverlayTrigger>
 
             </Panel>
-        </Form>
+        </AdaptableBlotterForm>
     }
 
     private onSaveLayoutClicked() {

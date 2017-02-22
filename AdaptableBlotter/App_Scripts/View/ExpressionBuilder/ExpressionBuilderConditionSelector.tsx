@@ -13,6 +13,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { ColumnType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
@@ -120,7 +121,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         return <PanelWithButton headerText="Build Expression"
             buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
             buttonContent={"Add Condition"} bsStyle="primary"  showAddButtonGlyph={false} style={{ height: '575px' }}>
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
@@ -144,18 +145,18 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                     </FormGroup>
                 }
-            </Form>
+            </AdaptableBlotterForm>
 
             {this.props.SelectedColumnId == "select" ? null :
 
                 <div >
-                    <Form horizontal>
+                    <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineCriteria">
                             <Col xs={3}>
                                 <ControlLabel>Step 2: Create Criteria</ControlLabel>
                             </Col>
                         </FormGroup>
-                    </Form>
+                    </AdaptableBlotterForm>
                     <Row >
                         <Col xs={4}>
                             <ExpressionBuilderColumnValues

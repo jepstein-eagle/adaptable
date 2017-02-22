@@ -20,6 +20,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionComponent> {
     SmartEditValue: string;
@@ -104,7 +105,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         return (
             <div >
                 <PanelWithImage header="Smart Edit Details" bsStyle="primary" glyphicon="pencil">
-                    <Form inline>
+                    <AdaptableBlotterForm inline>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
                                 <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
@@ -124,7 +125,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Warning} />}
                         {(!globalHasValidationWarning && globalHasValidationPrevent) &&
                             <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Error} />}
-                    </Form>
+                    </AdaptableBlotterForm>
                 </PanelWithImage>
                 <Panel header={previewHeader} bsStyle="success" style={divStyle}>
                     <Table >

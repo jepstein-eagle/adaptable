@@ -8,6 +8,7 @@ import { ICellValidationRule } from '../../Core/interface/ICellValidationStrateg
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -51,26 +52,26 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             <Panel header="Cell Validation Settings" bsStyle="primary">
 
                 <Panel header="Action To Take When Validation Fails" bsStyle="info"  >
-                    <Form inline>
+                    <AdaptableBlotterForm inline>
                         <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
                         <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
                         </Col>
-                    </Form>
+                    </AdaptableBlotterForm>
                 </Panel>
 
 
                 <Panel header={validationRuleHeader} bsStyle="info">
-                    <Form >
+                    <AdaptableBlotterForm >
                         <Col xs={12} style={divStyle}>
                             <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
                         </Col>
                         <Col xs={12} style={divStyle}>
                             <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
                         </Col>
-                    </Form>
+                    </AdaptableBlotterForm>
 
                     { /* if not None operator then show operator dropdown */}               
                           <FormGroup style={divStyle}>
@@ -112,13 +113,13 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                 </Panel>
 
                 <Panel header="Expression" bsStyle="info">
-                    <Form inline >
+                    <AdaptableBlotterForm inline >
                         <Col xs={12}> <HelpBlock>An Expression is used if the rule is dependent on other values in the row.<br />The rule will only be activated and checked if the Expression passes.</HelpBlock>
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Create Expression (created in next step)</Checkbox>
                         </Col>
-                    </Form>
+                    </AdaptableBlotterForm>
 
                 </Panel>
             </Panel>

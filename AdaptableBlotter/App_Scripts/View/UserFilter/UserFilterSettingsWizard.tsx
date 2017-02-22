@@ -9,7 +9,7 @@ import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
@@ -29,7 +29,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     render() {
 
         return <Panel header="Filter Settings" bsStyle="primary">
-            <Form horizontal>
+            <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="filterName">
                     <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
                     <Col xs={9}>
@@ -38,7 +38,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
                     </Col>
                 </FormGroup>
 
-            </Form>
+            </AdaptableBlotterForm>
         </Panel>
 
     }

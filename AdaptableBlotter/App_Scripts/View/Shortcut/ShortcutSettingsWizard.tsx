@@ -9,7 +9,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ColumnType } from '../../Core/Enums';
 import { ShortcutAction } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
-
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
     NumericKeysAvailable: Array<string>
@@ -69,14 +69,14 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
             <Panel header="Shortcut Settings" bsStyle="primary">
 
                 <Panel header="Shortcut Column Type" bsStyle="info">
-                    <Form inline >
+                    <AdaptableBlotterForm inline >
                         <Col xs={4}>
                             <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
                         </Col>
                         <Col xs={8}>
                             <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
                         </Col>
-                    </Form>
+                    </AdaptableBlotterForm>
                 </Panel>
 
 
