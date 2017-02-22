@@ -170,7 +170,7 @@ var lightTheme = {
     rowHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
 
     backgroundColor2: 'rgb(201, 201, 201)',
-    lineColor: 'rgb(199, 199, 199)',
+    lineColor: '#bbdceb',
     voffset: 0,
     scrollbarHoverOver: 'visible',
     scrollbarHoverOff: 'visible',
@@ -180,7 +180,7 @@ var lightTheme = {
     fixedColAlign: 'center',
     cellPadding: 15,
     gridLinesH: false,
-    gridLinesV: false,
+    gridLinesV: true,
 
     defaultRowHeight: 30,
     defaultFixedRowHeight: 15,
