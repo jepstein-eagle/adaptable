@@ -105,7 +105,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         return (
             <div >
                 <PanelWithImage header="Smart Edit Details" bsStyle="primary" glyphicon="pencil">
-                    <AdaptableBlotterForm inline>
+                    <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
                                 <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
