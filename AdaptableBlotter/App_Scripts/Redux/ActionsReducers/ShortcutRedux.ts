@@ -90,9 +90,9 @@ export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 
 const initialShortcutState: ShortcutState = {
     NumericShortcuts: [
-        { ShortcutKey: "M", ShortcutResult: 1000000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
-        { ShortcutKey: "K", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
-        { ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: true, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "M", ShortcutResult: 1000000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "K", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
     ],
     DateShortcuts: [
         { ShortcutKey: "T", ShortcutResult: "Today", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
