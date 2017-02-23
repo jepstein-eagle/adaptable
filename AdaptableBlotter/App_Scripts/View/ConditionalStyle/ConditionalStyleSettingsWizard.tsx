@@ -39,13 +39,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                 <div>
                     <FormGroup controlId="colorBackStyle">
-                        <Col xs={4} componentClass={ControlLabel}>Style Back Colour: </Col>
+                        <Col xs={4} componentClass={ControlLabel}>Back Colour: </Col>
                         <Col xs={8}>
                             <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="colorForeStyle">
-                        <Col xs={4} componentClass={ControlLabel}>Style Fore Colour: </Col>
+                        <Col xs={4} componentClass={ControlLabel}>Fore Colour: </Col>
                         <Col xs={8}>
                             <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                         </Col>

@@ -120,7 +120,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                     <Col xs={3}>
                                         <ControlLabel>Operator:</ControlLabel>
                                     </Col>
-                                    <Col xs={9}>
+                                    <Col xs={8}>
                                         <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                             <option value="select" key="select">Select operator</option>
                                             {optionOperators}
@@ -141,7 +141,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
                                 <FormGroup controlId="formInlineSearchBackColor">
                                     <Col xs={3}>
-                                        <ControlLabel>BackColor:</ControlLabel>
+                                        <ControlLabel>Back Colour: </ControlLabel>
                                     </Col>
                                     <Col xs={2}>
                                         <ColorPicker value={this.props.QuickSearchBackColor} onChange={(x) => this.onBackColorChange(x)} />
