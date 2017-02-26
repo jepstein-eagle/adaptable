@@ -2,18 +2,22 @@
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
     onShowQuickSearchConfig: () => PopupRedux.ShowPopupAction;
+    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
     QuickSearchText: string
+    QuickSearchDashboardControl: IDashboardControl
 }
 
 interface QuickSearchToolbarControlComponentState {
@@ -25,11 +29,11 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     constructor() {
         super();
-        this.state = { EditedQuickSearchText: "", isCollapsed: true }
+        this.state = { EditedQuickSearchText: "", isCollapsed: false }
     }
     componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
         this.setState({
-            EditedQuickSearchText: nextProps.QuickSearchText, isCollapsed: this.state.isCollapsed
+            EditedQuickSearchText: nextProps.QuickSearchText, isCollapsed: nextProps.QuickSearchDashboardControl.IsCollapsed
         });
     }
 
@@ -72,7 +76,10 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     }
 
     expandCollapseClicked() {
-        this.setState({ isCollapsed: !this.state.isCollapsed } as QuickSearchToolbarControlComponentState);
+        let isCollapsed: boolean = this.state.isCollapsed;
+        this.setState({ isCollapsed: !isCollapsed } as QuickSearchToolbarControlComponentState);
+        this.props.QuickSearchDashboardControl.IsCollapsed = !isCollapsed;
+        this.props.onChangeDashboardControl(this.props.QuickSearchDashboardControl);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
@@ -81,7 +88,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     }
 
     onSetQuickSearch() {
-           this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
+        this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
     }
 
     onClearQuickSearch() {
@@ -93,7 +100,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        QuickSearchText: state.QuickSearch.QuickSearchText
+        QuickSearchText: state.QuickSearch.QuickSearchText,
+        QuickSearchDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Quick Search"),
     };
 }
 
@@ -101,7 +109,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
         onShowQuickSearchConfig: () => dispatch(PopupRedux.ShowPopup("QuickSearchConfig")),
-
+        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
     };
 }
 

@@ -6,10 +6,13 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchUid: string;
@@ -18,6 +21,8 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onEditAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
+    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    AdvancedSearchDashboardControl: IDashboardControl
 }
 
 interface AdvancedSearchToolbarControlComponentState {
@@ -28,6 +33,12 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     constructor() {
         super();
         this.state = { isCollapsed: true }
+    }
+
+     componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
+        this.setState({
+           isCollapsed: nextProps.AdvancedSearchDashboardControl.IsCollapsed
+        });
     }
     render(): any {
 
@@ -73,7 +84,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
                     {!this.state.isCollapsed ? advancedSearchContent :
-                        <ControlLabel>{savedSearch?savedSearch.Name:"None"}</ControlLabel>}
+                        <ControlLabel>{savedSearch ? savedSearch.Name : "None"}</ControlLabel>}
                     {' '}
                     {this.state.isCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
@@ -90,7 +101,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
     expandCollapseClicked() {
-        this.setState({ isCollapsed: !this.state.isCollapsed });
+        let isCollapsed: boolean = this.state.isCollapsed;
+        this.setState({ isCollapsed: !isCollapsed } as AdvancedSearchToolbarControlComponentState);
+        this.props.AdvancedSearchDashboardControl.IsCollapsed = !isCollapsed;
+        this.props.onChangeDashboardControl(this.props.AdvancedSearchDashboardControl);
     }
 
     onSelectedSearchChanged(event: React.FormEvent) {
@@ -125,7 +139,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
-        AdvancedSearches: state.AdvancedSearch.AdvancedSearches
+        AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Advanced Search"),
     };
 }
 
@@ -135,6 +150,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onNewAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction", "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction")),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
     };
 }
 

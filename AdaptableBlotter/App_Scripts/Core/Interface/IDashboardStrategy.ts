@@ -6,5 +6,6 @@ export interface IDashboardStrategy extends IStrategy {
 
 export interface IDashboardControl {
     Name: string;
-   IsVisible: boolean
+   IsVisible: boolean;
+   IsCollapsed: boolean;
 }

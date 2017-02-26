@@ -4,22 +4,23 @@ import * as Redux from 'redux';
 import { DashboardState } from './interface/IState'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 
-const CHANGE_CONTROL_VISIBILITY = 'CHANGE_CONTROL_VISIBILITY';
+const CHANGE_DASHBOARD_CONTROL = 'CHANGE_DASHBOARD_CONTROL';
 
-export interface ChangeControlVisibilityAction extends Redux.Action {
+export interface ChangeDashboardControlAction extends Redux.Action {
     DashboardControl: IDashboardControl;
 }
 
-export const ChangeControlVisibility = (DashboardControl: IDashboardControl): ChangeControlVisibilityAction => ({
-    type: CHANGE_CONTROL_VISIBILITY,
+export const EditDashboardControl = (DashboardControl: IDashboardControl): ChangeDashboardControlAction => ({
+    type: CHANGE_DASHBOARD_CONTROL,
     DashboardControl
 })
 
+
 const initialDashboardState: DashboardState = {
     DashboardControls: [
-        { Name: "Advanced Search", IsVisible: true },
-        { Name: "Quick Search", IsVisible: true },
-        { Name: "Layout", IsVisible: true },
+        { Name: "Advanced Search", IsVisible: true, IsCollapsed: false },
+        { Name: "Quick Search", IsVisible: true, IsCollapsed: false },
+        { Name: "Layout", IsVisible: true, IsCollapsed: false },
     ],
     DashboardButtons: []
 }
@@ -28,11 +29,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
     let index: number;
     let dashboardControls: IDashboardControl[]
     switch (action.type) {
-        case CHANGE_CONTROL_VISIBILITY:
-            let actionTypedChangeControlVisibility = <ChangeControlVisibilityAction>action;
+        case CHANGE_DASHBOARD_CONTROL:
+            let actionTypedChangeDashboardControl = <ChangeDashboardControlAction>action;
             dashboardControls = [].concat(state.DashboardControls);
-            index = dashboardControls.findIndex(a => a.Name == actionTypedChangeControlVisibility.DashboardControl.Name)
-            dashboardControls[index] = actionTypedChangeControlVisibility.DashboardControl;
+            index = dashboardControls.findIndex(a => a.Name == actionTypedChangeDashboardControl.DashboardControl.Name)
+            dashboardControls[index] = actionTypedChangeDashboardControl.DashboardControl;
             return Object.assign({}, state, { DashboardControls: dashboardControls });
         default:
             return state

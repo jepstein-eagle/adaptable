@@ -13,15 +13,14 @@ import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardControl>;
-    onChangeControlVisibility: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeControlVisibilityAction
-
+    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
 }
 
 class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}> {
     render() {
 
-        let radioDashboardControls = this.props.DashboardControls.map(x => {
-            return <Col xs={9} style={toolbarMarginStyle}>
+        let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
+            return <Col xs={9} key={i} style={toolbarMarginStyle}>
                 <Checkbox key={x.Name} inline onChange={(e) => this.onDashboardControlVisibilityChanged(e, x)} checked={x.IsVisible}>Show {x.Name} Control</Checkbox>
             </Col>
         })
@@ -35,7 +34,6 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
 
                 </Panel>
 
-
             </PanelWithImage>
         );
     }
@@ -43,7 +41,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
     onDashboardControlVisibilityChanged(event: React.FormEvent, dashboardControl: IDashboardControl) {
         let e = event.target as HTMLInputElement;
         dashboardControl.IsVisible = e.checked;
-        this.props.onChangeControlVisibility(dashboardControl);
+        this.props.onChangeDashboardControl(dashboardControl);
     }
 
 }
@@ -56,8 +54,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onChangeControlVisibility: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.ChangeControlVisibility(dashboardControl)),
-
+        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
     };
 }
 
