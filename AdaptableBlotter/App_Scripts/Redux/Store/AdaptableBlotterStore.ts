@@ -25,6 +25,7 @@ import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
+import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
@@ -60,7 +61,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
-    Layout: LayoutRedux.LayoutReducer
+    Layout: LayoutRedux.LayoutReducer,
+    Dashboard: DashboardRedux.DashboardReducer,
 });
 
 

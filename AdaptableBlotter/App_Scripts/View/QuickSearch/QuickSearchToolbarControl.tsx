@@ -58,8 +58,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
             <AdaptableBlotterForm className='navbar-form' inline onSubmit={() => this.onSetQuickSearch()}>
                 <ControlLabel>Quick Search:</ControlLabel>
                 {' '}
-                {!this.state.isCollapsed ? quicksearchContent:
-                <ControlLabel>{this.props.QuickSearchText}</ControlLabel>}
+                {!this.state.isCollapsed ? quicksearchContent :
+                    <ControlLabel>{StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>}
                 {' '}
                 {this.state.isCollapsed ?
                     <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>

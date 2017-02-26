@@ -12,7 +12,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { IEvent } from '../Core/Interface/IEvent';
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
-import { PopupState, MenuState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState, MenuState, DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IMenuItem } from '../Core/interface/IStrategy'
@@ -28,6 +28,7 @@ import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfir
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
     MenuState: MenuState;
+    DashboardState: DashboardState
     AdaptableBlotter: IAdaptableBlotter;
     showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.ShowPopupAction;
     onClosePopup: () => PopupRedux.HidePopupAction;
@@ -47,6 +48,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
         });
 
+        var visibleDashboardControls = this.props.DashboardState.DashboardControls.filter(dc => dc.IsVisible);
+
         return (
             <div className="adaptable_blotter_style">
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
@@ -54,22 +57,29 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Navbar.Brand>
                         <Dropdown id="dropdown-functions">
                             <Dropdown.Toggle>
-                                <Glyphicon glyph="th-list" />{' '}Functions...
+                                <Glyphicon glyph="home" />{' '}Functions...
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {configMenuItems}
                             </Dropdown.Menu>
                         </Dropdown>
                     </Navbar.Brand>
-                    <Nav>
-                        <QuickSearchToolbarControl />
-                    </Nav>
-                    <Nav>
+
+                    {/* Im sure we must be able to do this more dynamically and cleverly but while there are ony 3 its ok for now */}
+                    {visibleDashboardControls.find(dc => dc.Name == "Quick Search") != null &&
+                        <Nav>
+                            <QuickSearchToolbarControl />
+                        </Nav>
+                    }
+                    {visibleDashboardControls.find(dc => dc.Name == "Advanced Search") != null && <Nav>
                         <AdvancedSearchToolbarControl />
                     </Nav>
-                    <Nav>
+                    }
+                    {visibleDashboardControls.find(dc => dc.Name == "Layout") != null && <Nav>
                         <LayoutToolbarControl />
                     </Nav>
+                    }
+
                 </Navbar>
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
@@ -120,6 +130,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         MenuState: state.Menu,
         PopupState: state.Popup,
+        DashboardState: state.Dashboard,
         AdaptableBlotter: ownProps.Blotter,
     };
 }

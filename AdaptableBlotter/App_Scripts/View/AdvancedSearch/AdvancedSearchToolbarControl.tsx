@@ -73,7 +73,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
                     {!this.state.isCollapsed ? advancedSearchContent :
-                        <ControlLabel>{savedSearch?savedSearch.Name:""}</ControlLabel>}
+                        <ControlLabel>{savedSearch?savedSearch.Name:"None"}</ControlLabel>}
                     {' '}
                     {this.state.isCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>

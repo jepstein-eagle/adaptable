@@ -14,6 +14,7 @@ import { IColumnFilter } from '../../../Core/interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/interface/ILayoutStrategy';
+import { IDashboardControl } from '../../../Core/interface/IDashboardStrategy';
 
 
 
@@ -142,4 +143,10 @@ export interface CellValidationState {
 export interface LayoutState {
     CurrentLayout: string;
     AvailableLayouts: ILayout[]
+}
+
+export interface DashboardState {
+  DashboardControls:IDashboardControl[]
+  DashboardButtons:string[]
+  
 }
