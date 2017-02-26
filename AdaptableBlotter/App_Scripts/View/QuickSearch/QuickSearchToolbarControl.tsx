@@ -9,6 +9,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
+
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
     onShowQuickSearchConfig: () => PopupRedux.ShowPopupAction;
@@ -40,18 +41,12 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
                 onChange={(x) => this.onUpdateQuickSearchText(x)}
             />{' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Run Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='primary' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onSetQuickSearch()}>Run</Button>
-            </OverlayTrigger>
-            {' '}
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
                 <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
             </OverlayTrigger>
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Quick Search Settings</Tooltip>}>
-                <Button bsSize='small' bsStyle='default' onClick={() => this.props.onShowQuickSearchConfig()}>
-                    <Glyphicon glyph="wrench" />
-                </Button>
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Quick Search</Tooltip>}>
+                <Button bsSize='small' bsStyle='primary' onClick={() => this.props.onShowQuickSearchConfig()}>Edit</Button>
             </OverlayTrigger></FormGroup>
 
         return <Panel className="small-padding-panel">
@@ -82,11 +77,11 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     onUpdateQuickSearchText(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ EditedQuickSearchText: e.value } as QuickSearchToolbarControlComponentState);
+        this.props.onSetQuickSearchText(e.value);
     }
 
     onSetQuickSearch() {
-        this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
+           this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
     }
 
     onClearQuickSearch() {
