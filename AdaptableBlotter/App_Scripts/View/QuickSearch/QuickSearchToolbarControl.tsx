@@ -10,6 +10,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helper';
 
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -20,33 +21,20 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     QuickSearchDashboardControl: IDashboardControl
 }
 
-interface QuickSearchToolbarControlComponentState {
-    EditedQuickSearchText: string,
-    isCollapsed: boolean
-}
 
-class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, QuickSearchToolbarControlComponentState> {
 
-    constructor() {
-        super();
-        this.state = { EditedQuickSearchText: "", isCollapsed: false }
-    }
-    componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
-        this.setState({
-            EditedQuickSearchText: nextProps.QuickSearchText, isCollapsed: nextProps.QuickSearchDashboardControl.IsCollapsed
-        });
-    }
+class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, {}> {
 
     render(): any {
         let quicksearchContent: any = <FormGroup controlId="formQuickSearch">
             <FormControl
                 type="text"
                 placeholder="Search Text"
-                value={(this.state != null) ? this.state.EditedQuickSearchText : ""}
+                value={this.props.QuickSearchText}
                 onChange={(x) => this.onUpdateQuickSearchText(x)}
             />{' '}
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.state.EditedQuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
+                <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.props.QuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
             </OverlayTrigger>
             {' '}
             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Quick Search</Tooltip>}>
@@ -54,13 +42,13 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
             </OverlayTrigger></FormGroup>
 
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' inline onSubmit={() => this.onSetQuickSearch()}>
+            <AdaptableBlotterForm className='navbar-form' inline >
                 <ControlLabel>Quick Search:</ControlLabel>
                 {' '}
-                {!this.state.isCollapsed ? quicksearchContent :
+                {!this.props.QuickSearchDashboardControl.IsCollapsed ? quicksearchContent :
                     <ControlLabel>{StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>}
                 {' '}
-                {this.state.isCollapsed ?
+                {this.props.QuickSearchDashboardControl.IsCollapsed ?
                     <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                     </OverlayTrigger>
@@ -71,15 +59,12 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 }
             </AdaptableBlotterForm>
         </Panel>
-
-
     }
 
     expandCollapseClicked() {
-        let isCollapsed: boolean = this.state.isCollapsed;
-        this.setState({ isCollapsed: !isCollapsed } as QuickSearchToolbarControlComponentState);
-        this.props.QuickSearchDashboardControl.IsCollapsed = !isCollapsed;
-        this.props.onChangeDashboardControl(this.props.QuickSearchDashboardControl);
+        let control: IDashboardControl = Helper.cloneObject(this.props.QuickSearchDashboardControl);
+        control.IsCollapsed = !control.IsCollapsed;
+        this.props.onChangeDashboardControl(control);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
@@ -87,13 +72,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         this.props.onSetQuickSearchText(e.value);
     }
 
-    onSetQuickSearch() {
-        this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
-    }
-
     onClearQuickSearch() {
-        //Jo:no need to update state since we'll get the update from redux
-        // this.setState({ EditedQuickSearchText: "" });
         this.props.onSetQuickSearchText("");
     }
 }

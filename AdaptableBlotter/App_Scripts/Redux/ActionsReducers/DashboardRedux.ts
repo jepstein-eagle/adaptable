@@ -30,7 +30,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
     let dashboardControls: IDashboardControl[]
     switch (action.type) {
         case CHANGE_DASHBOARD_CONTROL:
-            let actionTypedChangeDashboardControl = <ChangeDashboardControlAction>action;
+                let actionTypedChangeDashboardControl = <ChangeDashboardControlAction>action;
             dashboardControls = [].concat(state.DashboardControls);
             index = dashboardControls.findIndex(a => a.Name == actionTypedChangeDashboardControl.DashboardControl.Name)
             dashboardControls[index] = actionTypedChangeDashboardControl.DashboardControl;

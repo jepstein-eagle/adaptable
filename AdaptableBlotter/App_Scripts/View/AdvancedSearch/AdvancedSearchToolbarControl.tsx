@@ -25,22 +25,8 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     AdvancedSearchDashboardControl: IDashboardControl
 }
 
-interface AdvancedSearchToolbarControlComponentState {
-    isCollapsed: boolean
-}
-
-class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, AdvancedSearchToolbarControlComponentState> {
-    constructor() {
-        super();
-        this.state = { isCollapsed: true }
-    }
-
-     componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
-        this.setState({
-           isCollapsed: nextProps.AdvancedSearchDashboardControl.IsCollapsed
-        });
-    }
-    render(): any {
+class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
+      render(): any {
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
@@ -83,10 +69,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 <AdaptableBlotterForm className='navbar-form' inline>
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
-                    {!this.state.isCollapsed ? advancedSearchContent :
+                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent :
                         <ControlLabel>{savedSearch ? savedSearch.Name : "None"}</ControlLabel>}
                     {' '}
-                    {this.state.isCollapsed ?
+                    {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                             <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                         </OverlayTrigger>
@@ -101,11 +87,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
     expandCollapseClicked() {
-        let isCollapsed: boolean = this.state.isCollapsed;
-        this.setState({ isCollapsed: !isCollapsed } as AdvancedSearchToolbarControlComponentState);
-        this.props.AdvancedSearchDashboardControl.IsCollapsed = !isCollapsed;
-        this.props.onChangeDashboardControl(this.props.AdvancedSearchDashboardControl);
-    }
+    let control: IDashboardControl = Helper.cloneObject(this.props.AdvancedSearchDashboardControl);
+        control.IsCollapsed = !control.IsCollapsed;
+        this.props.onChangeDashboardControl(control);  }
 
     onSelectedSearchChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;

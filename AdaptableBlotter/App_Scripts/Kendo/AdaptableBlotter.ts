@@ -41,6 +41,7 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
+import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
@@ -108,6 +109,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
