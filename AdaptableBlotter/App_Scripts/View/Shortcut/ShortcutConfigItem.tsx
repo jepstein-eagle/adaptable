@@ -45,7 +45,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={2} >
                     {ColumnType[this.props.Shortcut.ColumnType]}
                 </Col>
-                <Col md={3} >
+                <Col md={2} >
                     {this.props.Shortcut.ColumnType == ColumnType.Date ?
                         ShortcutAction[this.props.Shortcut.ShortcutAction] :
                         <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
@@ -74,11 +74,11 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 value={this.props.Shortcut.ShortcutResult}
                                 />}
                 </Col>
-                <Col md={1} >
+                <Col md={2} >
                     <EntityListActionButtons
                         deleteClick={() => this.props.onDelete(this.props.Shortcut)}
                         showEdit={false}
-                        deleteDisabled={this.props.Shortcut.IsPredefined}>
+                        disableDelete={this.props.Shortcut.IsPredefined}>
                     </EntityListActionButtons>
                 </Col>
 

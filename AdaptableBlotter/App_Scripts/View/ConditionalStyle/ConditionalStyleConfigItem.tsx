@@ -51,11 +51,11 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 <Col md={2} >
                     <ColorPicker value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
                 </Col>
 
-                <Col md={2} >
+                <Col md={3} >
                     <EntityListActionButtons
                         deleteClick={() => this.props.onDelete(this.props.ConditionalStyleCondition)}
                         editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}>

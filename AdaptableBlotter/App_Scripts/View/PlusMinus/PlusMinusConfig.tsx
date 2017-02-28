@@ -47,7 +47,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
     }
     render() {
 
-        let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 5], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
 
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
             let optionColumns = this.props.Columns.filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
@@ -65,10 +65,10 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     <Col xs={2}>
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e)} />
                     </Col>
-                    <Col xs={5}>
+                    <Col xs={4}>
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)}
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteColumnDefaultNudgeValue(index)}
                             editClick={() => this.onEdit(index, x)}>
