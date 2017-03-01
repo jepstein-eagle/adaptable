@@ -8,7 +8,7 @@ import { FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, Men
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { SmartEditOperation, CellValidationAction, PopoverType } from '../../Core/Enums'
+import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Core/Interface/ISmartEditStrategy'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
@@ -54,8 +54,8 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Prevent).length > 0
-                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationAction == CellValidationAction.Warning).length > 0
+                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.Prevent).length > 0
+                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.Warning).length > 0
                 globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
                 globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
                 if (!hasValidationErrors || localHasValidationWarning) {

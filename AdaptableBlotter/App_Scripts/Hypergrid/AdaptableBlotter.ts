@@ -43,7 +43,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationAction } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -159,7 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
 
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

@@ -42,7 +42,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
     render() {
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Key", 2], ["Columns", 2], ["Action", 2], ["Result", 3], ["", 2]];
+        let cellInfo: [string, number][] = [["Live", 1], ["Key", 1], ["Columns", 2], ["Action", 2], ["Result", 2], ["", 4]];
 
         let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
@@ -71,7 +71,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
         return <PanelWithButton headerText="Shortcuts"
             buttonClick={() => this.CreateShortcut()}
-            buttonContent={"Create Shortcut"} bsStyle="primary"  showAddButtonGlyph={true}  style={panelStyle} glyphicon={"road"}>
+            buttonContent={"New"} bsStyle="primary"  showAddButtonGlyph={true}  style={panelStyle} glyphicon={"road"}>
 
 
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

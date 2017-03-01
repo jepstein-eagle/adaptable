@@ -3,7 +3,7 @@ import { IAuditService, IDataChangedEvent, IDataChangingEvent, IColumnDataValueL
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
-import { MenuType, ColumnType, CellValidationAction, LeafExpressionOperator, SortOrder } from '../Enums';
+import { MenuType, ColumnType, CellValidationMode, LeafExpressionOperator, SortOrder } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
@@ -101,7 +101,7 @@ export class AuditService implements IAuditService {
                     let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRule.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
                     if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
-                        if (expressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                        if (expressionRule.CellValidationMode == CellValidationMode.Prevent) {
                             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                                 "CheckCellChanging",
                                 "Failed",
@@ -119,7 +119,7 @@ export class AuditService implements IAuditService {
             let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
             for (let noExpressionRule of noExpressionRules) {
                 if (!this.IsCellValidationRuleValid(noExpressionRule, dataChangedEvent, columns)) {
-                    if (noExpressionRule.CellValidationAction == CellValidationAction.Prevent) {
+                    if (noExpressionRule.CellValidationMode == CellValidationMode.Prevent) {
                         this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                             "CheckCellChanging",
                             "Failed",

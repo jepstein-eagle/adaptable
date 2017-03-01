@@ -31,7 +31,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={1} >
                     <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
-                <Col md={2} >
+                <Col md={1} >
                     <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
                             <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
@@ -57,7 +57,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                         </FormControl>
                     }
                 </Col>
-                <Col md={3}>
+                <Col md={2}>
                     {this.props.Shortcut.IsDynamic ?
                         this.props.Shortcut.ShortcutResult :
                         this.props.Shortcut.ColumnType == ColumnType.Date ?
@@ -74,7 +74,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 value={this.props.Shortcut.ShortcutResult}
                                 />}
                 </Col>
-                <Col md={2} >
+                <Col md={4} >
                     <EntityListActionButtons
                         deleteClick={() => this.props.onDelete(this.props.Shortcut)}
                         showEdit={false}

@@ -2,7 +2,7 @@ import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
-import { SmartEditOperation, ColumnType, CellValidationAction } from '../Core/Enums'
+import { SmartEditOperation, ColumnType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem , ICellInfo} from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
@@ -24,7 +24,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         let newValues:ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationAction == CellValidationAction.Prevent).length == 0) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.Prevent).length == 0) {
                     newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
                 }
             }
