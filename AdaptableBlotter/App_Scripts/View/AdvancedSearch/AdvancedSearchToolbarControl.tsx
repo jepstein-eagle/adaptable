@@ -6,10 +6,13 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchUid: string;
@@ -18,18 +21,12 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onEditAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
+    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    AdvancedSearchDashboardControl: IDashboardControl
 }
 
-interface AdvancedSearchToolbarControlComponentState {
-    isCollapsed: boolean
-}
-
-class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, AdvancedSearchToolbarControlComponentState> {
-    constructor() {
-        super();
-        this.state = { isCollapsed: true }
-    }
-    render(): any {
+class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
+      render(): any {
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
@@ -72,10 +69,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 <AdaptableBlotterForm className='navbar-form' inline>
                     <ControlLabel>Advanced Search:</ControlLabel>
                     {' '}
-                    {!this.state.isCollapsed ? advancedSearchContent :
-                        <ControlLabel>{savedSearch?savedSearch.Name:""}</ControlLabel>}
+                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent :
+                        <ControlLabel>{savedSearch ? savedSearch.Name : "None"}</ControlLabel>}
                     {' '}
-                    {this.state.isCollapsed ?
+                    {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                             <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                         </OverlayTrigger>
@@ -90,8 +87,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
     expandCollapseClicked() {
-        this.setState({ isCollapsed: !this.state.isCollapsed });
-    }
+    let control: IDashboardControl = Helper.cloneObject(this.props.AdvancedSearchDashboardControl);
+        control.IsCollapsed = !control.IsCollapsed;
+        this.props.onChangeDashboardControl(control);  }
 
     onSelectedSearchChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
@@ -125,7 +123,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
-        AdvancedSearches: state.AdvancedSearch.AdvancedSearches
+        AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Advanced Search"),
     };
 }
 
@@ -135,6 +134,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onNewAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction", "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction")),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
     };
 }
 

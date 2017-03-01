@@ -52,7 +52,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 3], ["Failure Action", 2], ["", 2]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 2], ["Action", 2], ["", 3]];
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             return <li
@@ -64,7 +64,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     <Col xs={3}>
                         {x.Description}
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={2}>
                         {this.setExpressionDescription(x)}
                     </Col>
                     <Col xs={2}>
@@ -73,7 +73,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         </FormControl>
 
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteCellValidation(index)}
                             editClick={() => this.onEdit(index, x)}>
