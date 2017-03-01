@@ -3,7 +3,7 @@ import * as fetch from 'isomorphic-fetch';
 
 interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
 
-const checkStatus = (response: ResponseInterface) => {
+const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
 
   if (response.status >= 200 && response.status < 300) {
