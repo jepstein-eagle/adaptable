@@ -3,7 +3,7 @@
   "startup_app": {
     "name": "OpenFin with Adaptable Blotter Offline",
     "description": "OpenFin with Adaptable Blotter Offline",
-    "url": "http://localhost:8080/indexoffline.html",
+    "url": "http://localhost:9090/indexoffline.html",
     "uuid": "openfin-adaptable-blotter-offline",
     "autoShow": true
   },
