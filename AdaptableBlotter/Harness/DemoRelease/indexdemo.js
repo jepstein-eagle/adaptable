@@ -54,6 +54,7 @@ function InitBlotter() {
     grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',
         currency: 'USD',
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0
     }));
 

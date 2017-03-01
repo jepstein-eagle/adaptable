@@ -20,8 +20,8 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
     }
 
     getMenuItems(): IMenuItem[] {
-        return [];
-        //return [this.menuItemConfig];
+        //return [];
+        return [this.menuItemConfig];
     }
 
     public onAction(action: string) {

@@ -83,7 +83,7 @@ messages: {
     var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
             primaryKey: "tradeId",
             userName: "Jonathan",
-            enableAuditLog: false,
+            enableAuditLog: true,
             enableRemoteConfigServer: false
         });
     blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))

@@ -74,7 +74,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
-        
+
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -369,7 +369,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let column = this.grid.behavior.getActiveColumns()[currentCell.origin.x]
             let row = this.grid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
             let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-            let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
+            
+            //this function needs the column.index from the schema
+            // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
+            let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
             return { Id: primaryKey, ColumnId: column.name, Value: value }
         }
         return null
@@ -388,7 +391,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // for (let rowIndex = rectangle.firstSelectedCell.y; rowIndex <= rectangle.lastSelectedCell.y; rowIndex++) {
                     let row = this.grid.behavior.dataModel.dataSource.getRow(rowIndex)
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-                    let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
+                    //this function needs the column.index from the schema
+                    // let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
+                    let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
                     // let value = column.getValue(rowIndex)
