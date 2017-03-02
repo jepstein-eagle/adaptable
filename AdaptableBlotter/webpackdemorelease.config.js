@@ -2,6 +2,9 @@
 var path = require('path');
 var failPlugin = require('webpack-fail-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var PACKAGE = require('./package.json');
 
 module.exports = {
     entry: {
@@ -12,7 +15,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist/adaptableblotter',
-        filename: "[name]-bundle.min.js",
+        filename: "[name]-bundle." + PACKAGE.version + ".min.js",
         publicPath: "/adaptableblotter/",
         library: "[name]",
         libraryTarget: 'var',
@@ -29,6 +32,26 @@ module.exports = {
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['harness', 'adaptableblotterhypergrid'],
+            filename: "../hypergriddemo.html",
+            template: 'Harness/DemoRelease/hypergriddemo.ejs',
+            inject: false,
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['harness', 'adaptableblotterkendo'],
+            filename: "../kendodemo.html",
+            template: 'Harness/DemoRelease/kendodemo.ejs',
+            inject: false,
+        }),
+        new HtmlWebpackPlugin({
+            chunks: [],
+            filename: "../index.html",
+            template: 'Harness/DemoRelease/index.ejs',
+            inject: false,
+            'version' : PACKAGE.version,
+            'versiondate' : 'Feb 2017'
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),

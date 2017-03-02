@@ -20,19 +20,18 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-
-    <!-- Data Generator -->
-    <script src="adaptableblotter/harness-bundle.min.js"></script>
-    <script src="kendodemo.js"></script>
 </head>
 
 <body>
     <div>
         <div id="content" style="margin:15px;"></div>
     </div>
-    <!-- Adaptable Blotter JS -->
-    <script src="adaptableblotter/adaptableblotterkendo-bundle.min.js"></script>
+    <% for (key in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
+    <% } %>
     <p/>
+    <!-- Grid Setup -->
+    <script src="kendodemo.js"></script>
     <div id="grid"></div>
 
     <script>
