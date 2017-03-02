@@ -1,7 +1,5 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <title>Adaptable Blotter Hypergrid Demo</title>
@@ -13,24 +11,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <!-- Latest Hypergrid -->
     <script src="https://openfin.github.io/fin-hypergrid/build/fin-hypergrid.js"></script>
-    <!-- Data Generator -->
-    <script src="adaptableblotter/harness-bundle.min.js"></script>
-    <!-- Grid Setup -->
-    <script src="hypergriddemo.js"></script>
-</head>
 
+</head>
 <body>
     <!-- Adaptable Blotter div for react and dashboard -->
     <div id="content" style="margin:15px;"></div>
-    <!-- Adaptable Blotter JS -->
-    <script src="adaptableblotter/adaptableblotterhypergrid-bundle.min.js"></script>
     <p/>
     <!-- Grid div -->
     <div id="grid"></div>
-
+    <% for (key in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
+    <% } %>
+    <!-- Grid Setup -->
+    <script src="hypergriddemo.js"></script>
     <script>
         InitBlotter()
     </script>
 </body>
-
 </html>
