@@ -45,7 +45,7 @@ import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IEvent } from '../Core/Interface/IEvent';
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationAction, DistinctCriteriaPairValue } from '../Core/Enums'
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
@@ -138,7 +138,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
 
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationAction == CellValidationAction.Prevent) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

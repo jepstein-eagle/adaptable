@@ -6,7 +6,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, CellValidationAction, LeafExpressionOperator } from '../../Core/Enums';
+import { ColumnType, CellValidationMode, LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
@@ -18,7 +18,7 @@ interface CellValidationSettingsWizardState {
     Operand1: string;
     Operand2: string;
     HasExpression: boolean;
-    CellValidationAction: CellValidationAction;
+    CellValidationMode: CellValidationMode;
 }
 
 export class CellValidationRulesWizard extends React.Component<CellValidationRulesWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -29,7 +29,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operand1: this.props.Data.RangeExpression.Operand1,
             Operand2: this.props.Data.RangeExpression.Operand2,
             HasExpression: this.props.Data.HasExpression,
-            CellValidationAction: this.props.Data.CellValidationAction,
+            CellValidationMode: this.props.Data.CellValidationMode,
         }
     }
 
@@ -54,10 +54,10 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                 <Panel header="Action To Take When Validation Fails" bsStyle="info"  >
                     <AdaptableBlotterForm inline>
                         <Col xs={12} style={divStyle}>
-                            <Radio inline value={CellValidationAction.Prevent.toString()} checked={this.state.CellValidationAction == CellValidationAction.Prevent} onChange={(e) => this.onCellValidationActionChanged(e)}>Prevent the cell edit in all circumstances</Radio>
+                            <Radio inline value={CellValidationMode.Prevent.toString()} checked={this.state.CellValidationMode == CellValidationMode.Prevent} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit in all circumstances</Radio>
                         </Col>
                         <Col xs={12} style={divStyle}>
-                            <Radio inline value={CellValidationAction.Warning.toString()} checked={this.state.CellValidationAction == CellValidationAction.Warning} onChange={(e) => this.onCellValidationActionChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
+                            <Radio inline value={CellValidationMode.Warning.toString()} checked={this.state.CellValidationMode == CellValidationMode.Warning} onChange={(e) => this.onCellValidationModeChanged(e)}>Display a warning - with options to allow or disallow the edit</Radio>
                         </Col>
                     </AdaptableBlotterForm>
                 </Panel>
@@ -128,9 +128,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     }
 
 
-    private onCellValidationActionChanged(event: React.FormEvent) {
+    private onCellValidationModeChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationAction: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ CellValidationMode: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperatorChanged(event: React.FormEvent) {
@@ -281,7 +281,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.props.Data.RangeExpression = rangeExpression;
         this.props.Data.HasExpression = this.state.HasExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
-        this.props.Data.CellValidationAction = this.state.CellValidationAction;
+        this.props.Data.CellValidationMode = this.state.CellValidationMode;
 
     }
 

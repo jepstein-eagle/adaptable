@@ -43,10 +43,11 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 <Col xs={3}>
                     {buttonContent &&
 
-                        <Button bsSize="small" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
-                            {this.props.showAddButtonGlyph &&
-                                <Glyphicon glyph="plus" style={glyphSmallRightMarginStyle} />
-                            }
+
+
+
+                        <Button bsSize="small" bsStyle={this.getButtonAddStyle()} disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+
                             {buttonContent}
                         </Button>}
                 </Col>
@@ -55,6 +56,11 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         return <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;
+    }
+
+    private getButtonAddStyle(): string {
+        // changed by JW but not sure about this so always using defaault...
+        return this.props.showAddButtonGlyph ? "default" : "default"
     }
 
 }

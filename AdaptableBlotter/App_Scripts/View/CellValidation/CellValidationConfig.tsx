@@ -14,7 +14,7 @@ import { Helper } from '../../Core/Helper';
 import { ColumnType } from '../../Core/Enums';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../EntityListActionButtons';
-import { PopupType, CellValidationAction } from '../../Core/Enums'
+import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
@@ -32,7 +32,7 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     UserFilters: IUserFilter[]
     onDeleteCellValidation: (Index: number) => CellValidationRedux.CellValidationDeleteAction
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddOrUpdateAction
-    onChangeCellValidationAction: (index: number, CellValidationAction: CellValidationAction) => CellValidationRedux.ChangeCellValidationActionAction
+    onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
 }
 
 interface CellValidationConfigState {
@@ -47,7 +47,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
     render() {
 
-        let CellValidationActionTypes = EnumExtensions.getNamesAndValues(CellValidationAction).map((enumNameAndValue: any) => {
+        let CellValidationModeTypes = EnumExtensions.getNamesAndValues(CellValidationMode).map((enumNameAndValue: any) => {
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
         })
 
@@ -68,8 +68,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         {this.setExpressionDescription(x)}
                     </Col>
                     <Col xs={2}>
-                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationAction.toString()} onChange={(x) => this.onCellValidationActionChanged(index, x)} >
-                            {CellValidationActionTypes}
+                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationMode.toString()} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
+                            {CellValidationModeTypes}
                         </FormControl>
 
                     </Col>
@@ -129,9 +129,9 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index });
     }
 
-    private onCellValidationActionChanged(index: number, event: React.FormEvent) {
+    private onCellValidationModeChanged(index: number, event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeCellValidationAction(index, Number.parseInt(e.value));
+        this.props.onChangeCellValidationMode(index, Number.parseInt(e.value));
     }
 
     closeWizard() {
@@ -165,7 +165,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteCellValidation: (index: number) => dispatch(CellValidationRedux.DeleteCellValidation(index)),
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.AddEditCellValidation(index, CellValidation)),
-        onChangeCellValidationAction: (index: number, CellValidationAction: CellValidationAction) => dispatch(CellValidationRedux.ChangeCellValidationAction(index, CellValidationAction))
+        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.ChangeModeCellValidation(index, CellValidationMode))
     };
 }
 

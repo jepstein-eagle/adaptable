@@ -3,7 +3,7 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { MenuType, ColumnType, CellValidationAction, LeafExpressionOperator } from '../Core/Enums';
+import { MenuType, ColumnType, LeafExpressionOperator } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Core/Interface/IExpression';

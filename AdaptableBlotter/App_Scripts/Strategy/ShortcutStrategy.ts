@@ -8,7 +8,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IMenuItem, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
 import { Helper } from '../Core/Helper';
 import { ColumnType } from '../Core/Enums'
-import { ShortcutAction, CellValidationAction } from '../Core/Enums'
+import { ShortcutAction, CellValidationMode } from '../Core/Enums'
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { MenuType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -89,8 +89,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);
-                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationAction == CellValidationAction.Prevent;
-                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationAction == CellValidationAction.Warning;
+                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.Prevent;
+                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.Warning;
 
                 this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
                     "HandleKeyDown",

@@ -9,28 +9,29 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helper';
+
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
+   onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction, Columns: IColumn[],
     AvailableLayouts: ILayout[];
-    CurrentLayout: string
+    CurrentLayout: string;
+    LayoutDashboardControl: IDashboardControl
 }
 
-interface LayoutToolbarControlComponentState {
-    isCollapsed: boolean
-}
 
-class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, LayoutToolbarControlComponentState> {
-    constructor() {
-        super();
-        this.state = { isCollapsed: true }
-    }
-    render(): any {
+
+class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
+    
+      render(): any {
 
         let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
             return <option value={x.Name} key={index}>{x.Name}</option>
@@ -60,10 +61,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             <AdaptableBlotterForm className='navbar-form' inline>
                 <ControlLabel>Layout:</ControlLabel>
                 {' '}
-                {!this.state.isCollapsed ? layoutContent:
+                {!this.props.LayoutDashboardControl.IsCollapsed ? layoutContent:
                 <ControlLabel>{this.props.CurrentLayout}</ControlLabel>}
                 {' '}
-                {this.state.isCollapsed ?
+                {this.props.LayoutDashboardControl.IsCollapsed ?
                     <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                         <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                     </OverlayTrigger>
@@ -77,9 +78,12 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
     }
 
-    expandCollapseClicked() {
-        this.setState({ isCollapsed: !this.state.isCollapsed });
+     expandCollapseClicked() {
+        let control: IDashboardControl = Helper.cloneObject(this.props.LayoutDashboardControl);
+        control.IsCollapsed = !control.IsCollapsed;
+        this.props.onChangeDashboardControl(control);
     }
+
     private onSaveLayoutClicked() {
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
     }
@@ -117,7 +121,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+              LayoutDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Layout"),
+ 
     };
 }
 
@@ -127,6 +133,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
     };
 }
 

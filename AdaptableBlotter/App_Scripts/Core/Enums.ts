@@ -124,7 +124,7 @@ export enum AuditLogTrigger {
     Ping
 }
 
-export enum CellValidationAction {
+export enum CellValidationMode {
     Warning,
     Prevent
 }

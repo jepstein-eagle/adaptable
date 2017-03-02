@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
-import { CellValidationAction, LeafExpressionOperator, ColumnType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
+import { CellValidationMode, LeafExpressionOperator, ColumnType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
@@ -22,7 +22,7 @@ export module ObjectFactory {
 
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
-            CellValidationAction: CellValidationAction.Prevent,
+            CellValidationMode: CellValidationMode.Prevent,
             ColumnId: "",
             RangeExpression: {
                 Operator: LeafExpressionOperator.None,
