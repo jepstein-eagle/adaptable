@@ -16,10 +16,8 @@ export interface ISmartEditPreviewResult {
 }
 
 export interface ISmartEditStrategy extends IStrategy {
-    BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn;
+    CheckCorrectCellSelection():IStrategyActionReturn<boolean>;
+    BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreview;
     ApplySmartEdit(bypassCellValidationWarnings : boolean): void;
 }
 
-export interface ISmartEditPreviewReturn extends IStrategyActionReturn<ISmartEditPreview> {
-
-}

@@ -20,6 +20,7 @@ import { MenuType } from '../Core/Enums';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
+import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupPrompt } from './AdaptableBlotterPopupPrompt'
@@ -77,6 +78,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     }
                     {visibleDashboardControls.find(dc => dc.Name == "Layout") != null && <Nav>
                         <LayoutToolbarControl />
+                    </Nav>
+                    }
+                    {visibleDashboardControls.find(dc => dc.Name == "SmartEdit") != null && <Nav>
+                        <SmartEditToolbarControl />
                     </Nav>
                     }
 

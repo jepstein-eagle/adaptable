@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -16,7 +16,7 @@ import { Helper } from '../../Core/Helper';
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
     onShowQuickSearchConfig: () => PopupRedux.ShowPopupAction;
-    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardControl
 }
@@ -26,6 +26,11 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
 class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, {}> {
 
     render(): any {
+
+        let collapsedContent = <span style={labelStyle}>
+            {StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}
+        </span>
+
         let quicksearchContent: any = <FormGroup controlId="formQuickSearch">
             <FormControl
                 type="text"
@@ -43,14 +48,15 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm className='navbar-form' inline >
-                <ControlLabel>Quick Search:</ControlLabel>
-                {' '}
-                {!this.props.QuickSearchDashboardControl.IsCollapsed ? quicksearchContent :
-                    <ControlLabel>{StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>}
+                <div style={headerStyle}>
+                    <Glyphicon glyph="eye-open" /> {' '}
+                    <ControlLabel>Quick Search:</ControlLabel>
+                </div>
+                {!this.props.QuickSearchDashboardControl.IsCollapsed ? quicksearchContent : collapsedContent}
                 {' '}
                 {this.props.QuickSearchDashboardControl.IsCollapsed ?
                     <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                        <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                     </OverlayTrigger>
                     :
                     <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
@@ -62,9 +68,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     }
 
     expandCollapseClicked() {
-        let control: IDashboardControl = Helper.cloneObject(this.props.QuickSearchDashboardControl);
-        control.IsCollapsed = !control.IsCollapsed;
-        this.props.onChangeDashboardControl(control);
+        this.props.onChangeControlCollapsedState(this.props.QuickSearchDashboardControl.Name, !this.props.QuickSearchDashboardControl.IsCollapsed);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
@@ -88,7 +92,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
         onShowQuickSearchConfig: () => dispatch(PopupRedux.ShowPopup("QuickSearchConfig")),
-        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
+        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
 
@@ -98,3 +102,11 @@ var labelStyle = {
     marginRight: '3px'
 };
 
+
+var headerStyle = {
+    marginBottom: '2px'
+};
+
+var marginBottomStyle = {
+    marginBottom: '4px'
+};

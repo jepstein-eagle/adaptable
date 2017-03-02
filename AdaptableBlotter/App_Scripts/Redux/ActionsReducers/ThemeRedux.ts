@@ -3,14 +3,14 @@
 import * as Redux from 'redux';
 import { ThemeState } from './interface/IState'
 import { StaticThemes } from '../../../themes/index'
-const SET_CURRENT_THEME = 'SET_CURRENT_THEME';
+const THEME_SELECT = 'THEME_SELECT';
 
-export interface SetCurrentThemeAction extends Redux.Action {
+export interface ThemeSelectAction extends Redux.Action {
     Theme: string;
 }
 
-export const SetCurrentTheme = (Theme: string): SetCurrentThemeAction => ({
-    type: SET_CURRENT_THEME,
+export const SelectTheme = (Theme: string): ThemeSelectAction => ({
+    type: THEME_SELECT,
     Theme
 })
 
@@ -21,8 +21,8 @@ const initialThemeState: ThemeState = {
 
 export const ThemeReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {
     switch (action.type) {
-        case SET_CURRENT_THEME:
-            return Object.assign({}, state, { CurrentTheme: (<SetCurrentThemeAction>action).Theme })
+        case THEME_SELECT:
+            return Object.assign({}, state, { CurrentTheme: (<ThemeSelectAction>action).Theme })
         default:
             return state
     }

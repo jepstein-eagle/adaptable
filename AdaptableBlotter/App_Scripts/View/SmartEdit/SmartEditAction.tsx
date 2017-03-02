@@ -30,7 +30,7 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     UserFilters: IUserFilter[];
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
     onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
-    fetchSelectedCells: () => SmartEditRedux.SmartEditFetchPreviewAction;
+    onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction;
 }
@@ -43,9 +43,10 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
     }
 
     public componentDidMount() {
-        this.props.fetchSelectedCells();
+        this.props.onSmartEditCheckSelectedCells();
     }
-    
+
+
     render() {
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false
@@ -196,7 +197,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
-        fetchSelectedCells: () => dispatch(SmartEditRedux.SmartEditFetchPreview()),
+        onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };

@@ -6,6 +6,7 @@ import { SmartEditOperation } from '../../Core/Enums';
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_SETVALUE = 'SMARTEDIT_SETVALUE';
 export const SMARTEDIT_SETOPERATION = 'SMARTEDIT_SETOPERATION';
+export const SMARTEDIT_CHECKCELLSELECTION = 'SMARTEDIT_CHECKCELLSELECTION';
 export const SMARTEDIT_FETCHPREVIEW = 'SMARTEDIT_FETCHPREVIEW';
 export const SMARTEDIT_SETPREVIEW = 'SMARTEDIT_SETPREVIEW';
 
@@ -19,6 +20,9 @@ export interface SmartEditSetValueAction extends Redux.Action {
 
 export interface SmartEditSetOperationAction extends Redux.Action {
     SmartEditOperation: SmartEditOperation
+}
+
+export interface SmartEditCheckCellSelectionAction extends Redux.Action {
 }
 
 export interface SmartEditFetchPreviewAction extends Redux.Action {
@@ -41,6 +45,10 @@ export const SmartEditSetValue = (value: string): SmartEditSetValueAction => ({
 export const SmartEditSetOperation = (SmartEditOperation: SmartEditOperation): SmartEditSetOperationAction => ({
     type: SMARTEDIT_SETOPERATION,
     SmartEditOperation
+})
+
+export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction => ({
+    type: SMARTEDIT_CHECKCELLSELECTION
 })
 
 export const SmartEditFetchPreview = (): SmartEditFetchPreviewAction => ({
@@ -68,6 +76,8 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEdit
         case SMARTEDIT_SETOPERATION:
             return Object.assign({}, state, { SmartEditOperation: (<SmartEditSetOperationAction>action).SmartEditOperation })
         case SMARTEDIT_FETCHPREVIEW:
+            return state
+        case SMARTEDIT_CHECKCELLSELECTION:
             return state
         case SMARTEDIT_SETPREVIEW:
             return Object.assign({}, state, { Preview: (<SmartEditSetPreviewAction>action).Preview })

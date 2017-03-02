@@ -21,18 +21,21 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onEditAdvancedSearch: () => PopupRedux.ShowPopupAction;
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
-    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     AdvancedSearchDashboardControl: IDashboardControl
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
-      render(): any {
+    render(): any {
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
         })
 
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
+
+        let collapsedContent = <span style={labelStyle}>  {savedSearch ? savedSearch.Name : "None"}</span>
+
         let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
             "select" : this.props.CurrentAdvancedSearchUid
 
@@ -45,7 +48,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             </FormControl>
 
             {' '}
-             <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear (but do not delete) Current Advanced Search</Tooltip>}>
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear (but do not delete) Current Advanced Search</Tooltip>}>
                 <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onSelectAdvancedSearch("")}>Clear</Button>
             </OverlayTrigger>
 
@@ -55,7 +58,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             </OverlayTrigger>
 
             {' '}
-           <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
+            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
                 <Button bsSize='small' bsStyle='success' onClick={() => this.props.onNewAdvancedSearch()}>New</Button>
             </OverlayTrigger>
             {' '}
@@ -67,14 +70,15 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         return (
             <Panel className="small-padding-panel" >
                 <AdaptableBlotterForm className='navbar-form' inline>
-                    <ControlLabel>Advanced Search:</ControlLabel>
-                    {' '}
-                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent :
-                        <ControlLabel>{savedSearch ? savedSearch.Name : "None"}</ControlLabel>}
+                    <div style={headerStyle}>
+                      <Glyphicon glyph="search" /> {' '}
+                         <ControlLabel>Advanced Search:</ControlLabel>
+                    </div>
+                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent : collapsedContent}
                     {' '}
                     {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                            <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                            <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                         </OverlayTrigger>
                         :
                         <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
@@ -87,9 +91,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
     expandCollapseClicked() {
-    let control: IDashboardControl = Helper.cloneObject(this.props.AdvancedSearchDashboardControl);
-        control.IsCollapsed = !control.IsCollapsed;
-        this.props.onChangeDashboardControl(control);  }
+        this.props.onChangeControlCollapsedState(this.props.AdvancedSearchDashboardControl.Name, !this.props.AdvancedSearchDashboardControl.IsCollapsed);
+    }
 
     onSelectedSearchChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
@@ -134,7 +137,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onNewAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction", "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction")),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
-        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
+        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
 
@@ -147,3 +150,11 @@ var labelStyle = {
 var borderStyle = {
     border: '2px'
 }
+
+var headerStyle = {
+    marginBottom: '2px'
+};
+
+var marginBottomStyle = {
+    marginBottom: '4px'
+};
