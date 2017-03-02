@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -61,9 +61,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         return <Panel className="small-padding-panel" >
             <AdaptableBlotterForm className='navbar-form' inline>
-                <div style={headerStyle}>
-                   <Glyphicon glyph="th" /> {' '}
-                     <ControlLabel>Layout:</ControlLabel>
+                 <div style={headerStyle}>
+                  <h4>
+                    <Label bsStyle="primary"><Glyphicon glyph="th" />{' '}Layout</Label></h4>
                 </div>
                 {!this.props.LayoutDashboardControl.IsCollapsed ? layoutContent :
                     collapsedContent

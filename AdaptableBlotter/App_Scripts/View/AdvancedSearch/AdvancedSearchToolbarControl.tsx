@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Panel, Form, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
+import { Panel, Form, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -70,10 +70,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         return (
             <Panel className="small-padding-panel" >
                 <AdaptableBlotterForm className='navbar-form' inline>
-                    <div style={headerStyle}>
-                      <Glyphicon glyph="search" /> {' '}
-                         <ControlLabel>Advanced Search:</ControlLabel>
-                    </div>
+                     <div style={headerStyle}>
+                  <h4>
+                    <Label bsStyle="primary"><Glyphicon glyph="search" />{' '}Advanced Search</Label></h4>
+                </div>
                     {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent : collapsedContent}
                     {' '}
                     {this.props.AdvancedSearchDashboardControl.IsCollapsed ?

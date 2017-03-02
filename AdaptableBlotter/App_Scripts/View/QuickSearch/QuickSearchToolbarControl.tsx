@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -49,8 +49,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm className='navbar-form' inline >
                 <div style={headerStyle}>
-                    <Glyphicon glyph="eye-open" /> {' '}
-                    <ControlLabel>Quick Search:</ControlLabel>
+                  <h4>
+                    <Label bsStyle="primary"><Glyphicon glyph="eye-open" />{' '}Quick Search</Label></h4>
                 </div>
                 {!this.props.QuickSearchDashboardControl.IsCollapsed ? quicksearchContent : collapsedContent}
                 {' '}
