@@ -14,7 +14,7 @@ import { PanelWithImage } from '../PanelWithImage';
 interface ThemeConfigProps extends IStrategyViewPopupProps<ThemeConfigComponent> {
     AvailableThemes: Array<string>;
     CurrentTheme: string;
-    SetCurrentTheme: (newTheme: string) => ThemeRedux.SetCurrentThemeAction;
+    SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
 }
 
 class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
@@ -35,7 +35,7 @@ class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
 
     onChangeTheme(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.SetCurrentTheme(e.value);
+        this.props.SelectTheme(e.value);
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -48,7 +48,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        SetCurrentTheme: (newTheme: string) => dispatch(ThemeRedux.SetCurrentTheme(newTheme))
+        SelectTheme: (newTheme: string) => dispatch(ThemeRedux.SelectTheme(newTheme))
     };
 }
 

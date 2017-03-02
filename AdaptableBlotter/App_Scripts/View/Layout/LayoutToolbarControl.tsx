@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -20,7 +20,7 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
-   onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction, Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
@@ -30,12 +30,14 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
 
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
-    
-      render(): any {
+
+    render(): any {
 
         let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
+
+        let collapsedContent = <span style={labelStyle}> {this.props.CurrentLayout}</span>
 
         let layoutContent = <FormGroup controlId="formAdvancedSearch">
             <FormControl componentClass="select" placeholder="select"
@@ -59,18 +61,21 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         return <Panel className="small-padding-panel" >
             <AdaptableBlotterForm className='navbar-form' inline>
-                <ControlLabel>Layout:</ControlLabel>
-                {' '}
-                {!this.props.LayoutDashboardControl.IsCollapsed ? layoutContent:
-                <ControlLabel>{this.props.CurrentLayout}</ControlLabel>}
+                <div style={headerStyle}>
+                   <Glyphicon glyph="th" /> {' '}
+                     <ControlLabel>Layout:</ControlLabel>
+                </div>
+                {!this.props.LayoutDashboardControl.IsCollapsed ? layoutContent :
+                    collapsedContent
+                }
                 {' '}
                 {this.props.LayoutDashboardControl.IsCollapsed ?
                     <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                        <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                     </OverlayTrigger>
                     :
                     <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                        <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                        <Button bsSize='small'  onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
                     </OverlayTrigger>
                 }
             </AdaptableBlotterForm>
@@ -78,10 +83,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
     }
 
-     expandCollapseClicked() {
-        let control: IDashboardControl = Helper.cloneObject(this.props.LayoutDashboardControl);
-        control.IsCollapsed = !control.IsCollapsed;
-        this.props.onChangeDashboardControl(control);
+    expandCollapseClicked() {
+        this.props.onChangeControlCollapsedState(this.props.LayoutDashboardControl.Name, !this.props.LayoutDashboardControl.IsCollapsed);
     }
 
     private onSaveLayoutClicked() {
@@ -122,8 +125,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
         Columns: state.Grid.Columns,
-              LayoutDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Layout"),
- 
+        LayoutDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Layout"),
+
     };
 }
 
@@ -133,7 +136,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
-        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
+        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
 
@@ -141,5 +144,14 @@ export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(L
 
 var labelStyle = {
     marginRight: '3px'
+};
+
+
+var headerStyle = {
+    marginBottom: '2px'
+};
+
+var marginBottomStyle = {
+    marginBottom: '4px'
 };
 

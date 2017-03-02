@@ -29,7 +29,7 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy, ISmartEditPreviewReturn } from '../../Core/Interface/ISmartEditStrategy'
+import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
 import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
@@ -178,7 +178,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 }
                 case LayoutRedux.DELETE_LAYOUT: {
                     let returnAction = next(action);
-                     middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"))
+                    middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"))
                     return returnAction;
                 }
                 case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
@@ -213,6 +213,26 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return next(action);
                 }
+
+                case SmartEditRedux.SMARTEDIT_CHECKCELLSELECTION: {
+                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
+                    let state = middlewareAPI.getState();
+                    let returnAction = next(action);
+                    let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
+
+                    if (apiReturn.Error) {
+                        //We close the SmartEditPopup
+                        middlewareAPI.dispatch(PopupRedux.HidePopup());
+                        //We show the Error Popup
+                        middlewareAPI.dispatch(PopupRedux.ShowErrorPopup(apiReturn.Error));
+                    } else {
+                        let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
+                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiPreviewReturn));
+                    }
+                    return returnAction;
+                }
+
+
                 //here we have all actions that triggers a refresh of the SmartEditPreview
                 case SmartEditRedux.SMARTEDIT_SETOPERATION:
                 case SmartEditRedux.SMARTEDIT_SETVALUE:
@@ -224,18 +244,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
 
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue),
-                        state.SmartEdit.SmartEditOperation);
-
-                    if (apiReturn.Error) {
-                        //We close the SmartEditPopup
-                        middlewareAPI.dispatch(PopupRedux.HidePopup());
-                        //We show the Error Popup
-                        middlewareAPI.dispatch(PopupRedux.ShowErrorPopup(apiReturn.Error));
-                    }
-                    else {
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn.ActionReturn));
-                    }
+                    let apiReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
+                    middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn));
                     return returnAction;
                 }
 

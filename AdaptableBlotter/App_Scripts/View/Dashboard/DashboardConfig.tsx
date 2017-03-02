@@ -13,7 +13,7 @@ import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardControl>;
-    onChangeDashboardControl: (DashboardControl: IDashboardControl) => DashboardRedux.ChangeDashboardControlAction
+    onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
 }
 
 class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}> {
@@ -40,8 +40,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
 
     onDashboardControlVisibilityChanged(event: React.FormEvent, dashboardControl: IDashboardControl) {
         let e = event.target as HTMLInputElement;
-        dashboardControl.IsVisible = e.checked;
-        this.props.onChangeDashboardControl(dashboardControl);
+        this.props.onChangeControlVisibility(dashboardControl.Name, e.checked);
     }
 
 }
@@ -54,7 +53,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onChangeDashboardControl: (dashboardControl: IDashboardControl) => dispatch(DashboardRedux.EditDashboardControl(dashboardControl)),
+        onChangeControlVisibility: (controlName: string, isVisible: boolean) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName, isVisible))
     };
 }
 

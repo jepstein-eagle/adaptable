@@ -3,9 +3,9 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { SmartEditOperation, ColumnType, CellValidationMode } from '../Core/Enums'
-import { IMenuItem , ICellInfo} from '../Core/Interface/IStrategy';
+import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult, ISmartEditPreviewReturn } from '../Core/Interface/ISmartEditStrategy'
+import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Core/Interface/ISmartEditStrategy'
 import { MenuType } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
@@ -21,7 +21,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
-        let newValues:ICellInfo[] = [];
+        let newValues: ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
                 if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.Prevent).length == 0) {
@@ -43,11 +43,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.blotter.setValueBatch(newValues)
     }
 
-    public BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreviewReturn {
+    public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
         let selectedCells = this.blotter.getSelectedCells();
-        let previewResults: ISmartEditPreviewResult[] = [];
-        let columnId: string;
-        //if no cells are selected
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
@@ -55,6 +52,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 }
             }
         }
+
         for (let pair of selectedCells.Selection) {
             if (pair[1].length > 1) {
                 return {
@@ -80,6 +78,23 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     }
 
                 }
+            }
+        }
+        return true;
+
+    }
+
+    public BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreview {
+        let selectedCells = this.blotter.getSelectedCells();
+        let previewResults: ISmartEditPreviewResult[] = [];
+        let columnId: string;
+
+        for (let pair of selectedCells.Selection) {
+
+
+            for (var columnValuePair of pair[1]) {
+
+
                 let newValue: number;
                 switch (smartEditOperation) {
                     case SmartEditOperation.Sum:
@@ -111,10 +126,10 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         }
 
         return {
-            ActionReturn: {
-                ColumnId: columnId,
-                PreviewResults: previewResults
-            }
+
+            ColumnId: columnId,
+            PreviewResults: previewResults
+
         }
     }
 
