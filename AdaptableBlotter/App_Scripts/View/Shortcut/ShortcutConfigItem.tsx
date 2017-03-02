@@ -4,7 +4,7 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl } from 'react-bootstrap';
+import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl, Label, HelpBlock } from 'react-bootstrap';
 import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../EntityListActionButtons';
@@ -26,7 +26,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
     render(): any {
         return <li
             className="list-group-item"
-            onClick={() => { } }>
+            onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col md={1} >
                     <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
@@ -43,7 +43,9 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                     </AdaptableBlotterForm>
                 </Col>
                 <Col md={2} >
-                    {ColumnType[this.props.Shortcut.ColumnType]}
+                    <HelpBlock>
+                        {ColumnType[this.props.Shortcut.ColumnType]}
+                    </HelpBlock>
                 </Col>
                 <Col md={2} >
                     {this.props.Shortcut.ColumnType == ColumnType.Date ?
@@ -54,6 +56,9 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                     return <option key={ShortcutAction[shortcutAction]} value={shortcutAction.toString()}>{ShortcutAction[shortcutAction]}</option>
                                 })
                             }
+                            <FormGroup controlId="formValidationSuccess1" validationState={undefined}>
+                                Help text with validation state.
+    </FormGroup>
                         </FormControl>
                     }
                 </Col>
@@ -66,13 +71,13 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 placeholder="Shortcut Result"
                                 onChange={(e) => this.onResultChange(e)}
                                 value={this.props.Shortcut.ShortcutResult}
-                                /> :
+                            /> :
                             <FormControl
                                 type="number"
                                 placeholder="Shortcut Result"
                                 onChange={(e) => this.onResultChange(e)}
                                 value={this.props.Shortcut.ShortcutResult}
-                                />}
+                            />}
                 </Col>
                 <Col md={4} >
                     <EntityListActionButtons

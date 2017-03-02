@@ -34,7 +34,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
 
-        let collapsedContent = <span style={labelStyle}>  {savedSearch ? savedSearch.Name : "None"}</span>
+        let collapsedContent = <div style={collapsedContentStyle}>  {savedSearch ? savedSearch.Name : "None"}</div>
 
         let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
             "select" : this.props.CurrentAdvancedSearchUid
@@ -72,10 +72,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 <AdaptableBlotterForm className='navbar-form' inline>
                      <div style={headerStyle}>
                   <h4>
-                    <Label bsStyle="primary"><Glyphicon glyph="search" />{' '}Advanced Search</Label></h4>
-                </div>
-                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent : collapsedContent}
-                    {' '}
+                    <Label bsStyle="primary"><Glyphicon glyph="search" />{' '}Advanced Search</Label>
+                     {' '}
                     {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                             <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
@@ -85,6 +83,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
                         </OverlayTrigger>
                     }
+                    </h4>
+                </div>
+                    {!this.props.AdvancedSearchDashboardControl.IsCollapsed ? advancedSearchContent : collapsedContent}
+                   
                 </AdaptableBlotterForm>
             </Panel>
         );
@@ -143,8 +145,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let AdvancedSearchToolbarControl = connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchToolbarControlComponent);
 
-var labelStyle = {
-    marginRight: '3px'
+var collapsedContentStyle = {
+     marginBottom: '19px'
 };
 
 var borderStyle = {
