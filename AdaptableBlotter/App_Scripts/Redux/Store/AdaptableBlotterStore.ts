@@ -110,7 +110,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
             Redux.applyMiddleware(/*snooper,*/ diffStateAuditMiddleware(blotter), adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
-            (<any>window).devToolsExtension ? (<any>window).devToolsExtension() : f => f
+            ((<any>window).devToolsExtension && process.env.NODE_ENV !== 'production') ? (<any>window).devToolsExtension() : f => f
         )(Redux.createStore);
 
         //TODO: need to check if we want the storage to be done before or after 
