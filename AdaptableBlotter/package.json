@@ -39,7 +39,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install",
     "build-themes": "node postcss-scopify.config.js",
-    "release-adaptableblotter": "node_modules/.bin/webpack -p --config webpackrelease.config.js",
+    "release-demo-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemorelease.config.js",
     "build-adaptableblotter": "node_modules/.bin/webpack",
     "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/",
     "dev-hypergrid": "node_modules/.bin/webpack-dev-server --content-base Harness/Hypergrid/",
