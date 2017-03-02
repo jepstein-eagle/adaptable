@@ -6,7 +6,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         'adaptableblotterkendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
-        'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
+        // 'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
