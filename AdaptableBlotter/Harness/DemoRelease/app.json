@@ -3,7 +3,7 @@
   "startup_app": {
     "name": "OpenFin with Adaptable Blotter",
     "description": "OpenFin with Adaptable Blotter",
-    "url": "https://adaptableblotterdemo.000webhostapp.com/index.html",
+    "url": "https://adaptableblotterdemo.000webhostapp.com/hypergriddemo.html",
     "uuid": "openfin-adaptable-blotter",
     "autoShow": true
   },
