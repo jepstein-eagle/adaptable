@@ -35,7 +35,7 @@ const initialDashboardState: DashboardState = {
         { Name: "Advanced Search", IsVisible: true, IsCollapsed: false },
         { Name: "Quick Search", IsVisible: true, IsCollapsed: false },
         { Name: "Layout", IsVisible: true, IsCollapsed: false },
-        { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
+     // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ],
     DashboardButtons: []
 }
