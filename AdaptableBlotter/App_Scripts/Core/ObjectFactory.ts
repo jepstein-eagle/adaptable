@@ -18,10 +18,10 @@ export module ObjectFactory {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
 
-    export function CreateEmptyPlusMinusCondition(): IPlusMinusCondition {
+    export function CreateEmptyPlusMinusCondition(defaultNudgeValue:number): IPlusMinusCondition {
         return {
             ColumnId: "select",
-            DefaultNudge: this.props.DefaultNudgeValue,
+            DefaultNudge: defaultNudgeValue,
             Expression: CreateEmptyExpression(),
             IsPredefined: false
         }

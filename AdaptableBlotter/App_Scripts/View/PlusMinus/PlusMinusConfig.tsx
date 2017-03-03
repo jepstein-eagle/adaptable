@@ -117,7 +117,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
     }
 
     createColumnNudgeValue() {
-        this.setState({ EditedPlusMinusCondition: ObjectFactory.CreateEmptyPlusMinusCondition(), EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedIndexColumnNudgeValue: -1 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
