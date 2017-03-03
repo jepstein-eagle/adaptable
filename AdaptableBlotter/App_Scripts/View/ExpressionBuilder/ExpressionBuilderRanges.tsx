@@ -106,7 +106,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             })
         }
 
-        return <PanelWithButton headerText={"Ranges"}  showAddButtonGlyph={false} className="no-padding-panel" bsStyle="info"
+        return <PanelWithButton headerText={"Ranges"} className="no-padding-panel" bsStyle="info"
             buttonClick={() => this.addRange()}
             buttonContent={"Add Range Entry"}>
             <div style={divStyle}>

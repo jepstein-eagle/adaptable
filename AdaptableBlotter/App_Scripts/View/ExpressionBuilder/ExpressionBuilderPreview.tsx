@@ -163,7 +163,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         return <div>
             {this.props.ShowPanel &&
 
-                <PanelWithButton headerText="Preview" bsStyle="primary"  showAddButtonGlyph={false} style={{ height: '575px' }} >
+                <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
                     <div style={divStyle}>
                         {previewLists}
                     </div>

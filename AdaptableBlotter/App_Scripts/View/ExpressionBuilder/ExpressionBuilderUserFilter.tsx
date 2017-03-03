@@ -24,7 +24,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
             </ListGroupItem>
         })
 
-        return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  showAddButtonGlyph={false} bsStyle="info">
+        return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  bsStyle="info">
             <ListGroup style={listGroupStyle}>
                 {userFilterExpressions}
             </ListGroup>
