@@ -1,0 +1,108 @@
+{
+	"SmartEdit": {
+		"SmartEditValue": "1",
+		"SmartEditOperation": 0,
+		"Preview": null
+	},
+	"CustomSort": {
+		"CustomSorts": []
+	},
+	"Shortcut": {
+		"NumericShortcuts": [],
+		"DateShortcuts": []
+	},
+	"PlusMinus": {
+		"DefaultNudge": 1,
+		"PlusMinusConditions": []
+	},
+	"Export": {
+		"FileName": "Adaptable Blotter Export",
+		"AllPages": true,
+		"Filterable": true
+	},
+	"FlashingCell": {
+		"FlashingColumns": []
+	},
+	"Calendars": {
+		"CurrentCalendar": "United States"
+	},
+	"ConditionalStyle": {
+		"ConditionalStyleConditions": []
+	},
+	"PrintPreview": {},
+	"QuickSearch": {
+		"QuickSearchText": "",
+		"QuickSearchOperator": 9,
+		"QuickSearchDisplayType": 1,
+		"QuickSearchBackColor": "#FFFFCC"
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [],
+		"CurrentAdvancedSearchId": ""
+	},
+	"UserFilter": {
+		"UserFilters": []
+	},
+	"ColumnFilter": {
+		"ColumnFilters": []
+	},
+	"Theme": {
+		"CurrentTheme": "Default"
+	},
+	"CellValidation": {
+		"CellValidations": []
+	},
+	"Layout": {
+		"CurrentLayout": "Default",
+		"AvailableLayouts": [
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"currency",
+					"country",
+					"changeOnYear",
+					"price",
+					"bid",
+					"ask",
+					"bidOfferSpread",
+					"isLive",
+					"moodysRating",
+					"fitchRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"bloombergAsk",
+					"bloombergBid",
+					"percentChange",
+					"bookingGuid",
+					"lastUpdated",
+					"lastUpdatedBy"
+				],
+				"Name": "Default"
+			}
+		]
+	},
+	"Dashboard": {
+		"DashboardControls": [
+			{
+				"Name": "Advanced Search",
+				"IsVisible": true,
+				"IsCollapsed": false
+			},
+			{
+				"Name": "Quick Search",
+				"IsVisible": true,
+				"IsCollapsed": false
+			},
+			{
+				"Name": "Layout",
+				"IsVisible": true,
+				"IsCollapsed": false
+			}
+		],
+		"DashboardButtons": []
+	}
+}

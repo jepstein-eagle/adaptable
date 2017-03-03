@@ -1,0 +1,15 @@
+{
+	"Shortcut": {
+		"NumericShortcuts": [
+			{
+				"ShortcutKey": "D",
+				"ShortcutResult": "52",
+				"ColumnType": 1,
+				"ShortcutAction": 2,
+				"IsLive": true,
+				"IsPredefined": true,
+				"IsDynamic": false
+			}
+		]
+	}
+}
