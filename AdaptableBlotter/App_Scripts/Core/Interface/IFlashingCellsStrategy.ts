@@ -1,8 +1,8 @@
 import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
+import { IConfigEntity } from './IAdaptableBlotter'
 
-// TODO: Add colour scheme in due course
-export interface IFlashingColumn {
+export interface IFlashingColumn extends IConfigEntity {
     IsLive: boolean,
     ColumnName: string;
     FlashingCellDuration: IFlashingCellDuration;

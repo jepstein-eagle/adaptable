@@ -8,15 +8,30 @@ import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
 import { IShortcut } from './Interface/IShortcutStrategy';
+import { ICustomSort } from './Interface/ICustomSortStrategy';
+import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
 
 export module ObjectFactory {
 
+    export function CreateEmptyCustomSort(): ICustomSort {
+        return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
+    }
+
+    export function CreateEmptyPlusMinusCondition(): IPlusMinusCondition {
+        return {
+            ColumnId: "select",
+            DefaultNudge: this.props.DefaultNudgeValue,
+            Expression: CreateEmptyExpression(),
+            IsPredefined: false
+        }
+    }
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
             Uid: Helper.generateUid(),
             Name: "",
             Expression: CreateEmptyExpression(),
+            IsPredefined: false
         }
     }
 
@@ -31,7 +46,8 @@ export module ObjectFactory {
             },
             HasExpression: false,
             OtherExpression: CreateEmptyExpression(),
-            Description: ""
+            Description: "",
+            IsPredefined: false
         }
     }
 
@@ -50,7 +66,13 @@ export module ObjectFactory {
     }
 
     export function CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
-        return { IsLive: false, ColumnName: column.ColumnId, FlashingCellDuration: GetFlashingCellDurations().find(f => f.Name == "1/2 Second"), UpBackColor: '#008000', DownBackColor: '#FF0000' };
+        return {
+            IsLive: false,
+            ColumnName: column.ColumnId,
+            FlashingCellDuration: GetFlashingCellDurations().find(f => f.Name == "1/2 Second"),
+            UpBackColor: '#008000', DownBackColor: '#FF0000',
+            IsPredefined: false
+        };
     }
 
     export function GetFlashingCellDurations(): IFlashingCellDuration[] {
@@ -97,6 +119,7 @@ export module ObjectFactory {
             ForeColor: '#000000',
             ConditionalStyleScope: ConditionalStyleScope.Column,
             Expression: CreateEmptyExpression(),
+            IsPredefined: false
         }
     }
 

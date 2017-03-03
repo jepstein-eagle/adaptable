@@ -66,7 +66,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             return Object.assign({}, state, { CurrentLayout: (<SetCurrentLayoutAction>action).LayoutName })
         case ADD_LAYOUT:
             let actionTypedAdd = (<AddLayoutAction>action)
-            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText }
+            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText, IsPredefined: false }
             layouts = [].concat(state.AvailableLayouts);
             layouts.push(layoutToAdd);
             return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
@@ -80,7 +80,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             let actionTypedSave = <SaveLayoutAction>action;
             layouts = [].concat(state.AvailableLayouts);
             index = layouts.findIndex(a => a.Name == actionTypedSave.LayoutName)
-            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.LayoutName }
+            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.LayoutName, IsPredefined: false }
             layouts[index] = layoutToSave;
             return Object.assign({}, state, { AvailableLayouts: layouts });
         default:

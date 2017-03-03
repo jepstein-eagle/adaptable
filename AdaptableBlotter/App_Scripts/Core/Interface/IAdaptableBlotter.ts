@@ -105,3 +105,7 @@ export interface IAdaptableBlotterOptions{
     userName?: string,
     primaryKey? : string
 }
+
+export interface IConfigEntity {
+    IsPredefined: boolean
+}

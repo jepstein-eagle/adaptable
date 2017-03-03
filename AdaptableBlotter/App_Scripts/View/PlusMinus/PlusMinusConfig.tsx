@@ -117,12 +117,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
     }
 
     createColumnNudgeValue() {
-        let _editedColumnNudgeValue = {
-            ColumnId: "select",
-            DefaultNudge: this.props.DefaultNudgeValue,
-            Expression: ObjectFactory.CreateEmptyExpression()
-        }
-        this.setState({ EditedPlusMinusCondition: _editedColumnNudgeValue, EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: ObjectFactory.CreateEmptyPlusMinusCondition(), EditedIndexColumnNudgeValue: -1 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);

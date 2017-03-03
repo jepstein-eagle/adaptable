@@ -10,6 +10,7 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
+import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortConfigItem } from './CustomSortConfigItem'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
@@ -94,7 +95,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
     }
 
     CreateCustomSort() {
-        this.setState({ EditedCustomSort: { ColumnId: "", CustomSortItems: [] }, WizardStartIndex: 0 });
+        this.setState({ EditedCustomSort: ObjectFactory.CreateEmptyCustomSort(), WizardStartIndex: 0 });
     }
 }
 

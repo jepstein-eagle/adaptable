@@ -2,16 +2,17 @@ import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { Expression } from '../Expression/Expression';
 import { ConditionalStyleScope } from '../Enums';
 import { IRangeExpression } from '../Interface/IExpression';
+import { IConfigEntity } from './IAdaptableBlotter'
 
 export interface IConditionalStyleStrategy extends IStrategy {
 }
 
-export interface IConditionalStyleCondition {
+export interface IConditionalStyleCondition extends IConfigEntity {
     Uid: string
     ColumnId: string
     ConditionalStyleScope: ConditionalStyleScope
     Expression: Expression
-     BackColor: string
+    BackColor: string
     ForeColor: string
 }
 

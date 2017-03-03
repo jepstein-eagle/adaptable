@@ -8,20 +8,10 @@ import { MenuType } from '../Core/Enums';
 
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
-    public CurrentCalendar: string
-
     private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalendarStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Calendars", this.Id, 'CalendarsConfig', MenuType.Configuration, "calendar");
-        this.InitState();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
-    }
-
-    InitState() {
-        if (this.CurrentCalendar != this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars.CurrentCalendar) {
-            this.CurrentCalendar = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars.CurrentCalendar;
-        }
     }
 
     getMenuItems(): IMenuItem[] {
