@@ -14,7 +14,9 @@ import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-
+import { ButtonSave } from '../ButtonSave';
+import { ButtonDelete } from '../ButtonDelete';
+import { ButtonCreate } from '../ButtonCreate';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
@@ -37,6 +39,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
+        let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
         let collapsedContent = <ControlLabel> {this.props.CurrentLayout}</ControlLabel>
 
         let labelContent = <Label style={labelStyle} bsStyle="primary"><Glyphicon glyph="th" />{' '}Layout</Label>;
@@ -48,17 +51,18 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 {availableLayouts}
             </FormControl>
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Save Changes to Current Layout</Tooltip>}>
-                <Button bsSize='small' bsStyle='primary' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onSaveLayoutClicked()}>Save</Button>
-            </OverlayTrigger>
+            <ButtonSave onClick={() => this.onSaveLayoutClicked()}
+                overrideTooltip="Save Changes to Current Layout"
+                overrideDisableButton={this.props.CurrentLayout == "Default"}
+                ConfigEntity={layoutEntity} />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create a new Layout using the Blotter's current column order and visibility</Tooltip>}>
-                <Button bsSize='small' bsStyle='success' onClick={() => this.onAddLayoutClicked()}>New</Button>
-            </OverlayTrigger>
+            <ButtonCreate onClick={() => this.onAddLayoutClicked()}
+                overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Layout</Tooltip>}>
-                <Button bsSize='small' bsStyle='danger' disabled={this.props.CurrentLayout == "Default"} onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
-            </OverlayTrigger>
+            <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
+                overrideTooltip="Delete Layout"
+                overrideDisableButton={this.props.CurrentLayout == "Default"}
+                ConfigEntity={layoutEntity} />
         </FormGroup>
 
         return <Panel className="small-padding-panel" >
