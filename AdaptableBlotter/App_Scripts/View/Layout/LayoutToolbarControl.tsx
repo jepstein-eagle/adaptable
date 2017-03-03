@@ -67,11 +67,13 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     <div >
                         {labelContent}
                         {' '}
-                        {collapsedContent}
-                        {' '}
                         <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                            <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                            <Button bsStyle="primary" bsSize='small' style={buttonOpenStyle} onClick={() => this.expandCollapseClicked()}>
+                                <Glyphicon glyph="chevron-right" />
+                            </Button>
                         </OverlayTrigger>
+                        {' '}
+                        {collapsedContent}
                     </div>
 
                 </AdaptableBlotterForm>
@@ -81,7 +83,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                         {labelContent}
                         {' '}
                         <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                            <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                            <Button bsSize='small' bsStyle="primary" style={buttonCloseStyle} onClick={() => this.expandCollapseClicked()}>
+                                <Glyphicon glyph="chevron-up" />
+                            </Button>
                         </OverlayTrigger>
                         <Row style={marginButtonStyle}>
                             {layoutContent}
@@ -156,9 +160,6 @@ var marginButtonStyle = {
     margin: '4px'
 };
 
-var marginBottomStyle = {
-    marginBottom: '4px'
-};
 
 var noSearchStyle = {
     fontStyle: 'italic'
@@ -168,3 +169,12 @@ var labelStyle = {
     fontSize: 'small'
 };
 
+var buttonOpenStyle = {
+    padding: '1px',
+};
+
+var buttonCloseStyle = {
+    padding: '0px',
+    marginTop: '2px',
+    marginBottom: '4px'
+};

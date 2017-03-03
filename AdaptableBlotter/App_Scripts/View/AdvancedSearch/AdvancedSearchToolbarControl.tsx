@@ -72,33 +72,39 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         return (
             <Panel className="small-padding-panel" >
-                {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
-                    <AdaptableBlotterForm className='navbar-form' inline>
-                        <div >
-                            {labelContent}
-                            {' '}
-                            {collapsedContent}
-                            {' '}
-                            <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                                <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
-                            </OverlayTrigger>
-                        </div>
+                <AdaptableBlotterForm className='navbar-form' inline>
+                    <div >
+                        {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
+                            <div>
+                                {labelContent}
+                                {' '}
+                               
+                                <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+                                    <Button bsStyle="primary" bsSize='small' style={buttonOpenStyle} onClick={() => this.expandCollapseClicked()}>
+                                          <Glyphicon glyph="chevron-right" />
+                                    </Button>
+                                </OverlayTrigger>
+                                {' '}
+                                 {collapsedContent}
+                                
+                            </div>
+                            :
+                            <div>
+                                {labelContent}
+                                {' '}
+                                <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
+                                    <Button bsSize='small' bsStyle="primary"  style={buttonCloseStyle} onClick={() => this.expandCollapseClicked()}>
+                                        <Glyphicon glyph="chevron-up" />
+                                     </Button>
+                                </OverlayTrigger>
+                                <Row style={marginButtonStyle}>
+                                    {advancedSearchContent}
+                                </Row>
+                            </div>
+                        }
+                    </div>
+                </AdaptableBlotterForm>
 
-                    </AdaptableBlotterForm>
-                    :
-                    <AdaptableBlotterForm className='navbar-form' inline>
-                        <div >
-                            {labelContent}
-                            {' '}
-                            <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                                <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
-                            </OverlayTrigger>
-                            <Row style={marginButtonStyle}>
-                                {advancedSearchContent}
-                            </Row>
-                        </div>
-                    </AdaptableBlotterForm>
-                }
             </Panel>
         );
     }
@@ -165,14 +171,20 @@ var marginButtonStyle = {
     margin: '4px'
 };
 
-var marginBottomStyle = {
-    marginBottom: '4px'
-};
-
 var noSearchStyle = {
     fontStyle: 'italic'
 };
 
 var labelStyle = {
     fontSize: 'small'
+};
+
+var buttonOpenStyle = {
+    padding: '1px',
+};
+
+var buttonCloseStyle = {
+    padding: '0px',
+    marginTop: '2px',
+     marginBottom: '4px'
 };
