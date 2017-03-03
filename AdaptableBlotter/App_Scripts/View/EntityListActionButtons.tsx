@@ -4,10 +4,14 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { ButtonToolbar, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import {  IUIError } from '../Core/Interface/IStrategy';
+import { IUIError } from '../Core/Interface/IStrategy';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-
-
+import { ButtonEdit } from './ButtonEdit';
+import { ButtonDelete } from './ButtonDelete';
+import { ButtonClear } from './ButtonClear';
+import { ButtonCreate } from './ButtonCreate';
+import { ButtonShare } from './ButtonShare';
+import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
 
 interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
@@ -16,38 +20,41 @@ interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListA
     showEdit?: boolean
     showDelete?: boolean
     showShare?: boolean
-    disableEdit? : boolean
-    disableDelete? : boolean
-    disableShare? : boolean
+    overrideDisableEdit?: boolean
+    overrideDisableDelete?: boolean
+    overrideDisableShare?: boolean
+    overrideTooltipEdit?: string
+    overrideTooltipDelete?: string
+    overrideTooltipShare?: string
+    ConfigEntity?: IConfigEntity
 }
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
     public static defaultProps: EntityListActionButtonsProps = {
         showEdit: true,
         showDelete: true,
-        disableEdit: false,
-        disableDelete: false,
         showShare: true,
-        disableShare: false
+        overrideDisableEdit: false,
+        overrideDisableDelete: false,
+        overrideDisableShare: false
     };
     render() {
         return <ButtonToolbar>
             {this.props.showEdit &&
-                <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit</Tooltip>}>
-                    <Button disabled={this.props.disableEdit} onClick={() => this.props.editClick()}><Glyphicon glyph="edit" /></Button>
-                </OverlayTrigger>}
+                <ButtonEdit onClick={() => this.props.editClick()}
+                    overrideDisableButton={this.props.overrideDisableEdit}
+                    ConfigEntity={this.props.ConfigEntity}
+                    overrideTooltip={this.props.overrideTooltipEdit} />}
             {this.props.showDelete &&
-                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                    <Button disabled={this.props.disableDelete} onClick={() => this.props.deleteClick()}><Glyphicon glyph="trash" /></Button>
-                </OverlayTrigger>}
+                <ButtonDelete onClick={() => this.props.deleteClick()}
+                    overrideDisableButton={this.props.overrideDisableDelete}
+                    ConfigEntity={this.props.ConfigEntity}
+                    overrideTooltip={this.props.overrideTooltipDelete} />}
             {this.props.showShare &&
-                <OverlayTrigger overlay={<Tooltip id="tooltipShare">Share With Team - disabled in this demo</Tooltip>}>
-                    <Button disabled={this.props.disableShare} ><Glyphicon glyph="share" /></Button>
-                </OverlayTrigger>}
+                <ButtonShare onClick={() => this.props.shareClick()}
+                    overrideDisableButton={this.props.overrideDisableShare}
+                    ConfigEntity={this.props.ConfigEntity}
+                    overrideTooltip="Share With Team - disabled in this demo" />}
         </ButtonToolbar>;
     }
-
-
-
-
 }
