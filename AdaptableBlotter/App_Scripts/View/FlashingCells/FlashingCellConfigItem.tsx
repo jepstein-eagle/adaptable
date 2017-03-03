@@ -24,19 +24,20 @@ interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCell
 export class FlashingCellConfigItem extends React.Component<FlashingCellConfigItemProps, {}> {
 
     render(): any {
+        let isDisabled = this.props.FlashingColumn.IsPredefined
         return <li
             className="list-group-item"
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col md={1} >
-                    <Checkbox onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
+                    <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
                 </Col>
                 <Col md={4} >
                     {this.props.Columns.find(f => f.ColumnId == this.props.FlashingColumn.ColumnName).FriendlyName}
                 </Col>
                 <Col md={3} >
                     {
-                        <FormControl componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration.Name} onChange={(x) => this.onActionChange(x)} >
+                        <FormControl disabled={isDisabled} componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration.Name} onChange={(x) => this.onActionChange(x)} >
                             {
                                 this.props.FlashingCellDurations.map((flashingCellDuration: IFlashingCellDuration) => {
                                     return <option key={flashingCellDuration.Name} value={flashingCellDuration.Name}>{flashingCellDuration.Name}</option>
@@ -46,10 +47,10 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     }
                 </Col>
                 <Col md={2} >
-                    <ColorPicker value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
+                    <ColorPicker disabled={isDisabled} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
                 </Col>
                 <Col md={2} >
-                    <ColorPicker value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+                    <ColorPicker disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
                 </Col>
             </Row>
         </li>
