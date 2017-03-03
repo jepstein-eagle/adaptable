@@ -46,7 +46,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
             tooltip = this.props.overrideTooltip
         }
         return <OverlayTrigger overlay={<Tooltip id="tooltipButton">{tooltip}</Tooltip>}>
-            <Button bsSize='small' style={this.props.style}
+            <Button style={this.props.style}
                 bsStyle={this.props.bsStyle}
                 disabled={isDisabled}
                 onClick={() => this.props.onClick()}><Glyphicon glyph={this.props.glyph} /></Button>
