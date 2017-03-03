@@ -12,6 +12,10 @@ import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { ButtonEdit } from '../ButtonEdit';
+import { ButtonDelete } from '../ButtonDelete';
+import { ButtonClear } from '../ButtonClear';
+import { ButtonCreate } from '../ButtonCreate';
 
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
@@ -51,23 +55,22 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             </FormControl>
 
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear (but do not delete) Current Advanced Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='info' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onSelectAdvancedSearch("")}>Clear</Button>
-            </OverlayTrigger>
-
+            <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
+                overrideTooltip="Clear (but do not delete) Current Advanced Search"
+                overrideDisableButton={currentAdvancedSearchId == "select"} />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Current Advanced Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='primary' disabled={currentAdvancedSearchId == "select"} onClick={() => this.props.onEditAdvancedSearch()}>Edit</Button>
-            </OverlayTrigger>
-
+            <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
+                overrideTooltip="Edit Current Advanced Search"
+                overrideDisableButton={currentAdvancedSearchId == "select"}
+                ConfigEntity={savedSearch} />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Create New Advanced Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='success' onClick={() => this.props.onNewAdvancedSearch()}>New</Button>
-            </OverlayTrigger>
+            <ButtonCreate onClick={() => this.props.onNewAdvancedSearch()}
+                overrideTooltip="Create New Advanced Search" />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Delete Advanced Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='danger' disabled={currentAdvancedSearchId == "select"} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-            </OverlayTrigger>
+            <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
+                overrideTooltip="Delete Advanced Search"
+                overrideDisableButton={currentAdvancedSearchId == "select"}
+                ConfigEntity={savedSearch} />
         </FormGroup>
 
         return (
@@ -78,24 +81,24 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             <div>
                                 {labelContent}
                                 {' '}
-                               
+
                                 <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                                     <Button bsStyle="primary" bsSize='small' style={buttonOpenStyle} onClick={() => this.expandCollapseClicked()}>
-                                          <Glyphicon glyph="chevron-right" />
+                                        <Glyphicon glyph="chevron-right" />
                                     </Button>
                                 </OverlayTrigger>
                                 {' '}
-                                 {collapsedContent}
-                                
+                                {collapsedContent}
+
                             </div>
                             :
                             <div>
                                 {labelContent}
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                                    <Button bsSize='small' bsStyle="primary"  style={buttonCloseStyle} onClick={() => this.expandCollapseClicked()}>
+                                    <Button bsSize='small' bsStyle="primary" style={buttonCloseStyle} onClick={() => this.expandCollapseClicked()}>
                                         <Glyphicon glyph="chevron-up" />
-                                     </Button>
+                                    </Button>
                                 </OverlayTrigger>
                                 <Row style={marginButtonStyle}>
                                     {advancedSearchContent}
@@ -186,5 +189,5 @@ var buttonOpenStyle = {
 var buttonCloseStyle = {
     padding: '0px',
     marginTop: '2px',
-     marginBottom: '4px'
+    marginBottom: '4px'
 };
