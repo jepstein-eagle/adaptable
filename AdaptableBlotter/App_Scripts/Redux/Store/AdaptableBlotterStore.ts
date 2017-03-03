@@ -5,6 +5,7 @@ import * as ReduxStorage from 'redux-storage'
 import * as DeepDiff from 'deep-diff'
 import createEngine from 'redux-storage-engine-localstorage';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
+import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
@@ -93,19 +94,19 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
+        let engineWithFilter: ReduxStorage.StorageEngine
+        let engineReduxStorage: ReduxStorage.StorageEngine
         //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            let engineReduxStorageRemote = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName);
-            middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorageRemote);
-            reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
-            loadStorage = ReduxStorage.createLoader(engineReduxStorageRemote);
+            engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName);
         }
         else {
-            let engineReduxStorage = createEngine('my-adaptable-blotter-key');
-            middlewareReduxStorage = ReduxStorage.createMiddleware(engineReduxStorage);
-            reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
-            loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+            engineReduxStorage = createEngine('my-adaptable-blotter-key');
         }
+        engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
+        middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+        loadStorage = ReduxStorage.createLoader(engineReduxStorage);
 
         //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
         let finalCreateStore = Redux.compose(
@@ -119,13 +120,14 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
-            .then(() => this.TheStore.dispatch(InitState()))
-            .catch((e) => {
+            .then(
+            () => this.TheStore.dispatch(InitState()),
+            (e) => {
                 console.log('Failed to load previous adaptable blotter state : ' + e);
                 //for now i'm still initializing the AB even if loading state has failed.... 
                 //we may revisit that later
                 this.TheStore.dispatch(InitState())
-            });
+            })
     }
 }
 
