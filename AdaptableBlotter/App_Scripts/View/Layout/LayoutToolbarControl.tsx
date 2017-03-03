@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label } from 'react-bootstrap';
+import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -37,7 +37,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
-        let collapsedContent = <div style={collapsedContentStyle}> {this.props.CurrentLayout}</div>
+        let collapsedContent = <ControlLabel> {this.props.CurrentLayout}</ControlLabel>
+
+        let labelContent = <Label style={labelStyle} bsStyle="primary"><Glyphicon glyph="th" />{' '}Layout</Label>;
 
         let layoutContent = <FormGroup controlId="formAdvancedSearch">
             <FormControl componentClass="select" placeholder="select"
@@ -60,27 +62,33 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         </FormGroup>
 
         return <Panel className="small-padding-panel" >
-            <AdaptableBlotterForm className='navbar-form' inline>
-                <div >
-                    <h4>
-                        <Label bsStyle="primary"><Glyphicon glyph="th" />{' '}Layout</Label>
+            {this.props.LayoutDashboardControl.IsCollapsed ?
+                <AdaptableBlotterForm className='navbar-form' inline>
+                    <div >
+                        {labelContent}
                         {' '}
-                        {this.props.LayoutDashboardControl.IsCollapsed ?
-                            <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                                <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
-                            </OverlayTrigger>
-                            :
-                            <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                                <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
-                            </OverlayTrigger>
-                        }
-                    </h4>
-                </div>
-                {!this.props.LayoutDashboardControl.IsCollapsed ? layoutContent :
-                    collapsedContent
-                }
+                        {collapsedContent}
+                        {' '}
+                        <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+                            <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
+                        </OverlayTrigger>
+                    </div>
 
-            </AdaptableBlotterForm>
+                </AdaptableBlotterForm>
+                :
+                <AdaptableBlotterForm className='navbar-form' inline>
+                    <div >
+                        {labelContent}
+                        {' '}
+                        <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
+                            <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                        </OverlayTrigger>
+                        <Row style={marginButtonStyle}>
+                            {layoutContent}
+                        </Row>
+                    </div>
+                </AdaptableBlotterForm>
+            }
         </Panel>
 
     }
@@ -144,15 +152,19 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);
 
-var collapsedContentStyle = {
-     marginBottom: '19px'
-};
-
-var headerStyle = {
-    marginBottom: '2px'
+var marginButtonStyle = {
+    margin: '4px'
 };
 
 var marginBottomStyle = {
     marginBottom: '4px'
+};
+
+var noSearchStyle = {
+    fontStyle: 'italic'
+};
+
+var labelStyle = {
+    fontSize: 'small'
 };
 

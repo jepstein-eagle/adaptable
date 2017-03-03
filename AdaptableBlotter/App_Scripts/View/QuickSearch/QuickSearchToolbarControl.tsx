@@ -27,9 +27,9 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     render(): any {
 
-        let collapsedContent = <div style={collapsedContentStyle}>
-            {StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? <span style={noSearchStyle}>None</span> : this.props.QuickSearchText}
-        </div>
+        let collapsedContent = StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? <span style={noSearchStyle}>None</span> : <ControlLabel> {this.props.QuickSearchText}</ControlLabel>
+
+        let labelContent = <Label style={labelStyle} bsStyle="primary"><Glyphicon glyph="eye-open" />{' '}Quick Search</Label>;
 
         let quicksearchContent: any = <FormGroup controlId="formQuickSearch">
             <FormControl
@@ -47,27 +47,36 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 <Button bsSize='small' bsStyle='primary' onClick={() => this.props.onShowQuickSearchConfig()}>Edit</Button>
             </OverlayTrigger></FormGroup>
 
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' inline >
-                <span style={headerStyle}>
-                    <h4>
-                        <Label bsStyle="primary"><Glyphicon glyph="eye-open" />{' '}Quick Search</Label>
-                        {' '}
-                        {this.props.QuickSearchDashboardControl.IsCollapsed ?
+        return  <Panel className="small-padding-panel" >
+                {this.props.QuickSearchDashboardControl.IsCollapsed ?
+                    <AdaptableBlotterForm className='navbar-form' inline>
+                        <div >
+                            {labelContent}
+                            {' '}
+                            {collapsedContent}
+                            {' '}
                             <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
                                 <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&gt;&gt;</Button>
                             </OverlayTrigger>
-                            :
+                        </div>
+
+                    </AdaptableBlotterForm>
+                    :
+                    <AdaptableBlotterForm className='navbar-form' inline>
+                        <div >
+                            {labelContent}
+                            {' '}
                             <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                                <Button bsSize='small' onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
+                                <Button bsSize='small' style={marginBottomStyle} onClick={() => this.expandCollapseClicked()}>&lt;&lt;</Button>
                             </OverlayTrigger>
-                        }
-                    </h4>
-                </span>
-                {!this.props.QuickSearchDashboardControl.IsCollapsed ? quicksearchContent : collapsedContent}
-              
-            </AdaptableBlotterForm>
-        </Panel>
+                            <Row style={marginButtonStyle}>
+                                {quicksearchContent}
+                            </Row>
+                        </div>
+                    </AdaptableBlotterForm>
+                }
+            </Panel>
+        
     }
 
     expandCollapseClicked() {
@@ -101,12 +110,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let QuickSearchToolbarControl = connect(mapStateToProps, mapDispatchToProps)(QuickSearchToolbarControlComponent);
 
-var collapsedContentStyle = {
-     marginBottom: '19px'
-};
-
-var headerStyle = {
-    marginBottom: '2px'
+var marginButtonStyle = {
+    margin: '4px'
 };
 
 var marginBottomStyle = {
@@ -114,5 +119,9 @@ var marginBottomStyle = {
 };
 
 var noSearchStyle = {
-    fontStyle: 'Italic'
+    fontStyle: 'italic'
+};
+
+var labelStyle = {
+    fontSize: 'small'
 };
