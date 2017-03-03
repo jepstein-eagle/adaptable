@@ -67,7 +67,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.onDeleteUserFilter(x)}
-                            editClick={() => this.onEditUserFilter(x)}>
+                            editClick={() => this.onEditUserFilter(x)}
+                            ConfigEntity={x}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -76,7 +77,6 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle}
             buttonContent={"Create User Filter"}
-             showAddButtonGlyph={true}  
             buttonClick={() => this.onCreateUserFilter()} glyphicon={"filter"}>
             {UserFilterItems.length > 0 &&
                 <div>

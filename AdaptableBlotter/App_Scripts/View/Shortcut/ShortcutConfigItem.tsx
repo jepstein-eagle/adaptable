@@ -83,7 +83,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                     <EntityListActionButtons
                         deleteClick={() => this.props.onDelete(this.props.Shortcut)}
                         showEdit={false}
-                        disableDelete={this.props.Shortcut.IsPredefined}>
+                        ConfigEntity={this.props.Shortcut}>
                     </EntityListActionButtons>
                 </Col>
 

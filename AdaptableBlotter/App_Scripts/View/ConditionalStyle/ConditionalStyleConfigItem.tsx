@@ -29,6 +29,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         let optionColumns = this.props.Columns.map(x => {
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
+        let isDisabled = this.props.ConditionalStyleCondition.IsPredefined
 
         return <li
             className="list-group-item"
@@ -37,7 +38,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                        <FormControl componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
+                        <FormControl disabled={isDisabled} componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
                             <option value="select" key="select">Select a column</option>
                             {optionColumns}
                         </FormControl> :
@@ -46,10 +47,10 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col md={2} >
-                    <ColorPicker value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                    <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                 </Col>
                 <Col md={2} >
-                    <ColorPicker value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                    <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
                 <Col xs={3}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
@@ -58,7 +59,8 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 <Col md={3} >
                     <EntityListActionButtons
                         deleteClick={() => this.props.onDelete(this.props.ConditionalStyleCondition)}
-                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}>
+                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
+                        ConfigEntity={this.props.ConditionalStyleCondition}>
                     </EntityListActionButtons>
                 </Col>
             </Row>

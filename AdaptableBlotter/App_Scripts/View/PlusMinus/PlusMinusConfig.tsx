@@ -71,7 +71,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteColumnDefaultNudgeValue(index)}
-                            editClick={() => this.onEdit(index, x)}>
+                            editClick={() => this.onEdit(index, x)}
+                            ConfigEntity={x}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>

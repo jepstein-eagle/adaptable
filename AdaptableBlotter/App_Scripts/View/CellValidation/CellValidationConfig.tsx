@@ -76,7 +76,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     <Col xs={3}>
                         <EntityListActionButtons
                             deleteClick={() => this.props.onDeleteCellValidation(index)}
-                            editClick={() => this.onEdit(index, x)}>
+                            editClick={() => this.onEdit(index, x)}
+                            ConfigEntity={x}>
                         </EntityListActionButtons>
                     </Col>
                 </Row>
