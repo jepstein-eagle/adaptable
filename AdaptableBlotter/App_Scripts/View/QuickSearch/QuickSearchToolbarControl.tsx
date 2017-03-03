@@ -11,7 +11,8 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-
+import { ButtonEdit } from '../ButtonEdit';
+import { ButtonClear } from '../ButtonClear';
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
@@ -39,13 +40,13 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 value={this.props.QuickSearchText}
                 onChange={(x) => this.onUpdateQuickSearchText(x)}
             />{' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Clear Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='info' disabled={StringExtensions.IsEmpty(this.props.QuickSearchText)} onClick={() => this.onClearQuickSearch()}>Clear</Button>
-            </OverlayTrigger>
+            <ButtonClear onClick={() => this.onClearQuickSearch()}
+                overrideTooltip="Clear Quick Search"
+                overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)} />
             {' '}
-            <OverlayTrigger overlay={<Tooltip id="tooltipEdit">Edit Quick Search</Tooltip>}>
-                <Button bsSize='small' bsStyle='primary' onClick={() => this.props.onShowQuickSearchConfig()}>Edit</Button>
-            </OverlayTrigger></FormGroup>
+            <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
+                overrideTooltip="Edit Quick Search" />
+        </FormGroup>
 
         return <Panel className="small-padding-panel" >
             {this.props.QuickSearchDashboardControl.IsCollapsed ?
