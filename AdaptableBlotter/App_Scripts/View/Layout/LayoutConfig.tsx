@@ -14,6 +14,8 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ButtonDelete } from '../ButtonDelete';
+import { ButtonSave } from '../ButtonSave';
 
 interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],
@@ -39,6 +41,8 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
+        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
+
         return (
             <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th">
 
@@ -52,10 +56,10 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             </FormControl>
                         </Col>
                         <Col xs={2}>
-                            <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Layout</Tooltip>}>
-                                <Button bsSize='small' bsStyle="info" style={smallButtonStyle} disabled={this.props.CurrentLayout == "Default"}
-                                    onClick={() => this.onDeleteLayoutClicked()}>Delete</Button>
-                            </OverlayTrigger>
+                            <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
+                                overrideTooltip="Delete Layout"
+                                overrideDisableButton={this.props.CurrentLayout == "Default"}
+                                ConfigEntity={layoutEntity} />
                         </Col>
                     </FormGroup>
                 </Panel>
@@ -79,7 +83,8 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                                 <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e: React.FormEvent) => this.onSaveLayoutNameChanged(e)} />
                             </Col>
                             <Col xs={2}>
-                                <Button bsStyle="info" disabled={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)} onClick={() => this.onSaveLayoutClicked()} >Save</Button>
+                                <ButtonSave onClick={() => this.onSaveLayoutClicked()}
+                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)} />
                             </Col>
                         </Row>
                     </AdaptableBlotterForm>
@@ -137,7 +142,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let LayoutConfig = connect(mapStateToProps, mapDispatchToProps)(LayoutConfigComponent);
-
-let smallButtonStyle = {
-    margin: '2px'
-}
