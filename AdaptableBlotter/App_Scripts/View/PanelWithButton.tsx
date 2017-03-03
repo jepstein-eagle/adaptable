@@ -7,14 +7,14 @@ import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-boot
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 
 interface PanelWithButtonProps extends PanelProps {
+    //use either button content + buttonClick OR button
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;
+    button?: React.ReactElement<any>;
     headerText: string
     glyphicon?: string
     buttonDisabled?: boolean
-    showAddButtonGlyph: boolean
 }
-
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
 //need to transfer props individually as a consequence
@@ -26,7 +26,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         if (this.props.className) {
             className += " " + this.props.className
         }
-        if (buttonContent) {
+        if (buttonContent || this.props.button) {
             className += " " + "panel-with-button-reduce-header-padding"
         }
 
@@ -42,14 +42,10 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 </Col>
                 <Col xs={3}>
                     {buttonContent &&
-
-
-
-
-                        <Button bsSize="small" bsStyle={this.getButtonAddStyle()} disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
-
+                        <Button bsSize="small" bsStyle="default" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
+                    {this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } })}
                 </Col>
             </Row>
         </AdaptableBlotterForm>;
@@ -57,12 +53,6 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
             {this.props.children}
         </Panel>;
     }
-
-    private getButtonAddStyle(): string {
-        // changed by JW but not sure about this so always using defaault...
-        return this.props.showAddButtonGlyph ? "default" : "default"
-    }
-
 }
 
 let glyphBigRightMarginStyle = {
