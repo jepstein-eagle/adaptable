@@ -52,12 +52,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         var visibleDashboardControls = this.props.DashboardState.DashboardControls.filter(dc => dc.IsVisible);
 
         return (
-            <div className="adaptable_blotter_style">
+            <div className="adaptable_blotter_style" >
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
                 <Navbar fluid >
-                    <Navbar.Brand>
-                        <Dropdown id="dropdown-functions">
-                            <Dropdown.Toggle>
+                    <Navbar.Brand >
+                        <Dropdown id="dropdown-functions" >
+                            <Dropdown.Toggle style={marginStyle}>
                                 <Glyphicon glyph="home" />{' '}Functions...
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -80,11 +80,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         <LayoutToolbarControl />
                     </Nav>
                     }
-                    {visibleDashboardControls.find(dc => dc.Name == "SmartEdit") != null && <Nav>
-                        <SmartEditToolbarControl />
-                    </Nav>
-                    }
-
+                  
                 </Navbar>
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
@@ -159,8 +155,9 @@ export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Pro
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;
 
-let marginStyle: React.CSSProperties = {
-    margin: '3px'
+let marginStyle = {
+    padding: '3px',
+    
 }
 
 let glyphStyle = {
