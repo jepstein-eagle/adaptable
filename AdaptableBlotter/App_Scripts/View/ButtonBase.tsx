@@ -16,6 +16,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     overrideTooltip?: string
     //The entity we pass in to check normal disabled status
     ConfigEntity?: IConfigEntity
+    style?: React.CSSProperties;
 }
 
 interface ButtonBaseProps extends ButtonProps {
@@ -45,7 +46,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
             tooltip = this.props.overrideTooltip
         }
         return <OverlayTrigger overlay={<Tooltip id="tooltipButton">{tooltip}</Tooltip>}>
-            <Button bsSize='small'
+            <Button bsSize='small' style={this.props.style}
                 bsStyle={this.props.bsStyle}
                 disabled={isDisabled}
                 onClick={() => this.props.onClick()}><Glyphicon glyph={this.props.glyph} /></Button>

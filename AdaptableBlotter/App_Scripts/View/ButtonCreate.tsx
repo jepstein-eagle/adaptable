@@ -18,6 +18,7 @@ export class ButtonCreate extends React.Component<ButtonProps, {}> {
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
+            style={this.props.style}
         />;
     }
 }
