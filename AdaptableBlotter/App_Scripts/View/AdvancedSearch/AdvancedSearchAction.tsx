@@ -23,7 +23,10 @@ import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
-
+import { ButtonEdit } from '../ButtonEdit';
+import { ButtonDelete } from '../ButtonDelete';
+import { ButtonClear } from '../ButtonClear';
+import { ButtonCreate } from '../ButtonCreate';
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -70,15 +73,16 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
         })
 
-
         let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch()
         let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
-
+        let newSearchButton = <ButtonCreate onClick={() => this.onNewAdvancedSearch()}
+            overrideTooltip="Create New Advanced Search" />
+        let editSearchButton = <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
+            overrideTooltip="Edit Search"
+            ConfigEntity={selectedAdvancedSearch} />
         return (
             <div >
-                <PanelWithButton bsStyle="primary" headerText="Advanced Search" buttonContent={"New Search"}
-                    buttonClick={() => this.onNewAdvancedSearch()} showAddButtonGlyph={false} glyphicon={"search"}>
-
+                <PanelWithButton bsStyle="primary" headerText="Advanced Search" button={newSearchButton} glyphicon={"search"}>
                     {/* The main Search selection form */}
                     <div >
                         <FormGroup controlId="formInlineName">
@@ -94,13 +98,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 </FormControl>
                             </Col>
                             <Col xs={4}>
-                                <OverlayTrigger overlay={<Tooltip id="tooltipClear">Clear Search</Tooltip>}>
-                                    <Button bsSize='small' style={smallButtonStyle} disabled={selectedAdvancedSearch == null} bsStyle='info' onClick={() => this.onClearAdvancedSearch()}>Clear</Button>
-                                </OverlayTrigger>
+                                <ButtonClear onClick={() => this.onClearAdvancedSearch()}
+                                    overrideTooltip="Clear Search"
+                                    overrideDisableButton={selectedAdvancedSearch == null} />
                                 {' '}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete Search</Tooltip>}>
-                                    <Button bsSize='small' style={smallButtonStyle} disabled={selectedAdvancedSearch == null} onClick={() => this.onDeleteAdvancedSearch()}>Delete</Button>
-                                </OverlayTrigger>
+                                <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
+                                    overrideTooltip="Delete Search"
+                                    overrideDisableButton={selectedAdvancedSearch == null}
+                                    ConfigEntity={selectedAdvancedSearch} />
                             </Col>
                         </FormGroup>
                     </div>
@@ -127,9 +132,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <PanelWithButton headerText="Search Details" bsStyle="primary" showAddButtonGlyph={false}
-                        buttonContent={"Edit Search"}
-                        buttonClick={() => this.onEditAdvancedSearch()}>
+                    <PanelWithButton headerText="Search Details" bsStyle="primary" button={editSearchButton}>
                         <div style={previewDivStyle}>
                             <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
                                 UserFilters={this.props.UserFilters}
