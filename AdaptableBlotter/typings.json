@@ -8,9 +8,5 @@
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-redux": "registry:dt/react-redux#4.4.0+20160724070751",
     "redux": "registry:dt/redux#3.5.2+20160703092728"
-  },
-  "dependencies": {
-    "redux-storage": "registry:npm/redux-storage#4.0.0+20160310030142",
-    "redux-storage-engine-localstorage": "registry:npm/redux-storage-engine-localstorage#1.0.1+20160310030142"
   }
 }
