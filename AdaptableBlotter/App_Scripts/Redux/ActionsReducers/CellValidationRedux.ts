@@ -5,12 +5,11 @@ import { CellValidationState } from './interface/IState'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { CellValidationMode } from '../../Core/Enums';
 
-export const CELL_VALIDATION_ADD_OR_UPDATE = 'CELL_VALIDATION_ADD_OR_UPDATE';
+export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
-export const CELL_VALIDATION_MODE_CHANGE = 'CELL_VALIDATION_MODE_CHANGE';
+export const CELL_VALIDATION_CHANGE_MODE = 'CELL_VALIDATION_CHANGE_MODE';
 
-
-export interface CellValidationAddOrUpdateAction extends Redux.Action {
+export interface CellValidationAddUpdateAction extends Redux.Action {
     Index: number,
     CellValidationRule: ICellValidationRule
 }
@@ -24,19 +23,19 @@ export interface CellValidationDeleteAction extends Redux.Action {
     Index: number,
 }
 
-export const ChangeModeCellValidation = (Index: number, CellValidationMode: CellValidationMode): CellValidationChangeModeAction => ({
-    type: CELL_VALIDATION_MODE_CHANGE,
+export const CellValidationChangeMode = (Index: number, CellValidationMode: CellValidationMode): CellValidationChangeModeAction => ({
+    type: CELL_VALIDATION_CHANGE_MODE,
     Index,
     CellValidationMode
 })
 
-export const AddEditCellValidation = (Index: number, CellValidationRule: ICellValidationRule): CellValidationAddOrUpdateAction => ({
-    type: CELL_VALIDATION_ADD_OR_UPDATE,
+export const CellValidationAddUpdate = (Index: number, CellValidationRule: ICellValidationRule): CellValidationAddUpdateAction => ({
+    type: CELL_VALIDATION_ADD_UPDATE,
     Index,
     CellValidationRule
 })
 
-export const DeleteCellValidation = (Index: number): CellValidationDeleteAction => ({
+export const CellValidationDelete = (Index: number): CellValidationDeleteAction => ({
     type: CELL_VALIDATION_DELETE,
     Index,
 })
@@ -51,8 +50,8 @@ export const CellValidationReducer: Redux.Reducer<CellValidationState> = (state:
 
     switch (action.type) {
 
-        case CELL_VALIDATION_ADD_OR_UPDATE: {
-            let actionTyped = (<CellValidationAddOrUpdateAction>action)
+        case CELL_VALIDATION_ADD_UPDATE: {
+            let actionTyped = (<CellValidationAddUpdateAction>action)
             CellValidations = [].concat(state.CellValidations)
             if (actionTyped.Index == -1) {
                 CellValidations.push(actionTyped.CellValidationRule)
@@ -68,7 +67,7 @@ export const CellValidationReducer: Redux.Reducer<CellValidationState> = (state:
             return Object.assign({}, state, { CellValidations: CellValidations })
         }
 
-        case CELL_VALIDATION_MODE_CHANGE: {
+        case CELL_VALIDATION_CHANGE_MODE: {
             let actionTyped = (<CellValidationChangeModeAction>action)
             CellValidations = [].concat(state.CellValidations)
             let cellValidation = CellValidations[actionTyped.Index]

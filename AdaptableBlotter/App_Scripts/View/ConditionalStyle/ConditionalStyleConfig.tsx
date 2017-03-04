@@ -26,7 +26,7 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     Columns: IColumn[],
     UserFilters: IUserFilter[],
     onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
-    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddOrUpdateAction
+    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
     onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => ConditionalStyleRedux.ConditionalStyleEditColourAction
 }
@@ -122,10 +122,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.AddOrUpdateConditionalStyle(conditionalStyleCondition)),
-        onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.DeleteConditionalStyle(conditionalStyleCondition)),
-        onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.EditColumnConditionalStyle(condiditionalStyleCondition, newColumnId)),
-        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => dispatch(ConditionalStyleRedux.EditColourConditionalStyle(condiditionalStyleCondition, backColor, foreColor)),
+        onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(conditionalStyleCondition)),
+        onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyleCondition)),
+        onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.ConditionalStyleEditColumn(condiditionalStyleCondition, newColumnId)),
+        onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => dispatch(ConditionalStyleRedux.ConditionalStyleEditColour(condiditionalStyleCondition, backColor, foreColor)),
     };
 }
 

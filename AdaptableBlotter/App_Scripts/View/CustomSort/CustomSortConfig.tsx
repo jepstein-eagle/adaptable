@@ -109,9 +109,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.AddCustomSort(customSort)),
-        onDeleteCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.DeleteCustomSort(customSort)),
-        onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.EditCustomSort(customSort))
+        onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
+        onDeleteCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortDelete(customSort)),
+        onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort))
     };
 }
 

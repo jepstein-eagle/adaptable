@@ -31,7 +31,7 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     Columns: Array<IColumn>,
     UserFilters: IUserFilter[]
     onDeleteCellValidation: (Index: number) => CellValidationRedux.CellValidationDeleteAction
-    onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddOrUpdateAction
+    onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
 }
 
@@ -163,9 +163,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteCellValidation: (index: number) => dispatch(CellValidationRedux.DeleteCellValidation(index)),
-        onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.AddEditCellValidation(index, CellValidation)),
-        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.ChangeModeCellValidation(index, CellValidationMode))
+        onDeleteCellValidation: (index: number) => dispatch(CellValidationRedux.CellValidationDelete(index)),
+        onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
+        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode))
     };
 }
 

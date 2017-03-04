@@ -18,16 +18,16 @@ export interface CustomSortDeleteAction extends Redux.Action {
     CustomSort: ICustomSort
 }
 
-export const AddCustomSort = (CustomSort: ICustomSort): CustomSortAddAction => ({
+export const CustomSortAdd = (CustomSort: ICustomSort): CustomSortAddAction => ({
     type: CUSTOMSORT_ADD,
     CustomSort
 })
 
-export const EditCustomSort = (CustomSort: ICustomSort): CustomSortEditAction => ({
+export const CustomSortEdit = (CustomSort: ICustomSort): CustomSortEditAction => ({
     type: CUSTOMSORT_EDIT,
     CustomSort
 })
-export const DeleteCustomSort = (CustomSort: ICustomSort): CustomSortDeleteAction => ({
+export const CustomSortDelete = (CustomSort: ICustomSort): CustomSortDeleteAction => ({
     type: CUSTOMSORT_DELETE,
     CustomSort
 })
