@@ -5,8 +5,6 @@ import { GridState } from './interface/IState'
 import { IColumn } from '../../Core/interface/IAdaptableBlotter'
 import { ICellInfo } from '../../Core/interface/IStrategy'
 
-
-
 const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
 export const SET_GRIDVALUE_LIKE_EDIT = 'SET_GRIDVALUE_LIKE_EDIT';
 

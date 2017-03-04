@@ -6,39 +6,37 @@ import { ILayout } from '../../Core/interface/ILayoutStrategy';
 import { IColumn } from '../../Core/interface/IAdaptableBlotter'
 import { InputAction } from '../../Core/Interface/IStrategy';
 
+export const LAYOUT_SELECT = 'LAYOUT_SELECT';
+const LAYOUT_ADD = 'LAYOUT_ADD';
+const LAYOUT_SAVE = 'LAYOUT_SAVE';
+export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 
-export const SET_CURRENT_LAYOUT = 'SET_CURRENT_LAYOUT';
-const ADD_LAYOUT = 'ADD_LAYOUT';
-const SAVE_LAYOUT = 'SAVE_LAYOUT';
-export const DELETE_LAYOUT = 'DELETE_LAYOUT';
-
-export interface SetCurrentLayoutAction extends Redux.Action {
+export interface LayoutSelectAction extends Redux.Action {
     LayoutName: string;
 }
 
-export const SetCurrentLayout = (LayoutName: string): SetCurrentLayoutAction => ({
-    type: SET_CURRENT_LAYOUT,
+export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
+    type: LAYOUT_SELECT,
     LayoutName
 })
 
-export interface AddLayoutAction extends InputAction {
+export interface LayoutAddAction extends InputAction {
     Columns: string[],
-
 }
 
-export const AddLayout = (Columns: string[], InputText: string): AddLayoutAction => ({
-    type: ADD_LAYOUT,
+export const LayoutAdd = (Columns: string[], InputText: string): LayoutAddAction => ({
+    type: LAYOUT_ADD,
     Columns,
     InputText
 })
 
-export interface SaveLayoutAction extends Redux.Action {
+export interface LayoutSaveAction extends Redux.Action {
     LayoutName: string,
     Columns: string[],
 }
 
-export const SaveLayout = (Columns: string[], LayoutName: string): SaveLayoutAction => ({
-    type: SAVE_LAYOUT,
+export const SaveLayout = (Columns: string[], LayoutName: string): LayoutSaveAction => ({
+    type: LAYOUT_SAVE,
     Columns,
     LayoutName
 })
@@ -48,10 +46,9 @@ export interface DeleteLayoutAction extends Redux.Action {
 }
 
 export const DeleteLayout = (LayoutName: string): DeleteLayoutAction => ({
-    type: DELETE_LAYOUT,
+    type: LAYOUT_DELETE,
     LayoutName
 })
-
 
 const initialLayoutState: LayoutState = {
     CurrentLayout: "",
@@ -62,22 +59,22 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
     let index: number;
     let layouts: ILayout[]
     switch (action.type) {
-        case SET_CURRENT_LAYOUT:
-            return Object.assign({}, state, { CurrentLayout: (<SetCurrentLayoutAction>action).LayoutName })
-        case ADD_LAYOUT:
-            let actionTypedAdd = (<AddLayoutAction>action)
+        case LAYOUT_SELECT:
+            return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName })
+        case LAYOUT_ADD:
+            let actionTypedAdd = (<LayoutAddAction>action)
             let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText, IsPredefined: false }
             layouts = [].concat(state.AvailableLayouts);
             layouts.push(layoutToAdd);
             return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
-        case DELETE_LAYOUT:
+        case LAYOUT_DELETE:
             let actionTypedDelete = (<DeleteLayoutAction>action)
             layouts = [].concat(state.AvailableLayouts)
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
             return Object.assign({}, state, { CurrentLayout: "", AvailableLayouts: layouts })
-        case SAVE_LAYOUT:
-            let actionTypedSave = <SaveLayoutAction>action;
+        case LAYOUT_SAVE:
+            let actionTypedSave = <LayoutSaveAction>action;
             layouts = [].concat(state.AvailableLayouts);
             index = layouts.findIndex(a => a.Name == actionTypedSave.LayoutName)
             let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.LayoutName, IsPredefined: false }

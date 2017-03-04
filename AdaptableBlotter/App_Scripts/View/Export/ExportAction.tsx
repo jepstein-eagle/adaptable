@@ -15,7 +15,7 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
     FileName: string,
     AllPages: boolean,
     Filterable: boolean,
-    onApplyExport: () => ExportRedux.ApplyExportAction,
+    onApplyExport: () => ExportRedux.ExportApplyAction,
     onFileNameChanged: (FileName: string) => ExportRedux.ExportSetFileNameAction;
     onAllPagesChanged: (AllPages: boolean) => ExportRedux.ExportSetAllPagesAction;
     onFilterableChanged: (Filterable: boolean) => ExportRedux.ExportSetFilterableAction;
@@ -86,10 +86,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onApplyExport: () => dispatch(ExportRedux.ApplyExport()),
-        onFileNameChanged: (FileName: string) => dispatch(ExportRedux.FileNameSetOperation(FileName)),
-        onAllPagesChanged: (AllPages: boolean) => dispatch(ExportRedux.AllPagesSetOperation(AllPages)),
-        onFilterableChanged: (Filterable: boolean) => dispatch(ExportRedux.FilterableSetOperation(Filterable)),
+        onApplyExport: () => dispatch(ExportRedux.ExportApply()),
+        onFileNameChanged: (FileName: string) => dispatch(ExportRedux.ExportSetFileName(FileName)),
+        onAllPagesChanged: (AllPages: boolean) => dispatch(ExportRedux.ExportSetAllPages(AllPages)),
+        onFilterableChanged: (Filterable: boolean) => dispatch(ExportRedux.ExportSetFilterable(Filterable)),
     };
 }
 

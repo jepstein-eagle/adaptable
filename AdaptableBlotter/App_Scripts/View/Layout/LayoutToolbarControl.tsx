@@ -19,8 +19,8 @@ import { ButtonDelete } from '../ButtonDelete';
 import { ButtonCreate } from '../ButtonCreate';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
-    onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
-    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.SaveLayoutAction,
+    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
+    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutSaveAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.ShowPromptPopupAction,
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction, Columns: IColumn[],
@@ -126,7 +126,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let prompt: IUIPrompt = {
             PromptTitle: "Create New Layout",
             PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.AddLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
+            ConfirmAction: LayoutRedux.LayoutAdd(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
         }
         this.props.onShowPrompt(prompt)
     }
@@ -150,7 +150,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.SetCurrentLayout(layoutName)),
+        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.ShowPromptPopup(prompt)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),

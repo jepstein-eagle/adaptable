@@ -21,8 +21,8 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     Layouts: ILayout[],
     CurrentLayout: string,
     Columns: IColumn[]
-    onLoadLayout: (layoutName: string) => LayoutRedux.SetCurrentLayoutAction
-    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.AddLayoutAction,
+    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
+    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
     onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
 }
 
@@ -135,8 +135,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.SetCurrentLayout(layoutName)),
-        onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.AddLayout(Columns, LayoutName)),
+        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
+        onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
     };
 }

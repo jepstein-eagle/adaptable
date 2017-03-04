@@ -164,7 +164,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
-                case LayoutRedux.SET_CURRENT_LAYOUT: {
+                case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
 
                     let layoutState = middlewareAPI.getState().Layout;
@@ -178,9 +178,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return returnAction;
                 }
-                case LayoutRedux.DELETE_LAYOUT: {
+                case LayoutRedux.LAYOUT_DELETE: {
                     let returnAction = next(action);
-                    middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"))
+                    middlewareAPI.dispatch(LayoutRedux.LayoutSelect("Default"))
                     return returnAction;
                 }
                 case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
@@ -293,13 +293,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     adaptableBlotter.SetColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
-                        middlewareAPI.dispatch(LayoutRedux.AddLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
-                        middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout("Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect("Default"));
                     }
                     else {
                         //update default layout with latest columns
                         middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
-                        middlewareAPI.dispatch(LayoutRedux.SetCurrentLayout(middlewareAPI.getState().Layout.CurrentLayout));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(middlewareAPI.getState().Layout.CurrentLayout));
                     }
                     return returnAction;
                 }

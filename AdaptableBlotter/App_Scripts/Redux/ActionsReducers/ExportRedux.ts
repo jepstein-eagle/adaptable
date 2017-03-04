@@ -7,7 +7,7 @@ export const EXPORT_SET_FILENAME = 'EXPORT_SET_FILENAME';
 export const EXPORT_SET_ALL_PAGES = 'EXPORT_SET_ALL_PAGES';
 export const EXPORT_SET_FILTERABLE = 'EXPORT_SET_FILTERABLE';
 
-export interface ApplyExportAction extends Redux.Action {
+export interface ExportApplyAction extends Redux.Action {
 }
 
 export interface ExportSetFileNameAction extends Redux.Action {
@@ -22,21 +22,21 @@ export interface ExportSetFilterableAction extends Redux.Action {
     Filterable: boolean
 }
 
-export const ApplyExport = (): ApplyExportAction => ({
+export const ExportApply = (): ExportApplyAction => ({
     type: EXPORT_APPLY
 })
 
-export const FileNameSetOperation = (FileName: string): ExportSetFileNameAction => ({
+export const ExportSetFileName = (FileName: string): ExportSetFileNameAction => ({
     type: EXPORT_SET_FILENAME,
     FileName: FileName
 })
 
-export const AllPagesSetOperation = (AllPages: boolean): ExportSetAllPagesAction => ({
+export const ExportSetAllPages = (AllPages: boolean): ExportSetAllPagesAction => ({
     type: EXPORT_SET_ALL_PAGES,
     AllPages: AllPages
 })
 
-export const FilterableSetOperation = (Filterable: boolean): ExportSetFilterableAction => ({
+export const ExportSetFilterable = (Filterable: boolean): ExportSetFilterableAction => ({
     type: EXPORT_SET_FILTERABLE,
     Filterable: Filterable
 })
