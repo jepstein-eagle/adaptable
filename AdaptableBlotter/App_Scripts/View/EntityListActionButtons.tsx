@@ -9,7 +9,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonClear } from './ButtonClear';
-import { ButtonCreate } from './ButtonCreate';
+import { ButtonNew } from './ButtonNew';
 import { ButtonShare } from './ButtonShare';
 import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
 

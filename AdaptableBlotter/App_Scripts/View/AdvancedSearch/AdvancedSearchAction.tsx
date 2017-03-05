@@ -26,7 +26,7 @@ import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { ButtonEdit } from '../ButtonEdit';
 import { ButtonDelete } from '../ButtonDelete';
 import { ButtonClear } from '../ButtonClear';
-import { ButtonCreate } from '../ButtonCreate';
+import { ButtonNew } from '../ButtonNew';
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -75,7 +75,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         let selectedAdvancedSearchName: string = selectedAdvancedSearch==null? "": selectedAdvancedSearch.Name;
 
         let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
-        let newSearchButton = <ButtonCreate onClick={() => this.onNewAdvancedSearch()}
+        let newSearchButton = <ButtonNew onClick={() => this.onNewAdvancedSearch()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text" />
         let editSearchButton = <ButtonEdit onClick={() => this.onEditAdvancedSearch()}

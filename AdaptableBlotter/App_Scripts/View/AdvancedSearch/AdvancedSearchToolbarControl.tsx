@@ -15,7 +15,7 @@ import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../ButtonEdit';
 import { ButtonDelete } from '../ButtonDelete';
 import { ButtonClear } from '../ButtonClear';
-import { ButtonCreate } from '../ButtonCreate';
+import { ButtonNew } from '../ButtonNew';
 
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
@@ -65,7 +65,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 ConfigEntity={savedSearch}
                 DisplayMode="Glyph+Text" />
             {' '}
-            <ButtonCreate onClick={() => this.props.onNewAdvancedSearch()}
+            <ButtonNew onClick={() => this.props.onNewAdvancedSearch()}
                 overrideTooltip="Create New Advanced Search"
                 DisplayMode="Glyph+Text" />
             {' '}

@@ -16,7 +16,7 @@ import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonSave } from '../ButtonSave';
 import { ButtonDelete } from '../ButtonDelete';
-import { ButtonCreate } from '../ButtonCreate';
+import { ButtonNew } from '../ButtonNew';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
@@ -55,7 +55,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 ConfigEntity={layoutEntity} 
                 DisplayMode="Glyph+Text"/>
             {' '}
-            <ButtonCreate onClick={() => this.onAddLayoutClicked()}
+            <ButtonNew onClick={() => this.onAddLayoutClicked()}
                 overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" 
                 DisplayMode="Glyph+Text"/>
             {' '}

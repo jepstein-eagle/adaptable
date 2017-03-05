@@ -9,9 +9,9 @@ import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 
-export class ButtonCreate extends React.Component<ButtonProps, {}> {
+export class ButtonNew extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Create"
+        return <ButtonBase ToolTipAndText="New"
             bsStyle='info'
             ConfigEntity={this.props.ConfigEntity}
             glyph="plus"
