@@ -9,7 +9,7 @@ interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConf
     CustomSort: ICustomSort
     ColumnLabel: string
     onEdit: (CustomSort: ICustomSort) => void;
-    onDelete: (CustomSort: ICustomSort) => void;
+    onDeleteConfirm: Redux.Action;
 }
 
 
@@ -25,7 +25,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                 </Col>
                 <Col xs={3}>
                     <EntityListActionButtons
-                        deleteClick={() => this.props.onDelete(this.props.CustomSort)}
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
                         editClick={() => this.props.onEdit(this.props.CustomSort)}
                         ConfigEntity={this.props.CustomSort}>
                     </EntityListActionButtons>

@@ -24,7 +24,6 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction,
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     AdvancedSearchDashboardControl: IDashboardControl
 }
@@ -57,24 +56,27 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             {' '}
             <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
                 overrideTooltip="Clear (but do not delete) Current Advanced Search"
-                overrideDisableButton={currentAdvancedSearchId == "select"} 
-                DisplayMode="Glyph+Text"/>
+                overrideDisableButton={currentAdvancedSearchId == "select"}
+                DisplayMode="Glyph+Text" />
             {' '}
             <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
                 overrideTooltip="Edit Current Advanced Search"
                 overrideDisableButton={currentAdvancedSearchId == "select"}
-                ConfigEntity={savedSearch} 
-                DisplayMode="Glyph+Text"/>
+                ConfigEntity={savedSearch}
+                DisplayMode="Glyph+Text" />
             {' '}
             <ButtonCreate onClick={() => this.props.onNewAdvancedSearch()}
-                overrideTooltip="Create New Advanced Search" 
-                DisplayMode="Glyph+Text"/>
+                overrideTooltip="Create New Advanced Search"
+                DisplayMode="Glyph+Text" />
             {' '}
-            <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
+            <ButtonDelete
                 overrideTooltip="Delete Advanced Search"
                 overrideDisableButton={currentAdvancedSearchId == "select"}
-                ConfigEntity={savedSearch} 
-                DisplayMode="Glyph+Text"/>
+                ConfigEntity={savedSearch}
+                DisplayMode="Glyph+Text"
+                ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
+                ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "": savedSearch.Name + "'?"}
+                ConfirmationTitle={"Delete Advanced Search"} />
         </FormGroup>
 
         return (
@@ -126,20 +128,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         this.props.onSelectAdvancedSearch(advancedSearchId);
     }
 
-    onDeleteAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
-
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Delete Advanced Search",
-            ConfirmationMsg: "Are you sure you want to delete '" + clonedSearch.Name + "'?",
-            ConfirmationText: "Delete",
-            CancelAction: null,
-            ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(clonedSearch)
-        }
-        this.props.onConfirmWarning(confirmation)
-    }
-
     private getClonedSelectedAdvancedSearch() {
         let selectedAdvancedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(a => a.Uid == this.props.CurrentAdvancedSearchUid);
         if (selectedAdvancedSearch) {
@@ -162,7 +150,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction")),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }

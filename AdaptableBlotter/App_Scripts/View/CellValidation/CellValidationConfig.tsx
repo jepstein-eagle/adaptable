@@ -30,7 +30,6 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     CellValidations: ICellValidationRule[];
     Columns: Array<IColumn>,
     UserFilters: IUserFilter[]
-    onDeleteCellValidation: (Index: number) => CellValidationRedux.CellValidationDeleteAction
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
 }
@@ -75,7 +74,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteCellValidation(index)}
+                            ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
                             editClick={() => this.onEdit(index, x)}
                             ConfigEntity={x}>
                         </EntityListActionButtons>
@@ -163,7 +162,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteCellValidation: (index: number) => dispatch(CellValidationRedux.CellValidationDelete(index)),
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
         onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode))
     };

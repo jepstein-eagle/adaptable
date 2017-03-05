@@ -23,13 +23,11 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutSaveAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction,
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction, Columns: IColumn[],
+    Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
     LayoutDashboardControl: IDashboardControl
 }
-
-
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
@@ -61,11 +59,14 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" 
                 DisplayMode="Glyph+Text"/>
             {' '}
-            <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
+            <ButtonDelete 
                 overrideTooltip="Delete Layout"
                 overrideDisableButton={this.props.CurrentLayout == "Default"}
                 ConfigEntity={layoutEntity} 
-                DisplayMode="Glyph+Text"/>
+                DisplayMode="Glyph+Text"
+                ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+                ConfirmationTitle={"Delete Layout"}/>
         </FormGroup>
 
         return <Panel className="small-padding-panel" >
@@ -101,7 +102,6 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 </AdaptableBlotterForm>
             }
         </Panel>
-
     }
 
     expandCollapseClicked() {
@@ -110,19 +110,6 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
     private onSaveLayoutClicked() {
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
-    }
-
-    private onDeleteLayoutClicked() {
-
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Delete Layout",
-            ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?",
-            ConfirmationText: "Delete",
-            CancelAction: null,
-            ConfirmAction: LayoutRedux.DeleteLayout(this.props.CurrentLayout)
-        }
-        this.props.onConfirmWarning(confirmation)
     }
 
     private onAddLayoutClicked() {
@@ -156,7 +143,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
@@ -166,7 +152,6 @@ export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(L
 var marginButtonStyle = {
     margin: '4px'
 };
-
 
 var noSearchStyle = {
     fontStyle: 'italic'

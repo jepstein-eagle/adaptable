@@ -29,7 +29,6 @@ interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigCo
     PlusMinusConditions: IPlusMinusCondition[]
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditConditionAction
-    onDeleteColumnDefaultNudgeValue: (Index: number) => PlusMinusRedux.PlusMinusDeleteConditionAction
     onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
 }
 
@@ -70,7 +69,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.props.onDeleteColumnDefaultNudgeValue(index)}
+                            ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                             editClick={() => this.onEdit(index, x)}
                             ConfigEntity={x}>
                         </EntityListActionButtons>
@@ -162,7 +161,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetDefaultNudgeValue: (value: number) => dispatch(PlusMinusRedux.PlusMinusSetDefaultNudge(value)),
         onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => dispatch(PlusMinusRedux.PlusMinusEditCondition(Index, ColumnDefaultNudge)),
-        onDeleteColumnDefaultNudgeValue: (Index: number) => dispatch(PlusMinusRedux.PlusMinusDeleteCondition(Index)),
         onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge))
     };
 }

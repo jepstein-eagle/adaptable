@@ -27,7 +27,6 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
     Columns: IColumn[],
-    onDeleteUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterDeleteAction
     onAddUpdateUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
 }
 
@@ -66,7 +65,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            deleteClick={() => this.onDeleteUserFilter(x)}
+                            ConfirmDeleteAction={UserFilterRedux.UserFilterDelete(x)}
                             editClick={() => this.onEditUserFilter(x)}
                             ConfigEntity={x}>
                         </EntityListActionButtons>
@@ -120,10 +119,6 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
         this.setState({ EditedUserFilter: Helper.cloneObject(userFilter) });
     }
 
-    onDeleteUserFilter(userFilter: IUserFilter) {
-        this.props.onDeleteUserFilter(userFilter);
-    }
-
     closeWizard() {
         this.setState({ EditedUserFilter: null, });
     }
@@ -144,7 +139,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterDelete(userFilter)),
         onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(userFilter))
     };
 }

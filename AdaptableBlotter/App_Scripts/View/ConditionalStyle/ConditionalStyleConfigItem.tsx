@@ -5,6 +5,7 @@ import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl } from 'react-bootstrap';
 import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
@@ -16,7 +17,7 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     ConditionalStyleCondition: IConditionalStyleCondition;
     Columns: IColumn[];
     UserFilters: IUserFilter[]
-    onDelete: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
+    onDeleteConfirm: Redux.Action;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
     onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => void;
@@ -58,9 +59,9 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     <EntityListActionButtons
-                        deleteClick={() => this.props.onDelete(this.props.ConditionalStyleCondition)}
                         editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
-                        ConfigEntity={this.props.ConditionalStyleCondition}>
+                        ConfigEntity={this.props.ConditionalStyleCondition}
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
                     </EntityListActionButtons>
                 </Col>
             </Row>

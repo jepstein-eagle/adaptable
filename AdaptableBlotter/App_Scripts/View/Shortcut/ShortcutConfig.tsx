@@ -20,7 +20,6 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
-    onDeleteShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutDeleteAction
     onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => ShortcutRedux.ShortcutChangeKeyAction
     onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => ShortcutRedux.ShortcutChangeOperationAction
     onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
@@ -50,7 +49,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
                 AvailableKeys={availableNumericKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut)}
+                onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
                 onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
@@ -62,7 +61,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             return <ShortcutConfigItem Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
                 AvailableKeys={availableDateKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
-                onDelete={(shortcut) => this.props.onDeleteShortcut(shortcut)}
+                onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
                 onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
@@ -129,7 +128,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutSelect(shortcut)),
         onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
-        onDeleteShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutDelete(shortcut)),
         onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
         onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewShortcutAction)),
         onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),

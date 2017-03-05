@@ -33,10 +33,8 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     Columns: IColumn[];
     CurrentAdvancedSearchUid: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
-    onDeleteAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchDeleteAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onClearPopupParams: () => PopupRedux.PopupClearParamAction,
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction,
     PopupParams: any,
     UserFilters: IUserFilter[]
 }
@@ -105,11 +103,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     overrideDisableButton={selectedAdvancedSearch == null}
                                     DisplayMode="Glyph" />
                                 {' '}
-                                <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
+                                <ButtonDelete
                                     overrideTooltip="Delete Search"
                                     overrideDisableButton={selectedAdvancedSearch == null}
                                     ConfigEntity={selectedAdvancedSearch}
-                                    DisplayMode="Glyph" />
+                                    DisplayMode="Glyph"
+                                    ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(selectedAdvancedSearch)}
+                                    ConfirmationMsg={"Are you sure you want to delete '" + selectedAdvancedSearch.Name + "'?"}
+                                    ConfirmationTitle={"Delete Advanced Search"} />
                             </Col>
                         </FormGroup>
                     </div>
@@ -171,21 +172,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     // Clear search:  sets the edited and selected searches to null and calles Redux Select Advanced Search
     onClearAdvancedSearch() {
         this.props.onSelectAdvancedSearch("");
-    }
-
-    // Delete search:  sets the selected search to null and calles Redux Delete Advanced Search
-    onDeleteAdvancedSearch() {
-        let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
-
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Delete Advanced Search",
-            ConfirmationMsg: "Are you sure you want to delete '" + clonedSearch.Name + "'?",
-            ConfirmationText: "Delete",
-            CancelAction: null,
-            ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(clonedSearch)
-        }
-        this.props.onConfirmWarning(confirmation)
     }
 
     onDeleteColumnValue(columnId: string, value: any) {
@@ -260,10 +246,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
-        onDeleteAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

@@ -15,7 +15,6 @@ import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
 
 interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
-    deleteClick?: () => void;
     shareClick?: () => void;
     showEdit?: boolean
     showDelete?: boolean
@@ -27,6 +26,7 @@ interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListA
     overrideTooltipDelete?: string
     overrideTooltipShare?: string
     ConfigEntity?: IConfigEntity
+    ConfirmDeleteAction: Redux.Action
 }
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
@@ -36,7 +36,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         showShare: true,
         overrideDisableEdit: false,
         overrideDisableDelete: false,
-        overrideDisableShare: false
+        overrideDisableShare: false,
+        ConfirmDeleteAction: null,
     };
     render() {
         return <ButtonToolbar>
@@ -44,20 +45,23 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                 <ButtonEdit onClick={() => this.props.editClick()}
                     overrideDisableButton={this.props.overrideDisableEdit}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip={this.props.overrideTooltipEdit} 
-                    DisplayMode="Glyph"/>}
+                    overrideTooltip={this.props.overrideTooltipEdit}
+                    DisplayMode="Glyph" />}
             {this.props.showDelete &&
-                <ButtonDelete onClick={() => this.props.deleteClick()}
+                <ButtonDelete
                     overrideDisableButton={this.props.overrideDisableDelete}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip={this.props.overrideTooltipDelete} 
-                    DisplayMode="Glyph"/>}
+                    overrideTooltip={this.props.overrideTooltipDelete}
+                    DisplayMode="Glyph"
+                    ConfirmAction={this.props.ConfirmDeleteAction}
+                    ConfirmationMsg={"Are you sure you want to delete this item?"}
+                    ConfirmationTitle={"Delete Item"} />}
             {this.props.showShare &&
                 <ButtonShare onClick={() => this.props.shareClick()}
                     overrideDisableButton={this.props.overrideDisableShare}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip="Share With Team - disabled in this demo" 
-                    DisplayMode="Glyph"/>}
+                    overrideTooltip="Share With Team - disabled in this demo"
+                    DisplayMode="Glyph" />}
         </ButtonToolbar>;
     }
 }

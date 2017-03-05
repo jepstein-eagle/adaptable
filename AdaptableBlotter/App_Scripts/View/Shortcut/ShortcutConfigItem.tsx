@@ -13,7 +13,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
     Shortcut: IShortcut
     onSelect: (Shortcut: IShortcut) => void;
-    onDelete: (Shortcut: IShortcut) => void;
+    onDeleteConfirm: Redux.Action;
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
@@ -81,9 +81,9 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 </Col>
                 <Col md={4} >
                     <EntityListActionButtons
-                        deleteClick={() => this.props.onDelete(this.props.Shortcut)}
                         showEdit={false}
-                        ConfigEntity={this.props.Shortcut}>
+                        ConfigEntity={this.props.Shortcut}
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
                     </EntityListActionButtons>
                 </Col>
 

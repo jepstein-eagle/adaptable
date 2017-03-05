@@ -25,7 +25,6 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     UserFilters: IUserFilter[],
-    onDeleteConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleDeleteAction
     onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => ConditionalStyleRedux.ConditionalStyleEditColumnAction
     onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => ConditionalStyleRedux.ConditionalStyleEditColourAction
@@ -53,9 +52,9 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
                 onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
-                onDelete={(conditionalStyleCondition) => this.props.onDeleteConditionalStyle(conditionalStyleCondition)}
                 onChangeColumn={(conditionalStyleCondition, newColumnId) => this.props.onChangeColumnConditionalStyle(conditionalStyleCondition, newColumnId)}
-                onChangeColour={(conditionalStyleCondition, backColor, foreColor) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, backColor, foreColor)} >
+                onChangeColour={(conditionalStyleCondition, backColor, foreColor) => this.props.onChangeColourConditionalStyle(conditionalStyleCondition, backColor, foreColor)}
+                onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyleCondition)} >
             </ConditionalStyleConfigItem>
         });
 
@@ -123,7 +122,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(conditionalStyleCondition)),
-        onDeleteConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyleCondition)),
         onChangeColumnConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => dispatch(ConditionalStyleRedux.ConditionalStyleEditColumn(condiditionalStyleCondition, newColumnId)),
         onChangeColourConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => dispatch(ConditionalStyleRedux.ConditionalStyleEditColour(condiditionalStyleCondition, backColor, foreColor)),
     };

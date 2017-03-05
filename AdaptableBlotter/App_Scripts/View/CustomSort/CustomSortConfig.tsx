@@ -21,7 +21,6 @@ import { PanelWithRow } from '../PanelWithRow';
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
-    onDeleteCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortDeleteAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
     CustomSorts: Array<ICustomSort>
     Columns: Array<IColumn>
@@ -44,7 +43,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             if (column == null) return;
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
                 onEdit={(customSort) => this.onEditCustomSort(customSort)}
-                onDelete={(customSort) => this.props.onDeleteCustomSort(customSort)}
+                onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
                 ColumnLabel={column.FriendlyName}></CustomSortConfigItem>
         });
 
@@ -110,7 +109,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
-        onDeleteCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortDelete(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort))
     };
 }

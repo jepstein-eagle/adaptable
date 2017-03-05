@@ -23,7 +23,6 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction,
 }
 
 interface LayoutConfigState {
@@ -56,11 +55,14 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             </FormControl>
                         </Col>
                         <Col xs={2}>
-                            <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
+                            <ButtonDelete
                                 overrideTooltip="Delete Layout"
                                 overrideDisableButton={this.props.CurrentLayout == "Default"}
                                 ConfigEntity={layoutEntity}
-                                DisplayMode="Glyph" />
+                                DisplayMode="Glyph"
+                                ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                                ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+                                ConfirmationTitle={"Delete Layout"} />
                         </Col>
                     </FormGroup>
                 </Panel>
@@ -110,20 +112,6 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.state.NewLayoutName);
         this.setState({ NewLayoutName: "" });
     }
-
-    private onDeleteLayoutClicked() {
-
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Delete Layout",
-            ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?",
-            ConfirmationText: "Delete",
-            CancelAction: null,
-            ConfirmAction: LayoutRedux.DeleteLayout(this.props.CurrentLayout)
-        }
-        this.props.onConfirmWarning(confirmation)
-    }
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -139,7 +127,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 
