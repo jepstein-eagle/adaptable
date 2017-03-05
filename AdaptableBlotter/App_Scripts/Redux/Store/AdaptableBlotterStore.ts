@@ -201,7 +201,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return next(action);
                 }
-                case PopupRedux.POPUP_CANCEL_CONFIRMATION: {
+                case PopupRedux.POPUP_CONFIRM_CONFIRMATION: {
                     let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
                     if (confirmationAction) {
                         middlewareAPI.dispatch(confirmationAction);
