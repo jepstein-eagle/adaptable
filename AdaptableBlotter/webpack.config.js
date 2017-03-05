@@ -8,6 +8,7 @@ module.exports = {
         'adaptableblotterkendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
         'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblottergrid': ["./App_Scripts/AdaptableGrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {
