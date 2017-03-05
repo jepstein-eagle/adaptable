@@ -147,7 +147,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         let error: IUIError = {
             ErrorMsg: ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter)
         }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {
@@ -162,9 +162,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             ConfirmationText: "Perform Shortcut Anyway",
             //We cancel the edit before applying the shortcut so if cancel then there is fuck all to do
             CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
-            ConfirmAction: ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, newValue)
+            ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)
         }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
     }
 
     getMenuItems(): IMenuItem[] {

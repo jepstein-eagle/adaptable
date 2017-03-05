@@ -31,7 +31,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
             let error: IUIError = {
                 ErrorMsg: errorMessage
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
 
 
         }

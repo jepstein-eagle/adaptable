@@ -23,7 +23,7 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction,
 }
 
 interface LayoutConfigState {
@@ -137,7 +137,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

@@ -9,7 +9,7 @@ export interface ThemeSelectAction extends Redux.Action {
     Theme: string;
 }
 
-export const SelectTheme = (Theme: string): ThemeSelectAction => ({
+export const ThemeSelect = (Theme: string): ThemeSelectAction => ({
     type: THEME_SELECT,
     Theme
 })

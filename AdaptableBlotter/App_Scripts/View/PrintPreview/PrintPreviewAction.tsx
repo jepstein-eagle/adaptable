@@ -12,7 +12,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 
 
 interface PrintPreviewActionProps extends IStrategyViewPopupProps<PrintPreviewActionComponent> {
-    onApplyPrintPreview: () => PrintPreviewRedux.ApplyPrintPreviewAction,
+    onApplyPrintPreview: () => PrintPreviewRedux.PrintPreviewApplyAction,
 }
 
 class PrintPreviewActionComponent extends React.Component<PrintPreviewActionProps, {}> {
@@ -37,7 +37,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 // Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onApplyPrintPreview: () => dispatch(PrintPreviewRedux.ApplyPrintPreview()),
+        onApplyPrintPreview: () => dispatch(PrintPreviewRedux.PrintPreviewApply()),
     };
 }
 

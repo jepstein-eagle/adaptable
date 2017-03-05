@@ -22,9 +22,9 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     CurrentAdvancedSearchUid: string;
     AdvancedSearches: IAdvancedSearch[];
     onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
-    onNewAdvancedSearch: () => PopupRedux.ShowPopupAction;
-    onEditAdvancedSearch: () => PopupRedux.ShowPopupAction;
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction,
+    onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
+    onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction,
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     AdvancedSearchDashboardControl: IDashboardControl
 }
@@ -156,9 +156,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction", "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.ShowPopup("AdvancedSearchAction")),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction")),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }

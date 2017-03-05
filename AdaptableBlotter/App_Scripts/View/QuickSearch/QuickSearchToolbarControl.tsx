@@ -15,8 +15,9 @@ import { ButtonEdit } from '../ButtonEdit';
 import { ButtonClear } from '../ButtonClear';
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
-    onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction;
-    onShowQuickSearchConfig: () => PopupRedux.ShowPopupAction;
+    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
+    onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction;
+    onShowQuickSearchConfig: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardControl
@@ -90,11 +91,11 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     onUpdateQuickSearchText(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onSetQuickSearchText(e.value);
+        this.props.onRunQuickSearch(e.value);
     }
 
     onClearQuickSearch() {
-        this.props.onSetQuickSearchText("");
+        this.props.onClearQuickSearch();
     }
 }
 
@@ -107,8 +108,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSetQuickSearchText: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(newQuickSearchText)),
-        onShowQuickSearchConfig: () => dispatch(PopupRedux.ShowPopup("QuickSearchConfig")),
+        onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(newQuickSearchText)),
+        onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
+        onShowQuickSearchConfig: () => dispatch(PopupRedux.PopupShow("QuickSearchConfig")),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }

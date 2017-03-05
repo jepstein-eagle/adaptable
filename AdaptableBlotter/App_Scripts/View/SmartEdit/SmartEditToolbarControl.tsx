@@ -22,10 +22,10 @@ interface SmartEditToolbarControlComponentProps extends IStrategyViewPopupProps<
     SmartEditValue: string;
     SmartEditOperation: SmartEditOperation;
     Preview: ISmartEditPreview;
-    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
-    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
-    onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
-    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction;
+    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
+    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditChangeOperationAction;
+    onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
+    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     SmartEditDashboardControl: IDashboardControl
 }
@@ -146,8 +146,8 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
             ConfirmationTitle: "Do you want to continue?",
             ConfirmationMsg: "This edit breaks Cell Validation rules that you have set.\nClick 'OK' to bypass these rules.\nClick 'Cancel' if you wish not to proceed with the edit.",
             ConfirmationText: "OK",
-            CancelAction: SmartEditRedux.ApplySmartedit(false),
-            ConfirmAction: SmartEditRedux.ApplySmartedit(true)
+            CancelAction: SmartEditRedux.SmartEditApply(false),
+            ConfirmAction: SmartEditRedux.SmartEditApply(true)
         }
         this.props.onConfirmWarningCellValidation(confirmation)
     }
@@ -167,10 +167,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
-        onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
-        onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
-        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
+        onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
+        onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
+        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }

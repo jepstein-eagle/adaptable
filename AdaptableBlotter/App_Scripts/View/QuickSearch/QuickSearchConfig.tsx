@@ -21,7 +21,8 @@ interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConf
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
     QuickSearchBackColor: string,
-    onSetQuickSearchText: (quickSearchText: string) => QuickSearchRedux.QuickSearchSetSearchTextAction,
+    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction,
+    onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
     onSetSearchBackColor: (backColor: string) => QuickSearchRedux.QuickSearchSetBackColorAction
@@ -48,7 +49,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
     }
 
     onSetQuickSearch() {
-        this.props.onSetQuickSearchText(this.state.EditedQuickSearchText);
+        this.props.onRunQuickSearch(this.state.EditedQuickSearchText);
     }
 
     onKeyDownQuickSearch(event: React.KeyboardEvent) {
@@ -60,7 +61,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
     onClearQuickSearch() {
         this.setState({ EditedQuickSearchText: "" });
-        this.props.onSetQuickSearchText("");
+        this.props.onClearQuickSearch();
     }
 
     onStringOperatorChange(event: React.FormEvent) {
@@ -168,9 +169,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSetQuickSearchText: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchSetSearchText(quickSearchText)),
-        onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetSearchOperator(searchOperator)),
-        onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetSearchDisplay(searchDisplayType)),
+        onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(quickSearchText)),
+        onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
+        onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
+        onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetSearchBackColor: (backColor: string) => dispatch(QuickSearchRedux.QuickSearchSetBackColor(backColor)),
     };
 }

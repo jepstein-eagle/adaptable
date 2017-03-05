@@ -6,11 +6,11 @@ import { ColumnType } from '../../Core/Enums'
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
 
-export const USER_FILTER_ADD_OR_UPDATE = 'USER_FILTER_ADD_OR_UPDATE';
+export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 
 
-export interface UserFilterAddOrUpdateAction extends Redux.Action {
+export interface UserFilterAddUpdateAction extends Redux.Action {
     UserFilter: IUserFilter
 }
 
@@ -18,12 +18,12 @@ export interface UserFilterDeleteAction extends Redux.Action {
     UserFilter: IUserFilter
 }
 
-export const AddEditUserFilter = (UserFilter: IUserFilter): UserFilterAddOrUpdateAction => ({
-    type: USER_FILTER_ADD_OR_UPDATE,
+export const UserFilterAddUpdate = (UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
+    type: USER_FILTER_ADD_UPDATE,
     UserFilter
 })
 
-export const DeleteUserFilter = (UserFilter: IUserFilter): UserFilterDeleteAction => ({
+export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteAction => ({
     type: USER_FILTER_DELETE,
     UserFilter
 })
@@ -39,8 +39,8 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
 
     switch (action.type) {
 
-        case USER_FILTER_ADD_OR_UPDATE: {
-            let actionTypedAddUpdate = (<UserFilterAddOrUpdateAction>action)
+        case USER_FILTER_ADD_UPDATE: {
+            let actionTypedAddUpdate = (<UserFilterAddUpdateAction>action)
             UserFilters = [].concat(state.UserFilters)
             index = UserFilters.findIndex(i => i.Uid == actionTypedAddUpdate.UserFilter.Uid)
             if (index != -1) {  // it exists

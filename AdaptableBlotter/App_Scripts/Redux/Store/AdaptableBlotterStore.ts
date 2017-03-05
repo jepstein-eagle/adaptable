@@ -192,7 +192,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
-                case PopupRedux.CONFIRM_PROMPTPOPUP: {
+                case PopupRedux.POPUP_CONFIRM_PROMPT: {
                     let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
                     if (promptConfirmationAction) {
                         let inputText: string = (<InputAction>action).InputText;
@@ -201,14 +201,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     return next(action);
                 }
-                case PopupRedux.CONFIRM_CONFIRMATIONPOPUP: {
+                case PopupRedux.POPUP_CANCEL_CONFIRMATION: {
                     let confirmationAction = middlewareAPI.getState().Popup.ConfirmationPopup.ConfirmAction
                     if (confirmationAction) {
                         middlewareAPI.dispatch(confirmationAction);
                     }
                     return next(action);
                 }
-                case PopupRedux.CANCEL_CONFIRMATIONPOPUP: {
+                case PopupRedux.POPUP_CANCEL_CONFIRMATION: {
                     let cancelAction = middlewareAPI.getState().Popup.ConfirmationPopup.CancelAction
                     if (cancelAction) {
                         middlewareAPI.dispatch(cancelAction);
@@ -216,7 +216,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     return next(action);
                 }
 
-                case SmartEditRedux.SMARTEDIT_CHECKCELLSELECTION: {
+                case SmartEditRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
@@ -224,9 +224,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
 
                     if (apiReturn.Error) {
                         //We close the SmartEditPopup
-                        middlewareAPI.dispatch(PopupRedux.HidePopup());
+                        middlewareAPI.dispatch(PopupRedux.PopupHide());
                         //We show the Error Popup
-                        middlewareAPI.dispatch(PopupRedux.ShowErrorPopup(apiReturn.Error));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
                     } else {
                         let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
                         middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiPreviewReturn));
@@ -236,9 +236,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
 
 
                 //here we have all actions that triggers a refresh of the SmartEditPreview
-                case SmartEditRedux.SMARTEDIT_SETOPERATION:
-                case SmartEditRedux.SMARTEDIT_SETVALUE:
-                case SmartEditRedux.SMARTEDIT_FETCHPREVIEW: {
+                case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
+                case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
+                case SmartEditRedux.SMARTEDIT_FETCH_PREVIEW: {
                     //all our logic needs to be executed AFTER the main reducers 
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
@@ -253,15 +253,15 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    SmartEditStrategy.ApplySmartEdit((<SmartEditRedux.ApplySmarteditAction>action).bypassCellValidationWarnings);
-                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    SmartEditStrategy.ApplySmartEdit((<SmartEditRedux.SmartEditApplyAction>action).bypassCellValidationWarnings);
+                    middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
                     let plusMinusStrategy = <IPlusMinusStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
                     let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
                     plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
-                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
                 case ShortcutRedux.SHORTCUT_APPLY: {
@@ -273,13 +273,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case ExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     ExportStrategy.ExportBlotter();
-                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
                 case PrintPreviewRedux.PRINT_PREVIEW_APPLY: {
                     let PrintPreviewStrategy = <IPrintPreviewStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PrintPreviewStrategyId));
                     PrintPreviewStrategy.ApplyPrintPreview();
-                    middlewareAPI.dispatch(PopupRedux.HidePopup());
+                    middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
                 //We rebuild the menu from scratch

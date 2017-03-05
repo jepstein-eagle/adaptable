@@ -31,14 +31,14 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     MenuState: MenuState;
     DashboardState: DashboardState
     AdaptableBlotter: IAdaptableBlotter;
-    showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.ShowPopupAction;
-    onClosePopup: () => PopupRedux.HidePopupAction;
-    onCloseErrorPopup: () => PopupRedux.HideErrorPopupAction;
-    onCloseWarningPopup: () => PopupRedux.HideWarningPopupAction;
-    onConfirmPromptPopup: () => PopupRedux.ConfirmPromptPopupAction;
-    onClosePromptPopup: () => PopupRedux.HidePromptPopupAction;
-    onConfirmConfirmationPopup: () => PopupRedux.ConfirmConfirmationPopupAction;
-    onCancelConfirmationPopup: () => PopupRedux.CancelConfirmationPopupAction;
+    showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.PopupShowAction;
+    onClosePopup: () => PopupRedux.PopupHideAction;
+    onCloseErrorPopup: () => PopupRedux.PopupHideErrorAction;
+    onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
+    onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
+    onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
+    onConfirmConfirmationPopup: () => PopupRedux.PopupConfirmConfirmationAction;
+    onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -138,14 +138,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClosePopup: () => dispatch(PopupRedux.HidePopup()),
-        onCloseErrorPopup: () => dispatch(PopupRedux.HideErrorPopup()),
-        onCloseWarningPopup: () => dispatch(PopupRedux.HideWarningPopup()),
-        onClosePromptPopup: () => dispatch(PopupRedux.HidePromptPopup()),
-        onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.ConfirmPromptPopup(inputText)),
-        onConfirmConfirmationPopup: () => dispatch(PopupRedux.ConfirmConfirmationPopup()),
-        onCancelConfirmationPopup: () => dispatch(PopupRedux.CancelConfirmationPopup()),
-        showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.ShowPopup(componentClassName, params)),
+        onClosePopup: () => dispatch(PopupRedux.PopupHide()),
+        onCloseErrorPopup: () => dispatch(PopupRedux.PopupHideError()),
+        onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
+        onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
+        onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
+        onConfirmConfirmationPopup: () => dispatch(PopupRedux.PopupConfirmConfirmation()),
+        onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
+        showPopup: (componentClassName: string, params?: any) => dispatch(PopupRedux.PopupShow(componentClassName, params)),
     };
 }
 

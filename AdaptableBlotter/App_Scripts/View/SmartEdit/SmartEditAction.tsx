@@ -28,11 +28,11 @@ interface SmartEditActionProps extends IStrategyViewPopupProps<SmartEditActionCo
     Preview: ISmartEditPreview;
     Columns: IColumn[];
     UserFilters: IUserFilter[];
-    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditSetValueAction;
-    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditSetOperationAction;
+    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
+    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
-    onApplySmartEdit: () => SmartEditRedux.ApplySmarteditAction;
-    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.ShowConfirmationPopupAction;
+    onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
+    onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
 
 class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}> {
@@ -166,8 +166,8 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
             ConfirmationTitle: "Do you want to continue?",
             ConfirmationMsg: "This edit breaks Cell Validation rules that you have set.\nClick 'OK' to bypass these rules.\nClick 'Cancel' if you wish not to proceed with the edit.",
             ConfirmationText: "OK",
-            CancelAction: SmartEditRedux.ApplySmartedit(false),
-            ConfirmAction: SmartEditRedux.ApplySmartedit(true)
+            CancelAction: SmartEditRedux.SmartEditApply(false),
+            ConfirmAction: SmartEditRedux.SmartEditApply(true)
         }
         this.props.onConfirmWarningCellValidation(confirmation)
     }
@@ -195,11 +195,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditSetValue(value)),
-        onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditSetOperation(SmartEditOperation)),
+        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
+        onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
         onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
-        onApplySmartEdit: () => dispatch(SmartEditRedux.ApplySmartedit(false)),
-        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.ShowConfirmationPopup(confirmation)),
+        onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
+        onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

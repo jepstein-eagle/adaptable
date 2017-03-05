@@ -164,7 +164,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let error: IUIError = {
                         ErrorMsg: errorMessage
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
                     event.preventDefault();
                 } else {
                     let warningMessage: string = "";
@@ -184,7 +184,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         CancelAction: null,
                         ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
                     }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }

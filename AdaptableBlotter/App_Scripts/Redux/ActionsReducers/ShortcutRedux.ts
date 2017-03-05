@@ -48,19 +48,19 @@ export interface ShortcutChangeResultAction extends Redux.Action {
     NewShortcutResult: any;
 }
 
-export const SelectShortcut = (Shortcut: IShortcut): ShortcutSelectAction => ({
+export const ShortcutSelect = (Shortcut: IShortcut): ShortcutSelectAction => ({
     type: SHORTCUT_SELECT,
     Shortcut
 })
 
-export const ApplyShortcut = (Shortcut: IShortcut, CellInfo: ICellInfo, KeyEventString: string, NewValue: any): ShortcutApplyAction => ({
+export const ShortcutApply = (Shortcut: IShortcut, CellInfo: ICellInfo, KeyEventString: string, NewValue: any): ShortcutApplyAction => ({
     type: SHORTCUT_APPLY,
     Shortcut,
     CellInfo,
     KeyEventString,
     NewValue
 })
-export const AddShortcut = (Shortcut: IShortcut): ShortcutAddAction => ({
+export const ShortcutAdd = (Shortcut: IShortcut): ShortcutAddAction => ({
     type: SHORTCUT_ADD,
     Shortcut
 })
@@ -83,7 +83,7 @@ export const ShortcutChangeResult = (Shortcut: IShortcut, NewShortcutResult: any
     NewShortcutResult
 })
 
-export const DeleteShortcut = (Shortcut: IShortcut): ShortcutDeleteAction => ({
+export const ShortcutDelete = (Shortcut: IShortcut): ShortcutDeleteAction => ({
     type: SHORTCUT_DELETE,
     Shortcut
 })

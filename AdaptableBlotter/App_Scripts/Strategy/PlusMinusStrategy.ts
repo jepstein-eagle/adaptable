@@ -120,7 +120,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             let error: IUIError = {
                 ErrorMsg: errorMessage
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowErrorPopupAction>(PopupRedux.ShowErrorPopup(error));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
         }
     }
 
@@ -143,10 +143,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                ConfirmationTitle: "Do you want to continue?",
                 ConfirmationMsg: warningMessage,
                 ConfirmationText: "Perform Nudge Anyway",
-                CancelAction: PlusMinusRedux.ApplyPlusMinus(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.ApplyPlusMinus(allValues, keyEventString)
+                CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
+                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.ShowConfirmationPopupAction>(PopupRedux.ShowConfirmationPopup(confirmation));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
         }
     }
 

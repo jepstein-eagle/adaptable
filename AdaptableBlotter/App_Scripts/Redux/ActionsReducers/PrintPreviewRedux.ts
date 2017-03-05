@@ -4,10 +4,10 @@ import {PrintPreviewState} from './Interface/IState';
 
 export const PRINT_PREVIEW_APPLY = 'PRINT_PREVIEW_APPLY';
 
-export interface ApplyPrintPreviewAction extends Redux.Action {
+export interface PrintPreviewApplyAction extends Redux.Action {
 }
 
-export const ApplyPrintPreview = (): ApplyPrintPreviewAction => ({
+export const PrintPreviewApply = (): PrintPreviewApplyAction => ({
     type: PRINT_PREVIEW_APPLY
 })
 
