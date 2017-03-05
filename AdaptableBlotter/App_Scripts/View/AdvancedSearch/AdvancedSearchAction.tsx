@@ -71,7 +71,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
         })
 
-        let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch()
+        let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
+        let selectedAdvancedSearchName: string = selectedAdvancedSearch==null? "": selectedAdvancedSearch.Name;
+
         let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
         let newSearchButton = <ButtonCreate onClick={() => this.onNewAdvancedSearch()}
             overrideTooltip="Create New Advanced Search"
@@ -109,7 +111,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     ConfigEntity={selectedAdvancedSearch}
                                     DisplayMode="Glyph"
                                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(selectedAdvancedSearch)}
-                                    ConfirmationMsg={"Are you sure you want to delete '" + selectedAdvancedSearch.Name + "'?"}
+                                    ConfirmationMsg={"Are you sure you want to delete '" + selectedAdvancedSearchName + "'?"}
                                     ConfirmationTitle={"Delete Advanced Search"} />
                             </Col>
                         </FormGroup>
