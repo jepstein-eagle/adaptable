@@ -57,20 +57,24 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             {' '}
             <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
                 overrideTooltip="Clear (but do not delete) Current Advanced Search"
-                overrideDisableButton={currentAdvancedSearchId == "select"} />
+                overrideDisableButton={currentAdvancedSearchId == "select"} 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
                 overrideTooltip="Edit Current Advanced Search"
                 overrideDisableButton={currentAdvancedSearchId == "select"}
-                ConfigEntity={savedSearch} />
+                ConfigEntity={savedSearch} 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonCreate onClick={() => this.props.onNewAdvancedSearch()}
-                overrideTooltip="Create New Advanced Search" />
+                overrideTooltip="Create New Advanced Search" 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
                 overrideTooltip="Delete Advanced Search"
                 overrideDisableButton={currentAdvancedSearchId == "select"}
-                ConfigEntity={savedSearch} />
+                ConfigEntity={savedSearch} 
+                DisplayMode="Glyph+Text"/>
         </FormGroup>
 
         return (

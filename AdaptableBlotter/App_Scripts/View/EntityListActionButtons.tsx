@@ -44,17 +44,20 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                 <ButtonEdit onClick={() => this.props.editClick()}
                     overrideDisableButton={this.props.overrideDisableEdit}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip={this.props.overrideTooltipEdit} />}
+                    overrideTooltip={this.props.overrideTooltipEdit} 
+                    DisplayMode="Glyph"/>}
             {this.props.showDelete &&
                 <ButtonDelete onClick={() => this.props.deleteClick()}
                     overrideDisableButton={this.props.overrideDisableDelete}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip={this.props.overrideTooltipDelete} />}
+                    overrideTooltip={this.props.overrideTooltipDelete} 
+                    DisplayMode="Glyph"/>}
             {this.props.showShare &&
                 <ButtonShare onClick={() => this.props.shareClick()}
                     overrideDisableButton={this.props.overrideDisableShare}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip="Share With Team - disabled in this demo" />}
+                    overrideTooltip="Share With Team - disabled in this demo" 
+                    DisplayMode="Glyph"/>}
         </ButtonToolbar>;
     }
 }

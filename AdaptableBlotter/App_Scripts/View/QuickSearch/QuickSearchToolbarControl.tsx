@@ -43,10 +43,12 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
             />{' '}
             <ButtonClear onClick={() => this.onClearQuickSearch()}
                 overrideTooltip="Clear Quick Search"
-                overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)} />
+                overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)} 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
-                overrideTooltip="Edit Quick Search" />
+                overrideTooltip="Edit Quick Search" 
+                DisplayMode="Glyph+Text"/>
         </FormGroup>
 
         return <Panel className="small-padding-panel" >

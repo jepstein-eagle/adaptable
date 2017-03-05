@@ -54,15 +54,18 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             <ButtonSave onClick={() => this.onSaveLayoutClicked()}
                 overrideTooltip="Save Changes to Current Layout"
                 overrideDisableButton={this.props.CurrentLayout == "Default"}
-                ConfigEntity={layoutEntity} />
+                ConfigEntity={layoutEntity} 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonCreate onClick={() => this.onAddLayoutClicked()}
-                overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" />
+                overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" 
+                DisplayMode="Glyph+Text"/>
             {' '}
             <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
                 overrideTooltip="Delete Layout"
                 overrideDisableButton={this.props.CurrentLayout == "Default"}
-                ConfigEntity={layoutEntity} />
+                ConfigEntity={layoutEntity} 
+                DisplayMode="Glyph+Text"/>
         </FormGroup>
 
         return <Panel className="small-padding-panel" >

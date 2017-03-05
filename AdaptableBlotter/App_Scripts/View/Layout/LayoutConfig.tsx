@@ -59,7 +59,8 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             <ButtonDelete onClick={() => this.onDeleteLayoutClicked()}
                                 overrideTooltip="Delete Layout"
                                 overrideDisableButton={this.props.CurrentLayout == "Default"}
-                                ConfigEntity={layoutEntity} />
+                                ConfigEntity={layoutEntity}
+                                DisplayMode="Glyph" />
                         </Col>
                     </FormGroup>
                 </Panel>
@@ -84,7 +85,8 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             </Col>
                             <Col xs={2}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)} />
+                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)}
+                                    DisplayMode="Glyph" />
                             </Col>
                         </Row>
                     </AdaptableBlotterForm>

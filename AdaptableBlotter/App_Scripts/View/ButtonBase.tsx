@@ -17,10 +17,13 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     //The entity we pass in to check normal disabled status
     ConfigEntity?: IConfigEntity
     style?: React.CSSProperties;
+    //Override normal Text i.e. Edit
+    overrideText?: string
+    DisplayMode: "Glyph" | "Text" | "Glyph+Text"
 }
 
 interface ButtonBaseProps extends ButtonProps {
-    ToolTip: string,
+    ToolTipAndText: string,
     bsStyle: string;
     glyph: string
 }
@@ -29,9 +32,10 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
     public static defaultProps: ButtonBaseProps = {
         overrideDisableButton: false,
         ConfigEntity: null,
-        ToolTip: "",
+        ToolTipAndText: "",
         bsStyle: "",
-        glyph: ""
+        glyph: "",
+        DisplayMode: "Glyph+Text"
     };
     render() {
         let isDisabled: boolean
@@ -41,15 +45,32 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         if (this.props.overrideDisableButton) {
             isDisabled = true
         }
-        let tooltip = this.props.ToolTip
+        let text = this.props.ToolTipAndText
+        if (this.props.overrideText) {
+            text = this.props.overrideText
+        }
+        let tooltip = this.props.ToolTipAndText
         if (this.props.overrideTooltip) {
             tooltip = this.props.overrideTooltip
+        }
+        let content: React.ReactElement<any>
+        if (this.props.DisplayMode == "Glyph") {
+            content = <Glyphicon glyph={this.props.glyph} />
+        }
+        else if (this.props.DisplayMode == "Text") {
+            content = <span>{text}</span>
+        }
+        else if (this.props.DisplayMode == "Glyph+Text") {
+            content = <div><Glyphicon glyph={this.props.glyph} />
+                {' '}{text}
+            </div>
         }
         return <OverlayTrigger overlay={<Tooltip id="tooltipButton">{tooltip}</Tooltip>}>
             <Button style={this.props.style}
                 bsStyle={this.props.bsStyle}
                 disabled={isDisabled}
-                onClick={() => this.props.onClick()}><Glyphicon glyph={this.props.glyph} /></Button>
+                onClick={() => this.props.onClick()}>
+                {content}</Button>
         </OverlayTrigger>;
     }
 }

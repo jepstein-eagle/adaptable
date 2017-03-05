@@ -11,7 +11,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 
 export class ButtonDelete extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTip="Delete"
+        return <ButtonBase ToolTipAndText="Delete"
             bsStyle='danger'
             ConfigEntity={this.props.ConfigEntity}
             glyph="trash"
@@ -19,6 +19,8 @@ export class ButtonDelete extends React.Component<ButtonProps, {}> {
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
             style={this.props.style}
+            DisplayMode={this.props.DisplayMode}
+            overrideText={this.props.overrideText}
         />;
     }
 }

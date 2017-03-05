@@ -76,10 +76,12 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch()
         let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
         let newSearchButton = <ButtonCreate onClick={() => this.onNewAdvancedSearch()}
-            overrideTooltip="Create New Advanced Search" />
+            overrideTooltip="Create New Advanced Search"
+            DisplayMode="Glyph+Text" />
         let editSearchButton = <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
             overrideTooltip="Edit Search"
-            ConfigEntity={selectedAdvancedSearch} />
+            ConfigEntity={selectedAdvancedSearch}
+            DisplayMode="Glyph+Text" />
         return (
             <div >
                 <PanelWithButton bsStyle="primary" headerText="Advanced Search" button={newSearchButton} glyphicon={"search"}>
@@ -100,12 +102,14 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                             <Col xs={4}>
                                 <ButtonClear onClick={() => this.onClearAdvancedSearch()}
                                     overrideTooltip="Clear Search"
-                                    overrideDisableButton={selectedAdvancedSearch == null} />
+                                    overrideDisableButton={selectedAdvancedSearch == null}
+                                    DisplayMode="Glyph" />
                                 {' '}
                                 <ButtonDelete onClick={() => this.onDeleteAdvancedSearch()}
                                     overrideTooltip="Delete Search"
                                     overrideDisableButton={selectedAdvancedSearch == null}
-                                    ConfigEntity={selectedAdvancedSearch} />
+                                    ConfigEntity={selectedAdvancedSearch}
+                                    DisplayMode="Glyph" />
                             </Col>
                         </FormGroup>
                     </div>

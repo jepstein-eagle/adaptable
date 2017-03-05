@@ -11,7 +11,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 
 export class ButtonEdit extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTip="Edit"
+        return <ButtonBase ToolTipAndText="Edit"
             bsStyle='primary'
             ConfigEntity={this.props.ConfigEntity}
             glyph="edit"
@@ -19,6 +19,8 @@ export class ButtonEdit extends React.Component<ButtonProps, {}> {
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
             style={this.props.style}
+            DisplayMode={this.props.DisplayMode}
+            overrideText={this.props.overrideText}
         />;
     }
 }
