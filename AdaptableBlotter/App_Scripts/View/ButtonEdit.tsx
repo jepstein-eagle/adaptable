@@ -12,7 +12,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 export class ButtonEdit extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Edit"
-            bsStyle='primary'
+            bsStyle='success'
             ConfigEntity={this.props.ConfigEntity}
             glyph="edit"
             onClick={() => this.props.onClick()}

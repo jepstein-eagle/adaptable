@@ -12,7 +12,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 export class ButtonClear extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Clear"
-            bsStyle='info'
+            bsStyle='primary'
             ConfigEntity={this.props.ConfigEntity}
             glyph="erase"
             onClick={() => this.props.onClick()}
