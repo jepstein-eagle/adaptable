@@ -38,7 +38,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
 
-        let collapsedContent = savedSearch ? <ControlLabel>{savedSearch.Name}</ControlLabel> : <span style={noSearchStyle}>None</span>;
+        let collapsedContent =  <ControlLabel>{savedSearch?savedSearch.Name:"None"}</ControlLabel>
 
         let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
             "select" : this.props.CurrentAdvancedSearchUid
@@ -160,10 +160,4 @@ var borderStyle = {
 var marginButtonStyle = {
     marginTop: '4px'
 };
-
-var noSearchStyle = {
-    fontStyle: 'italic'
-};
-
-
 
