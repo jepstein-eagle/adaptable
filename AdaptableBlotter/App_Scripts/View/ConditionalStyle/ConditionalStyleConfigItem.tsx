@@ -32,9 +32,10 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         })
         let isDisabled = this.props.ConditionalStyleCondition.IsPredefined
 
+
         return <li
             className="list-group-item"
-            onClick={() => { } }>
+            onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
 
                 <Col md={3} >
@@ -54,7 +55,9 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                 </Col>
                 <Col xs={3}>
-                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
+                    <span style={expressionFontSizeStyle}>
+                        {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
+                    </span>
                 </Col>
 
                 <Col md={3} >
@@ -85,3 +88,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
 }
 
+var expressionFontSizeStyle = {
+    fontSize: 'small'
+};
