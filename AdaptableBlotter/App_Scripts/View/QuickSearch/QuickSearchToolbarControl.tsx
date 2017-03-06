@@ -31,8 +31,9 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     render(): any {
 
         let collapsedContent = StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? <span style={noSearchStyle}>None</span> : <ControlLabel> {this.props.QuickSearchText}</ControlLabel>
+        let tooltipText = this.props.QuickSearchDashboardControl.IsCollapsed ? "Expand" : "Collapse"
 
-        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
                 {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search{' '}<Glyphicon glyph={this.props.QuickSearchDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
@@ -50,13 +51,13 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 />
                 {' '}
                 <ButtonClear onClick={() => this.onClearQuickSearch()}
-                 size="small"
+                    size="small"
                     overrideTooltip="Clear Quick Search"
                     overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
                     DisplayMode="Glyph+Text" />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
-                   size="small"
+                    size="small"
                     overrideTooltip="Edit Quick Search"
                     DisplayMode="Glyph+Text" />
             </div>
