@@ -72,7 +72,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         })
 
         let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
-        let selectedAdvancedSearchName: string = selectedAdvancedSearch==null? "": selectedAdvancedSearch.Name;
+        let selectedAdvancedSearchName: string = selectedAdvancedSearch == null ? "" : selectedAdvancedSearch.Name;
 
         let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
         let newSearchButton = <ButtonNew onClick={() => this.onNewAdvancedSearch()}
@@ -86,10 +86,10 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             <div >
                 <PanelWithButton bsStyle="primary" headerText="Advanced Search" button={newSearchButton} glyphicon={"search"}>
                     {/* The main Search selection form */}
-                    <div >
+                    <Form horizontal>
                         <FormGroup controlId="formInlineName">
-                            <Col xs={3}>
-                                <ControlLabel style={largeControlStyle}>Current:</ControlLabel>
+                            <Col componentClass={ControlLabel} xs={3}>
+                                Current:
                             </Col>
                             <Col xs={5}>
                                 <FormControl componentClass="select" placeholder="select"
@@ -115,8 +115,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     ConfirmationTitle={"Delete Advanced Search"} />
                             </Col>
                         </FormGroup>
-                    </div>
-
+                    </Form>
                     {/* Wizard for creating or ediiting searches */}
                     {this.state.EditedAdvancedSearch != null &&
                         <AdaptableWizard Steps={
@@ -265,10 +264,6 @@ var previewDivStyle = {
     overflowY: 'auto',
     maxHeight: '350px',
 };
-
-let largeControlStyle = {
-    margin: '6px'
-}
 
 let smallButtonStyle = {
     margin: '2px'
