@@ -40,7 +40,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
 
-        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+        let tooltipText = this.props.LayoutDashboardControl.IsCollapsed ? "Expand" : "Collapse"
+
+
+        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
                 {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
