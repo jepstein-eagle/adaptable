@@ -14,6 +14,7 @@ interface PanelWithButtonProps extends PanelProps {
     headerText: string
     glyphicon?: string
     buttonDisabled?: boolean
+    buttonStyle?: string
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -29,6 +30,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         if (buttonContent || this.props.button) {
             className += " " + "panel-with-button-reduce-header-padding"
         }
+        let buttonStyle:string = (this.props.buttonStyle)? this.props.buttonStyle: "default"
 
 
         let header = <AdaptableBlotterForm inline>
@@ -42,7 +44,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 </Col>
                 <Col xs={3}>
                     {buttonContent &&
-                        <Button bsSize="small" bsStyle="default" disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
+                        <Button bsSize="small" bsStyle={buttonStyle} disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
                         </Button>}
                     {this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } })}

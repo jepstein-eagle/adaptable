@@ -22,12 +22,12 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
 
 //common colors from http://htmlcolorcodes.com/
 const ABcolorChoices = <datalist id={'ABcolorChoices'}>
+    <option>#000000</option>
     <option>#ffffff</option>
     <option>#C0C0C0</option>
     <option>#808080</option>
-    <option>#000000</option>
     <option>#FF0000</option>
-    <option>#800000</option>
+    <option>#FFFFCC</option>
     <option>#FFFF00</option>
     <option>#808000</option>
     <option>#00FF00</option>
@@ -38,4 +38,6 @@ const ABcolorChoices = <datalist id={'ABcolorChoices'}>
     <option>#000080</option>
     <option>#FF00FF</option>
     <option>#800080</option>
+    <option>#800000</option>
+    
 </datalist>

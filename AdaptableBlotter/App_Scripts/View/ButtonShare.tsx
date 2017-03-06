@@ -12,7 +12,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 export class ButtonShare extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Edit"
-            bsStyle='info'
+            bsStyle='warning'
             ConfigEntity={this.props.ConfigEntity}
             glyph="share"
             onClick={() => this.props.onClick()}
