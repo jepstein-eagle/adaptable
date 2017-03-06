@@ -40,18 +40,20 @@ export class AuditService implements IAuditService {
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnId;
         let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
-        let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
-        if (cellDataValueList != null) {
-            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfo.NewValue;
-            cellDataValueList.DataChangedInfo.OldValue = dataChangedEvent.OldValue
-            cellDataValueList.DataChangedInfo.NewValue = dataChangedEvent.NewValue
-            cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
-        }
-        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-            dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
-            let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
-            myList.CellDataValueList.push(cellDataValueList);
+        if (myList) {
+            let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
+            if (cellDataValueList != null) {
+                dataChangedEvent.OldValue = cellDataValueList.DataChangedInfo.NewValue;
+                cellDataValueList.DataChangedInfo.OldValue = dataChangedEvent.OldValue
+                cellDataValueList.DataChangedInfo.NewValue = dataChangedEvent.NewValue
+                cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
+            }
+            else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
+                dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
+                let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+                cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
+                myList.CellDataValueList.push(cellDataValueList);
+            }
         }
     }
 
@@ -163,14 +165,14 @@ export class AuditService implements IAuditService {
         switch (columnType) {
             case ColumnType.Date:
                 operand1 = Date.parse(cellValidationRule.RangeExpression.Operand1)
-                if (StringExtensions.IsNotEmpty( cellValidationRule.RangeExpression.Operand2 )) {
+                if (StringExtensions.IsNotEmpty(cellValidationRule.RangeExpression.Operand2)) {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
                 newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
             case ColumnType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
-                if (StringExtensions.IsNotEmpty( cellValidationRule.RangeExpression.Operand2 )) {
+                if (StringExtensions.IsNotEmpty(cellValidationRule.RangeExpression.Operand2)) {
                     operand2 = Number(cellValidationRule.RangeExpression.Operand2);
                 }
                 newValue = dataChangedEvent.NewValue;
