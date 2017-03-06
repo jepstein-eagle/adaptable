@@ -14,6 +14,7 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { ColumnType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ButtonNew } from '../ButtonNew';
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
@@ -118,9 +119,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let addConditionButtonDisabled: boolean = !this.state.IsFirstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
+        let newButton = <ButtonNew onClick={() => this.onSelectedColumnChanged()}
+            overrideTooltip="Add Condition"
+            DisplayMode="Glyph+Text" 
+            overrideDisableButton={addConditionButtonDisabled}/>
+
         return <PanelWithButton headerText="Build Expression"
-            buttonClick={() => this.onSelectedColumnChanged()} buttonDisabled={addConditionButtonDisabled}
-            buttonContent={"Add Condition"} buttonStyle="info" bsStyle="primary" style={{ height: '575px' }}>
+            button={newButton}
+            bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
                     <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
