@@ -15,6 +15,7 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { Helper } from '../../Core/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -86,7 +87,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             <div >
                 <PanelWithButton bsStyle="primary" headerText="Advanced Search" button={newSearchButton} glyphicon={"search"}>
                     {/* The main Search selection form */}
-                    <Form horizontal>
+                    <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineName">
                             <Col componentClass={ControlLabel} xs={3}>
                                 Current:
@@ -115,7 +116,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     ConfirmationTitle={"Delete Advanced Search"} />
                             </Col>
                         </FormGroup>
-                    </Form>
+                    </AdaptableBlotterForm>
                     {/* Wizard for creating or ediiting searches */}
                     {this.state.EditedAdvancedSearch != null &&
                         <AdaptableWizard Steps={
