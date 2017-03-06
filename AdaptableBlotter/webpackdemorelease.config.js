@@ -51,7 +51,7 @@ module.exports = {
             template: 'Harness/DemoRelease/index.ejs',
             inject: false,
             'version' : PACKAGE.version,
-            'versiondate' : 'Feb 2017'
+            'versiondate' : new Date().toLocaleDateString()
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
