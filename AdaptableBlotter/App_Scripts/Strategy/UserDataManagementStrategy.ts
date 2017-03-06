@@ -20,7 +20,11 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
     }
 
     getMenuItems(): IMenuItem[] {
-        //return [];
+        if(process.env.NODE_ENV == "production")
+        {
+            return [];
+        }
+        console.log(process.env)
         return [this.menuItemConfig];
     }
 
