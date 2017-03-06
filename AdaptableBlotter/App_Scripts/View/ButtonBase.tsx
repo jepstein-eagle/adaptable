@@ -65,12 +65,14 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
                 {' '}{text}
             </div>
         }
-        return <OverlayTrigger overlay={<Tooltip id="tooltipButton">{tooltip}</Tooltip>}>
-            <Button style={this.props.style}
-                bsStyle={this.props.bsStyle}
-                disabled={isDisabled}
-                onClick={() => this.props.onClick()}>
-                {content}</Button>
-        </OverlayTrigger>;
+        let button = <Button style={this.props.style}
+            bsStyle={this.props.bsStyle}
+            disabled={isDisabled}
+            onClick={() => this.props.onClick()}>
+            {content}</Button>
+        let buttonwithtooltip = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>
+            {button}
+        </OverlayTrigger >
+        return isDisabled ? button : buttonwithtooltip
     }
 }
