@@ -42,7 +42,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                         </FormGroup>
                     </AdaptableBlotterForm>
                 </Col>
-                <Col md={2} >
+                <Col md={3} >
                     <HelpBlock>
                         {ColumnType[this.props.Shortcut.ColumnType]}
                     </HelpBlock>
@@ -62,7 +62,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                         </FormControl>
                     }
                 </Col>
-                <Col md={2}>
+                <Col md={3}>
                     {this.props.Shortcut.IsDynamic ?
                         this.props.Shortcut.ShortcutResult :
                         this.props.Shortcut.ColumnType == ColumnType.Date ?
@@ -79,7 +79,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 value={this.props.Shortcut.ShortcutResult}
                             />}
                 </Col>
-                <Col md={4} >
+                <Col md={2} >
                     <EntityListActionButtons
                         showEdit={false}
                         ConfigEntity={this.props.Shortcut}
