@@ -1,4 +1,12 @@
 {
+	"Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "QuickSearch",
+				"AccessLevel": "ReadOnly"
+			}
+		]
+	},
 	"Shortcut": {
 		"NumericShortcuts": [
 			{
@@ -9,6 +17,29 @@
 				"IsLive": true,
 				"IsPredefined": true,
 				"IsDynamic": false
+			}
+		]
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [
+			{
+				"Uid": "a1fe7874-2d38-4353-ad1e-17eefd24d1fc",
+				"Name": "EURUSD",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "currency",
+							"ColumnValues": [
+								"EUR",
+								"GBP"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": true
 			}
 		]
 	}
