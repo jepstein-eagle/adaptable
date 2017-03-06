@@ -68,7 +68,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             bsStyle="primary" style={panelStyle} glyphicon={"tint"}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
-                <Well bsSize="small">Click 'Create Conditional Style' to create a new conditional style to be applied at row or column level.</Well>
+                <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 

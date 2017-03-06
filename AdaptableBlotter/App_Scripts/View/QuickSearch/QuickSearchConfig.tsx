@@ -95,7 +95,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                     onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)}/>
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
-                                    <Button bsStyle='primary' onClick={() => this.onSetQuickSearch()}>Search</Button>
+                                    <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
                                 </OverlayTrigger>
                                 {' '}
                                 <ButtonClear onClick={() => this.onClearQuickSearch()}

@@ -13,7 +13,8 @@ export class ButtonShare extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Edit"
             bsStyle='warning'
-            ConfigEntity={this.props.ConfigEntity}
+            bsSize={this.props.size}
+             ConfigEntity={this.props.ConfigEntity}
             glyph="share"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

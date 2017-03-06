@@ -51,23 +51,26 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         let expandedContent = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                  <FormControl componentClass="select" placeholder="select"
-                value={this.props.CurrentLayout}
-                onChange={(x) => this.onSelectedLayoutChanged(x)} >
-                {availableLayouts}
-            </FormControl>
-          {' '}
+                <FormControl componentClass="select" placeholder="select"
+                    value={this.props.CurrentLayout}
+                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
+                    {availableLayouts}
+                </FormControl>
+                {' '}
                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
+                    size="small"
                     overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph+Text" />
                 {' '}
                 <ButtonNew onClick={() => this.onAddLayoutClicked()}
+                    size="small"
                     overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
                     DisplayMode="Glyph+Text" />
                 {' '}
                 <ButtonDelete
+                    size="small"
                     overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
@@ -147,7 +150,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);
 
 var marginButtonStyle = {
-     marginTop: '4px'
+    marginTop: '4px'
 };
 
 var noSearchStyle = {

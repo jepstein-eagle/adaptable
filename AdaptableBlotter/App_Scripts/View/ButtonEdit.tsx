@@ -13,7 +13,8 @@ export class ButtonEdit extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Edit"
             bsStyle='success'
-            ConfigEntity={this.props.ConfigEntity}
+            bsSize={this.props.size}
+             ConfigEntity={this.props.ConfigEntity}
             glyph="edit"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

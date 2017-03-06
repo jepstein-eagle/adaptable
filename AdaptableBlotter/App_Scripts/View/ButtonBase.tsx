@@ -17,6 +17,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     //The entity we pass in to check normal disabled status
     ConfigEntity?: IConfigEntity
     style?: React.CSSProperties;
+    size?: ReactBootstrap.Sizes;
     //Override normal Text i.e. Edit
     overrideText?: string
     DisplayMode: "Glyph" | "Text" | "Glyph+Text"
@@ -25,6 +26,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
 interface ButtonBaseProps extends ButtonProps {
     ToolTipAndText: string,
     bsStyle: string;
+    bsSize: ReactBootstrap.Sizes
     glyph: string
 }
 
@@ -34,6 +36,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         ConfigEntity: null,
         ToolTipAndText: "",
         bsStyle: "",
+        bsSize: null,
         glyph: "",
         DisplayMode: "Glyph+Text"
     };
@@ -53,6 +56,10 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         if (this.props.overrideTooltip) {
             tooltip = this.props.overrideTooltip
         }
+         let bsSize = this.props.bsSize
+        if (this.props.bsSize) {
+            bsSize = "large"
+        }
         let content: React.ReactElement<any>
         if (this.props.DisplayMode == "Glyph") {
             content = <Glyphicon glyph={this.props.glyph} />
@@ -68,6 +75,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         let button = <Button style={this.props.style}
             bsStyle={this.props.bsStyle}
             disabled={isDisabled}
+            bsSize ={this.props.bsSize}
             onClick={() => this.props.onClick()}>
             {content}</Button>
         let buttonwithtooltip = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>

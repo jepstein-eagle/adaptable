@@ -120,16 +120,17 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && this.props.SelectedColumnId != "select") || !addConditionButtonDisabled;
 
         let newButton = <ButtonNew onClick={() => this.onSelectedColumnChanged()}
+            size="small"
             overrideTooltip="Add Condition"
-            DisplayMode="Glyph+Text" 
-            overrideDisableButton={addConditionButtonDisabled}/>
+            DisplayMode="Glyph+Text"
+            overrideDisableButton={addConditionButtonDisabled} />
 
-        return <PanelWithButton headerText="Build Expression"
+        return <PanelWithButton headerText="Column Conditions"
             button={newButton}
             bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
-                    <Well bsSize="small">Click 'Add Condition' button to start adding Column Conditions for the Expression.
+                    <Well bsSize="small">Click 'New' button to start adding Column Conditions for the Expression.
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?

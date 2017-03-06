@@ -46,25 +46,29 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
             <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th">
 
                 <Panel header="Load Layout" bsStyle="info">
-                    <FormGroup controlId="load">
-                        <Col xs={4} componentClass={ControlLabel}>Current Layout: </Col>
-                        <Col xs={6}>
-                            <FormControl componentClass="select" placeholder="select" value={this.props.CurrentLayout}
-                                onChange={(x) => this.onLayoutSelectionChanged(x)} >
-                                {optionLayouts}
-                            </FormControl>
-                        </Col>
-                        <Col xs={2}>
-                            <ButtonDelete
-                                overrideTooltip="Delete Layout"
-                                overrideDisableButton={this.props.CurrentLayout == "Default"}
-                                ConfigEntity={layoutEntity}
-                                DisplayMode="Glyph"
-                                ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
-                                ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
-                                ConfirmationTitle={"Delete Layout"} />
-                        </Col>
-                    </FormGroup>
+                    <AdaptableBlotterForm horizontal>
+                        <FormGroup controlId="load">
+                            <Col xs={2} >
+                                <ControlLabel >Current</ControlLabel>
+                            </Col>
+                            <Col xs={7}>
+                                <FormControl componentClass="select" placeholder="select" value={this.props.CurrentLayout}
+                                    onChange={(x) => this.onLayoutSelectionChanged(x)} >
+                                    {optionLayouts}
+                                </FormControl>
+                            </Col>
+                            <Col xs={3}>
+                                <ButtonDelete
+                                    overrideTooltip="Delete Layout"
+                                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                                    ConfigEntity={layoutEntity}
+                                    DisplayMode="Glyph+Text"
+                                    ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                                    ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+                                    ConfirmationTitle={"Delete Layout"} />
+                            </Col>
+                        </FormGroup>
+                    </AdaptableBlotterForm>
                 </Panel>
 
                 <Panel header="Save As New Layout" bsStyle="info">
@@ -82,13 +86,16 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={10} >
+                            <Col xs={2} >
+                                <ControlLabel >Name</ControlLabel>
+                            </Col>
+                            <Col xs={7}>
                                 <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e: React.FormEvent) => this.onSaveLayoutNameChanged(e)} />
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
                                     overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)}
-                                    DisplayMode="Glyph" />
+                                    DisplayMode="Glyph+Text" />
                             </Col>
                         </Row>
                     </AdaptableBlotterForm>

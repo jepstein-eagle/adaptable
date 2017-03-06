@@ -91,7 +91,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             }
 
             {UserFilterItems.length == 0 &&
-                <Well bsSize="small">Click 'Create User Filter' to start creating user filters.<p />
+                <Well bsSize="small">Click 'New' to start creating user filters.<p />
                     User filters are accessible when filtering columns or creating an expression (e.g. Advanced Search, Plus / Minus, Conditional Style etc).</Well>
             }
 

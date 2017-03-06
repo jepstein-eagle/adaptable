@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
-import { FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
+import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -89,10 +89,10 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                     {/* The main Search selection form */}
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineName">
-                            <Col componentClass={ControlLabel} xs={3}>
-                                Current:
+                            <Col xs={2}>
+                                <ControlLabel>  Current: </ControlLabel>
                             </Col>
-                            <Col xs={5}>
+                            <Col xs={4}>
                                 <FormControl componentClass="select" placeholder="select"
                                     value={currentAdvancedSearch}
                                     onChange={(x) => this.onSelectedSearchChanged(x)} >
@@ -100,17 +100,23 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     {advancedSearches}
                                 </FormControl>
                             </Col>
-                            <Col xs={4}>
+                            <Col xs={6}>
                                 <ButtonClear onClick={() => this.onClearAdvancedSearch()}
                                     overrideTooltip="Clear Search"
                                     overrideDisableButton={selectedAdvancedSearch == null}
-                                    DisplayMode="Glyph" />
+                                    DisplayMode="Glyph+Text" />
+                                {' '}
+                                <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
+                                    overrideTooltip="Edit Search"
+                                     overrideDisableButton={selectedAdvancedSearch == null}
+                                    ConfigEntity={selectedAdvancedSearch}
+                                    DisplayMode="Glyph+Text" />
                                 {' '}
                                 <ButtonDelete
                                     overrideTooltip="Delete Search"
                                     overrideDisableButton={selectedAdvancedSearch == null}
                                     ConfigEntity={selectedAdvancedSearch}
-                                    DisplayMode="Glyph"
+                                    DisplayMode="Glyph+Text"
                                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(selectedAdvancedSearch)}
                                     ConfirmationMsg={"Are you sure you want to delete '" + selectedAdvancedSearchName + "'?"}
                                     ConfirmationTitle={"Delete Advanced Search"} />
@@ -139,7 +145,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <PanelWithButton headerText="Search Details" bsStyle="primary" button={editSearchButton}>
+                    <Panel bsStyle="primary" header="Search Details">
                         <div style={previewDivStyle}>
                             <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
                                 UserFilters={this.props.UserFilters}
@@ -152,7 +158,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 ShowPanel={false}>
                             </ExpressionBuilderPreview>
                         </div>
-                    </PanelWithButton>
+                    </Panel>
 
                 }
 

@@ -47,7 +47,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 ColumnLabel={column.FriendlyName}></CustomSortConfigItem>
         });
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
+        let cellInfo: [string, number][] = [["Column", 3], ["Sort Order", 6], ["", 3]];
         let newButton = <ButtonNew onClick={() => this.CreateCustomSort()}
             overrideTooltip="Create Custom Sort"
             DisplayMode="Glyph+Text" />
@@ -55,7 +55,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         return <PanelWithButton headerText="Custom Sort" style={panelStyle}
             button={newButton} bsStyle="primary"  glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
-                <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
+                <Well bsSize="small">Click 'New' to create a new bespoke sort order for a column of your choosing.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 

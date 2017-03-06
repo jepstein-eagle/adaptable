@@ -19,8 +19,8 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
             className="list-group-item"
             onClick={() => { } }>
             <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={2}>{this.props.ColumnLabel}</Col>
-                <Col xs={7} >
+                <Col xs={3}>{this.props.ColumnLabel}</Col>
+                <Col xs={6} >
                     {this.props.CustomSort.CustomSortItems.join(', ')}
                 </Col>
                 <Col xs={3}>

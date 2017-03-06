@@ -50,11 +50,13 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 />
                 {' '}
                 <ButtonClear onClick={() => this.onClearQuickSearch()}
+                 size="small"
                     overrideTooltip="Clear Quick Search"
                     overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
                     DisplayMode="Glyph+Text" />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
+                   size="small"
                     overrideTooltip="Edit Quick Search"
                     DisplayMode="Glyph+Text" />
             </div>

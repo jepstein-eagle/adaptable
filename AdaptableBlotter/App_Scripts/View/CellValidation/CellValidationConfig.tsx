@@ -101,7 +101,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
             {CellValidationItems.length == 0 &&
                 <Well bsSize="small">
-                    <HelpBlock>Click 'Create Cell Validation Rule' to start creating rules for valid cell edits.</HelpBlock>
+                    <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
                     <HelpBlock>Edits that fail can be prevented altogether or allowed after user sees a warning.</HelpBlock>
                 </Well>
             }
