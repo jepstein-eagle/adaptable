@@ -38,69 +38,65 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         })
 
         let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
+
+        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
+            <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
+                {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-right" : "chevron-up"} />
+            </Button>
+        </OverlayTrigger>
+
         let collapsedContent = <ControlLabel> {this.props.CurrentLayout}</ControlLabel>
 
-        let labelContent = <Label style={labelStyle} bsStyle="primary"><Glyphicon glyph="th" />{' '}Layout</Label>;
 
-        let layoutContent = <FormGroup controlId="formAdvancedSearch">
-            <FormControl componentClass="select" placeholder="select"
+        let expandedContent = <span>
+            <div style={marginButtonStyle}>
+                  <FormControl componentClass="select" placeholder="select"
                 value={this.props.CurrentLayout}
                 onChange={(x) => this.onSelectedLayoutChanged(x)} >
                 {availableLayouts}
             </FormControl>
-            {' '}
-            <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                overrideTooltip="Save Changes to Current Layout"
-                overrideDisableButton={this.props.CurrentLayout == "Default"}
-                ConfigEntity={layoutEntity} 
-                DisplayMode="Glyph+Text"/>
-            {' '}
-            <ButtonNew onClick={() => this.onAddLayoutClicked()}
-                overrideTooltip="Create a new Layout using the Blotter's current column order and visibility" 
-                DisplayMode="Glyph+Text"/>
-            {' '}
-            <ButtonDelete 
-                overrideTooltip="Delete Layout"
-                overrideDisableButton={this.props.CurrentLayout == "Default"}
-                ConfigEntity={layoutEntity} 
-                DisplayMode="Glyph+Text"
-                ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
-                ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
-                ConfirmationTitle={"Delete Layout"}/>
-        </FormGroup>
+          {' '}
+                <ButtonSave onClick={() => this.onSaveLayoutClicked()}
+                    overrideTooltip="Save Changes to Current Layout"
+                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                    ConfigEntity={layoutEntity}
+                    DisplayMode="Glyph+Text" />
+                {' '}
+                <ButtonNew onClick={() => this.onAddLayoutClicked()}
+                    overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
+                    DisplayMode="Glyph+Text" />
+                {' '}
+                <ButtonDelete
+                    overrideTooltip="Delete Layout"
+                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                    ConfigEntity={layoutEntity}
+                    DisplayMode="Glyph+Text"
+                    ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                    ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+                    ConfirmationTitle={"Delete Layout"} />
+            </div>
+        </span>
 
         return <Panel className="small-padding-panel" >
-            {this.props.LayoutDashboardControl.IsCollapsed ?
-                <AdaptableBlotterForm className='navbar-form' inline>
-                    <div >
-                        {labelContent}
-                        {' '}
-                        <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
-                            <Button bsStyle="primary" bsSize='small' style={buttonOpenStyle} onClick={() => this.expandCollapseClicked()}>
-                                <Glyphicon glyph="chevron-right" />
-                            </Button>
-                        </OverlayTrigger>
-                        {' '}
-                        {collapsedContent}
-                    </div>
 
-                </AdaptableBlotterForm>
-                :
-                <AdaptableBlotterForm className='navbar-form' inline>
-                    <div >
-                        {labelContent}
-                        {' '}
-                        <OverlayTrigger overlay={<Tooltip id="toolcollapse">Collapse</Tooltip>}>
-                            <Button bsSize='small' bsStyle="primary" style={buttonCloseStyle} onClick={() => this.expandCollapseClicked()}>
-                                <Glyphicon glyph="chevron-up" />
-                            </Button>
-                        </OverlayTrigger>
-                        <Row style={marginButtonStyle}>
-                            {layoutContent}
-                        </Row>
-                    </div>
-                </AdaptableBlotterForm>
-            }
+            <AdaptableBlotterForm className='navbar-form' >
+                <FormGroup controlId="formLayout">
+                    {this.props.LayoutDashboardControl.IsCollapsed ?
+                        <span>
+                            {toolbarHeaderButton}
+                            {' '}
+                            {collapsedContent}
+                        </span>
+                        :
+                        <span>
+                            {toolbarHeaderButton}
+                            {' '}  {' '}
+                            {expandedContent}
+                        </span>
+                    }
+                </FormGroup>
+
+            </AdaptableBlotterForm>
         </Panel>
     }
 
@@ -150,23 +146,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);
 
 var marginButtonStyle = {
-    margin: '4px'
+     marginTop: '4px'
 };
 
 var noSearchStyle = {
     fontStyle: 'italic'
-};
-
-var labelStyle = {
-    fontSize: 'small'
-};
-
-var buttonOpenStyle = {
-    padding: '1px',
-};
-
-var buttonCloseStyle = {
-    padding: '0px',
-    marginTop: '2px',
-    marginBottom: '4px'
 };
