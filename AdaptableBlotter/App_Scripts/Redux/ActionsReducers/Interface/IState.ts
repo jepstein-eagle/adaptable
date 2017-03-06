@@ -42,6 +42,7 @@ export interface PopupState {
 export interface IActionConfigurationPopup {
     ShowPopup: boolean;
     ComponentClassName: string;
+    IsReadOnly: boolean
     Params: any
 }
 
@@ -80,6 +81,10 @@ export interface SmartEditState {
 
 export interface CustomSortState {
     CustomSorts: Array<ICustomSort>;
+}
+
+export interface EntitlementsState {
+    FunctionEntitlements: Array<{ FunctionName: string, AccessLevel: "ReadOnly" | "Hidden" | "Default" }>;
 }
 
 export interface ShortcutState {
@@ -146,7 +151,7 @@ export interface LayoutState {
 }
 
 export interface DashboardState {
-  DashboardControls:IDashboardControl[]
-  DashboardButtons:string[]
-  
+    DashboardControls: IDashboardControl[]
+    DashboardButtons: string[]
+
 }

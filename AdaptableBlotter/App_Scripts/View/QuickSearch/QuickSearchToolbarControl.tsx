@@ -21,6 +21,7 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardControl
+    IsReadOnly: boolean
 }
 
 
@@ -39,7 +40,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
 
         let expandedContent: any = <span>
-            <div style={marginButtonStyle}>
+            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <FormControl
                     style={{ width: "120px" }}
                     type="text"
@@ -58,9 +59,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph+Text" />
             </div>
         </span>
-
-
-        return <Panel className="small-padding-panel" >
+        return <Panel className="small-padding-panel">
             <AdaptableBlotterForm className='navbar-form' >
                 <FormGroup controlId="formQuickSearch">
                     {this.props.QuickSearchDashboardControl.IsCollapsed ?

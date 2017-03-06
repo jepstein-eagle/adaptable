@@ -27,6 +27,7 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
     LayoutDashboardControl: IDashboardControl
+    IsReadOnly: boolean
 }
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
@@ -49,7 +50,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
 
         let expandedContent = <span>
-            <div style={marginButtonStyle}>
+            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                   <FormControl componentClass="select" placeholder="select"
                 value={this.props.CurrentLayout}
                 onChange={(x) => this.onSelectedLayoutChanged(x)} >

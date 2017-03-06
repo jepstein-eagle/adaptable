@@ -7,9 +7,10 @@ import { DistinctCriteriaPairValue } from '../Core/Enums'
 import { AdaptableViewFactory } from './AdaptableViewFactory';
 import { IStrategy } from '../Core/Interface/IStrategy';
 
-interface IAdaptableBlotterPopupProps {
+interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
   ComponentClassName: string;
+  IsReadOnly: boolean
   onHide?: Function;
   AdaptableBlotter: IAdaptableBlotter;
 }
@@ -31,7 +32,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         {/*<Modal.Header closeButton>
             <Modal.Title>{}</Modal.Title>
           </Modal.Header>*/}
-        <Modal.Body style={divStyle}>
+        <Modal.Body style={divStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
           {body}
         </Modal.Body>
         <Modal.Footer>

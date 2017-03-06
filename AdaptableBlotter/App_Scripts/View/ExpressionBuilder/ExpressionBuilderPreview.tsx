@@ -50,7 +50,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
                     return <ListGroupItem key={y} >
-                        <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                             <AdaptableBlotterForm inline>
                                 {y}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -71,7 +71,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 if (userFilterExpressions) {
                     columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
                         return <ListGroupItem key={ne.Uid}>
-                            <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                            <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                 <AdaptableBlotterForm inline>
                                     {ne.FriendlyName}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -92,7 +92,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
-                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -104,7 +104,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -118,7 +118,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     else {
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
-                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -130,7 +130,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                <div onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>

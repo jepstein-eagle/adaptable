@@ -28,6 +28,7 @@ import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
+import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
@@ -38,10 +39,6 @@ import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIError, ICellInfo, InputAction } from '../../Core/interface/IStrategy'
-
-
-
-
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -64,8 +61,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
     Dashboard: DashboardRedux.DashboardReducer,
+    Entitlements: EntitlementsRedux.EntitlementsReducer
 });
-
 
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
@@ -103,7 +100,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         else {
             engineReduxStorage = createEngine('my-adaptable-blotter-key');
         }
-        engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
+        engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
         loadStorage = ReduxStorage.createLoader(engineReduxStorage);

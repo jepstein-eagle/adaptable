@@ -151,8 +151,8 @@ function InitBlotter() {
     var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
-        enableAuditLog: true,
-        enableRemoteConfigServer: false
+        enableAuditLog: false,
+        enableRemoteConfigServer: true
     });
     var origgetCell = grid.behavior.dataModel.getCell;
     grid.behavior.dataModel.getCell = (config, declaredRendererName) => {

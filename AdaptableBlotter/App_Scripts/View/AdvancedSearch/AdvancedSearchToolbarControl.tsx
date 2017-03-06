@@ -26,6 +26,7 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     AdvancedSearchDashboardControl: IDashboardControl
+    IsReadOnly: boolean
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
@@ -50,14 +51,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
 
         let expandedContent = <span>
-            <div style={marginButtonStyle}>
-                   <FormControl componentClass="select" placeholder="select"
-                value={currentAdvancedSearchId}
-                onChange={(x) => this.onSelectedSearchChanged(x)} >
-                <option value="select" key="select">Select a Search</option>
-                {advancedSearches}
-            </FormControl>
-         {' '}
+            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                <FormControl componentClass="select" placeholder="select"
+                    value={currentAdvancedSearchId}
+                    onChange={(x) => this.onSelectedSearchChanged(x)} >
+                    <option value="select" key="select">Select a Search</option>
+                    {advancedSearches}
+                </FormControl>
+                {' '}
                 <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
                     overrideTooltip="Clear (but do not delete) Current Advanced Search"
                     overrideDisableButton={currentAdvancedSearchId == "select"}
@@ -139,7 +140,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", "New")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction")),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };

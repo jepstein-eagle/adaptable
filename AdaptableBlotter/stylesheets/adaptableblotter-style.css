@@ -37,6 +37,14 @@ button.placeholder:before {
 	font-size: 14px;
 }
 
+.adaptable_blotter_readonly button,
+.adaptable_blotter_readonly .adaptable_blotter_div_like_button,
+.adaptable_blotter_readonly select,
+.adaptable_blotter_readonly input,
+.adaptable_blotter_readonly .radio{
+    opacity: 0.65; 
+    pointer-events: none;
+}
 
 .scale-lg{font-size: 1.4em;}
 .scale-2x{font-size: 2em;}
