@@ -56,10 +56,6 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         if (this.props.overrideTooltip) {
             tooltip = this.props.overrideTooltip
         }
-         let bsSize = this.props.bsSize
-        if (this.props.bsSize) {
-            bsSize = "large"
-        }
         let content: React.ReactElement<any>
         if (this.props.DisplayMode == "Glyph") {
             content = <Glyphicon glyph={this.props.glyph} />
