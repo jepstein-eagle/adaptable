@@ -45,7 +45,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
-                {' '}<Glyphicon glyph="search" />{' '}Advanced Search{' '}<Glyphicon glyph={this.props.AdvancedSearchDashboardControl.IsCollapsed ? "chevron-right" : "chevron-up"} />
+                {' '}<Glyphicon glyph="search" />{' '}Advanced Search{' '}<Glyphicon glyph={this.props.AdvancedSearchDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
         </OverlayTrigger>
 

@@ -42,7 +42,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
-                {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-right" : "chevron-up"} />
+                {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
         </OverlayTrigger>
 

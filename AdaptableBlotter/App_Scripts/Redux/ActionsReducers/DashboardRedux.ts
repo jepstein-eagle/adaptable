@@ -32,9 +32,9 @@ export const ChangeVisibilityDashboardControl = (ControlName: string, IsVisible:
 
 const initialDashboardState: DashboardState = {
     DashboardControls: [
-        { Name: "Advanced Search", IsVisible: true, IsCollapsed: false },
-        { Name: "Quick Search", IsVisible: true, IsCollapsed: false },
-        { Name: "Layout", IsVisible: true, IsCollapsed: false },
+        { Name: "Advanced Search", IsVisible: true, IsCollapsed: true },
+        { Name: "Quick Search", IsVisible: true, IsCollapsed: true },
+        { Name: "Layout", IsVisible: true, IsCollapsed: true },
      // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ],
     DashboardButtons: []

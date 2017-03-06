@@ -34,7 +34,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">Expand</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
-                {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search{' '}<Glyphicon glyph={this.props.QuickSearchDashboardControl.IsCollapsed ? "chevron-right" : "chevron-up"} />
+                {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search{' '}<Glyphicon glyph={this.props.QuickSearchDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
         </OverlayTrigger>
 
