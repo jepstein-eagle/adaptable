@@ -83,35 +83,6 @@
 				],
 				"Name": "Default",
 				"IsPredefined": false
-			},
-			{
-				"Columns": [
-					"counterparty",
-					"tradeId",
-					"notional",
-					"deskId",
-					"currency",
-					"country",
-					"changeOnYear",
-					"price",
-					"bid",
-					"ask",
-					"bidOfferSpread",
-					"isLive",
-					"moodysRating",
-					"fitchRating",
-					"sandpRating",
-					"tradeDate",
-					"settlementDate",
-					"bloombergAsk",
-					"bloombergBid",
-					"percentChange",
-					"bookingGuid",
-					"lastUpdated",
-					"lastUpdatedBy"
-				],
-				"Name": "POPO",
-				"IsPredefined": false
 			}
 		]
 	},
@@ -120,17 +91,17 @@
 			{
 				"Name": "Advanced Search",
 				"IsVisible": true,
-				"IsCollapsed": false
+				"IsCollapsed": true
 			},
 			{
 				"Name": "Quick Search",
 				"IsVisible": true,
-				"IsCollapsed": false
+				"IsCollapsed": true
 			},
 			{
 				"Name": "Layout",
 				"IsVisible": true,
-				"IsCollapsed": false
+				"IsCollapsed": true
 			}
 		],
 		"DashboardButtons": []

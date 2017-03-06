@@ -30,8 +30,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     render(): any {
 
-        let collapsedContent = StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? <span style={noSearchStyle}>None</span> : <ControlLabel> {this.props.QuickSearchText}</ControlLabel>
         let tooltipText = this.props.QuickSearchDashboardControl.IsCollapsed ? "Expand" : "Collapse"
+        let collapsedContent = <ControlLabel> {StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
@@ -120,8 +120,4 @@ export let QuickSearchToolbarControl = connect(mapStateToProps, mapDispatchToPro
 
 var marginButtonStyle = {
     marginTop: '4px'
-};
-
-var noSearchStyle = {
-    fontStyle: 'italic'
 };

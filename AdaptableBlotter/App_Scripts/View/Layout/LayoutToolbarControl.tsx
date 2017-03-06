@@ -155,7 +155,3 @@ export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(L
 var marginButtonStyle = {
     marginTop: '4px'
 };
-
-var noSearchStyle = {
-    fontStyle: 'italic'
-};
