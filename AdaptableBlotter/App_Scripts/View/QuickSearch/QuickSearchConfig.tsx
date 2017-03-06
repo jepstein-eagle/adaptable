@@ -15,6 +15,8 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ButtonClear } from '../ButtonClear';
+import { StringExtensions } from '../../Core/Extensions';
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
     QuickSearchText: string;
@@ -52,13 +54,6 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.props.onRunQuickSearch(this.state.EditedQuickSearchText);
     }
 
-    onKeyDownQuickSearch(event: React.KeyboardEvent) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-            this.onSetQuickSearch();
-        }
-    }
-
     onClearQuickSearch() {
         this.setState({ EditedQuickSearchText: "" });
         this.props.onClearQuickSearch();
@@ -90,24 +85,23 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         return (
             <div >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open">
-                    <AdaptableBlotterForm inline>
+                    <AdaptableBlotterForm inline onSubmit={()=> this.onSetQuickSearch()}>
                         <div >
                             <Panel header={"Search For"} bsStyle="info">
                                 <FormControl
                                     value={this.state.EditedQuickSearchText}
                                     type="string"
                                     placeholder="Quick Search Text"
-                                    onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)}
-                                    onKeyDown={(x) => this.onKeyDownQuickSearch(x)} />
+                                    onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)}/>
                                 {' '}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
                                     <Button bsStyle='primary' onClick={() => this.onSetQuickSearch()}>Search</Button>
                                 </OverlayTrigger>
                                 {' '}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipClearSearch">Clear Quick Search</Tooltip>}>
-                                    <Button bsStyle='info' onClick={() => this.onClearQuickSearch()}>Clear</Button>
-                                </OverlayTrigger>
-
+                                <ButtonClear onClick={() => this.onClearQuickSearch()}
+                                    overrideTooltip="Clear Quick Search"
+                                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
+                                    DisplayMode="Glyph+Text" />
                             </Panel>
 
                         </div>
