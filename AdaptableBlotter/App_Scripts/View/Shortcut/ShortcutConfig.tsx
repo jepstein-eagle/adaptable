@@ -17,6 +17,7 @@ import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithButton } from '../PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ButtonNew } from '../ButtonNew';
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
@@ -68,10 +69,13 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             </ShortcutConfigItem>
         });
 
-        return <PanelWithButton headerText="Shortcuts"
-            buttonClick={() => this.CreateShortcut()}
-            buttonContent={"New"} bsStyle="primary"  style={panelStyle} glyphicon={"road"}>
+        let newButton = <ButtonNew onClick={() => this.CreateShortcut()}
+            overrideTooltip="Create New Shortcut"
+            DisplayMode="Glyph+Text" />
 
+        return <PanelWithButton headerText="Shortcuts"
+            button={newButton}
+            bsStyle="primary" style={panelStyle} glyphicon={"road"}>
 
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>

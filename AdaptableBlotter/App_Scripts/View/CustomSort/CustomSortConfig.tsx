@@ -17,7 +17,7 @@ import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { PanelWithButton } from '../PanelWithButton';
 import { PanelWithRow } from '../PanelWithRow';
-
+import { ButtonNew } from '../ButtonNew';
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -48,11 +48,12 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         });
 
         let cellInfo: [string, number][] = [["Column", 2], ["Sort Order", 7], ["", 3]];
-
+        let newButton = <ButtonNew onClick={() => this.CreateCustomSort()}
+            overrideTooltip="Create Custom Sort"
+            DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText="Custom Sort" style={panelStyle}
-            buttonClick={() => this.CreateCustomSort()}
-            buttonContent="Create Custom Sort" bsStyle="primary"  glyphicon={"sort-by-attributes"}>
+            button={newButton} bsStyle="primary"  glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'Create Custom Sort' to create a new bespoke sort order for a column of your choosing.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

@@ -23,6 +23,7 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ButtonNew } from '../ButtonNew';
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
@@ -74,9 +75,12 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             </li>
         })
 
+        let newButton = <ButtonNew onClick={() => this.onCreateUserFilter()}
+            overrideTooltip="Create User Filter"
+            DisplayMode="Glyph+Text" />
+
         return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create User Filter"}
-            buttonClick={() => this.onCreateUserFilter()} glyphicon={"filter"}>
+            button={newButton} glyphicon={"filter"}>
             {UserFilterItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

@@ -20,6 +20,7 @@ import { PanelWithButton } from '../PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
+import { ButtonNew } from '../ButtonNew';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
@@ -58,9 +59,12 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             </ConditionalStyleConfigItem>
         });
 
+        let newButton = <ButtonNew onClick={() => this.onAdd()}
+            overrideTooltip="Create Conditional Style"
+            DisplayMode="Glyph+Text" />
+
         return <PanelWithButton headerText="Conditional Style"
-            buttonContent={"Create Conditional Style"}
-            buttonClick={() => this.onAdd()}
+            button={newButton}
             bsStyle="primary" style={panelStyle} glyphicon={"tint"}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?

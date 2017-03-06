@@ -25,6 +25,7 @@ import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ButtonNew } from '../ButtonNew';
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];
@@ -82,9 +83,12 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                 </Row>
             </li>
         })
+        let newButton = <ButtonNew onClick={() => this.createCellValidation()}
+            overrideTooltip="Create Cell Validation Rule"
+            DisplayMode="Glyph+Text" />
+
         return <PanelWithButton headerText="Cell Validation" bsStyle="primary" style={panelStyle}
-            buttonContent={"Create Cell Validation Rule"}
-            buttonClick={() => this.createCellValidation()}
+            button={newButton}
             glyphicon={"flag"} >
             {CellValidationItems.length > 0 &&
                 <div>

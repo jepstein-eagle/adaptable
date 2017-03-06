@@ -21,6 +21,7 @@ import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ButtonNew } from '../ButtonNew';
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -78,8 +79,12 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             </li>
         })
 
-        return <PanelWithButton headerText="Plus / Minus" bsStyle="primary" style={panelStyle} buttonContent={"Create Column Nudge Value"}
-            buttonClick={() => this.createColumnNudgeValue()} glyphicon={"plus-sign"} >
+        let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
+            overrideTooltip="Create Column Nudge Value"
+            DisplayMode="Glyph+Text" />
+
+        return <PanelWithButton headerText="Plus / Minus" bsStyle="primary" style={panelStyle}
+            button={newButton} glyphicon={"plus-sign"} >
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
