@@ -127,7 +127,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Error} />}
                     </AdaptableBlotterForm>
                 </PanelWithImage>
-                <Panel header={previewHeader} bsStyle="success" style={divStyle}>
+                <Panel header={previewHeader} bsStyle="info" style={divStyle}>
                     <Table >
                         {header}
                         <tbody>
@@ -179,7 +179,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         if (globalHasValidationWarning || globalHasValidationPrevent) {
             return "warning";
         }
-        return "info";
+        return "success";
     }
 }
 
