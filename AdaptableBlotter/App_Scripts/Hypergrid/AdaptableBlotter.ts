@@ -38,6 +38,8 @@ import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
+import { DashboardStrategy } from '../Strategy/DashboardStrategy'
+import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../Core/Interface/IEvent';
@@ -105,6 +107,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
+  this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
