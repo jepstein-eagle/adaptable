@@ -51,11 +51,12 @@ module.exports = {
             template: 'Harness/DemoRelease/index.ejs',
             inject: false,
             'version' : PACKAGE.version,
-            'versiondate' : new Date().toLocaleDateString()
+            'versiondate' : (new Date()).toLocaleDateString("en-GB")
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
         new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
+        new CopyWebpackPlugin([{ from: 'UserGuide/Adaptable_Blotter_User_Guide.pdf', to: '../' }]),
         new CopyWebpackPlugin([{ from: 'Harness/DemoRelease/*', to: '../', flatten: true }])
     ],
     module: {
