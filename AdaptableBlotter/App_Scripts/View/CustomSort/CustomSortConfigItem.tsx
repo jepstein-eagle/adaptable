@@ -25,7 +25,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                 </Col>
                 <Col xs={3}>
                     <EntityListActionButtons
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}
                         editClick={() => this.props.onEdit(this.props.CustomSort)}
                         ConfigEntity={this.props.CustomSort}>
                     </EntityListActionButtons>
