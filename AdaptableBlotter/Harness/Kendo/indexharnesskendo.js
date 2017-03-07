@@ -1,3 +1,4 @@
+var adaptableblotter
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
@@ -80,13 +81,13 @@ messages: {
         });
     var grid = $("#grid").data("kendoGrid");
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
+    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
             primaryKey: "tradeId",
             userName: "Jonathan",
             enableAuditLog: true,
             enableRemoteConfigServer: false
         });
-    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter))
 }
 
 function setEditDecimals(container, options) {

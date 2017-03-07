@@ -10,6 +10,7 @@ function ThemeChange(blotter, grid) {
     }
 }
 var themeName = ""
+var adaptableblotter
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -148,7 +149,7 @@ function InitBlotter() {
     });
 
     var container = document.getElementById('content');
-    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
         enableAuditLog: false,
@@ -164,7 +165,7 @@ function InitBlotter() {
         }
         return origgetCell(config, declaredRendererName);
     };
-    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
 
     grid.addProperties(lightTheme);
 }

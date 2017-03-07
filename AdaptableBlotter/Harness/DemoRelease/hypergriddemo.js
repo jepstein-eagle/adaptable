@@ -10,6 +10,7 @@ function ThemeChange(blotter, grid) {
     }
 }
 var themeName = ""
+var adaptableblotter
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -125,7 +126,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     //tradeId is the primary for the datasource
     //Jonathan is the username for the demo. Can be plugged to an authent service if required
-    var blotter = new adaptableblotterhypergrid.AdaptableBlotter(
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(
         grid,
         container,
         {
@@ -146,7 +147,7 @@ function InitBlotter() {
         return origgetCell(config, declaredRendererName);
     };
     //We subscribe to the AB theme change so we update the theme of the grid (only light or dark for demo)
-    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter, grid))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
     grid.addProperties(lightTheme);
 }
 

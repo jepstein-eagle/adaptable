@@ -1,3 +1,4 @@
+var adaptableblotter
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
@@ -73,14 +74,14 @@ function InitBlotter() {
     var container = document.getElementById('content');
     //tradeId is the primary for the datasource
     //Jonathan is the username for the demo. Can be plugged to an authent service if required
-    var blotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, {
+    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
         enableAuditLog: false,
         enableRemoteConfigServer: false
     });
     //We subscribe to the AB theme change so we update the theme of the grid (only light or dark for demo)
-    blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(blotter))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter))
 }
 
 function setEditDecimals(container, options) {
