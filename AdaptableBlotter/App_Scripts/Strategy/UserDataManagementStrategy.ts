@@ -24,7 +24,6 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
         {
             return [];
         }
-        console.log(process.env)
         return [this.menuItemConfig];
     }
 
