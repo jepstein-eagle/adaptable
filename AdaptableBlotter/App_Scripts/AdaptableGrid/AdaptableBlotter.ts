@@ -148,7 +148,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return "";
     }
 
-    getActiveCell(): ICellInfo {
+    public getActiveCell(): ICellInfo {
         return null
     }
 

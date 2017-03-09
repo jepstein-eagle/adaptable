@@ -57,7 +57,7 @@ import { StringExtensions } from '../Core/Extensions'
 import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
 import { GridState } from '../Redux/ActionsReducers/Interface/IState'
-import {DefaultAdaptableBlotterOptions} from '../Core/DefaultAdaptableBlotterOptions'
+import { DefaultAdaptableBlotterOptions } from '../Core/DefaultAdaptableBlotterOptions'
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -135,8 +135,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
             if (failedRules.length > 0) { // we have at least one failure or warning
-                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
