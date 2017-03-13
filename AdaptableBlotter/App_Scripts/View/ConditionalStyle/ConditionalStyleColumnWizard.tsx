@@ -5,7 +5,7 @@ import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, 
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, ColumnType, LeafExpressionOperator, SortOrder, SelectionMode } from '../../Core/Enums';
+import { ConditionalStyleScope, ColumnType, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -14,6 +14,7 @@ import { Helper } from '../../Core/Helper'
 import { SingleListBox } from '../SingleListBox'
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { AdaptablePopover } from '../AdaptablePopover';
 
 interface ConditionalStyleColumnWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Columns: Array<IColumn>
@@ -39,14 +40,16 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
         let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <div>
-            <Panel header="Select Scope" bsStyle="primary">
+            <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
 
                 <AdaptableBlotterForm inline>
                     <Col xs={12} style={radioMarginStyle}>
-                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Single Column (select below) </Radio>
-                    </Col>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Single Column </Radio>
+                             {' '}<AdaptablePopover headerText={"Conditional Style: Column"} bodyText={"Pick the column from the list below which will have conditional style applied."} popoverType={PopoverType.Info} />
+                   </Col>
                     <Col xs={12} style={radioMarginStyle}>
-                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}> Entire Row</Radio>
+                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}> Entire Row </Radio>
+                              {' '}<AdaptablePopover headerText={"Conditional Style: Row"} bodyText={"The conditional style will be applied to every cell in a matching row."} popoverType={PopoverType.Info} />
                     </Col>
                      <Col xs={12} style={radioMarginStyle}>
                      </Col>

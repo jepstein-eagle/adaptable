@@ -1,63 +1,64 @@
-﻿/// <reference path="../../typings/index.d.ts" />
+﻿/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import { FilterFormReact } from '../View/FilterForm';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
-import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
-import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
-import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
-import { CalendarService } from '../Core/Services/CalendarService'
-import { IAuditService } from '../Core/Services/Interface/IAuditService'
-import { AuditService } from '../Core/Services/AuditService'
-import { ISearchService } from '../Core/Services/Interface/ISearchService'
-import { SearchService } from '../Core/Services/SearchService'
-import { StyleService } from '../Core/Services/StyleService'
-import { ThemeService } from '../Core/Services/ThemeService'
-import { AuditLogService } from '../Core/Services/AuditLogService'
-import * as StrategyIds from '../Core/StrategyIds'
-import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
-import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
-import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
-import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
-import { ExportStrategy } from '../Strategy/ExportStrategy'
-import { FlashingCellsStrategy } from '../Strategy/FlashingCellsStrategy'
-import { CalendarStrategy } from '../Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from '../Strategy/ConditionalStyleStrategy'
-import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
-import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
-import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
-import { ThemeStrategy } from '../Strategy/ThemeStrategy'
-import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
-import { LayoutStrategy } from '../Strategy/LayoutStrategy'
-import { DashboardStrategy } from '../Strategy/DashboardStrategy'
-import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
-import { IEvent } from '../Core/Interface/IEvent';
-import { EventDispatcher } from '../Core/EventDispatcher'
-import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
+import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
+import { FilterFormReact } from '../../View/FilterForm';
+import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
+import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
+import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
+import { CalendarService } from '../../Core/Services/CalendarService'
+import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import { AuditService } from '../../Core/Services/AuditService'
+import { ISearchService } from '../../Core/Services/Interface/ISearchService'
+import { SearchService } from '../../Core/Services/SearchService'
+import { StyleService } from '../../Core/Services/StyleService'
+import { ThemeService } from '../../Core/Services/ThemeService'
+import { AuditLogService } from '../../Core/Services/AuditLogService'
+import * as StrategyIds from '../../Core/StrategyIds'
+import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
+import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
+import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
+import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
+import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
+import { ExportStrategy } from '../../Strategy/ExportStrategy'
+import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
+import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
+import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
+import { PrintPreviewStrategy } from '../../Strategy/PrintPreviewStrategy'
+import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
+import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
+import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
+import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
+import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
+import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
+import { IEvent } from '../../Core/Interface/IEvent';
+import { EventDispatcher } from '../../Core/EventDispatcher'
+import { Helper } from '../../Core/Helper';
+import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
-import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { ILayout } from '../Core/Interface/ILayoutStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
-import { ExportState, QuickSearchState, LayoutState } from '../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../Core/Extensions'
-import { IDataChangingEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
-import { GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { DefaultAdaptableBlotterOptions } from '../Core/DefaultAdaptableBlotterOptions'
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
+import { ExportState, QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
+import { StringExtensions } from '../../Core/Extensions'
+import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
+import { ObjectFactory } from '../../Core/ObjectFactory';
+import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
+import {DefaultAdaptableBlotterOptions} from '../../Core/DefaultAdaptableBlotterOptions'
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -230,7 +231,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 var menuText = $(e.item).text();
                 menu.close();
                 popup.close();
-                this.Strategies.forEach(s => s.onColumnMenuItemClicked(column, menuText));
+               
             });
         })
 
@@ -815,16 +816,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             case QuickSearchDisplayType.ColourCell:
                                 this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
                                 break;
-                            case QuickSearchDisplayType.HideNonMatchingRow:
+                            case QuickSearchDisplayType.ShowRow:
                                 matchingRowIds.push(rowId);
                                 break;
-                            case QuickSearchDisplayType.HideRowAndColourCell:
+                            case QuickSearchDisplayType.ShowRowAndColourCell:
                                 this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
                                 matchingRowIds.push(rowId);
                                 break;
                         }
                         // now break out of the for loop if just hiding non matching rows
-                        if (quickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                        if (quickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
                             break;
                         }
                     }

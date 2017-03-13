@@ -36,7 +36,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Column Name", 4], ["Flash Duration", 3], ["Up Colour", 2], ["Down Colour", 2]];
+        let cellInfo: [string, number][] = [["Live", 1], ["Column", 4], ["Flash Duration", 3], ["Up Colour", 2], ["Down Colour", 2]];
         
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
         numericColumns.forEach(nc => {

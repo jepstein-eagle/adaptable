@@ -14,8 +14,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     public addColumnMenuItem(column: IColumn, menuItems: string[]): void {
     }
 
-    public onColumnMenuItemClicked(column: IColumn, menuItem: string): void {
-    }
+
 
 }
 

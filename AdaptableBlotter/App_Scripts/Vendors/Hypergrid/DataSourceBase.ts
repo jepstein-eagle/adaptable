@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 
 //All custom pipelines should extend from pipelineBase
 export let DataSourceBase = (<any>window).fin.Hypergrid.Base.extend('DataSourceIndexed', {

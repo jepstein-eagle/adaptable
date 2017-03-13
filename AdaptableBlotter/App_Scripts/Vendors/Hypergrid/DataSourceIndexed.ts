@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DataSourceBase } from './DataSourceBase'
 
 //All custom pipelines should extend from pipelineBase

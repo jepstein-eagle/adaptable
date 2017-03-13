@@ -39,7 +39,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         return <Panel header="Plus/Minus Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formColumn">
-                    <Col componentClass={ControlLabel} xs={3}>Select Column: </Col>
+                    <Col componentClass={ControlLabel} xs={3}>Column: </Col>
                     <Col xs={9}>
                         <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
                             <option value="select" key="select">Select a column</option>
@@ -48,7 +48,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="nudgeColumn">
-                    <Col xs={3} componentClass={ControlLabel}>Default Nudge: </Col>
+                    <Col xs={3} componentClass={ControlLabel}>Nudge Value: </Col>
                     <Col xs={9}>
                         <FormControl value={this.state.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(e)} />
                     </Col>
@@ -57,12 +57,13 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                     <Col xs={3} componentClass={ControlLabel}>Apply To: </Col>
                     <Col xs={9}>
                         <Radio value="whole" checked={this.state.ExpressionOption == 'whole'} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Whole Column
+                            Whole Column {' '}
+                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={"Make this the default nudge value for the column"} popoverType={PopoverType.Info} />
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Column Expression {' '}
-                            <AdaptablePopover headerText={""} bodyText={"You can create the Expression in the next step of the wizard"} popoverType={PopoverType.Info} />
-                            </Radio>
+                            Custom Expression {' '}
+                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={"Create an Expression (in the next step of the wizard) to determine a bespoke nudge value rule"} popoverType={PopoverType.Info} />
+                        </Radio>
                     </Col>
                 </FormGroup>
             </AdaptableBlotterForm>

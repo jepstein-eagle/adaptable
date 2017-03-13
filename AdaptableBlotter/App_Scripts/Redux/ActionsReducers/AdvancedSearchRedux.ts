@@ -12,6 +12,7 @@ export interface AdvancedSearchAddUpdateAction extends Redux.Action {
     AdvancedSearch: IAdvancedSearch
 }
 
+
 export const AdvancedSearchAddUpdate = (AdvancedSearch: IAdvancedSearch): AdvancedSearchAddUpdateAction => ({
     type: ADVANCED_SEARCH_ADD_UPDATE,
     AdvancedSearch

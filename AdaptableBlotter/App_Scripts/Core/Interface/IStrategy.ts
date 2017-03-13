@@ -7,8 +7,6 @@ export interface IStrategy {
     getMenuItems(): IMenuItem[]
     onAction(action: string): void
     addColumnMenuItem(column: IColumn, menuItems: string[]): void
-    // not sure if this is best or not = feels a bit old fashioned and should use lambdas / actions...
-    onColumnMenuItemClicked(column: IColumn, menuItem: string): void
 }
 
 export interface IMenuItem {

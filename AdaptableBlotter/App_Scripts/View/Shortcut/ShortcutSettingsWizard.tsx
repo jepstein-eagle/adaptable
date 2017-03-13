@@ -6,10 +6,11 @@ import { Radio, Panel, Form, ControlLabel, FormControl, Col } from 'react-bootst
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ColumnType } from '../../Core/Enums';
-import { ShortcutAction } from '../../Core/Enums';
+import { ColumnType, PopoverType, ShortcutAction } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { AdaptablePopover } from '../AdaptablePopover';
+
 
 interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
     NumericKeysAvailable: Array<string>
@@ -65,57 +66,68 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         let currentActionValue = this.state.ShortcutAction.toString();
 
 
-        return <div>
-            <Panel header="Shortcut Settings" bsStyle="primary">
+        return <Panel header="Shortcut Settings" bsStyle="primary">
 
-                <Panel header="Shortcut Column Type" bsStyle="info">
-                    <AdaptableBlotterForm inline >
-                        <Col xs={4}>
-                            <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
-                        </Col>
-                        <Col xs={8}>
-                            <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
-                        </Col>
-                    </AdaptableBlotterForm>
-                </Panel>
+            <Panel header="Column Type" bsStyle="info">
+                <AdaptableBlotterForm inline >
+                    <Col xs={4}>
+                        <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
+                    </Col>
+                    <Col xs={8}>
+                        <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
+                    </Col>
+                </AdaptableBlotterForm>
+            </Panel>
 
 
-                <Panel header="Shortcut Key" bsStyle="info">
-                    <FormControl componentClass="select" placeholder="select" value={this.state.ShortcutKey} onChange={(x) => this.onShortcutKeyChanged(x)} >
-                        <option value="select" key="select">Select a key</option>
-                        {optionKeys}
-                    </FormControl>
-                </Panel>
+            <Panel header="Shortcut Key" bsStyle="info">
+                <AdaptableBlotterForm inline >
+                         <FormControl componentClass="select" placeholder="select" value={this.state.ShortcutKey} onChange={(x) => this.onShortcutKeyChanged(x)} >
+                            <option value="select" key="select">Select key</option>
+                            {optionKeys}
+                        </FormControl>
+                        {' '}<AdaptablePopover headerText={"Shortcut: Key"} bodyText={"The keyboard key that triggers the shortcut."} popoverType={PopoverType.Info} />
+                     </AdaptableBlotterForm>
+            </Panel>
 
-                {this.state.ColumnType == ColumnType.Number ?
-                    <div>
-                        <Panel header="Shortcut Action" bsStyle="info">
-                            <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
-                                {optionActions}
-                            </FormControl>
-                        </Panel>
+            {this.state.ColumnType == ColumnType.Number ?
+                <span>
+                    <Panel header="Shortcut Action" bsStyle="info">
+                        <AdaptableBlotterForm inline >
+                                 <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
+                                    {optionActions}
+                                </FormControl>
+                                 {' '}<AdaptablePopover headerText={"Shortcut: Action"} bodyText={"How cell contents change when shortcut is triggered.  'Replace' replaces cell contents with Shortcut Result; all other actions update the cell value."} popoverType={PopoverType.Info} />
+                        </AdaptableBlotterForm>
+                    </Panel>
 
-                        <Panel header="Shortcut Number Result" bsStyle="info">
+                    <Panel header="Shortcut Result" bsStyle="info">
+                        <AdaptableBlotterForm inline >  
                             <FormControl
                                 type="number"
+                                placeholder="Enter Number"
+                                onChange={this.changeContent}
+                                value={this.state.ShortcutResult}
+                            />
+                            {' '}<AdaptablePopover headerText={"Shortcut: Result"} bodyText={"Used to calculate cell's new contents when a shortcut is triggered. If Action is 'Replace' it becomes the new value; for other Actions it is used in conjunction with cell's initial value."} popoverType={PopoverType.Info} />
+                        </AdaptableBlotterForm>
+                    </Panel>
+                </span>
+                :
+                <Panel header="Shortcut Result" bsStyle="info">
+                    <AdaptableBlotterForm inline >
+                            <FormControl
+                                type="date"
                                 placeholder="Shortcut Result"
                                 onChange={this.changeContent}
                                 value={this.state.ShortcutResult}
-                                />
-                        </Panel>
-                    </div>
-                    :
-                    <Panel header="Shortcut Date Result" bsStyle="info">
-                        <FormControl
-                            type="date"
-                            placeholder="Shortcut Result"
-                            onChange={this.changeContent}
-                            value={this.state.ShortcutResult}
                             />
-                    </Panel>
-                }
-            </Panel>
-        </div>
+                            {' '}<AdaptablePopover headerText={"Shortcut: Result"} bodyText={"The date that becomes the cell's new value when the shortcut is triggered."} popoverType={PopoverType.Info} />
+                    </AdaptableBlotterForm>
+                </Panel>
+            }
+        </Panel>
+
     }
 
     private onColumTypeChanged(event: React.FormEvent) {

@@ -13,7 +13,7 @@ import { Expression } from '../Core/Expression/Expression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { MenuType } from '../Core/Enums';
-import { AdaptableBlotter } from '../Hypergrid/AdaptableBlotter'
+import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {

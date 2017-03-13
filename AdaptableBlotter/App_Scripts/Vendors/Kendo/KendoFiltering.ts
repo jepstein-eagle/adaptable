@@ -1,12 +1,12 @@
-import { IRangeExpression } from '../Core/Interface/IExpression';
-import { LeafExpressionOperator, ColumnType, DistinctCriteriaPairValue } from '../Core/Enums'
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { IRangeExpression } from '../../Core/Interface/IExpression';
+import { LeafExpressionOperator, ColumnType, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IColumnFilter, } from '../Core/Interface/IColumnFilterStrategy';
-import { IUserFilter } from '../Core/interface/IExpression';
-import { Expression } from '../Core/Expression/Expression';
-import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
+import { IColumnFilter, } from '../../Core/Interface/IColumnFilterStrategy';
+import { IUserFilter } from '../../Core/interface/IExpression';
+import { Expression } from '../../Core/Expression/Expression';
+import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 
 export module KendoFiltering {
