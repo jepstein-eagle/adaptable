@@ -5,9 +5,12 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
+import { AdaptablePopover } from './AdaptablePopover';
+import { PopoverType } from '../Core/Enums';
 
 interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
+      infoBody?: string
 }
 
 
@@ -26,6 +29,13 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
                 <Col xs={12}>
                     {<Glyphicon glyph={this.props.glyphicon} style={marginRightStyle} />}
                     {this.props.header}
+                     {' '}
+                    {this.props.infoBody != null &&
+                      <span> 
+                         <label>{' '}</label>
+                        <span>  {' '} <AdaptablePopover headerText="" bodyText={this.props.infoBody} popoverType={PopoverType.Info} /></span>
+                 </span>
+                    }
                 </Col>
             </Row>
         </AdaptableBlotterForm>;

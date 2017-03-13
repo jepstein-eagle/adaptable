@@ -1,5 +1,5 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { ColumnType, SortOrder } from '../Core/Enums'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import { ColumnType, SortOrder } from '../../Core/Enums'
 import { DataSourceIndexed } from './DataSourceIndexed'
 
 //All custom pipelines should extend from pipelineBase

@@ -5,10 +5,10 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'adaptableblotterkendo': ["./App_Scripts/Kendo/AdaptableBlotter.ts"],
-        'adaptableblotterdx': ["./App_Scripts/DevExpress/AdaptableBlotter.ts"],
-        'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
-        'adaptableblottergrid': ["./App_Scripts/AdaptableGrid/AdaptableBlotter.ts"],
+        'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
+        'adaptableblotterdx': ["./App_Scripts/Vendors/DevExpress/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {

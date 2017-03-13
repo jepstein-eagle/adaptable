@@ -7,6 +7,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithInfo } from '../PanelWithInfo';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -68,6 +69,11 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     render() {
+        let infoBody: string = "Create multi-column named searches using a selection of column values, filters and ranges.\n" +
+            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.\n" +
+            "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form.\n" +
+            "Click 'New' to create a new Advanced Search."
+
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
         })
@@ -85,7 +91,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             DisplayMode="Glyph+Text" />
         return (
             <div >
-                <PanelWithButton bsStyle="primary" headerText="Advanced Search" button={newSearchButton} glyphicon={"search"}>
+                <PanelWithButton bsStyle="primary" headerText="Advanced Search"
+                    infoBody={infoBody}
+                    button={newSearchButton} glyphicon={"search"}>
                     {/* The main Search selection form */}
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineName">
@@ -108,7 +116,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 {' '}
                                 <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
                                     overrideTooltip="Edit Search"
-                                     overrideDisableButton={selectedAdvancedSearch == null}
+                                    overrideDisableButton={selectedAdvancedSearch == null}
                                     ConfigEntity={selectedAdvancedSearch}
                                     DisplayMode="Glyph+Text" />
                                 {' '}
@@ -145,7 +153,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <Panel bsStyle="primary" header="Search Details">
+                    <PanelWithInfo bsStyle="primary" bsSize="small" header="Search Details" infoBody="Stuff about details" >
                         <div style={previewDivStyle}>
                             <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
                                 UserFilters={this.props.UserFilters}
@@ -158,7 +166,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 ShowPanel={false}>
                             </ExpressionBuilderPreview>
                         </div>
-                    </Panel>
+                    </PanelWithInfo>
 
                 }
 

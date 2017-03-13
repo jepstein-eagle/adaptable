@@ -147,7 +147,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnFriendlyName = this.props.ColumnsList.find(x => x.ColumnId == columnId).FriendlyName
             return <div key={columnId + "div"}>
                 <Button block style={panelHeaderStyle}
-                    bsStyle="info"
+                    bsStyle="success"
                     key={columnId + "header"}
                     ref={columnId}
                     onClick={() => this.props.onSelectedColumnChange(columnId)} >

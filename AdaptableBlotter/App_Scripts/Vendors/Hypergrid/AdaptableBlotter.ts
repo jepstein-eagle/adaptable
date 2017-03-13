@@ -1,61 +1,61 @@
-﻿/// <reference path="../../typings/index.d.ts" />
+﻿/// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../Redux/ActionsReducers/ColumnChooserRedux'
-import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore'
-import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
-import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
-import { CalendarService } from '../Core/Services/CalendarService'
-import { IAuditService } from '../Core/Services/Interface/IAuditService'
-import { AuditService } from '../Core/Services/AuditService'
-import { ISearchService } from '../Core/Services/Interface/ISearchService'
-import { ThemeService } from '../Core/Services/ThemeService'
-import { SearchServiceHyperGrid } from '../Core/Services/SearchServiceHypergrid'
-import { AuditLogService } from '../Core/Services/AuditLogService'
-import * as StrategyIds from '../Core/StrategyIds'
-import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
-import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
-import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../Strategy/UserDataManagementStrategy'
-import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
-import { ExportStrategy } from '../Strategy/ExportStrategy'
-import { FlashingCellsHypergridStrategy } from '../Strategy/FlashingCellsHypergridStrategy'
-import { CalendarStrategy } from '../Strategy/CalendarStrategy'
-import { ConditionalStyleHypergridStrategy } from '../Strategy/ConditionalStyleHypergridStrategy'
-import { PrintPreviewStrategy } from '../Strategy/PrintPreviewStrategy'
-import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
-import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
-import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
-import { LayoutStrategy } from '../Strategy/LayoutStrategy'
-import { ThemeStrategy } from '../Strategy/ThemeStrategy'
-import { DashboardStrategy } from '../Strategy/DashboardStrategy'
-import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../Core/Interface/ICellValidationStrategy';
-import { IEvent } from '../Core/Interface/IEvent';
-import { EventDispatcher } from '../Core/EventDispatcher'
-import { Helper } from '../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
-import { Expression } from '../Core/Expression/Expression';
+import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
+import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
+import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
+import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
+import { CalendarService } from '../../Core/Services/CalendarService'
+import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import { AuditService } from '../../Core/Services/AuditService'
+import { ISearchService } from '../../Core/Services/Interface/ISearchService'
+import { ThemeService } from '../../Core/Services/ThemeService'
+import { SearchServiceHyperGrid } from '../../Core/Services/SearchServiceHypergrid'
+import { AuditLogService } from '../../Core/Services/AuditLogService'
+import * as StrategyIds from '../../Core/StrategyIds'
+import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
+import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
+import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
+import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
+import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
+import { ExportStrategy } from '../../Strategy/ExportStrategy'
+import { FlashingCellsHypergridStrategy } from '../../Strategy/FlashingCellsHypergridStrategy'
+import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
+import { ConditionalStyleHypergridStrategy } from '../../Strategy/ConditionalStyleHypergridStrategy'
+import { PrintPreviewStrategy } from '../../Strategy/PrintPreviewStrategy'
+import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
+import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
+import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
+import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
+import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
+import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
+import { IEvent } from '../../Core/Interface/IEvent';
+import { EventDispatcher } from '../../Core/EventDispatcher'
+import { Helper } from '../../Core/Helper';
+import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import { Expression } from '../../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
-import { FilterFormReact } from '../View/FilterForm';
-import { IDataChangingEvent, IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
-import { ILayout } from '../Core/Interface/ILayoutStrategy';
-import { LayoutState } from '../Redux/ActionsReducers/Interface/IState'
-import { DefaultAdaptableBlotterOptions } from '../Core/DefaultAdaptableBlotterOptions'
+import { FilterFormReact } from '../../View/FilterForm';
+import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
+import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
+import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

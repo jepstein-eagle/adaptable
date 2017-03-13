@@ -5,6 +5,8 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
+import { AdaptablePopover } from './AdaptablePopover';
+import { PopoverType } from '../Core/Enums';
 
 interface PanelWithButtonProps extends PanelProps {
     //use either button content + buttonClick OR button
@@ -15,6 +17,7 @@ interface PanelWithButtonProps extends PanelProps {
     glyphicon?: string
     buttonDisabled?: boolean
     buttonStyle?: string
+    infoBody?: string
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -30,7 +33,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         if (buttonContent || this.props.button) {
             className += " " + "panel-with-button-reduce-header-padding"
         }
-        let buttonStyle:string = (this.props.buttonStyle)? this.props.buttonStyle: "default"
+        let buttonStyle: string = (this.props.buttonStyle) ? this.props.buttonStyle : "default"
 
 
         let header = <AdaptableBlotterForm inline>
@@ -41,6 +44,14 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                         <Glyphicon glyph={this.props.glyphicon} style={glyphBigRightMarginStyle} />
                     }
                     {this.props.headerText}
+                    {' '}
+                    {this.props.infoBody != null &&
+                      <span> 
+                         <label>{' '}</label>
+                        <span>  {' '} <AdaptablePopover headerText="" bodyText={this.props.infoBody} popoverType={PopoverType.Info} /></span>
+                 </span>
+                    }
+
                 </Col>
                 <Col xs={3}>
                     {buttonContent &&

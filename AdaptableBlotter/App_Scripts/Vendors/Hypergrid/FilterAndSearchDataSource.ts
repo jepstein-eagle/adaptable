@@ -1,10 +1,10 @@
-import { AdaptableBlotter } from '../Hypergrid/AdaptableBlotter'
+import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { IAdvancedSearch } from '../Core/interface/IAdvancedSearchStrategy';
-import { StringExtensions } from '../Core/Extensions'
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { IColumnFilter, IColumnFilterContext } from '../Core/Interface/IColumnFilterStrategy';
-import { LeafExpressionOperator, QuickSearchDisplayType } from '../Core/Enums'
+import { IAdvancedSearch } from '../../Core/interface/IAdvancedSearchStrategy';
+import { StringExtensions } from '../../Core/Extensions'
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
+import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase
 export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
@@ -61,11 +61,11 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             if (stringValueLowerCase.includes(quickSearchLowerCase)) {
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
                                     this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
                                     return true;
                                 }
                                 recordReturnValue = true
@@ -77,11 +77,11 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
                                     this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
                                     return true;
                                 }
                                 recordReturnValue = true
@@ -92,11 +92,11 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                         {
                             //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                             if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideRowAndColourCell) {
+                                || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
                                 this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                             }
                             //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HideNonMatchingRow) {
+                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
                                 return true;
                             }
                             recordReturnValue = true

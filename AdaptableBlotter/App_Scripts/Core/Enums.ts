@@ -85,10 +85,9 @@ export enum SortOrder {
 }
 
 export enum QuickSearchDisplayType {
-    HideNonMatchingRow,
     ColourCell,
-    HideRowAndColourCell
-
+    ShowRow,
+    ShowRowAndColourCell
 }
 
 

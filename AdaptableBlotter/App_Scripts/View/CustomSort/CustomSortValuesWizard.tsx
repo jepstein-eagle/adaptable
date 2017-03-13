@@ -52,5 +52,5 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public canBack(): boolean { return !this.state.IsEdit; }
     public Next(): void { this.props.Data.CustomSortItems = this.state.SelectedValues }
     public Back(): void { }
-    public StepName = "Select Sort Order for Column "
+    public StepName = "Create Sort Order for Column: "
 }

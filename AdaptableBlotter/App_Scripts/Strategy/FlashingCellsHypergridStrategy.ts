@@ -1,5 +1,5 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
-import { AdaptableBlotter } from '../Hypergrid/AdaptableBlotter'
+import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
