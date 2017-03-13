@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax

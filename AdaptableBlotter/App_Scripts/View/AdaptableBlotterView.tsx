@@ -11,7 +11,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { EventDispatcher } from '../Core/EventDispatcher'
 import { IEvent } from '../Core/Interface/IEvent';
-import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
+import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
 import { PopupState, MenuState, DashboardState, EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
@@ -21,10 +21,10 @@ import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarContr
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
-import { AdaptableBlotterPopupError } from './AdaptableBlotterPopupError'
-import { AdaptableBlotterPopupWarning } from './AdaptableBlotterPopupWarning'
-import { AdaptableBlotterPopupPrompt } from './AdaptableBlotterPopupPrompt'
-import { AdaptableBlotterPopupConfirmation } from './AdaptableBlotterPopupConfirmation'
+import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotterPopupError'
+import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlotterPopupWarning'
+import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
+import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
