@@ -9,7 +9,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ColumnType } from '../../Core/Enums'
+import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItem } from './ShortcutConfigItem'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
@@ -105,10 +105,10 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         this.setState({ EditedShortcut: null, WizardStartIndex: 0 });
     }
     WizardFinish() {
-        if (this.state.EditedShortcut.ColumnType == ColumnType.Number) {
+        if (this.state.EditedShortcut.DataType == DataType.Number) {
             this.props.onAddShortcut(this.state.EditedShortcut)
         }
-        else if (this.state.EditedShortcut.ColumnType == ColumnType.Date) {
+        else if (this.state.EditedShortcut.DataType == DataType.Date) {
             this.props.onAddShortcut(this.state.EditedShortcut)
         }
 

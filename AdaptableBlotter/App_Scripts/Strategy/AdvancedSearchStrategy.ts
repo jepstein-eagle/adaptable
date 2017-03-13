@@ -4,7 +4,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, ColumnType } from '../Core/Enums';
+import { MenuType, LeafExpressionOperator } from '../Core/Enums';
 import { ExpressionHelper, } from '../Core/Expression/ExpressionHelper';
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { Helper } from '../Core/Helper';

@@ -58,7 +58,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
 
     public Next(): void {
         this.props.Data.FriendlyName = this.state.FilterName
-        this.props.Data.ColumnType = UserFilterHelper.GetColumnTypeForUserFilter(this.props.Data, this.props.Columns)
+        this.props.Data.DataType = UserFilterHelper.GetDataTypeForUserFilter(this.props.Data, this.props.Columns)
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }
     public Back(): void { }

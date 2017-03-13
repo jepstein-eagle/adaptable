@@ -1,12 +1,9 @@
-import { LeafExpressionOperator, ColumnType } from '../Enums'
+import { LeafExpressionOperator, DataType } from '../Enums'
 import { Expression } from '../Expression/Expression'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { IConfigEntity } from './IAdaptableBlotter'
 
-//export interface IColumnValuesExpression {
-//   ColumnValue: any;
-//   ColumnType: Number
-//}
+
 
 export interface IRangeExpression {
     Operator: LeafExpressionOperator;
@@ -18,7 +15,7 @@ export interface IUserFilter extends IConfigEntity {
     Uid: string;
     FriendlyName: string;
     Description: string;
-    ColumnType: ColumnType;
+    DataType: DataType;
     IsExpressionSatisfied(valueToCheck: any, blotter: IAdaptableBlotter): boolean;
     Expression: Expression
 }

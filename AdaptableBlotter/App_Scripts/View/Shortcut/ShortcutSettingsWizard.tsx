@@ -6,7 +6,7 @@ import { Radio, Panel, Form, ControlLabel, FormControl, Col } from 'react-bootst
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ColumnType, PopoverType, ShortcutAction } from '../../Core/Enums';
+import { DataType, PopoverType, ShortcutAction } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -18,7 +18,7 @@ interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut
 
 }
 interface ShortcutSettingsWizardState {
-    ColumnType: ColumnType;
+    DataType: DataType;
     ShortcutKey: string;
     ShortcutResult: any;
     ShortcutAction: ShortcutAction
@@ -32,8 +32,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
     constructor(props: ShortcutSettingsWizardProps) {
         super(props);
-        this.state = { ColumnType: this.props.Data.ColumnType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
-        if (this.state.ColumnType == ColumnType.Date) {
+        this.state = { DataType: this.props.Data.DataType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
+        if (this.state.DataType == DataType.Date) {
             this.state.ShortcutAction = ShortcutAction.Replace;
         }
 
@@ -47,10 +47,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
         // sort out keys
         var keyList: Array<string>
-        if (this.state.ColumnType == ColumnType.Number) {
+        if (this.state.DataType == DataType.Number) {
             keyList = this.props.NumericKeysAvailable
         }
-        else if (this.state.ColumnType == ColumnType.Date) {
+        else if (this.state.DataType == DataType.Date) {
             keyList = this.props.DateKeysAvailable
         }
 
@@ -71,10 +71,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
             <Panel header="Column Type" bsStyle="info">
                 <AdaptableBlotterForm inline >
                     <Col xs={4}>
-                        <Radio inline value="Number" checked={this.state.ColumnType == ColumnType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
+                        <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
                     </Col>
                     <Col xs={8}>
-                        <Radio inline value="Date" checked={this.state.ColumnType == ColumnType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
+                        <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>
@@ -90,7 +90,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                      </AdaptableBlotterForm>
             </Panel>
 
-            {this.state.ColumnType == ColumnType.Number ?
+            {this.state.DataType == DataType.Number ?
                 <span>
                     <Panel header="Shortcut Action" bsStyle="info">
                         <AdaptableBlotterForm inline >
@@ -133,9 +133,9 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     private onColumTypeChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Number") {
-            this.setState({ ColumnType: ColumnType.Number, ShortcutKey: "select" } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ DataType: DataType.Number, ShortcutKey: "select" } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
         } else {
-            this.setState({ ColumnType: ColumnType.Date, ShortcutKey: "select", ShortcutAction: ShortcutAction.Replace } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ DataType: DataType.Date, ShortcutKey: "select", ShortcutAction: ShortcutAction.Replace } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
         }
     }
 
@@ -151,14 +151,14 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     }
 
     public canNext(): boolean {
-        return this.state.ColumnType != null &&
+        return this.state.DataType != null &&
             StringExtensions.IsNotNullOrEmpty(this.state.ShortcutResult) &&
             StringExtensions.IsNotNullOrEmpty(this.state.ShortcutKey) &&
             this.state.ShortcutKey != "select"
     }
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.ColumnType = this.state.ColumnType;
+        this.props.Data.DataType = this.state.DataType;
         this.props.Data.ShortcutResult = this.state.ShortcutResult;
         this.props.Data.ShortcutAction = this.state.ShortcutAction;
         this.props.Data.ShortcutKey = this.state.ShortcutKey;

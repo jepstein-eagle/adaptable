@@ -43,7 +43,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
 import { FilterFormReact } from '../../View/FilterForm';
@@ -112,20 +112,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+    public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+    public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
 
 
-    public SetColumnIntoStore() {
+    public setColumnIntoStore() {
     }
 
-    public CreateMenu() {
+    public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
@@ -148,7 +148,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return "";
     }
 
-    getActiveCell(): ICellInfo {
+    public getActiveCell(): ICellInfo {
         return null
     }
 
@@ -157,9 +157,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public getColumnType(columnId: string): ColumnType {
+    public getColumnDataType(columnId: string): DataType {
         //need to do same as hypergrid.... if There is no defined type. Defaulting to type of the first value for column
-        return ColumnType.String;
+        return DataType.String;
     }
 
     public setValue(cellInfo: ICellInfo): void {
@@ -207,7 +207,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
 
     }
 
@@ -254,7 +254,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
+    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
 
     public isGridPageable(): boolean {

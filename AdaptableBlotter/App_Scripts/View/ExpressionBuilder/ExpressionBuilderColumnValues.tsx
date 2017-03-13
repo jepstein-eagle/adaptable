@@ -4,7 +4,7 @@ import * as React from "react";
 import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
-import { ColumnType, SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import {  SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 
 
 interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {

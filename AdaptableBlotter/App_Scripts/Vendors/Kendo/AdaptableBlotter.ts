@@ -45,7 +45,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
@@ -136,8 +136,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
             if (failedRules.length > 0) { // we have at least one failure or warning
-                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
@@ -206,7 +204,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // we want to fire this after the DOM manipulation. 
             // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
             // http://www.telerik.com/forums/column-reorder-event-delay
-            setTimeout(() => this.SetColumnIntoStore(), 5);
+            setTimeout(() => this.setColumnIntoStore(), 5);
         });
 
         // following code is taken from Telerik website for how to ADD menu items to their column header menu
@@ -278,7 +276,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
 
 
-    public SetColumnIntoStore() {
+    public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
         let columns: IColumn[] = this.grid.columns.map((x, index) => {
@@ -286,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
-                ColumnType: this.getColumnType(x.field),
+                DataType: this.getColumnDataType(x.field),
                 Visible: isVisible,
                 Index: isVisible ? index : -1
             }
@@ -295,21 +293,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+        public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+    public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
 
 
-    public CreateMenu() {
+    public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
-
-        //let menuItems = [].concat(this.strategies.values.(strat: IStrategy => strat.getMenuItems()[0]));
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
@@ -330,7 +326,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return record["uid"]
     }
 
-    getActiveCell(): ICellInfo {
+    public getActiveCell(): ICellInfo {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
         let item = this.grid.dataItem(row);
@@ -376,29 +372,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnType(columnId: string): ColumnType {
+    public getColumnDataType(columnId: string): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!columnId) {
             console.log('columnId is undefined returning String for Type')
-            return ColumnType.String;
+            return DataType.String;
         }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
-            return ColumnType.String;
+            return DataType.String;
         }
 
         let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
-                return ColumnType.String;
+                return DataType.String;
             case 'number':
-                return ColumnType.Number;
+                return DataType.Number;
             case 'boolean':
-                return ColumnType.Boolean;
+                return DataType.Boolean;
             case 'date':
-                return ColumnType.Date;
+                return DataType.Date;
             case 'object':
-                return ColumnType.Object;
+                return DataType.Object;
             default:
                 break;
         }
@@ -544,7 +540,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values());
     }
 
-    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
             let col = this.grid.columns.find(x => x.field == column.ColumnId)
             //if not then not need to set it because it was already visible.........
@@ -558,7 +554,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }))
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
-        this.SetColumnIntoStore();
+        this.setColumnIntoStore();
     }
 
 
@@ -670,7 +666,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
 
-    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
+    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
         // this is rather brittle... but its only required the first time we change a cell value
         var dataSource = this.grid.dataSource;
         var dataSourceCopy: any = dataSource;

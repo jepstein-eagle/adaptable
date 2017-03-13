@@ -1,5 +1,4 @@
 import { IEvent } from '../../Interface/IEvent'
-import { ColumnType } from '../../Enums';
 import { ICellValidationRule } from '../../Interface/ICellValidationStrategy';
 
 

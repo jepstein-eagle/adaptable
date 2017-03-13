@@ -3,7 +3,7 @@ import { IAuditService, IDataChangedEvent, IDataChangingEvent, IColumnDataValueL
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
-import { MenuType, ColumnType, CellValidationMode, LeafExpressionOperator, SortOrder } from '../Enums';
+import { MenuType, DataType, CellValidationMode, LeafExpressionOperator, SortOrder } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
@@ -49,7 +49,7 @@ export class AuditService implements IAuditService {
                 cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
             }
             else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-                dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
+                dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
                 let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
                 cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
                 myList.CellDataValueList.push(cellDataValueList);
@@ -66,7 +66,7 @@ export class AuditService implements IAuditService {
             return cellDataValueList.DataChangedInfo.NewValue;
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-            return this.blotter.GetDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
+            return this.blotter.getDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
         }
     }
 
@@ -157,31 +157,31 @@ export class AuditService implements IAuditService {
             return false;
         }
 
-        let columnType: ColumnType = columns.find(c => c.ColumnId == dataChangedEvent.ColumnId).ColumnType;
+        let columnDataType: DataType = columns.find(c => c.ColumnId == dataChangedEvent.ColumnId).DataType;
         // taken primarily from IsSatisfied in expresion - wonder if we can use that fully?
         let operand1: any;
         let operand2: any;
         let newValue: any;
-        switch (columnType) {
-            case ColumnType.Date:
+        switch (columnDataType) {
+            case DataType.Date:
                 operand1 = Date.parse(cellValidationRule.RangeExpression.Operand1)
                 if (StringExtensions.IsNotEmpty(cellValidationRule.RangeExpression.Operand2)) {
                     operand2 = Date.parse(cellValidationRule.RangeExpression.Operand2)
                 }
                 newValue = dataChangedEvent.NewValue.setHours(0, 0, 0, 0)
                 break
-            case ColumnType.Number:
+            case DataType.Number:
                 operand1 = Number(cellValidationRule.RangeExpression.Operand1)
                 if (StringExtensions.IsNotEmpty(cellValidationRule.RangeExpression.Operand2)) {
                     operand2 = Number(cellValidationRule.RangeExpression.Operand2);
                 }
                 newValue = dataChangedEvent.NewValue;
                 break
-            case ColumnType.Boolean:
+            case DataType.Boolean:
                 newValue = dataChangedEvent.NewValue;
                 break;
-            case ColumnType.Object:
-            case ColumnType.String:
+            case DataType.Object:
+            case DataType.String:
                 operand1 = cellValidationRule.RangeExpression.Operand1.toLowerCase();
                 operand2 = cellValidationRule.RangeExpression.Operand2.toLowerCase();
                 newValue = dataChangedEvent.NewValue.toLowerCase();

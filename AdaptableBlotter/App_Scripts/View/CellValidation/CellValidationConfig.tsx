@@ -11,7 +11,6 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import { Helper } from '../../Core/Helper';
-import { ColumnType } from '../../Core/Enums';
 import { PanelWithButton } from '../PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { PopupType, CellValidationMode } from '../../Core/Enums'

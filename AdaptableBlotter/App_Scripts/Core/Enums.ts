@@ -1,7 +1,7 @@
 
 // General Enums
 // should really rename this DataType
-export enum ColumnType {
+export enum DataType {
     String,
     Number,
     Boolean,

@@ -1,7 +1,7 @@
 
 import { ISearchService } from './Interface/ISearchService';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, ColumnType, QuickSearchDisplayType } from '../Enums';
+import { MenuType, LeafExpressionOperator, QuickSearchDisplayType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { Expression } from '../Expression/Expression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'
@@ -19,7 +19,7 @@ export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
-        this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
+        this.blotter.onGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {

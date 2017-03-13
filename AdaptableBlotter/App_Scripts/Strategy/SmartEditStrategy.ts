@@ -2,7 +2,7 @@ import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
-import { SmartEditOperation, ColumnType, CellValidationMode } from '../Core/Enums'
+import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Core/Interface/ISmartEditStrategy'
@@ -62,7 +62,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 }
             }
             for (var columnValuePair of pair[1]) {
-                if (this.blotter.getColumnType(columnValuePair.columnID) != ColumnType.Number) {
+                if (this.blotter.getColumnDataType(columnValuePair.columnID) != DataType.Number) {
                     return {
                         Error: {
                             ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."

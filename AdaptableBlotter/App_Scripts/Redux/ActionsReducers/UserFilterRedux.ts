@@ -2,7 +2,6 @@
 
 import { UserFilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/interface/IExpression';
-import { ColumnType } from '../../Core/Enums'
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
 

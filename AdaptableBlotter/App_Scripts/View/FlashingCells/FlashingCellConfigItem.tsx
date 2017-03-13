@@ -5,7 +5,6 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Col, Panel, Row, Checkbox, FormControl } from 'react-bootstrap';
-import { ColumnType } from '../../Core/Enums'
 import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';

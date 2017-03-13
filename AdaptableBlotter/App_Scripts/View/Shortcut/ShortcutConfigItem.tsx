@@ -5,7 +5,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl, Label, HelpBlock } from 'react-bootstrap';
-import { ColumnType } from '../../Core/Enums'
+import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -44,11 +44,11 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 </Col>
                 <Col md={3} >
                     <HelpBlock>
-                        {ColumnType[this.props.Shortcut.ColumnType]}
+                        {DataType[this.props.Shortcut.DataType]}
                     </HelpBlock>
                 </Col>
                 <Col md={2} >
-                    {this.props.Shortcut.ColumnType == ColumnType.Date ?
+                    {this.props.Shortcut.DataType == DataType.Date ?
                         ShortcutAction[this.props.Shortcut.ShortcutAction] :
                         <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
@@ -65,7 +65,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={3}>
                     {this.props.Shortcut.IsDynamic ?
                         this.props.Shortcut.ShortcutResult :
-                        this.props.Shortcut.ColumnType == ColumnType.Date ?
+                        this.props.Shortcut.DataType == DataType.Date ?
                             <FormControl
                                 type="date"
                                 placeholder="Shortcut Result"

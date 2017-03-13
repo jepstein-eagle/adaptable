@@ -1,4 +1,4 @@
-import { SortOrder, ColumnType } from '../Core/Enums'
+import { SortOrder } from '../Core/Enums'
 
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;

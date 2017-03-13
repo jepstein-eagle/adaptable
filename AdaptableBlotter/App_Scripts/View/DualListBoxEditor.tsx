@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
-import { SortOrder, ColumnType } from '../Core/Enums'
+import { SortOrder } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 
 interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {

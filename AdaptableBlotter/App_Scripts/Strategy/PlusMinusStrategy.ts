@@ -6,7 +6,7 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem, ICellInfo, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
-import { ColumnType, MenuType, CellValidationMode } from '../Core/Enums'
+import { DataType, MenuType, CellValidationMode } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
@@ -22,7 +22,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         super(StrategyIds.PlusMinusStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration, "plus-sign");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
-        blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+        blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
     private InitState() {
@@ -50,7 +50,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
-                    if (this.blotter.getColumnType(columnValuePair.columnID) == ColumnType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                    if (this.blotter.getColumnDataType(columnValuePair.columnID) == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
                         let newValue: ICellInfo;
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)

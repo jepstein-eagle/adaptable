@@ -5,7 +5,6 @@ import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel }
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
-import { ColumnType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 

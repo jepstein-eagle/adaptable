@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
-import { CellValidationMode, LeafExpressionOperator, ColumnType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
+import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
@@ -56,7 +56,7 @@ export module ObjectFactory {
             Uid: Helper.generateUid(),
             FriendlyName: "",
             Description: "",
-            ColumnType: ColumnType.String,
+            DataType: DataType.String,
             Expression: CreateEmptyExpression(),
             IsExpressionSatisfied: (value: any): boolean => {
                 return null;
@@ -88,7 +88,7 @@ export module ObjectFactory {
         return {
             ShortcutKey: null,
             ShortcutResult: null,
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             ShortcutAction: ShortcutAction.Multiply,
             IsLive: true,
             IsPredefined: false,

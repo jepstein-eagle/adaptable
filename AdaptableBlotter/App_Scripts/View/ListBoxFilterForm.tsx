@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
-import { SortOrder, ColumnType,DistinctCriteriaPairValue } from '../Core/Enums'
+import { SortOrder, DistinctCriteriaPairValue } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';

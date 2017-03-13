@@ -7,7 +7,7 @@ import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdapta
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
-import { ColumnType, DistinctCriteriaPairValue } from '../../Core/Enums';
+import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums';
 
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -32,9 +32,6 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     }
 
     render(): any {
-        let selectedColumnType: ColumnType = (this.props.Data.ColumnId == "select") ? null : this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).ColumnType;
-
-
         return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
             SelectedValues={this.state.SelectedValues}
             HeaderAvailable="Column Values"
