@@ -10,7 +10,7 @@ import { PanelWithButton } from './PanelWithButton';
 import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
-import { ColumnType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
+import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
 import { Expression } from '../Core/Expression/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'
 import { Helper } from '../Core/Helper'
@@ -39,7 +39,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.ColumnValueType);
         columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
 
-        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.ColumnType != ColumnType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: String[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []

@@ -6,7 +6,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { ColumnType, CellValidationMode, LeafExpressionOperator, PopoverType } from '../../Core/Enums';
+import { DataType, CellValidationMode, LeafExpressionOperator, PopoverType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -89,7 +89,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         </Col>
 
                         { /* if  numeric then show a numeric control */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnTypeFromState() == ColumnType.Number &&
+                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnDataTypeFromState() == DataType.Number &&
                             <Col xs={5}>
                                 <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 {this.isBetweenOperator() &&
@@ -99,7 +99,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         }
 
                         { /* if  date then show a date control */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.Date &&
+                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.Date &&
                             <Col xs={5}>
                                 <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
                                 {this.isBetweenOperator() &&
@@ -109,7 +109,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         }
 
                         { /* if string then show a text control  */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnTypeFromState() == ColumnType.String &&
+                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.String &&
                             <Col xs={5}>
                                 <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                             </Col>
@@ -165,8 +165,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.setState({ HasExpression: e.checked } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
     }
 
-    private getColumnTypeFromState(): ColumnType {
-        return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).ColumnType;
+    private getColumnDataTypeFromState(): DataType {
+        return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
     }
 
     private checkOperator(operator: LeafExpressionOperator): boolean {
@@ -178,14 +178,14 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     }
 
     private getAvailableOperators(): LeafExpressionOperator[] {
-        switch (this.getColumnTypeFromState()) {
-            case ColumnType.Boolean:
+        switch (this.getColumnDataTypeFromState()) {
+            case DataType.Boolean:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
-            case ColumnType.String:
+            case DataType.String:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
-            case ColumnType.Date:
+            case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
-            case ColumnType.Number:
+            case DataType.Number:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.IsPositive, LeafExpressionOperator.IsNegative, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
         }
     }
@@ -201,13 +201,13 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case LeafExpressionOperator.NotEquals:
                 return "Not Equals "
             case LeafExpressionOperator.GreaterThan:
-                if (this.getColumnTypeFromState() == ColumnType.Date) {
+                if (this.getColumnDataTypeFromState() == DataType.Date) {
                     return "After "
                 } else {
                     return "Greater Than "
                 }
             case LeafExpressionOperator.LessThan:
-                if (this.getColumnTypeFromState() == ColumnType.Date) {
+                if (this.getColumnDataTypeFromState() == DataType.Date) {
                     return "Before "
                 } else {
                     return "Less Than "
@@ -238,8 +238,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         if (!this.operatorRequiresValue(CellValidation.RangeExpression.Operator)) {
             return valueDescription;
         }
-        let columnType: ColumnType = this.props.Columns.find(c => c.ColumnId == CellValidation.ColumnId).ColumnType;
-        let operand1Text: string = (columnType == ColumnType.Boolean || columnType == ColumnType.Number) ?
+        let dataType: DataType = this.props.Columns.find(c => c.ColumnId == CellValidation.ColumnId).DataType;
+        let operand1Text: string = (dataType == DataType.Boolean || dataType == DataType.Number) ?
             CellValidation.RangeExpression.Operand1 :
             "'" + CellValidation.RangeExpression.Operand1 + "'"
 
@@ -250,7 +250,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         }
 
         if (StringExtensions.IsNotNullOrEmpty(CellValidation.RangeExpression.Operand2)) {
-            let operand2Text: string = (columnType == ColumnType.Number) ?
+            let operand2Text: string = (dataType == DataType.Number) ?
                 " and " + CellValidation.RangeExpression.Operand2 :
                 " and '" + CellValidation.RangeExpression.Operand2 + "'";
             valueDescription = valueDescription + operand2Text;

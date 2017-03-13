@@ -7,7 +7,7 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IMenuItem, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
 import { Helper } from '../Core/Helper';
-import { ColumnType } from '../Core/Enums'
+import { DataType } from '../Core/Enums'
 import { ShortcutAction, CellValidationMode } from '../Core/Enums'
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { MenuType } from '../Core/Enums';
@@ -45,12 +45,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)
         if (activeCell && !isReadOnly) {
-            let columnType: ColumnType = this.blotter.getColumnType(activeCell.ColumnId);
+            let columnDataType: DataType = this.blotter.getColumnDataType(activeCell.ColumnId);
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
             let activeShortcut: IShortcut
             var valueToReplace: any;
-            switch (columnType) {
-                case ColumnType.Number: {
+            switch (columnDataType) {
+                case DataType.Number: {
                     activeShortcut = this.NumericShortcuts.filter(s => s.IsLive).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         let currentCellValue: any;
@@ -65,7 +65,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     }
                     break;
                 }
-                case ColumnType.Date: {
+                case DataType.Date: {
                     activeShortcut = this.DateShortcuts.filter(s => s.IsLive).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values

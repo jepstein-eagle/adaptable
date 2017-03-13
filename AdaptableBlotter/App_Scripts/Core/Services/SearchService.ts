@@ -1,7 +1,7 @@
 
 import { ISearchService } from './Interface/ISearchService';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, ColumnType, QuickSearchDisplayType } from '../Enums';
+import { MenuType, LeafExpressionOperator, QuickSearchDisplayType } from '../Enums';
 import { ExpressionHelper, } from '../Expression/ExpressionHelper';
 import { Expression } from '../Expression/Expression'
 import { IDataChangedEvent } from '../Services/Interface/IAuditService'

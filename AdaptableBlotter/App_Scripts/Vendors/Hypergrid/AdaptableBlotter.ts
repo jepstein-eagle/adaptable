@@ -45,7 +45,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -295,7 +295,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                ColumnType: this.getColumnType(x.name),
+                DataType: this.getColumnDataType(x.name),
                 Visible: true,
                 Index: index
             }
@@ -304,7 +304,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                ColumnType: this.getColumnType(x.name),
+                DataType: this.getColumnDataType(x.name),
                 Visible: false,
                 Index: -1
             }
@@ -416,11 +416,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnType(columnId: string): ColumnType {
+    public getColumnDataType(columnId: string): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!columnId) {
             console.log('columnId is undefined returning String for Type')
-            return ColumnType.String;
+            return DataType.String;
         }
 
         let column = this.grid.behavior.dataModel.schema.find((x: any) => x.name == columnId)
@@ -431,41 +431,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (columnObj) {
                     switch (columnObj.getType()) {
                         case 'string':
-                            return ColumnType.String;
+                            return DataType.String;
                         case 'number':
                         case 'int':
                         case 'float':
-                            return ColumnType.Number;
+                            return DataType.Number;
                         case 'boolean':
-                            return ColumnType.Boolean;
+                            return DataType.Boolean;
                         case 'date':
-                            return ColumnType.Date;
+                            return DataType.Date;
                         case 'object':
-                            return ColumnType.Object;
+                            return DataType.Object;
                         default:
                             break;
                     }
                 }
-                return ColumnType.String;
+                return DataType.String;
             }
             let type = column.type;
             switch (type) {
                 case 'string':
-                    return ColumnType.String;
+                    return DataType.String;
                 case 'number':
-                    return ColumnType.Number;
+                    return DataType.Number;
                 case 'boolean':
-                    return ColumnType.Boolean;
+                    return DataType.Boolean;
                 case 'date':
-                    return ColumnType.Date;
+                    return DataType.Date;
                 case 'object':
-                    return ColumnType.Object;
+                    return DataType.Object;
                 default:
                     break;
             }
         }
         console.log('columnId does not exist')
-        return ColumnType.String;
+        return DataType.String;
     }
 
     public setValue(cellInfo: ICellInfo): void {

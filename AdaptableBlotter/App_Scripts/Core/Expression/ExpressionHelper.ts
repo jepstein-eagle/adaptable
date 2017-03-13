@@ -2,7 +2,7 @@ import { Expression } from './Expression'
 import { UserFilterHelper } from '../Services/UserFilterHelper'
 import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
-import { ColumnType } from '../Enums'
+import { DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 
 
@@ -126,23 +126,23 @@ export module ExpressionHelper {
                     for (let range of columnRanges.Ranges) {
                         let operand1: any
                         let operand2: any
-                        switch (column.ColumnType) {
-                            case ColumnType.Date:
+                        switch (column.DataType) {
+                            case DataType.Date:
                                 operand1 = Date.parse(range.Operand1)
                                 if (range.Operand2 != "") {
                                     operand2 = Date.parse(range.Operand2)
                                 }
                                 columnValue = columnValue.setHours(0, 0, 0, 0)
                                 break
-                            case ColumnType.Number:
+                            case DataType.Number:
                                 operand1 = Number(range.Operand1)
                                 if (range.Operand2 != "") {
                                     operand2 = Number(range.Operand2)
                                 }
                                 break
-                            case ColumnType.Boolean:
-                            case ColumnType.Object:
-                            case ColumnType.String:
+                            case DataType.Boolean:
+                            case DataType.Object:
+                            case DataType.String:
                                 operand1 = range.Operand1.toLowerCase();
                                 operand2 = range.Operand2.toLowerCase();
                                 columnValue = columnValue.toLowerCase();

@@ -1,5 +1,5 @@
 import { IStrategy } from './IStrategy';
-import { CellValidationMode, ColumnType } from '../Enums';
+import { CellValidationMode } from '../Enums';
 import { IRangeExpression } from '../Interface/IExpression';
 import { Expression } from '../Expression/Expression'
 import { IColumn } from '../Interface/IAdaptableBlotter';

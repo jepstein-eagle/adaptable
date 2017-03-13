@@ -45,7 +45,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
@@ -284,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
-                ColumnType: this.getColumnType(x.field),
+                DataType: this.getColumnDataType(x.field),
                 Visible: isVisible,
                 Index: isVisible ? index : -1
             }
@@ -306,8 +306,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
-
-        //let menuItems = [].concat(this.strategies.values.(strat: IStrategy => strat.getMenuItems()[0]));
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
@@ -374,29 +372,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnType(columnId: string): ColumnType {
+    public getColumnDataType(columnId: string): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!columnId) {
             console.log('columnId is undefined returning String for Type')
-            return ColumnType.String;
+            return DataType.String;
         }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
-            return ColumnType.String;
+            return DataType.String;
         }
 
         let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
         switch (type) {
             case 'string':
-                return ColumnType.String;
+                return DataType.String;
             case 'number':
-                return ColumnType.Number;
+                return DataType.Number;
             case 'boolean':
-                return ColumnType.Boolean;
+                return DataType.Boolean;
             case 'date':
-                return ColumnType.Date;
+                return DataType.Date;
             case 'object':
-                return ColumnType.Object;
+                return DataType.Object;
             default:
                 break;
         }

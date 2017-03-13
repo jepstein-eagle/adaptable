@@ -22,7 +22,7 @@ import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../ButtonNew';
-import { ColumnType } from '../../Core/Enums';
+import { DataType } from '../../Core/Enums';
 
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
@@ -53,7 +53,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
 
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
-            let optionColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number).filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
+            let optionColumns = this.props.Columns.filter(c => c.DataType == DataType.Number).filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
                 return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
             })
             return <li

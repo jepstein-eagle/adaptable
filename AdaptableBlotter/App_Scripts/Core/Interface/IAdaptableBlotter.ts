@@ -1,4 +1,4 @@
-import { ColumnType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
+import { DataType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
 import { IMenuItem, IStrategy, ICellInfo } from './IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -14,31 +14,46 @@ export interface IAdaptableBlotter {
     BlotterOptions: IAdaptableBlotterOptions
     Strategies: IAdaptableStrategyCollection
 
+    // Services
     CalendarService: ICalendarService
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
 
+    // Grid Events
+    onMenuClicked(menuItem: IMenuItem): void
+    onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+
+    // General
+    createMenu(): void
+    isGridPageable(): boolean
+    getPrimaryKeyValueFromRecord(record: any): any
+
+    // cell selection
     getSelectedCells(): ISelectedCells
-    getColumnType(columnId: string): ColumnType
+    getActiveCell(): ICellInfo
+    selectCells(cells: ICellInfo[]): void
+
+
+    // column related
+    getColumnDataType(columnId: string): DataType
     getColumnHeader(columnId: string): string
     getColumnIndex(columnName: string): number
-    setValue(cellInfo: ICellInfo): void
-    setValueBatch(batchValues: ICellInfo[]): void
-    createMenu(): void
     setColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
-    getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
-    gridHasCurrentEditValue(): boolean
-    selectCells(cells: ICellInfo[]): void
     isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
-    getActiveCell(): ICellInfo
-    isGridPageable(): boolean
-    getPrimaryKeyValueFromRecord(record: any): any
-    cancelEdit() : any
+
+    // editing related
+    setValue(cellInfo: ICellInfo): void
+    setValueBatch(batchValues: ICellInfo[]): void
+    cancelEdit(): any
+    gridHasCurrentEditValue(): boolean
+    getCurrentCellEditValue(): any
+
 
     // cell styling methods
     addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void
@@ -51,7 +66,7 @@ export interface IAdaptableBlotter {
     // get dirty data
     getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
 
-    // playing around
+    // Row Methods
     getAllRowIds(): string[]
     hideRows(rowIds: string[]): void
     showRows(rowIds: string[]): void
@@ -66,14 +81,10 @@ export interface IAdaptableBlotter {
     // Print Preview
     printGrid(): void
 
-    // filtering
+    // Filtering
     applyColumnFilters(): void
 
-    // Grid Events
-    onMenuClicked(menuItem: IMenuItem): void
-    onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
-    onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-
+    // Quick Search    
     getQuickSearchRowIds(rowIds: string[]): string[]
 }
 
@@ -88,9 +99,9 @@ export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 export interface IColumn {
     ColumnId: string,
     FriendlyName: string
-    ColumnType: ColumnType
+    DataType: DataType
     Visible: boolean,
-    Index :number
+    Index: number
 }
 
 //make sure property names match DistinctCriteriaPairValue
@@ -99,11 +110,11 @@ export interface IRawValueDisplayValuePair {
     DisplayValue: string
 }
 
-export interface IAdaptableBlotterOptions{
-    enableAuditLog? : boolean,
+export interface IAdaptableBlotterOptions {
+    enableAuditLog?: boolean,
     enableRemoteConfigServer?: boolean,
     userName?: string,
-    primaryKey? : string
+    primaryKey?: string
 }
 
 export interface IConfigEntity {

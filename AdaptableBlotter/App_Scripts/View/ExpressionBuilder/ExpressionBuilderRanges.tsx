@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ColumnType } from '../../Core/Enums'
+import { DataType } from '../../Core/Enums'
 import { IRangeExpression } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../PanelWithButton'
@@ -10,7 +10,7 @@ import { DropdownButton, MenuItem, InputGroup, ListGroupItem, ListGroup, Panel, 
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
-    ColumnType: ColumnType
+    DataType: DataType
     Ranges: Array<IRangeExpression>
     onRangesChange: (Ranges: Array<IRangeExpression>) => void
 }
@@ -18,7 +18,7 @@ interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionB
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesProps, {}> {
     render() {
         let rangesElement: JSX.Element[] = null
-        if (this.props.ColumnType == ColumnType.Number || this.props.ColumnType == ColumnType.Date) {
+        if (this.props.DataType == DataType.Number || this.props.DataType == DataType.Date) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>
@@ -35,10 +35,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                         <FormGroup controlId={"Range1" + index}>
                             <InputGroup>
                                 {numericAndDateOption}
-                                {this.props.ColumnType == ColumnType.Number &&
+                                {this.props.DataType == DataType.Number &&
                                     <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
-                                {this.props.ColumnType == ColumnType.Date &&
+                                {this.props.DataType == DataType.Date &&
                                     <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 <InputGroup.Button>
@@ -49,10 +49,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             </InputGroup>
                             <InputGroup style={betweenAddOnStyle}>
                                 <InputGroup.Addon>And</InputGroup.Addon>
-                                {this.props.ColumnType == ColumnType.Number &&
+                                {this.props.DataType == DataType.Number &&
                                     <FormControl value={String(x.Operand2)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
                                 }
-                                {this.props.ColumnType == ColumnType.Date &&
+                                {this.props.DataType == DataType.Date &&
                                     <FormControl value={String(x.Operand2)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
                                 }
                             </InputGroup>
@@ -64,10 +64,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                         <FormGroup controlId={"Range" + index}>
                             <InputGroup>
                                 {numericAndDateOption}
-                                {this.props.ColumnType == ColumnType.Number &&
+                                {this.props.DataType == DataType.Number &&
                                     <FormControl value={String(x.Operand1)} type="number" placeholder="Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
-                                {this.props.ColumnType == ColumnType.Date &&
+                                {this.props.DataType == DataType.Date &&
                                     <FormControl value={String(x.Operand1)} type="date" placeholder="Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
                                 }
                                 <InputGroup.Button>
@@ -81,7 +81,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                 }
             })
         }
-        else if (this.props.ColumnType == ColumnType.String) {
+        else if (this.props.DataType == DataType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>

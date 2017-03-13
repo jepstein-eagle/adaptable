@@ -43,7 +43,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { ColumnType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
 import { FilterFormReact } from '../../View/FilterForm';
@@ -157,9 +157,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public getColumnType(columnId: string): ColumnType {
+    public getColumnDataType(columnId: string): DataType {
         //need to do same as hypergrid.... if There is no defined type. Defaulting to type of the first value for column
-        return ColumnType.String;
+        return DataType.String;
     }
 
     public setValue(cellInfo: ICellInfo): void {

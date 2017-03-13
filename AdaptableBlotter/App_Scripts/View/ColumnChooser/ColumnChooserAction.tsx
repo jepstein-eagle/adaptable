@@ -9,7 +9,6 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { ColumnType } from '../../Core/Enums';
 import { PanelWithImage } from '../PanelWithImage';
 
 

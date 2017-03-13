@@ -11,7 +11,7 @@ import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, F
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
-import { ColumnType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../ButtonNew';
@@ -111,7 +111,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
         })
 
-        let selectedColumnType: ColumnType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).ColumnType;
+        let selectedColumnDataType: DataType = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).DataType;
         let selectedColumn: IColumn = (this.props.SelectedColumnId == "select") ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
         let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn));
 
@@ -181,7 +181,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Col>
                         <Col xs={4}>
                             <ExpressionBuilderRanges
-                                ColumnType={selectedColumnType}
+                                DataType={selectedColumnDataType}
                                 Ranges={this.state.SelectedColumnRanges}
                                 onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
                             </ExpressionBuilderRanges>

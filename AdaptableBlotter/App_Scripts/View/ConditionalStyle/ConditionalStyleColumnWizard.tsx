@@ -5,7 +5,7 @@ import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, 
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, ColumnType, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../Core/Enums';
+import { ConditionalStyleScope, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';

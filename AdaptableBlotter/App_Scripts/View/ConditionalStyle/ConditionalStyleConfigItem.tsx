@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl } from 'react-bootstrap';
-import { ConditionalStyleScope, ColumnType } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';

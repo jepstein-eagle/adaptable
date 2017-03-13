@@ -3,7 +3,7 @@
 import { ShortcutState } from './Interface/IState';
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
-import { ColumnType, ShortcutAction } from '../../Core/Enums';
+import { DataType, ShortcutAction } from '../../Core/Enums';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
@@ -90,14 +90,14 @@ export const ShortcutDelete = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 
 const initialShortcutState: ShortcutState = {
     NumericShortcuts: [
-        { ShortcutKey: "M", ShortcutResult: 1000000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
-        { ShortcutKey: "K", ShortcutResult: 1000, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
-        { ShortcutKey: "H", ShortcutResult: 100, ColumnType: ColumnType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "M", ShortcutResult: 1000000, DataType: DataType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "K", ShortcutResult: 1000, DataType: DataType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
+        { ShortcutKey: "H", ShortcutResult: 100, DataType: DataType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
     ],
     DateShortcuts: [
-        { ShortcutKey: "T", ShortcutResult: "Today", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "L", ShortcutResult: "Last Work Day", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "N", ShortcutResult: "Next Work Day", ColumnType: ColumnType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "T", ShortcutResult: "Today", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "L", ShortcutResult: "Last Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "N", ShortcutResult: "Next Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }
 
@@ -111,7 +111,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         case SHORTCUT_CHANGE_KEY: {
             let actionTyped = <ShortcutChangeKeyAction>action
             let shortcut = actionTyped.Shortcut
-            if (shortcut.ColumnType == ColumnType.Number) {
+            if (shortcut.DataType == DataType.Number) {
                 let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey })
@@ -119,7 +119,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     NumericShortcuts: items
                 });
             }
-            else if (shortcut.ColumnType == ColumnType.Date) {
+            else if (shortcut.DataType == DataType.Date) {
                 let items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey })
@@ -131,7 +131,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         case SHORTCUT_CHANGE_OPERATION: {
             let actionTyped = <ShortcutChangeOperationAction>action
             let shortcut = actionTyped.Shortcut
-            if (shortcut.ColumnType == ColumnType.Number) {
+            if (shortcut.DataType == DataType.Number) {
                 let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutAction: actionTyped.NewShortcutAction })
@@ -139,7 +139,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     NumericShortcuts: items
                 });
             }
-            else if (shortcut.ColumnType == ColumnType.Date) {
+            else if (shortcut.DataType == DataType.Date) {
                 let items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutAction: actionTyped.NewShortcutAction })
@@ -151,7 +151,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         case SHORTCUT_CHANGE_RESULT: {
             let actionTyped = <ShortcutChangeResultAction>action
             let shortcut = actionTyped.Shortcut
-            if (shortcut.ColumnType == ColumnType.Number) {
+            if (shortcut.DataType == DataType.Number) {
                 let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult })
@@ -159,7 +159,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     NumericShortcuts: items
                 });
             }
-            else if (shortcut.ColumnType == ColumnType.Date) {
+            else if (shortcut.DataType == DataType.Date) {
                 let items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.indexOf(shortcut)
                 items[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult })
@@ -170,14 +170,14 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         }
         case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
-            if (newShortcut.ColumnType == ColumnType.Number) {
+            if (newShortcut.DataType == DataType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 items.push(newShortcut);
                 return Object.assign({}, state, {
                     NumericShortcuts: items
                 });
             }
-            else if (newShortcut.ColumnType == ColumnType.Date) {
+            else if (newShortcut.DataType == DataType.Date) {
                 var items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 items.push(newShortcut);
                 return Object.assign({}, state, {
@@ -187,7 +187,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         }
         case SHORTCUT_SELECT: {
             let updatedShortcut = (<ShortcutSelectAction>action).Shortcut
-            if (updatedShortcut.ColumnType == ColumnType.Number) {
+            if (updatedShortcut.DataType == DataType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 updatedShortcut = Object.assign({}, updatedShortcut, {
                     IsLive: !updatedShortcut.IsLive
@@ -198,7 +198,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                     NumericShortcuts: items
                 });
             }
-            else if (updatedShortcut.ColumnType == ColumnType.Date) {
+            else if (updatedShortcut.DataType == DataType.Date) {
                 var items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 updatedShortcut = Object.assign({}, updatedShortcut, {
                     IsLive: !updatedShortcut.IsLive
@@ -220,7 +220,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 return state;
             }
 
-            if (deletedShortcut.ColumnType == ColumnType.Number) {
+            if (deletedShortcut.DataType == DataType.Number) {
                 var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
                 items.splice(index, 1);
@@ -230,7 +230,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 });
 
             }
-            else if (deletedShortcut.ColumnType == ColumnType.Date) {
+            else if (deletedShortcut.DataType == DataType.Date) {
                 var items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
                 items.splice(index, 1);

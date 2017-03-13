@@ -1,7 +1,7 @@
 import { Expression } from '../Expression/Expression'
 import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
-import { ColumnType } from '../Enums'
+import { DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -18,7 +18,7 @@ export module UserFilterHelper {
 
         // predefined expressions return if its right column type
         if (userFilter.IsPredefined) {
-            return userFilter.ColumnType == column.ColumnType;
+            return userFilter.DataType == column.DataType;
         }
 
         // see if there are any columnvalues and then get the first only
@@ -39,23 +39,23 @@ export module UserFilterHelper {
         return false;
     }
 
-    export function GetColumnTypeForUserFilter(userFilter: IUserFilter, Columns: Array<IColumn>): ColumnType {
+    export function GetDataTypeForUserFilter(userFilter: IUserFilter, Columns: Array<IColumn>): DataType {
 
         // predefined expressions return if its right column type
         if (userFilter.IsPredefined) {
-            return userFilter.ColumnType;
+            return userFilter.DataType;
         }
 
         // see if there are any columnvalues and then get the first only
         if (userFilter.Expression.ColumnDisplayValuesExpressions != null && userFilter.Expression.ColumnDisplayValuesExpressions.length > 0) {
             let columnID: string = userFilter.Expression.ColumnDisplayValuesExpressions[0].ColumnName;
-            return Columns.find(c => c.ColumnId == columnID).ColumnType;
+            return Columns.find(c => c.ColumnId == columnID).DataType;
         }
 
         // see if there are any ranges and then get the first only
         if (userFilter.Expression.RangeExpressions != null && userFilter.Expression.RangeExpressions.length > 0) {
             let columnID: string = userFilter.Expression.RangeExpressions[0].ColumnName;
-            return Columns.find(c => c.ColumnId == columnID).ColumnType;
+            return Columns.find(c => c.ColumnId == columnID).DataType;
         }
     }
 
@@ -108,7 +108,7 @@ export module UserFilterHelper {
             Uid: TODAY_USER_FILTER,
             FriendlyName: "Today",
             Description: "Is Date Today",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
@@ -121,7 +121,7 @@ export module UserFilterHelper {
             Uid: IN_PAST_USER_FILTER,
             FriendlyName: "In Past",
             Description: "Is Date In Past",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck < Date.now();
@@ -133,7 +133,7 @@ export module UserFilterHelper {
             Uid: IN_FUTURE_USER_FILTER,
             FriendlyName: "In Future",
             Description: "Is Date In Future",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck > Date.now();
@@ -145,7 +145,7 @@ export module UserFilterHelper {
             Uid: YESTERDAY_USER_FILTER,
             FriendlyName: "Yesterday",
             Description: "Is Date Yesterday",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
@@ -158,7 +158,7 @@ export module UserFilterHelper {
             Uid: TOMORROW_USER_FILTER,
             FriendlyName: "Tomorrow",
             Description: "Is Date Tomorrow",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
@@ -171,7 +171,7 @@ export module UserFilterHelper {
             Uid: NEXT_WORKING_DAY_USER_FILTER,
             FriendlyName: "Next Working Day",
             Description: "Is Next Working Day",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
@@ -183,7 +183,7 @@ export module UserFilterHelper {
             Uid: LAST_WORKING_DAY_USER_FILTER,
             FriendlyName: "Last Working Day",
             Description: "Is Last Working Day",
-            ColumnType: ColumnType.Date,
+            DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetLastWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
@@ -196,7 +196,7 @@ export module UserFilterHelper {
             Uid: POSITIVE_USER_FILTER,
             FriendlyName: "Positive",
             Description: "Is Number Positive",
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck > 0);
@@ -208,7 +208,7 @@ export module UserFilterHelper {
             Uid: NEGATIVE_USER_FILTER,
             FriendlyName: "Negative",
             Description: "Is Number Negative",
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck < 0);
@@ -220,7 +220,7 @@ export module UserFilterHelper {
             Uid: ZERO_USER_FILTER,
             FriendlyName: "Zero",
             Description: "Is Number Zero",
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == 0);
@@ -232,7 +232,7 @@ export module UserFilterHelper {
             Uid: NUMERIC_BLANKS_USER_FILTER,
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == null);
@@ -244,7 +244,7 @@ export module UserFilterHelper {
             Uid: NUMERIC_NON_BLANKS_USER_FILTER,
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
-            ColumnType: ColumnType.Number,
+            DataType: DataType.Number,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck != null);
@@ -257,7 +257,7 @@ export module UserFilterHelper {
             Uid: STRING_BLANKS_USER_FILTER,
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
-            ColumnType: ColumnType.String,
+            DataType: DataType.String,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNullOrEmpty(stringToCheck));
@@ -269,7 +269,7 @@ export module UserFilterHelper {
             Uid: STRING_NON_BLANKS_USER_FILTER,
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
-            ColumnType: ColumnType.String,
+            DataType: DataType.String,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
@@ -282,7 +282,7 @@ export module UserFilterHelper {
             Uid: TRUE_USER_FILTER,
             FriendlyName: "True",
             Description: "Is Value True",
-            ColumnType: ColumnType.Boolean,
+            DataType: DataType.Boolean,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (boolToCheck);
@@ -294,7 +294,7 @@ export module UserFilterHelper {
             Uid: FALSE_USER_FILTER,
             FriendlyName: "False",
             Description: "Is Value False",
-            ColumnType: ColumnType.Boolean,
+            DataType: DataType.Boolean,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (!boolToCheck);

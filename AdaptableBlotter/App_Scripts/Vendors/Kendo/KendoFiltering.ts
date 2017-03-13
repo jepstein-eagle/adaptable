@@ -1,5 +1,5 @@
 import { IRangeExpression } from '../../Core/Interface/IExpression';
-import { LeafExpressionOperator, ColumnType, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { IColumnFilter, } from '../../Core/Interface/IColumnFilterStrategy';
@@ -190,16 +190,16 @@ export module KendoFiltering {
     }
 
     function getTypedValueForOperand(operandValue: string, column: IColumn): any {
-        switch (column.ColumnType) {
-            case ColumnType.Boolean:
+        switch (column.DataType) {
+            case DataType.Boolean:
                 return operandValue; // not sure what to do here...
-            case ColumnType.Date:
+            case DataType.Date:
                 return new Date(operandValue);
-            case ColumnType.Number:
+            case DataType.Number:
                 return Number(operandValue);
-            case ColumnType.String:
+            case DataType.String:
                 return operandValue;
-            case ColumnType.Object:
+            case DataType.Object:
                 return operandValue;
         }
     }
@@ -294,7 +294,7 @@ export module KendoFiltering {
         }
 
         // if strings and bools just return the expression
-        if (column.ColumnType == ColumnType.String || column.ColumnType == ColumnType.Boolean) {
+        if (column.DataType == DataType.String || column.DataType == DataType.Boolean) {
             return ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, [], columnValuesExpression.ColumnValues, [], [])
             // return displayValueExpression;
         }

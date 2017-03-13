@@ -9,7 +9,7 @@ import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRe
 import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
-import { ColumnType, SortOrder } from '../../Core/Enums'
+import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithImage } from '../PanelWithImage';
@@ -33,7 +33,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
     render() {
         let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
 
-        let numericColumns = this.props.Columns.filter(c => c.ColumnType == ColumnType.Number);
+        let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
         let cellInfo: [string, number][] = [["Live", 1], ["Column", 4], ["Flash Duration", 3], ["Up Colour", 2], ["Down Colour", 2]];
