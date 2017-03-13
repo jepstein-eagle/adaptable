@@ -118,13 +118,14 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
                 </Panel>
 
-                <Panel header="Expression" bsStyle="info">
+                <Panel header="Validation Expression" bsStyle="info">
                     <AdaptableBlotterForm inline >
                         <Col xs={12}> <HelpBlock>An Expression is used if the rule is dependent on other values in the row.<br />The rule will only be activated and checked if the Expression passes.</HelpBlock>
                         </Col>
                         <Col xs={12}>
-                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Create Expression (created in next step)</Checkbox>
-                        </Col>
+                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Expression</Checkbox>
+                              {' '}<AdaptablePopover headerText={"Validation Rule: Expression"} bodyText={"Create an Expression (in next step) which will stipulate other cell values required for the Rule."} popoverType={PopoverType.Info} />
+                    </Col>
                     </AdaptableBlotterForm>
 
                 </Panel>
