@@ -16,7 +16,7 @@ import { PanelWithImage } from '../PanelWithImage';
 import { PanelWithInfo } from '../PanelWithInfo';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonClear } from '../ButtonClear';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
 

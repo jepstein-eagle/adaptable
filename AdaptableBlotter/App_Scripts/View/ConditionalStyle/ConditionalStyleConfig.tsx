@@ -20,7 +20,7 @@ import { PanelWithButton } from '../PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,

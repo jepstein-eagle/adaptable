@@ -13,7 +13,7 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import { Helper } from '../../Core/Helper';
 import { ColumnType } from '../../Core/Enums';
 import { PanelWithButton } from '../PanelWithButton';
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../PanelWithRow';
@@ -25,7 +25,7 @@ import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];

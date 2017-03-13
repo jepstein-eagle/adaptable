@@ -17,7 +17,7 @@ import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithRow } from '../PanelWithRow';
 import { PanelWithButton } from '../PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction

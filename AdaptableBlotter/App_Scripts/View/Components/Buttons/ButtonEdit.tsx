@@ -1,21 +1,21 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
+import { Helper } from '../../../Core/Helper'
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { IUIError } from '../Core/Interface/IStrategy';
-import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import { IUIError } from '../../../Core/Interface/IStrategy';
+import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 
-export class ButtonNew extends React.Component<ButtonProps, {}> {
+export class ButtonEdit extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="New"
-            bsStyle='info'
+        return <ButtonBase ToolTipAndText="Edit"
+            bsStyle='success'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
-            glyph="plus"
+             ConfigEntity={this.props.ConfigEntity}
+            glyph="edit"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}

@@ -3,7 +3,7 @@ import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 
 import * as React from "react";
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 
 interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort

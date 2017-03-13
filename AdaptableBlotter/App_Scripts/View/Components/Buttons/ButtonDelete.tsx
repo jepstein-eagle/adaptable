@@ -1,16 +1,16 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../Core/Helper'
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
+import { Helper } from '../../../Core/Helper'
+import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { IUIError } from '../Core/Interface/IStrategy';
-import { IConfigEntity } from '../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import { IUIError } from '../../../Core/Interface/IStrategy';
+import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import { IUIConfirmation } from '../Core/Interface/IStrategy';
+import { IUIConfirmation } from '../../../Core/Interface/IStrategy';
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction

@@ -17,7 +17,7 @@ import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { PanelWithButton } from '../PanelWithButton';
 import { PanelWithRow } from '../PanelWithRow';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction

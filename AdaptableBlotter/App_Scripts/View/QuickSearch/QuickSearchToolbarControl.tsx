@@ -11,8 +11,8 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-import { ButtonEdit } from '../ButtonEdit';
-import { ButtonClear } from '../ButtonClear';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;

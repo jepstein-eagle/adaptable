@@ -16,12 +16,12 @@ import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../PanelWithButton';
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { PanelWithRow } from '../PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ColumnType } from '../../Core/Enums';
 
 

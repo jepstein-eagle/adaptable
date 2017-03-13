@@ -25,10 +25,10 @@ import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
-import { ButtonEdit } from '../ButtonEdit';
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonClear } from '../ButtonClear';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];

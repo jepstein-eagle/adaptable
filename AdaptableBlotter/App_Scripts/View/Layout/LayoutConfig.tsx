@@ -14,8 +14,8 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonSave } from '../ButtonSave';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonSave } from '../Components/Buttons/ButtonSave';
 
 interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],

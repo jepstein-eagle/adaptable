@@ -7,7 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl, Label, HelpBlock } from 'react-bootstrap';
 import { ColumnType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {

@@ -16,6 +16,8 @@ import { IUserFilter } from '../Core/Interface/IExpression'
 import { Helper } from '../Core/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { IStrategyViewPopupProps } from '../Core/Interface/IStrategyView'
+import { ButtonClose } from './Components/Buttons/ButtonClose';
+
 
 interface FilterFormProps extends IStrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -47,7 +49,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info">
+
+         let newButton = <ButtonClose onClick={() => this.onCloseForm()}
+           style={buttonCloseStyle}
+            overrideTooltip="Close"
+            DisplayMode="Glyph" />
+
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info" button={newButton}>
             <ListBoxFilterForm ColumnValues={columnValuePairs}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
@@ -108,6 +116,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             this.props.onAddEditColumnFilter(columnFilter);
         }
     }
+
+        onCloseForm() {
+        
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -138,3 +150,8 @@ let panelStyle = {
     width: '130px'
 }
 
+
+let buttonCloseStyle = {
+    margin: '0px',
+    padding: '0px'
+}

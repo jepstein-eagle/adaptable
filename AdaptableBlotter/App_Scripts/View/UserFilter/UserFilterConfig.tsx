@@ -15,7 +15,7 @@ import { IUserFilter } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../PanelWithButton';
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
 import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
@@ -23,7 +23,7 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
