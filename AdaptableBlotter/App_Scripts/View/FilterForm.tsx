@@ -120,6 +120,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         onCloseForm() {
         // need to close this form
+        this.setState({ showModal: false });
     }
 }
 
