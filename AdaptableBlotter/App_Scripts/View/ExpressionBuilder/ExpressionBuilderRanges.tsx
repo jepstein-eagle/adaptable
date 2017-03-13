@@ -4,7 +4,7 @@ import * as React from "react";
 import { DataType } from '../../Core/Enums'
 import { IRangeExpression } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
-import { PanelWithButton } from '../PanelWithButton'
+import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

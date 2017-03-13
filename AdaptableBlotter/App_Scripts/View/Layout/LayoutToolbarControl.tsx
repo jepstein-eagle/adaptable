@@ -14,9 +14,9 @@ import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-import { ButtonSave } from '../ButtonSave';
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonSave } from '../Components/Buttons/ButtonSave';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction

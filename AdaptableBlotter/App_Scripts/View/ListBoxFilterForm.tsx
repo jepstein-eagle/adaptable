@@ -8,6 +8,7 @@ import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
+import { ButtonClear } from './Components/Buttons/ButtonClear';
 
 
 interface ListBoxFilterFormProps extends ListGroupProps {
@@ -101,8 +102,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                     onChange={(e) => this.handleChangeFilterValue(e)}
                     />
                 <InputGroup.Button>
-                    <Button onClick={() => this.clearFilter()}><Glyphicon glyph="remove" /></Button>
-                </InputGroup.Button>
+                  <ButtonClear onClick={() => this.clearFilter()}
+                                    overrideTooltip="Clear Filter"
+                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.FilterValue)}
+                                    DisplayMode="Glyph" />
+                  
+                 </InputGroup.Button>
             </InputGroup>
         </FormGroup>
 

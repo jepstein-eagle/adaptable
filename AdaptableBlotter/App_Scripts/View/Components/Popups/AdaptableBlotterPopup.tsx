@@ -1,11 +1,11 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
-import { DistinctCriteriaPairValue } from '../Core/Enums'
-import { AdaptableViewFactory } from './AdaptableViewFactory';
-import { IStrategy } from '../Core/Interface/IStrategy';
+import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { AdaptableViewFactory } from './../../AdaptableViewFactory';
+import { IStrategy } from '../../../Core/Interface/IStrategy';
 
 interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;

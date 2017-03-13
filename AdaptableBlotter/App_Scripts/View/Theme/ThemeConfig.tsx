@@ -8,7 +8,7 @@ import { Panel, Form, FormControl, ControlLabel, Col, FormGroup } from 'react-bo
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 

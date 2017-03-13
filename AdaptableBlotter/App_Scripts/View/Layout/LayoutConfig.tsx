@@ -8,14 +8,14 @@ import { Provider, connect } from 'react-redux';
 import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonSave } from '../ButtonSave';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonSave } from '../Components/Buttons/ButtonSave';
 
 interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],

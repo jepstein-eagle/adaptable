@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { IRangeExpression, IUserFilter } from '../../Core/Interface/IExpression'
-import { PanelWithButton } from '../PanelWithButton'
+import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
@@ -14,7 +14,7 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>

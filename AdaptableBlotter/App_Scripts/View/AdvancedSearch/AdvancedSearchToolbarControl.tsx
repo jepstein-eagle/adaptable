@@ -12,10 +12,10 @@ import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
-import { ButtonEdit } from '../ButtonEdit';
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonClear } from '../ButtonClear';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {

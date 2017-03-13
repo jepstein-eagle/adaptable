@@ -6,8 +6,8 @@ import * as Redux from "redux";
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
-import { PanelWithButton } from '../PanelWithButton';
-import { PanelWithInfo } from '../PanelWithInfo';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -25,10 +25,10 @@ import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
-import { ButtonEdit } from '../ButtonEdit';
-import { ButtonDelete } from '../ButtonDelete';
-import { ButtonClear } from '../ButtonClear';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];

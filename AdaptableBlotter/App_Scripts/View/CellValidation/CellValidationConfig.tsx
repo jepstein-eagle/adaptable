@@ -11,11 +11,11 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import { Helper } from '../../Core/Helper';
-import { PanelWithButton } from '../PanelWithButton';
-import { EntityListActionButtons } from '../EntityListActionButtons';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
 import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'
@@ -24,7 +24,7 @@ import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];

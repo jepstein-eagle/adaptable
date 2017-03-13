@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
-
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums';
+import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 
 
 interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -32,14 +32,20 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     }
 
     render(): any {
-        return <DualListBoxEditor AvailableValues={this.state.ColumnValues}
-            SelectedValues={this.state.SelectedValues}
-            HeaderAvailable="Column Values"
-            HeaderSelected="Custom Sort Order"
-            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+      
+        let infoBody = "Create a custom sort by moving (and ordering items) to the 'Custom Sort Order' listbox.\n\n" + 
+            "The new sort will consist of the items created and then sort alphabetically."
+
+        return <PanelWithInfo header="Create Sort Order" bsStyle="primary" infoBody={infoBody}>
+            <DualListBoxEditor AvailableValues={this.state.ColumnValues}
+                SelectedValues={this.state.SelectedValues}
+                HeaderAvailable="Column Values"
+                HeaderSelected="Custom Sort Order"
+                DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+                ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+        </PanelWithInfo>
     }
     OnSelectedValuesChange(newValues: Array<string>) {
         this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () => this.props.UpdateGoBackState())

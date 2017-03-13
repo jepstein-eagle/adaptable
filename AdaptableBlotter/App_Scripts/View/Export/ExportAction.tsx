@@ -8,7 +8,7 @@ import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Co
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {

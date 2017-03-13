@@ -12,11 +12,11 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithImage } from '../PanelWithImage';
-import { PanelWithInfo } from '../PanelWithInfo';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonClear } from '../ButtonClear';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
 

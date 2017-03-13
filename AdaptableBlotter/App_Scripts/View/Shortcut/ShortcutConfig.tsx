@@ -14,10 +14,10 @@ import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItem } from './ShortcutConfigItem'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
-import { PanelWithRow } from '../PanelWithRow';
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../ButtonNew';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
