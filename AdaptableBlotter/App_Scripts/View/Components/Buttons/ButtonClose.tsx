@@ -13,7 +13,7 @@ export class ButtonClose extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Close"
             bsStyle='default'
-             bsSize={"xsmall"}
+            bsSize={this.props.size}
              ConfigEntity={this.props.ConfigEntity}
             glyph="remove"
             onClick={() => this.props.onClick()}

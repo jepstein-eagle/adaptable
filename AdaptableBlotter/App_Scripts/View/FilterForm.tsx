@@ -52,6 +52,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
          let newButton = <ButtonClose onClick={() => this.onCloseForm()}
            style={buttonCloseStyle}
+           size={"xsmall"}
             overrideTooltip="Close"
             DisplayMode="Glyph" />
 
@@ -118,7 +119,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
         onCloseForm() {
-        
+        // need to close this form
     }
 }
 
