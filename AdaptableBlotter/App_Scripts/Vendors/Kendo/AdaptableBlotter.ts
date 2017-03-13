@@ -204,7 +204,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // we want to fire this after the DOM manipulation. 
             // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
             // http://www.telerik.com/forums/column-reorder-event-delay
-            setTimeout(() => this.SetColumnIntoStore(), 5);
+            setTimeout(() => this.setColumnIntoStore(), 5);
         });
 
         // following code is taken from Telerik website for how to ADD menu items to their column header menu
@@ -276,7 +276,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
 
 
-    public SetColumnIntoStore() {
+    public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
         let columns: IColumn[] = this.grid.columns.map((x, index) => {
@@ -293,17 +293,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+        public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+    public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
 
 
-    public CreateMenu() {
+    public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
@@ -328,7 +328,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return record["uid"]
     }
 
-    getActiveCell(): ICellInfo {
+    public getActiveCell(): ICellInfo {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
         let item = this.grid.dataItem(row);
@@ -542,7 +542,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values());
     }
 
-    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
             let col = this.grid.columns.find(x => x.field == column.ColumnId)
             //if not then not need to set it because it was already visible.........
@@ -556,7 +556,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }))
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
-        this.SetColumnIntoStore();
+        this.setColumnIntoStore();
     }
 
 
@@ -668,7 +668,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
 
-    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
+    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
         // this is rather brittle... but its only required the first time we change a cell value
         var dataSource = this.grid.dataSource;
         var dataSourceCopy: any = dataSource;

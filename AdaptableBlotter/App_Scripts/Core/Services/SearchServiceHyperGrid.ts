@@ -9,7 +9,7 @@ import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
 export class SearchServiceHyperGrid implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
-        this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
+        this.blotter.onGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
     }
 
 

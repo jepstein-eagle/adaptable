@@ -285,11 +285,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         grid.addEventListener("fin-column-changed-event", () => {
-            setTimeout(() => this.SetColumnIntoStore(), 5);
+            setTimeout(() => this.setColumnIntoStore(), 5);
         });
     }
 
-    public SetColumnIntoStore() {
+    public setColumnIntoStore() {
         // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
         let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any, index: number) => {
             return {
@@ -313,16 +313,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+    public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+    public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
 
-    public CreateMenu() {
+    public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
@@ -577,7 +577,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values());
     }
 
-    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
             //we use allcolumns so we can show previously hidden columns
             let oldcolindex = this.grid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
@@ -590,7 +590,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.changed()
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
-        this.SetColumnIntoStore();
+        this.setColumnIntoStore();
     }
 
     public exportBlotter(): void {
@@ -714,7 +714,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
+    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
 
     public isGridPageable(): boolean {

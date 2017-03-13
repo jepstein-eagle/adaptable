@@ -134,7 +134,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                             <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                                 {optionOperators}
                                             </FormControl>
-                                            {' '}<AdaptablePopover headerText={"Quick Search: Operator"} bodyText={"Which cells pass Quick Search.\n'StartsWith' returns cells whose contents begin with the search text;\n'Contains' returns cells whose contents contain the search text anywhere."} popoverType={PopoverType.Info} />
+                                            {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
+                                                bodyText={"'StartsWith': returns cells whose contents begin with search text;\n\n" +
+                                                    "'Contains': returns cells whose contents contain search text anywhere."} popoverType={PopoverType.Info} />
                                         </AdaptableBlotterForm  >
                                     </Col>
                                 </FormGroup>

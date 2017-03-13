@@ -49,7 +49,7 @@ export class AuditService implements IAuditService {
                 cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
             }
             else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-                dataChangedEvent.OldValue = this.blotter.GetDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
+                dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
                 let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
                 cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
                 myList.CellDataValueList.push(cellDataValueList);
@@ -66,7 +66,7 @@ export class AuditService implements IAuditService {
             return cellDataValueList.DataChangedInfo.NewValue;
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-            return this.blotter.GetDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
+            return this.blotter.getDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
         }
     }
 

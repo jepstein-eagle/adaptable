@@ -28,7 +28,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         this.menuItemConfig = new MenuItemShowPopup("Shortcut", this.Id, 'ShortcutConfig', MenuType.Configuration, "road");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
-        blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+        blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
 

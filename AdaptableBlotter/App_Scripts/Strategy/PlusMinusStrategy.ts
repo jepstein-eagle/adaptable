@@ -22,7 +22,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         super(StrategyIds.PlusMinusStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration, "plus-sign");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
-        blotter.OnKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+        blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
     private InitState() {

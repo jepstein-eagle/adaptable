@@ -286,9 +286,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case RESET_STATE: {
                     let returnAction = next(action);
                     //we create all the menus
-                    adaptableBlotter.CreateMenu();
+                    adaptableBlotter.createMenu();
                     //we set the column list from the datasource
-                    adaptableBlotter.SetColumnIntoStore();
+                    adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
                         middlewareAPI.dispatch(LayoutRedux.LayoutAdd(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
@@ -305,7 +305,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
                     //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
                     //Time will tell I guess
-                    adaptableBlotter.SetNewColumnListOrder(actionTyped.VisibleColumnList)
+                    adaptableBlotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
                     return next(action);
                 default:
                     return next(action);

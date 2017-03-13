@@ -75,14 +75,9 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                     <AdaptableBlotterForm horizontal>
                         <Row>
                             <Col xs={12} >
-                                <Well bsSize="small">
-                                    <HelpBlock>
-                                        Enter a name and then click 'Save' in order to create a new layout.
+                                <HelpBlock>
+                                    Enter a name and then click 'Save' in order to create a new layout.  The new layout will contain the Blotter's current column visibility and order.
                                 </HelpBlock>
-                                    <HelpBlock>
-                                        The new layout will contain the Blotter's current column visibility and order.
-                                </HelpBlock>
-                                </Well>
                             </Col>
                         </Row>
                         <Row>

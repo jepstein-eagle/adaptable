@@ -25,8 +25,8 @@ export interface IAdaptableBlotter {
     getColumnIndex(columnName: string): number
     setValue(cellInfo: ICellInfo): void
     setValueBatch(batchValues: ICellInfo[]): void
-    CreateMenu(): void
-    SetColumnIntoStore(): void
+    createMenu(): void
+    setColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getCurrentCellEditValue(): any
     getDisplayValue(id: any, columnId: string): string
@@ -34,7 +34,7 @@ export interface IAdaptableBlotter {
     selectCells(cells: ICellInfo[]): void
     isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
-    SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+    setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getActiveCell(): ICellInfo
     isGridPageable(): boolean
     getPrimaryKeyValueFromRecord(record: any): any
@@ -49,7 +49,7 @@ export interface IAdaptableBlotter {
     removeAllCellStylesWithRegex(regex: RegExp): void
 
     // get dirty data
-    GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
+    getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
 
     // playing around
     getAllRowIds(): string[]
@@ -71,8 +71,8 @@ export interface IAdaptableBlotter {
 
     // Grid Events
     onMenuClicked(menuItem: IMenuItem): void
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+    onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     getQuickSearchRowIds(rowIds: string[]): string[]
 }

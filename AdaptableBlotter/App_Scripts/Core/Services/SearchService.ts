@@ -19,7 +19,7 @@ export class SearchService implements ISearchService {
 
     constructor(private blotter: IAdaptableBlotter) {
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
-        this.blotter.OnGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
+        this.blotter.onGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
     }
 
     private handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {

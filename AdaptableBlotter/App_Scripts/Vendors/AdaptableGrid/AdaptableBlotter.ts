@@ -112,20 +112,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    OnKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+    public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-    OnGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+    public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
     }
 
 
-    public SetColumnIntoStore() {
+    public setColumnIntoStore() {
     }
 
-    public CreateMenu() {
+    public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
 
@@ -207,7 +207,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public SetNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
 
     }
 
@@ -254,7 +254,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public GetDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
+    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
 
     public isGridPageable(): boolean {
