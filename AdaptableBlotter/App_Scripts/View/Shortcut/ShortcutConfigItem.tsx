@@ -56,9 +56,6 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                     return <option key={ShortcutAction[shortcutAction]} value={shortcutAction.toString()}>{ShortcutAction[shortcutAction]}</option>
                                 })
                             }
-                            <FormGroup controlId="formValidationSuccess1" validationState={undefined}>
-                                Help text with validation state.
-    </FormGroup>
                         </FormControl>
                     }
                 </Col>
