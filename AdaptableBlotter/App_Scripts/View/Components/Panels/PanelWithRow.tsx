@@ -1,10 +1,10 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../../typings/index.d.ts" />
 
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
+import { Helper } from '../../../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
-import { AdaptableBlotterForm } from './AdaptableBlotterForm'
+import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 
 interface PanelWithRowProps extends PanelProps {
     CellInfo: [string, number][]

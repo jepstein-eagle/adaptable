@@ -14,14 +14,14 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
 import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 

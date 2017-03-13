@@ -16,9 +16,9 @@ import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard
 import { ConditionalStyleColumnWizard } from './ConditionalStyleColumnWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { Helper } from '../../Core/Helper';
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 

@@ -15,9 +15,9 @@ import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

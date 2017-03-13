@@ -11,11 +11,11 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import { Helper } from '../../Core/Helper';
-import { PanelWithButton } from '../PanelWithButton';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
 import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'

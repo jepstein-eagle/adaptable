@@ -8,7 +8,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Panel, Form, FormControl, ControlLabel, FormGroup, Col, Row, Checkbox } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {

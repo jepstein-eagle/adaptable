@@ -6,8 +6,8 @@ import * as Redux from "redux";
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
-import { PanelWithButton } from '../PanelWithButton';
-import { PanelWithInfo } from '../PanelWithInfo';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'

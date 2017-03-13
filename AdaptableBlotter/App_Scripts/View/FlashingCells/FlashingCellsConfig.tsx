@@ -11,8 +11,8 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
-import { PanelWithRow } from '../PanelWithRow';
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

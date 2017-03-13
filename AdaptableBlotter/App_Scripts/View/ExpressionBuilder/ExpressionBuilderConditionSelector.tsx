@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { IRangeExpression, IUserFilter } from '../../Core/Interface/IExpression'
-import { PanelWithButton } from '../PanelWithButton'
+import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'

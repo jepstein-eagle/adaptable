@@ -9,7 +9,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 
 
 interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {

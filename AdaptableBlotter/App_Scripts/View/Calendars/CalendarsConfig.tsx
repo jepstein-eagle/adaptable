@@ -11,8 +11,8 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Modal } from 'react-bootstrap';
 import { CalendarsConfigItem } from './CalendarsConfigItem'
 import { CalendarEntryItem } from './CalendarEntryItem'
-import { PanelWithRow } from '../PanelWithRow';
-import { PanelWithImage } from '../PanelWithImage';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helper';
 import { SortOrder } from '../../Core/Enums';
 

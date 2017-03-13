@@ -15,8 +15,8 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortConfigItem } from './CustomSortConfigItem'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
-import { PanelWithButton } from '../PanelWithButton';
-import { PanelWithRow } from '../PanelWithRow';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
