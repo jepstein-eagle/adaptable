@@ -32,9 +32,8 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     }
 
     render(): any {
-      
-        let infoBody: any[] = ["Create a custom sort for '" +  this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName + "' column by moving items to the 'Custom Sort Order' listbox and then using the buttons on the right to order them as required.\n\n" + 
-            "The new sort will consist first of the items in the custom sort order; any other values will then sort alphabetically."]
+      let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
+        let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.",<br/>,<br/>, "Use the buttons on the right of the box to order items in the list as required.", <br/>,<br/>,"The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
 
         return <PanelWithInfo header="Create Sort Order" bsStyle="primary" infoBody={infoBody}>
             <DualListBoxEditor AvailableValues={this.state.ColumnValues}

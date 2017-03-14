@@ -132,8 +132,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                             {optionOperators}
                                         </FormControl>
                                         {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
-                                            bodyText={["'StartsWith': returns cells whose contents begin with search text;\n\n" +
-                                                "'Contains': returns cells whose contents contain search text anywhere."]} popoverType={PopoverType.Info} />
+                                            bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text",<br/>,<br/>,<b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
                                     </AdaptableBlotterForm  >
                                 </Col>
                             </FormGroup>
@@ -148,7 +147,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                             {quickSearchDisplayTypes}
                                         </FormControl>
                                         {' '}<AdaptablePopover headerText={"Quick Search: Behaviour"}
-                                            bodyText={[<b>Colour Cells:</b>, " Changes back colour of cells matching search text",<br/>,<br/>,<b>Show Rows:</b>," Only shows rows containing cells matching search text",<br/>,<br/>,<b>Colour Cells and Show Rows:</b>," Only shows rows containing cells (which are also coloured) matching search text"]}
+                                            bodyText={[<b>Colour Cells:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Rows:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Colour Cells and Show Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
                                             popoverType={PopoverType.Info} />
                                     </AdaptableBlotterForm  >
                                 </Col>
