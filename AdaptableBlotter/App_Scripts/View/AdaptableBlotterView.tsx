@@ -70,7 +70,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     <Navbar.Brand >
                         <Dropdown id="dropdown-functions" >
                             <Dropdown.Toggle style={marginStyle}>
-                                <Glyphicon glyph="home" />{' '}Functions...
+                                <Glyphicon glyph="home" />{' '}Functions
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {configMenuItems}

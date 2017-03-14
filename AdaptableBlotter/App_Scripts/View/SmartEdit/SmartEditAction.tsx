@@ -48,7 +48,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
 
     render() {
-        let infoBody: any[] = ["Click ",<i>Apply to Grid</i>," button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,"3 smart edit operations are available:",<br/>,<strong>Sum:</strong>," Adds inputted amount to selected cells",<br/>,<strong>Ratio:</strong>," Multiplies selected cells by inputted amount",<br/>,<strong>Absolute:</strong>," Sets selected cells to inputed amount (e.g. Bulk Update)",<br/>, <br/>,"Smart Edits that break Cell Validation Rules will be flagged and prevented."]
+        let infoBody: any[] = ["Click ",<i><b>Apply to Grid</b></i>," button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,"3 Smart Edit operations are available:",<br/>,<strong>Sum:</strong>," Add inputted amount to selected cells",<br/>,<strong>Ratio:</strong>," Multiply selected cells by inputted amount",<br/>,<strong>Absolute:</strong>," Set selected cells to inputed amount (i.e. Bulk Update)",<br/>, <br/>,"Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false
