@@ -97,10 +97,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
 
         return (
-            <div >
+            <span >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open" infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => this.onSetQuickSearch()}>
-                        <div >
                             <Panel header={"Search For"} bsStyle="info" Click >
                                 <FormControl
                                     value={this.state.EditedQuickSearchText}
@@ -118,11 +117,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                     DisplayMode="Glyph+Text" />
                             </Panel>
 
-                        </div>
                     </AdaptableBlotterForm>
 
                     <AdaptableBlotterForm horizontal>
-                        <div >
                             <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
                                 <FormGroup controlId="formInlineSearchOperator">
@@ -168,10 +165,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                 </FormGroup>
 
                             </Panel>
-                        </div>
                     </AdaptableBlotterForm>
                 </PanelWithImage>
-            </div>
+            </span>
         );
     }
 
