@@ -48,6 +48,8 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
 
     render() {
+        let infoBody: any[] = ["Click ",<i>Apply to Grid</i>," button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,"3 smart edit operations are available:",<br/>,<strong>Sum:</strong>," Adds inputted amount to selected cells",<br/>,<strong>Ratio:</strong>," Multiplies selected cells by inputted amount",<br/>,<strong>Absolute:</strong>," Sets selected cells to inputed amount (e.g. Bulk Update)",<br/>, <br/>,"Smart Edits that break Cell Validation Rules will be flagged and prevented."]
+
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false
         let globalHasValidationWarning = false
@@ -69,10 +71,10 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                     {hasValidationErrors ?
                         <td>
                             {localHasValidationPrevent == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} popoverType={PopoverType.Error} />
+                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
                             }
                             {localHasValidationWarning == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={this.getValidationErrorMessage(previewResult.ValidationRules)} popoverType={PopoverType.Warning} />
+                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
                             }
                         </td>
                         :
@@ -104,7 +106,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         }
         return (
             <div >
-                <PanelWithImage header="Smart Edit Details" bsStyle="primary" glyphicon="pencil">
+                <PanelWithImage header="Smart Edit" bsStyle="primary" glyphicon="pencil" infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
@@ -122,9 +124,9 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                             onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
                         {' '}
                         {(globalHasValidationWarning) &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Warning} />}
+                            <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
                         {(!globalHasValidationWarning && globalHasValidationPrevent) &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Error} />}
+                            <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
                     </AdaptableBlotterForm>
                 </PanelWithImage>
                 <Panel header={previewHeader} bsStyle="info" style={divStyle}>

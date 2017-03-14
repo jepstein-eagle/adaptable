@@ -9,7 +9,7 @@ import { AdaptablePopover } from './../../AdaptablePopover';
 import { PopoverType } from '../../../Core/Enums';
 
 interface PanelWithInfoProps extends PanelProps {
-    infoBody: string
+    infoBody: any[]
 }
 
 export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {

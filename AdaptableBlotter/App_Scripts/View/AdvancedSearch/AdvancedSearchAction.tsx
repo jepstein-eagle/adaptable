@@ -69,10 +69,12 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     render() {
-        let infoBody: string = "Create multi-column named searches using a selection of column values, filters and ranges.\n" +
+        let infoBody: any[] = ["Create multi-column named searches using a selection of column values, filters and ranges.\n" +
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.\n" +
             "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form.\n" +
-            "Click 'New' to create a new Advanced Search."
+            "Click 'New' to create a new Advanced Search."]
+
+             let detailsInfoBody: any[] = ["Stuff about details."]
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
@@ -153,7 +155,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                 {/* Search details screen - showing contents of current selected search (only visible if there is one) */}
                 {selectedAdvancedSearch != null &&
 
-                    <PanelWithInfo bsStyle="primary" bsSize="small" header="Search Details" infoBody="Stuff about details" >
+                    <PanelWithInfo bsStyle="primary" bsSize="small" header="Search Details" infoBody={detailsInfoBody} >
                         <div style={previewDivStyle}>
                             <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
                                 UserFilters={this.props.UserFilters}

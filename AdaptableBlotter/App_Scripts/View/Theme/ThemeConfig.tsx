@@ -20,8 +20,7 @@ interface ThemeConfigProps extends IStrategyViewPopupProps<ThemeConfigComponent>
 
 class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
     render() {
-        let infoBody: string = "Choose a theme to change the look & feel of the Adaptable Blotter screens.\n\n" +
-            "Select 'none' if you prefer to upload your own custom theme or 'default' to use the standard Bootstrap theme."
+        let infoBody: any[] = ["Choose a theme to change the look & feel of the Adaptable Blotter screens.", <br/>,<br/>, "Select ", <i>None</i>, " if you prefer to upload your own custom theme or ", <i>default</i>, " to use the standard Bootstrap theme."]
 
   let optionThemes = this.props.AvailableThemes.map(x => {
             return <option value={x} key={x}>{x}</option>

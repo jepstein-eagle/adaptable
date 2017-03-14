@@ -58,11 +58,11 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                     <Col xs={9}>
                         <Radio value="whole" checked={this.state.ExpressionOption == 'whole'} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Whole Column {' '}
-                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={"Make this the default nudge value for the column"} popoverType={PopoverType.Info} />
+                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={["Make this the default nudge value for the column"]} popoverType={PopoverType.Info} />
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Custom Expression {' '}
-                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={"Create an Expression (in the next step of the wizard) to determine a bespoke nudge value rule"} popoverType={PopoverType.Info} />
+                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={["Create an Expression (in the next step of the wizard) to determine a bespoke nudge value rule"]} popoverType={PopoverType.Info} />
                         </Radio>
                     </Col>
                 </FormGroup>

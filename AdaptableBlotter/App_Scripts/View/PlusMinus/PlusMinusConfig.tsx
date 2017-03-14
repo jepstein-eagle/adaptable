@@ -48,7 +48,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
     }
     render() {
-        let infoBody = "I'm going do this here.  Probably easier than getting from strategy"
+        let infoBody: any[] = ["I'm going do this here.  Probably easier than getting from strategy"]
 
         let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
 

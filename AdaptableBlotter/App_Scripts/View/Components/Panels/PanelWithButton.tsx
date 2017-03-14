@@ -17,7 +17,7 @@ interface PanelWithButtonProps extends PanelProps {
     glyphicon?: string
     buttonDisabled?: boolean
     buttonStyle?: string
-    infoBody?: string
+    infoBody?: any[]
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 

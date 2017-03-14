@@ -87,9 +87,9 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                     onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
                 {' '}
                 {(globalHasValidationWarning) &&
-                    <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Warning} />}
+                    <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
                 {(!globalHasValidationWarning && globalHasValidationPrevent) &&
-                    <AdaptablePopover headerText={"Validation Error"} bodyText={globalValidationMessage} popoverType={PopoverType.Error} />}
+                    <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
             </AdaptableBlotterForm>
 
         </FormGroup>

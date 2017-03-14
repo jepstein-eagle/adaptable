@@ -10,7 +10,7 @@ import { PopoverType } from '../../../Core/Enums';
 
 interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
-      infoBody?: string
+      infoBody?: any[]
 }
 
 

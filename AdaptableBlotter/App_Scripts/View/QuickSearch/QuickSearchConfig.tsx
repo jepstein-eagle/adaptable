@@ -78,9 +78,9 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
     }
 
     render() {
-        let infoBody: string = "Run a simple text search across all visible cells in the Blotter.\n\n" +
+        let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.\n\n" +
             "Options to set how quick search works - all of which are persisted.\n\n" +
-            "For a more powerful, multi-column, saveable search use Advanced Search."
+            "For a more powerful, multi-column, saveable search use Advanced Search."]
 
 
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
@@ -100,71 +100,70 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
             <span >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open" infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => this.onSetQuickSearch()}>
-                            <Panel header={"Search For"} bsStyle="info" Click >
-                                <FormControl
-                                    value={this.state.EditedQuickSearchText}
-                                    type="string"
-                                    placeholder="Quick Search Text"
-                                    onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)} />
-                                {' '}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
-                                    <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
-                                </OverlayTrigger>
-                                {' '}
-                                <ButtonClear onClick={() => this.onClearQuickSearch()}
-                                    overrideTooltip="Clear Quick Search"
-                                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                                    DisplayMode="Glyph+Text" />
-                            </Panel>
+                        <Panel header={"Search For"} bsStyle="info" Click >
+                            <FormControl
+                                value={this.state.EditedQuickSearchText}
+                                type="string"
+                                placeholder="Quick Search Text"
+                                onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)} />
+                            {' '}
+                            <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
+                                <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
+                            </OverlayTrigger>
+                            {' '}
+                            <ButtonClear onClick={() => this.onClearQuickSearch()}
+                                overrideTooltip="Clear Quick Search"
+                                overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
+                                DisplayMode="Glyph+Text" />
+                        </Panel>
 
                     </AdaptableBlotterForm>
 
                     <AdaptableBlotterForm horizontal>
-                            <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
+                        <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
-                                <FormGroup controlId="formInlineSearchOperator">
-                                    <Col xs={3}>
-                                        <ControlLabel>Operator:</ControlLabel>
-                                    </Col>
-                                    <Col xs={8}>
-                                        <AdaptableBlotterForm inline >
-                                            <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
-                                                {optionOperators}
-                                            </FormControl>
-                                            {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
-                                                bodyText={"'StartsWith': returns cells whose contents begin with search text;\n\n" +
-                                                    "'Contains': returns cells whose contents contain search text anywhere."} popoverType={PopoverType.Info} />
-                                        </AdaptableBlotterForm  >
-                                    </Col>
-                                </FormGroup>
+                            <FormGroup controlId="formInlineSearchOperator">
+                                <Col xs={3}>
+                                    <ControlLabel>Operator:</ControlLabel>
+                                </Col>
+                                <Col xs={8}>
+                                    <AdaptableBlotterForm inline >
+                                        <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
+                                            {optionOperators}
+                                        </FormControl>
+                                        {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
+                                            bodyText={["'StartsWith': returns cells whose contents begin with search text;\n\n" +
+                                                "'Contains': returns cells whose contents contain search text anywhere."]} popoverType={PopoverType.Info} />
+                                    </AdaptableBlotterForm  >
+                                </Col>
+                            </FormGroup>
 
-                                <FormGroup controlId="formInlineSearchDisplay">
-                                    <Col xs={3}>
-                                        <ControlLabel>Behaviour:</ControlLabel>
-                                    </Col>
-                                    <Col xs={9}>
-                                        <AdaptableBlotterForm inline >
-                                            <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
-                                                {quickSearchDisplayTypes}
-                                            </FormControl>
-                                            {' '}<AdaptablePopover headerText={"Quick Search: Behaviour"}
-                                                bodyText={"'Colour Cells': Changes back colour of cells matching search text.\n\n" +
-                                                    "'Show Rows': Only shows rows containing cells matching search text;\n\n" +
-                                                    "'Colour Cells & Show Rows': Only shows rows containing cells (which are also coloured) matching search text;"} popoverType={PopoverType.Info} />
-                                        </AdaptableBlotterForm  >
-                                    </Col>
-                                </FormGroup>
+                            <FormGroup controlId="formInlineSearchDisplay">
+                                <Col xs={3}>
+                                    <ControlLabel>Behaviour:</ControlLabel>
+                                </Col>
+                                <Col xs={9}>
+                                    <AdaptableBlotterForm inline >
+                                        <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
+                                            {quickSearchDisplayTypes}
+                                        </FormControl>
+                                        {' '}<AdaptablePopover headerText={"Quick Search: Behaviour"}
+                                            bodyText={[<b>Colour Cells:</b>, " Changes back colour of cells matching search text",<br/>,<br/>,<b>Show Rows:</b>," Only shows rows containing cells matching search text",<br/>,<br/>,<b>Colour Cells and Show Rows:</b>," Only shows rows containing cells (which are also coloured) matching search text"]}
+                                            popoverType={PopoverType.Info} />
+                                    </AdaptableBlotterForm  >
+                                </Col>
+                            </FormGroup>
 
-                                <FormGroup controlId="formInlineSearchBackColor">
-                                    <Col xs={3}>
-                                        <ControlLabel>Back Colour: </ControlLabel>
-                                    </Col>
-                                    <Col xs={2}>
-                                        <ColorPicker value={this.props.QuickSearchBackColor} onChange={(x) => this.onBackColorChange(x)} />
-                                    </Col>
-                                </FormGroup>
+                            <FormGroup controlId="formInlineSearchBackColor">
+                                <Col xs={3}>
+                                    <ControlLabel>Back Colour: </ControlLabel>
+                                </Col>
+                                <Col xs={2}>
+                                    <ColorPicker value={this.props.QuickSearchBackColor} onChange={(x) => this.onBackColorChange(x)} />
+                                </Col>
+                            </FormGroup>
 
-                            </Panel>
+                        </Panel>
                     </AdaptableBlotterForm>
                 </PanelWithImage>
             </span>

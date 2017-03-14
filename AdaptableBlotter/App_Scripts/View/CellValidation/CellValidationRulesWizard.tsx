@@ -57,11 +57,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationMode.Prevent.toString()} checked={this.state.CellValidationMode == CellValidationMode.Prevent} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
                             {' '}{' '}
-                            <AdaptablePopover headerText={"Cell Validation Action: Prevent"} bodyText={"Disallows all cell edits that break the validation rule with no override available."} popoverType={PopoverType.Info} />
+                            <AdaptablePopover headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} popoverType={PopoverType.Info} />
                         </Col>
                         <Col xs={12} style={divStyle}>
                             <Radio inline value={CellValidationMode.Warning.toString()} checked={this.state.CellValidationMode == CellValidationMode.Warning} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
-                            {' '}<AdaptablePopover headerText={"Cell Validation Action: Warning"} bodyText={"Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."} popoverType={PopoverType.Info} />
+                            {' '}<AdaptablePopover headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} popoverType={PopoverType.Info} />
                         </Col>
                     </AdaptableBlotterForm>
                 </Panel>
@@ -71,11 +71,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     <AdaptableBlotterForm >
                         <Col xs={12} style={divStyle}>
                             <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                            {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={"Any edit is invalid - effectively makes the column read-only."} popoverType={PopoverType.Info} />
+                            {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
                         </Col>
                         <Col xs={12} style={divStyle}>
                             <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
-                            {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={"Only edits that match the rule defined in the dropdown below are valid."} popoverType={PopoverType.Info} />
+                            {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Only edits that match the rule defined in the dropdown below are valid."]} popoverType={PopoverType.Info} />
                         </Col>
                     </AdaptableBlotterForm>
 
@@ -124,7 +124,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Expression</Checkbox>
-                              {' '}<AdaptablePopover headerText={"Validation Rule: Expression"} bodyText={"Create an Expression (in next step) which will stipulate other cell values required for the Rule."} popoverType={PopoverType.Info} />
+                              {' '}<AdaptablePopover headerText={"Validation Rule: Expression"} bodyText={["Create an Expression (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
                     </Col>
                     </AdaptableBlotterForm>
 
