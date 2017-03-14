@@ -4,7 +4,7 @@ import { FilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
-import { IColumnFilter } from '../../Core/interface/IUserFilterStrategy';
+import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';

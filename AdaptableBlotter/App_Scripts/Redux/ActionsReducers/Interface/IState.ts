@@ -10,7 +10,7 @@ import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy'
 import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
-import { IColumnFilter } from '../../../Core/interface/IUserFilterStrategy';
+import { IColumnFilter } from '../../../Core/interface/IFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/interface/ILayoutStrategy';
