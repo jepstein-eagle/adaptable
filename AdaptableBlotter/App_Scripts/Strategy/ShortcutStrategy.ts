@@ -20,9 +20,7 @@ import { ObjectFactory } from '../Core/ObjectFactory';
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
     private NumericShortcuts: IShortcut[]
     private DateShortcuts: IShortcut[]
-    private menuItemConfig: IMenuItem;
-
-
+    
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Shortcut", this.Id, 'ShortcutConfig', MenuType.Configuration, "road");
@@ -167,9 +165,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 }
 
 

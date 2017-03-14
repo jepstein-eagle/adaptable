@@ -7,7 +7,6 @@ import {IPrintPreviewStrategy} from '../Core/Interface/IPrintPreviewStrategy'
 import {MenuType} from '../Core/Enums';
 
 export class PrintPreviewStrategy extends AdaptableStrategyBase implements IPrintPreviewStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.PrintPreviewStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Print", this.Id, 'PrintPreviewAction',MenuType.Action, "print");
@@ -18,7 +17,4 @@ export class PrintPreviewStrategy extends AdaptableStrategyBase implements IPrin
     }
 
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 }

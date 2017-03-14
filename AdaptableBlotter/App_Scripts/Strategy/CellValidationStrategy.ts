@@ -11,17 +11,13 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IUserFilter } from '../Core/Interface/IExpression';
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
-    private menuItemConfig: IMenuItem;
-
+ 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Cell Validation", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
     }
 
-      getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
-
+ 
 }
 
 

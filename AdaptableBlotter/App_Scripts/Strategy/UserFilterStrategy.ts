@@ -12,7 +12,6 @@ import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
-    private menuItemConfig: IMenuItem;
     private userFilters: IUserFilter[]
 
 
@@ -45,9 +44,6 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
         }
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 
     private GetUserFilterState(): UserFilterState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter;

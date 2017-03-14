@@ -15,7 +15,6 @@ import { MenuType } from '../Core/Enums';
 
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
-    private menuItemConfig: IMenuItem;
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
@@ -109,9 +108,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+   
 }
 
 

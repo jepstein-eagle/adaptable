@@ -12,6 +12,7 @@ Very basic - for now! - info box that allows us to show Error where required.
 2 params:
 1. HeaderText - if not supplied then no header appears
 2. BodyText - the main message
+3. PopoverType - Info, Warning or Error (matching the bootstrap types)
 */
 
 interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {

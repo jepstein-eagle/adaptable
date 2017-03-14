@@ -13,13 +13,12 @@ import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 const cleanUserData: string = "CleanUserData"
 
 export class UserDataManagementStrategy extends AdaptableStrategyBase implements IUserDataManagementStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserDataManagementStrategyId, blotter)
         this.menuItemConfig = new MenuItem("Clean User Data", this.Id, cleanUserData, MenuType.Action, "user");
     }
 
-    getMenuItems(): IMenuItem[] {
+  public  getMenuItems(): IMenuItem[] {
         if(process.env.NODE_ENV == "production")
         {
             return [];

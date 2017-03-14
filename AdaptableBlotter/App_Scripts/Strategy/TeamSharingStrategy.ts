@@ -14,14 +14,9 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 const teamSharing: string = "teamSharing"
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.TeamSharingStrategyId, blotter)
         this.menuItemConfig = new MenuItem("Team Sharing", this.Id, teamSharing, MenuType.Action, "share");
-    }
-
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
     }
 
     public onAction(action: string) {

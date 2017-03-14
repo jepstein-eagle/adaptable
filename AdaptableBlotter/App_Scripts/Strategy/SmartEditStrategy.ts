@@ -13,7 +13,6 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
@@ -137,7 +136,4 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 }

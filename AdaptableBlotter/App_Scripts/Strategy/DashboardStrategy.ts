@@ -8,13 +8,10 @@ import { MenuType } from '../Core/Enums';
 
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.DashboardStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Dashboard", this.Id, 'DashboardConfig', MenuType.Configuration, "dashboard");
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+    
 }

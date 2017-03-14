@@ -12,14 +12,9 @@ import { StringExtensions } from '../Core/Extensions'
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
     public CurrentLayout: string
 
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.LayoutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Layout", this.Id, 'LayoutConfig', MenuType.Configuration, "th");
-    }
-
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
     }
 
 }

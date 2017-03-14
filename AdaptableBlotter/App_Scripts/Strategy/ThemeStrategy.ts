@@ -8,13 +8,9 @@ import { MenuType } from '../Core/Enums';
 
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ThemeStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Theme Picker", this.Id, 'ThemeConfig', MenuType.Configuration, "leaf");
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 }

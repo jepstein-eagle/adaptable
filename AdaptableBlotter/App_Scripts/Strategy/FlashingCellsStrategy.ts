@@ -10,14 +10,8 @@ import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 
-/* First basic draft of FlashingCells Strategy. 
-    A few assumptions at play here
-    1.  We will only flash numeric columns (for now)
-    2.  The user cannot choose the flash colours; for now its just green and red, which are then hardcoded as styles in index.html.  
-    All the user can choose is which numeric columns will flash and the duration 
- */
+
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
-    private menuItemConfig: IMenuItem;
     private FlashingCellState: FlashingCellState
     protected FLASH_UP_STYLE: string = "Ab-FlashUp"
     protected FLASH_DOWN_STYLE: string = "Ab-FlashDown"
@@ -56,7 +50,4 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration.Duration)
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 }

@@ -16,7 +16,6 @@ import { ObjectFactory } from '../Core/ObjectFactory';
 
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
-    private menuItemConfig: IMenuItem;
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
@@ -165,9 +164,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+
 
 
 }

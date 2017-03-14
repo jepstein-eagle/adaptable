@@ -7,7 +7,12 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
     }
 
-    abstract getMenuItems(): IMenuItem[];
+    public menuItemConfig: IMenuItem;
+
+    public getMenuItems(): IMenuItem[] {
+        return [this.menuItemConfig];
+    }
+
     public onAction(action: string) {
     }
 

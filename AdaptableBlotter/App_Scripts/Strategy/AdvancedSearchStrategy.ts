@@ -14,7 +14,6 @@ import { StringExtensions } from '../Core/Extensions'
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState: AdvancedSearchState
 
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Advanced Search", this.Id, 'AdvancedSearchAction', MenuType.Configuration, "search");
@@ -43,8 +42,6 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+   
 
 }

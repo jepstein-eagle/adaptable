@@ -26,7 +26,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         }
     }
 
-    getMenuItems(): IMenuItem[] {
+    public getMenuItems(): IMenuItem[] {
         return [];
     }
 

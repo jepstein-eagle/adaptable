@@ -16,7 +16,6 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     private quickSearchDisplayType: QuickSearchDisplayType
     private visibleColumns: string[]
 
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Quick Search", this.Id, 'QuickSearchConfig', MenuType.Configuration, "eye-open");
@@ -103,8 +102,5 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
 
 }

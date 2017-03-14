@@ -8,7 +8,6 @@ import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Custom Sort", this.Id, 'CustomSortConfig', MenuType.Configuration, "sort-by-attributes");
@@ -47,9 +46,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         });
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
+  
 }
 
 function CreateCompareCustomSort(customSort: ICustomSort, blotter: IAdaptableBlotter) {

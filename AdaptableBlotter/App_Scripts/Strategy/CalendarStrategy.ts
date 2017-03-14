@@ -8,14 +8,10 @@ import { MenuType } from '../Core/Enums';
 
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
-    private menuItemConfig: IMenuItem;
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalendarStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Calendars", this.Id, 'CalendarsConfig', MenuType.Configuration, "calendar");
     }
 
-    getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
-    }
-
+   
 }
