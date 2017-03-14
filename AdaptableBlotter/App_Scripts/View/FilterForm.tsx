@@ -3,11 +3,11 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
-import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import * as UserFilterRedux from '../Redux/ActionsReducers/FilterRedux'
+import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './Components/Panels/PanelWithButton';
-import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
+import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IFilterStrategy';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
@@ -21,10 +21,9 @@ import { ButtonClose } from './Components/Buttons/ButtonClose';
 
 interface FilterFormProps extends IStrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
-    UserFilterState: UserFilterState;
-    ColumnFilterState: ColumnFilterState;
-    onDeleteColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
+    FilterState: FilterState;
+    onDeleteColumnFilter: (columnFilter: IColumnFilter) => UserFilterRedux.ColumnFilterDeleteAction
+    onAddEditColumnFilter: (columnFilter: IColumnFilter) => UserFilterRedux.ColumnFilterAddUpdateAction
     ColumnValueType: DistinctCriteriaPairValue
 }
 
@@ -33,7 +32,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     render(): any {
 
         // get user filter expressions appropriate for this column
-        let userFilters: IUserFilter[] = this.props.UserFilterState.UserFilters.filter(u => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Uid, this.props.CurrentColumn));
+        let userFilters: IUserFilter[] = this.props.FilterState.UserFilters.filter(u => UserFilterHelper.ShowUserFilterForColumn(this.props.FilterState.UserFilters, u.Uid, this.props.CurrentColumn));
         let userFilterItems: IRawValueDisplayValuePair[] = userFilters.map((uf, index) => { return { RawValue: uf.Uid, DisplayValue: uf.FriendlyName } })
 
         let columnValuePairs: Array<IRawValueDisplayValuePair>
@@ -41,7 +40,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.ColumnValueType);
         columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
 
-        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.FilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: String[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []
@@ -69,7 +68,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onClickColumValue(columnValues: string[]) {
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.FilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let userFilterUids = existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ?
             existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
 
@@ -92,7 +91,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     onClickUserFilter(userFilterUids: string[]) {
 
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.FilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         if (userFilterUids.find(s => s == "All")) {
             existingColumnFilter = null;
@@ -127,15 +126,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        ColumnFilterState: state.ColumnFilter,
-        UserFilterState: state.UserFilter
-    };
+        FilterState: state.Filter   
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterDelete(columnFilter)),
-        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter))
+        onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(UserFilterRedux.ColumnFilterDelete(columnFilter)),
+        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(UserFilterRedux.ColumnFilterAddUpdate(columnFilter))
     };
 }
 

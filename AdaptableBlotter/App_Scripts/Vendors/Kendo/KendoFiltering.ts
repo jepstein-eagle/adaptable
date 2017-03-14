@@ -2,7 +2,7 @@ import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IColumnFilter, } from '../../Core/Interface/IColumnFilterStrategy';
+import { IColumnFilter, } from '../../Core/Interface/IFilterStrategy';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
@@ -106,7 +106,7 @@ export module KendoFiltering {
 
         let userFiltersExpression = expression.UserFilters;
         if (userFiltersExpression.length > 0) {
-            let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
+            let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
             let userFilterUids: string[] = userFiltersExpression[0].UserFilterUids;
 
             let kendoUserFilters: kendo.data.DataSourceFilters = { logic: "or", filters: [] };  // is it "and" or "or" ?????

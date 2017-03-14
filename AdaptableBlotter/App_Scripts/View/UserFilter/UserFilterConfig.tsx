@@ -5,7 +5,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -17,7 +17,6 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
-import { IUserFilterStrategy } from '../../Core/Interface/IUserFilterStrategy';
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { StringExtensions } from '../../Core/Extensions';
@@ -28,7 +27,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
     Columns: IColumn[],
-    onAddUpdateUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
 }
 
 interface UserFilterConfigState {
@@ -66,7 +65,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
-                            ConfirmDeleteAction={UserFilterRedux.UserFilterDelete(x)}
+                            ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
                             editClick={() => this.onEditUserFilter(x)}
                             ConfigEntity={x}>
                         </EntityListActionButtons>
@@ -136,14 +135,14 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        UserFilters: state.UserFilter.UserFilters,
+        UserFilters: state.Filter.UserFilters,
         Columns: state.Grid.Columns,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(userFilter))
+        onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter))
     };
 }
 

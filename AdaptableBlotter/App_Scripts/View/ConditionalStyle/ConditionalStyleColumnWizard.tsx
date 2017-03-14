@@ -8,7 +8,6 @@ import { IConditionalStyleCondition } from '../../Core/interface/IConditionalSty
 import { ConditionalStyleScope, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ColorPicker } from '../ColorPicker';
 import { Helper } from '../../Core/Helper'
 import { SingleListBox } from '../SingleListBox'

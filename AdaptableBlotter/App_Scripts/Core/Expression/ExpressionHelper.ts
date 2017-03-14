@@ -302,7 +302,7 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
             blotter
         );
     }

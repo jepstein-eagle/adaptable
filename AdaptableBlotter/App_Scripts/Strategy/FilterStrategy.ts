@@ -1,4 +1,4 @@
-import { IUserFilterStrategy } from '../Core/Interface/IUserFilterStrategy';
+import { IFilterStrategy, IColumnFilter } from '../Core/Interface/IFilterStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -8,22 +8,22 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
-import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 
-export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
+export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
     private userFilters: IUserFilter[]
-
+    private ColumnFilters: IColumnFilter[]
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.UserFilterStrategyId, blotter)
+        super(StrategyIds.FilterStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'UserFilterConfig', MenuType.Configuration, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
 
     InitState() {
-        if (this.userFilters != this.GetUserFilterState().UserFilters) {
+        if (this.userFilters != this.GetFilterState().UserFilters) {
 
             // call search service as search might need to re-run if its using a filter that has changed / been deleted
             // tell the search service that a filter has changed and it will decide if it needs to run search
@@ -40,13 +40,18 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
                 // also rerun column filter - but do it every time that user filters are changed - which wont be often
                 this.blotter.applyColumnFilters();
             }
-            this.userFilters = this.GetUserFilterState().UserFilters;
+            this.userFilters = this.GetFilterState().UserFilters;
+        }
+
+        if (this.ColumnFilters != this.GetFilterState().ColumnFilters) {
+            setTimeout(() => this.blotter.applyColumnFilters(), 5);
+            this.ColumnFilters = this.GetFilterState().ColumnFilters;
         }
     }
 
 
-    private GetUserFilterState(): UserFilterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter;
+    private GetFilterState(): FilterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter;
     }
 }
 

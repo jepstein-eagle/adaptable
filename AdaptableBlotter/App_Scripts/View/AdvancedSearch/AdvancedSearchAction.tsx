@@ -255,7 +255,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns,
         PopupParams: state.Popup.ActionConfigurationPopup.Params,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.Filter.UserFilters
     };
 }
 

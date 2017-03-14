@@ -3,7 +3,7 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { IAdvancedSearch } from '../../Core/interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../Core/Extensions'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase
@@ -12,7 +12,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     apply: function () {
         this.clearColorQuickSearch();
         let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (StringExtensions.IsNotNullOrEmpty(currentSearchId)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
@@ -36,7 +36,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //we then assess filters
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (columnFilters.length > 0) {
             for (let columnFilter of columnFilters) {
                 if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, blotter)) {
@@ -114,7 +114,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     getRowCount: function () {
         let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (StringExtensions.IsNotNullOrEmpty(currentSearchId)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {

@@ -189,7 +189,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
         Preview: state.SmartEdit.Preview,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.Filter.UserFilters
     };
 }
 

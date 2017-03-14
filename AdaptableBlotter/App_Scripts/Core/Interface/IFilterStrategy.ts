@@ -1,8 +1,11 @@
+import { IUserFilter } from '../../Core/interface/IExpression';
+import { IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { IAdaptableBlotter, IColumn } from './IAdaptableBlotter';
 import { DistinctCriteriaPairValue } from '../Enums'
 
-export interface IColumnFilterStrategy {
+
+export interface IFilterStrategy extends IStrategy{
 }
 
 
@@ -22,3 +25,7 @@ export interface IColumnFilterContext {
     Blotter: IAdaptableBlotter,
     ColumnValueType: DistinctCriteriaPairValue
 }
+
+
+   
+

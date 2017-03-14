@@ -13,8 +13,7 @@ export interface AdaptableBlotterState {
     Calendars: AdaptableBlotterStates.CalendarState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
-    UserFilter: AdaptableBlotterStates.UserFilterState;
-    ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
+    Filter: AdaptableBlotterStates.FilterState;
     Theme: AdaptableBlotterStates.ThemeState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Layout: AdaptableBlotterStates.LayoutState;

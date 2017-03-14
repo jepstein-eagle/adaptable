@@ -119,7 +119,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyleConditions: state.ConditionalStyle.ConditionalStyleConditions,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.Filter.UserFilters
     };
 }
 

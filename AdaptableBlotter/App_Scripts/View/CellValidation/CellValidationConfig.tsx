@@ -157,7 +157,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
+        UserFilters: state.Filter.UserFilters,
         CellValidations: state.CellValidation.CellValidations
     };
 }
