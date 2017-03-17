@@ -105,7 +105,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-  this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
@@ -310,6 +310,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
     }
 
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+        VisibleColumnList.forEach((column, index) => {
+            //we use allcolumns so we can show previously hidden columns
+            let oldcolindex = this.grid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
+            this.grid.behavior.showColumns(false, oldcolindex, index, false)
+            //this.grid.swapColumns(index, oldcolindex);
+        })
+        this.grid.behavior.getActiveColumns().filter((x: any) => VisibleColumnList.findIndex(y => y.ColumnId == x.name) < 0).forEach(((col: any) => {
+            this.grid.behavior.hideColumns(false, this.grid.behavior.allColumns.indexOf(col))
+        }))
+        this.grid.behavior.changed()
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.setColumnIntoStore();
+    }
+
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
     public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
@@ -371,7 +387,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let column = this.grid.behavior.getActiveColumns()[currentCell.origin.x]
             let row = this.grid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
             let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-            
+
             //this function needs the column.index from the schema
             // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
             let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
@@ -414,18 +430,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(columnId: string): DataType {
+    public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
-        if (!columnId) {
+        if (!column) {
             console.log('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
-        let column = this.grid.behavior.dataModel.schema.find((x: any) => x.name == columnId)
         if (column) {
             if (!column.hasOwnProperty('type')) {
-                console.log('There is no defined type. Defaulting to type of the first value for column ' + columnId)
-                let columnObj = this.grid.behavior.columns.find((x: any) => x.name == columnId)
+                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
+                let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
                 if (columnObj) {
                     switch (columnObj.getType()) {
                         case 'string':
@@ -575,21 +590,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values());
     }
 
-    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        VisibleColumnList.forEach((column, index) => {
-            //we use allcolumns so we can show previously hidden columns
-            let oldcolindex = this.grid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
-            this.grid.behavior.showColumns(false, oldcolindex, index, false)
-            //this.grid.swapColumns(index, oldcolindex);
-        })
-        this.grid.behavior.getActiveColumns().filter((x: any) => VisibleColumnList.findIndex(y => y.ColumnId == x.name) < 0).forEach(((col: any) => {
-            this.grid.behavior.hideColumns(false, this.grid.behavior.allColumns.indexOf(col))
-        }))
-        this.grid.behavior.changed()
-        //if the event columnReorder starts to be fired when changing the order programmatically 
-        //we'll need to remove that line
-        this.setColumnIntoStore();
-    }
+
 
     public exportBlotter(): void {
     }

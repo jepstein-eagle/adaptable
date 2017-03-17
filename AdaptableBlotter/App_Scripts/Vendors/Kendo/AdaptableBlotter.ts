@@ -277,17 +277,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x, index) => {
+        let columns: IColumn[] = this.grid.columns.map((x:kendo.ui.GridColumn, index) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
-                DataType: this.getColumnDataType(x.field),
+                DataType: this.getColumnDataType(x),
                 Visible: isVisible,
                 Index: isVisible ? index : -1
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+    }
+
+        public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+        VisibleColumnList.forEach((column, index) => {
+            let col = this.grid.columns.find(x => x.field == column.ColumnId)
+            //if not then not need to set it because it was already visible.........
+            if (col.hasOwnProperty('hidden')) {
+                this.grid.showColumn(col)
+            }
+            this.grid.reorderColumn(index, col);
+        })
+        this.grid.columns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.field) < 0).forEach((col => {
+            this.grid.hideColumn(col)
+        }))
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.setColumnIntoStore();
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -370,18 +387,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(columnId: string): DataType {
+    public getColumnDataType(column: any): DataType {
+      
+      let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn> column;    
+      
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
-        if (!columnId) {
-            console.log('columnId is undefined returning String for Type')
+        if (!column) {
+            console.log('column is undefined returning String for Type')
             return DataType.String;
         }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + columnId)
+            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + kendoColumn)
             return DataType.String;
         }
 
-        let type = this.grid.dataSource.options.schema.model.fields[columnId].type;
+        let type = kendoColumn.type;
         switch (type) {
             case 'string':
                 return DataType.String;
@@ -538,22 +558,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values());
     }
 
-    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        VisibleColumnList.forEach((column, index) => {
-            let col = this.grid.columns.find(x => x.field == column.ColumnId)
-            //if not then not need to set it because it was already visible.........
-            if (col.hasOwnProperty('hidden')) {
-                this.grid.showColumn(col)
-            }
-            this.grid.reorderColumn(index, col);
-        })
-        this.grid.columns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.field) < 0).forEach((col => {
-            this.grid.hideColumn(col)
-        }))
-        //if the event columnReorder starts to be fired when changing the order programmatically 
-        //we'll need to remove that line
-        this.setColumnIntoStore();
-    }
+
 
 
     public exportBlotter(): void {
