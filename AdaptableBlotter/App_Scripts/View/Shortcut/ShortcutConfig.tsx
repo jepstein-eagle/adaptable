@@ -41,7 +41,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 
     render() {
-        let infoBody: any[] = ["Use shortcuts to replace frequently entered text with a single keystroke.",<br/>,<br/>,"Shortcuts can either replace cell contents or update the value based on the Shortcut 'Result'.", <br/>,<br/>,"Check ", <i>Live</i>, " to turn on a shortcut.", <br/>,<br/>,"Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
+        let infoBody: any[] = ["Use shortcuts to replace frequently entered text with a single keystroke.",<br/>,<br/>,"Shortcuts can either replace the entire contents of the cell, or update its value based on the Shortcut 'Result'.", <br/>,<br/>,"Check ", <i>Live</i>, " to turn on a shortcut.", <br/>,<br/>,"Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
 
         let cellInfo: [string, number][] = [["Live", 1], ["Key", 1], ["Columns", 3], ["Action", 2], ["Result", 3], ["", 2]];
 

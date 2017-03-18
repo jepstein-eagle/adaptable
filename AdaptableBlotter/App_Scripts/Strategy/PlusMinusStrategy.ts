@@ -49,7 +49,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
-                    if (this.blotter.getColumnDataType(columnValuePair.columnID) == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                  let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnID);
+                              if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
                         let newValue: ICellInfo;
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)

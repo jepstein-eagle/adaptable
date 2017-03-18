@@ -293,7 +293,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x.name),
+                DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index
             }
@@ -302,7 +302,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x.name),
+                DataType: this.getColumnDataType(x),
                 Visible: false,
                 Index: -1
             }
@@ -430,6 +430,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
+  
+
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
@@ -440,9 +442,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (column) {
             if (!column.hasOwnProperty('type')) {
                 console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
-                let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
-                if (columnObj) {
-                    switch (columnObj.getType()) {
+             //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
+             //   if (columnObj) {
+                    switch (column.getType()) {
                         case 'string':
                             return DataType.String;
                         case 'number':
@@ -475,7 +477,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     return DataType.Object;
                 default:
                     break;
-            }
+          //  }
         }
         console.log('columnId does not exist')
         return DataType.String;

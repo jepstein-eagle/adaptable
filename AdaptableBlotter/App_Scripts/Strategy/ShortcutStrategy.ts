@@ -11,7 +11,7 @@ import { DataType } from '../Core/Enums'
 import { ShortcutAction, CellValidationMode } from '../Core/Enums'
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { MenuType } from '../Core/Enums';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
@@ -20,7 +20,7 @@ import { ObjectFactory } from '../Core/ObjectFactory';
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
     private NumericShortcuts: IShortcut[]
     private DateShortcuts: IShortcut[]
-    
+
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = new MenuItemShowPopup("Shortcut", this.Id, 'ShortcutConfig', MenuType.Configuration, "road");
@@ -43,7 +43,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)
         if (activeCell && !isReadOnly) {
-            let columnDataType: DataType = this.blotter.getColumnDataType(activeCell.ColumnId);
+            let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);
+            let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
             let activeShortcut: IShortcut
             var valueToReplace: any;

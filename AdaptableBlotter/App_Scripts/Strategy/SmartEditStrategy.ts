@@ -4,7 +4,7 @@ import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Core/Interface/ISmartEditStrategy'
 import { MenuType } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -52,6 +52,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
+
         for (let pair of selectedCells.Selection) {
             if (pair[1].length > 1) {
                 return {
@@ -60,26 +61,32 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     }
                 }
             }
-            for (var columnValuePair of pair[1]) {
-                if (this.blotter.getColumnDataType(columnValuePair.columnID) != DataType.Number) {
-                    return {
-                        Error: {
-                            ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
-                        }
-                    }
 
-                }
-                if (this.blotter.isColumnReadonly(columnValuePair.columnID)) {
-                    return {
-                        Error: {
-                            ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
-                        }
-                    }
+            // just test the first item rather than all of them because if first passes/fails then all will...
+            let selectedColumnId: string = pair[1][0].columnID;;
 
+            // test column is numeric
+            let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedColumnId);
+            if (selectedColumn.DataType != DataType.Number) {
+                return {
+                    Error: {
+                        ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
+                    }
                 }
             }
+
+            // test column is not readonly
+            if (this.blotter.isColumnReadonly(selectedColumnId)) {
+                return {
+                    Error: {
+                        ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
+                    }
+                }
+
+            }
+            return true;
         }
-        return true;
+
 
     }
 
