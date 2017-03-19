@@ -48,7 +48,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
     }
     render() {
-        let infoBody: any[] = ["I'm going do this here.  Probably easier than getting from strategy"]
+       let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>," keys are pressed on the keyboard).",<br/>,<br/>,"Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
 
         let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
 

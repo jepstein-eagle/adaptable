@@ -78,10 +78,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
     }
 
     render() {
-        let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.\n\n" +
-            "Options to set how quick search works - all of which are persisted.\n\n" +
-            "For a more powerful, multi-column, saveable search use Advanced Search."]
-
+        let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.",<br/>,<br/>,"Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).",<br/>,<br/>,"For a more powerful, multi-column, saveable search with a wide range of options, use ", <i>Advanced Search</i>, "."]
 
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
 

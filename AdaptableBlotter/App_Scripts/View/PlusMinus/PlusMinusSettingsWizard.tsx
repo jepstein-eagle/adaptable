@@ -54,15 +54,15 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="applyTo">
-                    <Col xs={3} componentClass={ControlLabel}>Apply To: </Col>
+                    <Col xs={3} componentClass={ControlLabel}>Apply As: </Col>
                     <Col xs={9}>
                         <Radio value="whole" checked={this.state.ExpressionOption == 'whole'} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Whole Column {' '}
-                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={["Make this the default nudge value for the column"]} popoverType={PopoverType.Info} />
+                            Default Nudge Value for Column {' '}
+                            <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
-                            Custom Expression {' '}
-                            <AdaptablePopover headerText={"Plus Minus Settings"} bodyText={["Create an Expression (in the next step of the wizard) to determine a bespoke nudge value rule"]} popoverType={PopoverType.Info} />
+                            Custom Plus/Minus Rule {' '}
+                            <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Expression Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
                         </Radio>
                     </Col>
                 </FormGroup>
