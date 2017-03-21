@@ -324,10 +324,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-    public onMenuClicked(menuItem: IMenuItem): void {
-        this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
-    }
-
     public gridHasCurrentEditValue(): boolean {
         var currentEditCell = this.getcurrentEditedCell();
         return currentEditCell.length > 0;

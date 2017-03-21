@@ -1,4 +1,4 @@
-﻿import { MenuItemShowPopup } from '../Core/MenuItem';
+﻿import { MenuItemShowPopup, MenuReduxActionItem } from '../Core/MenuItem';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
@@ -32,7 +32,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState,
     AdaptableBlotter: IAdaptableBlotter;
-    showPopup: (ComponentClassName: string, Params?: any) => PopupRedux.PopupShowAction;
+    showPopup: (ComponentClassName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
     onCloseErrorPopup: () => PopupRedux.PopupHideErrorAction;
     onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
@@ -81,15 +81,15 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     {/* Im sure we must be able to do this more dynamically and cleverly but while there are ony 3 its ok for now */}
                     {visibleDashboardControls.find(dc => dc.Name == "Quick Search") != null &&
                         <Nav>
-                            <QuickSearchToolbarControl IsReadOnly={quickSearchToolbarReadOnly}/>
+                            <QuickSearchToolbarControl IsReadOnly={quickSearchToolbarReadOnly} />
                         </Nav>
                     }
                     {visibleDashboardControls.find(dc => dc.Name == "Advanced Search") != null && <Nav>
-                        <AdvancedSearchToolbarControl IsReadOnly={advancedSearchToolbarReadOnly}/>
+                        <AdvancedSearchToolbarControl IsReadOnly={advancedSearchToolbarReadOnly} />
                     </Nav>
                     }
                     {visibleDashboardControls.find(dc => dc.Name == "Layout") != null && <Nav>
-                        <LayoutToolbarControl IsReadOnly={layoutToolbarReadOnly}/>
+                        <LayoutToolbarControl IsReadOnly={layoutToolbarReadOnly} />
                     </Nav>
                     }
 
@@ -131,13 +131,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     }
 
     onClick(menuItem: IMenuItem) {
-        if (menuItem instanceof MenuItemShowPopup) {
-            let accessLevel = this.props.EntitlementsState.FunctionEntitlements.find(x => x.FunctionName == menuItem.StrategyId)
-            this.props.showPopup(menuItem.Action, accessLevel ? accessLevel.AccessLevel == "ReadOnly" : false);
-        }
-        else {
-            this.props.AdaptableBlotter.onMenuClicked(menuItem)
-        };
+        this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.dispatch(menuItem.Action)
     }
 }
 

@@ -15,7 +15,7 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Smart Edit", this.Id, 'SmartEditAction', MenuType.Action, "pencil");
+        this.menuItemConfig = this.createMenuItemShowPopup("Smart Edit", 'SmartEditAction', MenuType.ActionPopup, "pencil");
     }
 
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {

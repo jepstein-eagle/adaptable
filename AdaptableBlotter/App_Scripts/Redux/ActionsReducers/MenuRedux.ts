@@ -14,11 +14,6 @@ export interface MenuItemClickedAction extends Redux.Action {
     MenuItem: IMenuItem;
 }
 
-// export const SetMenuItems: Redux.ActionCreator<SetMenuItemsAction> = (MenuItems: IMenuItem[]) => ({
-//     type: SET_MENUITEMS,
-//     MenuItems
-// })
-
 //we do not use Redux.ActionCreator as we want to be typed safe for the arguments..... Redux.ActionCreator doesnt really make any sense to me as a consequence!!!!
 export const SetMenuItems = (MenuItems: IMenuItem[]): SetMenuItemsAction => ({
     type: SET_MENUITEMS,

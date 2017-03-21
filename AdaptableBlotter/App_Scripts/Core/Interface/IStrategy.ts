@@ -1,18 +1,19 @@
 import { MenuType } from '../Enums';
 import { IColumn } from '../Interface/IAdaptableBlotter'
+import { IEntitlement } from '../Interface/IAdaptableBlotter'
 
 
 export interface IStrategy {
     Id: string
     getMenuItems(): IMenuItem[]
-    onAction(action: string): void
     addColumnMenuItem(column: IColumn, menuItems: string[]): void
+    getStrategyEntitlement(): IEntitlement
 }
 
 export interface IMenuItem {
     Label: string;
     StrategyId: string;
-    Action: string;
+    Action: Redux.Action;
     IsEnabled: boolean;
     MenuType: MenuType;
     GlyphIcon: string

@@ -21,7 +21,6 @@ export interface IAdaptableBlotter {
     AuditLogService: AuditLogService
 
     // Grid Events
-    onMenuClicked(menuItem: IMenuItem): void
     onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
@@ -119,4 +118,9 @@ export interface IAdaptableBlotterOptions {
 
 export interface IConfigEntity {
     IsPredefined: boolean
+}
+
+export interface IEntitlement{
+    FunctionName: string;
+    AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }

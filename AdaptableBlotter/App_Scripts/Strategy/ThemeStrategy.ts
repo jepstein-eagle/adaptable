@@ -10,7 +10,7 @@ import { MenuType } from '../Core/Enums';
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ThemeStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Theme Picker", this.Id, 'ThemeConfig', MenuType.Configuration, "leaf");
+        this.menuItemConfig = this.createMenuItemShowPopup("Theme Picker", 'ThemeConfig', MenuType.ConfigurationPopup, "leaf");
     }
 
 }

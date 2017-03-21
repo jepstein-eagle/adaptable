@@ -11,7 +11,7 @@ import { MenuType } from '../Core/Enums';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Export", this.Id, 'ExportAction', MenuType.Action, "export");
+        this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', MenuType.ActionPopup, "export");
     }
 
     public ExportBlotter(): void {

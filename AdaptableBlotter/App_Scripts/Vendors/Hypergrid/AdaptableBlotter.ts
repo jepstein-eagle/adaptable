@@ -55,6 +55,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
+import { ContextMenuReact } from '../../View/ContextMenu'
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -70,6 +71,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
+    private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
@@ -114,6 +116,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.container.ownerDocument.body.appendChild(this.filterContainer)
 
+        this.contextMenuContainer = this.container.ownerDocument.createElement("div")
+        this.contextMenuContainer.id = "contextMenuContainer"
+        this.contextMenuContainer.style.position = 'absolute'
+        this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
+        ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
+
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         grid.addEventListener("fin-keydown", (e: any) => {
@@ -145,6 +153,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
                 ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
             }
+        });
+
+        grid.addEventListener("fin-context-menu", (e: any) => {
         });
 
         grid.addEventListener("fin-before-cell-edit", (event: any) => {
@@ -203,15 +214,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
             this.grid.behavior.reindex();
         });
-
-        //                 grid.addEventListener("fin-context-menu", (e: any) => {
-        // console.log("TOTO")
-        //         });
-
-        // grid.addEventListener('fin-click', function (e: any) {
-        //     var cell = e.detail.gridCell;
-        //     console.log('fin-click cell:', cell);
-        // });
 
         this.sortOrder = SortOrder.Unknown
         //this is used so the grid displays sort icon when sorting....
@@ -342,11 +344,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
-
-    public onMenuClicked(menuItem: IMenuItem): void {
-        this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
-    }
-
+    
     public sortColumn: number = -1
     public sortOrder: SortOrder
     public toggleSort(columnIndex: number) {
@@ -430,7 +428,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-  
+
 
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
@@ -442,42 +440,42 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (column) {
             if (!column.hasOwnProperty('type')) {
                 console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
-             //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
-             //   if (columnObj) {
-                    switch (column.getType()) {
-                        case 'string':
-                            return DataType.String;
-                        case 'number':
-                        case 'int':
-                        case 'float':
-                            return DataType.Number;
-                        case 'boolean':
-                            return DataType.Boolean;
-                        case 'date':
-                            return DataType.Date;
-                        case 'object':
-                            return DataType.Object;
-                        default:
-                            break;
-                    }
+                //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
+                //   if (columnObj) {
+                switch (column.getType()) {
+                    case 'string':
+                        return DataType.String;
+                    case 'number':
+                    case 'int':
+                    case 'float':
+                        return DataType.Number;
+                    case 'boolean':
+                        return DataType.Boolean;
+                    case 'date':
+                        return DataType.Date;
+                    case 'object':
+                        return DataType.Object;
+                    default:
+                        break;
                 }
-                return DataType.String;
             }
-            let type = column.type;
-            switch (type) {
-                case 'string':
-                    return DataType.String;
-                case 'number':
-                    return DataType.Number;
-                case 'boolean':
-                    return DataType.Boolean;
-                case 'date':
-                    return DataType.Date;
-                case 'object':
-                    return DataType.Object;
-                default:
-                    break;
-          //  }
+            return DataType.String;
+        }
+        let type = column.type;
+        switch (type) {
+            case 'string':
+                return DataType.String;
+            case 'number':
+                return DataType.Number;
+            case 'boolean':
+                return DataType.Boolean;
+            case 'date':
+                return DataType.Date;
+            case 'object':
+                return DataType.Object;
+            default:
+                break;
+            //  }
         }
         console.log('columnId does not exist')
         return DataType.String;

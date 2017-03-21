@@ -17,7 +17,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FilterStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Filter", this.Id, 'UserFilterConfig', MenuType.Configuration, "filter");
+        this.menuItemConfig = this.createMenuItemShowPopup("Filter", 'UserFilterConfig', MenuType.ConfigurationPopup, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
