@@ -217,7 +217,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let column: IColumn = this.getColumnFromColumnId(field);
 
             // each strategy can add its own menu item if it wants to
-            this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
+            // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
 
             columnMenuItems.forEach(s => menu.append({ text: s }))
 
@@ -322,10 +322,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
-    }
-
-    public onMenuClicked(menuItem: IMenuItem): void {
-        this.Strategies.get(menuItem.StrategyId).onAction(menuItem.Action);
     }
 
     public gridHasCurrentEditValue(): boolean {

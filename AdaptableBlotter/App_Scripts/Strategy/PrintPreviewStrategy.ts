@@ -9,7 +9,7 @@ import {MenuType} from '../Core/Enums';
 export class PrintPreviewStrategy extends AdaptableStrategyBase implements IPrintPreviewStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.PrintPreviewStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Print", this.Id, 'PrintPreviewAction',MenuType.Action, "print");
+        this.menuItemConfig = this.createMenuItemShowPopup("Print", 'PrintPreviewAction',MenuType.ActionPopup, "print");
     }
 
     public ApplyPrintPreview(): void {

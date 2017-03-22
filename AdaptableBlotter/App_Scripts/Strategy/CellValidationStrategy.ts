@@ -14,7 +14,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
  
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Cell Validation", this.Id, 'CellValidationConfig', MenuType.Configuration, "flag");
+        this.menuItemConfig = this.createMenuItemShowPopup("Cell Validation", 'CellValidationConfig', MenuType.ConfigurationPopup, "flag");
     }
 
  

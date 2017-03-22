@@ -1,22 +1,34 @@
-import {IMenuItem} from './Interface/IStrategy';
-import {MenuType} from './Enums';
+import { IMenuItem } from './Interface/IStrategy';
+import { MenuType } from './Enums';
+import { PopupShow } from '../Redux/ActionsReducers/PopupRedux'
+import * as Redux from 'redux';
+import { IEntitlement } from './Interface/IAdaptableBlotter';
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 
-//Just a normal menuitem class. if user click on it we 
-//will pass back the action to the strategy and it will decide what to do
-export class MenuItem implements IMenuItem {
+export class MenuReduxActionItem implements IMenuItem {
 
-    constructor(public Label: string, public StrategyId: string, public Action: string, public MenuType: MenuType, public GlyphIcon: string) {
+    constructor(public Label: string,
+        public StrategyId: string,
+        public Action: Redux.Action,
+        public GlyphIcon: string) {
         this.IsEnabled = true;
     }
 
     public IsEnabled: boolean;
+    public MenuType: MenuType.ReduxAction
 }
 
-//This menu item is different. If user click on it the AdaptableBlotterView dispatch directly 
-//a message to show a popup with the react component name stored in the Action param 
-export class MenuItemShowPopup extends MenuItem {
-
-    constructor(Label: string, StrategyId: string, Action: string, MenuType: MenuType, GlyphIcon: string) {
-        super(Label, StrategyId, Action, MenuType, GlyphIcon)
+export class MenuItemShowPopup implements IMenuItem {
+    constructor(public Label: string,
+        public StrategyId: string,
+        private ComponentName: string,
+        public MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
+        public GlyphIcon: string,
+        private Entitlment : IEntitlement) {
+        this.IsEnabled = true;
+        this.Action = PopupRedux.PopupShow(ComponentName, Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false)
     }
+
+    public IsEnabled: boolean;
+    public Action: Redux.Action;
 }

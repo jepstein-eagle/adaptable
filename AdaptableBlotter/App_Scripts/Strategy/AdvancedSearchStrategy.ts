@@ -16,7 +16,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Advanced Search", this.Id, 'AdvancedSearchAction', MenuType.Configuration, "search");
+        this.menuItemConfig = this.createMenuItemShowPopup("Advanced Search", 'AdvancedSearchAction', MenuType.ConfigurationPopup, "search");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
@@ -42,6 +42,6 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }
 
-   
+
 
 }

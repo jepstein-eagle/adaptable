@@ -19,7 +19,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Plus/Minus", this.Id, 'PlusMinusConfig', MenuType.Configuration, "plus-sign");
+        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus",'PlusMinusConfig', MenuType.ConfigurationPopup, "plus-sign")
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
@@ -49,8 +49,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
-                  let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnID);
-                              if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnID);
+                    if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
                         let newValue: ICellInfo;
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
@@ -140,7 +140,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let confirmation: IUIConfirmation = {
                 CancelText: "Cancel",
-               ConfirmationTitle: "Do you want to continue?",
+                ConfirmationTitle: "Do you want to continue?",
                 ConfirmationMsg: warningMessage,
                 ConfirmationText: "Perform Nudge Anyway",
                 CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),

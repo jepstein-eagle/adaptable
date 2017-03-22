@@ -5,7 +5,7 @@ import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
 import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
 import { IFlashingColumn } from '../../../Core/interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/interface/IStrategy'
-import { IColumn } from '../../../Core/interface/IAdaptableBlotter'
+import { IColumn, IEntitlement } from '../../../Core/interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
@@ -29,6 +29,15 @@ export interface GridState {
 
 export interface MenuState {
     MenuItems: IMenuItem[];
+    ContextMenu: IContextMenu
+}
+
+export interface IContextMenu {
+    IsVisible: boolean
+    PositionX: number 
+    PositionY: number
+    ColumnId: string 
+    Items: IMenuItem[]
 }
 
 export interface PopupState {
@@ -84,7 +93,7 @@ export interface CustomSortState {
 }
 
 export interface EntitlementsState {
-    FunctionEntitlements: Array<{ FunctionName: string, AccessLevel: "ReadOnly" | "Hidden" | "Default" }>;
+    FunctionEntitlements: Array<IEntitlement>;
 }
 
 export interface ShortcutState {

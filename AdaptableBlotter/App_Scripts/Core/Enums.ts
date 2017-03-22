@@ -48,8 +48,9 @@ export enum LeafExpressionOperator {
 }
 
 export enum MenuType {
-    Configuration,
-    Action
+    ConfigurationPopup,
+    ActionPopup,
+    ReduxAction
 }
 
 export enum PopoverType {

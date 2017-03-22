@@ -11,7 +11,7 @@ import {MenuType} from '../Core/Enums';
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        this.menuItemConfig = new MenuItemShowPopup("Column Chooser", this.Id, "ColumnChooserAction",MenuType.Action,"list-alt");
+        this.menuItemConfig = this.createMenuItemShowPopup("Column Chooser", "ColumnChooserAction",MenuType.ActionPopup,"list-alt");
     }
 
   
