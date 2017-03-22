@@ -156,6 +156,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         grid.addEventListener("fin-context-menu", (e: any) => {
+            if (e.detail.primitiveEvent.isHeaderCell) {
+                this.AdaptableBlotterStore.TheStore.dispatch(
+                    MenuRedux.ShowColumnContextMenu(
+                        e.detail.primitiveEvent.column.name,
+                        e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX,
+                        e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY))
+            }
         });
 
         grid.addEventListener("fin-before-cell-edit", (event: any) => {
@@ -344,7 +351,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
-    
+
     public sortColumn: number = -1
     public sortOrder: SortOrder
     public toggleSort(columnIndex: number) {

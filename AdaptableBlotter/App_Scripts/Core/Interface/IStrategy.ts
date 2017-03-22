@@ -6,7 +6,6 @@ import { IEntitlement } from '../Interface/IAdaptableBlotter'
 export interface IStrategy {
     Id: string
     getMenuItems(): IMenuItem[]
-    addColumnMenuItem(column: IColumn, menuItems: string[]): void
     getStrategyEntitlement(): IEntitlement
 }
 

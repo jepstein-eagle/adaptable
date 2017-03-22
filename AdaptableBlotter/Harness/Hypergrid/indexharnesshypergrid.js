@@ -153,7 +153,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "Jonathan",
         enableAuditLog: false,
-        enableRemoteConfigServer: true
+        enableRemoteConfigServer: false
     });
     var origgetCell = grid.behavior.dataModel.getCell;
     grid.behavior.dataModel.getCell = (config, declaredRendererName) => {

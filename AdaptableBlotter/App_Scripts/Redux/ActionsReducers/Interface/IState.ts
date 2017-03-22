@@ -29,6 +29,15 @@ export interface GridState {
 
 export interface MenuState {
     MenuItems: IMenuItem[];
+    ContextMenu: IContextMenu
+}
+
+export interface IContextMenu {
+    IsVisible: boolean
+    PositionX: number 
+    PositionY: number
+    ColumnId: string 
+    Items: IMenuItem[]
 }
 
 export interface PopupState {
