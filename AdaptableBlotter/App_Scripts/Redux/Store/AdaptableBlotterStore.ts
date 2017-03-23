@@ -188,6 +188,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
+                case GridRedux.HIDE_COLUMN: {
+                    let actionTyped = <GridRedux.HideColumnAction>action
+                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
+                    let columnIndex = columnList.findIndex(x=>x.ColumnId == actionTyped.ColumnId)
+                    columnList.splice(columnIndex,1)
+                    adaptableBlotter.setNewColumnListOrder(columnList)
+                    return next(action);
+                }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {
                     let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
                     if (promptConfirmationAction) {
