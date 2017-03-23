@@ -40,7 +40,14 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
         super();
         this.state = { EditedUserFilter: null }
     }
-
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                this.onCreateUserFilter()
+            }
+        }
+    }
     render() {
 
         let selectedColumnId: string = "select";
@@ -48,6 +55,13 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             let editedColumn: string = UserFilterHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
+            }
+            else if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams))
+            {
+                let arrayParams = this.props.PopupParams.split("|")
+                if (arrayParams.length == 2) {
+                    selectedColumnId = arrayParams[1];
+                }
             }
         }
 
@@ -123,6 +137,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
     }
 
     closeWizard() {
+        this.props.onClearPopupParams()
         this.setState({ EditedUserFilter: null, });
     }
 

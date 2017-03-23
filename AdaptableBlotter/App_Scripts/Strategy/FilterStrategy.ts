@@ -9,7 +9,7 @@ import { IUserFilter } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
-
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
     private userFilters: IUserFilter[]
@@ -19,6 +19,18 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
         super(StrategyIds.FilterStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Filter", 'UserFilterConfig', MenuType.ConfigurationPopup, "filter");
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+    }
+
+    protected addColumnMenuItems(columnId: string): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+                "Create User Filter",
+                this.Id,
+                "UserFilterConfig",
+                MenuType.ConfigurationPopup,
+                "filter",
+                this.getStrategyEntitlement(),
+                "New|" + columnId)))
     }
 
 
