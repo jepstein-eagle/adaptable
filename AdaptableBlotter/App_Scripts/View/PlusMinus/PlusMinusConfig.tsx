@@ -23,7 +23,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { DataType } from '../../Core/Enums';
-
+import { StringExtensions } from '../../Core/Extensions'
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -46,6 +46,17 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         super();
         this.state = { EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 }
 
+    }
+
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let plusMinus = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
+                plusMinus.ColumnId = arrayParams[1]
+                this.setState({ EditedPlusMinusCondition: plusMinus, EditedIndexColumnNudgeValue: -1 });
+            }
+        }
     }
     render() {
        let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>," keys are pressed on the keyboard).",<br/>,<br/>,"Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
@@ -133,6 +144,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index });
     }
     closeWizard() {
+        this.props.onClearPopupParams()
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
     }
     WizardFinish() {

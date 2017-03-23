@@ -13,13 +13,13 @@ import { Helper } from '../Core/Helper';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
-
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus",'PlusMinusConfig', MenuType.ConfigurationPopup, "plus-sign")
+        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus", 'PlusMinusConfig', MenuType.ConfigurationPopup, "plus-sign")
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
@@ -27,6 +27,20 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     private InitState() {
         if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
             this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        }
+    }
+
+    protected addColumnMenuItems(columnId: string): void {
+        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+                    "Create Plus/Minus Nudge Rule",
+                    this.Id,
+                    "PlusMinusConfig",
+                    MenuType.ConfigurationPopup,
+                    "plus-sign",
+                    this.getStrategyEntitlement(),
+                    "New|" + columnId)))
         }
     }
 
