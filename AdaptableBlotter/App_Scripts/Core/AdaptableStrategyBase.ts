@@ -30,8 +30,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     }
 
     protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup("Colum Menu For Strat " + this.Id + " Col " + columnId, this.Id, "CustomSortConfig", MenuType.ConfigurationPopup, "home", this.getStrategyEntitlement())))
     }
 
     getStrategyEntitlement(): IEntitlement {

@@ -24,7 +24,7 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
 
         let items = [{
             type: 'label',
-            title: 'Menu Popup 1'
+            title: 'Adaptable Blotter Menu'
         }, '-', {
             title: 'Menu item 1-1',
             items: [{ // sub-menu
