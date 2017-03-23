@@ -12,6 +12,7 @@ import { Expression } from '../Core/Expression/Expression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { MenuType } from '../Core/Enums';
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
@@ -31,6 +32,18 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
 
             this.InitStyles();
         }
+    }
+
+    protected addColumnMenuItems(columnId: string): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+                "Create Conditional Style",
+                this.Id,
+                "ConditionalStyleConfig",
+                MenuType.ConfigurationPopup,
+                "tint",
+                this.getStrategyEntitlement(),
+                "New|" + columnId)))
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
@@ -108,7 +121,7 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
         }
     }
 
-   
+
 }
 
 

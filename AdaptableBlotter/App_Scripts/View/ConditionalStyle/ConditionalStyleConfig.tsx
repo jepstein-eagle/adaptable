@@ -21,6 +21,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { StringExtensions } from '../../Core/Extensions'
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
@@ -40,6 +41,17 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     constructor() {
         super();
         this.state = { EditedConditionalStyleCondition: null }
+    }
+
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
+                _editedConditionalStyle.ColumnId = arrayParams[1]
+                this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
+            }
+        }
     }
 
     render() {
@@ -106,6 +118,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     closeWizard() {
+        this.props.onClearPopupParams()
         this.setState({ EditedConditionalStyleCondition: null });
     }
 
