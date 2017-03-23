@@ -383,7 +383,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(column: any): DataType {
+    public  getColumnDataType(column: any): DataType {
       
       let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn> column;    
       
@@ -397,7 +397,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-        let type = kendoColumn.type;
+         let type = this.grid.dataSource.options.schema.model.fields[kendoColumn.field].type;
+       
         switch (type) {
             case 'string':
                 return DataType.String;
