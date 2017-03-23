@@ -80,7 +80,7 @@ button.placeholder:before {
   -webkit-border-radius: 10px 10px 10px 10px;
   padding: 10px 0 10px 0;
   opacity: 0;
-  box-shadow: 15px 15px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
 }
 .menu-popup.showing {
   opacity: 1;
