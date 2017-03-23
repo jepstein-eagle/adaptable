@@ -23,13 +23,11 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
 
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create User Filter",
-                this.Id,
                 "UserFilterConfig",
                 MenuType.ConfigurationPopup,
                 "filter",
-                this.getStrategyEntitlement(),
                 "New|" + columnId)))
     }
 

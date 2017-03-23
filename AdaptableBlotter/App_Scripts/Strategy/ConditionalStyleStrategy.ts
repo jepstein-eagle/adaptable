@@ -36,13 +36,11 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
 
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create Conditional Style",
-                this.Id,
                 "ConditionalStyleConfig",
                 MenuType.ConfigurationPopup,
                 "tint",
-                this.getStrategyEntitlement(),
                 "New|" + columnId)))
     }
 

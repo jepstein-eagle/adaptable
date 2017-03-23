@@ -20,13 +20,11 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create Cell Validation Rule",
-                this.Id,
                 "CellValidationConfig",
                 MenuType.ConfigurationPopup,
                 "flag",
-                this.getStrategyEntitlement(),
                 "New|" + columnId)))
     }
 }

@@ -41,13 +41,15 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     createMenuItemShowPopup(Label: string,
         ComponentName: string,
         MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
-        GlyphIcon: string): MenuItemShowPopup {
+        GlyphIcon: string,
+        PopupParams?:string): MenuItemShowPopup {
         return new MenuItemShowPopup(Label,
             this.Id,
             ComponentName,
             MenuType,
             GlyphIcon,
-            this.getStrategyEntitlement());
+            this.getStrategyEntitlement(), 
+            PopupParams);
     }
 
 }

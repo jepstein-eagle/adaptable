@@ -29,13 +29,11 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         let label = this.CustomSorts.findIndex(x=>x.ColumnId == columnId)>-1?"Edit ": "Create "
         let popupParam = this.CustomSorts.findIndex(x=>x.ColumnId == columnId)>-1?"Edit|":"New|"
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 label + "Custom Sort",
-                this.Id,
                 "CustomSortConfig",
                 MenuType.ConfigurationPopup,
                 "sort-by-attributes",
-                this.getStrategyEntitlement(),
                 popupParam + columnId)))
     }
 
