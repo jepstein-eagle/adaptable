@@ -52,7 +52,7 @@ export interface IActionConfigurationPopup {
     ShowPopup: boolean;
     ComponentClassName: string;
     IsReadOnly: boolean
-    Params: any
+    Params: string
 }
 
 export interface IErrorPopup {

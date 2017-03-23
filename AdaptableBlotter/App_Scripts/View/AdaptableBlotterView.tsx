@@ -40,6 +40,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
     onConfirmConfirmationPopup: () => PopupRedux.PopupConfirmConfirmationAction;
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
+    onClearPopupParams: () => PopupRedux.PopupClearParamAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -124,7 +125,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ComponentClassName={this.props.PopupState.ActionConfigurationPopup.ComponentClassName}
                     onHide={this.props.onClosePopup}
                     IsReadOnly={this.props.PopupState.ActionConfigurationPopup.IsReadOnly}
-                    AdaptableBlotter={this.props.AdaptableBlotter} />
+                    AdaptableBlotter={this.props.AdaptableBlotter} 
+                    onClearPopupParams={()=>this.props.onClearPopupParams()}
+                    PopupParams={this.props.PopupState.ActionConfigurationPopup.Params}/>
             </div>
 
         );
@@ -155,6 +158,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfirmConfirmationPopup: () => dispatch(PopupRedux.PopupConfirmConfirmation()),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
         showPopup: (componentClassName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShow(componentClassName, isReadOnly, params)),
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }
 

@@ -36,8 +36,6 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     CurrentAdvancedSearchUid: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
-    onClearPopupParams: () => PopupRedux.PopupClearParamAction,
-    PopupParams: any,
     UserFilters: IUserFilter[]
 }
 
@@ -256,7 +254,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns,
-        PopupParams: state.Popup.ActionConfigurationPopup.Params,
         UserFilters: state.Filter.UserFilters
     };
 }
@@ -265,7 +262,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     };
 }
 

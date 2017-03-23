@@ -21,7 +21,7 @@ const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 export interface PopupShowAction extends Redux.Action {
     ComponentClassName: string,
     IsReadOnly: boolean,
-    Params?: any
+    Params?: string
 }
 
 export interface PopupHideAction extends Redux.Action { }
@@ -48,7 +48,7 @@ export interface PopupShowConfirmationAction extends Redux.Action { Confirmation
 
 export interface PopupClearParamAction extends Redux.Action { }
 
-export const PopupShow = (ComponentClassName: string, IsReadOnly?: boolean, Params?: any): PopupShowAction => ({
+export const PopupShow = (ComponentClassName: string, IsReadOnly?: boolean, Params?: string): PopupShowAction => ({
     type: POPUP_SHOW,
     ComponentClassName,
     IsReadOnly,

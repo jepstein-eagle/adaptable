@@ -6,6 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { AdaptableViewFactory } from './../../AdaptableViewFactory';
 import { IStrategy } from '../../../Core/Interface/IStrategy';
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 
 interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -13,6 +14,8 @@ interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlo
   IsReadOnly: boolean
   onHide?: Function;
   AdaptableBlotter: IAdaptableBlotter;
+  PopupParams: string
+  onClearPopupParams: () => PopupRedux.PopupClearParamAction
 }
 
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
@@ -23,7 +26,9 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       var body = React.createElement(bodyElement,
         {
           getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria),
-          isGridPageable: () => this.props.AdaptableBlotter.isGridPageable
+          isGridPageable: () => this.props.AdaptableBlotter.isGridPageable,
+          PopupParams: this.props.PopupParams,
+          onClearPopupParams: () => this.props.onClearPopupParams()
         });
     }
     //TODO: There is a CSS style in our App that makes the popup to autosize. Need to check how to do it directly from code
