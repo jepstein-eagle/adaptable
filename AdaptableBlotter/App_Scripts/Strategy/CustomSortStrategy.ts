@@ -5,6 +5,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
@@ -22,6 +23,20 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
             this.CustomSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
         }
+    }
+
+    protected addColumnMenuItems(columnId: string): void {
+        let label = this.CustomSorts.findIndex(x=>x.ColumnId == columnId)>-1?"Edit ": "Create "
+        let popupParam = this.CustomSorts.findIndex(x=>x.ColumnId == columnId)>-1?"Edit|":"New|"
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+                label + "Custom Sort",
+                this.Id,
+                "CustomSortConfig",
+                MenuType.ConfigurationPopup,
+                "sort-by-attributes",
+                this.getStrategyEntitlement(),
+                popupParam + columnId)))
     }
 
     removeCustomSorts() {
@@ -46,7 +61,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         });
     }
 
-  
+
 }
 
 function CreateCompareCustomSort(customSort: ICustomSort, blotter: IAdaptableBlotter) {

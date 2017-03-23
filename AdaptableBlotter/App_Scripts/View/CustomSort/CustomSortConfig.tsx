@@ -7,6 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -18,6 +19,7 @@ import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { StringExtensions } from '../../Core/Extensions'
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -37,6 +39,21 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         this.state = { EditedCustomSort: null, WizardStartIndex: 0 }
 
     }
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let newCustomSort = ObjectFactory.CreateEmptyCustomSort()
+                newCustomSort.ColumnId = arrayParams[1]
+                this.onEditCustomSort(newCustomSort)
+            }
+            if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
+                let editCustomSort = this.props.CustomSorts.find(x=>x.ColumnId == arrayParams[1])
+                this.onEditCustomSort(editCustomSort)
+            }
+        }
+    }
+
     render() {
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
@@ -53,7 +70,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText="Custom Sort" style={panelStyle}
-            button={newButton} bsStyle="primary"  glyphicon={"sort-by-attributes"}>
+            button={newButton} bsStyle="primary" glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -75,6 +92,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
     private wizardSteps: JSX.Element[]
 
     closeWizard() {
+        this.props.onClearPopupParams()
         this.setState({ EditedCustomSort: null, WizardStartIndex: 0 });
     }
     WizardFinish() {
@@ -110,7 +128,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
-        onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort))
+        onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }
 

@@ -24,9 +24,13 @@ export class MenuItemShowPopup implements IMenuItem {
         private ComponentName: string,
         public MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
         public GlyphIcon: string,
-        private Entitlment : IEntitlement) {
+        private Entitlment: IEntitlement,
+        private PopupParams?: string) {
         this.IsEnabled = true;
-        this.Action = PopupRedux.PopupShow(ComponentName, Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false)
+        this.Action = PopupRedux.PopupShow(
+            ComponentName,
+            Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false,
+            this.PopupParams)
     }
 
     public IsEnabled: boolean;
