@@ -1,7 +1,8 @@
-import { MenuItemShowPopup } from '../Core/MenuItem'
+import { MenuReduxActionItem } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
+import { ObjectFactory } from '../Core/ObjectFactory'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
@@ -9,6 +10,7 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
@@ -18,11 +20,36 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-        this.menuItemConfig =this.createMenuItemShowPopup("Flashing Cell", 'FlashingCellsConfig', MenuType.ConfigurationPopup, "flash");
+        this.menuItemConfig = this.createMenuItemShowPopup("Flashing Cell", 'FlashingCellsConfig', MenuType.ConfigurationPopup, "flash");
         this.InitState()
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         // TODO: test extension works
+    }
+
+    protected addColumnMenuItems(columnId: string): void {
+        let flashingCell = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == columnId)
+        if (flashingCell && flashingCell.IsLive) {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.AddItemColumnContextMenu(new MenuReduxActionItem(
+                    "Turn Flashing Cell Off",
+                    this.Id,
+                    FlashingCellsRedux.FlashingCellSelect(flashingCell),
+                    "flash")))
+        }
+        else {
+            if (!flashingCell) {
+                let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x=>x.ColumnId == columnId)
+                flashingCell = ObjectFactory.CreateDefaultFlashingColumn(column)
+            }
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.AddItemColumnContextMenu(new MenuReduxActionItem(
+                    "Turn Flashing Cell On",
+                    this.Id,
+                    FlashingCellsRedux.FlashingCellSelect(flashingCell),
+                    "flash")))
+        }
+
     }
 
     private InitState() {
