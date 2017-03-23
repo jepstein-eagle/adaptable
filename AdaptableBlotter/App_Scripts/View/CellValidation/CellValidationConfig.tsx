@@ -37,12 +37,23 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
 interface CellValidationConfigState {
     EditedCellValidation: ICellValidationRule
     EditedIndexCellValidation: number
+    WizardStartIndex: number
 }
 
 class CellValidationConfigComponent extends React.Component<CellValidationConfigProps, CellValidationConfigState> {
     constructor() {
         super();
-        this.state = { EditedCellValidation: null, EditedIndexCellValidation: -1 }
+        this.state = { EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 }
+    }
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let cellValitdation = ObjectFactory.CreateEmptyCellValidation()
+                cellValitdation.ColumnId = arrayParams[1]
+                this.setState({ EditedCellValidation: cellValitdation, EditedIndexCellValidation: -1, WizardStartIndex: 1 });
+            }
+        }
     }
     render() {
 
@@ -115,7 +126,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                 ]}
                     Data={this.state.EditedCellValidation}
-                    StepStartIndex={0}
+                    StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.finishWizard()} ></AdaptableWizard>}
 
@@ -123,12 +134,12 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
 
     createCellValidation() {
-        this.setState({ EditedCellValidation: ObjectFactory.CreateEmptyCellValidation(), EditedIndexCellValidation: -1 });
+        this.setState({ EditedCellValidation: ObjectFactory.CreateEmptyCellValidation(), EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index });
+        this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index, WizardStartIndex: 1 });
     }
 
     private onCellValidationModeChanged(index: number, event: React.FormEvent) {
@@ -137,12 +148,13 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
 
     closeWizard() {
-        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1 });
+        this.props.onClearPopupParams()
+        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
     finishWizard() {
         this.props.onAddEditCellValidation(this.state.EditedIndexCellValidation, this.state.EditedCellValidation);
-        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1 });
+        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
     setExpressionDescription(CellValidation: ICellValidationRule): string {

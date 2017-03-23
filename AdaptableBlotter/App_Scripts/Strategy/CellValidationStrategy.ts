@@ -9,15 +9,26 @@ import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IUserFilter } from '../Core/Interface/IExpression';
+import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
- 
+
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Cell Validation", 'CellValidationConfig', MenuType.ConfigurationPopup, "flag");
     }
 
- 
+    protected addColumnMenuItems(columnId: string): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+            MenuRedux.AddItemColumnContextMenu(new MenuItemShowPopup(
+                "Create Cell Validation Rule",
+                this.Id,
+                "CellValidationConfig",
+                MenuType.ConfigurationPopup,
+                "flag",
+                this.getStrategyEntitlement(),
+                "New|" + columnId)))
+    }
 }
 
 
