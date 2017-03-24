@@ -56,8 +56,8 @@ import { StringExtensions } from '../../Core/Extensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
-import {DefaultAdaptableBlotterOptions} from '../../Core/DefaultAdaptableBlotterOptions'
-
+import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
+import { ContextMenuReact } from '../../View/ContextMenu'
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -71,6 +71,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
+    private contextMenuContainer: HTMLDivElement
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -110,8 +111,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        this.contextMenuContainer = this.container.ownerDocument.createElement("div")
+        this.contextMenuContainer.id = "contextMenuContainer"
+        this.contextMenuContainer.style.position = 'absolute'
+        this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
+        ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
+        ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
@@ -205,33 +211,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
 
-        // following code is taken from Telerik website for how to ADD menu items to their column header menu
-        // not sure yet if we want to use their or our menu, probably former
-        // would be nice if can work out how to make it re-evaluate during runtime;
-        // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
-        grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
-            let menu: any = e.container.find(".k-menu").data("kendoMenu");
-            var field = e.field;
-            var popup = e.container.data('kendoPopup');
-            let columnMenuItems: string[] = [];
-            let column: IColumn = this.getColumnFromColumnId(field);
+        $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
+            e.preventDefault()
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.ShowColumnContextMenu(
+                    e.currentTarget.getAttribute("data-field"),
+                    e.clientX,
+                    e.clientY))
+        });
+        // // following code is taken from Telerik website for how to ADD menu items to their column header menu
+        // // not sure yet if we want to use their or our menu, probably former
+        // // would be nice if can work out how to make it re-evaluate during runtime;
+        // // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
+        // grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
+        //     let menu: any = e.container.find(".k-menu").data("kendoMenu");
+        //     var field = e.field;
+        //     var popup = e.container.data('kendoPopup');
+        //     let columnMenuItems: string[] = [];
+        //     let column: IColumn = this.getColumnFromColumnId(field);
 
-            // each strategy can add its own menu item if it wants to
-            // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
+        //     // each strategy can add its own menu item if it wants to
+        //     // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
 
-            columnMenuItems.forEach(s => menu.append({ text: s }))
+        //     columnMenuItems.forEach(s => menu.append({ text: s }))
 
-            // we can add the item this way which is nicer but not doing so for now
-            //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
+        //     // we can add the item this way which is nicer but not doing so for now
+        //     //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
 
-            // event handler - each strategy listens and acts accordingly
-            menu.bind("select", (e: any) => {
-                var menuText = $(e.item).text();
-                menu.close();
-                popup.close();
-               
-            });
-        })
+        //     // event handler - each strategy listens and acts accordingly
+        //     menu.bind("select", (e: any) => {
+        //         var menuText = $(e.item).text();
+        //         menu.close();
+        //         popup.close();
+
+        //     });
+        // })
 
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
@@ -277,7 +291,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x:kendo.ui.GridColumn, index) => {
+        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
@@ -290,7 +304,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
     }
 
-        public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
             let col = this.grid.columns.find(x => x.field == column.ColumnId)
             //if not then not need to set it because it was already visible.........
@@ -308,7 +322,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-        public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+    public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
         return this._onKeyDown;
     }
 
@@ -383,10 +397,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public  getColumnDataType(column: any): DataType {
-      
-      let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn> column;    
-      
+    public getColumnDataType(column: any): DataType {
+
+        let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn>column;
+
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
             console.log('column is undefined returning String for Type')
@@ -397,8 +411,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-         let type = this.grid.dataSource.options.schema.model.fields[kendoColumn.field].type;
-       
+        let type = this.grid.dataSource.options.schema.model.fields[kendoColumn.field].type;
+
         switch (type) {
             case 'string':
                 return DataType.String;
