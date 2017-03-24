@@ -108,7 +108,9 @@ export const MenuReducer: Redux.Reducer<MenuState> = (state: MenuState = initial
                         IsVisible: state.ContextMenu.IsVisible,
                         PositionX: state.ContextMenu.PositionX,
                         PositionY: state.ContextMenu.PositionY,
-                        Items: [].concat(state.ContextMenu.Items, actionTyped.Item)
+                        Items: [].concat(state.ContextMenu.Items, actionTyped.Item).sort((a: IMenuItem, b: IMenuItem) =>
+                            (a.Label < b.Label) ? -1
+                                : (a.Label > b.Label) ? 1 : 0)
                     }
                 })
         }
