@@ -30,7 +30,7 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
-    render(): any {
+    render() {
 
         let advancedSearches = this.props.AdvancedSearches.map(x => {
             return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
@@ -125,14 +125,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let advancedSearchId = (e.value == "select") ? "" : e.value;
         this.props.onSelectAdvancedSearch(advancedSearchId);
     }
-
-    private getClonedSelectedAdvancedSearch() {
-        let selectedAdvancedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(a => a.Uid == this.props.CurrentAdvancedSearchUid);
-        if (selectedAdvancedSearch) {
-            selectedAdvancedSearch = Helper.cloneObject(selectedAdvancedSearch)
-        }
-        return selectedAdvancedSearch
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -147,7 +139,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "Edit")),
         onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
