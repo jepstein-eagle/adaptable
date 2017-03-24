@@ -160,6 +160,10 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case FilterRedux.HIDE_FILTER_FORM:{
+                    adaptableBlotter.hideFilterForm()
+                    return next(action);
+                }
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
 

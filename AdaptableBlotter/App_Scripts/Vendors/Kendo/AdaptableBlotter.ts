@@ -252,6 +252,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
+    private kendoPopup: kendo.ui.Popup
+    public hideFilterForm() {
+        if(this.kendoPopup)
+        {
+            this.kendoPopup.close()
+        }
+    }
+
     private createFilterForm(e: kendo.ui.GridFilterMenuInitEvent): void {
         /* 
        replacing filter screen with our own - good idea?  some ideas stolen from...
@@ -267,6 +275,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // Remove default filter UI
         e.container.off();
         e.container.empty();
+        this.kendoPopup = e.container.data("kendoPopup")
         //we repopuple the popup with a new react component with latest values for columns etc ...
         e.container.data("kendoPopup").bind("open", () => this.populateFilterForm(filterContext))
 
