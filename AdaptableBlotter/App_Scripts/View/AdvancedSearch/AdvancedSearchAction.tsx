@@ -54,6 +54,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         if (this.props.PopupParams == "New") {
             this.onNewAdvancedSearch()
         }
+        if (this.props.PopupParams == "Edit") {
+            this.onEditAdvancedSearch()
+        }
     }
 
     private getClonedSelectedAdvancedSearch() {
