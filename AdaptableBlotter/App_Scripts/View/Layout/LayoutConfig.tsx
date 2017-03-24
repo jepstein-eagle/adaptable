@@ -37,6 +37,8 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
     }
 
     render() {
+       let infoBody:any[] = ["Use layouts to create and manage multiple named, sets of ordered columns",<br/>,<br/>,"To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)",<br/>,<br/>,"To create a new layout, enter a name in the 'Save As New Layout' textbox."]
+
         let optionLayouts = this.props.Layouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
                 let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
@@ -55,7 +57,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
         let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
 
         return (
-            <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th">
+            <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th" infoBody={infoBody}>
 
                 <Panel header="Load Layout" bsStyle="info">
                     <AdaptableBlotterForm horizontal>
