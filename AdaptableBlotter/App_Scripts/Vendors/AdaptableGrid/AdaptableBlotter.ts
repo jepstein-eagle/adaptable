@@ -143,6 +143,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
     }
 
+    public hideFilterForm() {
+        throw Error("not implemented yet")
+    }
+
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         let gridVisibleColumns: AdaptableBlotterGrid.Column[] = this.grid.getVisibleColumns();
         let gridHiddenColumns: AdaptableBlotterGrid.Column[] = this.grid.getHiddenColumns();

@@ -12,9 +12,13 @@ export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 
 export const COLUMN_FILTER_ADD_UPDATE = 'COLUMN_FILTER_ADD_UPDATE';
 export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
+export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
     UserFilter: IUserFilter
+}
+
+export interface HideFilterFormAction extends Redux.Action {
 }
 
 export interface UserFilterDeleteAction extends Redux.Action {
@@ -33,6 +37,10 @@ export interface ColumnFilterDeleteAction extends Redux.Action {
 export const UserFilterAddUpdate = (UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
     type: USER_FILTER_ADD_UPDATE,
     UserFilter
+})
+
+export const HideFilterForm = (): HideFilterFormAction => ({
+    type: HIDE_FILTER_FORM,
 })
 
 export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteAction => ({

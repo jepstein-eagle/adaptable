@@ -140,7 +140,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         grid.addEventListener('fin-click', (e: any) => {
             if (this.filterContainer.style.visibility == 'visible') {
-                this.filterContainer.style.visibility = 'hidden'
+                this.hideFilterForm()
             }
             if (e.detail.primitiveEvent.isHeaderCell) {
                 let filterContext: IColumnFilterContext = {
@@ -317,6 +317,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
+    }
+
+    public hideFilterForm() {
+        this.filterContainer.style.visibility = 'hidden'
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {

@@ -8,6 +8,7 @@ import { Helper } from '../Core/Helper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IContextMenu } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import {ContextMenuCustomRenderer} from './ContextMenuCustomRenderer'
 
 interface ContextMenuComponentProps extends React.ClassAttributes<ContextMenuComponent> {
     ContextMenu: IContextMenu,
@@ -36,6 +37,8 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
 
         let realItems = this.props.ContextMenu.Items.map(item => {
             return {
+                type: 'ContextMenuCustomRenderer',
+                menuitem: item,
                 title: item.Label,
                 callback: (e:any) => {
                     this.props.dipatchClickedMenu(item.Action)
@@ -43,7 +46,11 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
             }
         })
 
-        return this.props.ContextMenu.IsVisible && <ReactDataMenu.Menu.default items={[].concat(items, realItems)} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
+        let renderers={
+            'ContextMenuCustomRenderer' : ContextMenuCustomRenderer
+        }
+
+        return this.props.ContextMenu.IsVisible && <ReactDataMenu.Menu.default items={[].concat(items, realItems)} renderers={renderers} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
     }
 
     onMenuClose() {

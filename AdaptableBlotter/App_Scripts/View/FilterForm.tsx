@@ -24,7 +24,8 @@ interface FilterFormProps extends IStrategyViewPopupProps<FilterFormComponent> {
     FilterState: FilterState;
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => UserFilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => UserFilterRedux.ColumnFilterAddUpdateAction
-    ColumnValueType: DistinctCriteriaPairValue
+    ColumnValueType: DistinctCriteriaPairValue,
+    onHideFilterForm: () => UserFilterRedux.HideFilterFormAction
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, {}> {
@@ -49,7 +50,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
 
-         let newButton = <ButtonClose onClick={() => this.onCloseForm()}
+         let newButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
            style={buttonCloseStyle}
            size={"xsmall"}
             overrideTooltip="Close"
@@ -116,11 +117,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             this.props.onAddEditColumnFilter(columnFilter);
         }
     }
-
-        onCloseForm() {
-        // need to close this form
-        this.setState({ showModal: false });
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -133,7 +129,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(UserFilterRedux.ColumnFilterDelete(columnFilter)),
-        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(UserFilterRedux.ColumnFilterAddUpdate(columnFilter))
+        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(UserFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onHideFilterForm: () => dispatch(UserFilterRedux.HideFilterForm())
     };
 }
 

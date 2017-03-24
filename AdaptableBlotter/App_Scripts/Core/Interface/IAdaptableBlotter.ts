@@ -28,6 +28,7 @@ export interface IAdaptableBlotter {
     createMenu(): void
     isGridPageable(): boolean
     getPrimaryKeyValueFromRecord(record: any): any
+    hideFilterForm(): void
 
     // cell selection
     getSelectedCells(): ISelectedCells
@@ -120,7 +121,7 @@ export interface IConfigEntity {
     IsPredefined: boolean
 }
 
-export interface IEntitlement{
+export interface IEntitlement {
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }
