@@ -549,7 +549,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnIndex(columnName: string): number {
         //be carefull this returns the index y of the cell. Not the actual index in the collection
-        return this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName).index;
+        let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
+        return (activeColumn)? activeColumn.index: -1;
     }
 
 
