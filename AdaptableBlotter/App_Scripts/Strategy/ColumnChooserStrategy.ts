@@ -20,7 +20,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
                 "Hide Column",
                 this.Id,
                 GridRedux.HideColumn(columnId),
-                "plus-sign")))
+                "list-alt")))
     }
 
 }
