@@ -43,7 +43,7 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
             }
         })
 
-        return this.props.ContextMenu.IsVisible && <ReactDataMenu.Menu.default items={[].concat(items, realItems)} position={position} onClose={() => this.onMenuClose()} />
+        return this.props.ContextMenu.IsVisible && <ReactDataMenu.Menu.default items={[].concat(items, realItems)} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
     }
 
     onMenuClose() {

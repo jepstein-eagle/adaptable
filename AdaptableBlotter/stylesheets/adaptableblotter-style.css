@@ -55,7 +55,7 @@ button.placeholder:before {
 .drop-down {
   display: inline-block;
 }
-.menu-button {
+.adaptable_blotter_menu-button {
   color: white;
   background-color: #2ead6d;
   border: 0;
@@ -63,15 +63,15 @@ button.placeholder:before {
   font-size: 30px;
   transition: background-color 150ms ease-in;
 }
-.menu-button-selected {
+.adaptable_blotter_menu-button-selected {
   background-color: #5943aa;
   transition: background-color 150ms ease-in;
 }
-.menu-button:hover {
+.adaptable_blotter_menu-button:hover {
   background-color: #5943aa;
   transition: background-color 150ms ease-in;
 }
-.menu-popup {
+.adaptable_blotter_menu-popup {
   display: inline-block;
   white-space: nowrap;
   background-color: #6699cc;
@@ -82,11 +82,11 @@ button.placeholder:before {
   opacity: 0;
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
 }
-.menu-popup.showing {
+.adaptable_blotter_menu-popup.showing {
   opacity: 1;
   transition: opacity 150ms ease-in;
 }
-.menu-item {
+.adaptable_blotter_menu-item {
   display: block;
   width: 100%;
   color: white;
@@ -95,30 +95,30 @@ button.placeholder:before {
   font-size: 15px;
   border: 0;
 }
-.menu-item-button {
+.adaptable_blotter_menu-item-button {
   line-height: 15px;
   text-align: left;
   transition: background-color 150ms ease-in;
 }
-.menu-item-button:hover {
+.adaptable_blotter_menu-item-button:hover {
   background-color: #5943aa;
   transition: background-color 150ms ease-in;
 }
-.menu-item-button span {
+.adaptable_blotter_menu-item-button span {
   line-height: inherit;
 }
-.menu-item-selected {
+.adaptable_blotter_menu-item-selected {
   background-color: #5943aa;
   transition: background-color 150ms ease-in;
 }
-.menu-item-label {
+.adaptable_blotter_menu-item-label {
   text-align: left;
   font-weight: normal;
   font-style: italic;
   padding: 5px 10px 5px 10px;
   line-height: 15px
 }
-.menu-item-separator {
+.adaptable_blotter_menu-item-separator {
   border: 0;
   height: 0;
   width: auto;
@@ -126,16 +126,16 @@ button.placeholder:before {
   padding: 0;
   margin: 10px 0;
 }
-.menu-item:focus {
+.adaptable_blotter_menu-item:focus {
   outline: 0;
 }
-.menu-item span {
+.adaptable_blotter_menu-item span {
   float: left;
 }
-.menu-item-expandable {
+.adaptable_blotter_menu-item-expandable {
   padding-right: 0;
 }
-.menu-item-link a {
+.adaptable_blotter_menu-item-link a {
   color: #ffcc00;
 }
 .fa.fa-chevron-right {
