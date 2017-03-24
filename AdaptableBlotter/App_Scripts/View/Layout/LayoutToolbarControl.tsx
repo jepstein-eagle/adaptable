@@ -34,11 +34,21 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
     render(): any {
 
-        let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
-            return <option value={x.Name} key={index}>{x.Name}</option>
-        })
-
         let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
+        let isLayoutModified = layoutEntity&&!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.map(x => x.ColumnId))
+        let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
+            if (x.Name == this.props.CurrentLayout) {
+                if (!isLayoutModified) {
+                    return <option value={x.Name} key={index}>{x.Name}</option>
+                }
+                else {
+                    return <option value={x.Name} key={index}>{x.Name + "(Modified)"}</option>
+                }
+            }
+            else {
+                return <option value={x.Name} key={index}>{x.Name}</option>
+            }
+        })
 
         let tooltipText = this.props.LayoutDashboardControl.IsCollapsed ? "Expand" : "Collapse"
 
@@ -49,8 +59,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </Button>
         </OverlayTrigger>
 
-        let collapsedContent = <ControlLabel> {this.props.CurrentLayout}</ControlLabel>
-
+        let collapsedContent = <ControlLabel> {isLayoutModified ? this.props.CurrentLayout + "(Modified)" : this.props.CurrentLayout}</ControlLabel>
 
         let expandedContent = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>

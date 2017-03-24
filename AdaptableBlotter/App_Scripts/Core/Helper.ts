@@ -82,5 +82,12 @@ export module Helper {
         return arr1.every(x => arr2.indexOf(x) != -1)
     }
 
+    export function areArraysEqualWithOrder(arr1: any[], arr2: any[]) {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+        return arr1.every((x, index) => arr2.indexOf(x) == index)
+    }
+
 }
 

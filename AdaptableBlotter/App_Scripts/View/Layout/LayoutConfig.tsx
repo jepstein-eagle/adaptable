@@ -12,6 +12,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
+import { Helper } from '../../Core/Helper';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -37,7 +38,18 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
 
     render() {
         let optionLayouts = this.props.Layouts.map((x, index) => {
-            return <option value={x.Name} key={index}>{x.Name}</option>
+            if (x.Name == this.props.CurrentLayout) {
+                let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
+                if (Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.map(x=>x.ColumnId))) {
+                    return <option value={x.Name} key={index}>{x.Name}</option>
+                }
+                else {
+                    return <option value={x.Name} key={index}>{x.Name + "(Modified)"}</option>
+                }
+            }
+            else {
+                return <option value={x.Name} key={index}>{x.Name}</option>
+            }
         })
 
         let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
