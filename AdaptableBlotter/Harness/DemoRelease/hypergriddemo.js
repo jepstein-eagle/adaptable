@@ -51,6 +51,8 @@ function InitBlotter() {
 
     dataGen.startTickingDataHypergrid(grid)
     grid.addProperties({ editOnKeydown: false })
+    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells
+    grid.addProperties({ renderFalsy: true })
 
     grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',

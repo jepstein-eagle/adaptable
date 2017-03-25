@@ -73,6 +73,8 @@ function InitBlotter() {
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
     //which causes an issue.....
     grid.addProperties({ editOnKeydown: false })
+    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells
+    grid.addProperties({ renderFalsy: true })
     let behavior = grid.behavior;
 
     //   grid.localization.add('notional', notionalLocalizer);
