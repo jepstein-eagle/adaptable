@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
+/// <reference path="AdaptableBlotter.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -53,7 +54,7 @@ import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
 
-export class AdaptableBlotter implements IAdaptableBlotter {
+export class v implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
