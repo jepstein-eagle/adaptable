@@ -300,7 +300,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index) => {
+        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index:number) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
