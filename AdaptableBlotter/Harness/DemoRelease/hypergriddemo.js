@@ -50,6 +50,8 @@ function InitBlotter() {
     var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
 
     dataGen.startTickingDataHypergrid(grid)
+    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
+    grid.addProperties({ renderFalsy: true })
     grid.addProperties({ editOnKeydown: false })
 
     grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
