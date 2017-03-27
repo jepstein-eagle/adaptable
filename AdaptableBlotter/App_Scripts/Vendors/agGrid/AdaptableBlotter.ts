@@ -65,7 +65,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(private grid: ag.grid.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
