@@ -25,10 +25,10 @@ export class CalendarService implements ICalendarService {
         if (dynamicDateName == "Today") {
             dynamicDate = new Date();
         }
-        else if (dynamicDateName == "Last Working Day") {
+        else if (dynamicDateName == "Last Work Day") {
             dynamicDate = this.GetLastWorkingDay(1);
         }
-        else if (dynamicDateName == "Next Working Day") {
+        else if (dynamicDateName == "Next Work Day") {
             dynamicDate = this.GetNextWorkingDay(1);
         }
         return dynamicDate;
