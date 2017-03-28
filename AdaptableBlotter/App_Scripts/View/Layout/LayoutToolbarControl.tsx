@@ -35,7 +35,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     render(): any {
 
         let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
-        let isLayoutModified = layoutEntity&&!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.map(x => x.ColumnId))
+        let isLayoutModified = layoutEntity && !Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))
         let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
                 if (!isLayoutModified) {
