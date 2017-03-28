@@ -178,7 +178,7 @@ var lightTheme = {
     backgroundColor: 'white',
     altbackground: '#e6f2f8',
     foregroundSelectionColor: 'white',
-    backgroundSelectionColor: '#0d6a92',
+    backgroundSelectionColor: 'rgba(13, 106, 146, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: '#00435e',
@@ -219,7 +219,7 @@ var darkTheme = {
     backgroundColor: '#07071E',
     altbackground: '#07071E',
     foregroundSelectionColor: 'white',
-    backgroundSelectionColor: '#3D77FE',
+    backgroundSelectionColor: 'rgba(61, 119, 254, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: 'white',
