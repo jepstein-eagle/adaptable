@@ -1,7 +1,6 @@
 {
   "name": "adaptableblotter",
   "globalDependencies": {
-    "ag-grid": "registry:dt/ag-grid#2.1.2+20160510002910",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "kendo-ui": "registry:dt/kendo-ui#2016.1.314+20160818051423",
     "react": "registry:dt/react#0.14.0+20160829191040",
