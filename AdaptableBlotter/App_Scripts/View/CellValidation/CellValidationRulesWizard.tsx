@@ -124,8 +124,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         </Col>
                         <Col xs={12}>
                             <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Expression</Checkbox>
-                              {' '}<AdaptablePopover headerText={"Validation Rule: Expression"} bodyText={["Create an Expression (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
-                    </Col>
+                            {' '}<AdaptablePopover headerText={"Validation Rule: Expression"} bodyText={["Create an Expression (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
+                        </Col>
                     </AdaptableBlotterForm>
 
                 </Panel>
@@ -142,7 +142,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operator: Number.parseInt(e.value), Operand1: "", Operand2: "" } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
