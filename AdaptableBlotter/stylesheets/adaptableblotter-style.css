@@ -63,24 +63,28 @@ button.placeholder:before {
   font-size: 30px;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-button-selected {
-  background-color: #5943aa;
+.adaptable_blotter_menu-button-selected:not(.adaptable_blotter_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-button:hover {
-  background-color: #5943aa;
+.adaptable_blotter_menu-button:hover:not(.adaptable_blotter_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
   transition: background-color 150ms ease-in;
 }
 .adaptable_blotter_menu-popup {
   display: inline-block;
   white-space: nowrap;
-  background-color: #6699cc;
-  border-radius: 10px 10px 10px 10px;
+  background-color: #d9ecf5;
+  /*border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 10px 10px 10px 10px;
-  padding: 10px 0 10px 0;
+  -webkit-border-radius: 10px 10px 10px 10px;*/
+  /*padding: 10px 0 10px 0;*/
   opacity: 0;
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
+  border-style: solid;
+  border-width: thin;
 }
 .adaptable_blotter_menu-popup.showing {
   opacity: 1;
@@ -89,8 +93,8 @@ button.placeholder:before {
 .adaptable_blotter_menu-item {
   display: block;
   width: 100%;
-  color: white;
-  background-color: #6699cc;
+  color: #00435e;
+  background-color: #d9ecf5;
   padding: 5px 10px 5px 10px;
   font-size: 15px;
   border: 0;
@@ -100,15 +104,18 @@ button.placeholder:before {
   text-align: left;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-item-button:hover {
-  background-color: #5943aa;
+
+.adaptable_blotter_menu-item-button:hover:not(.adaptable_blotter_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
   transition: background-color 150ms ease-in;
 }
 .adaptable_blotter_menu-item-button span {
   line-height: inherit;
 }
-.adaptable_blotter_menu-item-selected {
-  background-color: #5943aa;
+.adaptable_blotter_menu-item-selected:not(.adaptable_blotter_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
   transition: background-color 150ms ease-in;
 }
 .adaptable_blotter_menu-item-label {
@@ -122,9 +129,10 @@ button.placeholder:before {
   border: 0;
   height: 0;
   width: auto;
-  border-bottom: 4px dotted rgba(255, 255, 255, 0.35);
+  /*border-bottom: 4px dotted rgba(255, 255, 255, 0.35);*/
+  border-bottom: 2px black solid;
   padding: 0;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 .adaptable_blotter_menu-item:focus {
   outline: 0;
