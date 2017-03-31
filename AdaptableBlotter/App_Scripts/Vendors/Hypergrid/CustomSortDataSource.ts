@@ -1,13 +1,13 @@
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import { AdaptableBlotter } from './AdaptableBlotter'
 import {  SortOrder } from '../../Core/Enums'
 import { DataSourceIndexed } from './DataSourceIndexed'
 
 //All custom pipelines should extend from pipelineBase
-export let CustomSortDataSource = (blotter: IAdaptableBlotter) => DataSourceIndexed.extend('CustomSortDataSource', {
+export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('CustomSortDataSource', {
     blotter: blotter,
     // This function is called on every reIndex call if this object is in the pipelne
     apply: function () {
-        var c = this.blotter.sortColumn;
+        var c = blotter.sortColumnGridIndex;
         if (c == -1) {
             this.clearIndex();
             return;
@@ -15,8 +15,7 @@ export let CustomSortDataSource = (blotter: IAdaptableBlotter) => DataSourceInde
 
         //There is a sort so we init the index array with each items index and we'll sort that
         this.buildIndex()
-
-        var fields = this.dataSource.schema[c].name;
+        let fields = blotter.sortColumnName
         let tmp = new Array(this.index.length);
 
 

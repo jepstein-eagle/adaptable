@@ -235,7 +235,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            if (this.sortColumn == columnIndex) {
+            if (grid.properties.columnIndexes[this.sortColumnGridIndex] == columnIndex) {
                 if (this.sortOrder == SortOrder.Ascending) {
                     icon = UPWARDS_BLACK_ARROW;
                 }
@@ -365,20 +365,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-    public sortColumn: number = -1
+    public sortColumnGridIndex: number = -1
+    public sortColumnName: string = ""
     public sortOrder: SortOrder
-    public toggleSort(columnIndex: number) {
+    public toggleSort(gridColumnIndex: number) {
         //Toggle sort one column at a time
-        if (this.sortColumn === columnIndex) {
+        if (this.sortColumnGridIndex === gridColumnIndex) {
             if (this.sortOrder == SortOrder.Descending) {
-                this.sortColumn = -1;
+                this.sortColumnGridIndex = -1;
             }
             else {
                 this.sortOrder = SortOrder.Descending
             }
         } else {
             this.sortOrder = SortOrder.Ascending
-            this.sortColumn = columnIndex;
+            this.sortColumnGridIndex = gridColumnIndex;
+            this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
         }
         this.grid.behavior.reindex();
     }
