@@ -34,13 +34,14 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
 
 interface ConditionalStyleConfigState {
     EditedConditionalStyleCondition: IConditionalStyleCondition
+    WizardStartIndex: number
 }
 
 class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleConfigProps, ConditionalStyleConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedConditionalStyleCondition: null }
+        this.state = { EditedConditionalStyleCondition: null, WizardStartIndex: 0 }
     }
 
     componentDidMount() {
@@ -49,7 +50,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
                 _editedConditionalStyle.ColumnId = arrayParams[1]
-                this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
+                _editedConditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
+                this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 1 });
             }
         }
     }
@@ -100,7 +102,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                     ]}
                     Data={this.state.EditedConditionalStyleCondition}
-                    StepStartIndex={0}
+                    StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
                     onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
 
@@ -109,22 +111,22 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onAdd() {
         let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
-        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle });
+        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 0 });
     }
 
     onEdit(condition: IConditionalStyleCondition) {
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConditionalStyleCondition: clonedObject });
+        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 1 });
     }
 
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConditionalStyleCondition: null });
+        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0 });
     }
 
     WizardFinish() {
         this.props.onAddEditConditionalStyle(this.state.EditedConditionalStyleCondition);
-        this.setState({ EditedConditionalStyleCondition: null });
+        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0 });
     }
 }
 

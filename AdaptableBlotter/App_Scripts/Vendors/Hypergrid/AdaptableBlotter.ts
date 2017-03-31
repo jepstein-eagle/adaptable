@@ -143,15 +143,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.hideFilterForm()
             }
             if (e.detail.primitiveEvent.isHeaderCell) {
-                let filterContext: IColumnFilterContext = {
-                    Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
-                    Blotter: this,
-                    ColumnValueType: DistinctCriteriaPairValue.DisplayValue
-                };
-                this.filterContainer.style.visibility = 'visible'
-                this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
-                this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
-                ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+                //try to check if we are clicking on the filter icon
+                let headerBounds = this.grid.getBoundsOfCell(e.detail.gridCell)
+                let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse
+                let iconPadding = this.grid.properties.iconPadding
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIconWidth = (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0).width
+                if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
+                    let filterContext: IColumnFilterContext = {
+                        Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
+                        Blotter: this,
+                        ColumnValueType: DistinctCriteriaPairValue.DisplayValue
+                    };
+                    this.filterContainer.style.visibility = 'visible'
+                    this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
+                    this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
+                    ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+                }
+                e.preventDefault()
             }
         });
 
@@ -554,7 +563,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnIndex(columnName: string): number {
         //be carefull this returns the index y of the cell. Not the actual index in the collection
         let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
-        return (activeColumn)? activeColumn.index: -1;
+        return (activeColumn) ? activeColumn.index : -1;
     }
 
 
