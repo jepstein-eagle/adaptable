@@ -30,5 +30,5 @@ export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implem
 
     public Back(): void { }
 
-    public StepName = "Advanced Search Create Expression"
+    public StepName = "Advanced Search: Create Query"
 }
