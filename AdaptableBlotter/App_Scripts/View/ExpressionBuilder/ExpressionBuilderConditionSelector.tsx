@@ -130,11 +130,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
-                    <Well bsSize="small">Click 'New' button to start adding Column Conditions for the Expression.
+                    <Well bsSize="small">Click 'New' to start adding Column Conditions to the Query.
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
-                            "This Expression can only contain one Column Condition." : "The Expression can contain multiple Column Conditions."}
+                            "This Query can only contain one Column Condition." : "The Query can contain multiple Column Conditions."}
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
