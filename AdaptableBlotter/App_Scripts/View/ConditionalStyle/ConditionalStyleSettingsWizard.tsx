@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/index.d.ts" />
 
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
+import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem, Checkbox } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
@@ -25,8 +25,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     constructor(props: ConditionalStyleSettingsWizardProps) {
         super(props)
         this.state = {
-            BackColor: this.props.Data.BackColor,
-            ForeColor: this.props.Data.ForeColor,
+            BackColor: this.props.Data.Style.BackColor,
+            ForeColor: this.props.Data.Style.ForeColor,
         }
     }
 
@@ -38,15 +38,25 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                 <div>
                     <FormGroup controlId="colorBackStyle">
-                        <Col xs={4} componentClass={ControlLabel}>Back Colour: </Col>
+                        <Col xs={4} >
+                            <Checkbox onChange={(x) => this.onUseBackColourCheckChange(x)}
+                                checked={this.state.BackColor != undefined}>Back Colour</Checkbox>
+                        </Col>
                         <Col xs={8}>
-                            <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                            {this.state.BackColor != undefined &&
+                                <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                            }
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="colorForeStyle">
-                        <Col xs={4} componentClass={ControlLabel}>Fore Colour: </Col>
-                        <Col xs={8}>
-                            <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                        <Col xs={3} >
+                            <Checkbox onChange={(x) => this.onUseForeColourCheckChange(x)}
+                                checked={this.state.ForeColor != undefined}>Fore Colour</Checkbox>
+                        </Col>
+                        <Col xs={9}>
+                            {this.state.ForeColor != undefined &&
+                                <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                            }
                         </Col>
                     </FormGroup>
                 </div>
@@ -54,6 +64,24 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
             </AdaptableBlotterForm>
         </Panel>
+    }
+
+    private onUseBackColourCheckChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ BackColor: "#ffffff" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ BackColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
+    }
+
+    private onUseForeColourCheckChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ ForeColor: "#000000" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ForeColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
     }
 
 
@@ -69,11 +97,13 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
 
 
-    public canNext(): boolean { return true; }
+    public canNext(): boolean {
+        return this.state.BackColor != undefined || this.state.ForeColor != undefined;
+    }
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.BackColor = this.state.BackColor;
-        this.props.Data.ForeColor = this.state.ForeColor;
+        this.props.Data.Style.BackColor = this.state.BackColor;
+        this.props.Data.Style.ForeColor = this.state.ForeColor;
     }
     public Back(): void { }
     public StepName = "Conditional Style Settings"

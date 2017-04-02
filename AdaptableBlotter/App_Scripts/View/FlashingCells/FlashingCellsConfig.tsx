@@ -31,7 +31,7 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
-        let infoBody:any[] = ["Allow numeric cells to flash briefly as their value changes",<br/>,<br/>,"Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns",<br/>,<br/>,"Defaults are Green for positive change, Red for negative change and a duration of 0.5 seconds, but these can be amended - and then automatically saved - for each column."]
+        let infoBody:any[] = ["Make numeric cells flash briefly as their value changes",<br/>,<br/>,"Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns",<br/>,<br/>,"Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
   let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
 
@@ -73,7 +73,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FormGroup>
         </AdaptableBlotterForm>;
 
-        return <PanelWithImage header={"Flashing Cell Columns"} bsStyle="primary" style={panelStyle} glyphicon="flash" infoBody={infoBody}>
+        return <PanelWithImage header={"Flashing Cells"} bsStyle="primary" style={panelStyle} glyphicon="flash" infoBody={infoBody}>
             {setAllOption}
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>

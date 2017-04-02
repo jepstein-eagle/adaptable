@@ -87,7 +87,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
 
-
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();

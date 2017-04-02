@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition, IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ConditionalStyleScope } from '../../Core/Enums';
@@ -85,10 +85,11 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
 
         case CONDITIONAL_STYLE_EDIT_COLOUR:
             let actionTypedColour = (<ConditionalStyleEditColourAction>action)
-            let conditionColour = actionTypedColour.conditionalStyleCondition;
+            let conditionColour: IConditionalStyleCondition = actionTypedColour.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
             index = conditions.findIndex(i => i.Uid == actionTypedColour.conditionalStyleCondition.Uid)
-            conditions[index] = Object.assign({}, conditionColour, { BackColor: actionTypedColour.backColor, ForeColor: actionTypedColour.foreColor, Uid: Helper.generateUid() })
+            let style:IStyle = {BackColor: actionTypedColour.backColor, ForeColor: actionTypedColour.foreColor};
+            conditions[index] = Object.assign({}, conditionColour, { Style: style, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
         case CONDITIONAL_STYLE_DELETE:

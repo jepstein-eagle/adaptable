@@ -2,7 +2,7 @@ import { Helper } from './Helper';
 import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
-import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition, IStyle } from './Interface/IConditionalStyleStrategy';
 import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
@@ -18,7 +18,7 @@ export module ObjectFactory {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
 
-    export function CreateEmptyPlusMinusCondition(defaultNudgeValue:number): IPlusMinusCondition {
+    export function CreateEmptyPlusMinusCondition(defaultNudgeValue: number): IPlusMinusCondition {
         return {
             ColumnId: "select",
             DefaultNudge: defaultNudgeValue,
@@ -115,9 +115,8 @@ export module ObjectFactory {
         return {
             Uid: Helper.generateUid(),
             ColumnId: "",
-            BackColor: '#ffffff',
-            ForeColor: '#000000',
-            ConditionalStyleScope: ConditionalStyleScope.Column,
+            Style: { BackColor: undefined, ForeColor: undefined },
+            ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: CreateEmptyExpression(),
             IsPredefined: false
         }

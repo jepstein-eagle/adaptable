@@ -39,7 +39,7 @@ export class StyleService {
                 this.addCSSRule(".Ab-FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
             });
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((element, index) => {
-                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.BackColor + ' !important;color: ' + element.ForeColor + ' !important')
+                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important')
 
             });
             // quick search

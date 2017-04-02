@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl } from 'react-bootstrap';
+import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
 import { ConditionalStyleScope } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
@@ -38,7 +38,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
             onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
 
-                <Col md={3} >
+                <Col md={2} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
                         <FormControl disabled={isDisabled} componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
                             <option value="select" key="select">Select a column</option>
@@ -49,10 +49,20 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col md={2} >
-                    <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                    <Checkbox onChange={(x) => this.onUseBackColourCheckChange(x)}
+                        checked={this.props.ConditionalStyleCondition.Style.BackColor != undefined} >
+                        {this.props.ConditionalStyleCondition.Style.BackColor != undefined &&
+                            <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.Style.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                        }
+                    </Checkbox>
                 </Col>
                 <Col md={2} >
-                    <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                    <Checkbox onChange={(x) => this.onUseForeColourCheckChange(x)}
+                        checked={this.props.ConditionalStyleCondition.Style.ForeColor != undefined} >
+                        {this.props.ConditionalStyleCondition.Style.ForeColor != undefined &&
+                            <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.Style.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                        }
+                    </Checkbox>
                 </Col>
                 <Col xs={3}>
                     <span style={expressionFontSizeStyle}>
@@ -71,6 +81,24 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         </li>
     }
 
+    private onUseBackColourCheckChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.props.onChangeColour(this.props.ConditionalStyleCondition, "#ffffff", this.props.ConditionalStyleCondition.Style.ForeColor);
+        } else {
+            this.props.onChangeColour(this.props.ConditionalStyleCondition, undefined, this.props.ConditionalStyleCondition.Style.ForeColor);
+        }
+    }
+
+    private onUseForeColourCheckChange(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, "#000000", );
+        } else {
+            this.props.onChangeColour(this.props.ConditionalStyleCondition,  this.props.ConditionalStyleCondition.Style.BackColor, undefined);
+        }
+    }
+
     private onColumnSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
@@ -78,12 +106,12 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
     private onBackColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeColour(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.ForeColor);
+        this.props.onChangeColour(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.Style.ForeColor);
     }
 
     private onForeColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.BackColor, e.value);
+        this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, e.value);
     }
 
 }

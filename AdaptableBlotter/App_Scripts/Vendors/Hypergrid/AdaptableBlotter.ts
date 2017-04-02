@@ -647,6 +647,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
             }
             //There is never a timeout for CS
+            // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
             if (style.csBackColorColumn) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
             }

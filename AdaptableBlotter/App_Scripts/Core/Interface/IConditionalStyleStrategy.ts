@@ -12,8 +12,12 @@ export interface IConditionalStyleCondition extends IConfigEntity {
     ColumnId: string
     ConditionalStyleScope: ConditionalStyleScope
     Expression: Expression
-    BackColor: string
-    ForeColor: string
+    Style: IStyle
+}
+
+export interface IStyle {
+    BackColor?: string
+    ForeColor?: string
 }
 
 

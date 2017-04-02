@@ -55,7 +55,12 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
     }
 
     render() {
-        let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
+        let infoBody: any[] = ["Custom Sorts enable you to create your own sort orders for columns where the default (alphabetical ascending or descending) is insufficient.", <br />, <br />,
+            "Use the Wizard to specify and order the column values in the Sort.", <br />, <br />,
+            "A Custom Sort can contain as many column values as required; any values not contained in the Custom Sort will be sorted alphabetically ", <strong>after</strong>, " the sort order has been applied."]
+
+
+  let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             if (column == null) return;
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
@@ -69,7 +74,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             overrideTooltip="Create Custom Sort"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Custom Sort" style={panelStyle}
+        return <PanelWithButton headerText="Custom Sort" style={panelStyle} infoBody={infoBody}
             button={newButton} bsStyle="primary" glyphicon={"sort-by-attributes"}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
