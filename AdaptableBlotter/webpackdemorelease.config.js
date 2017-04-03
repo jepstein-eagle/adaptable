@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
         // 'adaptableblotterdx': ["./App_Scripts/Vendors/DevExpress/AdaptableBlotter.ts"],
-        'adaptableblotterhypergrid': ["./App_ScriptsVendors//Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Vendors//Hypergrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {
