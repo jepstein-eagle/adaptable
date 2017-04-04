@@ -138,13 +138,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, e.detail.keyEvent)
         });
 
+        //we hide the filterform if scrolling on the x axis
+        grid.addEventListener('fin-scroll-x', (e: any) => {
+            if (this.filterContainer.style.visibility == 'visible') {
+                this.hideFilterForm()
+            }
+        }
+        )
+
         grid.addEventListener('fin-click', (e: any) => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.hideFilterForm()
             }
             if (e.detail.primitiveEvent.isHeaderCell) {
                 //try to check if we are clicking on the filter icon
-                let headerBounds = this.grid.getBoundsOfCell(e.detail.gridCell)
+                //we remove the scroll as get boundscell look at visible columns only
+                let scrolledX = e.detail.gridCell.x - this.grid.getHScrollValue()
+                let y = e.detail.gridCell.y
+                let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y })
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse
                 let iconPadding = this.grid.properties.iconPadding
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
