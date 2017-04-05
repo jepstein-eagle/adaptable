@@ -84,7 +84,7 @@ export module UserFilterHelper {
     export const YESTERDAY_USER_FILTER = 'Yesterday'
     export const TOMORROW_USER_FILTER = 'Tomorrow'
     export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
-    export const LAST_WORKING_DAY_USER_FILTER = 'LastWorkingDay'
+    export const PREVIOUS_WORKING_DAY_USER_FILTER = 'PreviousWorkingDay'
 
     // Numeric
     export const POSITIVE_USER_FILTER = 'Positive'
@@ -180,13 +180,13 @@ export module UserFilterHelper {
         });
         
         _predefinedExpressions.push({
-            Uid: LAST_WORKING_DAY_USER_FILTER,
-            FriendlyName: "Last Working Day",
-            Description: "Is Last Working Day",
+            Uid: PREVIOUS_WORKING_DAY_USER_FILTER,
+            FriendlyName: "Previous Working Day",
+            Description: "Is Previous Working Day",
             DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return blotter.CalendarService.GetLastWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
+                return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
             },
             IsPredefined: true
         });

@@ -96,7 +96,7 @@ const initialShortcutState: ShortcutState = {
     ],
     DateShortcuts: [
         { ShortcutKey: "T", ShortcutResult: "Today", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "L", ShortcutResult: "Last Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "P", ShortcutResult: "Previous Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
         { ShortcutKey: "N", ShortcutResult: "Next Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }

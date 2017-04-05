@@ -3,12 +3,12 @@ import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition, IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { ConditionalStyleScope } from '../../Core/Enums';
+import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 export const CONDITIONAL_STYLE_EDIT_COLUMN = 'CONDITIONAL_STYLE_EDIT_COLUMN';
-export const CONDITIONAL_STYLE_EDIT_COLOUR = 'CONDITIONAL_STYLE_EDIT_COLOUR';
+export const CONDITIONAL_STYLE_EDIT_STYLE = 'CONDITIONAL_STYLE_EDIT_STYLE';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 
 export interface ConditionalStyleAddUpdateAction extends Redux.Action {
@@ -31,17 +31,24 @@ export const ConditionalStyleEditColumn = (conditionalStyleCondition: ICondition
     columnId
 })
 
-export interface ConditionalStyleEditColourAction extends Redux.Action {
+// this needs to be divided up into smaller chunks but lets wait until we have a final version of the style before creating one redux method per property
+export interface ConditionalStyleEditStyleAction extends Redux.Action {
     conditionalStyleCondition: IConditionalStyleCondition,
     backColor: string,
-    foreColor: string
+    foreColor: string,
+    fontWeight: FontWeight,
+    fontStyle: FontStyle,
+    fontSize: FontSize,
 }
 
-export const ConditionalStyleEditColour = (conditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string): ConditionalStyleEditColourAction => ({
-    type: CONDITIONAL_STYLE_EDIT_COLOUR,
+export const ConditionalStyleEditStyle = (conditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string, fontWeight: FontWeight,fontStyle: FontStyle, fontSize: FontSize): ConditionalStyleEditStyleAction => ({
+    type: CONDITIONAL_STYLE_EDIT_STYLE,
     conditionalStyleCondition,
     backColor,
-    foreColor
+    foreColor,
+    fontWeight,
+    fontStyle,
+    fontSize
 })
 
 export interface ConditionalStyleDeleteAction extends Redux.Action {
@@ -83,12 +90,12 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             conditions[index] = Object.assign({}, conditionColumn, { ColumnId: actionTypedColumn.columnId, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
-        case CONDITIONAL_STYLE_EDIT_COLOUR:
-            let actionTypedColour = (<ConditionalStyleEditColourAction>action)
-            let conditionColour: IConditionalStyleCondition = actionTypedColour.conditionalStyleCondition;
+        case CONDITIONAL_STYLE_EDIT_STYLE:
+            let actionTypedStyle = (<ConditionalStyleEditStyleAction>action)
+            let conditionColour: IConditionalStyleCondition = actionTypedStyle.conditionalStyleCondition;
             conditions = [].concat(state.ConditionalStyleConditions)
-            index = conditions.findIndex(i => i.Uid == actionTypedColour.conditionalStyleCondition.Uid)
-            let style:IStyle = {BackColor: actionTypedColour.backColor, ForeColor: actionTypedColour.foreColor};
+            index = conditions.findIndex(i => i.Uid == actionTypedStyle.conditionalStyleCondition.Uid)
+            let style:IStyle = {BackColor: actionTypedStyle.backColor, ForeColor: actionTypedStyle.foreColor, FontWeight: actionTypedStyle.fontWeight, FontStyle: actionTypedStyle.fontStyle, FontSize: actionTypedStyle.fontSize};
             conditions[index] = Object.assign({}, conditionColour, { Style: style, Uid: Helper.generateUid() })
             return Object.assign({}, state, { ConditionalStyleConditions: conditions })
 
