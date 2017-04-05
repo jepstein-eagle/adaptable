@@ -37,7 +37,6 @@ export interface IAdaptableBlotter {
 
 
     // column related
-    getColumnDataType(column: any): DataType
     getColumnHeader(columnId: string): string
     getColumnIndex(columnName: string): number
     setColumnIntoStore(): void

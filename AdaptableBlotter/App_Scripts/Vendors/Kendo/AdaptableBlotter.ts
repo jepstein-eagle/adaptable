@@ -405,21 +405,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(column: any): DataType {
-
-        let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn>column;
-
+    private getColumnDataType(column: kendo.ui.GridColumn): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
             console.log('column is undefined returning String for Type')
             return DataType.String;
         }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + kendoColumn)
+            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + column)
             return DataType.String;
         }
 
-        let type = this.grid.dataSource.options.schema.model.fields[kendoColumn.field].type;
+        let type = this.grid.dataSource.options.schema.model.fields[column.field].type;
 
         switch (type) {
             case 'string':
@@ -435,6 +432,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             default:
                 break;
         }
+        return type
     }
 
     public setValue(cellInfo: ICellInfo): void {

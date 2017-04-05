@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions } from "ag-grid"
+import { GridOptions, Column } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -215,7 +215,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         valueArray = []
                         selectionMap.set(primaryKey, valueArray);
                     }
-                    valueArray.push({ columnID:column.getColId(), value: value });
+                    valueArray.push({ columnID: column.getColId(), value: value });
                 }
             }
         });
@@ -225,48 +225,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(column: any): DataType {
-        // //Some columns can have no ID or Title. we return string as a consequence but it needs testing
-        // if (!column) {
-        //     console.log('columnId is undefined returning String for Type')
-        //     return DataType.String;
-        // }
-        // let gridColumn: AdaptableBlotterGrid.Column = <AdaptableBlotterGrid.Column>column;
+    private getColumnDataType(column: Column): DataType {
+        //Some columns can have no ID or Title. we return string as a consequence but it needs testing
+        if (!column) {
+            console.log('columnId is undefined returning String for Type')
+            return DataType.String;
+        }
 
-        // let dataType: any = gridColumn.getType();
-
-        // /*
-        //         if (dataType.String) {
-        //             return DataType.String;
-        //         } else if (dataType.Number) {
-        //             return DataType.Number;
-        //         } else if (dataType.Boolean) {
-        //             return DataType.Boolean;
-        //         } else if (dataType.Date) {
-        //             return DataType.Date;
-        //         } else if (dataType.Object) {
-        //             return DataType.Object;
-        //         }
-
-        // */
-
-        // // not sure why but cannot switch if we do AdaptableBlotterGrid.DataType.String
-        // switch (dataType) {
-        //     case 0:
-        //         return DataType.String;
-        //     case 1:
-        //         return DataType.Number;
-        //     case 2:
-        //         return DataType.Boolean;
-        //     case 3:
-        //         return DataType.Date;
-        //     case 4:
-        //         return DataType.Object;
-        //     default:
-        //         break;
-        // }
-
-        // all else fails, return a string
+        if (true) {
+            console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
+            //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
+            //   if (columnObj) {
+            let value = this.gridOptions.api.getModel().getRow(0).data[column.getColId()]
+            if(value instanceof Date)
+            {
+                return DataType.Date
+            }
+            switch (typeof value) {
+                case 'string':
+                    return DataType.String;
+                case 'number':
+                    return DataType.Number;
+                case 'boolean':
+                    return DataType.Boolean;
+                case 'object':
+                    return DataType.Object;
+                default:
+                    break;
+            }
+        }
         return DataType.String;
     }
 

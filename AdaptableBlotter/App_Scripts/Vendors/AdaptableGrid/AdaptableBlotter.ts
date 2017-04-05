@@ -205,15 +205,14 @@ export class v implements IAdaptableBlotter {
         return null
     }
 
-    public getColumnDataType(column: any): DataType {
+    private getColumnDataType(column: AdaptableBlotterGrid.Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
             console.log('columnId is undefined returning String for Type')
             return DataType.String;
         }
-        let gridColumn: AdaptableBlotterGrid.Column = <AdaptableBlotterGrid.Column>column;
 
-        let dataType: any = gridColumn.getType();
+        let dataType: any = column.getType();
 
         /*
                 if (dataType.String) {
