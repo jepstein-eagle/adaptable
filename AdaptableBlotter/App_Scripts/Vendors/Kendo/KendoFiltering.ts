@@ -238,8 +238,8 @@ export module KendoFiltering {
                 dateToCheck.setHours(0, 0, 0, 0);
                 filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
-            case UserFilterHelper.LAST_WORKING_DAY_USER_FILTER:
-                dateToCheck = blotter.CalendarService.GetLastWorkingDay();
+            case UserFilterHelper.PREVIOUS_WORKING_DAY_USER_FILTER:
+                dateToCheck = blotter.CalendarService.GetPreviousWorkingDay();
                 filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
             case UserFilterHelper.NEXT_WORKING_DAY_USER_FILTER:

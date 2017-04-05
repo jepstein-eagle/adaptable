@@ -139,3 +139,22 @@ export enum DistinctCriteriaPairValue {
     RawValue,
     DisplayValue
 }
+
+export enum FontWeight {
+    Normal,
+    Bold
+}
+
+export enum FontStyle {
+    Normal,
+    Italic
+}
+
+export enum FontSize {
+   XSmall,
+    Small,
+    Medium,
+    Large,
+    XLarge
+}
+

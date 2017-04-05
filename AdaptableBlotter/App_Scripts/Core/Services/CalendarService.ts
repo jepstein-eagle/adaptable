@@ -25,8 +25,8 @@ export class CalendarService implements ICalendarService {
         if (dynamicDateName == "Today") {
             dynamicDate = new Date();
         }
-        else if (dynamicDateName == "Last Work Day") {
-            dynamicDate = this.GetLastWorkingDay(1);
+        else if (dynamicDateName == "Previous Work Day") {
+            dynamicDate = this.GetPreviousWorkingDay(1);
         }
         else if (dynamicDateName == "Next Work Day") {
             dynamicDate = this.GetNextWorkingDay(1);
@@ -46,7 +46,7 @@ export class CalendarService implements ICalendarService {
         return counterDate;
     }
 
-    public GetLastWorkingDay(days: number = 1): Date {
+    public GetPreviousWorkingDay(days: number = 1): Date {
         var count = 0;
         let counterDate: Date = new Date();
         while (count < days) {

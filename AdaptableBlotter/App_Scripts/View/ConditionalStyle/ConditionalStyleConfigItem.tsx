@@ -2,8 +2,8 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
-import { ConditionalStyleScope } from '../../Core/Enums';
+import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, HelpBlock, Checkbox, Label } from 'react-bootstrap';
+import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -20,7 +20,7 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     onDeleteConfirm: Redux.Action;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
     onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
-    onChangeColour: (ConditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string) => void;
+    onChangeStyle: (ConditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string, fontWeight: FontWeight, fontStyle: FontStyle, fontSize: FontSize) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
@@ -32,13 +32,18 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         })
         let isDisabled = this.props.ConditionalStyleCondition.IsPredefined
 
+        let backColorForStyle: string = this.props.ConditionalStyleCondition.Style.BackColor != undefined ? this.props.ConditionalStyleCondition.Style.BackColor : "transparent";
+        let foreColorForStyle: string = this.props.ConditionalStyleCondition.Style.ForeColor != undefined ? this.props.ConditionalStyleCondition.Style.ForeColor : "black";
+        let fontWeightForStyle: any = this.props.ConditionalStyleCondition.Style.FontWeight == FontWeight.Bold ? "bold" : "normal"
+        let fontStyleForStyle: any = this.props.ConditionalStyleCondition.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
+        let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(this.props.ConditionalStyleCondition.Style.FontSize);
 
         return <li
             className="list-group-item"
             onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
 
-                <Col md={2} >
+                <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
                         <FormControl disabled={isDisabled} componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
                             <option value="select" key="select">Select a column</option>
@@ -48,6 +53,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     }
                 </Col>
 
+                {/*  
                 <Col md={2} >
                     <Checkbox onChange={(x) => this.onUseBackColourCheckChange(x)}
                         checked={this.props.ConditionalStyleCondition.Style.BackColor != undefined} >
@@ -56,46 +62,48 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                         }
                     </Checkbox>
                 </Col>
-                <Col md={2} >
-                    <Checkbox onChange={(x) => this.onUseForeColourCheckChange(x)}
-                        checked={this.props.ConditionalStyleCondition.Style.ForeColor != undefined} >
-                        {this.props.ConditionalStyleCondition.Style.ForeColor != undefined &&
-                            <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.Style.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
-                        }
-                    </Checkbox>
-                </Col>
-                <Col xs={3}>
-                    <span style={expressionFontSizeStyle}>
-                        {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
-                    </span>
-                </Col>
+                */}
+
 
                 <Col md={3} >
-                    <EntityListActionButtons
-                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
-                        ConfigEntity={this.props.ConditionalStyleCondition}
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
-                    </EntityListActionButtons>
+                    <div style={{
+background: '-webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); / Chrome10-25,Safari5.1-6 /',
+                    
+                        margin: '0px', padding: '3px', color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Example of Style </div>
                 </Col>
+
+            <Col xs={3}>
+                <span style={expressionFontSizeStyle}>
+                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
+                </span>
+            </Col>
+
+            <Col md={3} >
+                <EntityListActionButtons
+                    editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
+                    ConfigEntity={this.props.ConditionalStyleCondition}
+                    ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                </EntityListActionButtons>
+            </Col>
             </Row>
-        </li>
+        </li >
     }
 
     private onUseBackColourCheckChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.props.onChangeColour(this.props.ConditionalStyleCondition, "#ffffff", this.props.ConditionalStyleCondition.Style.ForeColor);
+            this.props.onChangeStyle(this.props.ConditionalStyleCondition, "#ffffff", this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
         } else {
-            this.props.onChangeColour(this.props.ConditionalStyleCondition, undefined, this.props.ConditionalStyleCondition.Style.ForeColor);
+            this.props.onChangeStyle(this.props.ConditionalStyleCondition, undefined, this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
         }
     }
 
     private onUseForeColourCheckChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, "#000000", );
+            this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, "#000000", this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
         } else {
-            this.props.onChangeColour(this.props.ConditionalStyleCondition,  this.props.ConditionalStyleCondition.Style.BackColor, undefined);
+            this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, undefined, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
         }
     }
 
@@ -106,13 +114,16 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
     private onBackColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeColour(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.Style.ForeColor);
+        this.props.onChangeStyle(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
     }
 
     private onForeColourSelectChange(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeColour(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, e.value);
+        this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, e.value, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
     }
+
+
+
 
 }
 
