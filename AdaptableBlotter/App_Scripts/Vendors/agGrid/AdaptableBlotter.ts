@@ -182,7 +182,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: any): any {
-        return null
+        return record[this.BlotterOptions.primaryKey]
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -199,7 +199,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
-        return null
+        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+        var selected = this.gridOptions.api.getRangeSelections();
+        //we iterate for each ranges
+        selected.forEach((rangeSelection, index) => {
+            for (let column of rangeSelection.columns) {
+                let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
+                    let row = this.gridOptions.api.getModel().getRow(rowIndex).data
+                    let primaryKey = this.getPrimaryKeyValueFromRecord(row)
+                    let value = row[column.getColId()]
+                    let valueArray = selectionMap.get(primaryKey);
+                    if (valueArray == undefined) {
+                        valueArray = []
+                        selectionMap.set(primaryKey, valueArray);
+                    }
+                    valueArray.push({ columnID:column.getColId(), value: value });
+                }
+            }
+        });
+
+        return {
+            Selection: selectionMap
+        };
     }
 
     public getColumnDataType(column: any): DataType {
