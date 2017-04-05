@@ -432,7 +432,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             default:
                 break;
         }
-        return type
     }
 
     public setValue(cellInfo: ICellInfo): void {
