@@ -53,13 +53,13 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     }
                 </Col>
 
-                  <Col md={3} >
+                  <Col md={2} >
                     <div style={{
                     
-                        margin: '0px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Style </div>
+                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Style</div>
                 </Col>
 
-            <Col xs={3}>
+            <Col xs={4}>
                 <span style={expressionFontSizeStyle}>
                     {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
                 </span>

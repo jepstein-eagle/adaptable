@@ -54,119 +54,119 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
                 <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
 
-                   
-                        <Col xs={12}>
-                            <HelpBlock>Set the fore or back colours if required, or leave unchecked to use the colours from the cell's existing style.</HelpBlock>
-                        </Col>
-                        <FormGroup controlId="colorBackStyle">
-                            <Col xs={4} >
-                                <Checkbox inline value="existing" checked={this.state.BackColor != undefined} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
-                            </Col>
-                            <Col xs={8}>
-                                {this.state.BackColor != undefined &&
-                                    <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
-                                }
-                            </Col>
-                        </FormGroup>
-                         <FormGroup controlId="colorForeStyle">
-                            <Col xs={4} >
-                                <Checkbox inline value="existing" checked={this.state.ForeColor != undefined} onChange={(e) => this.onUseForeColourCheckChange(e)}>Set Fore Colour</Checkbox>
-                            </Col>
-                            <Col xs={8}>
-                                {this.state.ForeColor != undefined &&
-                                    <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
-                                }
-                            </Col>
 
-                        </FormGroup>
-             
+                    <Col xs={12}>
+                        <HelpBlock>Set the fore or back colours if required, or leave unchecked to use the colours from the cell's existing style.</HelpBlock>
+                    </Col>
+                    <FormGroup controlId="colorBackStyle">
+                        <Col xs={4} >
+                            <Checkbox inline value="existing" checked={this.state.BackColor != undefined} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
+                        </Col>
+                        <Col xs={8}>
+                            {this.state.BackColor != undefined &&
+                                <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                            }
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId="colorForeStyle">
+                        <Col xs={4} >
+                            <Checkbox inline value="existing" checked={this.state.ForeColor != undefined} onChange={(e) => this.onUseForeColourCheckChange(e)}>Set Fore Colour</Checkbox>
+                        </Col>
+                        <Col xs={8}>
+                            {this.state.ForeColor != undefined &&
+                                <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                            }
+                        </Col>
+
+                    </FormGroup>
+
 
                 </Panel>
 
-                    <Panel header="Font Properties" eventKey="1" bsStyle="info"  >
+                <Panel header="Font Properties" eventKey="1" bsStyle="info"  >
 
-                       <FormGroup controlId="fontWeight">
-                            <Col xs={12} >
-                                 <Checkbox value={FontWeight.Normal.toString()} checked={this.state.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
-                            </Col>
-                          </FormGroup>
-             
-                       <FormGroup controlId="fontStyle">
-                            <Col xs={12} >
-                                 <Checkbox value={FontStyle.Normal.toString()} checked={this.state.FontStyle == FontStyle.Italic} onChange={(e) => this.onFontStyleChange(e)}  >Italic</Checkbox>
-                            </Col>
-                          </FormGroup>
-             
-                       
-                        <FormGroup controlId="fontSize">
- <AdaptableBlotterForm inline >  
+                    <FormGroup controlId="fontWeight">
+                        <Col xs={12} >
+                            <Checkbox value={FontWeight.Normal.toString()} checked={this.state.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="fontStyle">
+                        <Col xs={12} >
+                            <Checkbox value={FontStyle.Normal.toString()} checked={this.state.FontStyle == FontStyle.Italic} onChange={(e) => this.onFontStyleChange(e)}  >Italic</Checkbox>
+                        </Col>
+                    </FormGroup>
+
+{/*   
+                    <FormGroup controlId="fontSize">
+                        <AdaptableBlotterForm inline >
                             <Col xs={3}>
-                                 <AdaptableBlotterForm inline >  
-                                     <FormControl componentClass="select" placeholder="select" value={currentFontSize} onChange={(x) => this.onFontSizeChange(x)} >
-                                    {optionFontSizes}
-                                </FormControl>
+                                <AdaptableBlotterForm inline >
+                                    <FormControl componentClass="select" placeholder="select" value={currentFontSize} onChange={(x) => this.onFontSizeChange(x)} >
+                                        {optionFontSizes}
+                                    </FormControl>
                                     {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
                                         bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
                                         popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm  >
                             </Col>
-                            </AdaptableBlotterForm  >
-                        </FormGroup>
+                        </AdaptableBlotterForm  >
+                    </FormGroup>
+
+ */}
 
 
 
-
-                        
-                    </Panel>
+                </Panel>
 
             </AdaptableBlotterForm>
         </Panel>
-            }
+    }
 
     private onUseBackColourCheckChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
+        let e = event.target as HTMLInputElement;
         if (e.checked) {
-                this.setState({ BackColor: "#ffffff" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
-            } else {
-                this.setState({ BackColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
-            }
-            }
+            this.setState({ BackColor: "#ffffff" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ BackColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
+    }
 
     private onUseForeColourCheckChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
-       if (e.checked) {
-                this.setState({ ForeColor: "#000000" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
-            } else {
-                this.setState({ ForeColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
-            }
-            }
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ ForeColor: "#000000" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ForeColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
+    }
 
 
     private onBackColourSelectChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
-        this.setState({BackColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        let e = event.target as HTMLInputElement;
+        this.setState({ BackColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onForeColourSelectChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
-        this.setState({ForeColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        let e = event.target as HTMLInputElement;
+        this.setState({ ForeColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onFontWeightChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
+        let e = event.target as HTMLInputElement;
         let fontWeight: FontWeight = (e.checked) ? FontWeight.Bold : FontWeight.Normal;
-        this.setState({FontWeight: fontWeight } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ FontWeight: fontWeight } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onFontStyleChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
+        let e = event.target as HTMLInputElement;
         let fontStyle: FontStyle = (e.checked) ? FontStyle.Italic : FontStyle.Normal;
-        this.setState({FontStyle: fontStyle } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ FontStyle: fontStyle } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onFontSizeChange(event: React.FormEvent) {
-                let e = event.target as HTMLInputElement;
-        this.setState({FontSize: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        let e = event.target as HTMLInputElement;
+        this.setState({ FontSize: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
@@ -174,14 +174,14 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
     public canBack(): boolean { return true; }
     public Next(): void {
-                this.props.Data.Style.BackColor = this.state.BackColor;
-            this.props.Data.Style.ForeColor = this.state.ForeColor;
+        this.props.Data.Style.BackColor = this.state.BackColor;
+        this.props.Data.Style.ForeColor = this.state.ForeColor;
         this.props.Data.Style.FontWeight = this.state.FontWeight;
         this.props.Data.Style.FontStyle = this.state.FontStyle;
         this.props.Data.Style.FontSize = this.state.FontSize;
     }
-    public Back(): void {}
-            public StepName = "Conditional Style Settings"
+    public Back(): void { }
+    public StepName = "Conditional Style Settings"
 }
 
 

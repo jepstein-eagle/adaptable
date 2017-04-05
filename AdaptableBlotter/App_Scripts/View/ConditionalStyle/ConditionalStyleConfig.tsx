@@ -58,7 +58,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     render() {
 
-        let cellInfo: [string, number][] = [["Where Applied", 3], ["Style",3], ["Description", 3], ["", 3]];
+        let cellInfo: [string, number][] = [["Where Applied", 3], ["Style",2], ["Description", 4], ["", 3]];
 
         let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition) => {
             return <ConditionalStyleConfigItem
