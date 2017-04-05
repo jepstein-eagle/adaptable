@@ -53,23 +53,10 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     }
                 </Col>
 
-                {/*  
-                <Col md={2} >
-                    <Checkbox onChange={(x) => this.onUseBackColourCheckChange(x)}
-                        checked={this.props.ConditionalStyleCondition.Style.BackColor != undefined} >
-                        {this.props.ConditionalStyleCondition.Style.BackColor != undefined &&
-                            <ColorPicker disabled={isDisabled} value={this.props.ConditionalStyleCondition.Style.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
-                        }
-                    </Checkbox>
-                </Col>
-                */}
-
-
-                <Col md={3} >
+                  <Col md={3} >
                     <div style={{
-background: '-webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); / Chrome10-25,Safari5.1-6 /',
                     
-                        margin: '0px', padding: '3px', color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Example of Style </div>
+                        margin: '0px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Style </div>
                 </Col>
 
             <Col xs={3}>
