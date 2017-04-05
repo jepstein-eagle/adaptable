@@ -42,7 +42,8 @@ export class StyleService {
                 this.addCSSRule(".Ab-FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
             });
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((element, index) => {
-                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important')
+       // with size still in for when its fixed        this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important')
+                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important')
 
             });
             // quick search
