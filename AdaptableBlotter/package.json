@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@types/ag-grid": "^2.1.31",
     "@types/deep-diff": "0.0.30",
     "@types/isomorphic-fetch": "0.0.33",
     "@types/redux-storage": "^4.0.7",
@@ -26,6 +25,7 @@
     "redux-storage-engine-localstorage": "^1.1.4"
   },
   "devDependencies": {
+    "ag-grid": "^9.0.0",
     "babel-core": "^6.20.0",
     "babel-loader": "^6.2.9",
     "babel-preset-es2015": "^6.22.0",

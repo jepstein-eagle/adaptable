@@ -51,6 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
+import { GridOptions } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -65,7 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    constructor(private grid: ag.grid.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(private gridOptions: GridOptions, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
@@ -107,6 +108,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
+        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
+        //since there are many events and we want them to behave the same
+        let columnEventsThatTriggersStateChange = ["columnMoved", "gridColumnsChanged", "columnVisible", "newColumnsLoaded"]
+        gridOptions.api.addGlobalListener((type: string, event: any) => {
+            if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
+                this.setColumnIntoStore()
+            }
+        });
+
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -121,25 +131,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setColumnIntoStore() {
-        // let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableBlotterGrid.Column, index: number) => {
-        //     return {
-        //         ColumnId: x.getId() ? x.getId() : "Unknown Column",
-        //         FriendlyName:  x.getId(), // fix when bug is fixed x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
-        //         DataType: this.getColumnDataType(x),
-        //         Visible: true,
-        //         Index: index
-        //     }
-        // });
-        // let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
-        //     return {
-        //         ColumnId: x.getId() ? x.getId() : "Unknown Column",
-        //       FriendlyName:  x.getId(), // fix when bug is fixed x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
-        //         DataType: this.getColumnDataType(x.name),
-        //         Visible: false,
-        //         Index: -1
-        //     }
-        // });
-        // this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
+        let visibleColumns = this.gridOptions.columnApi.getAllGridColumns().filter(x => x.isVisible()).map((col, index) => {
+            return {
+                ColumnId: col.getColId(),
+                FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(col, 'header'),
+                DataType: this.getColumnDataType(col),
+                Visible: col.isVisible(),
+                Index: index
+            }
+        })
+        let hiddenColumns = this.gridOptions.columnApi.getAllColumns().filter(x => !x.isVisible()).map(col => {
+            return {
+                ColumnId: col.getColId(),
+                FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(col, 'header'),
+                DataType: this.getColumnDataType(col),
+                Visible: col.isVisible(),
+                Index: -1
+            }
+        })
+
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(visibleColumns.concat(hiddenColumns)));
     }
 
     public hideFilterForm() {
@@ -147,32 +158,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        // let gridVisibleColumns: AdaptableBlotterGrid.Column[] = this.grid.getVisibleColumns();
-        // let gridHiddenColumns: AdaptableBlotterGrid.Column[] = this.grid.getHiddenColumns();
-
-        // VisibleColumnList.forEach((column, index) => {
-        //     let col = gridVisibleColumns.find(x => x.getId() == column.ColumnId)
-        //     if (!col) {
-        //         // it was missing so need to make it visible...
-        //         col = gridHiddenColumns.find(x => x.getId() == column.ColumnId);
-        //         if (col) // what if its not in this collection either????
-        //         {
-        //             col.setVisible();
-        //         }
-        //     }
-        //     //          this.grid.newColumnOrder(index, col);
-        // })
-        // gridVisibleColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getId()) < 0).forEach((col => {
-        //     col.setHidden();
-        // }))
-        // let visibleIds: any[] = VisibleColumnList.map(v => v.ColumnId);
-        // // hoping this is enough?
-        // this.grid.newColumnOrder(visibleIds)
-
-        // this.grid.render();
-        // //if the event columnReorder starts to be fired when changing the order programmatically 
-        // //we'll need to remove that line
-        // this.setColumnIntoStore();
+        let allColumns = this.gridOptions.columnApi.getAllGridColumns()
+        VisibleColumnList.forEach((column, index) => {
+            let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
+            if (!col.isVisible()) {
+                this.gridOptions.columnApi.setColumnVisible(col, true)
+            }
+            this.gridOptions.columnApi.moveColumn(col, index);
+        })
+        allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
+            this.gridOptions.columnApi.setColumnVisible(col, false)
+        }))
     }
 
     public createMenu() {
@@ -225,7 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         } else if (dataType.Object) {
         //             return DataType.Object;
         //         }
-        
+
         // */
 
         // // not sure why but cannot switch if we do AdaptableBlotterGrid.DataType.String
