@@ -56,7 +56,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                   <Col md={2} >
                     <div style={{
                     
-                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle }}>Style</div>
+                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle }}>Style</div> {/* font size taken out */}
                 </Col>
 
             <Col xs={4}>
