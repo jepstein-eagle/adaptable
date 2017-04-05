@@ -233,8 +233,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
-        //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
-        //   if (columnObj) {
         let value = this.gridOptions.api.getModel().getRow(0).data[column.getColId()]
         if (value instanceof Date) {
             return DataType.Date

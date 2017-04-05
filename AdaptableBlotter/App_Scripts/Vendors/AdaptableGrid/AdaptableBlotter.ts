@@ -214,21 +214,6 @@ export class v implements IAdaptableBlotter {
 
         let dataType: any = column.getType();
 
-        /*
-                if (dataType.String) {
-                    return DataType.String;
-                } else if (dataType.Number) {
-                    return DataType.Number;
-                } else if (dataType.Boolean) {
-                    return DataType.Boolean;
-                } else if (dataType.Date) {
-                    return DataType.Date;
-                } else if (dataType.Object) {
-                    return DataType.Object;
-                }
-        
-        */
-
         // not sure why but cannot switch if we do AdaptableBlotterGrid.DataType.String
         switch (dataType) {
             case 0:

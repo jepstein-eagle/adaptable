@@ -473,8 +473,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (column) {
             if (!column.hasOwnProperty('type')) {
                 console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
-                //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
-                //   if (columnObj) {
                 switch (column.getType()) {
                     case 'string':
                         return DataType.String;
