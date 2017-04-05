@@ -400,12 +400,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 }
             }
             else if (this.overHTMLElement.classList.contains("Selected")) {
-                if (this.props.DisplayMember) {
-                    to = this.state.SelectedValues.findIndex(x => x[this.props.DisplayMember] == this.overHTMLElement.innerText);
-                }
-                else {
-                    to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
-                }
+                to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
                 newSelectedArray = [...this.state.SelectedValues];
                 newSelectedArray.splice(from, 1);
                 newSelectedArray.splice(to, 0, this.draggedElement);
@@ -449,12 +444,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
             if (this.overHTMLElement.classList.contains("Selected")) {
                 from = this.state.AvailableValues.indexOf(this.draggedElement);
-                if (this.props.DisplayMember) {
-                    to = this.state.SelectedValues.findIndex(x => x[this.props.DisplayMember] == this.overHTMLElement.innerText);
-                }
-                else {
-                    to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
-                }
+                to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
                 newSelectedArray = [...this.state.SelectedValues];
                 if (this.props.ValueMember) {
                     newSelectedArray.splice(to, 0, this.draggedElement[this.props.ValueMember])
