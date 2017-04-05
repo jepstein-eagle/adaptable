@@ -107,6 +107,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.container.ownerDocument.body.appendChild(this.filterContainer)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        gridOptions.api.addGlobalListener((type: string, event: any) => {
+            console.log(event)
+        });
 
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
