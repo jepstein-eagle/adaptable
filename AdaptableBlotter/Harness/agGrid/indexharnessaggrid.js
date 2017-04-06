@@ -19,12 +19,27 @@ function getSchema(data) {
             if (p === 'deskId') {
                 schema.push({ headerName: capitalize(p), field: p });
             }
+            else if (p === 'notional') {
+                schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
+            }
             else {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text' });
             }
         }
     }
     return schema;
+}
+var currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+});
+function notionalCellRenderer(params) {
+    if (params.value) {
+        return currencyFormatter.format(params.value)
+    } else {
+        return null;
+    }
 }
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();

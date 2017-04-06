@@ -82,11 +82,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        //this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        //this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
@@ -318,7 +318,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-        return null
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
+        //we use forEachNode as we want to get all data even the one filtered out...
+        let data = this.gridOptions.api.forEachNode(rowNode => {
+            let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
+            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+            }
+            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+            }
+        })
+        return Array.from(returnMap.values());
     }
 
 
@@ -329,8 +341,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public getDisplayValueFromRecord(row: any, columnId: string): string {
-        return null
+    public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
+        //we do not handle yet if the column uses a template... we handle only if it's using a renderer
+        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        let rawValue = this.gridOptions.api.getValue(columnId, row)
+        if (colDef.cellRenderer) {
+            let render: any = colDef.cellRenderer
+            return render({ value: rawValue })
+        }
+        else {
+            return rawValue
+        }
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
