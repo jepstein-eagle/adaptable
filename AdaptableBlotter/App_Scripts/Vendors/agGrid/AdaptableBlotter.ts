@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column } from "ag-grid"
+import { GridOptions, Column, Events } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -82,22 +82,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        //this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        //this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        //this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        //this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
@@ -108,18 +108,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
         gridOptions.api.addGlobalListener((type: string, event: any) => {
-            console.log(event)
+            //console.log(event)
         });
 
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
-        let columnEventsThatTriggersStateChange = ["columnMoved", "gridColumnsChanged", "columnVisible", "newColumnsLoaded"]
+        let columnEventsThatTriggersStateChange = [Events.EVENT_COLUMN_MOVED,
+        Events.EVENT_GRID_COLUMNS_CHANGED,
+        Events.EVENT_COLUMN_VISIBLE,
+        Events.EVENT_NEW_COLUMNS_LOADED]
         gridOptions.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 this.setColumnIntoStore()
             }
         });
-
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -225,6 +227,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
+//We deduce the type here. I couldnt find a way to get it through the definition
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
@@ -232,7 +235,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-        console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
+        //console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
         let value = this.gridOptions.api.getModel().getRow(0).data[column.getColId()]
         if (value instanceof Date) {
             return DataType.Date
