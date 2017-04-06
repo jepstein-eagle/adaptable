@@ -143,7 +143,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     onChange={this.changeContent}
                                     value={this.state.ShortcutResult}
                                 />
-                                {' '}<AdaptablePopover headerText={"Shortcut: Result"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                {' '}<AdaptablePopover headerText={"Shortcut: Output"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
                             </AdaptableBlotterForm>
                         </Col>
                     </FormGroup>

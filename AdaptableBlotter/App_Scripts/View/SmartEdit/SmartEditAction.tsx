@@ -92,7 +92,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                 <tr>
                     <th>Initial Value</th>
                     <th>Computed Value</th>
-                    <th>Valid Edit</th>
+                    <th>Is Valid Edit</th>
                 </tr>
             </thead>;
         }
