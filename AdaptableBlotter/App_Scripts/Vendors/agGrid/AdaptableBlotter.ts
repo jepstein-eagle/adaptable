@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events } from "ag-grid"
+import { GridOptions, Column, Events, RowNode } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -183,8 +183,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-    public getPrimaryKeyValueFromRecord(record: any): any {
-        return record[this.BlotterOptions.primaryKey]
+    public getPrimaryKeyValueFromRecord(record: RowNode): any {
+        return this.gridOptions.api.getValue(this.BlotterOptions.primaryKey, record)
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -209,9 +209,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                 let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                 for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-                    let row = this.gridOptions.api.getModel().getRow(rowIndex).data
-                    let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-                    let value = row[column.getColId()]
+                    let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
+                    let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
+                    let value = this.gridOptions.api.getValue(column, rowNode)
                     let valueArray = selectionMap.get(primaryKey);
                     if (valueArray == undefined) {
                         valueArray = []
@@ -227,7 +227,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-//We deduce the type here. I couldnt find a way to get it through the definition
+    //We deduce the type here. I couldnt find a way to get it through the definition
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
@@ -236,7 +236,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         //console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
-        let value = this.gridOptions.api.getModel().getRow(0).data[column.getColId()]
+        let row = this.gridOptions.api.getModel().getRow(0)
+        let value = this.gridOptions.api.getValue(column, row)
         if (value instanceof Date) {
             return DataType.Date
         }
@@ -259,7 +260,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode.data)) {
+            if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
                 return
             }
@@ -270,7 +271,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode.data))
+            let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
                 rowNode.setDataValue(value.ColumnId, value.Value)
             }
