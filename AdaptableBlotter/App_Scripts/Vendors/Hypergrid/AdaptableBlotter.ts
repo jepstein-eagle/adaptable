@@ -283,12 +283,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (quickSearchBackColor) {
                     config.backgroundColor = quickSearchBackColor;
                 }
-                else if (csBackgroundColorColumn || csForeColorColumn) {
+                else if (csBackgroundColorColumn ) {
                     config.backgroundColor = csBackgroundColorColumn;
+                }
+                else if ( csForeColorColumn) {
                     config.color = csForeColorColumn;
                 }
-                else if (csBackgroundColorRow || csForeColorRow) {
+                else if (csBackgroundColorRow ) {
                     config.backgroundColor = csBackgroundColorRow;
+                 }
+                else if ( csForeColorRow) {
                     config.color = csForeColorRow;
                 }
             }
