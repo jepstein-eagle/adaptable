@@ -10,7 +10,7 @@ import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
+interface ShortcutConfigItemNumberProps extends React.ClassAttributes<ShortcutConfigItemNumber> {
     Shortcut: IShortcut
     onSelect: (Shortcut: IShortcut) => void;
     onDeleteConfirm: Redux.Action;
@@ -20,9 +20,9 @@ interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigIt
     AvailableKeys: Array<string>
 }
 
-const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide, ShortcutAction.Replace];
+const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
 
-export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps, {}> {
+export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItemNumberProps, {}> {
     render(): any {
         return <li
             className="list-group-item"
@@ -31,7 +31,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 <Col md={1} >
                     <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
                 </Col>
-                <Col md={1} >
+                <Col md={2} >
                     <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
                             <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
@@ -43,13 +43,6 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                     </AdaptableBlotterForm>
                 </Col>
                 <Col md={3} >
-                    <HelpBlock>
-                        {DataType[this.props.Shortcut.DataType]}
-                    </HelpBlock>
-                </Col>
-                <Col md={2} >
-                    {this.props.Shortcut.DataType == DataType.Date ?
-                        ShortcutAction[this.props.Shortcut.ShortcutAction] :
                         <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
                                 shortcutActionList.map((shortcutAction: ShortcutAction) => {
@@ -57,26 +50,20 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                                 })
                             }
                         </FormControl>
-                    }
+                    
                 </Col>
                 <Col md={3}>
                     {this.props.Shortcut.IsDynamic ?
                         this.props.Shortcut.ShortcutResult :
-                        this.props.Shortcut.DataType == DataType.Date ?
-                            <FormControl
-                                type="date"
-                                placeholder="Shortcut Result"
-                                onChange={(e) => this.onResultChange(e)}
-                                value={this.props.Shortcut.ShortcutResult}
-                            /> :
                             <FormControl
                                 type="number"
                                 placeholder="Shortcut Result"
                                 onChange={(e) => this.onResultChange(e)}
                                 value={this.props.Shortcut.ShortcutResult}
-                            />}
+                            />
+                    }
                 </Col>
-                <Col md={2} >
+                <Col md={3} >
                     <EntityListActionButtons
                         showEdit={false}
                         ConfigEntity={this.props.Shortcut}
