@@ -253,9 +253,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setValue(cellInfo: ICellInfo): void {
+        //ag-grid doesn't support FindRow based on data
+        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode.data)) {
+                rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
+                return
+            }
+        })
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
+        //ag-grid doesn't support FindRow based on data
+        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode.data))
+            if (value) {
+                rowNode.setDataValue(value.ColumnId, value.Value)
+            }
+        })
     }
 
     public cancelEdit() {
@@ -276,9 +292,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-
     public isColumnReadonly(columnId: string): boolean {
-        return null
+        //same as hypergrid. we do not support the fact that some rows are editable and some are not
+        //if editable is a function then we return that its not readonly since we assume that some record will be editable
+        //that's wrong but we ll see if we face the issue later
+        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        if (typeof colDef.editable == 'boolean') {
+            return !colDef.editable;
+        }
+        else {
+            return true
+        }
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
