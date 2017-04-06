@@ -18,8 +18,6 @@ interface CellValidationSettingsWizardState {
     Operator: LeafExpressionOperator;
     Operand1: string;
     Operand2: string;
-    HasExpression: boolean;
-    CellValidationMode: CellValidationMode;
 }
 
 export class CellValidationRulesWizard extends React.Component<CellValidationRulesWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
@@ -29,14 +27,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operator: this.props.Data.RangeExpression.Operator,
             Operand1: this.props.Data.RangeExpression.Operand1,
             Operand2: this.props.Data.RangeExpression.Operand2,
-            HasExpression: this.props.Data.HasExpression,
-            CellValidationMode: this.props.Data.CellValidationMode,
         }
-    }
-
-    public componentDidMount() {
-        // would rather not but only way I can see to force page to show Finish (which is default)
-        this.props.UpdateGoBackState(this.state.HasExpression == false);
     }
 
     render(): any {
@@ -48,123 +39,90 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         let columnFriendlyName: string = this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName;
 
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
+       
+        let helpText : string = "Decide whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
 
         return <div>
-            <Panel header="Cell Validation Settings" bsStyle="primary">
+            <Panel header={validationRuleHeader} bsStyle="primary">
 
-                <Panel header="Action To Take When Validation Fails" bsStyle="info"  >
-                    <AdaptableBlotterForm inline>
-                        <Col xs={12} style={divStyle}>
-                            <Radio inline value={CellValidationMode.Prevent.toString()} checked={this.state.CellValidationMode == CellValidationMode.Prevent} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
-                            {' '}{' '}
-                            <AdaptablePopover headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} popoverType={PopoverType.Info} />
+                <AdaptableBlotterForm >
+                    <Col xs={12}>
+                        <HelpBlock>{helpText}</HelpBlock>
+                    </Col>
+                    <Col xs={12} style={divStyle}>
+                        <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
+                        {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
+                    </Col>
+                    <Col xs={12} style={divStyle}>
+                        <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
+                        {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Only edits that match the rule defined in the dropdown below are valid."]} popoverType={PopoverType.Info} />
+                    </Col>
+                </AdaptableBlotterForm>
+
+                { /* if not None operator then show operator dropdown */}
+                <FormGroup style={divStyle}>
+                    <Col xs={1}></Col>
+                    <Col xs={6}>
+                        <FormControl disabled={this.checkOperator(LeafExpressionOperator.None)} componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
+                            {operatorTypes}
+                        </FormControl>
+                    </Col>
+
+                    { /* if  numeric then show a numeric control */}
+                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnDataTypeFromState() == DataType.Number &&
+                        <Col xs={5}>
+                            <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
+                            {this.isBetweenOperator() &&
+                                <FormControl value={this.state.Operand2} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                            }
                         </Col>
-                        <Col xs={12} style={divStyle}>
-                            <Radio inline value={CellValidationMode.Warning.toString()} checked={this.state.CellValidationMode == CellValidationMode.Warning} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
-                            {' '}<AdaptablePopover headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} popoverType={PopoverType.Info} />
+                    }
+
+                    { /* if  date then show a date control */}
+                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.Date &&
+                        <Col xs={5}>
+                            <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
+                            {this.isBetweenOperator() &&
+                                <FormControl value={this.state.Operand2} type="date" placeholder="Enter Date" onChange={(x) => this.onOperand2ValueChanged(x)} />
+                            }
                         </Col>
-                    </AdaptableBlotterForm>
-                </Panel>
+                    }
 
-
-                <Panel header={validationRuleHeader} bsStyle="info">
-                    <AdaptableBlotterForm >
-                        <Col xs={12} style={divStyle}>
-                            <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                            {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
+                    { /* if string then show a text control  */}
+                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.String &&
+                        <Col xs={5}>
+                            <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                         </Col>
-                        <Col xs={12} style={divStyle}>
-                            <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
-                            {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Only edits that match the rule defined in the dropdown below are valid."]} popoverType={PopoverType.Info} />
-                        </Col>
-                    </AdaptableBlotterForm>
+                    }
+                </FormGroup>
 
-                    { /* if not None operator then show operator dropdown */}
-                    <FormGroup style={divStyle}>
-                        <Col xs={1}></Col>
-                        <Col xs={6}>
-                            <FormControl disabled={this.checkOperator(LeafExpressionOperator.None)} componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
-                                {operatorTypes}
-                            </FormControl>
-                        </Col>
-
-                        { /* if  numeric then show a numeric control */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnDataTypeFromState() == DataType.Number &&
-                            <Col xs={5}>
-                                <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
-                                {this.isBetweenOperator() &&
-                                    <FormControl value={this.state.Operand2} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand2ValueChanged(x)} />
-                                }
-                            </Col>
-                        }
-
-                        { /* if  date then show a date control */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.Date &&
-                            <Col xs={5}>
-                                <FormControl type="date" placeholder="Enter Date" value={this.state.Operand1} onChange={(x) => this.onOperand1ValueChanged(x)} />
-                                {this.isBetweenOperator() &&
-                                    <FormControl value={this.state.Operand2} type="date" placeholder="Enter Date" onChange={(x) => this.onOperand2ValueChanged(x)} />
-                                }
-                            </Col>
-                        }
-
-                        { /* if string then show a text control  */}
-                        {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && this.getColumnDataTypeFromState() == DataType.String &&
-                            <Col xs={5}>
-                                <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
-                            </Col>
-                        }
-                    </FormGroup>
-
-                </Panel>
-
-                <Panel header="Validation Query" bsStyle="info">
-                    <AdaptableBlotterForm inline >
-                        <Col xs={12}> <HelpBlock>A Query is used if the rule is dependent on other values in the row.<br />The rule will only be activated and checked if the Query passes.</HelpBlock>
-                        </Col>
-                        <Col xs={12}>
-                            <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Query</Checkbox>
-                            {' '}<AdaptablePopover headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
-                        </Col>
-                    </AdaptableBlotterForm>
-
-                </Panel>
             </Panel>
         </div>
 
     }
 
 
-    private onCellValidationModeChanged(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationMode: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
-    }
-
     private onOperatorChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operator: Number.parseInt(e.value), Operand1: "", Operand2: "" } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operator: Number.parseInt(e.value), Operand1: "", Operand2: "" } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onOperand1ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onOperand2ValueChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onDisallowEditChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
         let operator: LeafExpressionOperator = (e.value == "None") ? LeafExpressionOperator.None : LeafExpressionOperator.Unknown;
-        this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(this.state.HasExpression == false))
+        this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onOtherExpressionOptionChanged(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ HasExpression: e.checked } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState(e.checked == false))
-    }
 
     private getColumnDataTypeFromState(): DataType {
         return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
@@ -286,10 +244,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operand2: this.state.Operand2
         }
         this.props.Data.RangeExpression = rangeExpression;
-        this.props.Data.HasExpression = this.state.HasExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
-        this.props.Data.CellValidationMode = this.state.CellValidationMode;
-
     }
 
     public Back(): void { }
