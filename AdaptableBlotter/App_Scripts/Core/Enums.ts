@@ -61,9 +61,9 @@ export enum PopoverType {
 
 // Enums used in Strategies
 export enum SmartEditOperation {
-    Sum,
-    Ratio,
-    Absolute
+    Add,
+    Multiply,
+    Replace
 }
 
 export enum ShortcutAction {

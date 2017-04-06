@@ -62,7 +62,7 @@ export const SmartEditSetPreview = (Preview: ISmartEditPreview): SmartEditSetPre
 
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: "1",
-    SmartEditOperation: SmartEditOperation.Sum,
+    SmartEditOperation: SmartEditOperation.Add,
     Preview: null
 }
 

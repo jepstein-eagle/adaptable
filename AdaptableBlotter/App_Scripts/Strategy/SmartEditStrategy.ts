@@ -103,13 +103,13 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let newValue: number;
                 switch (smartEditOperation) {
-                    case SmartEditOperation.Sum:
+                    case SmartEditOperation.Add:
                         newValue = Number(columnValuePair.value) + smartEditValue
                         break;
-                    case SmartEditOperation.Ratio:
+                    case SmartEditOperation.Multiply:
                         newValue = Number(columnValuePair.value) * smartEditValue
                         break;
-                    case SmartEditOperation.Absolute:
+                    case SmartEditOperation.Replace:
                         newValue = smartEditValue
                         break;
                 }
