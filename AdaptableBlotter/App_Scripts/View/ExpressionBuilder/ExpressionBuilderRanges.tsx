@@ -21,7 +21,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         if (this.props.DataType == DataType.Number || this.props.DataType == DataType.Date) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThan)}</MenuItem>
@@ -84,7 +84,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         else if (this.props.DataType == DataType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
                 let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>Select operator</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.StartsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>

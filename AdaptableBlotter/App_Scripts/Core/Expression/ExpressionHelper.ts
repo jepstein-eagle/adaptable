@@ -220,7 +220,7 @@ export module ExpressionHelper {
     export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {
             case LeafExpressionOperator.Unknown:
-                return "Unknown"
+                return "Select"
             case LeafExpressionOperator.GreaterThan:
                 return ">"
             case LeafExpressionOperator.LessThan:
