@@ -134,7 +134,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
-                            "This Query can only contain one Column Condition." : "The Query can contain multiple Column Conditions."}
+                            "This Query can only contain one Column Condition." : "The Query can contain multiple Column Conditions.  Simly click the 'New' button each time that a new Column Condition is required."}
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
