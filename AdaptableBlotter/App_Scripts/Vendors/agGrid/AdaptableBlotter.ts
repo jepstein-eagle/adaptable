@@ -20,7 +20,7 @@ import { ThemeService } from '../../Core/Services/ThemeService'
 import { SearchService } from '../../Core/Services/SearchService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
-import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
+import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
@@ -82,7 +82,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -262,7 +262,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
-                return
             }
         })
     }
@@ -310,11 +309,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
+        let column = this.gridOptions.columnApi.getColumn(columnId);
 
+        if (column) {
+            column.getColDef().comparator = <any>comparer
+        }
     }
 
     public removeCustomSort(columnId: string): void {
+        let column = this.gridOptions.columnApi.getColumn(columnId);
 
+        if (column) {
+            column.getColDef().comparator = null
+        }
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -338,10 +345,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        return null
+        //ag-grid doesn't support FindRow based on data
+        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        let returnValue: string
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                returnValue = this.getDisplayValueFromRecord(rowNode, columnId)
+            }
+        })
+        return returnValue
     }
 
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
+        //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
         let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
         let rawValue = this.gridOptions.api.getValue(columnId, row)
