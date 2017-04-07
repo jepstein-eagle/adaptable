@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "1.0.0",
+  "version": "1.0.1-beta",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -46,6 +46,7 @@
     "postinstall": "typings install",
     "build-themes": "node postcss-scopify.config.js",
     "release-demo-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemorelease.config.js",
+    "release-demo-beta-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemobetarelease.config.js",
     "build-adaptableblotter": "node_modules/.bin/webpack",
     "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/",
     "dev-hypergrid": "node_modules/.bin/webpack-dev-server --content-base Harness/Hypergrid/",
