@@ -58,7 +58,8 @@ function InitBlotter() {
     //dataGen.startTickingDataHypergrid(grid)
 
     var container = document.getElementById('content');
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, {
+    var gridcontainer = document.getElementById('grid');
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
         userName: "Jonathan",
         enableAuditLog: false,

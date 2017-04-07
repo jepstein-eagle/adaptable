@@ -66,7 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    constructor(private gridOptions: GridOptions, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
@@ -86,7 +86,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        //this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
@@ -122,6 +122,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.setColumnIntoStore()
             }
         });
+
+        gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -281,7 +283,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
-        return null
+        if (type == "getColumnValue") {
+            let rowNodeSearch: RowNode
+            //ag-grid doesn't support FindRow based on data
+            // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+            this.gridOptions.api.getModel().forEachNode(rowNode => {
+                if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                    rowNodeSearch = rowNode
+                }
+            })
+            return (columnName: string) => { return this.gridOptions.api.getValue(columnName, rowNodeSearch); }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+        }
     }
 
     public selectCells(cells: ICellInfo[]): void {
