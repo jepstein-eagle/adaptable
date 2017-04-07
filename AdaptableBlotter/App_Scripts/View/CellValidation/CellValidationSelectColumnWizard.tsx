@@ -9,15 +9,15 @@ import { StringExtensions } from '../../Core/Extensions';
 import { SelectionMode } from '../../Core/Enums';
 import { SingleListBox } from '../SingleListBox'
 
-interface CellValidationSettingsWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
 }
-interface CellValidationSettingsWizardState {
+interface CellValidationSelectColumnWizardState {
     ColumnId: string
 }
 
-export class CellValidationSettingsWizard extends React.Component<CellValidationSettingsWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: CellValidationSettingsWizardProps) {
+export class CellValidationSelectColumnWizard extends React.Component<CellValidationSelectColumnWizardProps, CellValidationSelectColumnWizardState> implements AdaptableWizardStep {
+    constructor(props: CellValidationSelectColumnWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
@@ -42,7 +42,7 @@ export class CellValidationSettingsWizard extends React.Component<CellValidation
     }
 
     private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
-        this.setState({ ColumnId: selectedColumnValues[0] } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: selectedColumnValues[0] } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

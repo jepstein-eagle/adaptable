@@ -17,9 +17,11 @@ import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
+import { CellValidationActionWizard } from './CellValidationActionWizard'
+import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard'
 import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
+import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
@@ -118,8 +120,10 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
             {this.state.EditedCellValidation != null &&
                 <AdaptableWizard Steps={[
-                    <CellValidationSettingsWizard Columns={this.props.Columns} />,
+                    <CellValidationSelectColumnWizard Columns={this.props.Columns} />,
+                    <CellValidationActionWizard Columns={this.props.Columns} />,
                     <CellValidationRulesWizard Columns={this.props.Columns} />,
+                    <CellValidationSelectQueryWizard Columns={this.props.Columns} />,
                     <CellValidationExpressionWizard ColumnList={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SelectedColumnId={null}
