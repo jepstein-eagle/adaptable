@@ -88,10 +88,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     <Col xs={9}>
                         <AdaptableBlotterForm inline >
                             <FormControl componentClass="select" placeholder="select" value={currentKeyValue} onChange={(x) => this.onShortcutKeyChanged(x)} >
-                                <option value="select" key="select">Select key</option>
+                                <option value="select" key="select">Select Key</option>
                                 {optionKeys}
                             </FormControl>
-                            {' '}<AdaptablePopover headerText={"Shortcut: Key"} bodyText={["The keyboard key that triggers the shortcut when pressed."]} popoverType={PopoverType.Info} />
+                            {' '}<AdaptablePopover headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} popoverType={PopoverType.Info} />
                         </AdaptableBlotterForm>
                     </Col>
                 </FormGroup>
@@ -108,7 +108,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         {optionActions}
                                     </FormControl>
                                     {' '}<AdaptablePopover headerText={"Shortcut: Operation"} 
-                                    bodyText={["Determines how cell contents change when a shortcut is triggered.",<br/>, "Used to calculate cell's new contents when a shortcut is triggered. It is used in conjunction with cell's current value to calculate the new value."]} popoverType={PopoverType.Info} />
+                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
@@ -125,7 +125,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         onChange={this.changeContent}
                                         value={this.state.ShortcutResult}
                                     />
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"} bodyText={["Used to calculate cell's new contents when a shortcut is triggered. It is used in conjunction with cell's current value to calculate the new value."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"} 
+                                      bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
