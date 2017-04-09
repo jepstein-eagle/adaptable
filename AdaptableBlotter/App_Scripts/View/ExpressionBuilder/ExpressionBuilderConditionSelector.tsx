@@ -165,13 +165,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </FormGroup>
                     </AdaptableBlotterForm>
                     <Row >
-                        <Col xs={4}>
-                            <ExpressionBuilderColumnValues
-                                ColumnValues={this.state.ColumnValues}
-                                SelectedValues={this.state.SelectedColumnValues}
-                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
-                            </ExpressionBuilderColumnValues>
-                        </Col>
+                        {selectedColumn.DataType != DataType.Boolean &&
+                            <Col xs={4}>
+                                <ExpressionBuilderColumnValues
+                                    ColumnValues={this.state.ColumnValues}
+                                    SelectedValues={this.state.SelectedColumnValues}
+                                    onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
+                                </ExpressionBuilderColumnValues>
+                            </Col>
+                        }
                         <Col xs={4}>
                             <ExpressionBuilderUserFilter
                                 UserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, availableExpressionIds)}
@@ -179,13 +181,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                 onUserFilterExpressionChange={(selectedValues) => this.onSelectedUserFilterExpressionsChange(selectedValues)} >
                             </ExpressionBuilderUserFilter>
                         </Col>
-                        <Col xs={4}>
-                            <ExpressionBuilderRanges
-                                DataType={selectedColumnDataType}
-                                Ranges={this.state.SelectedColumnRanges}
-                                onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
-                            </ExpressionBuilderRanges>
-                        </Col>
+                        {selectedColumn.DataType != DataType.Boolean &&
+                            <Col xs={4}>
+                                <ExpressionBuilderRanges
+                                    DataType={selectedColumnDataType}
+                                    Ranges={this.state.SelectedColumnRanges}
+                                    onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
+                                </ExpressionBuilderRanges>
+                            </Col>
+                        }
                     </Row>
                 </div>}
         </PanelWithButton>

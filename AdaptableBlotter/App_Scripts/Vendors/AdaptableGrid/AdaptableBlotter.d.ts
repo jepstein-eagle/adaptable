@@ -1,4 +1,4 @@
-declare namespace AdaptableBlotterGrid {
+declare namespace AdaptableGrid {
 
     class AdaptableGrid {
 
@@ -18,6 +18,7 @@ declare namespace AdaptableBlotterGrid {
         getDataType(type: string): DataType;
         getVisibleRows(): (Row)[];
         getHiddenRows(): (Row)[];
+        getAllColumns(): (Column)[];
         getVisibleColumns(): (Column)[];
         getHiddenColumns(): (Column)[];
         newColumnOrder(ids: string[]): void;
@@ -35,6 +36,8 @@ declare namespace AdaptableBlotterGrid {
         setFormat(format: string): void;
         getType(): string;
         getFormat(): string;
+        setReadOnly(): void;
+        isReadOnly(): boolean;
         getFormattedValue(grid: AdaptableGrid): string;
 
     }
@@ -53,7 +56,7 @@ declare namespace AdaptableBlotterGrid {
 
     }
 
-    export interface DataType {
+    interface DataType {
 
         String: number;
         Number: number;

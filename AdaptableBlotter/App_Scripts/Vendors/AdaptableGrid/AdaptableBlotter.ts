@@ -67,7 +67,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public BlotterOptions: IAdaptableBlotterOptions
 
     //Grid is ANY for now.... Might be good to ask Jason to create definition file?
-    constructor(private grid: AdaptableBlotterGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
@@ -123,10 +123,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setColumnIntoStore() {
-        let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableBlotterGrid.Column, index: number) => {
+        let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {
             return {
                 ColumnId: x.getId() ? x.getId() : "Unknown Column",
-                FriendlyName:  x.getId(), // fix when bug is fixed x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+                FriendlyName:  x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index
@@ -135,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
             return {
                 ColumnId: x.getId() ? x.getId() : "Unknown Column",
-              FriendlyName:  x.getId(), // fix when bug is fixed x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+              FriendlyName:  x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
                 DataType: this.getColumnDataType(x.name),
                 Visible: false,
                 Index: -1
@@ -149,8 +149,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        let gridVisibleColumns: AdaptableBlotterGrid.Column[] = this.grid.getVisibleColumns();
-        let gridHiddenColumns: AdaptableBlotterGrid.Column[] = this.grid.getHiddenColumns();
+        let gridVisibleColumns: AdaptableGrid.Column[] = this.grid.getVisibleColumns();
+        let gridHiddenColumns: AdaptableGrid.Column[] = this.grid.getHiddenColumns();
+
 
         VisibleColumnList.forEach((column, index) => {
             let col = gridVisibleColumns.find(x => x.getId() == column.ColumnId)
@@ -170,7 +171,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let visibleIds: any[] = VisibleColumnList.map(v => v.ColumnId);
         // hoping this is enough?
         this.grid.newColumnOrder(visibleIds)
-
         this.grid.render();
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
@@ -205,7 +205,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    private getColumnDataType(column: AdaptableBlotterGrid.Column): DataType {
+    private getColumnDataType(column: AdaptableGrid.Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
             console.log('columnId is undefined returning String for Type')
