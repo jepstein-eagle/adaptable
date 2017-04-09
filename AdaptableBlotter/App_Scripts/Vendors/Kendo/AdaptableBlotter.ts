@@ -577,19 +577,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public exportBlotter(): void {
-        // to select a column in kendo = e.g. country
-        //    let index:number = this.getColumnIndex("country") + 1;
-        // this.grid.select($('td:nth-child(' + index +')'));
-
         // get export state
         let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
         this.grid.options.excel.fileName = exportState.FileName + ".xlsx";
         this.grid.options.excel.allPages = exportState.AllPages;
         this.grid.options.excel.filterable = exportState.Filterable;
         this.grid.saveAsExcel();
-
-
-
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
