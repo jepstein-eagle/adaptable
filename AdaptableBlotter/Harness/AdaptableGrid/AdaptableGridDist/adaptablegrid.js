@@ -570,1707 +570,1454 @@ return rf.abs=Wc,rf.add=Yc,rf.subtract=Zc,rf.as=cd,rf.asMilliseconds=$e,rf.asSec
  * http://adamwdraper.github.com/Numeral-js/
  */
 !function(a,b){"function"==typeof define&&define.amd?define(b):"object"==typeof module&&module.exports?module.exports=b():a.numeral=b()}(this,function(){function a(a,b){this._input=a,this._value=b}var b,c,d="2.0.4",e={},f={},g={currentLocale:"en",zeroFormat:null,nullFormat:null,defaultFormat:"0,0"},h={currentLocale:g.currentLocale,zeroFormat:g.zeroFormat,nullFormat:g.nullFormat,defaultFormat:g.defaultFormat};return b=function(d){var f,g,i,j;if(b.isNumeral(d))f=d.value();else if(0===d||"undefined"==typeof d)f=0;else if(null===d||c.isNaN(d))f=null;else if("string"==typeof d)if(h.zeroFormat&&d===h.zeroFormat)f=0;else if(h.nullFormat&&d===h.nullFormat||!d.replace(/[^0-9]+/g,"").length)f=null;else{for(g in e)if(j="function"==typeof e[g].regexps.unformat?e[g].regexps.unformat():e[g].regexps.unformat,j&&d.match(j)){i=e[g].unformat;break}i=i||b._.stringToNumber,f=i(d)}else f=Number(d)||null;return new a(d,f)},b.version=d,b.isNumeral=function(b){return b instanceof a},b._=c={numberToFormat:function(a,c,d){var e,g,h,i,j,k,l,m=f[b.options.currentLocale],n=!1,o=!1,p="",q=1e12,r=1e9,s=1e6,t=1e3,u="",v=!1;if(a=a||0,g=Math.abs(a),b._.includes(c,"(")?(n=!0,c=c.replace(/[\(|\)]/g,"")):(b._.includes(c,"+")||b._.includes(c,"-"))&&(j=b._.includes(c,"+")?c.indexOf("+"):0>a?c.indexOf("-"):-1,c=c.replace(/[\+|\-]/g,"")),b._.includes(c,"a")&&(e=c.match(/a(k|m|b|t)?/),e=e?e[1]:!1,b._.includes(c," a")&&(p=" "),c=c.replace(new RegExp(p+"a[kmbt]?"),""),g>=q&&!e||"t"===e?(p+=m.abbreviations.trillion,a/=q):q>g&&g>=r&&!e||"b"===e?(p+=m.abbreviations.billion,a/=r):r>g&&g>=s&&!e||"m"===e?(p+=m.abbreviations.million,a/=s):(s>g&&g>=t&&!e||"k"===e)&&(p+=m.abbreviations.thousand,a/=t)),b._.includes(c,"[.]")&&(o=!0,c=c.replace("[.]",".")),h=a.toString().split(".")[0],i=c.split(".")[1],k=c.indexOf(","),i?(b._.includes(i,"[")?(i=i.replace("]",""),i=i.split("["),u=b._.toFixed(a,i[0].length+i[1].length,d,i[1].length)):u=b._.toFixed(a,i.length,d),h=u.split(".")[0],u=b._.includes(u,".")?m.delimiters.decimal+u.split(".")[1]:"",o&&0===Number(u.slice(1))&&(u="")):h=b._.toFixed(a,null,d),p&&!e&&Number(h)>=1e3&&p!==m.abbreviations.trillion)switch(h=String(Number(h)/1e3),p){case m.abbreviations.thousand:p=m.abbreviations.million;break;case m.abbreviations.million:p=m.abbreviations.billion;break;case m.abbreviations.billion:p=m.abbreviations.trillion}return b._.includes(h,"-")&&(h=h.slice(1),v=!0),k>-1&&(h=h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1"+m.delimiters.thousands)),0===c.indexOf(".")&&(h=""),l=h+u+(p?p:""),n?l=(n&&v?"(":"")+l+(n&&v?")":""):j>=0?l=0===j?(v?"-":"+")+l:l+(v?"-":"+"):v&&(l="-"+l),l},stringToNumber:function(a){var b,c,d,e=f[h.currentLocale],g=a,i={thousand:3,million:6,billion:9,trillion:12};if(h.zeroFormat&&a===h.zeroFormat)c=0;else if(h.nullFormat&&a===h.nullFormat||!a.replace(/[^0-9]+/g,"").length)c=null;else{c=1,"."!==e.delimiters.decimal&&(a=a.replace(/\./g,"").replace(e.delimiters.decimal,"."));for(b in i)if(d=new RegExp("[^a-zA-Z]"+e.abbreviations[b]+"(?:\\)|(\\"+e.currency.symbol+")?(?:\\))?)?$"),g.match(d)){c*=Math.pow(10,i[b]);break}c*=(a.split("-").length+Math.min(a.split("(").length-1,a.split(")").length-1))%2?1:-1,a=a.replace(/[^0-9\.]+/g,""),c*=Number(a)}return c},isNaN:function(a){return"number"==typeof a&&isNaN(a)},includes:function(a,b){return-1!==a.indexOf(b)},insert:function(a,b,c){return a.slice(0,c)+b+a.slice(c)},reduce:function(a,b){if(null===this)throw new TypeError("Array.prototype.reduce called on null or undefined");if("function"!=typeof b)throw new TypeError(b+" is not a function");var c,d=Object(a),e=d.length>>>0,f=0;if(3===arguments.length)c=arguments[2];else{for(;e>f&&!(f in d);)f++;if(f>=e)throw new TypeError("Reduce of empty array with no initial value");c=d[f++]}for(;e>f;f++)f in d&&(c=b(c,d[f],f,d));return c},multiplier:function(a){var b=a.toString().split(".");return b.length<2?1:Math.pow(10,b[1].length)},correctionFactor:function(){var a=Array.prototype.slice.call(arguments);return a.reduce(function(a,b){var d=c.multiplier(b);return a>d?a:d},1)},toFixed:function(a,b,c,d){var e,f,g,h,i=a.toString().split("."),j=b-(d||0);return e=2===i.length?Math.min(Math.max(i[1].length,j),b):j,g=Math.pow(10,e),h=(c(a*g)/g).toFixed(e),d>b-e&&(f=new RegExp("\\.?0{1,"+(d-(b-e))+"}$"),h=h.replace(f,"")),h}},b.options=h,b.formats=e,b.locales=f,b.locale=function(a){return a&&(h.currentLocale=a.toLowerCase()),h.currentLocale},b.localeData=function(a){if(!a)return f[h.currentLocale];if(a=a.toLowerCase(),!f[a])throw new Error("Unknown locale : "+a);return f[a]},b.reset=function(){for(var a in g)h[a]=g[a]},b.zeroFormat=function(a){h.zeroFormat="string"==typeof a?a:null},b.nullFormat=function(a){h.nullFormat="string"==typeof a?a:null},b.defaultFormat=function(a){h.defaultFormat="string"==typeof a?a:"0.0"},b.register=function(a,b,c){if(b=b.toLowerCase(),this[a+"s"][b])throw new TypeError(b+" "+a+" already registered.");return this[a+"s"][b]=c,c},b.validate=function(a,c){var d,e,f,g,h,i,j,k;if("string"!=typeof a&&(a+="",console.warn&&console.warn("Numeral.js: Value is not string. It has been co-erced to: ",a)),a=a.trim(),a.match(/^\d+$/))return!0;if(""===a)return!1;try{j=b.localeData(c)}catch(l){j=b.localeData(b.locale())}return f=j.currency.symbol,h=j.abbreviations,d=j.delimiters.decimal,e="."===j.delimiters.thousands?"\\.":j.delimiters.thousands,k=a.match(/^[^\d]+/),null!==k&&(a=a.substr(1),k[0]!==f)?!1:(k=a.match(/[^\d]+$/),null!==k&&(a=a.slice(0,-1),k[0]!==h.thousand&&k[0]!==h.million&&k[0]!==h.billion&&k[0]!==h.trillion)?!1:(i=new RegExp(e+"{2}"),a.match(/[^\d.,]/g)?!1:(g=a.split(d),g.length>2?!1:g.length<2?!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i):1===g[0].length?!!g[0].match(/^\d+$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/):!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/))))},b.fn=a.prototype={clone:function(){return b(this)},format:function(a,c){var d,f,g,i=this._value,j=a||h.defaultFormat;if(c=c||Math.round,0===i&&null!==h.zeroFormat)f=h.zeroFormat;else if(null===i&&null!==h.nullFormat)f=h.nullFormat;else{for(d in e)if(j.match(e[d].regexps.format)){g=e[d].format;break}g=g||b._.numberToFormat,f=g(i,j,c)}return f},value:function(){return this._value},input:function(){return this._input},set:function(a){return this._value=Number(a),this},add:function(a){function b(a,b,c,e){return a+Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([this._value,a],b,0)/d,this},subtract:function(a){function b(a,b,c,e){return a-Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([a],b,Math.round(this._value*d))/d,this},multiply:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)*Math.round(b*f)/Math.round(f*f)}return this._value=c.reduce([this._value,a],b,1),this},divide:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)/Math.round(b*f)}return this._value=c.reduce([this._value,a],b),this},difference:function(a){return Math.abs(b(this._value).subtract(a).value())}},b.register("locale","en",{delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(a){var b=a%10;return 1===~~(a%100/10)?"th":1===b?"st":2===b?"nd":3===b?"rd":"th"},currency:{symbol:"$"}}),function(){var a={base:1e3,suffixes:["B","KB","MB","GB","TB","PB","EB","ZB","YB"]},c={base:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"]};b.register("format","bytes",{regexps:{format:/([0\s]i?b)/,unformat:new RegExp("("+a.suffixes.concat(c.suffixes).join("|")+")")},format:function(d,e,f){var g,h,i,j,k=b._.includes(e,"ib")?c:a,l=b._.includes(e," b")||b._.includes(e," ib")?" ":"";for(e=e.replace(/\s?i?b/,""),h=0;h<=k.suffixes.length;h++)if(i=Math.pow(k.base,h),j=Math.pow(k.base,h+1),null===d||0===d||d>=i&&j>d){l+=k.suffixes[h],i>0&&(d/=i);break}return g=b._.numberToFormat(d,e,f),g+l},unformat:function(d){var e,f,g=b._.stringToNumber(d);if(g){for(e=a.suffixes.length-1;e>=0;e--){if(b._.includes(d,a.suffixes[e])){f=Math.pow(a.base,e);break}if(b._.includes(d,c.suffixes[e])){f=Math.pow(c.base,e);break}}g*=f||1}return g}})}(),function(){b.register("format","currency",{regexps:{format:/(\$)/},format:function(a,c,d){var e,f,g,h=b.locales[b.options.currentLocale],i={before:c.match(/^([\+|\-|\(|\s|\$]*)/)[0],after:c.match(/([\+|\-|\)|\s|\$]*)$/)[0]};for(c=c.replace(/\s?\$\s?/,""),e=b._.numberToFormat(a,c,d),a>=0?(i.before=i.before.replace(/[\-\(]/,""),i.after=i.after.replace(/[\-\)]/,"")):0>a&&!b._.includes(i.before,"-")&&!b._.includes(i.before,"(")&&(i.before="-"+i.before),g=0;g<i.before.length;g++)switch(f=i.before[g]){case"$":e=b._.insert(e,h.currency.symbol,g);break;case" ":e=b._.insert(e," ",g)}for(g=i.after.length-1;g>=0;g--)switch(f=i.after[g]){case"$":e=g===i.after.length-1?e+h.currency.symbol:b._.insert(e,h.currency.symbol,-(i.after.length-(1+g)));break;case" ":e=g===i.after.length-1?e+" ":b._.insert(e," ",-(i.after.length-(1+g)))}return e}})}(),function(){b.register("format","exponential",{regexps:{format:/(e\+|e-)/,unformat:/(e\+|e-)/},format:function(a,c,d){var e,f="number"!=typeof a||b._.isNaN(a)?"0e+0":a.toExponential(),g=f.split("e");return c=c.replace(/e[\+|\-]{1}0/,""),e=b._.numberToFormat(Number(g[0]),c,d),e+"e"+g[1]},unformat:function(a){function c(a,c,d,e){var f=b._.correctionFactor(a,c),g=a*f*(c*f)/(f*f);return g}var d=b._.includes(a,"e+")?a.split("e+"):a.split("e-"),e=Number(d[0]),f=Number(d[1]);return f=b._.includes(a,"e-")?f*=-1:f,b._.reduce([e,Math.pow(10,f)],c,1)}})}(),function(){b.register("format","ordinal",{regexps:{format:/(o)/},format:function(a,c,d){var e,f=b.locales[b.options.currentLocale],g=b._.includes(c," o")?" ":"";return c=c.replace(/\s?o/,""),g+=f.ordinal(a),e=b._.numberToFormat(a,c,d),e+g}})}(),function(){b.register("format","percentage",{regexps:{format:/(%)/,unformat:/(%)/},format:function(a,c,d){var e,f=b._.includes(c," %")?" ":"";return a=100*a,c=c.replace(/\s?\%/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"%"),e=e.join("")):e=e+f+"%",e},unformat:function(a){return.01*b._.stringToNumber(a)}})}(),function(){b.register("format","time",{regexps:{format:/(:)/,unformat:/(:)/},format:function(a,b,c){var d=Math.floor(a/60/60),e=Math.floor((a-60*d*60)/60),f=Math.round(a-60*d*60-60*e);return d+":"+(10>e?"0"+e:e)+":"+(10>f?"0"+f:f)},unformat:function(a){var b=a.split(":"),c=0;return 3===b.length?(c+=60*Number(b[0])*60,c+=60*Number(b[1]),c+=Number(b[2])):2===b.length&&(c+=60*Number(b[0]),c+=Number(b[1])),Number(c)}})}(),b});
+/**
+ * The main class for interacting with the grid
+ * @class
+ * @param {object} options - A list of options
+ * @returns {AdaptableGrid}
+ */
+$.fn.AdaptableGrid = function (options) {
+  
+  this.__constructor = function (options) {
 
-var Debug = function(state) {
-    this.__constructor = function(state) {
-        this.longtime = 150;
-        this.timers = {};
-        this.multiple = true;
-        this.timerStarted = false;
-        if (state) {
-            this.on();
-        } else {
-            this.off();
+    // Initialise the options property with some defaults
+    this.options = $.extend({
+      debug: new (function () { this.start = function (a) {}; this.end = function(a) {} }),
+      columns: [],
+      data: [],
+      display: null,
+      sortable: false,
+      pageable: false,
+      reorderable: false,
+      ongridload: function () {},
+      ongridsort: function (sortData) {},
+      onpagechange: function (page) {},
+      oncellenter: function (cell) { },
+      oncellchange: function (cell, newVal, oldVal) {},
+      oncolumnupdate: function (columns) {},
+      onrightclick: function (columnId) { }
+    }, options);
+
+    this.options.debug.start("AdaptableGrid.__constructor");
+
+    this.columnValueToIndex = {};
+    this.columnIndexToValue = {};
+
+    this.rows = [];
+    this.columns = [];
+    this.hiddenRows = [];
+    this.filteredOutRows = [];
+
+    this.width = options.columns.length;
+    this.height = options.data.length + 1;
+    dimension = this.width * this.height;
+
+    if (options.display == null) {
+      num = this.height - 1;
+    }
+    else {
+      num = options.display;
+    }
+
+    PageUtil.resetPages.bind(this)();
+    this.displayHeight = num + 1;
+
+    // Fix for jQuery UI datepicker.
+    // Ensure that moment.js and jQuery are consistent with date formats
+    $(function () {
+      $.datepicker.parseDate = function(format, value) {
+          return moment(value, format).toDate();
+      };
+      $.datepicker.formatDate = function (format, value) {
+          return moment(value).format(format);
+      };
+    });
+
+    this.read();
+    this.render(this.options.ongridload);
+    this.options.debug.end("AdaptableGrid.__constructor");
+    return this;
+    
+  }
+
+  /**
+   * Reads in the data to create a singleton list of type Cell
+   * @returns {void}
+   */
+  this.read = function () {
+    
+    this.options.debug.start("AdaptableGrid.read");
+      
+    for (i=0; i<this.height; i++) {
+
+      this.rows[i] = new Row(i);
+      
+      if (i==0) {
+        // This is the column headers
+        for (j=0; j<this.width; j++) {
+          this.getRow(i).setCell(j, new Cell(i, j));
+          this.getRow(i).getCell(j).setValue(options.columns[j].title);
+          this.getRow(i).getCell(j).setType(DataType.String);
+          col = new Column(options.columns[j].field, options.columns[j].title, this.getDataType(options.columns[j].type));
+          this.columns.push(col);
         }
-    }
-    this.on = function() {
-        this.reporting = true;
-        console.log("Debugging on...");
-    }
-    this.off = function() {
-        this.reporting = false;
-        console.log("Debugging off...");
-    }
-    this.start = function(name) {
-        this.timers[name] = null;
-        if (this.multiple || (!this.multiple && !this.timerStarted)) {
-            this.timers[name] = performance.now();
-            this.timerStarted = true;
+      }
+      else {
+        // Regular row
+        for (j=0; j<this.width; j++) {
+          this.getRow(i).setCell(j, new Cell(i, j));
+          this.getRow(i).getCell(j).setValue(options.data[i-1][options.columns[j].field]);
+          this.getRow(i).getCell(j).setType(this.getDataType(options.columns[j].type));
+          this.getRow(i).getCell(j).setFormat(options.columns[j].format);
+          if (options.columns[j].readonly) {
+            this.getRow(i).getCell(j).setReadOnly();
+          }
         }
+      }
+
     }
-    this.end = function(name) {
-        endTime = performance.now();
-        if (this.timers[name]) {
-            difference = endTime - this.timers[name];
-            this.report(name, difference);
-            this.timerStarted = false;
+
+    this.filteredRows = this.rows;
+
+    this.options.debug.end("AdaptableGrid.read");
+
+  }
+
+  /**
+   * Prints out the grid to the DOM
+   * @param {function} [callback] - The function to run after rendering is finished
+   * @returns {void}
+   */
+  this.render = function (callback) {
+    
+    this.options.debug.start("AdaptableGrid.render");
+
+    var table = '<table>';
+    displayedRows = 0;
+    rowCounter = -1;
+
+    // Output all the cells
+    while (displayedRows < this.displayHeight && rowCounter < this.rows.length) {
+
+      rowCounter += 1;
+      thisRow = rowCounter;
+
+      if (thisRow == 0) {
+
+        for (j=0; j<this.width; j++) {
+
+          // Don't print if column is invisible
+          if (!this.columns[j].isVisible()) continue;
+
+          if (j == 0) {
+            table += '<thead>';
+          }
+
+          rowObj = this.getRow(thisRow);
+          table += '<th class="AdaptableGrid AdaptableGrid-header ' + rowObj.getCell(j).cls.join(" ") + '" '
+                   + 'blotter="abjs:' + rowObj.getId() + ":" + j +'">'
+                   + rowObj.getCell(j).getFormattedValue(this) + '</th>';
+
+          if (j == this.width-1) {
+            table += '</thead><tbody>';
+          }
+
         }
-    }
-    this.report = function(name, difference) {
-        if (this.reporting && console) {
-            if (difference > this.longtime) {
-                console.warn(name + ": " + difference.toPrecision(4) + "ms");
-            } else {
-                console.info(name + ": " + difference.toPrecision(4) + "ms");
+
+      }
+      else {
+
+        // If dealing with pages, after printing the headers, jump to the relavant row
+        if (this.options.pageable) {
+          thisRow = (this.currentPage - 1) * (this.displayHeight - 1) + thisRow;
+        }
+
+        // Exit if we've reached the end
+        if (thisRow >= this.rows.length) {
+          break;
+        }
+
+        for (j=0; j<this.width; j++) {
+
+          // Don't print if column is invisible
+          if (!this.columns[j].isVisible()) continue;
+
+          if (j == 0) {
+            table += '<tr>';
+          }
+
+          rowObj = this.getRow(thisRow);
+          table += '<td blotter="abjs:' + rowObj.getId() + ":" + j +'" ' 
+                   + 'class="' + rowObj.getCell(j).cls.join(" ") + '">' + rowObj.getCell(j).getFormattedValue(this) + '</td>';
+
+          if (j == this.width-1) {
+            table += '</tr>';
+            if (i == this.displayHeight-1) {
+              table += '</tbody>';
             }
+          }                    
+
         }
+
+      }
+
+      displayedRows += 1;
+
     }
-    return this.__constructor(state);
-}
-var DataType = {
-    String: 0,
-    Number: 1,
-    Boolean: 2,
-    Date: 3,
-    Object: 4
-}
-var Row = function(rowId) {
-    this.constructor = function(rowId) {
-        this.rowId = rowId;
-        this.data = [];
-        this.visible = true;
+
+    table += '</table>';
+     
+    this.options.debug.start("AdaptableGrid.html");
+    $(this).html(table);
+    this.options.debug.end("AdaptableGrid.html");
+    this.options.debug.end("AdaptableGrid.render");
+    
+    this.applyStyles();
+    this.events();
+
+    if (callback) {
+      callback();
     }
-    this.getId = function() {
-        return this.rowId;
+
+  }
+
+  /**
+   * Associate the relavant events to paging, sorting, column reordering etc.
+   * @returns {void}
+   */
+  this.events = function () {
+    
+    if (this.options.pageable) {
+      PageUtil.getTotalPages.bind(this)();
+      PageUtil.addPages.bind(this)();
+      PageUtil.events.bind(this)();
     }
-    this.getData = function() {
-        return this.data;
+
+    if (this.options.sortable) {
+      SortUtil.events.bind(this)();
     }
-    this.addCell = function(cell) {
-        this.data.push(cell);
+
+    if (this.options.reorderable) {
+      ReorderUtil.events.bind(this)();
     }
-    this.setCell = function(key, value) {
-        this.data[key] = value;
-    }
-    this.getCell = function(key) {
-        return this.data[key];
-    }
-    this.setVisible = function(grid) {
-        var index = grid.hiddenRows.indexOf(this);
-        this.visible = true;
-        grid.rows.push(this);
-        grid.hiddenRows.splice(index, 1);
-    }
-    this.setHidden = function(grid) {
-        var index = grid.getPositionOfRow(this);
-        this.visible = false;
-        grid.hiddenRows.push(this);
-        grid.rows.splice(index, 1);
-    }
-    this.isVisible = function() {
-        return this.visible;
-    }
-    this.addCSS = function(cls, grid) {
-        for (var col = 0; col < this.getData().length; col++) {
-            grid.getRow(this.getId()).getCell(col).cls.push(cls);
-        }
-    }
-    return this.constructor(rowId);
-}
-var Column = function(columnId, friendlyName, type) {
-    this.__constructor = function(columnId, friendlyName, type) {
-        this.columnId = columnId;
-        this.friendlyName = friendlyName;
-        this.type = type;
-        this.visible = true;
-    }
-    this.getId = function() {
-        return this.columnId;
-    }
-    this.getFriendlyName = function() {
-        return this.getFriendlyName;
-    }
-    this.setFriendlyName = function(friendlyName) {
-        this.friendlyName = friendlyName;
-    }
-    this.getType = function() {
-        return this.type;
-    }
-    this.setVisible = function() {
-        this.visible = true;
-    }
-    this.setHidden = function() {
-        this.visible = false;
-    }
-    this.isVisible = function() {
-        return this.visible;
-    }
-    this.addCSS = function(cls, grid) {
-        var pos = grid.getPositionOfColumn(this);
-        for (var row = 0; row < grid.rows.length; row++) {
-            grid.getRow(row).getCell(pos).cls.push(cls);
-        }
-    }
-    return this.__constructor(columnId, friendlyName, type);
-}
-var Sorter = function(data) {
-    this.__construct = function(data) {
-        this.data = data;
-        return this;
-    }
-    this.process = function(grid, callback) {
-        
-        if (typeof this.data == "function") {
-            sortableRows = grid.rows.slice(1, grid.rows.length);
-            sortableRows.sort(this.data);
-            headerRow = grid.rows[0];
-            grid.rows = sortableRows;
-            grid.rows.unshift(headerRow);
-        } else {
-            this.prepare(grid);
-            this.shuffle(grid);
-            this.cleanUp(grid);
-        }
-        PageUtil.resetPages.bind(grid)();
-        PageUtil.getTotalPages.bind(grid)();
-        callback = callback || function() {};
-        grid.render(callback.bind(grid));
-        
-    }
-    this.prepare = function(grid) {
-        
-        this.columnIndex = [];
-        this.columnFormat = [];
-        this.columnSortBy = [];
-        for (var i = 0; i < this.data.length; i++) {
-            this.columnIndex[i] = grid.getPositionOfColumn(this.data[i].column);
-            this.columnFormat[i] = grid.columns[this.columnIndex[i]].getType();
-            if (this.columnFormat[i] == DataType.String) {
-                SortUtil.getColumnIndexes.bind(grid, this.columnIndex[i])();
-                SortUtil.columnToIndexes.bind(grid, this.columnIndex[i])();
-            }
-            if (Array.isArray(this.data[i].order)) {
-                this.data[i].order = this.data[i].order.map(function(x) {
-                    return grid.columnValueToIndex[this.columnIndex[i]][x];
-                }, this);
-            }
-            this.columnSortBy[i] = this.data[i].order;
-            if (Array.isArray(this.data[i].order)) {
-                for (j = 0; j < grid.columnIndexToValue[this.columnIndex[i]].length; j++) {
-                    if (this.columnSortBy[i].indexOf(j) == -1) {
-                        this.columnSortBy[i].push(j);
-                    }
-                }
-            }
-        }
-        
-    }
-    this.cleanUp = function(grid) {
-        
-        for (i = 0; i < data.length; i++) {
-            if (this.columnFormat[i] == DataType.String) {
-                SortUtil.indexesToColumn.bind(grid, this.columnIndex[i])();
-            }
-        }
-        
-    }
-    this.shuffle = function(grid) {
-        
-        grid.rows.sort(function(a, b) {
-            if (a.getCell(this.columnIndex[0]).row == 0) {
-                return -1;
-            }
-            if (b.getCell(this.columnIndex[0]).row == 0) {
-                return 1;
-            }
-            for (i = 0; i < this.columnIndex.length; i++) {
-                if (Array.isArray(this.columnSortBy[i])) {
-                    value_a = this.columnSortBy[i].indexOf(a.getCell(this.columnIndex[i]).getRawValue());
-                    value_b = this.columnSortBy[i].indexOf(b.getCell(this.columnIndex[i]).getRawValue());
-                    if (value_a == -1) {
-                        value_a = this.columnSortBy[i].length;
-                    }
-                    if (value_b == -1) {
-                        value_b = this.columnSortBy[i].length;
-                    }
-                    if (value_a != value_b) {
-                        return value_a - value_b;
-                    }
-                } else {
-                    value_a = a.getCell(this.columnIndex[i]).getRawValue();
-                    value_b = b.getCell(this.columnIndex[i]).getRawValue();
-                    if (value_a != value_b) {
-                        if (this.columnSortBy[i]) {
-                            return value_a - value_b;
-                        } else {
-                            return value_b - value_a;
-                        }
-                    }
-                }
-            }
+
+    // Selectable cells
+    $(this).find('tbody').selectable({
+      delay: 50,
+      stop: function(event, ui) {
+        $(this).click(function (e) {
+          if (!$(e.target).hasClass('ui-selectable')) {
+            $(this).find('.ui-selected').removeClass('ui-selected');
+          }
         }.bind(this));
-        
+      }.bind(this)
+    });
+
+    PersistenceUtil.editing.bind(this)();
+    PersistenceUtil.dates.bind(this)();
+    PersistenceUtil.checkbox.bind(this)();
+
+    // Right click context menu
+    $(this).find('th.AdaptableGrid-header').contextmenu(function (e) {
+      blotter_id = $(e.target).attr('blotter');
+      parts = blotter_id.split('abjs:')[1].split(":");
+      col = parseInt(parts[1]);
+      this.options.onrightclick(this.columns[col].getId());
+    }.bind(this));
+
+  }
+
+  /**
+   * Adds any styles necessary to cells
+   * @returns {void}
+   */
+  this.applyStyles = function () {
+    $(this).addClass('blotter-grid');
+  }
+
+  /**
+   * Returns the selected cells
+   * @returns {Cell[]}
+   */
+  this.getSelectedCells = function () {
+    this.options.debug.start("AdaptableGrid.getSelectedCells");
+    els = $(blotter).find('td.ui-selected').map(function (i, el) {
+      return blotter.elementToCell(el);
+    });
+    this.options.debug.end("AdaptableGrid.getSelectedCells");
+    return els;
+  }
+
+  /**
+   * Finds the HTML tag within the grid and returns the jQuery elements
+   * @param {integer} row - The row of the cell
+   * @param {integer} col - The column of the cell
+   * @returns {jQuery}
+   */
+  this.cellToElement = function (row, col) {
+    return $(this).find('[blotter="abjs:' + row + ":" + col + '"]');
+  }
+
+  /**
+   * Returns the cell from the jQuery element
+   * @param {jQuery} el - The DOM element
+   * @returns {Cell}
+   */
+  this.elementToCell = function (el) {
+    blotter_id = $(el).attr('blotter');
+    parts = blotter_id.split('abjs:')[1].split(":");
+    row = parseInt(parts[0]);
+    col = parseInt(parts[1]);
+    return this.getRowFromId(row).getCell(col);
+  }
+
+  /**
+   * Returns a Row object for this row
+   * @param {integer} index - The row index, after sorting/pages etc
+   * @returns {Row}
+   */
+  this.getRow = function (row) {
+    return this.rows[row];
+  }
+
+  /**
+   * Returns the current placement of the column given by the identifier
+   * The first columns has position 0
+   * @param {Column} column - The column object 
+   * @returns {integer}
+   */
+  this.getPositionOfColumn = function (column) {
+    return this.columns.indexOf(column);
+  }
+
+  /**
+   * Returns the Column object with the given columnId
+   * @param {string} columnId - The column identifier
+   * @returns {Column}
+   */
+  this.getColumnFromId = function (columnId) {
+    for (var i=0; i<this.columns.length; i++) {
+      if (this.columns[i].getId() == columnId) {
+        return this.columns[i];
+      }
     }
-    return this.__construct(data);
+    return -1;
+  }
+
+  /**
+   * Returns the current placement of the row given by the identifier
+   * The first row (i.e. header) has position 0
+   * Note: returns -1 if hidden
+   * @param {Row} row - The row object
+   * @returns {integer}
+   */
+  this.getPositionOfRow = function (row) {
+    return this.rows.indexOf(row);
+  }
+
+  /**
+   * Returns the Row object with the given rowId
+   * @param {string} rowId - The row identifier
+   * @returns {Row}
+   */
+  this.getRowFromId = function (rowId) {
+    for (var i=0; i<this.rows.length; i++) {
+      if (this.getRow(i).getId() == rowId) {
+        return this.getRow(i);
+      }
+    }
+    for (var i=0; i<this.hiddenRows.length; i++) {
+      if (this.hiddenRows[i].getId() == rowId) {
+        return this.hiddenRows[i];
+      }
+    }
+    for (var i=0; i<this.filteredOutRows.length; i++) {
+      if (this.filteredOutRows[i].getId() == rowId) {
+        return this.filteredOutRows[i];
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Returns the DataType corresponding to the given configuration
+   * @param {string} type - The data type in string form
+   * @return {DataType}
+   */
+  this.getDataType = function (type) {
+    switch (type) {
+      case "text": return DataType.String;
+      case "num": return DataType.Number;
+      case "date": return DataType.Date;
+      case "checkbox": return DataType.Boolean;
+    }
+  }
+
+  /**
+   * Returns the list of Rows which are visible
+   * @return {Row[]}
+   */
+  this.getVisibleRows = function () {
+    return this.rows;
+  }
+
+  /**
+   * Returns the list of Rows which are hidden
+   * @return {Row[]}
+   */
+  this.getHiddenRows = function () {
+    return this.hiddenRows;
+  }
+
+  /**
+   * Returns the list of all Columns
+   * @return {Column[]}
+   */
+  this.getAllColumns = function () {
+    return this.columns;
+  }
+
+  /**
+   * Returns the list of Columns which are visible
+   * @return {Column[]}
+   */
+  this.getVisibleColumns = function () {
+    return $.grep(this.getAllColumns(), function (i) {
+      return i.isVisible();
+    });
+  }
+
+  /**
+   * Returns the list of Columns which are hidden
+   * @return {Column[]}
+   */
+  this.getHiddenColumns = function () {
+    return $.grep(this.columns, function (i) {
+      return !i.isVisible();
+    });
+  }
+
+  /**
+   * Reorders the table columns according to the input array
+   * @param {string[]} ids - The ordered column IDs
+   * @return {void}
+   */
+  this.newColumnOrder = function (ids) {
+    this.options.debug.start("AdaptableGrid.newColumnOrder");
+    for (var i=0; i<this.rows.length; i++) {
+      var newData = [];
+      for (var j=0; j<this.getRow(i).getData().length; j++) {
+        var newIndex = ids.indexOf(this.columns[j].getId());
+        newData[newIndex] = this.getRow(i).getCell(j);
+      }
+      this.rows[i].data = newData;
+    }
+    this.columns.sort(function (a, b) {
+      return ids.indexOf(b.getId()) - ids.indexOf(a.getId());
+    });
+    this.options.debug.end("AdaptableGrid.newColumnOrder");
+  }
+
+  /**
+   * Clear filtered rows
+   * @returns {void}
+   */
+  this.clearFiltered = function () {
+    this.rows = this.rows.concat(this.filteredOutRows);
+    this.filteredOutRows = [];
+  }
+
+  /**
+   * Adds the given rows to the filteredRows array
+   * If the array is not empty already, only insert the intersection
+   * @param {Row[]} rs - The rows which passed the search/filter test
+   * @returns {void}
+   */
+  this.addFilter = function (rs) {
+    for (var i=1; i<this.rows.length; i++) {
+      thisRow = this.rows[i];
+      if (rs.indexOf(thisRow) == -1) {
+        this.rows.splice(i, 1);
+        this.filteredOutRows.push(thisRow);
+        i--;
+      }
+    }
+  }
+
+  return this.__constructor(options);
+
 }
-var Cell = function() {
-    this.__constructor = function() {
-        this.cls = [];
-    }
-    this.setValue = function(v) {
-        this.val = v;
-    }
-    this.getValuePairs = function() {
-        return [this.getRawValue(), this.getFormattedValue()];
-    }
-    this.getRawValue = function() {
-        return this.val;
-    }
-    this.setType = function(t) {
-        this.type = t;
-    }
-    this.setFormat = function(f) {
-        this.format = f;
-    }
-    this.getType = function() {
-        return this.type;
-    }
-    this.getFormat = function() {
-        return this.format;
-    }
-    this.getFormattedValue = function(grid) {
-        switch (this.type) {
-            case DataType.Number:
-                return numeral(this.getRawValue()).format(this.format);
-            case DataType.Date:
-                return '<input type="text" class="invisible adaptablegrid-datepicker" blotter-format="' + this.format + '"' + 'readonly="readonly" value="' + moment(this.getRawValue()).format(this.format) + '" />';
-            case DataType.Boolean:
-                return '<input type="checkbox" class="adaptablegrid-checkbox" ' + (this.getRawValue() ? 'checked="checked"' : '') + ' />';
-            default:
-                return this.getRawValue();
+/**
+ * An object representing an individual cell in the grid
+ * @class
+ * @returns {Cell}
+ */
+var Cell = function () {
+
+  this.__constructor = function () {
+    this.cls = [];
+    this.readonly = false;
+  }
+
+  /**
+   * Sets the value of the current cell
+   * @param {any} v - Any type can be in the cell
+   * @returns {void}
+   */
+  this.setValue = function (v) {
+    this.val = v;
+  }
+
+  /**
+   * Gets both the raw and formatted value of the current cell
+   * @returns {any[]}
+   */
+  this.getValuePairs = function () {
+    return [this.getRawValue(), this.getFormattedValue()];
+  }
+
+  /**
+   * Gets the value of the current cell
+   * @returns {any}
+   */
+  this.getRawValue = function () {
+    return this.val;
+  }
+
+  /**
+   * Sets the type of the current cell
+   * @param {string} type - The type, out of: text, num, date, checkbox
+   * @returns {void}
+   */
+  this.setType = function (t) {
+    this.type = t;
+  }
+
+  /**
+   * Sets the format of the current cell
+   * @param {string} format - The format which will be handled by 3rd party scripts
+   * @returns {void}
+   */
+  this.setFormat = function (f) {
+    this.format = f;
+  }
+
+  /**
+   * Gets the type of the current cell
+   * @returns {string}
+   */
+  this.getType = function () {
+    return this.type;
+  }
+
+  /**
+   * Gets the format of the current cell
+   * @returns {string}
+   */
+  this.getFormat = function () {
+    return this.format;
+  }
+
+  /**
+   * Sets this cell to be read-only
+   * @returns {void}
+   */
+  this.setReadOnly = function () {
+    this.readonly = true;
+  }
+
+  /**
+   * Returns true if this cell is read-only
+   * @returns {boolean}
+   */
+  this.isReadOnly = function () {
+    return this.readonly;
+  }
+
+  /**
+   * Displays the value into the correct displayed form, using the given format
+   * @param {AdaptableGrid} grid - A reference to the containing grid
+   * @returns {string}
+   */
+  this.getFormattedValue = function (grid) {
+    switch (this.type) {
+      case DataType.Number:
+        if (this.format == "" || this.format == null || this.format == undefined) {
+          return this.getRawValue();
         }
+        else {
+          return numeral(this.getRawValue()).format(this.format);
+        }
+      case DataType.Date:
+        return '<input type="text" class="invisible AdaptableGrid-datepicker" blotter-format="'+this.format+'"' +
+            'readonly="readonly" value="' + moment(this.getRawValue()).format(this.format) + '" />';
+      case DataType.Boolean:
+        return '<input type="checkbox" class="AdaptableGrid-checkbox" '+(this.getRawValue() ? 'checked="checked"' : '')+' />';
+      default:
+        return this.getRawValue();
     }
-    return this.__constructor();
+  }
+
+  return this.__constructor();
+
 }
-var CurrencyUtil = {
-    formatNumber: function(num, currency) {
-        currency_obj = CurrencyUtil.data()[currency];
-        if (typeof currency_obj == "undefined") {
-            return num.toFixed(2) + " " + currency;
-        } else {
-            return currency_obj["symbol"] + num.toFixed(currency_obj["decimal_digits"]);
-        }
-    },
-    data: function() {
-        return {
-            USD: {
-                symbol: "$",
-                name: "US Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "USD"
-            },
-            CAD: {
-                symbol: "CA$",
-                name: "Canadian Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "CAD"
-            },
-            EUR: {
-                symbol: "€",
-                name: "Euro",
-                symbol_native: "€",
-                decimal_digits: 2,
-                code: "EUR"
-            },
-            AED: {
-                symbol: "AED",
-                name: "United Arab Emirates Dirham",
-                symbol_native: "د.إ.‏",
-                decimal_digits: 2,
-                code: "AED"
-            },
-            AFN: {
-                symbol: "Af",
-                name: "Afghan Afghani",
-                symbol_native: "؋",
-                decimal_digits: 0,
-                code: "AFN"
-            },
-            ALL: {
-                symbol: "ALL",
-                name: "Albanian Lek",
-                symbol_native: "Lek",
-                decimal_digits: 0,
-                code: "ALL"
-            },
-            AMD: {
-                symbol: "AMD",
-                name: "Armenian Dram",
-                symbol_native: "դր.",
-                decimal_digits: 0,
-                code: "AMD"
-            },
-            ARS: {
-                symbol: "AR$",
-                name: "Argentine Peso",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "ARS"
-            },
-            AUD: {
-                symbol: "AU$",
-                name: "Australian Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "AUD"
-            },
-            AZN: {
-                symbol: "man.",
-                name: "Azerbaijani Manat",
-                symbol_native: "ман.",
-                decimal_digits: 2,
-                code: "AZN"
-            },
-            BAM: {
-                symbol: "KM",
-                name: "Bosnia-Herzegovina Convertible Mark",
-                symbol_native: "KM",
-                decimal_digits: 2,
-                code: "BAM"
-            },
-            BDT: {
-                symbol: "Tk",
-                name: "Bangladeshi Taka",
-                symbol_native: "৳",
-                decimal_digits: 2,
-                code: "BDT"
-            },
-            BGN: {
-                symbol: "BGN",
-                name: "Bulgarian Lev",
-                symbol_native: "лв.",
-                decimal_digits: 2,
-                code: "BGN"
-            },
-            BHD: {
-                symbol: "BD",
-                name: "Bahraini Dinar",
-                symbol_native: "د.ب.‏",
-                decimal_digits: 3,
-                code: "BHD"
-            },
-            BIF: {
-                symbol: "FBu",
-                name: "Burundian Franc",
-                symbol_native: "FBu",
-                decimal_digits: 0,
-                code: "BIF"
-            },
-            BND: {
-                symbol: "BN$",
-                name: "Brunei Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "BND"
-            },
-            BOB: {
-                symbol: "Bs",
-                name: "Bolivian Boliviano",
-                symbol_native: "Bs",
-                decimal_digits: 2,
-                code: "BOB"
-            },
-            BRL: {
-                symbol: "R$",
-                name: "Brazilian Real",
-                symbol_native: "R$",
-                decimal_digits: 2,
-                code: "BRL"
-            },
-            BWP: {
-                symbol: "BWP",
-                name: "Botswanan Pula",
-                symbol_native: "P",
-                decimal_digits: 2,
-                code: "BWP"
-            },
-            BYR: {
-                symbol: "BYR",
-                name: "Belarusian Ruble",
-                symbol_native: "BYR",
-                decimal_digits: 0,
-                code: "BYR"
-            },
-            BZD: {
-                symbol: "BZ$",
-                name: "Belize Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "BZD"
-            },
-            CDF: {
-                symbol: "CDF",
-                name: "Congolese Franc",
-                symbol_native: "FrCD",
-                decimal_digits: 2,
-                code: "CDF"
-            },
-            CHF: {
-                symbol: "CHF",
-                name: "Swiss Franc",
-                symbol_native: "CHF",
-                decimal_digits: 2,
-                code: "CHF"
-            },
-            CLP: {
-                symbol: "CL$",
-                name: "Chilean Peso",
-                symbol_native: "$",
-                decimal_digits: 0,
-                code: "CLP"
-            },
-            CNY: {
-                symbol: "CN¥",
-                name: "Chinese Yuan",
-                symbol_native: "CN¥",
-                decimal_digits: 2,
-                code: "CNY"
-            },
-            COP: {
-                symbol: "CO$",
-                name: "Colombian Peso",
-                symbol_native: "$",
-                decimal_digits: 0,
-                code: "COP"
-            },
-            CRC: {
-                symbol: "₡",
-                name: "Costa Rican Colón",
-                symbol_native: "₡",
-                decimal_digits: 0,
-                code: "CRC"
-            },
-            CVE: {
-                symbol: "CV$",
-                name: "Cape Verdean Escudo",
-                symbol_native: "CV$",
-                decimal_digits: 2,
-                code: "CVE"
-            },
-            CZK: {
-                symbol: "Kč",
-                name: "Czech Republic Koruna",
-                symbol_native: "Kč",
-                decimal_digits: 2,
-                code: "CZK"
-            },
-            DJF: {
-                symbol: "Fdj",
-                name: "Djiboutian Franc",
-                symbol_native: "Fdj",
-                decimal_digits: 0,
-                code: "DJF"
-            },
-            DKK: {
-                symbol: "Dkr",
-                name: "Danish Krone",
-                symbol_native: "kr",
-                decimal_digits: 2,
-                code: "DKK"
-            },
-            DOP: {
-                symbol: "RD$",
-                name: "Dominican Peso",
-                symbol_native: "RD$",
-                decimal_digits: 2,
-                code: "DOP"
-            },
-            DZD: {
-                symbol: "DA",
-                name: "Algerian Dinar",
-                symbol_native: "د.ج.‏",
-                decimal_digits: 2,
-                code: "DZD"
-            },
-            EEK: {
-                symbol: "Ekr",
-                name: "Estonian Kroon",
-                symbol_native: "kr",
-                decimal_digits: 2,
-                code: "EEK"
-            },
-            EGP: {
-                symbol: "EGP",
-                name: "Egyptian Pound",
-                symbol_native: "ج.م.‏",
-                decimal_digits: 2,
-                code: "EGP"
-            },
-            ERN: {
-                symbol: "Nfk",
-                name: "Eritrean Nakfa",
-                symbol_native: "Nfk",
-                decimal_digits: 2,
-                code: "ERN"
-            },
-            ETB: {
-                symbol: "Br",
-                name: "Ethiopian Birr",
-                symbol_native: "Br",
-                decimal_digits: 2,
-                code: "ETB"
-            },
-            GBP: {
-                symbol: "£",
-                name: "British Pound Sterling",
-                symbol_native: "£",
-                decimal_digits: 2,
-                code: "GBP"
-            },
-            GEL: {
-                symbol: "GEL",
-                name: "Georgian Lari",
-                symbol_native: "GEL",
-                decimal_digits: 2,
-                code: "GEL"
-            },
-            GHS: {
-                symbol: "GH₵",
-                name: "Ghanaian Cedi",
-                symbol_native: "GH₵",
-                decimal_digits: 2,
-                code: "GHS"
-            },
-            GNF: {
-                symbol: "FG",
-                name: "Guinean Franc",
-                symbol_native: "FG",
-                decimal_digits: 0,
-                code: "GNF"
-            },
-            GTQ: {
-                symbol: "GTQ",
-                name: "Guatemalan Quetzal",
-                symbol_native: "Q",
-                decimal_digits: 2,
-                code: "GTQ"
-            },
-            HKD: {
-                symbol: "HK$",
-                name: "Hong Kong Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "HKD"
-            },
-            HNL: {
-                symbol: "HNL",
-                name: "Honduran Lempira",
-                symbol_native: "L",
-                decimal_digits: 2,
-                code: "HNL"
-            },
-            HRK: {
-                symbol: "kn",
-                name: "Croatian Kuna",
-                symbol_native: "kn",
-                decimal_digits: 2,
-                code: "HRK"
-            },
-            HUF: {
-                symbol: "Ft",
-                name: "Hungarian Forint",
-                symbol_native: "Ft",
-                decimal_digits: 0,
-                code: "HUF"
-            },
-            IDR: {
-                symbol: "Rp",
-                name: "Indonesian Rupiah",
-                symbol_native: "Rp",
-                decimal_digits: 0,
-                code: "IDR"
-            },
-            ILS: {
-                symbol: "₪",
-                name: "Israeli New Sheqel",
-                symbol_native: "₪",
-                decimal_digits: 2,
-                code: "ILS"
-            },
-            INR: {
-                symbol: "Rs",
-                name: "Indian Rupee",
-                symbol_native: "টকা",
-                decimal_digits: 2,
-                code: "INR"
-            },
-            IQD: {
-                symbol: "IQD",
-                name: "Iraqi Dinar",
-                symbol_native: "د.ع.‏",
-                decimal_digits: 0,
-                code: "IQD"
-            },
-            IRR: {
-                symbol: "IRR",
-                name: "Iranian Rial",
-                symbol_native: "﷼",
-                decimal_digits: 0,
-                code: "IRR"
-            },
-            ISK: {
-                symbol: "Ikr",
-                name: "Icelandic Króna",
-                symbol_native: "kr",
-                decimal_digits: 0,
-                code: "ISK"
-            },
-            JMD: {
-                symbol: "J$",
-                name: "Jamaican Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "JMD"
-            },
-            JOD: {
-                symbol: "JD",
-                name: "Jordanian Dinar",
-                symbol_native: "د.أ.‏",
-                decimal_digits: 3,
-                code: "JOD"
-            },
-            JPY: {
-                symbol: "¥",
-                name: "Japanese Yen",
-                symbol_native: "￥",
-                decimal_digits: 0,
-                code: "JPY"
-            },
-            KES: {
-                symbol: "Ksh",
-                name: "Kenyan Shilling",
-                symbol_native: "Ksh",
-                decimal_digits: 2,
-                code: "KES"
-            },
-            KHR: {
-                symbol: "KHR",
-                name: "Cambodian Riel",
-                symbol_native: "៛",
-                decimal_digits: 2,
-                code: "KHR"
-            },
-            KMF: {
-                symbol: "CF",
-                name: "Comorian Franc",
-                symbol_native: "FC",
-                decimal_digits: 0,
-                code: "KMF"
-            },
-            KRW: {
-                symbol: "₩",
-                name: "South Korean Won",
-                symbol_native: "₩",
-                decimal_digits: 0,
-                code: "KRW"
-            },
-            KWD: {
-                symbol: "KD",
-                name: "Kuwaiti Dinar",
-                symbol_native: "د.ك.‏",
-                decimal_digits: 3,
-                code: "KWD"
-            },
-            KZT: {
-                symbol: "KZT",
-                name: "Kazakhstani Tenge",
-                symbol_native: "тңг.",
-                decimal_digits: 2,
-                code: "KZT"
-            },
-            LBP: {
-                symbol: "LB£",
-                name: "Lebanese Pound",
-                symbol_native: "ل.ل.‏",
-                decimal_digits: 0,
-                code: "LBP"
-            },
-            LKR: {
-                symbol: "SLRs",
-                name: "Sri Lankan Rupee",
-                symbol_native: "SL Re",
-                decimal_digits: 2,
-                code: "LKR"
-            },
-            LTL: {
-                symbol: "Lt",
-                name: "Lithuanian Litas",
-                symbol_native: "Lt",
-                decimal_digits: 2,
-                code: "LTL"
-            },
-            LVL: {
-                symbol: "Ls",
-                name: "Latvian Lats",
-                symbol_native: "Ls",
-                decimal_digits: 2,
-                code: "LVL"
-            },
-            LYD: {
-                symbol: "LD",
-                name: "Libyan Dinar",
-                symbol_native: "د.ل.‏",
-                decimal_digits: 3,
-                code: "LYD"
-            },
-            MAD: {
-                symbol: "MAD",
-                name: "Moroccan Dirham",
-                symbol_native: "د.م.‏",
-                decimal_digits: 2,
-                code: "MAD"
-            },
-            MDL: {
-                symbol: "MDL",
-                name: "Moldovan Leu",
-                symbol_native: "MDL",
-                decimal_digits: 2,
-                code: "MDL"
-            },
-            MGA: {
-                symbol: "MGA",
-                name: "Malagasy Ariary",
-                symbol_native: "MGA",
-                decimal_digits: 0,
-                code: "MGA"
-            },
-            MKD: {
-                symbol: "MKD",
-                name: "Macedonian Denar",
-                symbol_native: "MKD",
-                decimal_digits: 2,
-                code: "MKD"
-            },
-            MMK: {
-                symbol: "MMK",
-                name: "Myanma Kyat",
-                symbol_native: "K",
-                decimal_digits: 0,
-                code: "MMK"
-            },
-            MOP: {
-                symbol: "MOP$",
-                name: "Macanese Pataca",
-                symbol_native: "MOP$",
-                decimal_digits: 2,
-                code: "MOP"
-            },
-            MUR: {
-                symbol: "MURs",
-                name: "Mauritian Rupee",
-                symbol_native: "MURs",
-                decimal_digits: 0,
-                code: "MUR"
-            },
-            MXN: {
-                symbol: "MX$",
-                name: "Mexican Peso",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "MXN"
-            },
-            MYR: {
-                symbol: "RM",
-                name: "Malaysian Ringgit",
-                symbol_native: "RM",
-                decimal_digits: 2,
-                code: "MYR"
-            },
-            MZN: {
-                symbol: "MTn",
-                name: "Mozambican Metical",
-                symbol_native: "MTn",
-                decimal_digits: 2,
-                code: "MZN"
-            },
-            NAD: {
-                symbol: "N$",
-                name: "Namibian Dollar",
-                symbol_native: "N$",
-                decimal_digits: 2,
-                code: "NAD"
-            },
-            NGN: {
-                symbol: "₦",
-                name: "Nigerian Naira",
-                symbol_native: "₦",
-                decimal_digits: 2,
-                code: "NGN"
-            },
-            NIO: {
-                symbol: "C$",
-                name: "Nicaraguan Córdoba",
-                symbol_native: "C$",
-                decimal_digits: 2,
-                code: "NIO"
-            },
-            NOK: {
-                symbol: "Nkr",
-                name: "Norwegian Krone",
-                symbol_native: "kr",
-                decimal_digits: 2,
-                code: "NOK"
-            },
-            NPR: {
-                symbol: "NPRs",
-                name: "Nepalese Rupee",
-                symbol_native: "नेरू",
-                decimal_digits: 2,
-                code: "NPR"
-            },
-            NZD: {
-                symbol: "NZ$",
-                name: "New Zealand Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "NZD"
-            },
-            OMR: {
-                symbol: "OMR",
-                name: "Omani Rial",
-                symbol_native: "ر.ع.‏",
-                decimal_digits: 3,
-                code: "OMR"
-            },
-            PAB: {
-                symbol: "B/.",
-                name: "Panamanian Balboa",
-                symbol_native: "B/.",
-                decimal_digits: 2,
-                code: "PAB"
-            },
-            PEN: {
-                symbol: "S/.",
-                name: "Peruvian Nuevo Sol",
-                symbol_native: "S/.",
-                decimal_digits: 2,
-                code: "PEN"
-            },
-            PHP: {
-                symbol: "₱",
-                name: "Philippine Peso",
-                symbol_native: "₱",
-                decimal_digits: 2,
-                code: "PHP"
-            },
-            PKR: {
-                symbol: "PKRs",
-                name: "Pakistani Rupee",
-                symbol_native: "₨",
-                decimal_digits: 0,
-                code: "PKR"
-            },
-            PLN: {
-                symbol: "zł",
-                name: "Polish Zloty",
-                symbol_native: "zł",
-                decimal_digits: 2,
-                code: "PLN"
-            },
-            PYG: {
-                symbol: "₲",
-                name: "Paraguayan Guarani",
-                symbol_native: "₲",
-                decimal_digits: 0,
-                code: "PYG"
-            },
-            QAR: {
-                symbol: "QR",
-                name: "Qatari Rial",
-                symbol_native: "ر.ق.‏",
-                decimal_digits: 2,
-                code: "QAR"
-            },
-            RON: {
-                symbol: "RON",
-                name: "Romanian Leu",
-                symbol_native: "RON",
-                decimal_digits: 2,
-                code: "RON"
-            },
-            RSD: {
-                symbol: "din.",
-                name: "Serbian Dinar",
-                symbol_native: "дин.",
-                decimal_digits: 0,
-                code: "RSD"
-            },
-            RUB: {
-                symbol: "RUB",
-                name: "Russian Ruble",
-                symbol_native: "руб.",
-                decimal_digits: 2,
-                code: "RUB"
-            },
-            RWF: {
-                symbol: "RWF",
-                name: "Rwandan Franc",
-                symbol_native: "FR",
-                decimal_digits: 0,
-                code: "RWF"
-            },
-            SAR: {
-                symbol: "SR",
-                name: "Saudi Riyal",
-                symbol_native: "ر.س.‏",
-                decimal_digits: 2,
-                code: "SAR"
-            },
-            SDG: {
-                symbol: "SDG",
-                name: "Sudanese Pound",
-                symbol_native: "SDG",
-                decimal_digits: 2,
-                code: "SDG"
-            },
-            SEK: {
-                symbol: "Skr",
-                name: "Swedish Krona",
-                symbol_native: "kr",
-                decimal_digits: 2,
-                code: "SEK"
-            },
-            SGD: {
-                symbol: "S$",
-                name: "Singapore Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "SGD"
-            },
-            SOS: {
-                symbol: "Ssh",
-                name: "Somali Shilling",
-                symbol_native: "Ssh",
-                decimal_digits: 0,
-                code: "SOS"
-            },
-            SYP: {
-                symbol: "SY£",
-                name: "Syrian Pound",
-                symbol_native: "ل.س.‏",
-                decimal_digits: 0,
-                code: "SYP"
-            },
-            THB: {
-                symbol: "฿",
-                name: "Thai Baht",
-                symbol_native: "฿",
-                decimal_digits: 2,
-                code: "THB"
-            },
-            TND: {
-                symbol: "DT",
-                name: "Tunisian Dinar",
-                symbol_native: "د.ت.‏",
-                decimal_digits: 3,
-                code: "TND"
-            },
-            TOP: {
-                symbol: "T$",
-                name: "Tongan Paʻanga",
-                symbol_native: "T$",
-                decimal_digits: 2,
-                code: "TOP"
-            },
-            TRY: {
-                symbol: "TL",
-                name: "Turkish Lira",
-                symbol_native: "TL",
-                decimal_digits: 2,
-                code: "TRY"
-            },
-            TTD: {
-                symbol: "TT$",
-                name: "Trinidad and Tobago Dollar",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "TTD"
-            },
-            TWD: {
-                symbol: "NT$",
-                name: "New Taiwan Dollar",
-                symbol_native: "NT$",
-                decimal_digits: 2,
-                code: "TWD"
-            },
-            TZS: {
-                symbol: "TSh",
-                name: "Tanzanian Shilling",
-                symbol_native: "TSh",
-                decimal_digits: 0,
-                code: "TZS"
-            },
-            UAH: {
-                symbol: "₴",
-                name: "Ukrainian Hryvnia",
-                symbol_native: "₴",
-                decimal_digits: 2,
-                code: "UAH"
-            },
-            UGX: {
-                symbol: "USh",
-                name: "Ugandan Shilling",
-                symbol_native: "USh",
-                decimal_digits: 0,
-                code: "UGX"
-            },
-            UYU: {
-                symbol: "$U",
-                name: "Uruguayan Peso",
-                symbol_native: "$",
-                decimal_digits: 2,
-                code: "UYU"
-            },
-            UZS: {
-                symbol: "UZS",
-                name: "Uzbekistan Som",
-                symbol_native: "UZS",
-                decimal_digits: 0,
-                code: "UZS"
-            },
-            VEF: {
-                symbol: "Bs.F.",
-                name: "Venezuelan Bolívar",
-                symbol_native: "Bs.F.",
-                decimal_digits: 2,
-                code: "VEF"
-            },
-            VND: {
-                symbol: "₫",
-                name: "Vietnamese Dong",
-                symbol_native: "₫",
-                decimal_digits: 0,
-                code: "VND"
-            },
-            XAF: {
-                symbol: "FCFA",
-                name: "CFA Franc BEAC",
-                symbol_native: "FCFA",
-                decimal_digits: 0,
-                code: "XAF"
-            },
-            XOF: {
-                symbol: "CFA",
-                name: "CFA Franc BCEAO",
-                symbol_native: "CFA",
-                decimal_digits: 0,
-                code: "XOF"
-            },
-            YER: {
-                symbol: "YR",
-                name: "Yemeni Rial",
-                symbol_native: "ر.ي.‏",
-                decimal_digits: 0,
-                code: "YER"
-            },
-            ZAR: {
-                symbol: "R",
-                name: "South African Rand",
-                symbol_native: "R",
-                decimal_digits: 2,
-                code: "ZAR"
-            },
-            ZMK: {
-                symbol: "ZK",
-                name: "Zambian Kwacha",
-                symbol_native: "ZK",
-                decimal_digits: 0,
-                code: "ZMK"
-            }
-        }
+/**
+ * An object representing a column of data
+ * @class
+ * @param {any} columnId - The column identifier
+ * @param {string} friendlyName - The title of the column to display
+ * @param {DataType} type - The type of the column
+ * @returns {void}
+ */
+var Column = function (columnId, friendlyName, type) {
+  
+  this.__constructor = function (columnId, friendlyName, type) {
+    this.columnId = columnId;
+    this.friendlyName = friendlyName;
+    this.type = type;
+    this.visible = true;
+  }
+
+  /**
+   * Returns the identifier of this column
+   * @returns {string}
+   */
+  this.getId = function () {
+    return this.columnId;
+  }
+
+  /**
+   * Returns the title of this column
+   * @returns {string}
+   */
+  this.getFriendlyName = function () {
+    return this.friendlyName;
+  }
+
+  /**
+   * Changes the title of this column
+   * @param {string} friendlyName - The new name
+   * @returns {void}
+   */
+  this.setFriendlyName = function (friendlyName) {
+    this.friendlyName = friendlyName;
+  }
+
+  /**
+   * Gets the data type of this column
+   * @returns {DataType}
+   */
+  this.getType = function () {
+    return this.type;
+  }
+
+  /**
+   * Show this column
+   * @returns {void}
+   */
+  this.setVisible = function () {
+    this.visible = true;
+  }
+
+  /**
+   * Hide this column
+   * @returns {void}
+   */
+  this.setHidden = function () {
+    this.visible = false;
+  }
+
+  /**
+   * Returns whether this column is visible
+   * @returns {void}
+   */
+  this.isVisible = function () {
+    return this.visible;
+  }
+
+  /**
+   * Adds a class to all the cells in the column
+   * @param {string} class - The class name
+   * @param {AdaptableGrid} grid - The reference to the grid
+   * @returns {void}
+   */
+  this.addCSS = function (cls, grid) {
+    var pos = grid.getPositionOfColumn(this);
+    for (var row=0; row<grid.rows.length; row++) {
+      grid.getRow(row).getCell(pos).cls.push(cls);
     }
+  }
+
+  return this.__constructor(columnId, friendlyName, type);
+
 }
-var SortUtil = {
-    events: function() {
-        $(this).find('.adaptablegrid-header').addClass('adaptablegrid-sortable');
-        $(this).find('.adaptablegrid-header').on('click', SortUtil.clickColumn.bind(this));
-    },
-    clickColumn: function(header) {
-        columnIndex = $(header.target).attr('blotter').split("abjs:0:")[1];
-        if ($(header.target).hasClass('adaptablegrid-sort-asc')) {
-            c = 'adaptablegrid-sort-des';
-        } else {
-            c = 'adaptablegrid-sort-asc';
-        }
-        var s = new Sorter([{
-            column: this.columns[columnIndex],
-            order: (c == 'adaptablegrid-sort-asc')
-        }]);
-        s.process(this, function() {
-            this.cellToElement(0, columnIndex).addClass('adaptablegrid-sort').addClass(c);
-            this.options.ongridsort(s.data);
-        });
-    },
-    columnToIndexes: function(ind) {
-        
-        for (var i = 1; i < this.rows.length; i++) {
-            indexOfValue = this.columnValueToIndex[ind][this.getRow(i).getCell(ind).getRawValue()];
-            this.getRow(i).getCell(ind).setValue(indexOfValue);
-        }
-        
-    },
-    indexesToColumn: function(ind) {
-        
-        for (var i = 1; i < this.rows.length; i++) {
-            this.getRow(i).getCell(ind).setValue(this.columnIndexToValue[ind][this.getRow(i).getCell(ind).getRawValue()]);
-        }
-        
-    },
-    getColumnIndexes: function(ind) {
-        
-        if (this.columnIndexToValue[ind] == null) {
-            var tColI2V = [];
-            tColI2V = $.map(this.rows, function(i, n) {
-                if (n > 0) {
-                    return i.getCell(ind).getRawValue();
-                }
-            });
-            tColI2V = tColI2V.reduce(function(accum, current) {
-                if (accum.indexOf(current) < 0) {
-                    accum.push(current);
-                }
-                return accum;
-            }, []);
-            tColI2V.sort();
-            var key;
-            var tmpArr = {};
-            for (var i = 0; i < tColI2V.length; i++) {
-                tmpArr[tColI2V[i]] = i;
-            }
-            this.columnIndexToValue[ind] = tColI2V;
-            this.columnValueToIndex[ind] = tmpArr;
-        }
-        
-    }
+/**
+ * A enum representing different data types for cells/columns
+ * @enum {integer}
+ * @namespace
+ */
+var DataType = {
+  
+  /**
+   * Representing text types
+   * @ignore
+  */
+  String: 0,
+
+  /**
+   * Representing numerical types
+   * @ignore
+   */
+  Number: 1,
+
+  /**
+   * Either true or false, shown as checkboxes 
+   * @ignore
+   */
+  Boolean: 2,
+
+  /**
+   * Can be instantitated with a datepicker
+   * @ignore
+   */
+  Date: 3,
+
+  /**
+   * Any other types
+   * @ignore
+   */
+  Object: 4
+
 }
+/**
+ * A utility class for navigating pages
+ * @namespace
+ */
 var PageUtil = {
-    nextPage: function() {
-        
-        if (this.currentPage < this.numberOfPages) {
-            this.currentPage += 1;
-            this.render(this.options.onpagechange.bind(this, this.currentPage));
-        }
-        
-    },
-    prevPage: function() {
-        
-        if (this.currentPage > 1) {
-            this.currentPage -= 1;
-            this.render(this.options.onpagechange.bind(this, this.currentPage));
-        }
-        
-    },
-    resetPages: function() {
-        this.currentPage = 1;
-    },
-    getTotalPages: function() {
-        this.numberOfPages = Math.ceil((this.rows.length - 1) / (this.displayHeight - 1));
-    },
-    /**
-     * Adds the HTML div which contains what page we are currently on
-     * @static
-     * @this AdaptableGrid
-     * @returns {void}
-     */
-    addPages: function() {
-        $(this).append('\
-    <div class="adaptablegrid-pages noselect">\
-      Page <b class="adaptablegrid-currentpage">' + this.currentPage + '</b> of ' + this.numberOfPages + '\
-      <div class="adaptablegrid-page-prev ' + (this.currentPage == 1 ? 'adaptablegrid-page-disabled' : '') + '"></div>\
-      <div class="adaptablegrid-page-next ' + (this.currentPage == this.numberOfPages ? 'adaptablegrid-page-disabled' : '') + '">\
+
+  /**
+   * Goes to the next page and re-renders
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  nextPage: function () {
+    this.options.debug.start("PageUtil.nextPage");
+    if (this.currentPage < this.numberOfPages) {
+      this.currentPage += 1;
+      this.render(this.options.onpagechange.bind(this, this.currentPage));
+    }
+    this.options.debug.end("PageUtil.nextPage");
+  },
+
+  /**
+   * Goes to the previous page and re-renders
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  prevPage: function () {
+    this.options.debug.start("PageUtil.prevPage");
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+      this.render(this.options.onpagechange.bind(this, this.currentPage));
+    }
+    this.options.debug.end("PageUtil.prevPage");
+  },
+
+  /**
+   * Initialises the number of pages and sets the current page to 1
+   * Note: pages range from 1 - this.numberOfPages (inclusive), no zero-indexes for pages
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  resetPages: function () {
+    this.currentPage = 1;
+  },
+
+  /**
+   * Gets the total number of displayable pages
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  getTotalPages: function () {
+    this.numberOfPages = Math.ceil((this.rows.length - 1) / (this.displayHeight - 1));
+  },
+
+  /**
+   * Adds the HTML div which contains what page we are currently on
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  addPages: function () {
+    $(this).append('\
+    <div class="AdaptableGrid-pages noselect">\
+      Page <b class="AdaptableGrid-currentpage">' + this.currentPage + '</b> of ' + this.numberOfPages + '\
+      <div class="AdaptableGrid-page-prev ' + (this.currentPage==1?'AdaptableGrid-page-disabled':'') + '"></div>\
+      <div class="AdaptableGrid-page-next ' + (this.currentPage==this.numberOfPages?'AdaptableGrid-page-disabled':'') + '">\
       </div>\
     </div>');
-        $(this).find('.adaptablegrid-currentpage').css('width', this.numberOfPages.toString().length * 8);
-    },
-    /**
-     * Add event listeners for moving forward and backwards in pages
-     * @static
-     * @this AdaptableGrid
-     * @returns {void}
-     */
-    events: function() {
-        // Bind standard click events
-        $(this).find('.adaptablegrid-page-prev').on('click', PageUtil.prevPage.bind(this));
-        $(this).find('.adaptablegrid-page-next').on('click', PageUtil.nextPage.bind(this));
-        // Holding down the mouse on previous should increase speed of moving back pages
-        $(this).find('.adaptablegrid-page-prev').on('mousedown', function() {
-            // After 100ms of holding down the mouse, run an interval to move back a page every 100ms
-            clickAndHold = setTimeout(function() {
-                clickAndHold = setInterval(PageUtil.prevPage.bind(this), 100);
-            }.bind(this), 100);
-        }.bind(this)).on('mouseup mouseleave', function() {
-            // Clear the timeout when you release the mouse
-            if (typeof clickAndHold != "undefined") {
-                clearTimeout(clickAndHold);
-            }
-        });
-        // Holding down the mouse on next should increase speed of moving forward pages
-        $(this).find('.adaptablegrid-page-next').on('mousedown', function() {
-            // After 100ms of holding down the mouse, run an interval to move back a page every 100ms
-            clickAndHold = setTimeout(function() {
-                clickAndHold = setInterval(PageUtil.nextPage.bind(this), 100);
-            }.bind(this), 100);
-        }.bind(this)).on('mouseup mouseleave', function() {
-            // Clear the timeout when you release the mouse
-            if (typeof clickAndHold != "undefined") {
-                clearTimeout(clickAndHold);
-            }
-        });
-    }
+    $(this).find('.AdaptableGrid-currentpage').css('width', this.numberOfPages.toString().length * 8);
+  },
+
+  /**
+   * Add event listeners for moving forward and backwards in pages
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  events: function () {
+    
+    // Bind standard click events
+    $(this).find('.AdaptableGrid-page-prev').on('click', PageUtil.prevPage.bind(this));
+    $(this).find('.AdaptableGrid-page-next').on('click', PageUtil.nextPage.bind(this));
+    
+    // Holding down the mouse on previous should increase speed of moving back pages
+    $(this).find('.AdaptableGrid-page-prev').on('mousedown', function () {
+      
+      // After 100ms of holding down the mouse, run an interval to move back a page every 100ms
+      clickAndHold = setTimeout(function () {
+        clickAndHold = setInterval(PageUtil.prevPage.bind(this), 100);
+      }.bind(this), 100);
+
+    }.bind(this)).on('mouseup mouseleave', function () {
+      
+      // Clear the timeout when you release the mouse
+      if (typeof clickAndHold != "undefined") {
+        clearTimeout(clickAndHold);
+      }
+
+    });
+
+    // Holding down the mouse on next should increase speed of moving forward pages
+    $(this).find('.AdaptableGrid-page-next').on('mousedown', function () {
+      
+      // After 100ms of holding down the mouse, run an interval to move back a page every 100ms
+      clickAndHold = setTimeout(function () {
+        clickAndHold = setInterval(PageUtil.nextPage.bind(this), 100);
+      }.bind(this), 100);
+
+    }.bind(this)).on('mouseup mouseleave', function () {
+      
+      // Clear the timeout when you release the mouse
+      if (typeof clickAndHold != "undefined") {
+        clearTimeout(clickAndHold);
+      }
+
+    });
+    
+  }
+
 }
+/**
+ * A utility class with methods to store and save data when editing
+ * @namespace
+ */
 var PersistenceUtil = {
-    editing: function() {
-        
-        $(this).find('tbody td[blotter]').each(function(i, e) {
-            cell = this.elementToCell(e);
-            if (cell.type == DataType.String || cell.type == DataType.Number) {
-                $(e).dblclick(PersistenceUtil.editCell.bind(this, e, cell.type));
-            }
-        }.bind(this));
-        $(document).click(function(e) {
-            if (!$(e.target).parents('.abjs-editing').size()) {
-                PersistenceUtil.saveEdit.bind(this, $(this).find('.abjs-editing'))();
-            }
-        }.bind(this));
-        
+
+  /**
+   * When clicking on a cell, allow it to be edited
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  editing: function () {
+    this.options.debug.start("PersistenceUtil.editing");
+    
+    $(this).find('tbody td[blotter]').each(function (i, e) {
+      cell = this.elementToCell(e);
+      if (cell.type == DataType.String || cell.type == DataType.Number) {
+        $(e).dblclick(PersistenceUtil.editCell.bind(this, e, cell.type));
+      }
+    }.bind(this));
+
+    $(document).click(function (e) {
+      if (!$(e.target).parents('.abjs-editing').size()) {
+        // Save all other edits
+        PersistenceUtil.saveEdit.bind(this, $(this).find('.abjs-editing'))();
+      }
+    }.bind(this));
+
+    this.options.debug.end("PersistenceUtil.editing");
+  },
+
+  /**
+   * Transform regular text fields when edited
+   * @static
+   * @this AdaptableGrid
+   * @param {jQuery} el - The element to edit
+   * @param {String} type - The input type
+   * @returns {void}
+   */
+  editCell: function (el, type) {
+
+    // Activate this cell for editing
+    if (!$(el).hasClass('abjs-editing')) {
+      
+      cell = this.elementToCell(el);
+
+      // Exit if read-only
+      if (cell.isReadOnly()) {
+        return;
+      }
+
+      // Save all other edits
+      PersistenceUtil.saveEdit.bind(this, $(this).find('.abjs-editing'))();
+
+      $(el).addClass('abjs-editing');
+      val = cell.getRawValue();
+      html_type = (type == DataType.Number ? "number" : "text");
+      $(el).html('<input type="'+html_type+'" value="'+val+'" />');
+
     }
-    , editCell: function(el, type) {
-        if (!$(el).hasClass('abjs-editing')) {
-            PersistenceUtil.saveEdit.bind(this, $(this).find('.abjs-editing'))();
-            cell = this.elementToCell(el);
-            $(el).addClass('abjs-editing');
-            val = cell.getRawValue();
-            html_type = (type == DataType.Number ? "num" : "text");
-            $(el).html('<input type="' + html_type + '" value="' + val + '" />');
-        }
+
+  },
+
+  /**
+   * Restore all the elements back to their original state and
+   * save their current values in the cells property
+   * @static
+   * @this AdaptableGrid
+   * @param {jQuery} els - The elements to disable editing
+   * @returns {void}
+   */
+  saveEdit: function (els) {
+    this.options.debug.start("PersistenceUtil.saveEdit");
+    $(els).each(function (i, e) {
+      
+      cell = this.elementToCell(e);
+      oldValue = cell.getRawValue();
+      newValue = $(e).find('input').val();
+
+      if ($(e).find('input').attr('type') == "number") {
+        newValue = parseFloat(newValue);
+      }
+
+      $(e).removeClass('abjs-editing');
+
+      if (this.options.oncellchange(cell, newValue, oldValue) === false) {
+        $(e).html(cell.getFormattedValue(this));
+      }
+      else {
+        cell.setValue(newValue);
+        $(e).html(cell.getFormattedValue(this));
+      }
+      
+    }.bind(this));
+    this.options.debug.end("PersistenceUtil.saveEdit");
+  },
+
+  /**
+   * When modifying the datepicker, save the result to the grid
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  dates: function () {
+    
+    for (var i=0; i<$(this).find('.AdaptableGrid-datepicker').size(); i++) {
+      el = $(this).find('.AdaptableGrid-datepicker').eq(i);
+      el.datepicker({
+        showOn: "button",
+        buttonImageOnly: true,
+        buttonImage: "calendar.png",
+        dateFormat: el.attr('blotter-format'),
+        beforeShow: function (e, o) {
+          a = $(e).parents('[blotter]');
+          this.options.oncellenter(this.cellToElement($(e).parents('[blotter]')));
+        }.bind(this)
+      });
     }
-    , saveEdit: function(els) {
-        
-        $(els).each(function(i, e) {
-            cell = this.elementToCell(e);
-            oldValue = cell.getRawValue();
-            newValue = $(e).find('input').val();
-            if ($(e).find('input').attr('type') == "number") {
-                newValue = parseFloat(newValue);
-            }
-            $(e).removeClass('abjs-editing');
-            if (this.options.oncellchange(cell, newValue, oldValue) === false) {
-                $(e).html(cell.getFormattedValue(this));
-            } else {
-                cell.setValue(newValue);
-                $(e).html(cell.getFormattedValue(this));
-            }
-        }.bind(this));
-        
-    }
-    , dates: function() {
-        for (var i = 0; i < $(this).find('.adaptablegrid-datepicker').size(); i++) {
-            el = $(this).find('.adaptablegrid-datepicker').eq(i);
-            el.datepicker({
-                showOn: "button"
-                , buttonImageOnly: true
-                , buttonImage: "calendar.png"
-                , dateFormat: el.attr('blotter-format')
-                , beforeShow: function(e, o) {
-                    a = $(e).parents('[blotter]');
-                    this.options.oncellenter(this.cellToElement($(e).parents('[blotter]')));
-                }.bind(this)
-            });
-        }
-        $(this).find('.adaptablegrid-datepicker').on('change', function(datepicker) {
-            thisCell = $(datepicker.target).parents('td[blotter]').attr('blotter').split("abjs:")[1].split(":");
-            newValue = $(datepicker.target).val();
-            this.getRowFromId(thisCell[0]).getCell(thisCell[1]).setValue(newValue);
-            this.options.oncellchange(this.getRowFromId(thisCell[0]).getCell(thisCell[1]));
-        }.bind(this));
-    }
-    , checkbox: function() {
-        $(this).find('.adaptablegrid-checkbox').on('change', function(checkbox) {
-            thisCell = $(checkbox.target).parents('td[blotter]').attr('blotter').split("abjs:")[1].split(":");
-            newValue = $(checkbox.target).is(':checked') ? 1 : 0;
-            this.getRow(thisCell[0]).getCell(thisCell[1]).setValue(newValue);
-            this.options.oncellchange(this.getRow(thisCell[0]).getCell(thisCell[1]));
-        }.bind(this));
-    }
+
+    $(this).find('.AdaptableGrid-datepicker').on('change', function (datepicker) {
+      
+      thisCell = $(datepicker.target).parents('td[blotter]').attr('blotter').split("abjs:")[1].split(":");
+      newValue = $(datepicker.target).val();
+      this.getRowFromId(thisCell[0]).getCell(thisCell[1]).setValue(newValue);
+      this.options.oncellchange(this.getRowFromId(thisCell[0]).getCell(thisCell[1]));
+
+    }.bind(this));
+
+  },
+  
+  /**
+   * When modifying a boolean checkbox, save the result to the grid
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  checkbox: function () {
+    
+    $(this).find('.AdaptableGrid-checkbox').on('change', function (checkbox) {
+      
+      thisCell = $(checkbox.target).parents('td[blotter]').attr('blotter').split("abjs:")[1].split(":");
+      newValue = $(checkbox.target).is(':checked') ? 1 : 0;
+      this.getRow(thisCell[0]).getCell(thisCell[1]).setValue(newValue);
+      this.options.oncellchange(this.getRow(thisCell[0]).getCell(thisCell[1]));
+
+    }.bind(this));
+
+  }
+
 }
+/**
+ * A static class with utility functions for reordering columns
+ * @namespace
+ */
 var ReorderUtil = {
-    events: function() {
-        $(this).find('.adaptablegrid-header').draggable({
-            helper: 'clone'
-        });
-        $(this).find('.adaptablegrid-header').on('drag', ReorderUtil.drag.bind(this));
-        $(this).find('.adaptablegrid-header').on('dragstop', ReorderUtil.move.bind(this));
-    },
-    drag: function(event, ui) {
-        var minimumDistance = null;
-        var headers = $(this).find('.adaptablegrid-header:not(.ui-draggable-dragging)');
-        for (i = 0; i < headers.size(); i++) {
-            diff = Math.abs(ui.offset.left - (headers.eq(i).position().left + headers.eq(i).width() / 2));
-            if (diff < minimumDistance || minimumDistance == null) {
-                minimumDistance = diff;
-                $(this).find('.adaptablegrid-dropafter').removeClass('adaptablegrid-dropafter');
-                headers.eq(i).addClass('adaptablegrid-dropafter');
-            }
-        }
-    },
-    /**
-     * Triggered when the user releases the column in a given position
-     * Change the cell column structure to reflect the reorder
-     * @static
-     * @param {object} event - Details of the drag event
-     * @param {object} ui - The element being dragged
-     * @this AdaptableGrid
-     * @returns {void}
-     */
-    move: function(event, ui) {
+
+  /**
+   * Add event listeners for swapping columns
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  events: function () {
         
-        columnToInsert = parseInt($(ui.helper).attr('blotter').split("abjs:0:")[1]);
-        insertAfter = parseInt($(this).find('.adaptablegrid-dropafter').attr('blotter').split("abjs:0:")[1]);
-        if (insertAfter < columnToInsert) {
-            insertAfter += 1;
-        }
-        $(this).find('.adaptablegrid-dropafter').removeClass('adaptablegrid-dropafter');
-        this.columns.splice(insertAfter, 0, this.columns.splice(columnToInsert, 1)[0]);
-        for (i = 0; i < this.rows.length; i++) {
-            this.getRow(i).getData().splice(insertAfter, 0, this.getRow(i).getData().splice(columnToInsert, 1)[0]);
-        }
-        this.render(this.options.oncolumnupdate.bind(this, this.columns));
-        
+    $(this).find('.AdaptableGrid-header').draggable({
+      helper: 'clone'
+    });
+
+    $(this).find('.AdaptableGrid-header').on('drag', ReorderUtil.drag.bind(this));
+    $(this).find('.AdaptableGrid-header').on('dragstop', ReorderUtil.move.bind(this));
+
+  },
+
+  /**
+   * Triggered whilst the user is dragging a column header
+   * @static
+   * @param {object} event - Details of the drag event
+   * @param {object} ui - The element being dragged
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  drag: function (event, ui) {
+    
+    // Find the closest header cell to the helper
+    var minimumDistance = null;
+    var headers = $(this).find('.AdaptableGrid-header:not(.ui-draggable-dragging)');
+
+    for (i=0; i<headers.size(); i++) {
+      diff = Math.abs(ui.offset.left - (headers.eq(i).position().left + headers.eq(i).width()/2));
+      if (diff < minimumDistance || minimumDistance == null) {
+        minimumDistance = diff;
+        $(this).find('.AdaptableGrid-dropafter').removeClass('AdaptableGrid-dropafter');
+        headers.eq(i).addClass('AdaptableGrid-dropafter');
+      }
     }
+
+  },
+
+  /**
+   * Triggered when the user releases the column in a given position
+   * Change the cell column structure to reflect the reorder
+   * @static
+   * @param {object} event - Details of the drag event
+   * @param {object} ui - The element being dragged
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  move: function (event, ui) {
+    
+    this.options.debug.start("ReorderUtil.move");
+    columnToInsert = parseInt($(ui.helper).attr('blotter').split("abjs:0:")[1]);
+    insertAfter = parseInt($(this).find('.AdaptableGrid-dropafter').attr('blotter').split("abjs:0:")[1]);
+    
+    if (insertAfter < columnToInsert) {
+      insertAfter += 1;
+    }
+
+    $(this).find('.AdaptableGrid-dropafter').removeClass('AdaptableGrid-dropafter');
+    
+    this.columns.splice(insertAfter, 0, this.columns.splice(columnToInsert, 1)[0]);
+    for (i=0; i<this.rows.length; i++) {
+      this.getRow(i).getData().splice(insertAfter, 0, this.getRow(i).getData().splice(columnToInsert, 1)[0]);
+    }
+    
+    this.render(this.options.oncolumnupdate.bind(this, this.columns));
+    this.options.debug.end("ReorderUtil.move");
+
+  }
+
 }
-var DataGenerator = {
-    columns: function() {
-        return [{
-            field: "id",
-            title: "Transaction",
-            type: 'num',
-            format: "0"
-        }, {
-            field: "country",
-            title: "Country",
-            type: 'text'
-        }, {
-            field: "currency",
-            title: "Currency",
-            type: 'text'
-        }, {
-            field: "valuation",
-            title: "Valuation",
-            type: 'num',
-            format: "0.000"
-        }, {
-            field: "price",
-            title: "Price",
-            type: 'num',
-            format: "0,0.00"
-        }, {
-            field: "paid",
-            title: "Paid",
-            type: 'checkbox'
-        }, {
-            field: "created",
-            title: "Created",
-            type: 'date',
-            format: "DD/MM/YYYY"
-        }];
-    },
-    generate: function(numberOfRows) {
-        var arrCountries = ["United Kingdom", "USA", "Australia", "Israel", "Canada", "Italy", "Spain"];
-        var arrCurrencies = ["GBP", "USD", "AUD", "ILS", "CAD", "EUR", "EUR"];
-        var data = [];
-        for (var i = 0; i < numberOfRows; i++) {
-            var row = {};
-            rndNo = DataGenerator.getRndNumber(0, arrCurrencies.length);
-            row["id"] = i;
-            row["currency"] = arrCurrencies[rndNo];
-            row["price"] = (Math.random() * DataGenerator.getRndNumber(0, 1000));
-            row["country"] = arrCountries[rndNo];
-            row["valuation"] = Math.random() * DataGenerator.getRndNumber(0, 50) * (i + 1);
-            row["created"] = DataGenerator.randomDate(new Date(2000, 1, 1), new Date());
-            row["paid"] = Math.round(Math.random());
-            data.push(row);
-        }
-        return data;
-    },
-    randomDate: function(start, end) {
-        d = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-        return d.getTime();
-    },
-    getRndNumber: function(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
+/**
+ * An object representing a row of data
+ * @class
+ * @param {integer} rowId - The identifier of the row
+ * @returns {void}
+ */
+var Row = function (rowId) {
+  
+  this.constructor = function (rowId) {
+    this.rowId = rowId;
+    this.data = [];
+    this.visible = true; 
+  }
+
+  /**
+   * Gets the row identifier
+   * @returns {integer}
+   */
+  this.getId = function () {
+    return this.rowId;
+  }
+
+  /**
+   * Gets the row identifier
+   * @returns {Cell[]}
+   */
+  this.getData = function () {
+    return this.data;
+  }
+
+  /**
+   * Adds a Cell object to the row
+   * @param {Cell} cell - The cell to add
+   * @returns {void}
+   */
+  this.addCell = function (cell) {
+    this.data.push(cell);
+  }
+
+  /**
+   * Assign a Cell object to the row at a given index
+   * @param {integer} key - The position to add the Cell
+   * @param {Cell} value - The cell to add
+   * @returns {void}
+   */
+  this.setCell = function (key, value) {
+    this.data[key] = value; 
+  }
+
+  /**
+   * Gets the Cell at the given key position
+   * @param {integer} key - The cell position
+   * @returns {Cell}
+   */
+  this.getCell = function (key) {
+    return this.data[key];
+  }
+
+  /**
+   * Set the given row to be visible
+   * @param {AdaptableGrid} grid - A reference to the grid
+   * @returns {void}
+   */
+  this.setVisible = function (grid) {
+    var index = grid.hiddenRows.indexOf(this);
+    this.visible = true;
+    grid.rows.push(this);
+    grid.hiddenRows.splice(index, 1);
+  }
+
+  /**
+   * Set the given row to be hidden
+   * @param {AdaptableGrid} grid - A reference to the grid
+   * @returns {void}
+   */
+  this.setHidden = function (grid) {
+    var index = grid.getPositionOfRow(this);
+    this.visible = false;
+    grid.hiddenRows.push(this);
+    grid.rows.splice(index, 1);
+  }
+
+  /**
+   * Returns whether this row is visible or not
+   * @returns {boolean}
+   */
+  this.isVisible = function () {
+    return this.visible;
+  }
+
+  /**
+   * Adds a class to all the cells in the row
+   * @param {string} class - The class name
+   * @param {AdaptableGrid} grid - The reference to the grid
+   * @returns {void}
+   */
+  this.addCSS = function (cls, grid) {
+    for (var col=0; col<this.getData().length; col++) {
+      grid.getRow(this.getId()).getCell(col).cls.push(cls);
     }
+  }
+
+  return this.constructor(rowId);
+
 }
-$.fn.AdaptableGrid = function(options) {
-    this.__constructor = function(options) {
-        this.options = $.extend({
-            columns: [],
-            data: [],
-            display: null,
-            sortable: false,
-            pageable: false,
-            reorderable: false,
-            ongridload: function() {},
-            ongridsort: function(sortData) {},
-            onpagechange: function(page) {},
-            oncellenter: function(cell) {},
-            oncellchange: function(cell, newVal, oldVal) {},
-            oncolumnupdate: function(columns) {},
-            onrightclick: function(columnId) {}
-        }, options);
-        this.columnValueToIndex = {};
-        this.columnIndexToValue = {};
-        this.rows = [];
-        this.columns = [];
-        this.hiddenRows = [];
-        this.filteredOutRows = [];
-        this.width = options.columns.length;
-        this.height = options.data.length + 1;
-        dimension = this.width * this.height;
-        if (options.display == null) {
-            num = this.height - 1;
-        } else {
-            num = options.display;
-        }
-        PageUtil.resetPages.bind(this)();
-        this.displayHeight = num + 1;
-        $(function() {
-            $.datepicker.parseDate = function(format, value) {
-                return moment(value, format).toDate();
-            };
-            $.datepicker.formatDate = function(format, value) {
-                return moment(value).format(format);
-            };
-        });
-        this.read();
-        this.render(this.options.ongridload);
-        
-        return this;
+/**
+ * Configures a new sort
+ * @class
+ * @param {object[]} data - The sort data to show the priority of columns
+ * @returns {void}
+ * @example new Sorter([
+ *  { column: "currency", order: ["GBP", "AUD", "CAD", "USD", "EUR"] },
+ *  { column: "id", order: true }
+ * ]);
+ */
+var Sorter = function (data) {
+
+  this.__construct = function (data) {
+    this.data = data;
+    return this;
+  }
+
+  /**
+   * Run the sort and re-renders the grid
+   * @param {AdaptableGrid} grid - The grid to sort
+   * @param {function} [callback] - The function to run after sorting is finished
+   */
+  this.process = function (grid, callback) {
+    grid.options.debug.start("Sorter.process");
+    if (typeof this.data == "function") {
+      sortableRows = grid.rows.slice(1, grid.rows.length);
+      sortableRows.sort(this.data);
+      headerRow = grid.rows[0];
+      grid.rows = sortableRows;
+      grid.rows.unshift(headerRow);
     }
-    this.read = function() {
+    else {
+      this.prepare(grid);
+      this.shuffle(grid);
+      this.cleanUp(grid);
+    }
+    PageUtil.resetPages.bind(grid)();
+    PageUtil.getTotalPages.bind(grid)();
+    callback = callback || function () {};
+    grid.render(callback.bind(grid));
+    grid.options.debug.end("Sorter.process");
+  }
+
+  /**
+   * Prepares the sort by converting any strings to numbers for fast sort
+   * @param {AdaptableGrid} grid - The grid to sort
+   * @returns {void}
+   */
+  this.prepare = function (grid) {
+    
+    grid.options.debug.start("Sorter.prepare");
+    this.columnIndex = [];
+    this.columnFormat = [];
+    this.columnSortBy = [];
+    for (var i=0; i<this.data.length; i++) {
+      
+      // Find the index and format of this column
+      this.columnIndex[i] = grid.getPositionOfColumn(this.data[i].column);
+      this.columnFormat[i] = grid.columns[this.columnIndex[i]].getType();
+      if (this.columnFormat[i] == DataType.String) {
+        SortUtil.getColumnIndexes.bind(grid, this.columnIndex[i])();
+        SortUtil.columnToIndexes.bind(grid, this.columnIndex[i])();
+      }
+      if (Array.isArray(this.data[i].order)) {
+        this.data[i].order = this.data[i].order.map(function (x) {
+          return grid.columnValueToIndex[this.columnIndex[i]][x];
+        }, this);
+      }
+
+      this.columnSortBy[i] = this.data[i].order;
+      
+      if (Array.isArray(this.data[i].order)) {
+        // Any remaining values in this column sort ascendingly
+        for (j=0; j<grid.columnIndexToValue[this.columnIndex[i]].length; j++) {
+          if (this.columnSortBy[i].indexOf(j) == -1) {
+            this.columnSortBy[i].push(j);
+          }
+        }
+      }
+
+    }
+    grid.options.debug.end("Sorter.prepare");
+
+  }
+
+  /**
+   * Puts the grid back to original state by undoing any action from Sort.prepare
+   * @param {AdaptableGrid} grid - The grid to sort
+   * @returns {void}
+   */
+  this.cleanUp = function (grid) {
+    grid.options.debug.start("Sorter.cleanUp");
+    for (i=0; i<data.length; i++) {
+      if (this.columnFormat[i] == DataType.String) {
+        SortUtil.indexesToColumn.bind(grid, this.columnIndex[i])();
+      }
+    }
+    grid.options.debug.end("Sorter.cleanUp");
+  }
+
+  /**
+   * Use the appropriate algorithm to order the rows
+   * Always make sure the header rows stay at the top
+   * @param {AdaptableGrid} grid - The grid to sort
+   * @returns {void}
+   */
+  this.shuffle = function (grid) {
+    
+    grid.options.debug.start("Sort.shuffle");
+
+    grid.rows.sort(function (a, b) {
+      
+      if (a.getCell(this.columnIndex[0]).row == 0) { return -1; }
+      if (b.getCell(this.columnIndex[0]).row == 0) { return 1; }
+      
+      for (i=0; i<this.columnIndex.length; i++) {
         
-        for (i = 0; i < this.height; i++) {
-            this.rows[i] = new Row(i);
-            if (i == 0) {
-                for (j = 0; j < this.width; j++) {
-                    this.getRow(i).setCell(j, new Cell(i, j));
-                    this.getRow(i).getCell(j).setValue(options.columns[j].title);
-                    this.getRow(i).getCell(j).setType(DataType.String);
-                    col = new Column(options.columns[j].field, options.columns[j].title, this.getDataType(options.columns[j].type));
-                    this.columns.push(col);
-                }
-            } else {
-                for (j = 0; j < this.width; j++) {
-                    this.getRow(i).setCell(j, new Cell(i, j));
-                    this.getRow(i).getCell(j).setValue(options.data[i - 1][options.columns[j].field]);
-                    this.getRow(i).getCell(j).setType(this.getDataType(options.columns[j].type));
-                    this.getRow(i).getCell(j).setFormat(options.columns[j].format);
-                }
+        if (Array.isArray(this.columnSortBy[i])) {
+          value_a = this.columnSortBy[i].indexOf(a.getCell(this.columnIndex[i]).getRawValue());
+          value_b = this.columnSortBy[i].indexOf(b.getCell(this.columnIndex[i]).getRawValue());
+          if (value_a == -1) { value_a = this.columnSortBy[i].length; }
+          if (value_b == -1) { value_b = this.columnSortBy[i].length; }
+          if (value_a != value_b) {
+            return value_a - value_b;
+          }
+        }
+        else {
+          value_a = a.getCell(this.columnIndex[i]).getRawValue();
+          value_b = b.getCell(this.columnIndex[i]).getRawValue();
+          if (value_a != value_b) {                
+            if (this.columnSortBy[i]) {
+              return value_a - value_b;
             }
-        }
-        this.filteredRows = this.rows;
-        
-    }
-    this.render = function(callback) {
-        
-        var table = '<table>';
-        displayedRows = 0;
-        rowCounter = -1;
-        while (displayedRows < this.displayHeight && rowCounter < this.rows.length) {
-            rowCounter += 1;
-            thisRow = rowCounter;
-            if (thisRow == 0) {
-                for (j = 0; j < this.width; j++) {
-                    if (!this.columns[j].isVisible()) continue;
-                    if (j == 0) {
-                        table += '<thead>';
-                    }
-                    rowObj = this.getRow(thisRow);
-                    table += '<th class="adaptablegrid adaptablegrid-header ' + rowObj.getCell(j).cls.join(" ") + '" ' + 'blotter="abjs:' + rowObj.getId() + ":" + j + '">' + rowObj.getCell(j).getFormattedValue(this) + '</th>';
-                    if (j == this.width - 1) {
-                        table += '</thead><tbody>';
-                    }
-                }
-            } else {
-                if (this.options.pageable) {
-                    thisRow = (this.currentPage - 1) * (this.displayHeight - 1) + thisRow;
-                }
-                if (thisRow >= this.rows.length) {
-                    break;
-                }
-                for (j = 0; j < this.width; j++) {
-                    if (!this.columns[j].isVisible()) continue;
-                    if (j == 0) {
-                        table += '<tr>';
-                    }
-                    rowObj = this.getRow(thisRow);
-                    table += '<td blotter="abjs:' + rowObj.getId() + ":" + j + '" ' + 'class="' + rowObj.getCell(j).cls.join(" ") + '">' + rowObj.getCell(j).getFormattedValue(this) + '</td>';
-                    if (j == this.width - 1) {
-                        table += '</tr>';
-                        if (i == this.displayHeight - 1) {
-                            table += '</tbody>';
-                        }
-                    }
-                }
+            else {
+              return value_b - value_a;
             }
-            displayedRows += 1;
+          }
         }
-        table += '</table>';
-        
-        $(this).html(table);
-        
-        
-        this.applyStyles();
-        this.events();
-        if (callback) {
-            callback();
+
+      }            
+      
+    }.bind(this));
+    
+    grid.options.debug.end("Sort.shuffle");
+
+  }
+
+  return this.__construct(data);
+
+}
+/**
+ * Defines some static events for sorting
+ * @namespace
+ */
+var SortUtil = {
+
+  /**
+   * Add event listeners for sorting columns
+   * @static
+   * @this AdaptableGrid
+   * @returns {void}
+   */
+  events: function () {
+     
+    $(this).find('.AdaptableGrid-header').addClass('AdaptableGrid-sortable');
+    $(this).find('.AdaptableGrid-header').on('click', SortUtil.clickColumn.bind(this));
+
+  },
+
+  /**
+   * Callback function after clicking a column title
+   * Create a Sorter object and sort the column
+   * @static
+   * @this AdaptableGrid
+   * @param {object} header - The element that was clicked
+   * @returns {void}
+   */
+  clickColumn: function (header) {
+
+    columnIndex = $(header.target).attr('blotter').split("abjs:0:")[1];
+    
+    if ($(header.target).hasClass('AdaptableGrid-sort-asc')) {
+      c = 'AdaptableGrid-sort-des';
+    }
+    else {
+      c = 'AdaptableGrid-sort-asc';
+    }
+    
+    var s = new Sorter([{ column: this.columns[columnIndex], order: (c == 'AdaptableGrid-sort-asc') }]);
+    
+    s.process(this, function () {
+      this.cellToElement(0, columnIndex).addClass('AdaptableGrid-sort').addClass(c);
+      this.options.ongridsort(s.data);
+    });
+
+  },
+
+  /**
+   * Convert all the cells in a particular column to a number
+   * @static
+   * @this AdaptableGrid
+   * @param {integer} ind - The column index
+   * @returns {void}
+   */
+  columnToIndexes: function (ind) {
+    this.options.debug.start("SortUtil.columnToIndexes");
+    for (var i=1; i<this.rows.length; i++) {
+      indexOfValue = this.columnValueToIndex[ind][this.getRow(i).getCell(ind).getRawValue()];
+      this.getRow(i).getCell(ind).setValue(indexOfValue);
+    }
+    this.options.debug.end("SortUtil.columnToIndexes");
+  },
+
+  /**
+   * Convert all the cells in a particular column from a number back to their original value
+   * @static
+   * @this AdaptableGrid
+   * @param {integer} ind - The column index
+   * @returns {void}
+   */
+  indexesToColumn: function (ind) {
+    this.options.debug.start("SortUtil.indexesToColumn");
+    for (var i=1; i<this.rows.length; i++) {
+      this.getRow(i).getCell(ind).setValue(this.columnIndexToValue[ind][this.getRow(i).getCell(ind).getRawValue()]);
+    }
+    this.options.debug.end("SortUtil.indexesToColumn");
+  },
+
+  /**
+   * Generate two maps to turn text to an index and index back to a date
+   * @static
+   * @this AdaptableGrid
+   * @param {integer} columnIndex - The column index used for sorting
+   * @returns {void}
+   */
+  getColumnIndexes: function (ind) {
+    this.options.debug.start("SortUtil.getColumnIndexes");
+    
+    if (this.columnIndexToValue[ind] == null) {
+
+      var tColI2V = [];
+      tColI2V = $.map(this.rows, function (i, n) {
+        if (n > 0) {
+          return i.getCell(ind).getRawValue();
         }
-    }
-    this.events = function() {
-        if (this.options.pageable) {
-            PageUtil.getTotalPages.bind(this)();
-            PageUtil.addPages.bind(this)();
-            PageUtil.events.bind(this)();
+      });
+
+      // Get unique values of this array
+      tColI2V = tColI2V.reduce(function(accum, current) {
+        if (accum.indexOf(current) < 0) {
+          accum.push(current);
         }
-        if (this.options.sortable) {
-            SortUtil.events.bind(this)();
-        }
-        if (this.options.reorderable) {
-            ReorderUtil.events.bind(this)();
-        }
-        $(this).find('tbody').selectable({
-            delay: 50,
-            stop: function(event, ui) {
-                $(document).click(function(e) {
-                    if (!$(e.target).hasClass('ui-selectable')) {
-                        $(this).find('.ui-selected').removeClass('ui-selected');
-                    }
-                }.bind(this));
-            }.bind(this)
-        });
-        PersistenceUtil.editing.bind(this)();
-        PersistenceUtil.dates.bind(this)();
-        PersistenceUtil.checkbox.bind(this)();
-        $(this).find('th.adaptablegrid-header').contextmenu(function(e) {
-            blotter_id = $(e.target).attr('blotter');
-            parts = blotter_id.split('abjs:')[1].split(":");
-            col = parseInt(parts[1]);
-            this.options.onrightclick(this.columns[col].getId());
-        }.bind(this));
+        return accum;
+      }, []);
+
+      tColI2V.sort();
+      
+      var key;
+      var tmpArr = {};
+      
+      for (var i=0; i<tColI2V.length; i++) {
+        tmpArr[tColI2V[i]] = i;
+      }
+      
+      this.columnIndexToValue[ind] = tColI2V;
+      this.columnValueToIndex[ind] = tmpArr;
+
     }
-    this.applyStyles = function() {
-        $(this).addClass('blotter-grid');
-    }
-    this.getSelectedCells = function() {
-        
-        els = $(blotter).find('td.ui-selected').map(function(i, el) {
-            return blotter.elementToCell(el);
-        });
-        
-        return els;
-    }
-    this.cellToElement = function(row, col) {
-        return $(this).find('[blotter="abjs:' + row + ":" + col + '"]');
-    }
-    this.elementToCell = function(el) {
-        blotter_id = $(el).attr('blotter');
-        parts = blotter_id.split('abjs:')[1].split(":");
-        row = parseInt(parts[0]);
-        col = parseInt(parts[1]);
-        return this.getRowFromId(row).getCell(col);
-    }
-    this.getRow = function(row) {
-        return this.rows[row];
-    }
-    this.getPositionOfColumn = function(column) {
-        return this.columns.indexOf(column);
-    }
-    this.getColumnFromId = function(columnId) {
-        for (var i = 0; i < this.columns.length; i++) {
-            if (this.columns[i].getId() == columnId) {
-                return this.columns[i];
-            }
-        }
-        return -1;
-    }
-    this.getPositionOfRow = function(row) {
-        return this.rows.indexOf(row);
-    }
-    this.getRowFromId = function(rowId) {
-        for (var i = 0; i < this.rows.length; i++) {
-            if (this.getRow(i).getId() == rowId) {
-                return this.getRow(i);
-            }
-        }
-        for (var i = 0; i < this.hiddenRows.length; i++) {
-            if (this.hiddenRows[i].getId() == rowId) {
-                return this.hiddenRows[i];
-            }
-        }
-        for (var i = 0; i < this.filteredOutRows.length; i++) {
-            if (this.filteredOutRows[i].getId() == rowId) {
-                return this.filteredOutRows[i];
-            }
-        }
-        return -1;
-    }
-    this.getDataType = function(type) {
-        switch (type) {
-            case "text":
-                return DataType.String;
-            case "num":
-                return DataType.Number;
-            case "date":
-                return DataType.Date;
-            case "checkbox":
-                return DataType.Boolean;
-        }
-    }
-    this.getVisibleRows = function() {
-        return this.rows;
-    }
-    this.getHiddenRows = function() {
-        return this.hiddenRows;
-    }
-    this.getVisibleColumns = function() {
-        return $.grep(this.columns, function(i) {
-            return i.isVisible();
-        });
-    }
-    this.getHiddenColumns = function() {
-        return $.grep(this.columns, function(i) {
-            return !i.isVisible();
-        });
-    }
-    this.newColumnOrder = function(ids) {
-        
-        for (var i = 0; i < this.rows.length; i++) {
-            var newData = [];
-            for (var j = 0; j < this.getRow(i).getData().length; j++) {
-                var newIndex = ids.indexOf(this.columns[j].getId());
-                newData[newIndex] = this.getRow(i).getCell(j);
-            }
-            this.rows[i].data = newData;
-        }
-        this.columns.sort(function(a, b) {
-            return ids.indexOf(b.getId()) - ids.indexOf(a.getId());
-        });
-        
-    }
-    this.clearFiltered = function() {
-        this.rows = this.rows.concat(this.filteredOutRows);
-        this.filteredOutRows = [];
-    }
-    this.addFilter = function(rs) {
-        for (var i = 1; i < this.rows.length; i++) {
-            thisRow = this.rows[i];
-            if (rs.indexOf(thisRow) == -1) {
-                this.rows.splice(i, 1);
-                this.filteredOutRows.push(thisRow);
-                i--;
-            }
-        }
-    }
-    return this.__constructor(options);
+
+    this.options.debug.end("SortUtil.getColumnIndexes");
+  }
+
 }
