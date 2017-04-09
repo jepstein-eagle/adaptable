@@ -34,26 +34,31 @@ export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItem
                 <Col md={2} >
                     <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
+                     {this.props.Shortcut.IsPredefined ?
+                      this.props.Shortcut.ShortcutKey :
                             <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
                                 {this.props.AvailableKeys.map(x => {
                                     return <option value={x} key={x}>{x}</option>
                                 })}
                             </FormControl>
+                     }
                         </FormGroup>
                     </AdaptableBlotterForm>
                 </Col>
                 <Col md={3} >
-                        <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
+                      {this.props.Shortcut.IsPredefined ?
+                      this.props.Shortcut.ShortcutAction :
+                          <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
                                 shortcutActionList.map((shortcutAction: ShortcutAction) => {
                                     return <option key={ShortcutAction[shortcutAction]} value={shortcutAction.toString()}>{ShortcutAction[shortcutAction]}</option>
                                 })
                             }
                         </FormControl>
-                    
+                      }
                 </Col>
                 <Col md={3}>
-                    {this.props.Shortcut.IsDynamic ?
+                    {this.props.Shortcut.IsPredefined ?
                         this.props.Shortcut.ShortcutResult :
                             <FormControl
                                 type="number"

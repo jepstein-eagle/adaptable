@@ -31,17 +31,20 @@ export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDa
                 <Col md={2} >
                     <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
+                          {this.props.Shortcut.IsPredefined ?
+                        this.props.Shortcut.ShortcutKey :
                             <FormControl componentClass="select" value={this.props.Shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
                                 {this.props.AvailableKeys.map(x => {
                                     return <option value={x} key={x}>{x}</option>
                                 })}
                             </FormControl>
+                          }
                         </FormGroup>
                     </AdaptableBlotterForm>
                 </Col>
            
                 <Col md={6}>
-                    {this.props.Shortcut.IsDynamic ?
+                    {this.props.Shortcut.IsPredefined ?
                         this.props.Shortcut.ShortcutResult :
                             <FormControl
                                 type="date"
