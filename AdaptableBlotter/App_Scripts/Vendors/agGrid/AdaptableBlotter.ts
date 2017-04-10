@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events, RowNode } from "ag-grid"
+import { GridOptions, Column, Events, RowNode,ICellEditorComp } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -190,6 +190,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
+        let activeCell = this.gridOptions.api.getFocusedCell()
+        // let editor: ICellEditorComp = <ICellEditorComp>(this.gridOptions.columnApi.getColumn(activeCell.column.getColId()).getCellEditor())
+        // this.gridOptions.edit
         return false
     }
 
@@ -198,7 +201,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getActiveCell(): ICellInfo {
-        return null
+        let activeCell = this.gridOptions.api.getFocusedCell()
+        let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
+        return {
+            ColumnId: activeCell.column.getColId(),
+            Id: this.getPrimaryKeyValueFromRecord(rowNode),
+            Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+        }
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
@@ -314,7 +323,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
-        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        let colDef = this.gridOptions.api.getColumnDef(columnId)
         if (typeof colDef.editable == 'boolean') {
             return !colDef.editable;
         }
@@ -324,18 +333,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
-        let column = this.gridOptions.columnApi.getColumn(columnId);
+        let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
-        if (column) {
-            column.getColDef().comparator = <any>comparer
+        if (columnDef) {
+            columnDef.comparator = <any>comparer
         }
     }
 
     public removeCustomSort(columnId: string): void {
-        let column = this.gridOptions.columnApi.getColumn(columnId);
+        let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
-        if (column) {
-            column.getColDef().comparator = null
+        if (columnDef) {
+            columnDef.comparator = null
         }
     }
 
@@ -374,7 +383,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
         //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
-        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        let colDef = this.gridOptions.api.getColumnDef(columnId)
         let rawValue = this.gridOptions.api.getValue(columnId, row)
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
