@@ -107,6 +107,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 }
             }
 
+            //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
+            keyEvent.preventDefault()
             // first inform if any failed with prevent
             this.ShowErrorPreventMessage(failedPreventEdits);
             if (failedWarningEdits.length > 0) {

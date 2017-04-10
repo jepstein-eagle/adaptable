@@ -47,7 +47,7 @@ export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItem
                 </Col>
                 <Col md={3} >
                       {this.props.Shortcut.IsPredefined ?
-                      this.props.Shortcut.ShortcutAction :
+                      ShortcutAction[this.props.Shortcut.ShortcutAction] :
                           <FormControl componentClass="select" value={this.props.Shortcut.ShortcutAction.toString()} onChange={(x) => this.onActionChange(x)} >
                             {
                                 shortcutActionList.map((shortcutAction: ShortcutAction) => {

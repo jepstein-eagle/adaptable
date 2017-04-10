@@ -20,7 +20,7 @@ import { ThemeService } from '../../Core/Services/ThemeService'
 import { SearchService } from '../../Core/Services/SearchService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
-import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
+import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
 import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events, RowNode } from "ag-grid"
+import { GridOptions, Column, Events, RowNode,ICellEditorComp } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -66,7 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    constructor(private gridOptions: GridOptions, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
@@ -82,11 +82,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        //this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        //this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
@@ -122,6 +122,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.setColumnIntoStore()
             }
         });
+
+        gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -188,6 +190,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
+        let activeCell = this.gridOptions.api.getFocusedCell()
+        // let editor: ICellEditorComp = <ICellEditorComp>(this.gridOptions.columnApi.getColumn(activeCell.column.getColId()).getCellEditor())
+        // this.gridOptions.edit
         return false
     }
 
@@ -196,7 +201,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getActiveCell(): ICellInfo {
-        return null
+        let activeCell = this.gridOptions.api.getFocusedCell()
+        let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
+        return {
+            ColumnId: activeCell.column.getColId(),
+            Id: this.getPrimaryKeyValueFromRecord(rowNode),
+            Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+        }
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
@@ -262,7 +273,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
-                return
             }
         })
     }
@@ -282,7 +292,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
-        return null
+        if (type == "getColumnValue") {
+            let rowNodeSearch: RowNode
+            //ag-grid doesn't support FindRow based on data
+            // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+            this.gridOptions.api.getModel().forEachNode(rowNode => {
+                if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                    rowNodeSearch = rowNode
+                }
+            })
+            return (columnName: string) => { return this.gridOptions.api.getValue(columnName, rowNodeSearch); }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+        }
     }
 
     public selectCells(cells: ICellInfo[]): void {
@@ -300,7 +323,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
-        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        let colDef = this.gridOptions.api.getColumnDef(columnId)
         if (typeof colDef.editable == 'boolean') {
             return !colDef.editable;
         }
@@ -310,11 +333,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
+        let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
+        if (columnDef) {
+            columnDef.comparator = <any>comparer
+        }
     }
 
     public removeCustomSort(columnId: string): void {
+        let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
+        if (columnDef) {
+            columnDef.comparator = null
+        }
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -338,12 +369,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        return null
+        //ag-grid doesn't support FindRow based on data
+        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        let returnValue: string
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                returnValue = this.getDisplayValueFromRecord(rowNode, columnId)
+            }
+        })
+        return returnValue
     }
 
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
+        //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
-        let colDef = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+        let colDef = this.gridOptions.api.getColumnDef(columnId)
         let rawValue = this.gridOptions.api.getValue(columnId, row)
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer

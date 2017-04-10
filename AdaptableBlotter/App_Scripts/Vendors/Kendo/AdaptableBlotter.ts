@@ -606,7 +606,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // return cell.text();
     }
 
-    private getDisplayValueFromRecord(row: any, columnId: string): string {
+    public getDisplayValueFromRecord(row: any, columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);
         if (column.format) {
             return kendo.format(column.format, row[columnId])
