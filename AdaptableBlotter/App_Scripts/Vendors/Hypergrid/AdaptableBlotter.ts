@@ -344,6 +344,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public hideFilterForm() {
+        ReactDOM.unmountComponentAtNode(this.filterContainer)
         this.filterContainer.style.visibility = 'hidden'
     }
 
