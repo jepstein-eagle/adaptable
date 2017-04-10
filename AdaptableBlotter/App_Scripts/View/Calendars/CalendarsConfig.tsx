@@ -34,6 +34,9 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
     }
 
     render() {
+  let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />, 
+         "These are used primarily when calculating Working Days."]
+
 
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
             return <CalendarsConfigItem
@@ -58,7 +61,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             </CalendarEntryItem>
         }) : null;
 
-        return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar">
+        return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar" infoBody={infoBody}>
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}

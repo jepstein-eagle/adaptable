@@ -58,7 +58,10 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     render() {
 
-        let cellInfo: [string, number][] = [["Where Applied", 3], ["Style",2], ["Description", 4], ["", 3]];
+        let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
+            "Styles include selection of fore and back colours, and font properties."]
+
+        let cellInfo: [string, number][] = [["Where Applied", 3], ["Style", 2], ["Description", 4], ["", 3]];
 
         let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition) => {
             return <ConditionalStyleConfigItem
@@ -79,7 +82,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         return <PanelWithButton headerText="Conditional Style"
             button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={"tint"}>
+            bsStyle="primary" style={panelStyle} glyphicon={"tint"} infoBody={infoBody}>
 
             {this.props.ConditionalStyleConditions.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>

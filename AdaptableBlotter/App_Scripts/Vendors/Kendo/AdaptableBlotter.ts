@@ -253,8 +253,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private kendoPopup: kendo.ui.Popup
     public hideFilterForm() {
-        if(this.kendoPopup)
-        {
+        if (this.kendoPopup) {
             this.kendoPopup.close()
         }
     }
@@ -299,7 +298,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index:number) => {
+        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index: number) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",

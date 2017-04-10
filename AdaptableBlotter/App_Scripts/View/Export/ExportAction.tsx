@@ -39,8 +39,10 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
     }
 
     render() {
-        return (
-            <PanelWithImage header="Export" bsStyle="primary" glyphicon="export">
+       let infoBody: any[] = ["Export all visible rows directly to Excel using a file name that you choose."]
+
+   return (
+            <PanelWithImage header="Export" bsStyle="primary" glyphicon="export" infoBody={infoBody}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="fileName">
                         <Col xs={4} componentClass={ControlLabel}>File Name: </Col>
