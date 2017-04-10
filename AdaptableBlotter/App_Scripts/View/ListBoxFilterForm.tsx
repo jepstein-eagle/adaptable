@@ -95,7 +95,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
         let header = <FormGroup style={{ margin: 0 }}>
             <InputGroup>
-                <FormControl
+                <FormControl autoFocus
                     type="text"
                     value={this.state.FilterValue}
                     placeholder="Search"
