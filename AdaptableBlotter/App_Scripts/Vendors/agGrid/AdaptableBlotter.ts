@@ -51,7 +51,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events, RowNode,ICellEditorComp } from "ag-grid"
+import { GridOptions, Column, Events, RowNode, ICellEditor } from "ag-grid"
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -124,7 +124,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
+
+        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
+            //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+            let editor = (<any>this.gridOptions.api).rowRenderer.renderedRows[params.rowIndex].renderedCells[params.column.getColId()].cellEditor
+            //No need to register for the keydown on the editor since we already register on the main div
+            //TODO: check that it works when edit is popup. That's why I left the line below
+            //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
+            this._currentEditor = editor
+        });
+
+        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
+            //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
+            this._currentEditor = null
+        });
     }
+
+    private _currentEditor: ICellEditor
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
     public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
@@ -190,14 +206,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
-        let activeCell = this.gridOptions.api.getFocusedCell()
-        // let editor: ICellEditorComp = <ICellEditorComp>(this.gridOptions.columnApi.getColumn(activeCell.column.getColId()).getCellEditor())
-        // this.gridOptions.edit
+        if (this._currentEditor) {
+            return true
+        }
         return false
     }
 
     public getCurrentCellEditValue(): any {
-        return "";
+        //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+        if (this._currentEditor) {
+            return this._currentEditor.getValue()
+        }
+        return ""
     }
 
     public getActiveCell(): ICellInfo {
@@ -289,6 +309,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public cancelEdit() {
+        this.gridOptions.api.stopEditing(true)
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
