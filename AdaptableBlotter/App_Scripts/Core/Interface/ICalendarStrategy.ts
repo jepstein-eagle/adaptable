@@ -14,3 +14,7 @@ export interface ICalendarEntry {
     HolidayDate: string;
 }
 
+//Jo: creating those constants as this is a recipe for desaster otherwise.....
+export const TODAY_MAGICSTRING = "Today"
+export const PREVIOUS_WORK_DAY_MAGICSTRING = "Previous Work Day"
+export const NEXT_WORK_DAY_MAGICSTRING = "Next Work Day"
