@@ -1,6 +1,5 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';

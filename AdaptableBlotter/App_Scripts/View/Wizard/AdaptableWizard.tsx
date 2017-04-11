@@ -4,7 +4,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Button, ListGroupItemProps, Modal, Glyphicon } from 'react-bootstrap';
-import { AdaptableViewFactory } from '../AdaptableViewFactory';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './Interface/IAdaptableWizard'
 
 interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {

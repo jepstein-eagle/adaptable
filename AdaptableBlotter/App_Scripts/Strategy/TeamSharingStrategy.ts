@@ -2,7 +2,6 @@ import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
 import { ITeamSharingStrategy } from '../Core/Interface/ITeamSharingStrategy';
 import { MenuReduxActionItem } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IMenuItem, IUIError } from '../Core/Interface/IStrategy';
