@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
         // 'adaptableblotterdx': ["./App_Scripts/Vendors/DevExpress/AdaptableBlotter.ts"],
-        'adaptableblotterhypergrid': ["./App_ScriptsVendors//Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Vendors//Hypergrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {
@@ -29,9 +29,7 @@ module.exports = {
     plugins: [
         failPlugin,
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
+            'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new HtmlWebpackPlugin({
             chunks: ['harness', 'adaptableblotterhypergrid'],
@@ -50,8 +48,8 @@ module.exports = {
             filename: "../index.html",
             template: 'Harness/DemoRelease/index.ejs',
             inject: false,
-            'version' : PACKAGE.version,
-            'versiondate' : (new Date()).toLocaleDateString("en-GB")
+            'version': PACKAGE.version,
+            'versiondate': (new Date()).toLocaleDateString("en-GB")
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),

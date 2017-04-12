@@ -26,14 +26,14 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
         let items = [{
             type: 'label',
             title: 'Adaptable Blotter Menu'
-        }, '-', {
+        }, '-'/*, {
             title: 'Menu item 1-1',
             items: [{ // sub-menu
                 title: 'Menu Popup 2'
             }, '-', {
                 title: 'Menu item 2-1',
             }]
-        }]
+        }*/]
 
         let realItems = this.props.ContextMenu.Items.map(item => {
             return {

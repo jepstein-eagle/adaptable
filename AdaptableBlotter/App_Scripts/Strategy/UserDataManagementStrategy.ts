@@ -9,7 +9,6 @@ import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType } from '../Core/Enums';
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 
-
 const cleanUserData: string = "CleanUserData"
 
 export class UserDataManagementStrategy extends AdaptableStrategyBase implements IUserDataManagementStrategy {
@@ -18,9 +17,8 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
         this.menuItemConfig = new MenuReduxActionItem("Clean User Data", this.Id, ResetUserData(), "user");
     }
 
-  public  getMenuItems(): IMenuItem[] {
-        if(process.env.NODE_ENV == "production")
-        {
+    public getMenuItems(): IMenuItem[] {
+        if ("production" == process.env.NODE_ENV) {
             return [];
         }
         return [this.menuItemConfig];

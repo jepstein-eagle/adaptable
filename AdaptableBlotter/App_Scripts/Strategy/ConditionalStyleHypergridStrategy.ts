@@ -32,16 +32,17 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
             }
 
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
-                
+
                 if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
 
-                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { csBackColorRow: c.BackColor, csForeColorRow: c.ForeColor })
+                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { csBackColorRow: c.Style.BackColor, csForeColorRow: c.Style.ForeColor })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-
-                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { csBackColorColumn: c.BackColor, csForeColorColumn: c.ForeColor })
+                     //   if (columns.find(col => col.ColumnId == c.ColumnId).Visible) {
+                            let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
+                            this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { csBackColorColumn: c.Style.BackColor, csForeColorColumn: c.Style.ForeColor })
+                      //  }
                     }
                 }
             })
@@ -97,7 +98,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
 
-                        this.blotterBypass.addRowStyleHypergrid(rowId, { csBackColorRow: rowCS.BackColor, csForeColorRow: rowCS.ForeColor })
+                        this.blotterBypass.addRowStyleHypergrid(rowId, { csBackColorRow: rowCS.Style.BackColor, csForeColorRow: rowCS.Style.ForeColor })
                         break
                     }
                 }

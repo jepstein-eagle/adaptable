@@ -4,14 +4,15 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox } from 'react-bootstrap';
+import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox, Tabs, Tab } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
-import { ShortcutConfigItem } from './ShortcutConfigItem'
+import { ShortcutConfigItemNumber } from './ShortcutConfigItemNumber'
+import { ShortcutConfigItemDate } from './ShortcutConfigItemDate'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -41,33 +42,37 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
     }
 
     render() {
-        let infoBody: any[] = ["Use shortcuts to replace frequently entered text with a single keystroke.",<br/>,<br/>,"Shortcuts can either replace the entire contents of the cell, or update its value based on the Shortcut 'Result'.", <br/>,<br/>,"Check ", <i>Live</i>, " to turn on a shortcut.", <br/>,<br/>,"Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
+        let infoBody: any[] = ["Use shortcuts to replace frequently entered text with a single keystroke.", <br />, <br />, 
+        "Numeric shortcuts update the existing cell value based on a calculation'.", <br />, <br />,
+        "Date shortcuts replace the contents of the cell with a new date value.", <br />, <br />,
+         "Check ", <i>Live</i>, " to turn on a shortcut.", <br />, <br />, 
+         "Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Key", 1], ["Columns", 3], ["Action", 2], ["Result", 3], ["", 2]];
+        let numericCellInfo: [string, number][] = [["Live", 1], ["Key", 2], ["Operation", 3], ["Value", 3], ["", 3]];
+        let dateCellInfo: [string, number][] = [["Live", 1], ["Key", 2], ["Output", 6], ["", 3]];
 
         let sortedNumericShortcut = this.props.NumericShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let numericShortcuts = sortedNumericShortcut.map((shortcut: IShortcut) => {
             let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-            return <ShortcutConfigItem Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
+            return <ShortcutConfigItemNumber Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
                 AvailableKeys={availableNumericKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
                 onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
                 onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
-            </ShortcutConfigItem>
+            </ShortcutConfigItemNumber>
         });
         let sortedDateShortcut = this.props.DateShortcuts.sort((a, b) => (a.ShortcutKey < b.ShortcutKey) ? -1 : (a.ShortcutKey > b.ShortcutKey) ? 1 : 0)
         let dateShortcuts = sortedDateShortcut.map((shortcut: IShortcut) => {
             let availableDateKeys = keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-            return <ShortcutConfigItem Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
+            return <ShortcutConfigItemDate Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
                 AvailableKeys={availableDateKeys}
                 onSelect={(shortcut) => this.props.onSelectShortcut(shortcut)}
                 onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
-                onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
                 onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
-            </ShortcutConfigItem>
+            </ShortcutConfigItemDate>
         });
 
         let newButton = <ButtonNew onClick={() => this.CreateShortcut()}
@@ -79,11 +84,25 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             bsStyle="primary" style={panelStyle} glyphicon={"road"}
             infoBody={infoBody}>
 
-            <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-            <ListGroup style={divStyle}>
-                {numericShortcuts}
-                {dateShortcuts}
-            </ListGroup>
+
+
+<Tabs defaultActiveKey={1} id="uncontrolled-tab-example" bsStyle="pills">
+    <Tab eventKey={1} title="Numeric Shortcuts">
+               <PanelWithRow CellInfo={numericCellInfo} bsStyle="info" />
+                <ListGroup style={divStyle}>
+                    {numericShortcuts}
+                </ListGroup>
+         
+    </Tab>
+    <Tab eventKey={2} title="Date Shortcuts">
+         <PanelWithRow CellInfo={dateCellInfo} bsStyle="info" />
+                <ListGroup style={divStyle}>
+                    {dateShortcuts}
+                </ListGroup>
+    </Tab>
+  </Tabs>
+
+          
 
             {this.state.EditedShortcut ?
                 <AdaptableWizard Steps={
@@ -99,7 +118,10 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                     Data={this.state.EditedShortcut}
                     StepStartIndex={this.state.WizardStartIndex}
                     onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard> : null}
+                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+                : null
+            }
+
         </PanelWithButton>
     }
 
@@ -143,7 +165,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 export let ShortcutConfig = connect(mapStateToProps, mapDispatchToProps)(ShortcutConfigComponent);
 
 let panelStyle = {
-    width: '800px'
+     'overflowY': 'auto',
+   width: '600px'
 }
 
 const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]

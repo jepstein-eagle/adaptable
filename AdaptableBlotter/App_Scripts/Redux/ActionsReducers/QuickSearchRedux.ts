@@ -54,7 +54,7 @@ export const QuickSearchSetBackColor = (backColor: string): QuickSearchSetBackCo
 
 const initialQuickSearchState: QuickSearchState = {
     QuickSearchText: "",
-    QuickSearchOperator: LeafExpressionOperator.StartsWith,
+    QuickSearchOperator: LeafExpressionOperator.Contains,
     QuickSearchDisplayType: QuickSearchDisplayType.ColourCell,
     QuickSearchBackColor: "#FFFFCC"
 }

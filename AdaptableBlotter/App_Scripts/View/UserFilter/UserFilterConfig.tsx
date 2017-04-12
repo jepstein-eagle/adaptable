@@ -49,6 +49,10 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
         }
     }
     render() {
+        let infoBody: any[] = ["User Filters are Column Queries that can be named and re-used.", <br />, <br />,
+            "Once created, User Filters are available in the column's filter dropdown as if a single colum value.", <br />, <br />,
+            "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
+            "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
 
         let selectedColumnId: string = "select";
         if (this.state.EditedUserFilter != null) {
@@ -56,8 +60,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
             }
-            else if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams))
-            {
+            else if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
                 let arrayParams = this.props.PopupParams.split("|")
                 if (arrayParams.length == 2) {
                     selectedColumnId = arrayParams[1];
@@ -92,7 +95,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle}
+        return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={newButton} glyphicon={"filter"}>
             {UserFilterItems.length > 0 &&
                 <div>

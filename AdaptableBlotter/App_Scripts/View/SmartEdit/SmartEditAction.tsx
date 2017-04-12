@@ -48,7 +48,13 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
 
     render() {
-        let infoBody: any[] = ["Click ",<i><b>Apply to Grid</b></i>," button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,"3 Smart Edit operations are available:",<br/>,<strong>Sum:</strong>," Add inputted amount to selected cells",<br/>,<strong>Ratio:</strong>," Multiply selected cells by inputted amount",<br/>,<strong>Absolute:</strong>," Set selected cells to inputed amount (i.e. Bulk Update)",<br/>, <br/>,"Smart Edits that break Cell Validation Rules will be flagged and prevented."]
+        let infoBody: any[] = ["Click ",<i><b>Apply to Grid</b></i>,
+        " button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,
+        "3 operations are available to update the selected cells with the inputted value:",<br/>,
+        <strong>Add:</strong>," Adds value to cells",<br/>,
+        <strong>Multiply:</strong>," Multiplies cells by the value",<br/>,
+        <strong>Replace:</strong>," Sets cells to the value (i.e. Bulk Update)",<br/>, <br/>,
+        "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
         let globalHasValidationPrevent = false
@@ -86,7 +92,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                 <tr>
                     <th>Initial Value</th>
                     <th>Computed Value</th>
-                    <th>Valid Edit</th>
+                    <th>Is Valid Edit</th>
                 </tr>
             </thead>;
         }
@@ -111,9 +117,9 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
                                 <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
-                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Sum)}>{SmartEditOperation[SmartEditOperation.Sum]}</MenuItem>
-                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Ratio)}>{SmartEditOperation[SmartEditOperation.Ratio]}</MenuItem>
-                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Absolute)}>{SmartEditOperation[SmartEditOperation.Absolute]}</MenuItem>
+                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Add)}>{SmartEditOperation[SmartEditOperation.Add]}</MenuItem>
+                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation[SmartEditOperation.Multiply]}</MenuItem>
+                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation[SmartEditOperation.Replace]}</MenuItem>
                                 </DropdownButton>
                                 <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
                             </InputGroup>

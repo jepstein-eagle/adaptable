@@ -22,22 +22,30 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
 
 //common colors from http://htmlcolorcodes.com/
 const ABcolorChoices = <datalist id={'ABcolorChoices'}>
-    <option>#000000</option>
-    <option>#ffffff</option>
-    <option>#C0C0C0</option>
-    <option>#808080</option>
-    <option>#FF0000</option>
-    <option>#FFFFCC</option>
-    <option>#FFFF00</option>
-    <option>#808000</option>
-    <option>#00FF00</option>
-    <option>#008000</option>
-    <option>#00FFFF</option>
-    <option>#008080</option>
-    <option>#0000FF</option>
-    <option>#000080</option>
-    <option>#FF00FF</option>
-    <option>#800080</option>
-    <option>#800000</option>
-    
+    <option>#000000</option>  {/* black */}
+    <option>#ffffff</option>  {/* white */}
+    <option>#C0C0C0</option>  {/* light gray */}
+    <option>#808080</option>  {/* dark gray */}
+    <option>#800000</option>  {/* brown */}
+
+    <option>#808000</option>  {/* olive */}
+    <option>#008000</option>  {/* dark green */}
+    <option>#00FF00</option>  {/* light green */}
+    <option>#FFFF00</option>  {/* yellow */}
+    <option>#FFFFCC</option>  {/* pale yellow (quick search default) */}
+
+    <option>#000080</option>  {/* dark blue */}
+    <option>#0000FF</option>  {/* blue */}
+    <option>#008080</option>  {/* cyan */}
+    <option>#00FFFF</option>  {/* light blue */}
+    <option>#FF00FF</option>  {/* pink */}
+
+    <option>#800080</option>  {/* purple */}
+    <option>#8B0000</option>  {/* dark red */}
+    <option>#FF0000</option>  {/* red */}
+    <option>#FF6961</option>  {/* pastel red */}
+    <option>#FFA500</option>  {/* orange */}
+
+
+
 </datalist>

@@ -9,6 +9,7 @@ module.exports = {
         'adaptableblotterdx': ["./App_Scripts/Vendors/DevExpress/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
+        'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
         harness: "./harness/DataGenerator.ts"
     },
     output: {
@@ -29,6 +30,9 @@ module.exports = {
 
     plugins: [
         failPlugin,
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
         new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }])

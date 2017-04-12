@@ -70,6 +70,8 @@ function InitBlotter() {
 
     var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
     dataGen.startTickingDataHypergrid(grid)
+    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
+    grid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
     //which causes an issue.....
     grid.addProperties({ editOnKeydown: false })
@@ -154,7 +156,7 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
-        enableAuditLog: false,
+        enableAuditLog: true,
         enableRemoteConfigServer: false
     });
     var origgetCell = grid.behavior.dataModel.getCell;
@@ -178,7 +180,7 @@ var lightTheme = {
     backgroundColor: 'white',
     altbackground: '#e6f2f8',
     foregroundSelectionColor: 'white',
-    backgroundSelectionColor: '#0d6a92',
+    backgroundSelectionColor: 'rgba(13, 106, 146, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: '#00435e',
@@ -219,7 +221,7 @@ var darkTheme = {
     backgroundColor: '#07071E',
     altbackground: '#07071E',
     foregroundSelectionColor: 'white',
-    backgroundSelectionColor: '#3D77FE',
+    backgroundSelectionColor: 'rgba(61, 119, 254, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: 'white',

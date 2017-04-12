@@ -4,6 +4,7 @@ import { ShortcutState } from './Interface/IState';
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import { DataType, ShortcutAction } from '../../Core/Enums';
+import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
 
 export const SHORTCUT_SELECT = 'SHORTCUT_SELECT';
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
@@ -95,9 +96,9 @@ const initialShortcutState: ShortcutState = {
         { ShortcutKey: "H", ShortcutResult: 100, DataType: DataType.Number, ShortcutAction: ShortcutAction.Multiply, IsLive: false, IsPredefined: true, IsDynamic: false },
     ],
     DateShortcuts: [
-        { ShortcutKey: "T", ShortcutResult: "Today", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "L", ShortcutResult: "Last Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
-        { ShortcutKey: "N", ShortcutResult: "Next Work Day", DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "T", ShortcutResult: CalendarStrat.TODAY_MAGICSTRING, DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "P", ShortcutResult: CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING, DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
+        { ShortcutKey: "N", ShortcutResult: CalendarStrat.NEXT_WORK_DAY_MAGICSTRING, DataType: DataType.Date, ShortcutAction: ShortcutAction.Replace, IsLive: false, IsPredefined: true, IsDynamic: true },
     ]
 }
 

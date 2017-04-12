@@ -41,6 +41,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.ColumnValueType);
         columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
 
+        // for boolean columns dont show any column values as we already have true/false from user filters
+        if (this.props.CurrentColumn.DataType == DataType.Boolean) {
+            columnValuePairs = [];
+        }
+
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.FilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: String[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
@@ -50,9 +55,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
 
-         let newButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
-           style={buttonCloseStyle}
-           size={"xsmall"}
+        let newButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
+            style={buttonCloseStyle}
+            size={"xsmall"}
             overrideTooltip="Close"
             DisplayMode="Glyph" />
 
@@ -122,8 +127,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        FilterState: state.Filter   
-     };
+        FilterState: state.Filter
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

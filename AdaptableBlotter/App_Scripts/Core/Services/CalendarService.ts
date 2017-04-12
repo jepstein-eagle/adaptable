@@ -1,6 +1,7 @@
 
 import { ICalendarService } from './Interface/ICalendarService';
 import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../Interface/ICalendarStrategy';
+import * as CalendarStrat from '../Interface/ICalendarStrategy';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
 // Similar service to the one in WPF version
@@ -22,13 +23,13 @@ export class CalendarService implements ICalendarService {
         // eventually we should use some kind of enum? or class that holds this
         var dynamicDate: Date;
 
-        if (dynamicDateName == "Today") {
+        if (dynamicDateName == CalendarStrat.TODAY_MAGICSTRING) {
             dynamicDate = new Date();
         }
-        else if (dynamicDateName == "Last Working Day") {
-            dynamicDate = this.GetLastWorkingDay(1);
+        else if (dynamicDateName == CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING) {
+            dynamicDate = this.GetPreviousWorkingDay(1);
         }
-        else if (dynamicDateName == "Next Working Day") {
+        else if (dynamicDateName == CalendarStrat.NEXT_WORK_DAY_MAGICSTRING) {
             dynamicDate = this.GetNextWorkingDay(1);
         }
         return dynamicDate;
@@ -46,7 +47,7 @@ export class CalendarService implements ICalendarService {
         return counterDate;
     }
 
-    public GetLastWorkingDay(days: number = 1): Date {
+    public GetPreviousWorkingDay(days: number = 1): Date {
         var count = 0;
         let counterDate: Date = new Date();
         while (count < days) {

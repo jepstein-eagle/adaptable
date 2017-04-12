@@ -87,7 +87,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
 
-
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
@@ -254,8 +253,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private kendoPopup: kendo.ui.Popup
     public hideFilterForm() {
-        if(this.kendoPopup)
-        {
+        if (this.kendoPopup) {
             this.kendoPopup.close()
         }
     }
@@ -300,7 +298,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index) => {
+        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index: number) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
@@ -406,21 +404,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public getColumnDataType(column: any): DataType {
-
-        let kendoColumn: kendo.ui.GridColumn = <kendo.ui.GridColumn>column;
-
+    private getColumnDataType(column: kendo.ui.GridColumn): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
             console.log('column is undefined returning String for Type')
             return DataType.String;
         }
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + kendoColumn)
+            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + column)
             return DataType.String;
         }
 
-        let type = this.grid.dataSource.options.schema.model.fields[kendoColumn.field].type;
+        let type = this.grid.dataSource.options.schema.model.fields[column.field].type;
 
         switch (type) {
             case 'string':
@@ -611,7 +606,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // return cell.text();
     }
 
-    private getDisplayValueFromRecord(row: any, columnId: string): string {
+    public getDisplayValueFromRecord(row: any, columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);
         if (column.format) {
             return kendo.format(column.format, row[columnId])

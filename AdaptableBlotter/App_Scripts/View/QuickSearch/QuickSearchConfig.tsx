@@ -144,7 +144,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                             {quickSearchDisplayTypes}
                                         </FormControl>
                                         {' '}<AdaptablePopover headerText={"Quick Search: Behaviour"}
-                                            bodyText={[<b>Colour Cells:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Rows:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Colour Cells and Show Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
+                                            bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
                                             popoverType={PopoverType.Info} />
                                     </AdaptableBlotterForm  >
                                 </Col>
@@ -169,11 +169,11 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
     private getTextForQuickSearchDisplayType(quickSearchDisplayType: QuickSearchDisplayType): string {
         switch (quickSearchDisplayType) {
             case QuickSearchDisplayType.ColourCell:
-                return "Colour Cells"
+                return "Highlight Cells Only"
             case QuickSearchDisplayType.ShowRow:
-                return "Show Rows"
+                return "Show Matching Rows Only"
             case QuickSearchDisplayType.ShowRowAndColourCell:
-                return "Colour Cells & Show Rows"
+                return "Highlight Cells & Show Matching Rows"
         }
     }
 

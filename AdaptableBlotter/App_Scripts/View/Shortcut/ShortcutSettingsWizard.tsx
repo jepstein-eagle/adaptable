@@ -59,7 +59,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         })
 
         // sort out actions
-        let optionActions = EnumExtensions.getNamesAndValues(ShortcutAction).map((enumNameAndValue: any) => {
+        let optionActions = EnumExtensions.getNamesAndValues(ShortcutAction).filter
+            (nv => nv.value != ShortcutAction.Replace).map((enumNameAndValue: any) => {
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
         })
 
@@ -87,10 +88,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     <Col xs={9}>
                         <AdaptableBlotterForm inline >
                             <FormControl componentClass="select" placeholder="select" value={currentKeyValue} onChange={(x) => this.onShortcutKeyChanged(x)} >
-                                <option value="select" key="select">Select key</option>
+                                <option value="select" key="select">Select Key</option>
                                 {optionKeys}
                             </FormControl>
-                            {' '}<AdaptablePopover headerText={"Shortcut: Key"} bodyText={["The keyboard key that triggers the shortcut when pressed."]} popoverType={PopoverType.Info} />
+                            {' '}<AdaptablePopover headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} popoverType={PopoverType.Info} />
                         </AdaptableBlotterForm>
                     </Col>
                 </FormGroup>
@@ -99,22 +100,22 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     <span>
                         <FormGroup controlId="formInlineAction">
                             <Col xs={3}>
-                                <ControlLabel>Action:</ControlLabel>
+                                <ControlLabel>Operation:</ControlLabel>
                             </Col>
                             <Col xs={9}>
                                 <AdaptableBlotterForm inline >
                                     <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
                                         {optionActions}
                                     </FormControl>
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Action"} 
-                                    bodyText={["Determines how cell contents change when a shortcut is triggered.", <br/>,<i>Replace</i>, " replaces the entire cell contents with the Shortcut Result", <br/>, "All other actions update the cell value."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Operation"} 
+                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
 
                         <FormGroup controlId="formInlineNumberResult">
                             <Col xs={3}>
-                                <ControlLabel>Result:</ControlLabel>
+                                <ControlLabel>Value:</ControlLabel>
                             </Col>
                             <Col xs={9}>
                                 <AdaptableBlotterForm inline >
@@ -124,7 +125,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         onChange={this.changeContent}
                                         value={this.state.ShortcutResult}
                                     />
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Result"} bodyText={["Used to calculate cell's new contents when a shortcut is triggered. If Action is ", <i>Replace</i>, " it becomes the new value; for other Actions it is used in conjunction with cell's initial value."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"} 
+                                      bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
@@ -132,7 +134,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     :
                     <FormGroup controlId="formInlineDateResult">
                         <Col xs={3}>
-                            <ControlLabel>Result:</ControlLabel>
+                            <ControlLabel>Output:</ControlLabel>
                         </Col>
                         <Col xs={9}>
                             <AdaptableBlotterForm inline >
@@ -142,7 +144,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     onChange={this.changeContent}
                                     value={this.state.ShortcutResult}
                                 />
-                                {' '}<AdaptablePopover headerText={"Shortcut: Result"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                {' '}<AdaptablePopover headerText={"Shortcut: Output"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
                             </AdaptableBlotterForm>
                         </Col>
                     </FormGroup>

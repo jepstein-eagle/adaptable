@@ -19,7 +19,9 @@ interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooser
 
 class ColumnChooserActionComponent extends React.Component<ColumnChooserActionProps, {}> {
     render() {
-        let infoBody:any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",<br/>,<br/>,"Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",<br/>,<br/>,"All changes made while using the Column Chooser are implemented in the Blotter immediately."]
+        let infoBody:any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",<br/>,<br/>,
+        "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",<br/>,<br/>,
+        "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
 
         return <PanelWithImage header="Column Chooser" bsStyle="primary" glyphicon="list-alt" infoBody={infoBody}>
             <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible)}

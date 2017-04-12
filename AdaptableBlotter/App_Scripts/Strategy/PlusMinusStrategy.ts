@@ -82,7 +82,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                                 newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (this.PlusMinusState.DefaultNudge * side) })
                             }
                         }
-
+                        //avoid the 0.0000000000x  
+                        newValue.Value = parseFloat(newValue.Value.toFixed(12))
+                        
                         let dataChangedEvent: IDataChangedEvent = {
                             OldValue: Number(columnValuePair.value),
                             NewValue: newValue.Value,
@@ -107,6 +109,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 }
             }
 
+            //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
+            keyEvent.preventDefault()
             // first inform if any failed with prevent
             this.ShowErrorPreventMessage(failedPreventEdits);
             if (failedWarningEdits.length > 0) {

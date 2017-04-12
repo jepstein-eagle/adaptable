@@ -4,6 +4,6 @@ import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../../Interface/IC
 
 export interface ICalendarService {
   GetNextWorkingDay( days?: number): Date;
-  GetLastWorkingDay( days?: number): Date;
+  GetPreviousWorkingDay( days?: number): Date;
   GetDynamicDate( dynamicDateName: string): Date;
 }

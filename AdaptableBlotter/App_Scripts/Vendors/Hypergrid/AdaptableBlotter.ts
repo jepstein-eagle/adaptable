@@ -138,20 +138,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, e.detail.keyEvent)
         });
 
+        //we hide the filterform if scrolling on the x axis
+        grid.addEventListener('fin-scroll-x', (e: any) => {
+            if (this.filterContainer.style.visibility == 'visible') {
+                this.hideFilterForm()
+            }
+        }
+        )
+
         grid.addEventListener('fin-click', (e: any) => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.hideFilterForm()
             }
             if (e.detail.primitiveEvent.isHeaderCell) {
-                let filterContext: IColumnFilterContext = {
-                    Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
-                    Blotter: this,
-                    ColumnValueType: DistinctCriteriaPairValue.DisplayValue
-                };
-                this.filterContainer.style.visibility = 'visible'
-                this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
-                this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
-                ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+                //try to check if we are clicking on the filter icon
+                //we remove the scroll as get boundscell look at visible columns only
+                let scrolledX = e.detail.gridCell.x - this.grid.getHScrollValue()
+                let y = e.detail.gridCell.y
+                let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y })
+                let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse
+                let iconPadding = this.grid.properties.iconPadding
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIconWidth = (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0).width
+                if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
+                    let filterContext: IColumnFilterContext = {
+                        Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
+                        Blotter: this,
+                        ColumnValueType: DistinctCriteriaPairValue.DisplayValue
+                    };
+                    this.filterContainer.style.visibility = 'visible'
+                    this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
+                    this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
+                    ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+                }
+                e.preventDefault()
             }
         });
 
@@ -226,7 +246,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            if (this.sortColumn == columnIndex) {
+            if (grid.properties.columnIndexes[this.sortColumnGridIndex] == columnIndex) {
                 if (this.sortOrder == SortOrder.Ascending) {
                     icon = UPWARDS_BLACK_ARROW;
                 }
@@ -263,12 +283,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (quickSearchBackColor) {
                     config.backgroundColor = quickSearchBackColor;
                 }
-                else if (csBackgroundColorColumn || csForeColorColumn) {
+                else if (csBackgroundColorColumn ) {
                     config.backgroundColor = csBackgroundColorColumn;
+                }
+                else if ( csForeColorColumn) {
                     config.color = csForeColorColumn;
                 }
-                else if (csBackgroundColorRow || csForeColorRow) {
+                else if (csBackgroundColorRow ) {
                     config.backgroundColor = csBackgroundColorRow;
+                 }
+                else if ( csForeColorRow) {
                     config.color = csForeColorRow;
                 }
             }
@@ -320,6 +344,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public hideFilterForm() {
+        ReactDOM.unmountComponentAtNode(this.filterContainer)
         this.filterContainer.style.visibility = 'hidden'
     }
 
@@ -356,20 +381,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-    public sortColumn: number = -1
+    public sortColumnGridIndex: number = -1
+    public sortColumnName: string = ""
     public sortOrder: SortOrder
-    public toggleSort(columnIndex: number) {
+    public toggleSort(gridColumnIndex: number) {
         //Toggle sort one column at a time
-        if (this.sortColumn === columnIndex) {
+        if (this.sortColumnGridIndex === gridColumnIndex) {
             if (this.sortOrder == SortOrder.Descending) {
-                this.sortColumn = -1;
+                this.sortColumnGridIndex = -1;
             }
             else {
                 this.sortOrder = SortOrder.Descending
             }
         } else {
             this.sortOrder = SortOrder.Ascending
-            this.sortColumn = columnIndex;
+            this.sortColumnGridIndex = gridColumnIndex;
+            this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
         }
         this.grid.behavior.reindex();
     }
@@ -451,8 +478,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (column) {
             if (!column.hasOwnProperty('type')) {
                 console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
-                //   let columnObj = this.grid.behavior.columns.find((x: any) => x.name == column.name)
-                //   if (columnObj) {
                 switch (column.getType()) {
                     case 'string':
                         return DataType.String;
@@ -554,7 +579,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnIndex(columnName: string): number {
         //be carefull this returns the index y of the cell. Not the actual index in the collection
         let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
-        return (activeColumn)? activeColumn.index: -1;
+        return (activeColumn) ? activeColumn.index : -1;
     }
 
 
@@ -636,6 +661,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
             }
             //There is never a timeout for CS
+            // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
             if (style.csBackColorColumn) {
                 this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
             }

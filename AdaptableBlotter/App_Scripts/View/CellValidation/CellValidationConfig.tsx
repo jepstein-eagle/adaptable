@@ -17,9 +17,11 @@ import { PopupType, CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { CellValidationSettingsWizard } from './CellValidationSettingsWizard'
+import { CellValidationActionWizard } from './CellValidationActionWizard'
+import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard'
 import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
+import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/interface/IExpression';
@@ -56,6 +58,10 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         }
     }
     render() {
+
+        let infoBody: any[] = ["Cell Validation Rules determine whether an edit is valid.", <br />, <br />,
+            "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
+            "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
         let CellValidationModeTypes = EnumExtensions.getNamesAndValues(CellValidationMode).map((enumNameAndValue: any) => {
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
@@ -99,7 +105,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
         return <PanelWithButton headerText="Cell Validation" bsStyle="primary" style={panelStyle}
             button={newButton}
-            glyphicon={"flag"} >
+            glyphicon={"flag"}
+            infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -118,8 +125,10 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
             {this.state.EditedCellValidation != null &&
                 <AdaptableWizard Steps={[
-                    <CellValidationSettingsWizard Columns={this.props.Columns} />,
+                    <CellValidationSelectColumnWizard Columns={this.props.Columns} />,
+                    <CellValidationActionWizard Columns={this.props.Columns} />,
                     <CellValidationRulesWizard Columns={this.props.Columns} />,
+                    <CellValidationSelectQueryWizard Columns={this.props.Columns} />,
                     <CellValidationExpressionWizard ColumnList={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SelectedColumnId={null}

@@ -130,11 +130,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
-                    <Well bsSize="small">Click 'New' button to start adding Column Conditions for the Expression.
+                    <Well bsSize="small">Click 'New' to start adding Column Conditions to the Query.
                     <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
-                            "This Expression can only contain one Column Condition." : "The Expression can contain multiple Column Conditions."}
+                            "This Query can only contain one Column Condition." : "The Query can contain multiple Column Conditions.  Simly click the 'New' button each time that a new Column Condition is required."}
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
@@ -165,13 +165,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </FormGroup>
                     </AdaptableBlotterForm>
                     <Row >
-                        <Col xs={4}>
-                            <ExpressionBuilderColumnValues
-                                ColumnValues={this.state.ColumnValues}
-                                SelectedValues={this.state.SelectedColumnValues}
-                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
-                            </ExpressionBuilderColumnValues>
-                        </Col>
+                        {selectedColumn.DataType != DataType.Boolean &&
+                            <Col xs={4}>
+                                <ExpressionBuilderColumnValues
+                                    ColumnValues={this.state.ColumnValues}
+                                    SelectedValues={this.state.SelectedColumnValues}
+                                    onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
+                                </ExpressionBuilderColumnValues>
+                            </Col>
+                        }
                         <Col xs={4}>
                             <ExpressionBuilderUserFilter
                                 UserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, availableExpressionIds)}
@@ -179,13 +181,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                 onUserFilterExpressionChange={(selectedValues) => this.onSelectedUserFilterExpressionsChange(selectedValues)} >
                             </ExpressionBuilderUserFilter>
                         </Col>
-                        <Col xs={4}>
-                            <ExpressionBuilderRanges
-                                DataType={selectedColumnDataType}
-                                Ranges={this.state.SelectedColumnRanges}
-                                onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
-                            </ExpressionBuilderRanges>
-                        </Col>
+                        {selectedColumn.DataType != DataType.Boolean &&
+                            <Col xs={4}>
+                                <ExpressionBuilderRanges
+                                    DataType={selectedColumnDataType}
+                                    Ranges={this.state.SelectedColumnRanges}
+                                    onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
+                                </ExpressionBuilderRanges>
+                            </Col>
+                        }
                     </Row>
                 </div>}
         </PanelWithButton>

@@ -61,9 +61,9 @@ export enum PopoverType {
 
 // Enums used in Strategies
 export enum SmartEditOperation {
-    Sum,
-    Ratio,
-    Absolute
+    Add,
+    Multiply,
+    Replace
 }
 
 export enum ShortcutAction {
@@ -139,3 +139,22 @@ export enum DistinctCriteriaPairValue {
     RawValue,
     DisplayValue
 }
+
+export enum FontWeight {
+    Normal,
+    Bold
+}
+
+export enum FontStyle {
+    Normal,
+    Italic
+}
+
+export enum FontSize {
+   XSmall,
+    Small,
+    Medium,
+    Large,
+    XLarge
+}
+

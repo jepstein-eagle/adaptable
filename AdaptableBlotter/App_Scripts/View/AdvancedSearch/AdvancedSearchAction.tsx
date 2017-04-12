@@ -70,10 +70,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     render() {
-        let infoBody: any[] = ["Create multi-column named searches using a selection of column values, filters and ranges.\n" +
-            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.\n" +
-            "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form.\n" +
-            "Click 'New' to create a new Advanced Search."]
+        let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.",<br/>,<br/>,
+            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.",<br/>,<br/>,
+            "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form."]
 
              let detailsInfoBody: any[] = ["Stuff about details."]
 
