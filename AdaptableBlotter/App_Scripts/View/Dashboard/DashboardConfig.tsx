@@ -11,6 +11,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
+import * as StrategyIds from '../../Core/StrategyIds'
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardStrategyControl>;
@@ -33,6 +34,11 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
             let visibleButton = x.IsVisible ?
                 <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
+            if(x.Strategy == StrategyIds.FunctionsStrategyId)
+            {
+                //we want to prevent people from hiding the Functions dropdown
+                visibleButton = null
+            }
             return <li key={"DashboardControl" + i}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
