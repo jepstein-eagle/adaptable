@@ -32,7 +32,7 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
             }
             return true;
         }).map((menuItem: IMenuItem) => {
-            return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
+            return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
         });
 
         return <Panel className="small-padding-panel">
