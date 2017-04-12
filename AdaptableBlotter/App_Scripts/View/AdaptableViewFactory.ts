@@ -9,12 +9,17 @@ import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
 import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
+import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
+import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import { ThemeConfig } from './Theme/ThemeConfig'
 import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
+import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
+import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
+import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -36,6 +41,12 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
 }
+
+export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
+  [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
+  [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyIds.LayoutStrategyId, LayoutToolbarControl]
+]);
 
 
 interface IAdaptableViewFactory {

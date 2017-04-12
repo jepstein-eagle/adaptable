@@ -9,10 +9,10 @@ import { Panel, Form, FormControl, ControlLabel, FormGroup, Col, Row, Checkbox }
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
-    DashboardControls: Array<IDashboardControl>;
+    DashboardControls: Array<IDashboardStrategyControl>;
     onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
 }
 
@@ -21,7 +21,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
 
         let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
             return <Col xs={9} key={i} style={toolbarMarginStyle}>
-                <Checkbox key={x.Name} inline onChange={(e) => this.onDashboardControlVisibilityChanged(e, x)} checked={x.IsVisible}>Show {x.Name} Control</Checkbox>
+                <Checkbox key={x.Strategy} inline onChange={(e) => this.onDashboardControlVisibilityChanged(e, x)} checked={x.IsVisible}>Show {x.Strategy} Control</Checkbox>
             </Col>
         })
 
@@ -38,15 +38,15 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
         );
     }
 
-    onDashboardControlVisibilityChanged(event: React.FormEvent, dashboardControl: IDashboardControl) {
+    onDashboardControlVisibilityChanged(event: React.FormEvent, dashboardControl: IDashboardStrategyControl) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeControlVisibility(dashboardControl.Name, e.checked);
+        this.props.onChangeControlVisibility(dashboardControl.Strategy, e.checked);
     }
 
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControls: state.Dashboard.DashboardControls,
+        DashboardControls: state.Dashboard.DashboardStrategyControls,
     };
 }
 

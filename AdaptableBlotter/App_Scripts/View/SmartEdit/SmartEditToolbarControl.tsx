@@ -13,9 +13,10 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptablePopover } from '../AdaptablePopover';
+import * as StrategyIds from '../../Core/StrategyIds'
 
 
 interface SmartEditToolbarControlComponentProps extends IStrategyViewPopupProps<SmartEditToolbarControlComponent> {
@@ -27,7 +28,7 @@ interface SmartEditToolbarControlComponentProps extends IStrategyViewPopupProps<
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
-    SmartEditDashboardControl: IDashboardControl
+    SmartEditDashboardControl: IDashboardStrategyControl
 }
 
 
@@ -127,7 +128,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
         this.props.onApplySmartEdit()
     }
     expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.SmartEditDashboardControl.Name, !this.props.SmartEditDashboardControl.IsCollapsed);
+        this.props.onChangeControlCollapsedState(this.props.SmartEditDashboardControl.Strategy, !this.props.SmartEditDashboardControl.IsCollapsed);
     }
 
     private getButtonStyle(globalHasOnlyValidationPrevent: boolean, globalHasValidationPrevent: boolean, globalHasValidationWarning: boolean): string {
@@ -160,7 +161,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
         Preview: state.SmartEdit.Preview,
-        SmartEditDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "SmartEdit"),
+        SmartEditDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.SmartEditStrategyId),
 
     };
 }

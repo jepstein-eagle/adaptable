@@ -25,6 +25,7 @@ import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotter
 import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
+import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -57,13 +58,18 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
         });
 
-        var visibleDashboardControls = this.props.DashboardState.DashboardControls.filter(dc => dc.IsVisible);
-        //Because the Dashboard is autonomous and compoenents are not provided by the strategies we have no ways of linking the two together
-        //so you need to harcode everything...
-        //as discussed the strategies should provide the available react element and Dashbaord should just build them using React.Clonelement like for the PopupShow
-        let quickSearchToolbarReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == "QuickSearch" && x.AccessLevel == "ReadOnly") > -1
-        let advancedSearchToolbarReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == "AdvancedSearch" && x.AccessLevel == "ReadOnly") > -1
-        let layoutToolbarReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == "Layout" && x.AccessLevel == "ReadOnly") > -1
+        let visibleDashboardControls = this.props.DashboardState.DashboardStrategyControls.filter(dc => dc.IsVisible);
+        let visibleDashboardElements = visibleDashboardControls.map(control => {
+            //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
+            //we'll need to use the name or something else
+            let dashboardControl = AdaptableDashboardViewFactory.get(control.Strategy);
+            let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
+            let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
+            return <Nav>
+                {dashboardElememt}
+            </Nav>
+        })
+
         return (
             <div className="adaptable_blotter_style" >
                 {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
@@ -79,20 +85,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         </Dropdown>
                     </Navbar.Brand>
 
-                    {/* Im sure we must be able to do this more dynamically and cleverly but while there are ony 3 its ok for now */}
-                    {visibleDashboardControls.find(dc => dc.Name == "Quick Search") != null &&
-                        <Nav>
-                            <QuickSearchToolbarControl IsReadOnly={quickSearchToolbarReadOnly} />
-                        </Nav>
-                    }
-                    {visibleDashboardControls.find(dc => dc.Name == "Advanced Search") != null && <Nav>
-                        <AdvancedSearchToolbarControl IsReadOnly={advancedSearchToolbarReadOnly} />
-                    </Nav>
-                    }
-                    {visibleDashboardControls.find(dc => dc.Name == "Layout") != null && <Nav>
-                        <LayoutToolbarControl IsReadOnly={layoutToolbarReadOnly} />
-                    </Nav>
-                    }
+                    {visibleDashboardElements}
 
                 </Navbar>
 
@@ -125,9 +118,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ComponentClassName={this.props.PopupState.ActionConfigurationPopup.ComponentClassName}
                     onHide={this.props.onClosePopup}
                     IsReadOnly={this.props.PopupState.ActionConfigurationPopup.IsReadOnly}
-                    AdaptableBlotter={this.props.AdaptableBlotter} 
-                    onClearPopupParams={()=>this.props.onClearPopupParams()}
-                    PopupParams={this.props.PopupState.ActionConfigurationPopup.Params}/>
+                    AdaptableBlotter={this.props.AdaptableBlotter}
+                    onClearPopupParams={() => this.props.onClearPopupParams()}
+                    PopupParams={this.props.PopupState.ActionConfigurationPopup.Params} />
             </div>
 
         );
