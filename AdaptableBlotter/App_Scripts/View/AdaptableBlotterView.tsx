@@ -5,7 +5,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Modal, DropdownButton, Button, MenuItem, Alert, Glyphicon, Navbar, NavItem, Nav, Dropdown, FormControl, Form, Col, Row, ControlLabel, ButtonToolbar } from 'react-bootstrap';
+import { Modal, Button, Glyphicon, Navbar, NavItem, Nav, Dropdown, FormControl, Form, Col, Row, ControlLabel } from 'react-bootstrap';
 import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -15,17 +15,12 @@ import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup
 import { PopupState, MenuState, DashboardState, EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IMenuItem } from '../Core/interface/IStrategy'
-import { MenuType } from '../Core/Enums';
-import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
-import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
-import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
-import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
+import * as StrategyIds from '../Core/StrategyIds'
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -48,45 +43,29 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
 
-        var configMenuItems = this.props.MenuState.MenuItems.filter(x => {
-            let accessLevel = this.props.EntitlementsState.FunctionEntitlements.find(entitlement => entitlement.FunctionName == x.StrategyId)
-            if (accessLevel) {
-                return accessLevel.AccessLevel != "Hidden"
-            }
-            return true;
-        }).map((menuItem: IMenuItem) => {
-            return <MenuItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
-        });
 
         let visibleDashboardControls = this.props.DashboardState.DashboardStrategyControls.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else
             let dashboardControl = AdaptableDashboardViewFactory.get(control.Strategy);
-            let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
-            let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-            return <Nav key={"DashboardControl" + idx}>
-                {dashboardElememt}
-            </Nav>
+            if (dashboardControl) {
+                let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
+                let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
+                return <Nav key={"DashboardControl" + idx}>
+                    {dashboardElememt}
+                </Nav>
+            }
+            else {
+                console.error("Cannot find Dashboard Control for " + control.Strategy)
+            }
         })
 
         return (
             <div className="adaptable_blotter_style" >
-                {/*  The temporary nav bar - in lieue of a Dashboard - containing action buttons, config dropdown and quick search control */}
+                {/*  Dashboard */}
                 <Navbar fluid >
-                    <Navbar.Brand >
-                        <Dropdown id="dropdown-functions" >
-                            <Dropdown.Toggle style={marginStyle}>
-                                <Glyphicon glyph="home" />{' '}Functions
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {configMenuItems}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Navbar.Brand>
-
                     {visibleDashboardElements}
-
                 </Navbar>
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
@@ -125,10 +104,6 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
         );
     }
-
-    onClick(menuItem: IMenuItem) {
-        this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.dispatch(menuItem.Action)
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -160,19 +135,3 @@ let AdaptableBlotterReact: React.ComponentClass<any> = connect(mapStateToProps, 
 export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterReact Blotter={AdaptableBlotter} />
 </Provider>;
-
-let marginStyle = {
-    padding: '3px',
-
-}
-
-let glyphStyle = {
-    fontSize: "large",
-    marginRight: '5px',
-    padding: '0px'
-}
-
-let headerStyle = {
-    fontSize: "large",
-
-}

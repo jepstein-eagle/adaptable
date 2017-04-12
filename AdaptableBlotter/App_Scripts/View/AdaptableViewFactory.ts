@@ -10,6 +10,7 @@ import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
+import { FunctionsToolbarControl } from './Functions/FunctionsToolbarControl'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
@@ -43,6 +44,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 }
 
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
+  [StrategyIds.FunctionsStrategyId, FunctionsToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl]

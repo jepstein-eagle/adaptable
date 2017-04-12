@@ -47,6 +47,7 @@ const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
         //I keep the property Name insttead of Strategy as we are not yet able to migrate reduc state version
         //But the content of the Name needs to be a strategy Id
+        { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true, IsCollapsed: true },
