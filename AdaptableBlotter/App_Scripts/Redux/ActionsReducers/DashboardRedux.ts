@@ -3,10 +3,12 @@
 import * as Redux from 'redux';
 import { DashboardState } from './interface/IState'
 import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 const DASHBOARD_CHANGE_COLLAPSE_STATE = 'DASHBOARD_CHANGE_COLLAPSE_STATE';
 const DASHBOARD_CHANGE_VISIBILITY = 'DASHBOARD_CHANGE_VISIBILITY';
+const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 
 export interface DashboardChangeControlCollapseStateAction extends Redux.Action {
     StrategyId: string;
@@ -30,6 +32,16 @@ export const ChangeVisibilityDashboardControl = (StrategyId: string, IsVisible: 
     IsVisible
 })
 
+export interface DashboardMoveItemAction extends Redux.Action {
+    StrategyId: string;
+    NewIndex: number
+}
+
+export const DashboardMoveItem = (StrategyId: string, NewIndex: number): DashboardMoveItemAction => ({
+    type: DASHBOARD_MOVE_ITEM,
+    StrategyId,
+    NewIndex
+})
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
@@ -49,20 +61,29 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
     let dashboardControl: IDashboardStrategyControl
 
     switch (action.type) {
-        case DASHBOARD_CHANGE_COLLAPSE_STATE:
+        case DASHBOARD_CHANGE_COLLAPSE_STATE: {
             let actionTypedCollapsed = <DashboardChangeControlCollapseStateAction>action;
             dashboardControls = [].concat(state.DashboardStrategyControls);
             index = dashboardControls.findIndex(a => a.Strategy == actionTypedCollapsed.StrategyId)
             dashboardControl = dashboardControls[index]
             dashboardControls[index] = Object.assign({}, dashboardControl, { IsCollapsed: actionTypedCollapsed.IsCollapsed })
             return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
-        case DASHBOARD_CHANGE_VISIBILITY:
+        }
+        case DASHBOARD_CHANGE_VISIBILITY: {
             let actionTypedVisibility = <DashboardChangeControlVisibilityAction>action;
             dashboardControls = [].concat(state.DashboardStrategyControls);
             index = dashboardControls.findIndex(a => a.Strategy == actionTypedVisibility.StrategyId)
             dashboardControl = dashboardControls[index]
             dashboardControls[index] = Object.assign({}, dashboardControl, { IsVisible: actionTypedVisibility.IsVisible })
             return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+        }
+        case DASHBOARD_MOVE_ITEM: {
+            let actionTyped = <DashboardMoveItemAction>action;
+            dashboardControls = [].concat(state.DashboardStrategyControls);
+            index = dashboardControls.findIndex(a => a.Strategy == actionTyped.StrategyId)
+            Helper.moveArray(dashboardControls, index, actionTyped.NewIndex)
+            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+        }
         default:
             return state
     }

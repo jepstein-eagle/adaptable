@@ -59,13 +59,13 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         });
 
         let visibleDashboardControls = this.props.DashboardState.DashboardStrategyControls.filter(dc => dc.IsVisible);
-        let visibleDashboardElements = visibleDashboardControls.map(control => {
+        let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else
             let dashboardControl = AdaptableDashboardViewFactory.get(control.Strategy);
             let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-            return <Nav>
+            return <Nav key={"DashboardControl" + idx}>
                 {dashboardElememt}
             </Nav>
         })
