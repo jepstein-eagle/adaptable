@@ -159,6 +159,4 @@ export interface LayoutState {
 
 export interface DashboardState {
     DashboardStrategyControls: IDashboardStrategyControlConfiguration[]
-    DashboardButtons: string[]
-
 }

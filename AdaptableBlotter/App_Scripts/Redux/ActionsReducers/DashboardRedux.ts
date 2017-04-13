@@ -70,13 +70,12 @@ const initialDashboardState: DashboardState = {
         //I keep the property Name insttead of Strategy as we are not yet able to migrate reduc state version
         //But the content of the Name needs to be a strategy Id
         { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, IsCollapsed: true },
+        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
-    ],
-    DashboardButtons: []
+    ]
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
