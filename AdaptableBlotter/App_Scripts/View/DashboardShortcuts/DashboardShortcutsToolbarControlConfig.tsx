@@ -26,7 +26,13 @@ class DashboardShortcutsToolbarControlConfigComponent extends React.Component<Da
 
     render() {
         let availableShortcuts = this.props.MenuState.MenuItems.map(menuItem => {
-            return <Checkbox key={menuItem.Label} onChange={(item) => this.onClick(item, menuItem)}>{menuItem.Label}</Checkbox>
+            let config: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+            let isChecked = false
+            if(config)
+            {
+                isChecked = config.indexOf(menuItem.Label) > -1
+            }
+            return <Checkbox key={menuItem.Label} checked={isChecked} onChange={(item) => this.onClick(item, menuItem)}>{menuItem.Label}</Checkbox>
         })
         return <PanelWithImage header="Dashboard Shortcut Configuration" bsStyle="primary" glyphicon="dashboard">
             {availableShortcuts}

@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup } from 'react-bootstrap';
+import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -24,10 +24,22 @@ interface DashboardShortcutsControlComponentProps extends IStrategyViewPopupProp
 class DashboardShortcutsToolbarControlComponent extends React.Component<DashboardShortcutsControlComponentProps, {}> {
 
     render() {
+        let shortcutsArray: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+        let shortcuts
+        if (shortcutsArray) {
+            shortcuts = shortcutsArray.map(x => {
+                let menuItem = this.props.MenuState.MenuItems.find(y => y.Label == x)
+                if (menuItem) {
+                    return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
+                        <Button onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /></Button>
+                    </OverlayTrigger >
+                }
+            })
+        }
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm className='navbar-form' >
                 <FormGroup controlId="formDashboardShortcuts">
-              
+                    {shortcuts}
                 </FormGroup>
 
             </AdaptableBlotterForm>
