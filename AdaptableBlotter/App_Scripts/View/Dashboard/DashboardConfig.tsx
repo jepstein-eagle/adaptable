@@ -69,7 +69,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
         let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Config", 1], ["Preview", 6]];
 
         return (
-            <PanelWithImage header="Blotter Dashboard" bsStyle="primary" glyphicon="dashboard" style={panelStyle}>
+            <PanelWithImage header="Blotter Dashboard" bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon="dashboard" style={panelStyle}>
 
                 <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
