@@ -15,6 +15,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
 import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardStrategyControlConfiguration>;
@@ -59,22 +60,23 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{x.Strategy}</Col>
                     <Col xs={2}>{visibleButton}</Col>
                     <Col xs={1}>{configurationButton}</Col>
-                    <Col xs={7} style={previewStyle}>{dashboardElememt}
+                    <Col xs={6} style={previewStyle}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
         })
 
+        let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Config", 1], ["Preview", 6]];
+
         return (
             <PanelWithImage header="Blotter Dashboard" bsStyle="primary" glyphicon="dashboard" style={panelStyle}>
 
-                <Panel header="Dashboard Controls" bsStyle="info">
-                    <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
-                        onDragOver={(event) => this.DragOver(event)}
-                        onDragLeave={(event) => this.DragLeave(event)}>
-                        {radioDashboardControls}
-                    </ListGroup>
-                </Panel>
+                <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
+                    onDragOver={(event) => this.DragOver(event)}
+                    onDragLeave={(event) => this.DragLeave(event)}>
+                    {radioDashboardControls}
+                </ListGroup>
                 <AdaptableBlotterPopup showModal={this.state.CurrentDashboardConfig != ""}
                     ComponentClassName={this.state.CurrentDashboardConfig}
                     onHide={() => this.onCloseConfigPopup()}
