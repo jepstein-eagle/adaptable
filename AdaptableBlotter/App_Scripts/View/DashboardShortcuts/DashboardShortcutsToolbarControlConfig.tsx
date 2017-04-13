@@ -41,10 +41,11 @@ class DashboardShortcutsToolbarControlConfigComponent extends React.Component<Da
 
     onClick(item: React.FormEvent, menuItem: IMenuItem) {
         let e = item.target as HTMLInputElement;
-        let arrayConfig: Array<string> = [].concat(this.props.DashboardShortcutsDashboardControl.ControlConfiguration)
-        if (!arrayConfig) {
-            arrayConfig = []
+        let originalConf = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+        if (!originalConf) {
+            originalConf = []
         }
+        let arrayConfig: Array<string> = [].concat(originalConf)
         if (e.checked) {
             arrayConfig.push(menuItem.Label)
         }
