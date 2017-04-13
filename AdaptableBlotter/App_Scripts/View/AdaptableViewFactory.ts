@@ -19,6 +19,7 @@ import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
+import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
 import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
 import * as StrategyIds from '../Core/StrategyIds'
@@ -42,8 +43,10 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationConfig: CellValidationConfig,
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
+  DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig
 }
 
+//here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
   [StrategyIds.FunctionsStrategyId, FunctionsToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
@@ -52,6 +55,11 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.DashboardShortcutsStrategyId, DashboardShortcutsToolbarControl]
 ]);
 
+//here we put the configuration screen of the dashboard control if it exists
+//the component needs to be registered in the global view factory as well with the same key/name
+export const AdaptableDashboardConfigurationViewFactory = new Map<string, string>([
+  [StrategyIds.DashboardShortcutsStrategyId, "DashboardShortcutsToolbarControlConfig"]
+]);
 
 interface IAdaptableViewFactory {
   [key: string]: any;

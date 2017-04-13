@@ -8,4 +8,5 @@ export interface IDashboardStrategyControlConfiguration {
     Strategy: string
     IsVisible: boolean;
     IsCollapsed: boolean;
+    ControlConfiguration?: any;
 }

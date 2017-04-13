@@ -5,12 +5,15 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { Panel, Form, FormControl, ControlLabel, FormGroup, Col, Row, Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
+import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
@@ -18,13 +21,19 @@ interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigCo
     onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
     onMoveControl: (controlName: string, NewIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
-
+interface DashboardConfigState {
+    CurrentDashboardConfig: string;
+}
 var placeholder = document.createElement("button");
 placeholder.className = "placeholder"
 placeholder.classList.add("list-group-item")
 placeholder.type = "button"
 
-class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}> {
+class DashboardConfigComponent extends React.Component<DashboardConfigProps, DashboardConfigState> {
+    constructor() {
+        super()
+        this.state = { CurrentDashboardConfig: "" }
+    }
     render() {
 
         let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
@@ -34,17 +43,22 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
             let visibleButton = x.IsVisible ?
                 <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
-            if(x.Strategy == StrategyIds.FunctionsStrategyId)
-            {
+            if (x.Strategy == StrategyIds.FunctionsStrategyId) {
                 //we want to prevent people from hiding the Functions dropdown
                 visibleButton = null
             }
+            let configScreen = AdaptableDashboardConfigurationViewFactory.get(x.Strategy)
+            let isConfigurationButtonDisabled = !AdaptableDashboardConfigurationViewFactory.has(x.Strategy)
+            let configurationButton = <Button disabled={isConfigurationButtonDisabled}
+                onClick={() => this.onShowConfiguration(configScreen)}><Glyphicon glyph="wrench" /></Button>
+
             return <li key={"DashboardControl" + i}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{x.Strategy}</Col>
                     <Col xs={2}>{visibleButton}</Col>
+                    <Col xs={1}>{configurationButton}</Col>
                     <Col xs={7} style={previewStyle}>{dashboardElememt}
                     </Col>
                 </Row>
@@ -61,11 +75,23 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
                         {radioDashboardControls}
                     </ListGroup>
                 </Panel>
-
+                <AdaptableBlotterPopup showModal={this.state.CurrentDashboardConfig != ""}
+                    ComponentClassName={this.state.CurrentDashboardConfig}
+                    onHide={() => this.onCloseConfigPopup()}
+                    IsReadOnly={false}
+                    AdaptableBlotter={null}
+                    onClearPopupParams={() => null}
+                    PopupParams={null} />
             </PanelWithImage>
         );
     }
 
+    onCloseConfigPopup() {
+        this.setState({ CurrentDashboardConfig: "" })
+    }
+    onShowConfiguration(controlName: string) {
+        this.setState({ CurrentDashboardConfig: controlName })
+    }
     onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
         this.props.onChangeControlVisibility(dashboardControl.Strategy, visible);
     }
@@ -129,7 +155,6 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
         e.preventDefault();
         e.stopPropagation();
     }
-
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -141,7 +166,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onChangeControlVisibility: (controlName: string, isVisible: boolean) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName, isVisible)),
-        onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex))
+        onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };
 }
 
@@ -154,7 +179,7 @@ let divStyle = {
 
 let panelStyle = {
     'overflowY': 'auto',
-    width: '800px'
+    width: '900px'
 }
 
 let previewStyle = {
