@@ -10,6 +10,7 @@ const DASHBOARD_CHANGE_COLLAPSE_STATE = 'DASHBOARD_CHANGE_COLLAPSE_STATE';
 const DASHBOARD_CHANGE_VISIBILITY = 'DASHBOARD_CHANGE_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM = 'DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM';
+const DASHBOARD_SET_CONFIGURATION_ITEM = 'DASHBOARD_SET_CONFIGURATION_ITEM';
 
 export interface DashboardChangeControlCollapseStateAction extends Redux.Action {
     StrategyId: string;
@@ -51,6 +52,17 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
 export const DashboardCreateDefaultConfigurationItem = (StrategyId: string): DashboardCreateDefaultConfigurationItemAction => ({
     type: DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM,
     StrategyId
+})
+
+export interface DashboardSetConfigurationItemAction extends Redux.Action {
+    StrategyId: string;
+    NewConfig : any
+}
+
+export const DashboardSetConfigurationItem = (StrategyId: string, NewConfig: any): DashboardSetConfigurationItemAction => ({
+    type: DASHBOARD_SET_CONFIGURATION_ITEM,
+    StrategyId,
+    NewConfig
 })
 
 const initialDashboardState: DashboardState = {
@@ -104,6 +116,14 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
                 IsCollapsed: true,
                 IsVisible: false 
             })
+            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+        }
+        case DASHBOARD_SET_CONFIGURATION_ITEM: {
+            let actionTyped = <DashboardSetConfigurationItemAction>action;
+            dashboardControls = [].concat(state.DashboardStrategyControls);
+            index = dashboardControls.findIndex(a => a.Strategy == actionTyped.StrategyId)
+            dashboardControl = dashboardControls[index]
+            dashboardControls[index] = Object.assign({}, dashboardControl, { ControlConfiguration: actionTyped.NewConfig })
             return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
         }
         default:

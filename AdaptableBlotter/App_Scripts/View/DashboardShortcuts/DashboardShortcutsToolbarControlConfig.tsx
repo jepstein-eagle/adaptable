@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup } from 'react-bootstrap';
+import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup, Checkbox } from 'react-bootstrap';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -12,31 +12,41 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/interface/IStrategy'
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 
 interface DashboardShortcutsControlConfigComponentProps extends IStrategyViewPopupProps<DashboardShortcutsToolbarControlConfigComponent> {
     DashboardShortcutsDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean,
     MenuState: MenuState,
     EntitlementsState: EntitlementsState
-    onClick: (action: Redux.Action) => Redux.Action
+    onDashboardControlConfigChange: (strategyId: string, newConfig: any) => DashboardRedux.DashboardSetConfigurationItemAction
 }
 
 class DashboardShortcutsToolbarControlConfigComponent extends React.Component<DashboardShortcutsControlConfigComponentProps, {}> {
 
     render() {
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formDashboardShortcuts">
-              
-                </FormGroup>
-
-            </AdaptableBlotterForm>
-
-        </Panel>
+        let availableShortcuts = this.props.MenuState.MenuItems.map(menuItem => {
+            return <Checkbox key={menuItem.Label} onChange={(item) => this.onClick(item, menuItem)}>{menuItem.Label}</Checkbox>
+        })
+        return <PanelWithImage header="Dashboard Shortcut Configuration" bsStyle="primary" glyphicon="dashboard">
+            {availableShortcuts}
+        </PanelWithImage>
     }
 
-    onClick(menuItem: IMenuItem) {
-        this.props.onClick(menuItem.Action)
+    onClick(item: React.FormEvent, menuItem: IMenuItem) {
+        let e = item.target as HTMLInputElement;
+        let arrayConfig: Array<string> = [].concat(this.props.DashboardShortcutsDashboardControl.ControlConfiguration)
+        if (!arrayConfig) {
+            arrayConfig = []
+        }
+        if (e.checked) {
+            arrayConfig.push(menuItem.Label)
+        }
+        else {
+            let index = arrayConfig.indexOf(menuItem.Label)
+            arrayConfig.splice(index, 1)
+        }
+        this.props.onDashboardControlConfigChange(StrategyIds.DashboardShortcutsStrategyId, arrayConfig)
     }
 }
 
@@ -50,7 +60,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClick: (action: Redux.Action) => dispatch(action)
+        onDashboardControlConfigChange: (strategyId: string, newConfig: any) => dispatch(DashboardRedux.DashboardSetConfigurationItem(strategyId, newConfig))
     };
 }
 
