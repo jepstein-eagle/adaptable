@@ -38,6 +38,7 @@ import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIError, ICellInfo, InputAction } from '../../Core/interface/IStrategy'
+import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -309,6 +310,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(middlewareAPI.getState().Layout.CurrentLayout));
                     }
+                    //we create default configuration for new Dashboard Items that are
+                    //not existing in the user config
+                    AdaptableDashboardViewFactory.forEach((control,strategyId) =>{
+                        if(!middlewareAPI.getState().Dashboard.DashboardStrategyControls.find(x=>x.Strategy == strategyId))
+                        {
+                            middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
+                        }
+                    } )
                     return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
