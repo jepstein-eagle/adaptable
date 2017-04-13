@@ -1,11 +1,12 @@
-import {IStrategy} from './IStrategy';
+import { IStrategy } from './IStrategy';
 
 export interface IDashboardStrategy extends IStrategy {
 }
 
 
-export interface IDashboardControl {
-    Name: string;
-   IsVisible: boolean;
-   IsCollapsed: boolean;
+export interface IDashboardStrategyControlConfiguration {
+    Strategy: string
+    IsVisible: boolean;
+    IsCollapsed: boolean;
+    ControlConfiguration?: any;
 }

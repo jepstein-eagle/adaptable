@@ -9,10 +9,11 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import * as StrategyIds from '../../Core/StrategyIds'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
@@ -20,7 +21,7 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     onShowQuickSearchConfig: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
-    QuickSearchDashboardControl: IDashboardControl
+    QuickSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 
@@ -86,7 +87,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     }
 
     expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.QuickSearchDashboardControl.Name, !this.props.QuickSearchDashboardControl.IsCollapsed);
+        this.props.onChangeControlCollapsedState(this.props.QuickSearchDashboardControl.Strategy, !this.props.QuickSearchDashboardControl.IsCollapsed);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent) {
@@ -102,7 +103,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        QuickSearchDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Quick Search"),
+        QuickSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.QuickSearchStrategyId),
     };
 }
 

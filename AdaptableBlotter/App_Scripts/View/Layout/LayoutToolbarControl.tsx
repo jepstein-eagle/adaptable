@@ -12,11 +12,12 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import * as StrategyIds from '../../Core/StrategyIds'
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
@@ -26,7 +27,7 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
-    LayoutDashboardControl: IDashboardControl
+    LayoutDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 
@@ -117,7 +118,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.LayoutDashboardControl.Name, !this.props.LayoutDashboardControl.IsCollapsed);
+        this.props.onChangeControlCollapsedState(this.props.LayoutDashboardControl.Strategy, !this.props.LayoutDashboardControl.IsCollapsed);
     }
 
     private onSaveLayoutClicked() {
@@ -145,7 +146,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
         Columns: state.Grid.Columns,
-        LayoutDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Layout"),
+        LayoutDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.LayoutStrategyId),
 
     };
 }

@@ -14,7 +14,7 @@ import { IColumnFilter } from '../../../Core/interface/IFilterStrategy';
 import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/interface/ILayoutStrategy';
-import { IDashboardControl } from '../../../Core/interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../../Core/interface/IDashboardStrategy';
 
 
 
@@ -158,7 +158,5 @@ export interface LayoutState {
 }
 
 export interface DashboardState {
-    DashboardControls: IDashboardControl[]
-    DashboardButtons: string[]
-
+    DashboardStrategyControls: IDashboardStrategyControlConfiguration[]
 }

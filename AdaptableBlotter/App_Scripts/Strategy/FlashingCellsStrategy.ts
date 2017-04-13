@@ -1,6 +1,5 @@
 import { MenuReduxActionItem } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import { AdaptableViewFactory } from '../View/AdaptableViewFactory'
 import * as StrategyIds from '../Core/StrategyIds'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IMenuItem } from '../Core/Interface/IStrategy'

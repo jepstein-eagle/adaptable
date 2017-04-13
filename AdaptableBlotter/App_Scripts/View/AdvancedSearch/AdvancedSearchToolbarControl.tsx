@@ -11,11 +11,12 @@ import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import * as StrategyIds from '../../Core/StrategyIds'
 
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
@@ -25,7 +26,7 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
-    AdvancedSearchDashboardControl: IDashboardControl
+    AdvancedSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 
@@ -117,7 +118,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
     expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.AdvancedSearchDashboardControl.Name, !this.props.AdvancedSearchDashboardControl.IsCollapsed);
+        this.props.onChangeControlCollapsedState(this.props.AdvancedSearchDashboardControl.Strategy, !this.props.AdvancedSearchDashboardControl.IsCollapsed);
     }
 
     onSelectedSearchChanged(event: React.FormEvent) {
@@ -131,7 +132,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        AdvancedSearchDashboardControl: state.Dashboard.DashboardControls.find(d => d.Name == "Advanced Search"),
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
     };
 }
 
