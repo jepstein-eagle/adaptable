@@ -31,7 +31,7 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
                 let menuItem = this.props.MenuState.MenuItems.find(y => y.Label == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
-                        <Button onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /></Button>
+                        <Button disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /></Button>
                     </OverlayTrigger >
                 }
             })
