@@ -18,6 +18,7 @@ import { ThemeConfig } from './Theme/ThemeConfig'
 import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
+import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
 import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
 import * as StrategyIds from '../Core/StrategyIds'
@@ -47,7 +48,8 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.FunctionsStrategyId, FunctionsToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
-  [StrategyIds.LayoutStrategyId, LayoutToolbarControl]
+  [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
+  [StrategyIds.DashboardShortcutsStrategyId, DashboardShortcutsToolbarControl]
 ]);
 
 
