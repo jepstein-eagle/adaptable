@@ -2,7 +2,7 @@
 
 import * as Redux from 'redux';
 import { DashboardState } from './interface/IState'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 
@@ -59,8 +59,8 @@ const initialDashboardState: DashboardState = {
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
     let index: number;
-    let dashboardControls: IDashboardStrategyControl[]
-    let dashboardControl: IDashboardStrategyControl
+    let dashboardControls: IDashboardStrategyControlConfiguration[]
+    let dashboardControl: IDashboardStrategyControlConfiguration
 
     switch (action.type) {
         case DASHBOARD_CHANGE_COLLAPSE_STATE: {

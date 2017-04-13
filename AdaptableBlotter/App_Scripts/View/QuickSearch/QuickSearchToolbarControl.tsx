@@ -9,7 +9,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -21,7 +21,7 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     onShowQuickSearchConfig: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
-    QuickSearchDashboardControl: IDashboardStrategyControl
+    QuickSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 

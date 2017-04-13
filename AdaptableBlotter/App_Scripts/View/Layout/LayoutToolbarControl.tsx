@@ -12,7 +12,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -27,7 +27,7 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
-    LayoutDashboardControl: IDashboardStrategyControl
+    LayoutDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 

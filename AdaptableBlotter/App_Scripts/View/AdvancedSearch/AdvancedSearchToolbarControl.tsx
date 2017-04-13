@@ -11,7 +11,7 @@ import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -26,7 +26,7 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
-    AdvancedSearchDashboardControl: IDashboardStrategyControl
+    AdvancedSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
 

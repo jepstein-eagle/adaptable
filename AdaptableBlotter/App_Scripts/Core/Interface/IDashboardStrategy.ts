@@ -4,7 +4,7 @@ export interface IDashboardStrategy extends IStrategy {
 }
 
 
-export interface IDashboardStrategyControl {
+export interface IDashboardStrategyControlConfiguration {
     Strategy: string
     IsVisible: boolean;
     IsCollapsed: boolean;

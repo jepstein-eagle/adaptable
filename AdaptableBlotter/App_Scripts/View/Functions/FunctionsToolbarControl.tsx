@@ -8,13 +8,13 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/interface/IStrategy'
 
 interface FunctionsControlComponentProps extends IStrategyViewPopupProps<FunctionsToolbarControlComponent> {
-    FunctionsDashboardControl: IDashboardStrategyControl
+    FunctionsDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean,
     MenuState: MenuState,
     EntitlementsState: EntitlementsState

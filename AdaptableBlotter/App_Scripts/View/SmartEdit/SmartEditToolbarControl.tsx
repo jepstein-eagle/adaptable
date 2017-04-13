@@ -13,7 +13,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { AdaptablePopover } from '../AdaptablePopover';
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -28,7 +28,7 @@ interface SmartEditToolbarControlComponentProps extends IStrategyViewPopupProps<
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
     onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
-    SmartEditDashboardControl: IDashboardStrategyControl
+    SmartEditDashboardControl: IDashboardStrategyControlConfiguration
 }
 
 

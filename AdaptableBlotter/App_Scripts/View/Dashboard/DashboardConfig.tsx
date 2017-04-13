@@ -9,12 +9,12 @@ import { Panel, Form, FormControl, ControlLabel, FormGroup, Col, Row, Button, Li
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IDashboardStrategyControl } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
-    DashboardControls: Array<IDashboardStrategyControl>;
+    DashboardControls: Array<IDashboardStrategyControlConfiguration>;
     onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
     onMoveControl: (controlName: string, NewIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
@@ -66,13 +66,13 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, {}>
         );
     }
 
-    onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControl, visible: boolean) {
+    onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
         this.props.onChangeControlVisibility(dashboardControl.Strategy, visible);
     }
 
     private draggedHTMLElement: HTMLElement;
-    private draggedElement: IDashboardStrategyControl;
-    DragStart(e: React.DragEvent, controlElement: IDashboardStrategyControl) {
+    private draggedElement: IDashboardStrategyControlConfiguration;
+    DragStart(e: React.DragEvent, controlElement: IDashboardStrategyControlConfiguration) {
         //we want the listgroupitem
         this.draggedHTMLElement = (e.currentTarget as HTMLElement).parentElement.parentElement.parentElement;
         //Typescript definition is missing this method as of 12/04/17 so I'm casting to any
