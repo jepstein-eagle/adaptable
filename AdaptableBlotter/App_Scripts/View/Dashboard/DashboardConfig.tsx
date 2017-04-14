@@ -15,6 +15,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
 import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
+import { Helper } from '../../Core/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
@@ -57,7 +58,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
-                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{x.Strategy}</Col>
+                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</Col>
                     <Col xs={2}>{visibleButton}</Col>
                     <Col xs={1}>{configurationButton}</Col>
                     <Col xs={6} style={previewStyle}>{dashboardElememt}

@@ -89,5 +89,15 @@ export module Helper {
         return arr1.every((x, index) => arr2.indexOf(x) == index)
     }
 
+    export function capitalize(string: string) {
+        return (/[a-z]/.test(string) ? string : string.toLowerCase())
+            .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
+            .replace(/[A-Z]/g, ' $&')
+            .trim();
+    }
+    function replacer(a: string, b: string, c: string) {
+        return b.toUpperCase() + c;
+    }
+
 }
 
