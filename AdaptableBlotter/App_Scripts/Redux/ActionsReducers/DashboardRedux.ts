@@ -75,7 +75,7 @@ const initialDashboardState: DashboardState = {
         //we need to use the Dashboard config from the loaded state only and as well get all the controls 
         //from the view factory in order to complete the list of items missing
         { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true, ControlConfiguration: ["Smart Edit", "Plus/Minus", "Conditional Style"] },
+        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true, IsCollapsed: true },
