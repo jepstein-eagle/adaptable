@@ -46,7 +46,7 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
         </Panel>
     }
 
-    private onColumTypeChanged(event: React.FormEvent) {
+    private onColumTypeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Number") {
             this.setState({ DataType: DataType.Number } as ShortcutTypeWizardState, () => this.props.UpdateGoBackState())

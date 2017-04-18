@@ -31,23 +31,14 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
     constructor(props: ShortcutSettingsWizardProps) {
         super(props);
-<<<<<<< HEAD
+
         this.state = {
             ShortcutKey: this.props.Data.ShortcutKey,
             ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult,
             ShortcutAction: this.props.Data.ShortcutAction,
             IsDynamic: this.props.Data.IsDynamic
         }
-        if (this.props.Data.DataType == DataType.Date) {
-            this.state.ShortcutAction = ShortcutAction.Replace;
-=======
-        let state = { DataType: this.props.Data.DataType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
-        if (state.DataType == DataType.Date) {
-            state.ShortcutAction = ShortcutAction.Replace;
->>>>>>> 8e54506fa56b9c969864a217ff71422ac935df5b
-        }
-        this.state = state
-    }
+     }
 
     onClickShortcutAction(shortcutAction: ShortcutAction) {
         this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -73,10 +64,6 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
             (nv => nv.value != ShortcutAction.Replace).map((enumNameAndValue: any) => {
                 return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
             })
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e54506fa56b9c969864a217ff71422ac935df5b
 
         let currentActionValue = this.state.ShortcutAction.toString();
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
@@ -195,18 +182,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         </Panel>
     }
 
-<<<<<<< HEAD
 
-=======
-    private onColumTypeChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (e.value == "Number") {
-            this.setState({ DataType: DataType.Number, ShortcutKey: "select" } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
-        } else {
-            this.setState({ DataType: DataType.Date, ShortcutKey: "select", ShortcutAction: ShortcutAction.Replace } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
-        }
-    }
->>>>>>> 8e54506fa56b9c969864a217ff71422ac935df5b
 
     private onShortcutKeyChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -219,12 +195,12 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.setState({ ShortcutAction: Number.parseInt(e.value) } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onDynamicResultChanged(event: React.FormEvent) {
+    private onDynamicResultChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ShortcutResult: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-     private onDynamicSelectChanged(event: React.FormEvent) {
+     private onDynamicSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
             this.setState({ IsDynamic: (e.value == "dynamic") } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
      }
