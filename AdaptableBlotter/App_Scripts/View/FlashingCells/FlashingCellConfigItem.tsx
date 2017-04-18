@@ -1,6 +1,4 @@
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -56,17 +54,17 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
     }
 
 
-    onActionChange(event: React.FormEvent) {
+    onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeFlashingDuration(this.props.FlashingColumn, this.props.FlashingCellDurations.find(f => f.Name == e.value));
     }
 
-    onDownColorChange(event: React.FormEvent) {
+    onDownColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeDownColorFlashingColumn(this.props.FlashingColumn, e.value);
     }
 
-    onUpColorChange(event: React.FormEvent) {
+    onUpColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeUpColorFlashingColumn(this.props.FlashingColumn, e.value);
     }

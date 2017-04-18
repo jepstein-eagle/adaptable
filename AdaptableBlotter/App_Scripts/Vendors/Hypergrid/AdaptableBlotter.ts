@@ -1,6 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-
-import * as React from "react";
+﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
@@ -30,7 +28,6 @@ import { ExportStrategy } from '../../Strategy/ExportStrategy'
 import { FlashingCellsHypergridStrategy } from '../../Strategy/FlashingCellsHypergridStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleHypergridStrategy } from '../../Strategy/ConditionalStyleHypergridStrategy'
-import { PrintPreviewStrategy } from '../../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
@@ -101,7 +98,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
-        //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
@@ -756,10 +752,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public isGridPageable(): boolean {
         return false
-    }
-
-    public printGrid(): void {
-
     }
 
     public applyColumnFilters(): void {

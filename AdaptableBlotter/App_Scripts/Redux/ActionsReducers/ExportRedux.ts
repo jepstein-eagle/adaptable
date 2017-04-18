@@ -1,6 +1,5 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import {ExportState} from './Interface/IState';
+import * as Redux from 'redux'
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const EXPORT_SET_FILENAME = 'EXPORT_SET_FILENAME';

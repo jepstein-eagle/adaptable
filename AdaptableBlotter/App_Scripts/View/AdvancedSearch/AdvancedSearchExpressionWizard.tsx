@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'

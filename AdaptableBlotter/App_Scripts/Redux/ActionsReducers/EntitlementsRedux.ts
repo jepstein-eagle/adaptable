@@ -1,5 +1,5 @@
-/// <reference path="../../../typings/index.d.ts" />
 import {EntitlementsState} from './Interface/IState';
+import * as Redux from 'redux'
 
 const initialEntitlementsState: EntitlementsState = {
     FunctionEntitlements: []

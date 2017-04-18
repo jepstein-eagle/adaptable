@@ -1,6 +1,4 @@
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -165,14 +163,20 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ShortcutConfig = connect(mapStateToProps, mapDispatchToProps)(ShortcutConfigComponent);
 
+<<<<<<< HEAD
 let panelStyle = {
     'overflowY': 'auto',
     width: '600px'
+=======
+let panelStyle: React.CSSProperties = {
+     'overflowY': 'auto',
+   width: '600px'
+>>>>>>> 8e54506fa56b9c969864a217ff71422ac935df5b
 }
 
 const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }

@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
@@ -191,7 +189,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '490px'
 }

@@ -78,9 +78,6 @@ export interface IAdaptableBlotter {
     // Export
     exportBlotter(): void
 
-    // Print Preview
-    printGrid(): void
-
     // Filtering
     applyColumnFilters(): void
 

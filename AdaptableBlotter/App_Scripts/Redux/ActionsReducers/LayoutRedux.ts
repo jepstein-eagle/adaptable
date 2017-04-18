@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { LayoutState } from './interface/IState'
 import { ILayout } from '../../Core/interface/ILayoutStrategy';

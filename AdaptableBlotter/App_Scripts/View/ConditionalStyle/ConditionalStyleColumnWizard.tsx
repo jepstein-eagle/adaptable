@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -79,7 +77,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
         this.setState({ ColumnId: selectedColumnValues[0] } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onScopeSelectChanged(event: React.FormEvent) {
+    private onScopeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Column") {
             this.setState({ ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
@@ -109,7 +107,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
     public StepName = "Conditional Style Scope"
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '300px',
     'marginBottom': '0',

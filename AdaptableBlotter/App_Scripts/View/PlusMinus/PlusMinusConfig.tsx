@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -77,7 +75,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         </FormControl>
                     </Col>
                     <Col xs={2}>
-                        <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(index, e)} />
+                        <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
                     </Col>
                     <Col xs={4}>
                         {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)}
@@ -106,7 +104,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         <ControlLabel >Default Nudge Value for Blotter</ControlLabel>
                     </Col>
                     <Col xs={8}>
-                        <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.handleDefaultNudgeValueChange(e)} />
+                        <FormControl style={{ width: "Auto" }} value={this.props.DefaultNudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.handleDefaultNudgeValueChange(e)} />
                     </Col>
                 </FormGroup>
             </AdaptableBlotterForm>
@@ -152,17 +150,17 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
     }
 
-    private onColumnSelectChange(index: number, event: React.FormEvent) {
+    private onColumnSelectChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: e.value, DefaultNudge: this.props.PlusMinusConditions[index].DefaultNudge });
     }
 
-    onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent) {
+    onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: this.props.PlusMinusConditions[index].ColumnId, DefaultNudge: parseFloat(e.value) });
     }
 
-    handleDefaultNudgeValueChange(event: React.FormEvent) {
+    handleDefaultNudgeValueChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onSetDefaultNudgeValue(parseFloat(e.value));
     }
@@ -188,7 +186,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let PlusMinusConfig = connect(mapStateToProps, mapDispatchToProps)(PlusMinusConfigComponent);
 
-let panelColumNudge = {
+let panelColumNudge: React.CSSProperties = {
     overflowY: 'auto',
     minHeight: '100px',
     maxHeight: '300px'

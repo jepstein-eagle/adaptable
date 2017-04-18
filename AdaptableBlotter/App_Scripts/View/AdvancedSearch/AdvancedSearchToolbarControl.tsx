@@ -1,5 +1,5 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as React from "react";
+﻿import * as React from "react";
+import * as Redux from 'redux'
 import { Provider, connect } from 'react-redux';
 import { Panel, Form, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, HelpBlock, Row } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
@@ -121,7 +121,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         this.props.onChangeControlCollapsedState(this.props.AdvancedSearchDashboardControl.Strategy, !this.props.AdvancedSearchDashboardControl.IsCollapsed);
     }
 
-    onSelectedSearchChanged(event: React.FormEvent) {
+    onSelectedSearchChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let advancedSearchId = (e.value == "select") ? "" : e.value;
         this.props.onSelectAdvancedSearch(advancedSearchId);

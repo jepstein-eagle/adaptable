@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -101,7 +99,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 
     private draggedHTMLElement: HTMLElement;
     private draggedElement: IDashboardStrategyControlConfiguration;
-    DragStart(e: React.DragEvent, controlElement: IDashboardStrategyControlConfiguration) {
+    DragStart(e: React.DragEvent<any>, controlElement: IDashboardStrategyControlConfiguration) {
         //we want the listgroupitem
         this.draggedHTMLElement = (e.currentTarget as HTMLElement).parentElement.parentElement.parentElement;
         //Typescript definition is missing this method as of 12/04/17 so I'm casting to any
@@ -126,11 +124,11 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
             this.draggedElement = null;
         }
     }
-    DragEnter(e: React.DragEvent) {
+    DragEnter(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
     }
-    DragOver(e: React.DragEvent) {
+    DragOver(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -154,7 +152,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
         }
     }
 
-    DragLeave(e: React.DragEvent) {
+    DragLeave(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
     }
@@ -175,12 +173,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let DashboardConfig = connect(mapStateToProps, mapDispatchToProps)(DashboardConfigComponent);
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }
 
-let panelStyle = {
+let panelStyle: React.CSSProperties = {
     'overflowY': 'auto',
     width: '900px'
 }

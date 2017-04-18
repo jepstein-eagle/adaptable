@@ -1,8 +1,7 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import { AdvancedSearchState } from './Interface/IState';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import * as Redux from 'redux'
 
 export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';

@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
@@ -121,7 +119,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         </div>;
     }
 
-    handleChangeFilterValue(x: React.FormEvent) {
+    handleChangeFilterValue(x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
         this.setState({
             FilterValue: e.value
@@ -191,13 +189,13 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
     }
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '335px',
     'marginBottom': '0'
 }
 
-let userFilterItemStyle = {
+let userFilterItemStyle: React.CSSProperties = {
     'width': '87%',
     'fontStyle': 'italic',
     'fontSize': 'small',

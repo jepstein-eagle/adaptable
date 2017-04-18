@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, Popover } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -50,7 +48,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                 <FormGroup controlId="nudgeColumn">
                     <Col xs={3} componentClass={ControlLabel}>Nudge Value: </Col>
                     <Col xs={9}>
-                        <FormControl value={this.state.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e: React.FormEvent) => this.onColumnDefaultNudgeValueChange(e)} />
+                        <FormControl value={this.state.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(e)} />
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="applyTo">
@@ -70,16 +68,16 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         </Panel>
     }
 
-    private onExpressionOptionChange(event: React.FormEvent) {
+    private onExpressionOptionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ExpressionOption: e.value } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(e.value == "whole"))
     }
 
-    private onColumnSelectChange(event: React.FormEvent) {
+    private onColumnSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ColumnId: e.value } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(this.state.ExpressionOption == "whole"))
     }
-    onColumnDefaultNudgeValueChange(event: React.FormEvent) {
+    onColumnDefaultNudgeValueChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ DefaultNudge: parseFloat(e.value) } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(this.state.ExpressionOption == "whole"))
     }

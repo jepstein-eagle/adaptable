@@ -1,10 +1,9 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import { ShortcutState } from './Interface/IState';
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import { DataType, ShortcutAction } from '../../Core/Enums';
 import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
+import * as Redux from 'redux'
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';

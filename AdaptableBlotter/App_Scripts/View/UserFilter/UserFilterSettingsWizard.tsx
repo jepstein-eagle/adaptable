@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -34,7 +32,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
                     <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
                     <Col xs={9}>
                         <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
-                            onChange={(e: React.FormEvent) => this.onFilterNameChange(e)} />
+                            onChange={(e) => this.onFilterNameChange(e)} />
                     </Col>
                 </FormGroup>
 
@@ -44,7 +42,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     }
 
 
-    onFilterNameChange(event: React.FormEvent) {
+    onFilterNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ FilterName: e.value } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }

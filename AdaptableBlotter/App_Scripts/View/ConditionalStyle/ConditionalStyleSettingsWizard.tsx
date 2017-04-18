@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem, Checkbox, Radio, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -123,7 +121,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         </Panel>
     }
 
-    private onUseBackColourCheckChange(event: React.FormEvent) {
+    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
             this.setState({ BackColor: "#ffffff" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -132,7 +130,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         }
     }
 
-    private onUseForeColourCheckChange(event: React.FormEvent) {
+    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
             this.setState({ ForeColor: "#000000" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -142,29 +140,29 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
 
-    private onBackColourSelectChange(event: React.FormEvent) {
+    private onBackColourSelectChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
         this.setState({ BackColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onForeColourSelectChange(event: React.FormEvent) {
+    private onForeColourSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ForeColor: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onFontWeightChange(event: React.FormEvent) {
+    private onFontWeightChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let fontWeight: FontWeight = (e.checked) ? FontWeight.Bold : FontWeight.Normal;
         this.setState({ FontWeight: fontWeight } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onFontStyleChange(event: React.FormEvent) {
+    private onFontStyleChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let fontStyle: FontStyle = (e.checked) ? FontStyle.Italic : FontStyle.Normal;
         this.setState({ FontStyle: fontStyle } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onFontSizeChange(event: React.FormEvent) {
+    private onFontSizeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ FontSize: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }

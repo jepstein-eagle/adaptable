@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { IMenuItem } from '../../Core/Interface/IStrategy';
 import { MenuState } from './interface/IState'

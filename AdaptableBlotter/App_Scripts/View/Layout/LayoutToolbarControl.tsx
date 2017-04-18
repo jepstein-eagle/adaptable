@@ -1,5 +1,5 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as React from "react";
+﻿import * as React from "react";
+import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
@@ -134,7 +134,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onShowPrompt(prompt)
     }
 
-    private onSelectedLayoutChanged(event: React.FormEvent) {
+    private onSelectedLayoutChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onLoadLayout(e.value);
     }

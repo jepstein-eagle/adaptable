@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as React from "react";
+﻿import * as React from "react";
 import { Provider, connect } from 'react-redux';
+import * as Redux from "redux";
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { StringExtensions } from '../../Core/Extensions';
@@ -79,7 +79,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                             <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation[SmartEditOperation.Multiply]}</MenuItem>
                             <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation[SmartEditOperation.Replace]}</MenuItem>
                         </DropdownButton>
-                        <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
+                        <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                     </InputGroup>
                 </FormGroup>
                 {' '}
@@ -119,7 +119,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
     }
 
-    private onSmartEditValueChange(event: React.FormEvent) {
+    private onSmartEditValueChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
         this.props.onSmartEditValueChange(e.value);
     }

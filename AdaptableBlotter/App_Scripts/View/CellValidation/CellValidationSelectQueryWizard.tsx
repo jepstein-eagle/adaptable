@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -53,7 +51,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
 
 
 
-    private onOtherExpressionOptionChanged(event: React.FormEvent) {
+    private onOtherExpressionOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ HasExpression: e.checked } as CellValidationSelectQueryWizardState, () => this.props.UpdateGoBackState(e.checked == false))
     }

@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
@@ -16,7 +14,7 @@ export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormPr
             {this.props.children}
         </Form>
     }
-    CancelOnFormSubmit(e: React.FormEvent) {
+    CancelOnFormSubmit(e: React.FormEvent<any>) {
         e.preventDefault();
         if (this.props.onSubmit) {
             this.props.onSubmit(null);

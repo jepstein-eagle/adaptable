@@ -1,6 +1,6 @@
-/// <reference path="../../../typings/index.d.ts" />
 import { FlashingCellState } from './Interface/IState';
 import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
+import * as Redux from 'redux'
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';

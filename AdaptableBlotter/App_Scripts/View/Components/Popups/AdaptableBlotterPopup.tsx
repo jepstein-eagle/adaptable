@@ -1,6 +1,4 @@
 import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'

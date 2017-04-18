@@ -1,7 +1,7 @@
-/// <reference path="../../../typings/index.d.ts" />
 import { SmartEditState } from './Interface/IState';
 import { ISmartEditStrategy, ISmartEditPreview } from '../../Core/Interface/ISmartEditStrategy';
 import { SmartEditOperation } from '../../Core/Enums';
+import * as Redux from 'redux'
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';

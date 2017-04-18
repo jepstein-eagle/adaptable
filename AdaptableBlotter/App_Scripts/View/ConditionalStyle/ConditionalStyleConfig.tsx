@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
@@ -155,7 +154,7 @@ let panelStyle = {
     width: '800px'
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }

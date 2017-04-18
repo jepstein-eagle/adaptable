@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -166,7 +164,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let UserFilterConfig = connect(mapStateToProps, mapDispatchToProps)(UserFilterConfigComponent);
 
-let listGroupStyle = {
+let listGroupStyle: React.CSSProperties = {
     overflowY: 'auto',
     minHeight: '100px',
     maxHeight: '300px'

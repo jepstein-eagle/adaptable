@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { PopupState, IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup } from './Interface/IState';
 import { IUIError, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Core/Interface/IStrategy';

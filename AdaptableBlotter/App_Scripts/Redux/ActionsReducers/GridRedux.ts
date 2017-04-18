@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { GridState } from './interface/IState'
 import { IColumn } from '../../Core/interface/IAdaptableBlotter'

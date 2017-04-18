@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -121,7 +119,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                                     <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation[SmartEditOperation.Multiply]}</MenuItem>
                                     <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation[SmartEditOperation.Replace]}</MenuItem>
                                 </DropdownButton>
-                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e: React.FormEvent) => this.onSmartEditValueChange(e)} />
+                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
                         </FormGroup>
                         {' '}
@@ -147,7 +145,7 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         );
     }
 
-    private onSmartEditValueChange(event: React.FormEvent) {
+    private onSmartEditValueChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
         this.props.onSmartEditValueChange(e.value);
     }
@@ -213,7 +211,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let SmartEditAction = connect(mapStateToProps, mapDispatchToProps)(SmartEditActionComponent);
 
-var divStyle = {
+var divStyle: React.CSSProperties = {
     overflowY: 'auto',
     maxHeight: '400px'
 };

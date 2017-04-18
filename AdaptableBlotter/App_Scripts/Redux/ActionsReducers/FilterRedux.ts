@@ -1,11 +1,10 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import { FilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/interface/IExpression';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
 import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import * as Redux from 'redux'
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';

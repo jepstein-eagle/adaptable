@@ -1,6 +1,4 @@
 ﻿import { MenuItemShowPopup, MenuReduxActionItem } from '../Core/MenuItem';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
