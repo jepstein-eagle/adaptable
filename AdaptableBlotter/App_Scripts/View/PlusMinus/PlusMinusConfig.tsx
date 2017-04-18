@@ -112,7 +112,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             </AdaptableBlotterForm>
 
             {optionColumnsItems.length == 0 ?
-                <Well bsSize="small">Click 'New' to create new rules for what happens when plus / minus buttons are clicked in a cell.</Well>
+                <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
                 :
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

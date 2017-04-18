@@ -12,7 +12,6 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface ShortcutConfigItemNumberProps extends React.ClassAttributes<ShortcutConfigItemNumber> {
     Shortcut: IShortcut
-    onSelect: (Shortcut: IShortcut) => void;
     onDeleteConfirm: Redux.Action;
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
@@ -28,10 +27,7 @@ export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItem
             className="list-group-item"
             onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col md={1} >
-                    <Checkbox onChange={() => this.props.onSelect(this.props.Shortcut)} checked={this.props.Shortcut.IsLive}></Checkbox>
-                </Col>
-                <Col md={2} >
+                 <Col md={2} >
                     <AdaptableBlotterForm inline key={this.props.Shortcut.ShortcutKey}>
                         <FormGroup controlId={this.props.Shortcut.ShortcutKey}>
                      {this.props.Shortcut.IsPredefined ?

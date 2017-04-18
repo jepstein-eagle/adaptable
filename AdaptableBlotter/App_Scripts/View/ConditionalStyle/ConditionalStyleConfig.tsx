@@ -119,7 +119,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onEdit(condition: IConditionalStyleCondition) {
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 1 });
+        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 0 });
     }
 
     closeWizard() {

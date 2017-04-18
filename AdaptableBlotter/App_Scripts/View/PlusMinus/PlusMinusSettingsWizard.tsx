@@ -62,7 +62,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         </Radio>
                         <Radio value="expression" checked={this.state.ExpressionOption == 'expression'} onChange={(e) => this.onExpressionOptionChange(e)}>
                             Custom Plus/Minus Rule {' '}
-                            <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Expression Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
+                            <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
                         </Radio>
                     </Col>
                 </FormGroup>

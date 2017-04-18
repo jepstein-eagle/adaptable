@@ -2,7 +2,7 @@ import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 
 import * as React from "react";
-import { Radio, Panel, Form, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
+import { Radio, Panel, Form, ControlLabel, FormControl, Col, FormGroup, Checkbox } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -10,6 +10,7 @@ import { DataType, PopoverType, ShortcutAction } from '../../Core/Enums';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
+import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
 
 
 interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -18,10 +19,10 @@ interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut
 
 }
 interface ShortcutSettingsWizardState {
-    DataType: DataType;
     ShortcutKey: string;
     ShortcutResult: any;
-    ShortcutAction: ShortcutAction
+    ShortcutAction: ShortcutAction;
+    IsDynamic: boolean
 }
 
 export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWizardProps, ShortcutSettingsWizardState> implements AdaptableWizardStep {
@@ -32,8 +33,13 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
     constructor(props: ShortcutSettingsWizardProps) {
         super(props);
-        this.state = { DataType: this.props.Data.DataType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
-        if (this.state.DataType == DataType.Date) {
+        this.state = {
+            ShortcutKey: this.props.Data.ShortcutKey,
+            ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult,
+            ShortcutAction: this.props.Data.ShortcutAction,
+            IsDynamic: this.props.Data.IsDynamic
+        }
+        if (this.props.Data.DataType == DataType.Date) {
             this.state.ShortcutAction = ShortcutAction.Replace;
         }
 
@@ -47,10 +53,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
         // sort out keys
         var keyList: Array<string>
-        if (this.state.DataType == DataType.Number) {
+        if (this.props.Data.DataType == DataType.Number) {
             keyList = this.props.NumericKeysAvailable
         }
-        else if (this.state.DataType == DataType.Date) {
+        else if (this.props.Data.DataType == DataType.Date) {
             keyList = this.props.DateKeysAvailable
         }
 
@@ -61,31 +67,22 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         // sort out actions
         let optionActions = EnumExtensions.getNamesAndValues(ShortcutAction).filter
             (nv => nv.value != ShortcutAction.Replace).map((enumNameAndValue: any) => {
-            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
-        })
+                return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
+            })
+
 
         let currentActionValue = this.state.ShortcutAction.toString();
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
+        let currentDynamicResult = this.state.ShortcutResult != "" ? this.state.ShortcutResult : "select"
 
         return <Panel header="Shortcut Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
-                <FormGroup controlId="formInlineColumnType">
-                    <Col xs={3}>
-                        <ControlLabel>Column Type:</ControlLabel>
-                    </Col>
-                    <Col xs={9}>
-                        <AdaptableBlotterForm inline >
-                            <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Number</Radio>
-                            <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date</Radio>
-                        </AdaptableBlotterForm  >
-                    </Col>
-                </FormGroup>
 
                 <FormGroup controlId="formInlineKey">
                     <Col xs={3}>
                         <ControlLabel>Key:</ControlLabel>
                     </Col>
-                    <Col xs={9}>
+                    <Col xs={7}>
                         <AdaptableBlotterForm inline >
                             <FormControl componentClass="select" placeholder="select" value={currentKeyValue} onChange={(x) => this.onShortcutKeyChanged(x)} >
                                 <option value="select" key="select">Select Key</option>
@@ -96,19 +93,19 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     </Col>
                 </FormGroup>
 
-                {this.state.DataType == DataType.Number ?
+                {this.props.Data.DataType == DataType.Number ?
                     <span>
                         <FormGroup controlId="formInlineAction">
                             <Col xs={3}>
                                 <ControlLabel>Operation:</ControlLabel>
                             </Col>
-                            <Col xs={9}>
+                            <Col xs={7}>
                                 <AdaptableBlotterForm inline >
                                     <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
                                         {optionActions}
                                     </FormControl>
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Operation"} 
-                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Operation"}
+                                        bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
@@ -117,7 +114,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                             <Col xs={3}>
                                 <ControlLabel>Value:</ControlLabel>
                             </Col>
-                            <Col xs={9}>
+                            <Col xs={8}>
                                 <AdaptableBlotterForm inline >
                                     <FormControl
                                         type="number"
@@ -125,42 +122,73 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         onChange={this.changeContent}
                                         value={this.state.ShortcutResult}
                                     />
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"} 
-                                      bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"}
+                                        bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
                     </span>
                     :
-                    <FormGroup controlId="formInlineDateResult">
-                        <Col xs={3}>
-                            <ControlLabel>Output:</ControlLabel>
-                        </Col>
-                        <Col xs={9}>
-                            <AdaptableBlotterForm inline >
-                                <FormControl
-                                    type="date"
-                                    placeholder="Shortcut Result"
-                                    onChange={this.changeContent}
-                                    value={this.state.ShortcutResult}
-                                />
-                                {' '}<AdaptablePopover headerText={"Shortcut: Output"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
-                            </AdaptableBlotterForm>
-                        </Col>
-                    </FormGroup>
+                    <span>
+                        <FormGroup controlId="formInlineDateType">
+                            <AdaptableBlotterForm inline>
+                               
+                                <Col xs={3}>
+                                    <ControlLabel>Date Type:</ControlLabel>
+                                </Col>
+                                <Col xs={5} style={radioMarginStyle}>
+                                    <Radio inline value="custom" checked={this.state.IsDynamic == false} onChange={(e) => this.onDynamicSelectChanged(e)}>Custom</Radio>
+                                     <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
+                                       {' '}<AdaptablePopover headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.",<br/>,<br/>,<b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').",<br/>,<br/>,"Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
+                            </Col>
+                             </AdaptableBlotterForm>
+
+                            
+                        </FormGroup>
+
+                        {this.state.IsDynamic == true ?
+                            <FormGroup controlId="formInlineDateResultPredefined">
+                                <Col xs={3}>
+                                    <ControlLabel>Dynamic Date:</ControlLabel>
+                                </Col>
+                                <Col xs={7}>
+                                    <AdaptableBlotterForm inline >
+                                        <FormControl componentClass="select" placeholder="select" value={currentDynamicResult} onChange={(x) => this.onDynamicResultChanged(x)} >
+                                            <option value="select" key="select">Select Dynamic Date</option>
+                                            <option value={CalendarStrat.TODAY_MAGICSTRING} key={CalendarStrat.TODAY_MAGICSTRING}>Today</option>
+                                            <option value={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous</option>
+                                            <option value={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING} key={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING}>Next</option>
+                                        </FormControl>
+
+                                        {' '}<AdaptablePopover headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                    </AdaptableBlotterForm>
+                                </Col>
+                            </FormGroup>
+                            :
+                            <FormGroup controlId="formInlineDateResultCustom">
+                                <Col xs={3}>
+                                    <ControlLabel>Custom Date:</ControlLabel>
+                                </Col>
+                                <Col xs={7}>
+                                    <AdaptableBlotterForm inline >
+                                        <FormControl
+                                            type="date"
+                                            placeholder="Shortcut Result"
+                                            onChange={this.changeContent}
+                                            value={this.state.ShortcutResult}
+                                        />
+                                        {' '}<AdaptablePopover headerText={"Shortcut: Custom Date"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                    </AdaptableBlotterForm>
+                                </Col>
+                            </FormGroup>
+                        }
+                    </span>
                 }
             </AdaptableBlotterForm >
         </Panel>
     }
 
-    private onColumTypeChanged(event: React.FormEvent) {
-        let e = event.target as HTMLInputElement;
-        if (e.value == "Number") {
-            this.setState({ DataType: DataType.Number, ShortcutKey: "select" } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
-        } else {
-            this.setState({ DataType: DataType.Date, ShortcutKey: "select", ShortcutAction: ShortcutAction.Replace } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
-        }
-    }
+
 
     private onShortcutKeyChanged(event: React.FormEvent) {
         let e = event.target as HTMLInputElement;
@@ -173,21 +201,39 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.setState({ ShortcutAction: Number.parseInt(e.value) } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
+    private onDynamicResultChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ShortcutResult: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+     private onDynamicSelectChanged(event: React.FormEvent) {
+        let e = event.target as HTMLInputElement;
+            this.setState({ IsDynamic: (e.value == "dynamic") } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+     }
+
     public canNext(): boolean {
-        return this.state.DataType != null &&
-            StringExtensions.IsNotNullOrEmpty(this.state.ShortcutResult) &&
+        if (this.state.IsDynamic && this.state.ShortcutResult == "select") {
+            return false;
+        }
+
+        return StringExtensions.IsNotNullOrEmpty(this.state.ShortcutResult) &&
             StringExtensions.IsNotNullOrEmpty(this.state.ShortcutKey) &&
             this.state.ShortcutKey != "select"
     }
+
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.DataType = this.state.DataType;
         this.props.Data.ShortcutResult = this.state.ShortcutResult;
         this.props.Data.ShortcutAction = this.state.ShortcutAction;
         this.props.Data.ShortcutKey = this.state.ShortcutKey;
+        this.props.Data.IsDynamic = this.state.IsDynamic;
     }
     public Back(): void { }
-    public StepName = "Create Shortcut"
+    public StepName = "Shortcut Settings"
 }
 
 
+
+let radioMarginStyle = {
+    margin: '5px'
+}

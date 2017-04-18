@@ -90,7 +90,6 @@ export module ObjectFactory {
             ShortcutResult: null,
             DataType: DataType.Number,
             ShortcutAction: ShortcutAction.Multiply,
-            IsLive: true,
             IsPredefined: false,
             IsDynamic: false
         }

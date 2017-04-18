@@ -25,7 +25,7 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
 
     render() {
         let shortcutsArray: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
-        let shortcuts
+        let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {
                 let menuItem = this.props.MenuState.MenuItems.find(y => y.Label == x)

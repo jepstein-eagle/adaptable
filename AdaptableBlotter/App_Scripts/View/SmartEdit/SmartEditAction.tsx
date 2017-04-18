@@ -51,9 +51,9 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         let infoBody: any[] = ["Click ",<i><b>Apply to Grid</b></i>,
         " button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,
         "3 operations are available to update the selected cells with the inputted value:",<br/>,
-        <strong>Add:</strong>," Adds value to cells",<br/>,
-        <strong>Multiply:</strong>," Multiplies cells by the value",<br/>,
-        <strong>Replace:</strong>," Sets cells to the value (i.e. Bulk Update)",<br/>, <br/>,
+        <strong>Add</strong>," the value to selected cells",<br/>,
+        <strong>Multiply</strong>," selected cells by the value",<br/>,
+        <strong>Replace</strong>," selected cells with the value (i.e. Bulk Update)",<br/>, <br/>,
         "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";

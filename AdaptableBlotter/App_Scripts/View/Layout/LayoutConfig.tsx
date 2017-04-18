@@ -125,9 +125,11 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
     }
 
     private onSaveLayoutClicked() {
-        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.state.NewLayoutName);
+      let layoutName: string = this.state.NewLayoutName;
         this.setState({ NewLayoutName: "" });
-    }
+        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), layoutName);
+       this.setState({ NewLayoutName: "" });
+     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

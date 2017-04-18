@@ -8,7 +8,6 @@ export interface IShortcut extends IConfigEntity{
     ShortcutResult: any;
     ShortcutAction: ShortcutAction
     DataType: DataType;
-    IsLive: boolean,
     IsPredefined: boolean,
     IsDynamic: boolean
 }

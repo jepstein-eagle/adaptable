@@ -50,7 +50,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             var valueToReplace: any;
             switch (columnDataType) {
                 case DataType.Number: {
-                    activeShortcut = this.NumericShortcuts.filter(s => s.IsLive).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.NumericShortcuts.find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         let currentCellValue: any;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -65,7 +65,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     break;
                 }
                 case DataType.Date: {
-                    activeShortcut = this.DateShortcuts.filter(s => s.IsLive).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.DateShortcuts.find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values
                         if (activeShortcut.IsDynamic) {

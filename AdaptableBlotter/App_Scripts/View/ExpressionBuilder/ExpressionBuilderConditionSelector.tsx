@@ -125,16 +125,16 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             DisplayMode="Glyph+Text"
             overrideDisableButton={addConditionButtonDisabled} />
 
-        return <PanelWithButton headerText="Column Conditions"
+        return <PanelWithButton headerText="Query Conditions"
             button={newButton}
             bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
-                    <Well bsSize="small">Click 'New' to start adding Column Conditions to the Query.
-                    <p />A Column Condition consists of <br />   (i) a Column and <br />   (ii) as many Criteria for that Column as you wish to create. <p />
+                    <Well bsSize="small">Click 'New' to start adding Query Conditions.
+                    <p />A Query Condition consists of <br />(i) a Column and <br />(ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
-                            "This Query can only contain one Column Condition." : "The Query can contain multiple Column Conditions.  Simly click the 'New' button each time that a new Column Condition is required."}
+                            "This Query can only contain one Query Condition." : "The Query can contain multiple Query Conditions.  Click the 'New' button each time that a new Query Condition is required."}
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
