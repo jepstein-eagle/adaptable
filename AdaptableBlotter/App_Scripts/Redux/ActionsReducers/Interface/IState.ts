@@ -120,11 +120,6 @@ export interface ConditionalStyleState {
     ConditionalStyleConditions: Array<IConditionalStyleCondition>;
 }
 
-// nothing at present but will add in due course...
-export interface PrintPreviewState {
-
-}
-
 export interface QuickSearchState {
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator

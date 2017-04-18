@@ -4,7 +4,6 @@ import { ShortcutConfig } from './Shortcut/ShortcutConfig'
 import { PlusMinusConfig } from './PlusMinus/PlusMinusConfig'
 import { ColumnChooserAction } from './ColumnChooser/ColumnChooserAction'
 import { ExportAction } from './Export/ExportAction'
-import { PrintPreviewAction } from './PrintPreview/PrintPreviewAction'
 import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
 import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
@@ -35,7 +34,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FlashingCellsConfig: FlashingCellsConfig,
   CalendarsConfig: CalendarsConfig,
   ConditionalStyleConfig: ConditionalStyleConfig,
-  PrintPreviewAction: PrintPreviewAction,
   QuickSearchConfig: QuickSearchConfig,
   AdvancedSearchAction: AdvancedSearchAction,
   UserFilterConfig: UserFilterConfig,

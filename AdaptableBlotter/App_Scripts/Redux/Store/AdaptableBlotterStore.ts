@@ -15,7 +15,6 @@ import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExportRedux from '../ActionsReducers/ExportRedux'
-import * as PrintPreviewRedux from '../ActionsReducers/PrintPreviewRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
@@ -51,7 +50,6 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
     Calendars: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
-    PrintPreview: PrintPreviewRedux.PrintPreviewReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     Filter: FilterRedux.FilterReducer,
@@ -116,7 +114,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //we enrich the state with the AB middleware
         this.TheStore = Redux.createStore<AdaptableBlotterState>(
             reducerWithStorage,
-            composeEnhancers(Redux.applyMiddleware(/*snooper,*/
+            composeEnhancers(Redux.applyMiddleware(
                 diffStateAuditMiddleware(blotter),
                 adaptableBlotterMiddleware(blotter),
                 middlewareReduxStorage))
@@ -135,18 +133,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             })
     }
 }
-
-//not needed anymore since Redux DevToolsExtension is working
-// var snooper: Redux.Middleware = function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-//     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
-//         return function (action: Redux.Action) {
-//             console.log("snooping at `action`: " + action.type);
-//             let ret = next(action);
-//             console.log(middlewareAPI.getState())
-//             return ret;
-//         }
-//     }
-// }
 
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
@@ -290,12 +276,6 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case ExportRedux.EXPORT_APPLY: {
                     let ExportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     ExportStrategy.ExportBlotter();
-                    middlewareAPI.dispatch(PopupRedux.PopupHide());
-                    return next(action);
-                }
-                case PrintPreviewRedux.PRINT_PREVIEW_APPLY: {
-                    let PrintPreviewStrategy = <IPrintPreviewStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PrintPreviewStrategyId));
-                    PrintPreviewStrategy.ApplyPrintPreview();
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }

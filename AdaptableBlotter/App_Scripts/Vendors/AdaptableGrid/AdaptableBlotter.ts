@@ -30,7 +30,6 @@ import { ExportStrategy } from '../../Strategy/ExportStrategy'
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
-import { PrintPreviewStrategy } from '../../Strategy/PrintPreviewStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
@@ -324,10 +323,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public isGridPageable(): boolean {
         return false
-    }
-
-    public printGrid(): void {
-
     }
 
     public applyColumnFilters(): void {
