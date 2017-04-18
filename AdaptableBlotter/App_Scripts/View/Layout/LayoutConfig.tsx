@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -99,7 +98,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                                 <ControlLabel >Name</ControlLabel>
                             </Col>
                             <Col xs={7}>
-                                <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e: React.FormEvent) => this.onSaveLayoutNameChanged(e)} />
+                                <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
                             </Col>
                             <Col xs={3}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
@@ -114,12 +113,12 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
         );
     }
 
-    private onLayoutSelectionChanged(event: React.FormEvent) {
+    private onLayoutSelectionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onLoadLayout(e.value);
     }
 
-    private onSaveLayoutNameChanged(event: React.FormEvent) {
+    private onSaveLayoutNameChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ NewLayoutName: e.value });
     }

@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -43,7 +41,7 @@ class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
         );
     }
 
-    onChangeTheme(event: React.FormEvent) {
+    onChangeTheme(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.SelectTheme(e.value);
     }

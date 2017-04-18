@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -241,7 +239,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.props.onAddUpdateAdvancedSearch(clonedObject);
     }
 
-    onSelectedSearchChanged(event: React.FormEvent) {
+    onSelectedSearchChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "select") {
             this.onClearAdvancedSearch();
@@ -275,7 +273,7 @@ var divStyle = {
     margin: '6px'
 };
 
-var previewDivStyle = {
+var previewDivStyle : React.CSSProperties = {
     overflowY: 'auto',
     maxHeight: '350px',
 };

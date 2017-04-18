@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -348,7 +346,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     private draggedHTMLElement: HTMLElement;
     private draggedElement: any;
     private overHTMLElement: HTMLElement;
-    DragSelectedStart(e: React.DragEvent, listElement: any) {
+    DragSelectedStart(e: React.DragEvent<any>, listElement: any) {
         this.draggedHTMLElement = e.currentTarget as HTMLElement;
         this.draggedElement = listElement;
     }
@@ -431,7 +429,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 , () => this.raiseOnChange());
         }
     }
-    DragAvailableStart(e: React.DragEvent, listElement: any) {
+    DragAvailableStart(e: React.DragEvent<any>, listElement: any) {
         this.draggedHTMLElement = e.currentTarget as HTMLElement;
         this.draggedElement = listElement
     }
@@ -487,11 +485,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
 
     }
-    DragEnterAvailable(e: React.DragEvent) {
+    DragEnterAvailable(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
     }
-    DragOverAvailable(e: React.DragEvent) {
+    DragOverAvailable(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
         //we can only drop selected data into available
@@ -510,7 +508,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             targetElement.parentNode.insertBefore(placeholder, targetElement);
         }
     }
-    DragLeaveAvailable(e: React.DragEvent) {
+    DragLeaveAvailable(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
@@ -528,11 +526,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
     }
 
-    DragEnterSelected(e: React.DragEvent) {
+    DragEnterSelected(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
     }
-    DragOverSelected(e: React.DragEvent) {
+    DragOverSelected(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
@@ -546,7 +544,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             targetElement.parentNode.insertBefore(placeholder, targetElement);
         }
     }
-    DragLeaveSelected(e: React.DragEvent) {
+    DragLeaveSelected(e: React.DragEvent<any>) {
         e.preventDefault();
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
@@ -623,14 +621,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 var rowStyle = {
     'minWidth': '800px',
 };
-var listGroupStyleAvailable = {
+var listGroupStyleAvailable: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '261px',
     'height': '261px',
     'marginBottom': '0'
 };
 
-var listGroupStyle = {
+var listGroupStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px',
     'height': '300px',

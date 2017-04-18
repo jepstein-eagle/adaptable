@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -151,7 +149,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index, WizardStartIndex: 1 });
     }
 
-    private onCellValidationModeChanged(index: number, event: React.FormEvent) {
+    private onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeCellValidationMode(index, Number.parseInt(e.value));
     }
@@ -193,7 +191,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CellValidationConfig = connect(mapStateToProps, mapDispatchToProps)(CellValidationConfigComponent);
 
-let listGroupStyle = {
+let listGroupStyle: React.CSSProperties = {
     overflowY: 'auto',
     minHeight: '100px',
     maxHeight: '300px'

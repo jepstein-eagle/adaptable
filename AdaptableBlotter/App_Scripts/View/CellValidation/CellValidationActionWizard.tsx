@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -52,7 +50,7 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
     }
 
 
-    private onCellValidationModeChanged(event: React.FormEvent) {
+    private onCellValidationModeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ CellValidationMode: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }

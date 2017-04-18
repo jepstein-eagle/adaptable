@@ -1,6 +1,6 @@
-/// <reference path="../../../typings/index.d.ts" />
 import {CustomSortState} from './Interface/IState';
 import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import * as Redux from 'redux'
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';
 export const CUSTOMSORT_EDIT = 'CUSTOMSORT_EDIT';

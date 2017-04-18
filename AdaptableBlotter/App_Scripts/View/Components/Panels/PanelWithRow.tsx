@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../../../Core/Helper'

@@ -1,7 +1,6 @@
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
+import * as Redux from "redux";
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 

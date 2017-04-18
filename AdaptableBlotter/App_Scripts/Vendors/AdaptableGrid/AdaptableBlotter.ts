@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-/// <reference path="AdaptableBlotter.d.ts" />
+﻿/// <reference path="AdaptableBlotter.d.ts" />
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";

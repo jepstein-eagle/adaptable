@@ -1,6 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-
-import * as React from "react";
+﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'

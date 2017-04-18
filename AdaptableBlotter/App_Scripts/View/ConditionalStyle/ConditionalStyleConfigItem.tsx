@@ -76,7 +76,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         </li >
     }
 
-    private onUseBackColourCheckChange(event: React.FormEvent) {
+    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
             this.props.onChangeStyle(this.props.ConditionalStyleCondition, "#ffffff", this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
@@ -85,7 +85,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         }
     }
 
-    private onUseForeColourCheckChange(event: React.FormEvent) {
+    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
             this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, "#000000", this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
@@ -94,17 +94,17 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         }
     }
 
-    private onColumnSelectChange(event: React.FormEvent) {
+    private onColumnSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
     }
 
-    private onBackColourSelectChange(event: React.FormEvent) {
+    private onBackColourSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeStyle(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
     }
 
-    private onForeColourSelectChange(event: React.FormEvent) {
+    private onForeColourSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, e.value, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
     }

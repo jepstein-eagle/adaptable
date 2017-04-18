@@ -1,6 +1,4 @@
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Radio, Panel, Form, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
@@ -32,11 +30,11 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
     constructor(props: ShortcutSettingsWizardProps) {
         super(props);
-        this.state = { DataType: this.props.Data.DataType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
-        if (this.state.DataType == DataType.Date) {
-            this.state.ShortcutAction = ShortcutAction.Replace;
+        let state = { DataType: this.props.Data.DataType, ShortcutKey: this.props.Data.ShortcutKey, ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult, ShortcutAction: this.props.Data.ShortcutAction }
+        if (state.DataType == DataType.Date) {
+            state.ShortcutAction = ShortcutAction.Replace;
         }
-
+        this.state = state
     }
 
     onClickShortcutAction(shortcutAction: ShortcutAction) {
@@ -61,8 +59,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         // sort out actions
         let optionActions = EnumExtensions.getNamesAndValues(ShortcutAction).filter
             (nv => nv.value != ShortcutAction.Replace).map((enumNameAndValue: any) => {
-            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
-        })
+                return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
+            })
 
         let currentActionValue = this.state.ShortcutAction.toString();
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
@@ -107,8 +105,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
                                         {optionActions}
                                     </FormControl>
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Operation"} 
-                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Operation"}
+                                        bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
@@ -125,8 +123,8 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         onChange={this.changeContent}
                                         value={this.state.ShortcutResult}
                                     />
-                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"} 
-                                      bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Value"}
+                                        bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </AdaptableBlotterForm>
                             </Col>
                         </FormGroup>
@@ -153,7 +151,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         </Panel>
     }
 
-    private onColumTypeChanged(event: React.FormEvent) {
+    private onColumTypeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Number") {
             this.setState({ DataType: DataType.Number, ShortcutKey: "select" } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -162,13 +160,13 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         }
     }
 
-    private onShortcutKeyChanged(event: React.FormEvent) {
+    private onShortcutKeyChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ShortcutKey: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 
-    private onShortcutActionChanged(event: React.FormEvent) {
+    private onShortcutActionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ShortcutAction: Number.parseInt(e.value) } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }

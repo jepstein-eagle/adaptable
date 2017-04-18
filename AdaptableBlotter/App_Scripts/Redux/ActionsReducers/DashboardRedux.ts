@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { DashboardState } from './interface/IState'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
@@ -67,8 +65,6 @@ export const DashboardSetConfigurationItem = (StrategyId: string, NewConfig: any
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        //I keep the property Name insttead of Strategy as we are not yet able to migrate reduc state version
-        //But the content of the Name needs to be a strategy Id
         //WARNING: 12/04/17 Currently if you add a new dashboard control, you need to add it at the end otherwise you'll need
         //to do Clean user data. That's because we currently Merge Arrays when loading state. so if you add the new item
         // in the middle you end up with it missing and a duplicate. Need WI 1764 and 1765 to be done

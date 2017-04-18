@@ -1,6 +1,4 @@
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
-/// <reference path="../../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
@@ -50,7 +48,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public StepName = "Choose Custom Sort Column"
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '400px',
     'marginBottom': '0'

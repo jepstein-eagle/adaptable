@@ -1,5 +1,5 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as React from "react";
+﻿import * as React from "react";
+import * as Redux from 'redux'
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
@@ -90,7 +90,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         this.props.onChangeControlCollapsedState(this.props.QuickSearchDashboardControl.Strategy, !this.props.QuickSearchDashboardControl.IsCollapsed);
     }
 
-    onUpdateQuickSearchText(event: React.FormEvent) {
+    onUpdateQuickSearchText(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onRunQuickSearch(e.value);
     }

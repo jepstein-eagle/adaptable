@@ -1,8 +1,7 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import * as DeepDiff from 'deep-diff'
+import { composeWithDevTools } from 'redux-devtools-extension';
 import createEngine from 'redux-storage-engine-localstorage';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
 import filter from 'redux-storage-decorator-filter'
@@ -103,16 +102,25 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
         loadStorage = ReduxStorage.createLoader(engineReduxStorage);
-
-        //been looking to do that for a couple of hours and I have no idea how I came up with that syntax but it fucking works!
-        let finalCreateStore = Redux.compose(
-            Redux.applyMiddleware(/*snooper,*/ diffStateAuditMiddleware(blotter), adaptableBlotterMiddleware(blotter), middlewareReduxStorage),
-            ((<any>window).devToolsExtension && process.env.NODE_ENV !== 'production') ? (<any>window).devToolsExtension() : f => f
-        )(Redux.createStore);
+        let composeEnhancers
+        if ("production" != process.env.NODE_ENV) {
+            composeEnhancers = composeWithDevTools({
+                // Specify here name, actionsBlacklist, actionsCreators and other options if needed
+            });
+        }
+        else {
+            composeEnhancers = (x: any) => x
+        }
 
         //TODO: need to check if we want the storage to be done before or after 
         //we enrich the state with the AB middleware
-        this.TheStore = <Redux.Store<AdaptableBlotterState>>(finalCreateStore(reducerWithStorage));
+        this.TheStore = Redux.createStore<AdaptableBlotterState>(
+            reducerWithStorage,
+            composeEnhancers(Redux.applyMiddleware(/*snooper,*/
+                diffStateAuditMiddleware(blotter),
+                adaptableBlotterMiddleware(blotter),
+                middlewareReduxStorage))
+        );
 
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
@@ -123,7 +131,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 //for now i'm still initializing the AB even if loading state has failed.... 
                 //we may revisit that later
                 this.TheStore.dispatch(InitState())
-                this.TheStore.dispatch(PopupRedux.PopupShowError({ErrorMsg: "Error loading your configuration:" + e}))
+                this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
             })
     }
 }
@@ -161,7 +169,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
-                case FilterRedux.HIDE_FILTER_FORM:{
+                case FilterRedux.HIDE_FILTER_FORM: {
                     adaptableBlotter.hideFilterForm()
                     return next(action);
                 }
@@ -196,8 +204,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case GridRedux.HIDE_COLUMN: {
                     let actionTyped = <GridRedux.HideColumnAction>action
                     let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
-                    let columnIndex = columnList.findIndex(x=>x.ColumnId == actionTyped.ColumnId)
-                    columnList.splice(columnIndex,1)
+                    let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId)
+                    columnList.splice(columnIndex, 1)
                     adaptableBlotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
@@ -312,12 +320,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     }
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
-                    AdaptableDashboardViewFactory.forEach((control,strategyId) =>{
-                        if(!middlewareAPI.getState().Dashboard.DashboardStrategyControls.find(x=>x.Strategy == strategyId))
-                        {
+                    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
+                        if (!middlewareAPI.getState().Dashboard.DashboardStrategyControls.find(x => x.Strategy == strategyId)) {
                             middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
                         }
-                    } )
+                    })
                     return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:

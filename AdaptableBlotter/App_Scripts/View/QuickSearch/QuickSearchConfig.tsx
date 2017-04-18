@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -48,7 +46,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.setState({ EditedQuickSearchText: this.props.QuickSearchText });
     }
 
-    handleQuickSearchTextChange(event: React.FormEvent) {
+    handleQuickSearchTextChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
         this.setState({ EditedQuickSearchText: e.value });
     }
@@ -62,17 +60,17 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.props.onClearQuickSearch();
     }
 
-    onStringOperatorChange(event: React.FormEvent) {
+    onStringOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchOperator(Number.parseInt(e.value));
     }
 
-    onDisplayTypeChange(event: React.FormEvent) {
+    onDisplayTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchDisplayType(Number.parseInt(e.value));
     }
 
-    onBackColorChange(event: React.FormEvent) {
+    onBackColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onSetSearchBackColor(e.value);
     }
@@ -97,12 +95,12 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
             <span >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open" infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => this.onSetQuickSearch()}>
-                        <Panel header={"Search For"} bsStyle="info" Click >
+                        <Panel header={"Search For"} bsStyle="info" >
                             <FormControl
                                 value={this.state.EditedQuickSearchText}
                                 type="string"
                                 placeholder="Quick Search Text"
-                                onChange={(e: React.FormEvent) => this.handleQuickSearchTextChange(e)} />
+                                onChange={(e) => this.handleQuickSearchTextChange(e)} />
                             {' '}
                             <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
                                 <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>

@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
@@ -23,17 +21,17 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
 
 class ExportActionComponent extends React.Component<ExportActionProps, {}> {
 
-    handleFileNameChanged(event: React.FormEvent) {
+    handleFileNameChanged(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
         this.props.onFileNameChanged(e.value);
     }
 
-    handleAllPagesChanged(event: React.FormEvent) {
+    handleAllPagesChanged(event: React.FormEvent<Checkbox>) {
         const e = event.target as HTMLInputElement;
         this.props.onAllPagesChanged(e.checked);
     }
 
-    handleFilterableChanged(event: React.FormEvent) {
+    handleFilterableChanged(event: React.FormEvent<Checkbox>) {
         const e = event.target as HTMLInputElement;
         this.props.onFilterableChanged(e.checked);
     }
@@ -47,21 +45,21 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
                     <FormGroup controlId="fileName">
                         <Col xs={4} componentClass={ControlLabel}>File Name: </Col>
                         <Col xs={8}>
-                            <FormControl value={this.props.FileName} type="string" placeholder="Enter Name for Exported File" onChange={e => this.handleFileNameChanged(e)} />
+                            <FormControl value={this.props.FileName} type="string" placeholder="Enter Name for Exported File" onChange={(e) => this.handleFileNameChanged(e)} />
                         </Col>
                     </FormGroup>
                     {this.props.isGridPageable() &&
                         <FormGroup controlId="allPages">
                             <Col xs={4} componentClass={ControlLabel}>Export All Pages: </Col>
                             <Col xs={8}>
-                                <Checkbox onChange={(e: React.FormEvent) => this.handleAllPagesChanged(e)} checked={this.props.AllPages}></Checkbox>
+                                <Checkbox onChange={(e) => this.handleAllPagesChanged(e)} checked={this.props.AllPages}></Checkbox>
                             </Col>
                         </FormGroup>
                     }
                     <FormGroup controlId="filterable">
                         <Col xs={4} componentClass={ControlLabel}>Excel File Filterable: </Col>
                         <Col xs={8}>
-                            <Checkbox onChange={(e: React.FormEvent) => this.handleFilterableChanged(e)} checked={this.props.Filterable}></Checkbox>
+                            <Checkbox onChange={(e) => this.handleFilterableChanged(e)} checked={this.props.Filterable}></Checkbox>
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="exportButton">

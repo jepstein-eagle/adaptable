@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-bootstrap';
@@ -47,7 +45,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
     }
 }
 
-var listGroupStyle = {
+var listGroupStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '350px',
     'height': '350px'

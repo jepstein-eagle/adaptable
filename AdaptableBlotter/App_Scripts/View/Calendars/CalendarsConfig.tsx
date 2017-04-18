@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
 import { ICalendar, ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
 import * as React from "react";
 import * as Redux from "redux";
@@ -34,8 +33,8 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
     }
 
     render() {
-  let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />, 
-         "These are used primarily when calculating Working Days."]
+        let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />,
+            "These are used primarily when calculating Working Days."]
 
 
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
@@ -113,7 +112,7 @@ export let CalendarsConfig = connect(mapStateToProps, mapDispatchToProps)(Calend
 
 
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }

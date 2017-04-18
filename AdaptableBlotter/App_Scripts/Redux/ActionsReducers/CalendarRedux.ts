@@ -1,6 +1,5 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import { CalendarState } from './Interface/IState';
+import * as Redux from 'redux'
 
 export const CALENDAR_SELECT = 'CALENDAR_SELECT';
 

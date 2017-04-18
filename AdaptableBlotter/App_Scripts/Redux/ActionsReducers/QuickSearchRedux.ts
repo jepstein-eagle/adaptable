@@ -1,7 +1,6 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import { QuickSearchState } from './Interface/IState';
 import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums';
+import * as Redux from 'redux'
 
 export const QUICK_SEARCH_RUN = 'QUICK_SEARCH_RUN';
 export const QUICK_SEARCH_CLEAR = 'QUICK_SEARCH_CLEAR';

@@ -15,7 +15,7 @@ import { IUserFilter } from '../../../Core/interface/IExpression';
 import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Core/interface/IDashboardStrategy';
-
+import * as Redux from 'redux'
 
 
 export interface PlusMinusState {

@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as React from "react";
+﻿import * as React from "react";
 import { Provider, connect } from 'react-redux';
+import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';

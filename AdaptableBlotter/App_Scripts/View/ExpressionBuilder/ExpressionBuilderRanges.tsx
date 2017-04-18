@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { DataType } from '../../Core/Enums'
 import { IRangeExpression } from '../../Core/Interface/IExpression'
@@ -36,10 +34,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             <InputGroup>
                                 {numericAndDateOption}
                                 {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e) => this.onOperand1Edit(index, e)} />
                                 }
                                 {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e) => this.onOperand1Edit(index, e)} />
                                 }
                                 <InputGroup.Button>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
@@ -50,10 +48,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             <InputGroup style={betweenAddOnStyle}>
                                 <InputGroup.Addon>And</InputGroup.Addon>
                                 {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand2)} type="number" placeholder="Enter Number" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
+                                    <FormControl value={String(x.Operand2)} type="number" placeholder="Enter Number" onChange={(e) => this.onOperand2Edit(index, e)} />
                                 }
                                 {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand2)} type="date" placeholder="Enter Date" onChange={(e: React.FormEvent) => this.onOperand2Edit(index, e)} />
+                                    <FormControl value={String(x.Operand2)} type="date" placeholder="Enter Date" onChange={(e) => this.onOperand2Edit(index, e)} />
                                 }
                             </InputGroup>
                         </FormGroup>
@@ -65,10 +63,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             <InputGroup>
                                 {numericAndDateOption}
                                 {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Number" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Number" onChange={(e) => this.onOperand1Edit(index, e)} />
                                 }
                                 {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Date" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Date" onChange={(e) => this.onOperand1Edit(index, e)} />
                                 }
                                 <InputGroup.Button>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
@@ -94,7 +92,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <FormGroup controlId={"Range" + index}>
                         <InputGroup>
                             {stringOption}
-                            <FormControl value={String(x.Operand1)} type="string" placeholder="Value" onChange={(e: React.FormEvent) => this.onOperand1Edit(index, e)} />
+                            <FormControl value={String(x.Operand1)} type="string" placeholder="Value" onChange={(e) => this.onOperand1Edit(index, e)} />
                             <InputGroup.Button>
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
                                     <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
@@ -131,7 +129,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         this.props.onRangesChange(rangeCol)
     }
 
-    private onOperand1Edit(index: number, x: React.FormEvent) {
+    private onOperand1Edit(index: number, x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
         let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
@@ -139,7 +137,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         this.props.onRangesChange(rangeCol)
     }
 
-    private onOperand2Edit(index: number, x: React.FormEvent) {
+    private onOperand2Edit(index: number, x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
         let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
@@ -148,7 +146,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     }
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
     'height': '370px',

@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -102,22 +100,22 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     }
 
 
-    private onOperatorChanged(event: React.FormEvent) {
+    private onOperatorChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ Operator: Number.parseInt(e.value), Operand1: "", Operand2: "" } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onOperand1ValueChanged(event: React.FormEvent) {
+    private onOperand1ValueChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onOperand2ValueChanged(event: React.FormEvent) {
+    private onOperand2ValueChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onDisallowEditChanged(event: React.FormEvent) {
+    private onDisallowEditChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let operator: LeafExpressionOperator = (e.value == "None") ? LeafExpressionOperator.None : LeafExpressionOperator.Unknown;
         this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())

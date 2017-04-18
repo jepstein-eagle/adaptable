@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { CellValidationState } from './interface/IState'
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';

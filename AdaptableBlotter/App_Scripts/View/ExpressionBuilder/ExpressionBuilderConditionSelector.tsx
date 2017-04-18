@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { IRangeExpression, IUserFilter } from '../../Core/Interface/IExpression'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
@@ -261,7 +259,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.setState({ SelectedUserFilterExpresions: selectedUserFilterExpressionUids } as ExpressionBuilderConditionSelectorState)
     }
 
-    private onColumnSelectChange(event: React.FormEvent) {
+    private onColumnSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onSelectedColumnChange(e.value)
     }

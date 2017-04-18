@@ -1,6 +1,4 @@
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -66,12 +64,12 @@ export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDa
         </li>
     }
 
-    onResultChange(event: React.FormEvent) {
+    onResultChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeResult(this.props.Shortcut, e.value);
     }
 
-    onKeySelectChange(event: React.FormEvent) {
+    onKeySelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onChangeKey(this.props.Shortcut, e.value);
     }

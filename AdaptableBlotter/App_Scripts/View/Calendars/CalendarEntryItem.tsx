@@ -1,7 +1,5 @@
 import * as React from "react";
 import * as Redux from "redux";
-/// <reference path="../../typings/index.d.ts" />
-
 import { Provider, connect } from 'react-redux';
 import {  Col, Row, Panel } from 'react-bootstrap';
 import {  ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';

@@ -1,7 +1,7 @@
 import { MenuType } from '../Enums';
 import { IColumn } from '../Interface/IAdaptableBlotter'
 import { IEntitlement } from '../Interface/IAdaptableBlotter'
-
+import * as Redux from 'redux';
 
 export interface IStrategy {
     Id: string

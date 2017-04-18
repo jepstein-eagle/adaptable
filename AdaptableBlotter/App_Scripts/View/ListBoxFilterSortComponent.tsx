@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
@@ -42,7 +40,7 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
         </AdaptableBlotterForm>
     }
 
-    handleChangeFilterValue(x: React.FormEvent) {
+    handleChangeFilterValue(x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
         this.props.handleChangeFilterValue(e.value)
     }

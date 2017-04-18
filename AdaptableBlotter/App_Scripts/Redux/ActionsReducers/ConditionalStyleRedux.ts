@@ -1,10 +1,10 @@
-/// <reference path="../../../typings/index.d.ts" />
 import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyleCondition, IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { Helper } from '../../Core/Helper';
+import * as Redux from 'redux'
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 export const CONDITIONAL_STYLE_EDIT_COLUMN = 'CONDITIONAL_STYLE_EDIT_COLUMN';

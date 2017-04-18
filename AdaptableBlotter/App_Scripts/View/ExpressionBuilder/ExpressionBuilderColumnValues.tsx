@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { SingleListBox } from '../SingleListBox'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
@@ -29,7 +27,7 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
     }
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '335px',
     'marginBottom': '0'

@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as Redux from 'redux';
 import { ThemeState } from './interface/IState'
 import { StaticThemes } from '../../../themes/index'

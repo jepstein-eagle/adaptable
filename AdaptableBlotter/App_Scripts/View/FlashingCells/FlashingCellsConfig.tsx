@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -107,7 +106,7 @@ let panelStyle = {
     width: '800px'
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
 }

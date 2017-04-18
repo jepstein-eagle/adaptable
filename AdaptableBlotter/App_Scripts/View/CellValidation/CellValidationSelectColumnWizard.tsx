@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -58,7 +56,7 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     public StepName = "Cell Validation Column "
 }
 
-let divStyle = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '400px',
     'marginBottom': '0'

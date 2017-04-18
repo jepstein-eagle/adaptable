@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/index.d.ts" />
-
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -30,7 +28,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
                     <Col xs={3} componentClass={ControlLabel}>Search Name: </Col>
                     <Col xs={9}>
                         <FormControl value={this.state.AdvancedSearchName} type="string" placeholder="Enter search name"
-                            onChange={(e: React.FormEvent) => this.onAdvancedSearchNameChange(e)} />
+                            onChange={(e) => this.onAdvancedSearchNameChange(e)} />
                     </Col>
                 </FormGroup>
 
@@ -40,7 +38,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     }
 
 
-    onAdvancedSearchNameChange(event: React.FormEvent) {
+    onAdvancedSearchNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ AdvancedSearchName: e.value } as AdvancedSearchSettingsWizardState, () => this.props.UpdateGoBackState())
     }
