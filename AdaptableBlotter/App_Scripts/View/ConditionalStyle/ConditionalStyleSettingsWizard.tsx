@@ -48,14 +48,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
         return <Panel header="Style" bsStyle="primary">
 
-            <AdaptableBlotterForm horizontal>
-
-                <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
-
-
-                    <Col xs={12}>
-                        <HelpBlock>Set the fore or back colours if required, or leave unchecked to use the colours from the cell's existing style.</HelpBlock>
-                    </Col>
+            <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
+                <Col xs={12}>
+                    <HelpBlock>Set the fore or back colours if required, or leave unchecked to use the colours from the cell's existing style.</HelpBlock>
+                </Col>
+                <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="colorBackStyle">
                         <Col xs={4} >
                             <Checkbox inline value="existing" checked={this.state.BackColor != undefined} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
@@ -77,12 +74,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         </Col>
 
                     </FormGroup>
+                </AdaptableBlotterForm>
+            </Panel>
 
-
-                </Panel>
-
-                <Panel header="Font Properties" eventKey="1" bsStyle="info"  >
-
+            <Panel header="Font Properties" eventKey="1" bsStyle="info"  >
+                <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="fontWeight">
                         <Col xs={12} >
                             <Checkbox value={FontWeight.Normal.toString()} checked={this.state.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
@@ -94,31 +90,24 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                             <Checkbox value={FontStyle.Normal.toString()} checked={this.state.FontStyle == FontStyle.Italic} onChange={(e) => this.onFontStyleChange(e)}  >Italic</Checkbox>
                         </Col>
                     </FormGroup>
-
-{/*   
                     <FormGroup controlId="fontSize">
-                        <AdaptableBlotterForm inline >
-                            <Col xs={3}>
-                                <AdaptableBlotterForm inline >
-                                    <FormControl componentClass="select" placeholder="select" value={currentFontSize} onChange={(x) => this.onFontSizeChange(x)} >
-                                        {optionFontSizes}
-                                    </FormControl>
-                                    {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
-                                        bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                        popoverType={PopoverType.Info} />
-                                </AdaptableBlotterForm  >
-                            </Col>
-                        </AdaptableBlotterForm  >
+                        <Col xs={12} >
+                            {/*we use the componentclass fieldset to indicate its not a new form...*/}
+                            <AdaptableBlotterForm inline componentClass='fieldset' >
+                                <FormControl componentClass="select" placeholder="select" value={currentFontSize} onChange={(x) => this.onFontSizeChange(x)} >
+                                    {optionFontSizes}
+                                </FormControl>
+                                {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
+                                    bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
+                                    popoverType={PopoverType.Info} />
+                            </AdaptableBlotterForm  >
+                        </Col>
                     </FormGroup>
+                </AdaptableBlotterForm>
+            </Panel>
 
- */}
 
-
-
-                </Panel>
-
-            </AdaptableBlotterForm>
-        </Panel>
+        </Panel >
     }
 
     private onUseBackColourCheckChange(event: React.FormEvent<any>) {

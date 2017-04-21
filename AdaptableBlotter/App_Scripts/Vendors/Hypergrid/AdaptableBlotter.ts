@@ -41,6 +41,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
+import { EnumExtensions } from '../../Core/Extensions';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, FontSize, FontStyle, FontWeight } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
@@ -333,8 +334,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         var el = document.createElement("span");
         //we we let teh CSS parse build the different properties of the font CSS
         el.style.font = fontCssShortHand
+        //we now update individual properties
         el.style.fontWeight = FontWeight[newStyle.FontWeight].toLocaleLowerCase()
         el.style.fontStyle = FontStyle[newStyle.FontStyle].toLocaleLowerCase()
+        el.style.fontSize = EnumExtensions.getCssFontSizeFromFontSizeEnum(newStyle.FontSize)
+        //we return the new font CSS shorthand
         return el.style.font
     }
 

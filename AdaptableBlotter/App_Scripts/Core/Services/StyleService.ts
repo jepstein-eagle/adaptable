@@ -2,7 +2,7 @@
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/IState';
-import { FontWeight , FontStyle, FontSize} from '../../Core/Enums';
+import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions';
 
 
@@ -42,9 +42,7 @@ export class StyleService {
                 this.addCSSRule(".Ab-FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
             });
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((element, index) => {
-       // with size still in for when its fixed        this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important')
-                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important')
-
+                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important')
             });
             // quick search
             this.addCSSRule(".Ab-QuickSearch", 'background-color: ' + this.QuickSearchBackColor + ' !important')
