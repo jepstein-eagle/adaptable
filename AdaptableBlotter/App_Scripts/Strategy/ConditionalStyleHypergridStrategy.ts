@@ -36,13 +36,13 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
 
-                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { csBackColorRow: c.Style.BackColor, csForeColorRow: c.Style.ForeColor })
+                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                     //   if (columns.find(col => col.ColumnId == c.ColumnId).Visible) {
-                            let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-                            this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { csBackColorColumn: c.Style.BackColor, csForeColorColumn: c.Style.ForeColor })
-                      //  }
+                        //   if (columns.find(col => col.ColumnId == c.ColumnId).Visible) {
+                        let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
+                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { conditionalStyleColumn: c.Style })
+                        //  }
                     }
                 }
             })
@@ -89,7 +89,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
 
-                            this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { csBackColorColumn: columnCS.BackColor, csForeColorColumn: columnCS.ForeColor })
+                            this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { conditionalStyleColumn: columnCS })
                             break
                         }
                     }
@@ -98,7 +98,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
 
-                        this.blotterBypass.addRowStyleHypergrid(rowId, { csBackColorRow: rowCS.Style.BackColor, csForeColorRow: rowCS.Style.ForeColor })
+                        this.blotterBypass.addRowStyleHypergrid(rowId, { conditionalStyleRow: rowCS.Style })
                         break
                     }
                 }

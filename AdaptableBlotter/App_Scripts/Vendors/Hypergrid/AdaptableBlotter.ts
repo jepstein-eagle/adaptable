@@ -41,7 +41,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
-import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, FontSize, FontStyle, FontWeight } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
@@ -50,6 +50,7 @@ import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
@@ -268,10 +269,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
                 }
                 let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-                let csBackgroundColorColumn = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorColumn')
-                let csForeColorColumn = this.grid.behavior.getCellProperty(x, y, 'csForeColorColumn')
-                let csBackgroundColorRow = this.grid.behavior.getCellProperty(x, y, 'csBackgroundColorRow')
-                let csForeColorRow = this.grid.behavior.getCellProperty(x, y, 'csForeColorRow')
+                let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
+                let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
                 let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
                 if (flashColor) {
                     config.backgroundColor = flashColor;
@@ -279,17 +278,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (quickSearchBackColor) {
                     config.backgroundColor = quickSearchBackColor;
                 }
-                else if (csBackgroundColorColumn ) {
-                    config.backgroundColor = csBackgroundColorColumn;
+                else if (conditionalStyleColumn) {
+                    if (conditionalStyleColumn.BackColor) {
+                        config.backgroundColor = conditionalStyleColumn.BackColor;
+                    }
+                    if (conditionalStyleColumn.ForeColor) {
+                        config.color = conditionalStyleColumn.ForeColor;
+                    }
+                    if (conditionalStyleColumn.FontStyle
+                        || conditionalStyleColumn.FontWeight
+                        || conditionalStyleColumn.ForeColor) {
+                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                    }
                 }
-                else if ( csForeColorColumn) {
-                    config.color = csForeColorColumn;
-                }
-                else if (csBackgroundColorRow ) {
-                    config.backgroundColor = csBackgroundColorRow;
-                 }
-                else if ( csForeColorRow) {
-                    config.color = csForeColorRow;
+                else if (conditionalStyleRow) {
+                    if (conditionalStyleRow.BackColor) {
+                        config.backgroundColor = conditionalStyleRow.BackColor;
+                    }
+                    if (conditionalStyleRow.ForeColor) {
+                        config.color = conditionalStyleRow.ForeColor;
+                    }
+                    if (conditionalStyleRow.FontStyle
+                        || conditionalStyleRow.FontWeight
+                        || conditionalStyleRow.ForeColor) {
+                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                    }
                 }
             }
             return this.grid.cellRenderers.get(declaredRendererName);
@@ -314,6 +327,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
+    }
+
+    private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
+        var el = document.createElement("span");
+        //we we let teh CSS parse build the different properties of the font CSS
+        el.style.font = fontCssShortHand
+        el.style.fontWeight = FontWeight[newStyle.FontWeight].toLocaleLowerCase()
+        el.style.fontStyle = FontStyle[newStyle.FontStyle].toLocaleLowerCase()
+        return el.style.font
     }
 
     public setColumnIntoStore() {
@@ -658,11 +680,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             //There is never a timeout for CS
             // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
-            if (style.csBackColorColumn) {
-                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csBackgroundColorColumn', style.csBackColorColumn)
-            }
-            if (style.csForeColorColumn) {
-                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'csForeColorColumn', style.csForeColorColumn)
+            if (style.conditionalStyleColumn) {
+                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'conditionalStyleColumn', style.conditionalStyleColumn)
             }
         }
     }
@@ -673,11 +692,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
                 //here we don't call Repaint as we consider that we already are in the repaint loop
                 //There is never a timeout for CS
-                if (style.csBackColorRow) {
-                    this.grid.behavior.setCellProperty(index, rowIndex, 'csBackgroundColorRow', style.csBackColorRow)
-                }
-                if (style.csForeColorRow) {
-                    this.grid.behavior.setCellProperty(index, rowIndex, 'csForeColorRow', style.csForeColorRow)
+                if (style.conditionalStyleRow) {
+                    this.grid.behavior.setCellProperty(index, rowIndex, 'conditionalStyleRow', style.conditionalStyleRow)
                 }
             }
         }
@@ -710,13 +726,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.grid.repaint()
         }
         if (style == 'csColumn') {
-            this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorColumn', undefined)
-            this.grid.behavior.setCellProperty(x, y, 'csForeColorColumn', undefined)
+            this.grid.behavior.setCellProperty(x, y, 'conditionalStyleColumn', undefined)
             this.grid.repaint()
         }
         if (style == 'csRow') {
-            this.grid.behavior.setCellProperty(x, y, 'csBackgroundColorRow', undefined)
-            this.grid.behavior.setCellProperty(x, y, 'csForeColorRow', undefined)
+            this.grid.behavior.setCellProperty(x, y, 'conditionalStyleRow', undefined)
             this.grid.repaint()
         }
         if (style == 'QuickSearch') {
@@ -769,10 +783,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 }
 
 interface CellStyleHypergrid {
-    csForeColorColumn?: string,
-    csBackColorColumn?: string,
-    csForeColorRow?: string,
-    csBackColorRow?: string,
+    conditionalStyleColumn?: IStyle,
+    conditionalStyleRow?: IStyle,
     flashBackColor?: string,
     quickSearchBackColor?: string
 }
