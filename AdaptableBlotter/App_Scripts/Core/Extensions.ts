@@ -64,5 +64,8 @@ export module StringExtensions {
         return  stringToCheck.replace(/([A-Z])/g, ' $1').trim()
     }
 
-   
+  export function RemoveTrailingComma(stringToCheck: string) {
+        return  stringToCheck.replace(/,\s*$/, "")
+    }
+
 }

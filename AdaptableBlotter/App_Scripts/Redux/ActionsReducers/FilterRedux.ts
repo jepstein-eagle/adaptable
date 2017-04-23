@@ -10,6 +10,7 @@ export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 
 export const COLUMN_FILTER_ADD_UPDATE = 'COLUMN_FILTER_ADD_UPDATE';
+export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
 export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
 export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 
@@ -26,6 +27,9 @@ export interface UserFilterDeleteAction extends Redux.Action {
 
 export interface ColumnFilterAddUpdateAction extends Redux.Action {
     columnFilter: IColumnFilter
+}
+
+export interface ColumnFilterClearAction extends Redux.Action {
 }
 
 export interface ColumnFilterDeleteAction extends Redux.Action {
@@ -52,6 +56,10 @@ export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteActio
 export const ColumnFilterAddUpdate = (columnFilter: IColumnFilter): ColumnFilterAddUpdateAction => ({
     type: COLUMN_FILTER_ADD_UPDATE,
     columnFilter
+})
+
+export const ColumnFilterClear = (): ColumnFilterClearAction => ({
+    type: COLUMN_FILTER_CLEAR
 })
 
 export const ColumnFilterDelete = (columnFilter: IColumnFilter): ColumnFilterDeleteAction => ({
@@ -105,6 +113,12 @@ export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = i
             return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
 
+        case COLUMN_FILTER_CLEAR: {
+            let actionTypedClear = (<ColumnFilterClearAction>action)
+            columnFilters = []
+            return Object.assign({}, state, { ColumnFilters: columnFilters })
+        }
+       
         case COLUMN_FILTER_DELETE: {
             let actionTypedDelete = (<ColumnFilterDeleteAction>action)
             columnFilters = [].concat(state.ColumnFilters)
