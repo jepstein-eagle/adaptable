@@ -22,6 +22,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
             selected={[selectedColum]}
             onChange={(selected) => { this.onColumnChange(selected) }}
             options={sortedColumns}
+            disabled={this.props.disabled}
         />
     }
     // For now this control can select only one ColumnSelector. If needed it can be extended and it's quite well done'

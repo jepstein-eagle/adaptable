@@ -39,13 +39,14 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
 
 interface AdvancedSearchActionInternalState {
     EditedAdvancedSearch: IAdvancedSearch
+    //Jo: not sure I understand the goal of this property on the state. 
     SelectedColumnId: string
 }
 
 class AdvancedSearchActionComponent extends React.Component<AdvancedSearchActionProps, AdvancedSearchActionInternalState> {
     constructor(props: AdvancedSearchActionProps) {
         super(props);
-        this.state = { EditedAdvancedSearch: null, SelectedColumnId: "select" };
+        this.state = { EditedAdvancedSearch: null, SelectedColumnId: "" };
     }
 
     componentDidMount() {
@@ -176,7 +177,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
     // New search: sets the edited search to a new blank search which will force the wizard to show
     onNewAdvancedSearch() {
-        this.setState({ EditedAdvancedSearch: ObjectFactory.CreateEmptyAdvancedSearch(), SelectedColumnId: "select" } as AdvancedSearchActionInternalState)
+        this.setState({ EditedAdvancedSearch: ObjectFactory.CreateEmptyAdvancedSearch(), SelectedColumnId: "" } as AdvancedSearchActionInternalState)
     }
 
     // Edit search: sets the edited search to the current selected search which will force the wizard to show

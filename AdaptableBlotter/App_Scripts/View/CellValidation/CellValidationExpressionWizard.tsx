@@ -22,7 +22,7 @@ export class CellValidationExpressionWizard extends ExpressionBuilderPage implem
         super(props2)
         this.state = {
             Expression: props2.Data.OtherExpression,
-            SelectedColumnId: "select"
+            SelectedColumnId: ""
         }
     }
 

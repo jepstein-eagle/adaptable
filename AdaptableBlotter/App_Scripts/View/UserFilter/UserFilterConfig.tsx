@@ -52,7 +52,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
             "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
 
-        let selectedColumnId: string = "select";
+        let selectedColumnId: string = "";
         if (this.state.EditedUserFilter != null) {
             let editedColumn: string = UserFilterHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {

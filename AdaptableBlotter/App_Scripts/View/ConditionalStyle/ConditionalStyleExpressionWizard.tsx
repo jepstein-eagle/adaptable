@@ -21,7 +21,7 @@ export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage impl
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,
-            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : "select"
+            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : ""
         }
     }
 
