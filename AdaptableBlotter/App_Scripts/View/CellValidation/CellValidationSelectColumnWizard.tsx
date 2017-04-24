@@ -6,6 +6,7 @@ import { ICellValidationRule } from '../../Core/interface/ICellValidationStrateg
 import { StringExtensions } from '../../Core/Extensions';
 import { SelectionMode } from '../../Core/Enums';
 import { SingleListBox } from '../SingleListBox'
+import { ColumnSelector } from '../ColumnSelector';
 
 interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -27,20 +28,14 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
         let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <Panel header="Select a Column" bsStyle="primary">
-            <SingleListBox style={divStyle}
-                Values={this.props.Columns}
-                UiSelectedValues={selectedColumnValues}
-                DisplayMember="FriendlyName"
-                ValueMember="ColumnId"
-                SortMember="FriendlyName"
-                onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
-                SelectionMode={SelectionMode.Single}>
-            </SingleListBox>
+            <ColumnSelector SelectedColumnId={this.state.ColumnId}
+                ColumnList={this.props.Columns}
+                onColumnChange={colum => this.onColumnSelectedChanged(colum)}></ColumnSelector>
         </Panel>
     }
 
-    private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
-        this.setState({ ColumnId: selectedColumnValues[0] } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(column: IColumn) {
+        this.setState({ ColumnId: column ? column.ColumnId : "" } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
@@ -54,10 +49,4 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
 
     public Back(): void { }
     public StepName = "Cell Validation Column "
-}
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '400px',
-    'marginBottom': '0'
 }
