@@ -19,17 +19,11 @@ interface ConditionalStyleConfigItemProps extends React.ClassAttributes<Conditio
     UserFilters: IUserFilter[]
     onDeleteConfirm: Redux.Action;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
-    onChangeColumn: (ConditionalStyleCondition: IConditionalStyleCondition, newColumnId: string) => void;
-    onChangeStyle: (ConditionalStyleCondition: IConditionalStyleCondition, backColor: string, foreColor: string, fontWeight: FontWeight, fontStyle: FontStyle, fontSize: FontSize) => void;
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
 
     render(): any {
-
-        let optionColumns = this.props.Columns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
-        })
         let isDisabled = this.props.ConditionalStyleCondition.IsPredefined
 
         let backColorForStyle: string = this.props.ConditionalStyleCondition.Style.BackColor != undefined ? this.props.ConditionalStyleCondition.Style.BackColor : "transparent";
@@ -37,7 +31,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         let fontWeightForStyle: any = this.props.ConditionalStyleCondition.Style.FontWeight == FontWeight.Bold ? "bold" : "normal"
         let fontStyleForStyle: any = this.props.ConditionalStyleCondition.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
         let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(this.props.ConditionalStyleCondition.Style.FontSize);
-
+        let column = this.props.Columns.find(x => x.ColumnId == this.props.ConditionalStyleCondition.ColumnId)
         return <li
             className="list-group-item"
             onClick={() => { }}>
@@ -45,72 +39,34 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                        <FormControl disabled={isDisabled} componentClass="select" placeholder="select" value={this.props.Columns.find(f => f.ColumnId == this.props.ConditionalStyleCondition.ColumnId).ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
-                            <option value="select" key="select">Select a column</option>
-                            {optionColumns}
-                        </FormControl> :
+                        column ? column.FriendlyName : this.props.ConditionalStyleCondition.ColumnId :
                         "Whole Row"
                     }
                 </Col>
 
-                  <Col md={2} >
+                <Col md={2} >
                     <div style={{
-                    
-                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle }}>Style</div> {/* font size taken out */}
+
+                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle
+                    }}>Style</div> {/* font size taken out */}
                 </Col>
 
-            <Col xs={4}>
-                <span style={expressionFontSizeStyle}>
-                    {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
-                </span>
-            </Col>
+                <Col xs={4}>
+                    <span style={expressionFontSizeStyle}>
+                        {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
+                    </span>
+                </Col>
 
-            <Col md={3} >
-                <EntityListActionButtons
-                    editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
-                    ConfigEntity={this.props.ConditionalStyleCondition}
-                    ConfirmDeleteAction={this.props.onDeleteConfirm}>
-                </EntityListActionButtons>
-            </Col>
+                <Col md={3} >
+                    <EntityListActionButtons
+                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
+                        ConfigEntity={this.props.ConditionalStyleCondition}
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                    </EntityListActionButtons>
+                </Col>
             </Row>
         </li >
     }
-
-    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (e.checked) {
-            this.props.onChangeStyle(this.props.ConditionalStyleCondition, "#ffffff", this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-        } else {
-            this.props.onChangeStyle(this.props.ConditionalStyleCondition, undefined, this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-        }
-    }
-
-    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (e.checked) {
-            this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, "#000000", this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-        } else {
-            this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, undefined, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-        }
-    }
-
-    private onColumnSelectChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onChangeColumn(this.props.ConditionalStyleCondition, e.value);
-    }
-
-    private onBackColourSelectChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onChangeStyle(this.props.ConditionalStyleCondition, e.value, this.props.ConditionalStyleCondition.Style.ForeColor, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-    }
-
-    private onForeColourSelectChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onChangeStyle(this.props.ConditionalStyleCondition, this.props.ConditionalStyleCondition.Style.BackColor, e.value, this.props.ConditionalStyleCondition.Style.FontWeight, this.props.ConditionalStyleCondition.Style.FontStyle, this.props.ConditionalStyleCondition.Style.FontSize);
-    }
-
-
-
 
 }
 

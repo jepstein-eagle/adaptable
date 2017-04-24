@@ -8,7 +8,7 @@ import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ColorPicker } from '../ColorPicker';
 import { Helper } from '../../Core/Helper'
-import { SingleListBox } from '../SingleListBox'
+import { ColumnSelector } from '../ColumnSelector';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -36,45 +36,33 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
         let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
-        return <div>
-            <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
-
-                <AdaptableBlotterForm inline>
-                    <Col xs={12} style={radioMarginStyle}>
+        return <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
+                <Col xs={12} style={radioMarginStyle}>
+                    <AdaptableBlotterForm inline>
                         <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}>{' '} Whole Row </Radio>
                         {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Conditional Style: Whole Row"} bodyText={["The conditional style will be applied to alls cells in each matching row."]} popoverType={PopoverType.Info} /></span>
-                    </Col>
-                    <Col xs={12} style={radioMarginStyle}>
+                    </AdaptableBlotterForm>
+                </Col>
+                <Col xs={12} style={radioMarginStyle}>
+                    <AdaptableBlotterForm inline>
                         <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Single Column </Radio>
-                       {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} /></span>
-                    </Col>
-                    <Col xs={12} style={radioMarginStyle}>
-                    </Col>
-                </AdaptableBlotterForm>
-
-
-                {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
-
-                    <SingleListBox style={divStyle}
-                        Values={this.props.Columns}
-                        UiSelectedValues={selectedColumnValues}
-                        DisplayMember="FriendlyName"
-                        ValueMember="ColumnId"
-                        SortMember="FriendlyName"
-                        onSelectedChange={(list) => this.onColumnSelectedChanged(list)}
-                        SelectionMode={SelectionMode.Single}>
-                    </SingleListBox>
-                }
-
-
-            </Panel>
-        </div>
+                        {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} /></span>
+                    </AdaptableBlotterForm>
+                </Col>
+                <Col xs={12} style={radioMarginStyle}>
+                    {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
+                        <ColumnSelector SelectedColumnId={this.state.ColumnId}
+                            ColumnList={this.props.Columns}
+                            onColumnChange={colum => this.onColumnSelectedChanged(colum)}></ColumnSelector>
+                    }
+                </Col>
+        </Panel>
     }
 
 
 
-    private onColumnSelectedChanged(selectedColumnValues: Array<any>) {
-        this.setState({ ColumnId: selectedColumnValues[0] } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(column: IColumn) {
+        this.setState({ ColumnId: column ? column.ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onScopeSelectChanged(event: React.FormEvent<any>) {

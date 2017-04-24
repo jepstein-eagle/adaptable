@@ -21,7 +21,8 @@ declare module 'react-bootstrap-typeahead' {
         renderMenuItemChildren?: (props: TypeaheadProps, option: any, index: number) => any
         selected?: Array<any>,
         filterBy?: Array<string>,
-        clearButton?: Boolean
+        clearButton?: Boolean,
+        bodyContainer? : Boolean
     }
     export var Typeahead: React.ClassicComponentClass<TypeaheadProps>
     export default Typeahead

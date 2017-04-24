@@ -5,7 +5,6 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
 import { StringExtensions } from '../../Core/Extensions';
 import { SelectionMode } from '../../Core/Enums';
-import { SingleListBox } from '../SingleListBox'
 import { ColumnSelector } from '../ColumnSelector';
 
 interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
