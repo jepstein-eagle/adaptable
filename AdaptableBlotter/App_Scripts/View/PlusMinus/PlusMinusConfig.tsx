@@ -57,22 +57,17 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         }
     }
     render() {
-       let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>," keys are pressed on the keyboard).",<br/>,<br/>,"Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
+        let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />, "Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
 
         let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
-
+        
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
-            let optionColumns = this.props.Columns.filter(c => c.DataType == DataType.Number).filter(column => { return this.props.PlusMinusConditions.findIndex(entry => entry.ColumnId == column.ColumnId) < 0 || column.ColumnId == x.ColumnId }).map(x => {
-                return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
-            })
+            let column = this.props.Columns.find(y=>y.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={x.ColumnId + index}>
                 <Row >
                     <Col xs={3}>
-                        <FormControl componentClass="select" placeholder="select" value={x.ColumnId} onChange={(x) => this.onColumnSelectChange(index, x)} >
-                            <option value="select" key="select">Select a column</option>
-                            {optionColumns}
-                        </FormControl>
+                        {column?column.FriendlyName:x.ColumnId}
                     </Col>
                     <Col xs={2}>
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
@@ -150,10 +145,10 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
     }
 
-    private onColumnSelectChange(index: number, event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: e.value, DefaultNudge: this.props.PlusMinusConditions[index].DefaultNudge });
-    }
+    // private onColumnSelectChange(index: number, column: IColumn) {
+    //     let e = event.target as HTMLInputElement;
+    //     this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: column ? column.ColumnId : "", DefaultNudge: this.props.PlusMinusConditions[index].DefaultNudge });
+    // }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
