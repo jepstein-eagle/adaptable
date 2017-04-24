@@ -20,7 +20,7 @@ export module ObjectFactory {
 
     export function CreateEmptyPlusMinusCondition(defaultNudgeValue: number): IPlusMinusCondition {
         return {
-            ColumnId: "select",
+            ColumnId: "",
             DefaultNudge: defaultNudgeValue,
             Expression: CreateEmptyExpression(),
             IsPredefined: false

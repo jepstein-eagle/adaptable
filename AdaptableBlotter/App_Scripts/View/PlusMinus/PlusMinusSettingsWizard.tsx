@@ -6,7 +6,9 @@ import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
 import { DataType, SortOrder, PopoverType } from '../../Core/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { Helper } from '../../Core/Helper'
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ColumnSelector } from '../ColumnSelector'
 
 interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     Columns: Array<IColumn>
@@ -23,26 +25,26 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         this.state = {
             ColumnId: this.props.Data.ColumnId,
             DefaultNudge: this.props.Data.DefaultNudge,
-            ExpressionOption: this.props.Data.ColumnId == "select" ?
+            ExpressionOption: this.props.Data.ColumnId == "" ?
                 "" :
-                (this.props.Data.Expression == null ? "whole" : "expression")
+                ((this.props.Data.Expression == null || ExpressionHelper.IsExpressionEmpty(this.props.Data.Expression)) ? "whole" : "expression")
         }
     }
+    componentDidMount() {
+        this.props.UpdateGoBackState(this.state.ExpressionOption == "whole")
+    }
+
     render(): any {
-        let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Columns.filter(x => x.DataType == DataType.Number), "FriendlyName")
-        let optionColumns = sortedColumns.map(x => {
-            return <option value={x.ColumnId} key={x.ColumnId}>{x.FriendlyName}</option>
-        })
+        let numericColumns = this.props.Columns.filter(x => x.DataType == DataType.Number)
 
         return <Panel header="Plus/Minus Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formColumn">
                     <Col componentClass={ControlLabel} xs={3}>Column: </Col>
                     <Col xs={9}>
-                        <FormControl componentClass="select" placeholder="select" value={this.state.ColumnId} onChange={(x) => this.onColumnSelectChange(x)} >
-                            <option value="select" key="select">Select a column</option>
-                            {optionColumns}
-                        </FormControl>
+                        <ColumnSelector SelectedColumnId={this.state.ColumnId}
+                            ColumnList={numericColumns}
+                            onColumnChange={colum => this.onColumnSelectChange(colum)}></ColumnSelector>
                     </Col>
                 </FormGroup>
                 <FormGroup controlId="nudgeColumn">
@@ -73,9 +75,8 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         this.setState({ ExpressionOption: e.value } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(e.value == "whole"))
     }
 
-    private onColumnSelectChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ ColumnId: e.value } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(this.state.ExpressionOption == "whole"))
+    private onColumnSelectChange(column: IColumn) {
+        this.setState({ ColumnId: column ? column.ColumnId : "" } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(this.state.ExpressionOption == "whole"))
     }
     onColumnDefaultNudgeValueChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -84,7 +85,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
 
     public canNext(): boolean {
         return Number.isFinite(this.state.DefaultNudge)
-            && this.state.ColumnId != "select"
+            && this.state.ColumnId != ""
             && this.state.ExpressionOption != "";
     }
     public canBack(): boolean { return false; }
