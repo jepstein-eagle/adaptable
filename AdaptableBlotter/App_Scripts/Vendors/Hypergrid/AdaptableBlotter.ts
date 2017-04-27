@@ -244,7 +244,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            if (grid.properties.columnIndexes[this.sortColumnGridIndex] == columnIndex) {
+            //we now store the displayed column index in the sortColumnGridIndex so no need to transpose the index
+            // if (grid.properties.columnIndexes[columnIndex] == this.sortColumnGridIndex) {
+            if (columnIndex == this.sortColumnGridIndex) {
                 if (this.sortOrder == SortOrder.Ascending) {
                     icon = UPWARDS_BLACK_ARROW;
                 }
