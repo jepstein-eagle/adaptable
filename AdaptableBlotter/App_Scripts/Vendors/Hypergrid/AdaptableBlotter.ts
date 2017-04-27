@@ -244,7 +244,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            if (grid.properties.columnIndexes[this.sortColumnGridIndex] == columnIndex) {
+            //we now store the displayed column index in the sortColumnGridIndex so no need to transpose the index
+            // if (grid.properties.columnIndexes[columnIndex] == this.sortColumnGridIndex) {
+            if (columnIndex == this.sortColumnGridIndex) {
                 if (this.sortOrder == SortOrder.Ascending) {
                     icon = UPWARDS_BLACK_ARROW;
                 }
@@ -273,26 +275,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
                 let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
                 let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
-                if (flashColor) {
-                    config.backgroundColor = flashColor;
-                }
-                else if (quickSearchBackColor) {
-                    config.backgroundColor = quickSearchBackColor;
-                }
-                else if (conditionalStyleColumn) {
-                    if (conditionalStyleColumn.BackColor) {
-                        config.backgroundColor = conditionalStyleColumn.BackColor;
-                    }
-                    if (conditionalStyleColumn.ForeColor) {
-                        config.color = conditionalStyleColumn.ForeColor;
-                    }
-                    if (conditionalStyleColumn.FontStyle
-                        || conditionalStyleColumn.FontWeight
-                        || conditionalStyleColumn.ForeColor) {
-                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                    }
-                }
-                else if (conditionalStyleRow) {
+                //Lowest priority first then every step will override the properties it needs to override.
+                //probably not needed to optimise as we just assign properties.......
+                if (conditionalStyleRow) {
                     if (conditionalStyleRow.BackColor) {
                         config.backgroundColor = conditionalStyleRow.BackColor;
                     }
@@ -305,6 +290,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
                     }
                 }
+                if (conditionalStyleColumn) {
+                    if (conditionalStyleColumn.BackColor) {
+                        config.backgroundColor = conditionalStyleColumn.BackColor;
+                    }
+                    if (conditionalStyleColumn.ForeColor) {
+                        config.color = conditionalStyleColumn.ForeColor;
+                    }
+                    if (conditionalStyleColumn.FontStyle
+                        || conditionalStyleColumn.FontWeight
+                        || conditionalStyleColumn.ForeColor) {
+                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                    }
+                }
+                if (quickSearchBackColor) {
+                    config.backgroundColor = quickSearchBackColor;
+                }
+                if (flashColor) {
+                    config.backgroundColor = flashColor;
+                } 
             }
             return this.grid.cellRenderers.get(declaredRendererName);
         };
