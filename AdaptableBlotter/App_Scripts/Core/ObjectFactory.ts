@@ -100,14 +100,13 @@ export module ObjectFactory {
     }
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
-        let intro: string = (showIntro) ? "The following Cell Validation was broken:" : "";
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
         let columnFriendlyName: string = columns.find(c => c.ColumnId == CellValidation.ColumnId).FriendlyName;
         let expressionDescription: string = (CellValidation.HasExpression) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, columns, userFilters) :
             "";
-        return (intro + "\nColumn: '" + columnFriendlyName + "'\nRule: " + CellValidation.Description + expressionDescription);
+        return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
     }
 
     export function CreateEmptyConditionalStyle(): IConditionalStyleCondition {

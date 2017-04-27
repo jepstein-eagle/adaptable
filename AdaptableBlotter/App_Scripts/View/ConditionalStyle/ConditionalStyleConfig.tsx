@@ -47,7 +47,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
                 _editedConditionalStyle.ColumnId = arrayParams[1]
-                _editedConditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
+                _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column
                 this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 1 });
             }
         }

@@ -155,10 +155,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         })
         let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Do you want to continue?",
+            CancelText: "Cancel Edit",
+            ConfirmationTitle: "Cell Validation Failed",
             ConfirmationMsg: warningMessage,
-            ConfirmationText: "Perform Shortcut Anyway",
+            ConfirmationText: "Bypass Rule",
             //We cancel the edit before applying the shortcut so if cancel then there is fuck all to do
             CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
             ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)

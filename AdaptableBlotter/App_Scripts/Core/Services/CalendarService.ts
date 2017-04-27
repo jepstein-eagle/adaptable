@@ -26,6 +26,14 @@ export class CalendarService implements ICalendarService {
         if (dynamicDateName == CalendarStrat.TODAY_MAGICSTRING) {
             dynamicDate = new Date();
         }
+        else if (dynamicDateName == CalendarStrat.YESTERDAY_MAGICSTRING) {
+            dynamicDate = new Date()
+            dynamicDate.setDate(dynamicDate.getDate() - 1);
+        }
+        else if (dynamicDateName == CalendarStrat.TOMORROW_MAGICSTRING) {
+            dynamicDate = new Date()
+            dynamicDate.setDate(dynamicDate.getDate() + 1);
+        }
         else if (dynamicDateName == CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING) {
             dynamicDate = this.GetPreviousWorkingDay(1);
         }
@@ -62,10 +70,12 @@ export class CalendarService implements ICalendarService {
     private isNotWorkingDay(dateToCheck: Date): Boolean {
         let calendarStore = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendars
         let currentHoliday = calendarStore.AvailableCalendars.find(c => c.CalendarName == calendarStore.CurrentCalendar);
-        for (var holiday of currentHoliday.CalendarEntries) {
-            let holidayDate = new Date(holiday.HolidayDate)
-            if (holidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {
-                return false;
+        for (var year of currentHoliday.CalendarYears) {
+            for (var holiday of year.CalendarEntries) {
+                let holidayDate = new Date(holiday.HolidayDate)
+                if (holidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {
+                    return false;
+                }
             }
         }
         return (dateToCheck.getDay() != 0 && dateToCheck.getDay() != 6);
