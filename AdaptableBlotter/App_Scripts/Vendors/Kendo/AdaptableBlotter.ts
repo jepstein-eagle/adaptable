@@ -154,8 +154,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Value: dataChangedEvent.NewValue
                     }
                     let confirmation: IUIConfirmation = {
-                        CancelText: "Cancel",
-                        ConfirmationTitle: "Do you want to continue?",
+                        CancelText: "Cancel Edit",
+                        ConfirmationTitle: "Cell Validation Failed",
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,

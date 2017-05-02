@@ -132,7 +132,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            let errorMessage: string = failedRules.length + " Nudge(s) failed Cell Validation:\n" + failedMessages.toString();;
+            let errorMessage: string = failedRules.length + " Nudge(s) failed rule:\n" + failedMessages.toString();;
             let error: IUIError = {
                 ErrorMsg: errorMessage
             }
@@ -152,13 +152,13 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     warningMessages.push(warningMessage)
                 }
             })
-            let warningMessage: string = failedRules.length + " Nudge(s) failed Cell Validation:\n" + warningMessages.toString();;
+            let warningMessage: string = failedRules.length + " Nudge(s) failed rule:\n" + warningMessages.toString();;
 
             let confirmation: IUIConfirmation = {
-                CancelText: "Cancel",
-                ConfirmationTitle: "Do you want to continue?",
+                CancelText: "Cancel Edit",
+                ConfirmationTitle: "Cell Validation Failed",
                 ConfirmationMsg: warningMessage,
-                ConfirmationText: "Perform Nudge Anyway",
+                ConfirmationText: "Bypass Rule",
                 CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
                 ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
             }

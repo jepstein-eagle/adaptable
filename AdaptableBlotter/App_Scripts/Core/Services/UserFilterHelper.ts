@@ -85,6 +85,7 @@ export module UserFilterHelper {
     export const TOMORROW_USER_FILTER = 'Tomorrow'
     export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
     export const PREVIOUS_WORKING_DAY_USER_FILTER = 'PreviousWorkingDay'
+    export const THIS_YEAR_USER_FILTER = 'ThisYear'
 
     // Numeric
     export const POSITIVE_USER_FILTER = 'Positive'
@@ -166,7 +167,7 @@ export module UserFilterHelper {
             },
             IsPredefined: true
         });
-        
+
         _predefinedExpressions.push({
             Uid: NEXT_WORKING_DAY_USER_FILTER,
             FriendlyName: "Next Working Day",
@@ -174,11 +175,11 @@ export module UserFilterHelper {
             DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
+                return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
             },
             IsPredefined: true
         });
-        
+
         _predefinedExpressions.push({
             Uid: PREVIOUS_WORKING_DAY_USER_FILTER,
             FriendlyName: "Previous Working Day",
@@ -186,7 +187,22 @@ export module UserFilterHelper {
             DataType: DataType.Date,
             Expression: ObjectFactory.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0)==dateToCheck.setHours(0, 0, 0, 0);
+                return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+            },
+            IsPredefined: true
+        });
+
+        _predefinedExpressions.push({
+            Uid: THIS_YEAR_USER_FILTER,
+            FriendlyName: "This Year",
+            Description: "In This Year",
+            DataType: DataType.Date,
+            Expression: ObjectFactory.CreateEmptyExpression(),
+            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
+                let todayyear:number = today.getFullYear();
+                let datetocheckyear: number = dateToCheck.getFullYear();
+                return (todayyear == datetocheckyear)
             },
             IsPredefined: true
         });

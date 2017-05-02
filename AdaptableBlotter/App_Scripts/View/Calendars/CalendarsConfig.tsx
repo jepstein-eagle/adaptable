@@ -1,4 +1,4 @@
-import { ICalendar, ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
+import { ICalendar, ICalendarYear, ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -7,11 +7,12 @@ import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Modal } from 'react-bootstrap';
+import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
 import { CalendarsConfigItem } from './CalendarsConfigItem'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Core/Helper';
 import { SortOrder } from '../../Core/Enums';
 
@@ -23,13 +24,14 @@ interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigCo
 
 interface CalendarsConfigInternalState {
     DisplayedCalendar: ICalendar
+    DisplayedYear: Number
 }
 
 class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, CalendarsConfigInternalState> {
 
     constructor() {
         super();
-        this.state = { DisplayedCalendar: null }
+        this.state = { DisplayedCalendar: null, DisplayedYear: 2017 }
     }
 
     render() {
@@ -37,6 +39,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             "These are used primarily when calculating Working Days."]
 
 
+        let acllCalendarCellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
             return <CalendarsConfigItem
                 Calendar={calendar}
@@ -47,21 +50,46 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
             </CalendarsConfigItem>
         });
 
-        let cellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
-        let calendarEntryCellInfo: [string, number][] = [["Holiday Name", 6], ["Date", 6]];
-        let sortedCalendarEntries = (this.state.DisplayedCalendar != null) ?
-            Helper.sortArrayWithProperty(SortOrder.Ascending, this.state.DisplayedCalendar.CalendarEntries, "HolidayDate")
-            : null;
 
-        let calendarEntryItems = (this.state.DisplayedCalendar != null) ? sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
-            return <CalendarEntryItem
-                CalendarEntry={calendarEntry}
-                key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
-            </CalendarEntryItem>
-        }) : null;
+
+        // doing the model stuff here
+        let calendarEntryCellInfo: [string, number][] = [["Holiday Name", 6], ["Date", 6]];
+
+
+        let displayedCalendarModalBody = this.state.DisplayedCalendar == null ? null :
+            this.state.DisplayedCalendar.CalendarYears.map((calendarYear: ICalendarYear) => {
+                let sortedCalendarEntries = Helper.sortArrayWithProperty(SortOrder.Ascending, calendarYear.CalendarEntries, "HolidayDate");
+  let calendarEntryItems = sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
+                    return <CalendarEntryItem
+                        CalendarEntry={calendarEntry}
+                        key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
+                    </CalendarEntryItem>
+                });
+
+                let yearButton = <Button onClick={() => this.onClickCalendarYear(calendarYear.YearName)}>
+                    <Glyphicon glyph={this.state.DisplayedYear == calendarYear.YearName ? "chevron-up" : "chevron-down"}/>
+                </Button>
+
+                return <div key={calendarYear.YearName.toString()}>
+                    <PanelWithButton bsStyle="info" headerText={calendarYear.YearName.toString()} button={yearButton}>
+                        <Collapse in={this.state.DisplayedYear == calendarYear.YearName}>
+                            <div>
+                                <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="success" ></PanelWithRow>
+                                <ListGroup style={divStyle}>
+                                    {calendarEntryItems}
+                                </ListGroup>
+
+                            </div>
+
+                        </Collapse>
+                    </PanelWithButton>
+                    <Row></Row>
+                </div>
+            });
 
         return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar" infoBody={infoBody}>
-            <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+
+            <PanelWithRow CellInfo={acllCalendarCellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
             </ListGroup>
@@ -73,10 +101,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                         <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                        <PanelWithRow CellInfo={calendarEntryCellInfo} bsStyle="info" />
-                        <ListGroup style={divStyle}>
-                            {calendarEntryItems}
-                        </ListGroup>
+                        {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button style={buttonFloatRightStyle} onClick={() => this.closeInformationModal()}>Close</Button>
@@ -93,6 +118,15 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
     private onShowInformation(calendar: ICalendar) {
         this.setState({ DisplayedCalendar: calendar });
     }
+
+    private onClickCalendarYear(calendarYear: Number) {
+        if (this.state.DisplayedYear == calendarYear) {
+            this.setState({ DisplayedYear: 0 });
+        } else {
+            this.setState({ DisplayedYear: calendarYear });
+        }
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

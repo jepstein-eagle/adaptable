@@ -150,8 +150,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         <FormControl componentClass="select" placeholder="select" value={currentDynamicResult} onChange={(x) => this.onDynamicResultChanged(x)} >
                                             <option value="select" key="select">Select Dynamic Date</option>
                                             <option value={CalendarStrat.TODAY_MAGICSTRING} key={CalendarStrat.TODAY_MAGICSTRING}>Today</option>
-                                            <option value={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous</option>
-                                            <option value={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING} key={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING}>Next</option>
+                                            <option value={CalendarStrat.YESTERDAY_MAGICSTRING} key={CalendarStrat.YESTERDAY_MAGICSTRING}>Yesterday</option>
+                                            <option value={CalendarStrat.TOMORROW_MAGICSTRING} key={CalendarStrat.TOMORROW_MAGICSTRING}>Tomorrow</option>
+                                            <option value={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous Work Day</option>
+                                            <option value={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING} key={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING}>Next Work Day</option>
                                         </FormControl>
 
                                         {' '}<AdaptablePopover headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />

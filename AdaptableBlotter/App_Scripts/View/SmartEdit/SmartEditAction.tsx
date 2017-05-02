@@ -168,10 +168,10 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
     private onConfirmWarningCellValidation() {
         let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Do you want to continue?",
-            ConfirmationMsg: "This edit breaks Cell Validation rules that you have set.\nClick 'OK' to bypass these rules.\nClick 'Cancel' if you wish not to proceed with the edit.",
-            ConfirmationText: "OK",
+            CancelText: "Cancel Edit",
+            ConfirmationTitle: "Cell Validation Failed",
+            ConfirmationMsg: "Do you want to continue?",
+            ConfirmationText: "Bypass Rule",
             CancelAction: SmartEditRedux.SmartEditApply(false),
             ConfirmAction: SmartEditRedux.SmartEditApply(true)
         }
