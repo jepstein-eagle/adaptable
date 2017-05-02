@@ -1,30 +1,26 @@
 
 import { ISearchService } from './Interface/ISearchService';
-import { AdaptableBlotter } from '../../Vendors/Hypergrid/AdaptableBlotter';
+import { AdaptableBlotter } from '../../Vendors/agGrid/AdaptableBlotter';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { MenuType, LeafExpressionOperator } from '../Enums';
 import { QuickSearchState, AdvancedSearchState, GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IAdvancedSearch } from '../Interface/IAdvancedSearchStrategy';
 
-export class SearchServiceHyperGrid implements ISearchService {
+export class SearchServiceagGrid implements ISearchService {
 
     constructor(private blotter: AdaptableBlotter) {
         this.blotter.onGridDataBound().Subscribe((sender, eventText) => this.ApplySearchOnGrid())
     }
 
-
     public ApplySearchOnGrid(): void {
-        this.blotter.ReindexAndRepaint()
+        this.blotter.onFilterChanged()
     }
 
-
     public ApplySearchOnRow(rowIdentifier: string): void {
-        this.blotter.ReindexAndRepaint()
+        this.blotter.onFilterChanged()
     }
 
     public ApplySearchOnUserFilter(userFilterIds: string[]): void {
-        this.blotter.ReindexAndRepaint()
+        this.blotter.onFilterChanged()
     }
-
-
 }
