@@ -15,7 +15,7 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
-import { SearchService } from '../../Core/Services/SearchService'
+import { SearchServiceagGrid } from '../../Core/Services/SearchServiceagGrid'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
@@ -40,6 +40,8 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interfa
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
+import { StringExtensions } from '../../Core/Extensions';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
@@ -73,7 +75,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchService(this);
+        this.SearchService = new SearchServiceagGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
 
@@ -90,11 +92,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         //this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        //this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        //this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         //this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
@@ -137,6 +139,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null
         });
+
+        //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
+        let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent
+        gridOptions.isExternalFilterPresent = () => {
+            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0
+            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
+            return isFilterActive || isSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
+        }
+        let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass
+        gridOptions.doesExternalFilterPass = (node: RowNode) => {
+            let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns
+            let rowId = this.getPrimaryKeyValueFromRecord(node)
+
+            //first we assess AdvancedSearch 
+            let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
+            if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
+                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+                if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                    return false;
+                }
+            }
+
+            //we then assess filters
+            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+            if (columnFilters.length > 0) {
+                for (let columnFilter of columnFilters) {
+                    if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
+                        return false
+                    }
+                }
+            }
+            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true
+        }
+
     }
 
     private _currentEditor: ICellEditor
@@ -149,6 +185,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
+    }
+
+    public onFilterChanged(){
+        this.gridOptions.api.onFilterChanged()
     }
 
 
