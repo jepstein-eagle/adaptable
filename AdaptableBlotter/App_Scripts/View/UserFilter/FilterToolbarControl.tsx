@@ -112,5 +112,6 @@ export let FilterToolbarControl = connect(mapStateToProps, mapDispatchToProps)(F
 
 
 var marginButtonStyle = {
-    marginTop: '4px'
+    marginTop: '4px',
+    marginBottom: '4px'
 };
