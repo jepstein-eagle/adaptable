@@ -51,7 +51,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events, RowNode, ICellEditor } from "ag-grid"
+import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
+import { FilterWrapperFactory } from './FilterWrapper'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -173,6 +174,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true
         }
 
+        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+            this.gridOptions.api.destroyFilter(col)
+            this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
+            col.initialise()
+        })
     }
 
     private _currentEditor: ICellEditor
@@ -187,7 +193,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
-    public onFilterChanged(){
+    public onFilterChanged() {
         this.gridOptions.api.onFilterChanged()
     }
 
@@ -383,6 +389,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
+        //also looks like the column object already has the Iseditable function... need to check that
         let colDef = this.gridOptions.api.getColumnDef(columnId)
         if (typeof colDef.editable == 'boolean') {
             return !colDef.editable;
@@ -494,7 +501,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyColumnFilters(): void {
-        return null
+        this.gridOptions.api.onFilterChanged()
     }
 
     destroy() {
