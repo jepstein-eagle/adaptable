@@ -245,11 +245,11 @@ ModelManifest.xml
 .fake/
 
 # Ignores compiled TypeScript files
-/AdaptableBlotter/App_Scripts/**/*.js
-/AdaptableBlotter/App_Scripts/**/*.js.map
-/AdaptableBlotter/Harness/**/*.js
-/AdaptableBlotter/Harness/**/*.js.map
-/AdaptableBlotter/typings/globals/**/*.*
-/AdaptableBlotter/typings/modules/**/*.*
-/AdaptableBlotter/dist/**/*.*
-AdaptableBlotter/npm-debug.log.*
+#/App_Scripts/**/*.js
+#/App_Scripts/**/*.js.map
+#/Harness/**/*.js
+#/Harness/**/*.js.map
+/typings/globals/**/*.*
+/typings/modules/**/*.*
+/dist/**/*.*
+/npm-debug.log.*
