@@ -1,0 +1,5 @@
+langage: node_js
+install:
+    - npm install
+script:
+    - npm run build-adaptableblotter
