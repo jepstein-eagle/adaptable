@@ -3,14 +3,13 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { Form, FormProps } from 'react-bootstrap';
 
-
-
 interface AdaptableBlotterFormProps extends FormProps {
 }
 
 export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormProps, {}> {
-    render(): any {
-        return <Form {...this.props} onSubmit={(e) => this.CancelOnFormSubmit(e)} >
+    render() {
+        const { children, ...attrs } = this.props;
+        return <Form {...attrs} onSubmit={(e) => this.CancelOnFormSubmit(e)} >
             {this.props.children}
         </Form>
     }
