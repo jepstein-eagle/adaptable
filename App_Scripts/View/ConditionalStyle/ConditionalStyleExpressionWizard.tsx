@@ -3,7 +3,7 @@ import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Ju
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'

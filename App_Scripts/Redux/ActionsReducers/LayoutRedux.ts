@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
-import { LayoutState } from './interface/IState'
-import { ILayout } from '../../Core/interface/ILayoutStrategy';
-import { IColumn } from '../../Core/interface/IAdaptableBlotter'
+import { LayoutState } from './Interface/IState'
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { InputAction } from '../../Core/Interface/IStrategy';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';

@@ -1,6 +1,6 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { IAdvancedSearch } from '../../Core/interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../Core/Extensions'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';

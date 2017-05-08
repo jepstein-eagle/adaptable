@@ -1,8 +1,8 @@
 import { FilterState } from './Interface/IState';
-import { IUserFilter } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
-import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
+import { IColumnFilter } from '../../Core/Interface/IFilterStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import * as Redux from 'redux'
 

@@ -1,5 +1,5 @@
 import { PlusMinusState } from './Interface/IState';
-import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { Expression } from '../../Core/Expression/Expression';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'

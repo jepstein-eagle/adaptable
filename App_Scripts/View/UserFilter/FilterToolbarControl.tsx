@@ -11,7 +11,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { IColumnFilter } from '../../Core/interface/IFilterStrategy';
+import { IColumnFilter } from '../../Core/Interface/IFilterStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';

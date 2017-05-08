@@ -35,7 +35,7 @@ import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrateg
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError, ICellInfo, InputAction } from '../../Core/interface/IStrategy'
+import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({

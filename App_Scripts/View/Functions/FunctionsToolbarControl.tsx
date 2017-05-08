@@ -11,7 +11,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
-import { IMenuItem } from '../../Core/interface/IStrategy'
+import { IMenuItem } from '../../Core/Interface/IStrategy'
 
 interface FunctionsControlComponentProps extends IStrategyViewPopupProps<FunctionsToolbarControlComponent> {
     FunctionsDashboardControl: IDashboardStrategyControlConfiguration

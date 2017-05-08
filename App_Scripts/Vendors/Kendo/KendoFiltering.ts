@@ -3,7 +3,7 @@ import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../
 import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { IColumnFilter, } from '../../Core/Interface/IFilterStrategy';
-import { IUserFilter } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 import { Expression } from '../../Core/Expression/Expression';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';

@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { DashboardState } from './interface/IState'
+import { DashboardState } from './Interface/IState'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'

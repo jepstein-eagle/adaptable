@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { ICellValidationRule, ICellValidationStrategy } from '../../Core/interface/ICellValidationStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
@@ -22,7 +22,7 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { IUserFilter } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 

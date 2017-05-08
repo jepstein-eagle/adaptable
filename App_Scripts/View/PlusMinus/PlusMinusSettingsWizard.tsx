@@ -2,7 +2,7 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, Popover } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { DataType, SortOrder, PopoverType } from '../../Core/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { Helper } from '../../Core/Helper'

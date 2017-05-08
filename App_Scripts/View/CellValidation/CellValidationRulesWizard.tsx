@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../Core/Interface/IExpression';
 import { DataType, CellValidationMode, LeafExpressionOperator, PopoverType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';

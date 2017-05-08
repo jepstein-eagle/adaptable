@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
-import { CellValidationState } from './interface/IState'
-import { ICellValidationRule } from '../../Core/interface/ICellValidationStrategy';
+import { CellValidationState } from './Interface/IState'
+import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { CellValidationMode } from '../../Core/Enums';
 
 export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';

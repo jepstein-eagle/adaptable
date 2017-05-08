@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { ThemeState } from './interface/IState'
+import { ThemeState } from './Interface/IState'
 import { StaticThemes } from '../../../themes/index'
 const THEME_SELECT = 'THEME_SELECT';
 

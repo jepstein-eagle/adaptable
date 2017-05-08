@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { IPlusMinusCondition } from '../../Core/interface/IPlusMinusStrategy';
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 

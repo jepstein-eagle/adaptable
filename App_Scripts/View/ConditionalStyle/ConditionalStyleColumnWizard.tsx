@@ -2,7 +2,7 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IConditionalStyleCondition } from '../../Core/interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../Core/Enums';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';

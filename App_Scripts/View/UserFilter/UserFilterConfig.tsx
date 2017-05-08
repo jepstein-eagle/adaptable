@@ -9,7 +9,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { IUserFilter } from '../../Core/interface/IExpression';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';

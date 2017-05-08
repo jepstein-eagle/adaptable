@@ -1,20 +1,20 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
-import { InputAction } from '../../../Core/interface/IStrategy'
-import { ISmartEditPreview } from '../../../Core/interface/ISmartEditStrategy'
-import { ICustomSort } from '../../../Core/interface/ICustomSortStrategy'
-import { IShortcut } from '../../../Core/interface/IShortcutStrategy'
-import { IFlashingColumn } from '../../../Core/interface/IFlashingCellsStrategy'
-import { IMenuItem } from '../../../Core/interface/IStrategy'
-import { IColumn, IEntitlement } from '../../../Core/interface/IAdaptableBlotter'
-import { IPlusMinusCondition } from '../../../Core/interface/IPlusMinusStrategy';
-import { ICalendar } from '../../../Core/interface/ICalendarStrategy';
-import { IConditionalStyleCondition } from '../../../Core/interface/IConditionalStyleStrategy';
-import { IAdvancedSearch } from '../../../Core/interface/IAdvancedSearchStrategy';
-import { IColumnFilter } from '../../../Core/interface/IFilterStrategy';
-import { IUserFilter } from '../../../Core/interface/IExpression';
-import { ICellValidationRule } from '../../../Core/interface/ICellValidationStrategy';
-import { ILayout } from '../../../Core/interface/ILayoutStrategy';
-import { IDashboardStrategyControlConfiguration } from '../../../Core/interface/IDashboardStrategy';
+import { InputAction } from '../../../Core/Interface/IStrategy'
+import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
+import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
+import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
+import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
+import { IMenuItem } from '../../../Core/Interface/IStrategy'
+import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
+import { IPlusMinusCondition } from '../../../Core/Interface/IPlusMinusStrategy';
+import { ICalendar } from '../../../Core/Interface/ICalendarStrategy';
+import { IConditionalStyleCondition } from '../../../Core/Interface/IConditionalStyleStrategy';
+import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
+import { IColumnFilter } from '../../../Core/Interface/IFilterStrategy';
+import { IUserFilter } from '../../../Core/Interface/IExpression';
+import { ICellValidationRule } from '../../../Core/Interface/ICellValidationStrategy';
+import { ILayout } from '../../../Core/Interface/ILayoutStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../../Core/Interface/IDashboardStrategy';
 import * as Redux from 'redux'
 
 
