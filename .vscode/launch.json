@@ -8,13 +8,14 @@
             "url": "http://localhost:8080",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
-            "diagnosticLogging": true
+            "userDataDir": false
         },
         {
             "name": "Attach to Chrome, with sourcemaps",
             "type": "chrome",
             "request": "attach",
             "port": 9222,
+             "url": "http://localhost:8080",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
         },
