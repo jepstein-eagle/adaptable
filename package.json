@@ -21,6 +21,7 @@
     "express": "^4.15.2",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.10",
     "react-bootstrap-sweetalert": "^3.0.0",
