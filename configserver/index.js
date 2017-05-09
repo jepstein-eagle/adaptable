@@ -13,9 +13,10 @@ app.use(bodyParser.json())
 
 app.get('/adaptableblotter-config', function (req, res) {
     var username = req.headers["ab_username"]
+    var adaptableblotter_id = req.headers["ab_id"]
     try {
         if (username) {
-            let filename = ABConfigFolder + username + ".abjson"
+            let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
             let ApplicationConfig
             let UserConfig
             if (fs.existsSync(ApplicationConfigFileName)) {
@@ -52,8 +53,9 @@ app.get('/adaptableblotter-config', function (req, res) {
 
 app.put('/adaptableblotter-config', function (req, res) {
     var username = req.headers["ab_username"]
+    var adaptableblotter_id = req.headers["ab_id"]
     if (username) {
-        let filename = ABConfigFolder + username + ".abjson"
+        let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
         let state = req.body
         FilterPredefinedItems(state)
         fs.writeFile(filename, JSON.stringify(state, null, "\t"), { encoding: 'utf8' }, function (err) {

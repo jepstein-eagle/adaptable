@@ -4,4 +4,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableAuditLog: true,
     enableRemoteConfigServer: true,
     userName: "anonymous",
+    blotterId: "adaptable_blotter_id"
 }

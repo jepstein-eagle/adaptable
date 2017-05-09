@@ -111,7 +111,8 @@ export interface IAdaptableBlotterOptions {
     enableAuditLog?: boolean,
     enableRemoteConfigServer?: boolean,
     userName?: string,
-    primaryKey?: string
+    primaryKey?: string,
+    blotterId?: string
 }
 
 export interface IConfigEntity {

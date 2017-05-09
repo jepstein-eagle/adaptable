@@ -91,10 +91,10 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let engineReduxStorage: ReduxStorage.StorageEngine
         //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName);
+            engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
         else {
-            engineReduxStorage = createEngine('my-adaptable-blotter-key');
+            engineReduxStorage = createEngine(blotter.BlotterOptions.blotterId);
         }
         engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);

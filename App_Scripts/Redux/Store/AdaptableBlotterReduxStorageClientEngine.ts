@@ -15,13 +15,14 @@ const checkStatus = (response: Response) => {
 };
 
 class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxStorageClientEngine {
-  constructor(private url: string, private userName: string) {
+  constructor(private url: string, private userName: string, private blotterId: string) {
 
   }
   load(): Promise<any> {
     let loadOptions = {
       headers: {
-        'ab_username': this.userName
+        'ab_username': this.userName,
+        'ab_id': this.blotterId
       }
     }
     return fetch(this.url, loadOptions)
@@ -38,7 +39,8 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'ab_username': this.userName
+        'ab_username': this.userName,
+        'ab_id': this.blotterId
       },
     };
 
@@ -46,6 +48,6 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
   }
 }
 
-export function createEngine(url: string, userName: string): ReduxStorage.StorageEngine {
-  return new AdaptableBlotterReduxStorageClientEngine(url, userName)
+export function createEngine(url: string, userName: string, blotterId: string): ReduxStorage.StorageEngine {
+  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId)
 }
