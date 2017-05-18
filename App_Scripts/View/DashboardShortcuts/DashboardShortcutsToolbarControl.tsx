@@ -37,11 +37,8 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
             })
         }
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formDashboardShortcuts">
+            <AdaptableBlotterForm >
                     {shortcuts}
-                </FormGroup>
-
             </AdaptableBlotterForm>
 
         </Panel>

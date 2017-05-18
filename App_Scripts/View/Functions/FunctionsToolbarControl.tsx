@@ -36,18 +36,15 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
         });
 
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formAdvancedSearch">
-                    <Dropdown id="dropdown-functions" >
-                        <Dropdown.Toggle>
-                            <Glyphicon glyph="home" />{' '}Functions
+            <AdaptableBlotterForm >
+                <Dropdown id="dropdown-functions" >
+                    <Dropdown.Toggle>
+                        <Glyphicon glyph="home" />{' '}Functions
                             </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {configMenuItems}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </FormGroup>
-
+                    <Dropdown.Menu>
+                        {configMenuItems}
+                    </Dropdown.Menu>
+                </Dropdown>
             </AdaptableBlotterForm>
 
         </Panel>

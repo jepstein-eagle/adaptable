@@ -35,7 +35,7 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
         let tooltipText = this.props.FilterDashboardControl.IsCollapsed ? "Expand" : "Collapse";
         let collapsedText = this.props.ColumnFilters.length == 0 ? "None" : this.props.ColumnFilters.length + " Column(s)";
         let collapsedContent = <ControlLabel>{collapsedText}</ControlLabel>;
-      
+
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
             <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
                 {' '}<Glyphicon glyph="filter" />{' '}Filters{' '}<Glyphicon glyph={this.props.FilterDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
@@ -65,23 +65,20 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
         </span>
 
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formFilter">
-                    {this.props.FilterDashboardControl.IsCollapsed ?
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}
-                            {collapsedContent}
-                        </span>
-                        :
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}  {' '}
-                            {expandedContent}
-                        </span>
-                    }
-                </FormGroup>
-
+            <AdaptableBlotterForm inline>
+                {this.props.FilterDashboardControl.IsCollapsed ?
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}
+                        {collapsedContent}
+                    </span>
+                    :
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}  {' '}
+                        {expandedContent}
+                    </span>
+                }
             </AdaptableBlotterForm>
         </Panel>
 

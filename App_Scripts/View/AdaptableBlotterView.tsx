@@ -16,6 +16,7 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotterPopupError'
 import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
+import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -40,31 +41,9 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
-
-
-        let visibleDashboardControls = this.props.DashboardState.DashboardStrategyControls.filter(dc => dc.IsVisible);
-        let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-            //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
-            //we'll need to use the name or something else
-            let dashboardControl = AdaptableDashboardViewFactory.get(control.Strategy);
-            if (dashboardControl) {
-                let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
-                let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-                return <Nav key={"DashboardControl" + idx}>
-                    {dashboardElememt}
-                </Nav>
-            }
-            else {
-                console.error("Cannot find Dashboard Control for " + control.Strategy)
-            }
-        })
-
         return (
             <div className="adaptable_blotter_style" >
-                {/*  Dashboard */}
-                <Navbar fluid >
-                    {visibleDashboardElements}
-                </Navbar>
+                <Dashboard />
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
                     onClose={this.props.onCloseErrorPopup}

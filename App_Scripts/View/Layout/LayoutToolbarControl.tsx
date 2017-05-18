@@ -96,23 +96,20 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         return <Panel className="small-padding-panel" >
 
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formLayout">
-                    {this.props.LayoutDashboardControl.IsCollapsed ?
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}
-                            {collapsedContent}
-                        </span>
-                        :
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}  {' '}
-                            {expandedContent}
-                        </span>
-                    }
-                </FormGroup>
-
+            <AdaptableBlotterForm inline>
+                {this.props.LayoutDashboardControl.IsCollapsed ?
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}
+                        {collapsedContent}
+                    </span>
+                    :
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}  {' '}
+                        {expandedContent}
+                    </span>
+                }
             </AdaptableBlotterForm>
         </Panel>
     }

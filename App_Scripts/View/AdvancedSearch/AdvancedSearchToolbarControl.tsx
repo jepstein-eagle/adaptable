@@ -53,7 +53,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         </OverlayTrigger>
 
 
-        let expandedContent = <span>
+        let expandedContent = <AdaptableBlotterForm inline>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <FormControl componentClass="select" placeholder="select"
                     value={currentAdvancedSearchId}
@@ -90,12 +90,11 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
-        </span>
+        </AdaptableBlotterForm>
 
         return (
             <Panel className="small-padding-panel" >
-                <AdaptableBlotterForm className='navbar-form' >
-                    <FormGroup controlId="formAdvancedSearch">
+                <AdaptableBlotterForm >
                         {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                             <span>
                                 {toolbarHeaderButton}
@@ -109,8 +108,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                                 {expandedContent}
                             </span>
                         }
-                    </FormGroup>
-
                 </AdaptableBlotterForm>
 
             </Panel>

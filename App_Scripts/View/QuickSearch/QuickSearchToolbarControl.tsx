@@ -41,7 +41,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         </OverlayTrigger>
 
 
-        let expandedContent: any = <span>
+        let expandedContent = <AdaptableBlotterForm inline>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <FormControl
                     style={{ width: "120px" }}
@@ -62,25 +62,22 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     overrideTooltip="Edit Quick Search"
                     DisplayMode="Glyph+Text" />
             </div>
-        </span>
+        </AdaptableBlotterForm>
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm className='navbar-form' >
-                <FormGroup controlId="formQuickSearch">
-                    {this.props.QuickSearchDashboardControl.IsCollapsed ?
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}
-                            {collapsedContent}
-                        </span>
-                        :
-                        <span>
-                            {toolbarHeaderButton}
-                            {' '}  {' '}
-                            {expandedContent}
-                        </span>
-                    }
-                </FormGroup>
-
+            <AdaptableBlotterForm >
+                {this.props.QuickSearchDashboardControl.IsCollapsed ?
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}
+                        {collapsedContent}
+                    </span>
+                    :
+                    <span>
+                        {toolbarHeaderButton}
+                        {' '}  {' '}
+                        {expandedContent}
+                    </span>
+                }
             </AdaptableBlotterForm>
         </Panel>
 

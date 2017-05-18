@@ -96,7 +96,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
         </FormGroup>
 
         return <Panel className="small-padding-panel" >
-            <AdaptableBlotterForm className='navbar-form' inline>
+            <AdaptableBlotterForm inline>
                 <div style={headerStyle}>
                     <Glyphicon glyph="pencil" /> {' '}
                     <ControlLabel>SmartEdit:</ControlLabel>
