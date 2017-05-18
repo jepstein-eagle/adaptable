@@ -8,27 +8,31 @@ var scopify = require('postcss-scopify');
 var directories = getDirectories('node_modules/bootswatch/')
 for (var directory of directories) {
     if (fs.existsSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css')) {
-        var css = fs.readFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'utf8').toString();
-        var out = postcss()
-            .use(scopify('.adaptable_blotter_style'))
-            .process(css)
-            .css;
-
         ensureDirectoryExistence('themes/' + directory + '/bootstrap.min.css')
-        fs.writeFileSync('themes/' + directory + '/bootstrap.min.css', out)
+        copyFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'themes/' + directory + '/bootstrap.min.css')
+        // var css = fs.readFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'utf8').toString();
+        // var out = postcss()
+        //     .use(scopify('.adaptable_blotter_style'))
+        //     .process(css)
+        //     .css;
+
+        // ensureDirectoryExistence('themes/' + directory + '/bootstrap.min.css')
+        // fs.writeFileSync('themes/' + directory + '/bootstrap.min.css', out)
     }
 }
 
 //We package the default theme to work for the Adaptable Blotter only or 
 //at least all elements that have a parent that has the class adaptable_blotter_style
-var css = fs.readFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'utf8').toString();
-var out = postcss()
-    .use(scopify('.adaptable_blotter_style'))
-    .process(css)
-    .css;
-
 ensureDirectoryExistence('themes/default/bootstrap.min.css')
-fs.writeFileSync('themes/default/bootstrap.min.css', out)
+copyFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'themes/default/bootstrap.min.css')
+// var css = fs.readFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'utf8').toString();
+// var out = postcss()
+//     .use(scopify('.adaptable_blotter_style'))
+//     .process(css)
+//     .css;
+
+// ensureDirectoryExistence('themes/default/bootstrap.min.css')
+// fs.writeFileSync('themes/default/bootstrap.min.css', out)
 
 //We build an index.ts that we will reference in the code to build the list of initial available themes
 //We make them with the first letter uppercase but will do lowercase when manipulatring the URL
