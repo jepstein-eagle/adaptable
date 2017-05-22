@@ -62,7 +62,7 @@ function InitBlotter() {
             { field: "bloombergAsk", title: "Bloomberg Ask", type: 'num' },
             { field: "isLive", title: "Is Live", type: 'checkbox' },
             { field: "changeOnYear", title: "Change On Year", type: 'num' },
-            { field: "percentChange", title: "Percent Change", type: 'num' },
+           
             { field: "lastUpdated", title: "Last Update", type: 'date', format: "DD/MM/YYYY" },
             { field: "lastUpdatedBy", title: "Last Updated By", type: 'text' }
 
@@ -71,7 +71,9 @@ function InitBlotter() {
         ];
     }
 
-
+/*
+ { field: "percentChange", title: "Percent Change", type: 'num' },
+ */
 
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblottergrid.AdaptableBlotter(grid, container, {

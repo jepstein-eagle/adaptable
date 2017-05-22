@@ -17,6 +17,7 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
+import { StyleService } from '../../Core/Services/StyleService'
 import { SearchService } from '../../Core/Services/SearchService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -48,8 +49,9 @@ import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
-import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
+import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
+import { StringExtensions } from '../../Core/Extensions'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -59,6 +61,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
+    public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
@@ -75,6 +78,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.SearchService = new SearchService(this);
+        this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
 
@@ -107,6 +111,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
+        $(grid).keydown((event) => {
+            this._onKeyDown.Dispatch(this, event)
+        })
+
+
+
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -124,7 +134,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {
             return {
                 ColumnId: x.getId() ? x.getId() : "Unknown Column",
-                FriendlyName:  x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index
@@ -133,7 +143,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
             return {
                 ColumnId: x.getId() ? x.getId() : "Unknown Column",
-              FriendlyName:  x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
                 DataType: this.getColumnDataType(x.name),
                 Visible: false,
                 Index: -1
@@ -187,20 +197,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
-        return false
+        return this.grid.getCurrentEditor() != null;
     }
 
     public getCurrentCellEditValue(): any {
+        let editor: any = this.grid.getCurrentEditor();
+        if (editor) {
+            let editval: any = editor.editVal;
+            return editval;
+        }
         return "";
     }
 
     public getActiveCell(): ICellInfo {
-        return null
+        let activeCell: AdaptableGrid.Cell = this.grid.getActiveCell();
+        let cellInfo: ICellInfo = { Id: activeCell.getRowId(), ColumnId: activeCell.getColId(), Value: activeCell.getRawValue() };
+        return cellInfo;
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
     public getSelectedCells(): ISelectedCells {
-        return null
+        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+        let cells: any = this.grid.getSelectedCells();
+        cells.forEach((c: AdaptableGrid.Cell) => {
+            var valueArray = selectionMap.get(c.getRowId());
+            if (valueArray == undefined) {
+                valueArray = []
+                selectionMap.set(c.getRowId(), valueArray);
+            }
+            valueArray.push({ columnID: c.getColId(), value: c.getRawValue() });
+        });
+
+        return {
+            Selection: selectionMap
+        };
+
     }
 
     private getColumnDataType(column: AdaptableGrid.Column): DataType {
@@ -234,16 +265,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setValue(cellInfo: ICellInfo): void {
+        let row: AdaptableGrid.Row = this.grid.getRowFromId(cellInfo.Id);
+        let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, cellInfo.ColumnId);
+        cell.setValue(cellInfo.Value);
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
+        batchValues.forEach(b => {
+            this.setValue(b);
+        })
+
+        // not sure if this is best place..
+        this.rendergrid();
     }
 
     public cancelEdit() {
+        this.grid.exitCurrentEditor();
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
-        return null
+        // this is very very wrong!
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return this.getRawValue(id, columnName); }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+        }
     }
 
     public selectCells(cells: ICellInfo[]): void {
@@ -253,12 +300,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public getColumnIndex(columnName: string): number {
-        return null
+    public getColumnIndex(columnId: string): number {
+        let column: AdaptableGrid.Column = this.grid.getColumnFromId(columnId);
+        let columnIndex: number = this.grid.getPositionOfColumn(column);
+        return columnIndex;
     }
 
 
     public isColumnReadonly(columnId: string): boolean {
+
         return null
     }
 
@@ -271,50 +321,125 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-        return null
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
+        this.grid.getAllRows().forEach((row: AdaptableGrid.Row) => {
+            let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, columnId);
+            let displayValue = cell.getFormattedValue(this.grid);
+            let rawValue = cell.getRawValue();
+            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+        })
+        return Array.from(returnMap.values());
     }
 
+    public getDisplayValue(id: any, columnId: string): string {
+        let row: AdaptableGrid.Row = this.grid.getRowFromId(id);
+        return this.getDisplayValueFromRecord(row, columnId);
+    }
+
+    public getDisplayValueFromRecord(row: AdaptableGrid.Row, columnId: string): string {
+        let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, columnId);
+        return cell.getFormattedValue(this.grid);
+    }
+
+    private getRawValue(id: any, columnId: string): string {
+        let row: AdaptableGrid.Row = this.grid.getRowFromId(id);
+        let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, columnId);
+        return cell.getRawValue();
+    }
+
+    private getCellFromRowAndColumnId(row: AdaptableGrid.Row, columnId: string): AdaptableGrid.Cell {
+        let columnIndex: number = this.getColumnIndex(columnId);
+        return row.getCell(columnIndex);
+    }
 
     public exportBlotter(): void {
     }
 
-    public getDisplayValue(id: any, columnId: string): string {
-        return null
-    }
-
-    public getDisplayValueFromRecord(row: any, columnId: string): string {
-        return null
-    }
-
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
-        return null
+        var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
+        var cell: AdaptableGrid.Cell = row.getCell(columnIndex);
+        cell.addClass(style);
+        if (timeout) {
+            setTimeout(() => this.removeCellStyle(rowIdentifierValue, columnIndex, style), timeout);
+        }
     }
 
     public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
-
+        var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
+        // note: no check on if already exists...
+        row.addClass(style, this.grid);
+        if (timeout) {
+            setTimeout(() => this.removeRowStyle(rowIdentifierValue, style), timeout);
+        }
     }
 
     public removeAllCellStylesWithRegex(regex: RegExp): void {
+        // this.blotter.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
+
+
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
+        this.getAllRowIds().forEach(r => {
+            this.removeRowStyle(r, "Ab-ConditionalStyle-0")
+        })
+
     }
 
 
     public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
+        var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
+        var cell: AdaptableGrid.Cell = row.getCell(columnIndex);
+        cell.removeClass(style);
     }
 
     public removeRowStyle(rowIdentifierValue: any, style: string): void {
+        var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
+        // note: no check on if already exists...
+        row.removeClass(style, this.grid);
+
     }
 
+
+
     public getAllRowIds(): string[] {
-        return []
+        let rowIDs: any[] = [];
+        this.grid.getAllRows().forEach(r => rowIDs.push(r.getId().toString()));
+        return rowIDs;
     }
 
     public hideRows(rowIds: string[]): void {
+        // doing it long way to see if it works...
+        // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.
+
+        let rowsToHide: AdaptableGrid.Row[] = []
+
+        rowIds.forEach(r => rowsToHide.push(this.grid.getRowFromId(r)));
+
+        rowsToHide.forEach(rowToHide => {
+            if (rowToHide.isVisible()) {
+                rowToHide.setHidden(this.grid);
+            }
+        })
+
+        //     this.grid.render();
     }
 
     public showRows(rowIds: string[]): void {
+        let rowsToShow: AdaptableGrid.Row[] = []
+
+        rowIds.forEach(r => rowsToShow.push(this.grid.getRowFromId(r)));
+
+        rowsToShow.forEach(rowToShow => {
+            if (!rowToShow.isVisible()) {
+                rowToShow.setVisible(this.grid);
+            }
+        })
 
     }
 
@@ -335,6 +460,84 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {
-        return null
+        let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+        let quickSearchText: string = quickSearchState.QuickSearchText;
+
+        if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
+            return [];
+        }
+
+        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
+        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
+
+        let caseInSensitiveText = quickSearchText.toLowerCase();
+        let matchingRowIds: string[] = [];
+
+        //  let visibleColumnIndices: number[] = this.grid.columns.filter(c => this.isGridColumnVisible(c)).map(c => { return this.getColumnIndex(c.field) });
+        let visibleColumns: AdaptableGrid.Column[] = this.grid.getVisibleColumns();
+
+        let visibleColumnIndices: number[] = []
+        for (let visibleColumn of visibleColumns) {
+            visibleColumnIndices.push(this.grid.getPositionOfColumn(visibleColumn));
+        }
+
+        let visiblerows: AdaptableGrid.Row[] = this.grid.getVisibleRows();
+
+        visiblerows.forEach(visibleRow => {
+
+            let cellMatch: boolean = false;
+
+            for (let visibleColumnIndex of visibleColumnIndices) {
+
+                let cell: AdaptableGrid.Cell = visibleRow.getCell(visibleColumnIndex);
+                let cellFormatValue: string = cell.getFormattedValue(this.grid);
+
+                if (cellFormatValue != null) {
+                    let cellText: string = cellFormatValue.toString();
+
+                    if (StringExtensions.IsNotNullOrEmpty(cellText)) {
+                        if (quickSearchOperator == LeafExpressionOperator.Contains) {
+                            cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
+                        } else {
+                            cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
+                        }
+                        if (cellMatch) {
+                            let rowId: number = visibleRow.getId();
+
+                            switch (quickSearchDisplayType) {
+                                case QuickSearchDisplayType.ColourCell:
+                                    this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
+                                    break;
+                                case QuickSearchDisplayType.ShowRow:
+                                    matchingRowIds.push(rowId.toString());
+                                    break;
+                                case QuickSearchDisplayType.ShowRowAndColourCell:
+                                    this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
+                                    matchingRowIds.push(rowId.toString());
+                                    break;
+                            }
+                            // now break out of the for loop if just hiding non matching rows
+                            if (quickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+
+
+
+        //  if only colouring cells then return all rows, otherwise return just the ones which have matched
+        if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+            return rowIds;
+        } else {
+            return matchingRowIds;
+        }
+    }
+
+    public rendergrid(): void {
+        this.grid.render();
     }
 }

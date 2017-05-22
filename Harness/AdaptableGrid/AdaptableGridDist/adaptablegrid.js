@@ -592,10 +592,11 @@ $.fn.AdaptableGrid = function (options) {
       ongridload: function () {},
       ongridsort: function (sortData) {},
       onpagechange: function (page) {},
-      oncellenter: function (cell) { },
+      oncellenter: function (cell) {},
       oncellchange: function (cell, newVal, oldVal) {},
       oncolumnupdate: function (columns) {},
-      onrightclick: function (columnId) { }
+      onrightclick: function (columnId) {},
+      onkeydown: function (keyCode, cell) {}
     }, options);
 
     this.options.debug.start("AdaptableGrid.__constructor");
@@ -655,7 +656,8 @@ $.fn.AdaptableGrid = function (options) {
       if (i==0) {
         // This is the column headers
         for (j=0; j<this.width; j++) {
-          this.getRow(i).setCell(j, new Cell(i, j));
+          this.getRow(i).setCell(j, new Cell());
+          this.getRow(i).getCell(j).setRowCol(i, options.columns[j].field);
           this.getRow(i).getCell(j).setValue(options.columns[j].title);
           this.getRow(i).getCell(j).setType(DataType.String);
           col = new Column(options.columns[j].field, options.columns[j].title, this.getDataType(options.columns[j].type));
@@ -665,7 +667,8 @@ $.fn.AdaptableGrid = function (options) {
       else {
         // Regular row
         for (j=0; j<this.width; j++) {
-          this.getRow(i).setCell(j, new Cell(i, j));
+          this.getRow(i).setCell(j, new Cell());
+          this.getRow(i).getCell(j).setRowCol(i, options.columns[j].field);
           this.getRow(i).getCell(j).setValue(options.data[i-1][options.columns[j].field]);
           this.getRow(i).getCell(j).setType(this.getDataType(options.columns[j].type));
           this.getRow(i).getCell(j).setFormat(options.columns[j].format);
@@ -825,6 +828,19 @@ $.fn.AdaptableGrid = function (options) {
       this.options.onrightclick(this.columns[col].getId());
     }.bind(this));
 
+    // Add keydown event listener
+    $(this).keydown(function (event) {
+      editingCell = null;
+      if ($(event.target).parents('td[blotter]').size()) {
+        blotter_id = $(event.target).parents('td[blotter]').attr('blotter');
+        parts = blotter_id.split('abjs:')[1].split(":");
+        rowId = parseInt(parts[0]);
+        colPos = parseInt(parts[1]);
+        editingCell = this.getRowFromId(rowId).getCell(colPos);
+      }
+      this.options.onkeydown(event.keyCode || event.which, editingCell);
+    }.bind(this));
+
   }
 
   /**
@@ -836,26 +852,53 @@ $.fn.AdaptableGrid = function (options) {
   }
 
   /**
+   * Returns data about the current cell being edited
+   * @returns {object}
+   */
+  this.getCurrentEditor = function () {
+    var input = this.cellToElement(this.getActiveCell()).find('input');
+    if (input.size() == 0) return null;
+    return {
+      "editingCell": this.getActiveCell(),
+      "storedRawVal": this.getActiveCell().getRawValue(),
+      "storedFormattedVal": this.getActiveCell().getFormattedValue(),
+      "editVal": input.val()
+    }
+  }
+
+  /**
+   * Cancels the editing mode in any set
+   * Sets the value of the cell to whatever is in the edit box
+   * @returns {void}
+   */
+  this.exitCurrentEditor = function () {
+    PersistenceUtil.saveEdit.bind(this, $(this).find('.abjs-editing'))();
+  }
+
+  /**
    * Returns the selected cells
-   * @returns {Cell[]}
+   * Each element of the array contains the Cell object and the row, col
+   * @returns {object[]}
    */
   this.getSelectedCells = function () {
     this.options.debug.start("AdaptableGrid.getSelectedCells");
-    els = $(blotter).find('td.ui-selected').map(function (i, el) {
-      return blotter.elementToCell(el);
-    });
+    var selected = [];
+    els = $(this).find('td.ui-selected').map(function (i, el) {
+      selected.push(this.elementToCell(el));
+      return;
+    }.bind(this));
     this.options.debug.end("AdaptableGrid.getSelectedCells");
-    return els;
+    return selected;
   }
 
   /**
    * Finds the HTML tag within the grid and returns the jQuery elements
-   * @param {integer} row - The row of the cell
-   * @param {integer} col - The column of the cell
+   * @param {integer} cell - The cell
    * @returns {jQuery}
    */
-  this.cellToElement = function (row, col) {
-    return $(this).find('[blotter="abjs:' + row + ":" + col + '"]');
+  this.cellToElement = function (cell) {
+    coords = cell.getCoords(this);
+    return $(this).find('[blotter="abjs:' + coords.rowId + ":" + coords.colIndex + '"]');
   }
 
   /**
@@ -905,14 +948,27 @@ $.fn.AdaptableGrid = function (options) {
   }
 
   /**
+   * Returns the cell currently being edited
+   * Null if no cell is active
+   */
+  this.getActiveCell = function () {
+    if ($(this).find('.abjs-editing').size()) {
+      return this.elementToCell($(this).find('.abjs-editing'));
+    }
+    return null;
+  }
+
+  /**
    * Returns the current placement of the row given by the identifier
-   * The first row (i.e. header) has position 0
+   * Does NOT include the header, i.e. the first row of data has position 0
    * Note: returns -1 if hidden
    * @param {Row} row - The row object
    * @returns {integer}
    */
   this.getPositionOfRow = function (row) {
-    return this.rows.indexOf(row);
+    var pos = this.rows.indexOf(row);
+    if (pos == -1) return pos;
+    else return pos-1;
   }
 
   /**
@@ -954,11 +1010,29 @@ $.fn.AdaptableGrid = function (options) {
   }
 
   /**
+   * Returns the list of all Rows
+   * not including the header
+   * @return {Row[]}
+   */
+  this.getAllRows = function () {
+    return this.getVisibleRows().concat(this.getHiddenRows());
+  }
+
+  /**
    * Returns the list of Rows which are visible
+   * Don't include the headers
    * @return {Row[]}
    */
   this.getVisibleRows = function () {
-    return this.rows;
+    return this.rows.slice(1);
+  }
+
+  /**
+   * Returns the header row
+   * @return {Row}
+   */
+  this.getHeaderRow = function () {
+    return this.rows[0];
   }
 
   /**
@@ -1088,6 +1162,35 @@ var Cell = function () {
   this.__constructor = function () {
     this.cls = [];
     this.readonly = false;
+    this.rowId = null;
+    this.colId = null;
+  }
+
+  /**
+   * Sets the row and column Ids of this cell
+   * @param {any} rowId - the row ID
+   * @param {any} colId - the column ID
+   * @returns {void}
+   */
+  this.setRowCol = function (row, col) {
+    this.rowId = row;
+    this.colId = col;
+  }
+
+  /**
+   * Gets the row Id of this cell
+   * @returns {any}
+   */
+  this.getRowId = function () {
+    return this.rowId;
+  }
+
+  /**
+   * Gets the column Id of this cell
+   * @returns {any}
+   */
+  this.getColId = function () {
+    return this.colId;
   }
 
   /**
@@ -1150,12 +1253,35 @@ var Cell = function () {
   }
 
   /**
-   * Adds a CSS class style to this cell
+   * Adds a CSS class style to this cell if not already there
    * @param {string} c - The new class
    * @returns {void}
    */
   this.addClass = function (c) {
-    this.cls.push(c);
+    if (!this.hasClass(c)) {
+      this.cls.push(c);
+    }
+  }
+
+  /**
+   * Returns whether or not the current class is a css style
+   * @param {string} c - The new class
+   * @returns {boolean}
+   */
+  this.hasClass = function (c) {
+    return this.cls.indexOf(c) > -1;
+  }
+
+  /**
+   * Removes a css style from a class
+   * @param {string} c - The new class
+   * @returns {void}
+   */
+  this.removeClass = function (c) {
+    var index = this.cls.indexOf(c);
+    if (index > -1) {
+      this.cls.splice(index, 1);
+    }
   }
 
   /**
@@ -1191,10 +1317,10 @@ var Cell = function () {
     switch (this.type) {
       case DataType.Number:
         if (this.format == "" || this.format == null || this.format == undefined) {
-          return this.getRawValue();
+          return this.getRawValue().toString();
         }
         else {
-          return numeral(this.getRawValue()).format(this.format);
+          return numeral(this.getRawValue()).format(this.format).toString();
         }
       case DataType.Date:
         return '<input type="text" class="invisible AdaptableGrid-datepicker" blotter-format="'+this.format+'"' +
@@ -1202,7 +1328,22 @@ var Cell = function () {
       case DataType.Boolean:
         return '<input type="checkbox" class="AdaptableGrid-checkbox" '+(this.getRawValue() ? 'checked="checked"' : '')+' />';
       default:
-        return this.getRawValue();
+        return this.getRawValue().toString();
+    }
+  }
+
+  /**
+   * Get the row and column indexes of this cell
+   * as well as its row and column Ids
+   * @param {AdaptableGrid} grid - A reference to the grid
+   * @returns {any}
+   */
+  this.getCoords = function (grid) {
+    return {
+      rowId: this.getRowId(),
+      colId: this.getColId(),
+      colIndex: grid.getPositionOfColumn(grid.getColumnFromId(this.getColId())),
+      rowIndex: grid.getPositionOfRow(grid.getRowFromId(this.getRowId()))
     }
   }
 
@@ -1289,10 +1430,23 @@ var Column = function (columnId, friendlyName, type) {
    * @param {AdaptableGrid} grid - The reference to the grid
    * @returns {void}
    */
-  this.addCSS = function (cls, grid) {
+  this.addClass = function (cls, grid) {
     var pos = grid.getPositionOfColumn(this);
     for (var row=0; row<grid.rows.length; row++) {
       grid.getRow(row).getCell(pos).addClass(cls);
+    }
+  }
+
+  /**
+   * Removes a class from all the cells in the column
+   * @param {string} class - The class name
+   * @param {AdaptableGrid} grid - The reference to the grid
+   * @returns {void}
+   */
+  this.removeClass = function (cls, grid) {
+    var pos = grid.getPositionOfColumn(this);
+    for (var row=0; row<grid.rows.length; row++) {
+      grid.getRow(row).getCell(pos).removeClass(cls);
     }
   }
 
@@ -1575,7 +1729,7 @@ var PersistenceUtil = {
         dateFormat: el.attr('blotter-format'),
         beforeShow: function (e, o) {
           a = $(e).parents('[blotter]');
-          this.options.oncellenter(this.cellToElement($(e).parents('[blotter]')));
+          this.options.oncellenter(this.elementToCell($(e).parents('[blotter]')));
         }.bind(this)
       });
     }
@@ -1787,9 +1941,21 @@ var Row = function (rowId) {
    * @param {AdaptableGrid} grid - The reference to the grid
    * @returns {void}
    */
-  this.addCSS = function (cls, grid) {
+  this.addClass = function (cls, grid) {
     for (var col=0; col<this.getData().length; col++) {
       grid.getRow(this.getId()).getCell(col).addClass(cls);
+    }
+  }
+
+  /**
+   * Removes a class from all the cells in the row
+   * @param {string} class - The class name
+   * @param {AdaptableGrid} grid - The reference to the grid
+   * @returns {void}
+   */
+  this.removeClass = function (cls, grid) {
+    for (var col=0; col<this.getData().length; col++) {
+      grid.getRow(this.getId()).getCell(col).removeClass(cls);
     }
   }
 
@@ -1984,10 +2150,14 @@ var SortUtil = {
       c = 'AdaptableGrid-sort-asc';
     }
     
-    var s = new Sorter([{ column: this.columns[columnIndex], order: (c == 'AdaptableGrid-sort-asc') }]);
+    var s = new Sorter([{
+      column: this.columns[columnIndex],
+      order: (c == 'AdaptableGrid-sort-asc')
+    }]);
     
     s.process(this, function () {
-      this.cellToElement(0, columnIndex).addClass('AdaptableGrid-sort').addClass(c);
+      var headerCell = this.getRow(0).getCell(columnIndex);
+      this.cellToElement(headerCell).addClass('AdaptableGrid-sort').addClass(c);
       this.options.ongridsort(s.data);
     });
 

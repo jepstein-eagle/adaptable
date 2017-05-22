@@ -114,7 +114,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         }
     }
 
-    private CalculateShortcut(first: number, second: number, shortcutAction: ShortcutAction): number {
+    private CalculateShortcut(first: any, second: any, shortcutAction: ShortcutAction): number {
         let firstNumber: number = Number(first);
         let secondNumber: number = Number(second);
 
