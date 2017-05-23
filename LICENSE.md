@@ -5,12 +5,12 @@ By accepting the terms of this Licence or downloading, installing, copying, or o
 If you do not accept the terms of this Licence, you must not download, install, copy, or otherwise use the Software and TTL will not grant a licence of the Software to you.  In such an event, please contact the TTL as soon as possible to obtain a refund of any amounts paid for the Software.
 
 TTL provides the following:
+
 •	Developer Licence: you may use the source code to AdaptableBlotter.JS to modify and adapt the Software under a free developer licence.
 
 •	User Licence: you may only use the Software in a production environment if you have executed a Sales Order with TTL and paid the applicable annual licence fees.
 
 •	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to the Adaptable Blotter support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
-
 
 1.	LICENCE
 1.1	Developer Licence: In consideration of Client agreeing to and complying with the terms of this Licence TTL hereby grants to Client a non-exclusive, non-transferable licence to use the source code version of AdaptableBlotter.JS to copy, modify, adapt, merge, translate, disassemble, decompile, recompile or reverse engineer AdaptableBlotter.JS, create derivative works based on the whole of or any part of AdaptableBlotter.JS and incorporate AdaptableBlotter.JS into other products.
@@ -20,7 +20,6 @@ TTL provides the following:
 1.3	The annual licence fee includes unlimited use of both versions of the Software. However, the annual licence fee does not include any licences for underlying commercial vendor grids; where applicable, these will need to be purchased separately from the vendor.
 
 1.4	The user licence shall be effective upon its first installation or use of the Software, and shall continue for the licence term set out in the Sales Order subject to termination under clause 14.1.
-
 
 2.	RESTRICTIONS
 2.1	Client acknowledges that all intellectual property rights in the Software are, and shall remain, the property of TTL or the relevant third-party owners (as the case may be) and that Client shall have no rights in or to the Software other than the right to use it in accordance with the express terms of this Licence.
