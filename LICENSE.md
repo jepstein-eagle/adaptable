@@ -13,6 +13,7 @@ TTL provides the following:
 •	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to the Adaptable Blotter support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
 
 1.	LICENCE
+
 1.1	Developer Licence: In consideration of Client agreeing to and complying with the terms of this Licence TTL hereby grants to Client a non-exclusive, non-transferable licence to use the source code version of AdaptableBlotter.JS to copy, modify, adapt, merge, translate, disassemble, decompile, recompile or reverse engineer AdaptableBlotter.JS, create derivative works based on the whole of or any part of AdaptableBlotter.JS and incorporate AdaptableBlotter.JS into other products.
 
 1.2	User Licence: In consideration of Client paying the applicable annual licence fees to TTL and agreeing to and complying with the terms of this Licence TTL hereby grants to Client, for the user licence term as set out in the Sales Order, a non-exclusive, non-transferable licence to use the object code version of the Software at the Client’s site(s) set out in the Sales Order. 
