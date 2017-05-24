@@ -1,7 +1,19 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { MergeState } from './AdaptableBlotterReduxMerger'
+import { Helper } from '../../Core/Helper'
 import { StringExtensions } from '../../Core/Extensions'
+
+const checkStatus = (response: Response) => {
+    const error = new Error(response.statusText);
+
+    if (response.status >= 200 && response.status < 300) {
+        return response;
+    }
+
+    //error.response = response;
+    throw error;
+};
 
 interface IAdaptableBlotterReduxLocalStorageEngine extends ReduxStorage.StorageEngine { }
 
@@ -10,20 +22,24 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
 
     }
     load(): Promise<any> {
-        return new Promise((resolve) => {
-
-            const jsonState = localStorage.getItem(this.key);
-            let parsedJsonState = JSON.parse(jsonState/*, this.reviver*/) || {}
-            const predefinedState = ""
-            let parsedPredefinedState = JSON.parse(jsonState/*, this.reviver*/) || {}
-            if (StringExtensions.IsNotNullOrEmpty(this.urlPredefinedConfig)) {
-            }
-            resolve(MergeState(parsedPredefinedState, parsedJsonState) || {});
-        }).catch(rejectWithMessage);
+        const jsonState = localStorage.getItem(this.key);
+        let parsedJsonState = JSON.parse(jsonState/*, this.reviver*/) || {}
+        if (StringExtensions.IsNotNullOrEmpty(this.urlPredefinedConfig)) {
+            return fetch(this.urlPredefinedConfig)
+                .then(checkStatus)
+                .then(response => response.json())
+                .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
+                .catch(err => console.error(err));
+        }
+        else {
+            return new Promise((resolve) => {
+                resolve(parsedJsonState || {});
+            }).catch(rejectWithMessage);
+        }
     }
     save(state: any): Promise<any> {
         return new Promise((resolve) => {
-            let clonedState = Object.assign({}, state)
+            let clonedState = Helper.cloneObject(state)
             FilterPredefinedItems(clonedState)
             const jsonState = JSON.stringify(clonedState/*, this.replacer*/);
             localStorage.setItem(this.key, jsonState);
@@ -55,6 +71,6 @@ function rejectWithMessage(error: any) {
     return Promise.reject(error.message);
 }
 
-export function createEngine(key: string, urlPredefinedConfig: string = ""): ReduxStorage.StorageEngine {
+export function createEngine(key: string, urlPredefinedConfig: string): ReduxStorage.StorageEngine {
     return new AdaptableBlotterReduxLocalStorageEngine(key, urlPredefinedConfig)
 }

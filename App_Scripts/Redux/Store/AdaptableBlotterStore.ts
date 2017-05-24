@@ -95,7 +95,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
         }
         engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
