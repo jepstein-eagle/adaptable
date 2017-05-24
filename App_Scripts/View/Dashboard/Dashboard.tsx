@@ -28,7 +28,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
                 let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-                return <span style={{ display: "inline-table" }}>
+                return <span style={{ display: "inline-table" }} key={control.Strategy}>
                     {dashboardElememt}
                 </span>
             }
