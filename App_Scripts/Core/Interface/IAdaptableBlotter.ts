@@ -112,7 +112,8 @@ export interface IAdaptableBlotterOptions {
     enableRemoteConfigServer?: boolean,
     userName?: string,
     primaryKey?: string,
-    blotterId?: string
+    blotterId?: string,
+    predefinedConfigUrl?: string
 }
 
 export interface IConfigEntity {
