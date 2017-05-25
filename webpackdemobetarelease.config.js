@@ -55,7 +55,8 @@ module.exports = {
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
         new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
         new CopyWebpackPlugin([{ from: 'UserGuide/Adaptable_Blotter_User_Guide.pdf', to: '../' }]),
-        new CopyWebpackPlugin([{ from: 'Harness/DemoRelease/*', to: '../', flatten: true }])
+        new CopyWebpackPlugin([{ from: 'Harness/DemoRelease/**/*', to: '../', flatten: true }])
+        new CopyWebpackPlugin([{ from: 'ExtLibs/**/*', to: '' }]),
     ],
     module: {
         loaders: [

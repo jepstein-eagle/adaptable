@@ -35,7 +35,8 @@ module.exports = {
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ from: 'themes/**/*', to: '' }]),
-        new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }])
+        new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
+        new CopyWebpackPlugin([{ from: 'ExtLibs/**/*', to: '' }]),
     ],
     module: {
         loaders: [
