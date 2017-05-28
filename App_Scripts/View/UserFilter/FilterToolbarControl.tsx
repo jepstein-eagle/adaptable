@@ -33,7 +33,11 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
     render(): any {
 
         let tooltipText = this.props.FilterDashboardControl.IsCollapsed ? "Expand" : "Collapse";
-        let collapsedText = this.props.ColumnFilters.length == 0 ? "None" : this.props.ColumnFilters.length + " Column(s)";
+        let collapsedText = this.props.ColumnFilters.length == 0 ?
+            "None" :
+            this.props.ColumnFilters.length == 1 ?
+                "1 Column" :
+                this.props.ColumnFilters.length + " Columns";
         let collapsedContent = <ControlLabel>{collapsedText}</ControlLabel>;
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
