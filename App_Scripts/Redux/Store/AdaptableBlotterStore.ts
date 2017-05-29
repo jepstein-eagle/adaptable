@@ -2,8 +2,9 @@ import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createEngine from 'redux-storage-engine-localstorage';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
+import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
+import { MergeState } from './AdaptableBlotterReduxMerger';
 import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
@@ -94,11 +95,12 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
         else {
-            engineReduxStorage = createEngine(blotter.BlotterOptions.blotterId);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
         }
         engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
-        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement);
+        //here we use our own merger function which is derived from redux simple merger
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
         loadStorage = ReduxStorage.createLoader(engineReduxStorage);
         let composeEnhancers
         if ("production" != process.env.NODE_ENV) {

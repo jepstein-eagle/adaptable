@@ -1,0 +1,39 @@
+{
+    "FlashingCell": {
+        "FlashingColumns": [
+            {
+                "IsLive": true,
+                "ColumnName": "price",
+                "FlashingCellDuration": {
+                    "Name": "1/2 Second",
+                    "Duration": 500
+                },
+                "UpBackColor": "#008000",
+                "DownBackColor": "#FFFFFF",
+                "IsPredefined": true
+            }
+        ]
+    },
+    "Dashboard": {
+        "DashboardStrategyControls": [
+            {
+                "Strategy": "Functions",
+                "IsVisible": true,
+                "IsCollapsed": true
+            }
+        ]
+    },
+	"Shortcut": {
+		"NumericShortcuts": [
+			{
+				"ShortcutKey": "D",
+				"ShortcutResult": "52",
+				"ColumnType": 1,
+				"ShortcutAction": 2,
+				"IsLive": true,
+				"IsPredefined": true,
+				"IsDynamic": false
+			}
+		]
+	}
+}

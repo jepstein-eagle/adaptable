@@ -65,11 +65,6 @@ export const DashboardSetConfigurationItem = (StrategyId: string, NewConfig: any
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        //WARNING: 12/04/17 Currently if you add a new dashboard control, you need to add it at the end otherwise you'll need
-        //to do Clean user data. That's because we currently Merge Arrays when loading state. so if you add the new item
-        // in the middle you end up with it missing and a duplicate. Need WI 1764 and 1765 to be done
-        //we need to use the Dashboard config from the loaded state only and as well get all the controls 
-        //from the view factory in order to complete the list of items missing
         { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true, IsCollapsed: true },

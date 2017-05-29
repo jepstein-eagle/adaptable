@@ -50,7 +50,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
             <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
                 <Col xs={12}>
-                    <HelpBlock>Set the fore or back colours if required, or leave unchecked to use the colours from the cell's existing style.</HelpBlock>
+                    <HelpBlock>Set the fore or back colours - leave unchecked to use the colours from the cell's existing style.</HelpBlock>
                 </Col>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="colorBackStyle">
