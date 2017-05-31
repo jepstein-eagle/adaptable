@@ -9,6 +9,6 @@ Grid components supported included Telerik's Kendo Grid, the ag-Grid, OpenFin's 
 
 Licences are free for devlopment use, but a paid-for annual end user licence is required for each production user.  Please see the LICENSE.md file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
 
-Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.
+Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.  Or email the Adaptable Tools Support Team at support@adaptabletools.com.
 
 [![Build Status](https://travis-ci.org/jonathannaim/adaptableblotter.svg?branch=master)](https://travis-ci.org/jonathannaim/adaptableblotter)
