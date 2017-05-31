@@ -35,14 +35,13 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
 
                 if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-
                         this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        //   if (columns.find(col => col.ColumnId == c.ColumnId).Visible) {
-                        let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
-                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { conditionalStyleColumn: c.Style })
-                        //  }
+                        let columnIndex = this.blotter.getColumnIndex(c.ColumnId);
+                        if (columnIndex > -1) {
+                            this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { conditionalStyleColumn: c.Style })
+                        }
                     }
                 }
             })
