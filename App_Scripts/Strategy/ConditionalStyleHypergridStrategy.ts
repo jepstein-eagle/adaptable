@@ -89,7 +89,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
 
-                            this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { conditionalStyleColumn: columnCS })
+                            this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { conditionalStyleColumn: columnCS.Style })
                             break
                         }
                     }
@@ -104,6 +104,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 }
             })
         }
+        this.blotterBypass.ReindexAndRepaint();
     }
 }
 
