@@ -60,7 +60,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             overrideTooltip="Close"
             DisplayMode="Glyph" />
 
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel" bsStyle="info" button={newButton}>
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={newButton}>
             <ListBoxFilterForm ColumnValues={columnValuePairs}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}

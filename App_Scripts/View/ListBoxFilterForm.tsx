@@ -98,14 +98,14 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                     value={this.state.FilterValue}
                     placeholder="Search"
                     onChange={(e) => this.handleChangeFilterValue(e)}
-                    />
+                />
                 <InputGroup.Button>
-                  <ButtonClear onClick={() => this.clearFilter()}
-                                    overrideTooltip="Clear Filter"
-                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.FilterValue)}
-                                    DisplayMode="Glyph" />
-                  
-                 </InputGroup.Button>
+                    <ButtonClear onClick={() => this.clearFilter()}
+                        overrideTooltip="Clear Filter"
+                        overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.FilterValue)}
+                        DisplayMode="Glyph" />
+
+                </InputGroup.Button>
             </InputGroup>
         </FormGroup>
 
@@ -191,21 +191,22 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
+    'overflowX': 'hidden',
     'height': '335px',
     'marginBottom': '0'
 }
 
 let userFilterItemStyle: React.CSSProperties = {
-    'width': '87%',
+    //'width': '87%',
     'fontStyle': 'italic',
     'fontSize': 'small',
-    'padding': '5%',
+    'padding': '5px',
     'margin': 0
 }
 
 let columnVItemStyle = {
-    'width': '87%',
+    //'width': '87%',
     'fontSize': 'small',
-    'padding': '5%',
+    'padding': '5px',
     'margin': 0
 }
