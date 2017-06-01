@@ -26,14 +26,15 @@ interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor
     FilterValue: string
     SortOrder: SortOrder
 }
-var placeholder = document.createElement("button");
-placeholder.className = "placeholder"
-placeholder.classList.add("list-group-item")
-placeholder.type = "button"
 
 export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, DualListBoxEditorState> {
+    private placeholder: HTMLButtonElement
     constructor(props: DualListBoxEditorProps) {
         super(props);
+        this.placeholder = document.createElement("button");
+        this.placeholder.className = "placeholder"
+        this.placeholder.classList.add("list-group-item")
+        this.placeholder.type = "button"
         let availableValues = new Array<any>();
         this.props.AvailableValues.forEach(x => {
             if (this.props.ValueMember) {
@@ -412,10 +413,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
             //We remove our awesome placeholder
             if (this.overHTMLElement.classList.contains('SelectedDropZone') || this.overHTMLElement.classList.contains('AvailableDropZone')) {
-                this.overHTMLElement.removeChild(placeholder);
+                this.overHTMLElement.removeChild(this.placeholder);
             }
             else {
-                this.overHTMLElement.parentNode.removeChild(placeholder);
+                this.overHTMLElement.parentNode.removeChild(this.placeholder);
             }
             this.overHTMLElement = null;
             this.draggedHTMLElement = null;
@@ -467,10 +468,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
             //We remove our awesome placeholder
             if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
-                this.overHTMLElement.removeChild(placeholder);
+                this.overHTMLElement.removeChild(this.placeholder);
             }
             else {
-                this.overHTMLElement.parentNode.removeChild(placeholder);
+                this.overHTMLElement.parentNode.removeChild(this.placeholder);
             }
             this.overHTMLElement = null;
             this.draggedHTMLElement = null;
@@ -499,13 +500,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
         let targetElement = (e.target) as HTMLElement;
         //we want to keep the reference of the last intem we were over to
-        if (targetElement.classList.contains("placeholder")) return;
+        if (targetElement.classList.contains("placeholder")) { return; }
         this.overHTMLElement = targetElement;
         if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
-            targetElement.appendChild(placeholder);
+            targetElement.appendChild(this.placeholder);
         }
         else {
-            targetElement.parentNode.insertBefore(placeholder, targetElement);
+            targetElement.parentNode.insertBefore(this.placeholder, targetElement);
         }
     }
     DragLeaveAvailable(e: React.DragEvent<any>) {
@@ -515,10 +516,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         if (targetElement.classList.contains("AvailableDropZone") || targetElement.classList.contains("placeholder")) {
             if (this.overHTMLElement) {
                 if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
-                    this.overHTMLElement.removeChild(placeholder);
+                    this.overHTMLElement.removeChild(this.placeholder);
                 }
                 else {
-                    this.overHTMLElement.parentNode.removeChild(placeholder);
+                    this.overHTMLElement.parentNode.removeChild(this.placeholder);
                 }
                 this.overHTMLElement = null;
 
@@ -535,13 +536,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         e.stopPropagation();
         let targetElement = (e.target) as HTMLElement;
         //we want to keep the reference of the last intem we were over to
-        if (targetElement.classList.contains("placeholder")) return;
+        if (targetElement.classList.contains("placeholder")) { return; }
         this.overHTMLElement = targetElement;
         if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
-            targetElement.appendChild(placeholder);
+            targetElement.appendChild(this.placeholder);
         }
         else {
-            targetElement.parentNode.insertBefore(placeholder, targetElement);
+            targetElement.parentNode.insertBefore(this.placeholder, targetElement);
         }
     }
     DragLeaveSelected(e: React.DragEvent<any>) {
@@ -551,10 +552,10 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         if (targetElement.classList.contains("SelectedDropZone") || targetElement.classList.contains("placeholder")) {
             if (this.overHTMLElement) {
                 if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
-                    this.overHTMLElement.removeChild(placeholder);
+                    this.overHTMLElement.removeChild(this.placeholder);
                 }
                 else {
-                    this.overHTMLElement.parentNode.removeChild(placeholder);
+                    this.overHTMLElement.parentNode.removeChild(this.placeholder);
                 }
                 this.overHTMLElement = null;
             }
