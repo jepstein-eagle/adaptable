@@ -37,14 +37,11 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         }
     }
 
-    render(): any {
+    render() {
 
         let optionFontSizes = EnumExtensions.getNamesAndValues(FontSize).map((fontSizeNameAndValue: any) => {
             return <option key={fontSizeNameAndValue.value} value={fontSizeNameAndValue.value}>{fontSizeNameAndValue.name}</option>
         })
-
-
-        let currentFontSize = this.state.FontSize.toString();
 
         return <Panel header="Style" bsStyle="primary">
 
@@ -55,20 +52,20 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="colorBackStyle">
                         <Col xs={4} >
-                            <Checkbox inline value="existing" checked={this.state.BackColor != undefined} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
+                            <Checkbox inline value="existing" checked={this.state.BackColor ? true : false} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
                         </Col>
                         <Col xs={8}>
-                            {this.state.BackColor != undefined &&
+                            {this.state.BackColor != null &&
                                 <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                             }
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="colorForeStyle">
                         <Col xs={4} >
-                            <Checkbox inline value="existing" checked={this.state.ForeColor != undefined} onChange={(e) => this.onUseForeColourCheckChange(e)}>Set Fore Colour</Checkbox>
+                            <Checkbox inline value="existing" checked={this.state.ForeColor ? true : false} onChange={(e) => this.onUseForeColourCheckChange(e)}>Set Fore Colour</Checkbox>
                         </Col>
                         <Col xs={8}>
-                            {this.state.ForeColor != undefined &&
+                            {this.state.ForeColor != null &&
                                 <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                             }
                         </Col>
@@ -91,17 +88,23 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="fontSize">
-                        <Col xs={12} >
-                            {/*we use the componentclass fieldset to indicate its not a new form...*/}
-                            <AdaptableBlotterForm inline componentClass='fieldset' >
-                                <FormControl componentClass="select" placeholder="select" value={currentFontSize} onChange={(x) => this.onFontSizeChange(x)} >
-                                    {optionFontSizes}
-                                </FormControl>
-                                {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
-                                    bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                    popoverType={PopoverType.Info} />
-                            </AdaptableBlotterForm  >
+                        <Col xs={4} >
+                            <Checkbox inline checked={this.state.FontSize ? true : false} onChange={(e) => this.onUseFontSizeCheckChange(e)}>Set Font Size</Checkbox>
                         </Col>
+                        <Col xs={8}>
+                            {/*we use the componentclass fieldset to indicate its not a new form...*/}
+                            {this.state.FontSize != null &&
+                                < AdaptableBlotterForm inline componentClass='fieldset' >
+                                    <FormControl componentClass="select" placeholder="select" value={this.state.FontSize.toString()} onChange={(x) => this.onFontSizeChange(x)} >
+                                        {optionFontSizes}
+                                    </FormControl>
+                                    {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
+                                        bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
+                                        popoverType={PopoverType.Info} />
+                                </AdaptableBlotterForm  >
+                            }
+                        </Col>
+
                     </FormGroup>
                 </AdaptableBlotterForm>
             </Panel>
@@ -115,7 +118,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         if (e.checked) {
             this.setState({ BackColor: "#ffffff" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
         } else {
-            this.setState({ BackColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ BackColor: null } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
         }
     }
 
@@ -124,7 +127,16 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         if (e.checked) {
             this.setState({ ForeColor: "#000000" } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
         } else {
-            this.setState({ ForeColor: undefined } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ ForeColor: null } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        }
+    }
+
+    private onUseFontSizeCheckChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ FontSize: FontSize.Medium } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ FontSize: null } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
         }
     }
 
@@ -157,7 +169,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     public canNext(): boolean {
-        return this.state.BackColor != undefined || this.state.ForeColor != undefined || this.state.FontWeight != FontWeight.Normal || this.state.FontStyle != FontStyle.Normal || this.state.FontSize != FontSize.Medium;
+        return this.state.BackColor != null || this.state.ForeColor != null || this.state.FontWeight != FontWeight.Normal || this.state.FontStyle != FontStyle.Normal || this.state.FontSize != null;
     }
     public canBack(): boolean { return true; }
     public Next(): void {

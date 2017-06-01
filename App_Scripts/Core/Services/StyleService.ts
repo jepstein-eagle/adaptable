@@ -42,7 +42,7 @@ export class StyleService {
                 this.addCSSRule(".Ab-FlashDown" + index, 'background-color: ' + element.DownBackColor + ' !important')
             });
             this.ConditionalStyleState.ConditionalStyleConditions.forEach((element, index) => {
-                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important')
+                this.addCSSRule(".Ab-ConditionalStyle-" + index, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
             // quick search
             this.addCSSRule(".Ab-QuickSearch", 'background-color: ' + this.QuickSearchBackColor + ' !important')
