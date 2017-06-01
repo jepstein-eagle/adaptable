@@ -4,8 +4,10 @@ export interface IAuditLogEntry {
     adaptableblotter_auditlog_trigger: string
     adaptableblotter_client_timestamp: Date
     adaptableblotter_username: string
+    adaptableblotter_id: string
     adaptableblotter_editcell?: {
         primarykey: string
+        primarykey_column_id: string
         column_id: string
         old_value_string: string
         new_value_string: string

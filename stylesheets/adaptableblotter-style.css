@@ -8,6 +8,10 @@
     min-width: 300px;  
 }
 
+#filterContainer{
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
 /*Default style for the duallistbox placeholder*/
 button.placeholder {background: #87D0FA;}
 button.placeholder:before {

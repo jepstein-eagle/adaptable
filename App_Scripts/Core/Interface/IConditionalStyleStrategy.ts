@@ -20,7 +20,7 @@ export interface IStyle {
     ForeColor?: string
     FontWeight: FontWeight
     FontStyle: FontStyle
-    FontSize: FontSize
+    FontSize?: FontSize
 }
 
 

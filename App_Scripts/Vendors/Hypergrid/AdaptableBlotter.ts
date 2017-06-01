@@ -286,7 +286,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     if (conditionalStyleRow.FontStyle
                         || conditionalStyleRow.FontWeight
-                        || conditionalStyleRow.ForeColor) {
+                        || conditionalStyleRow.ForeColor
+                        || conditionalStyleRow.FontSize) {
                         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
                     }
                 }
@@ -299,7 +300,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                     if (conditionalStyleColumn.FontStyle
                         || conditionalStyleColumn.FontWeight
-                        || conditionalStyleColumn.ForeColor) {
+                        || conditionalStyleColumn.ForeColor
+                        || conditionalStyleColumn.FontSize) {
                         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
                     }
                 }
@@ -308,7 +310,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 if (flashColor) {
                     config.backgroundColor = flashColor;
-                } 
+                }
             }
             return this.grid.cellRenderers.get(declaredRendererName);
         };
@@ -341,7 +343,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we now update individual properties
         el.style.fontWeight = FontWeight[newStyle.FontWeight].toLocaleLowerCase()
         el.style.fontStyle = FontStyle[newStyle.FontStyle].toLocaleLowerCase()
-        el.style.fontSize = EnumExtensions.getCssFontSizeFromFontSizeEnum(newStyle.FontSize)
+        //font size can be null
+        if (newStyle.FontSize) {
+            el.style.fontSize = EnumExtensions.getCssFontSizeFromFontSizeEnum(newStyle.FontSize)
+        }
         //we return the new font CSS shorthand
         return el.style.font
     }

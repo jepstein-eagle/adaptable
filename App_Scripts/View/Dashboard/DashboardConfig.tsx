@@ -24,14 +24,15 @@ interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigCo
 interface DashboardConfigState {
     CurrentDashboardConfig: string;
 }
-var placeholder = document.createElement("button");
-placeholder.className = "placeholder"
-placeholder.classList.add("list-group-item")
-placeholder.type = "button"
 
 class DashboardConfigComponent extends React.Component<DashboardConfigProps, DashboardConfigState> {
+    private placeholder: HTMLButtonElement
     constructor() {
         super()
+        this.placeholder = document.createElement("button");
+        this.placeholder.className = "placeholder"
+        this.placeholder.classList.add("list-group-item")
+        this.placeholder.type = "button"
         this.state = { CurrentDashboardConfig: "" }
     }
     render() {
@@ -109,7 +110,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
     }
     DragEnd() {
         if (this.draggedElement) {
-            let indexOfPlaceHolder = Array.from(this.draggedHTMLElement.parentNode.childNodes).indexOf(placeholder)
+            let indexOfPlaceHolder = Array.from(this.draggedHTMLElement.parentNode.childNodes).indexOf(this.placeholder)
             if (indexOfPlaceHolder > -1) {
                 let to = indexOfPlaceHolder
                 let from = this.props.DashboardControls.indexOf(this.draggedElement);
@@ -117,7 +118,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                     to = Math.max(to - 1, 0)
                 }
                 //We remove our awesome placeholder
-                this.draggedHTMLElement.parentNode.removeChild(placeholder);
+                this.draggedHTMLElement.parentNode.removeChild(this.placeholder);
                 this.props.onMoveControl(this.draggedElement.Strategy, to)
             }
             this.draggedHTMLElement = null;
@@ -134,20 +135,20 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 
         let targetElement = (e.target) as HTMLElement;
         //we want to keep the reference of the last intem we were over to
-        if (targetElement.classList.contains("placeholder")) return;
+        if (targetElement.classList.contains("placeholder")) { return; }
         if (targetElement.nodeName == "LI") {
             let boundingClientRect = targetElement.getBoundingClientRect()
 
             if (e.clientY > (boundingClientRect.top + (boundingClientRect.height / 2))) {
                 if (targetElement.parentNode.lastChild == targetElement) {
-                    targetElement.parentNode.appendChild(placeholder);
+                    targetElement.parentNode.appendChild(this.placeholder);
                 }
                 else {
-                    targetElement.parentNode.insertBefore(placeholder, targetElement.nextSibling);
+                    targetElement.parentNode.insertBefore(this.placeholder, targetElement.nextSibling);
                 }
             }
             else {
-                targetElement.parentNode.insertBefore(placeholder, targetElement);
+                targetElement.parentNode.insertBefore(this.placeholder, targetElement);
             }
         }
     }
