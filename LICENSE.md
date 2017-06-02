@@ -258,7 +258,7 @@ TTL provides the following:
 
 22.1.5	ag-Grid – Licencing details can be found here: https://www.ag-grid.com/license-pricing.php
 
-22.1.6	OpenFin (Hypergrid) – Licencing details can be found here: https://openfin.co/licensing/
+22.1.6	OpenFin (Hypergrid) – Licencing details can be found here: https://raw.githubusercontent.com/openfin/fin-hypergrid/master/LICENSE
 
 22.2	A complete list of third party components and redistributables that are included in the Software is available upon request.   Such third party components and redistributables are provided "AS IS", the contributors give no express or implied condition, warranty, guarantee or indemnity and they are excluded from any condition, warranty, guarantee or indemnity provided by TTL under this Licence. All copyright and other intellectual property rights in and to such third party components and redistributables, any accompanying printed materials and any copies thereof are owned by the respective contributor.
 
