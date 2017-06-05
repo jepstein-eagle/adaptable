@@ -13,7 +13,7 @@ module.exports = {
         harness: "./Harness/DataGenerator.ts"
     },
     output: {
-        path: __dirname + '/dist/adaptableblotter',
+        path: __dirname + '/dist',
         filename: "[name]-bundle.js",
         publicPath: "/adaptableblotter/",
         library: "[name]",
