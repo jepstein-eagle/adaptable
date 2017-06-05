@@ -21,7 +21,7 @@ export class ThemeService {
                 this.theme.href = ""
             }
             else {
-                this.theme.href = this.blotter.BlotterOptions.themeRootUrl +  "adaptableblotter/themes/" + this.ThemeState.CurrentTheme.toLocaleLowerCase() + "/bootstrap.min.css"
+                this.theme.href = this.blotter.BlotterOptions.themeRootUrl +  "adaptable-blotter-themes/" + this.ThemeState.CurrentTheme.toLocaleLowerCase() + "/bootstrap.min.css"
             }
         }
     }
