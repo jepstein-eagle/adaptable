@@ -47,10 +47,10 @@ export class DataGenerator {
             let initialNewValue = trade[columnName];
             let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
             trade[columnName] = newValue;
- 
-            trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] /2);
-            trade["bid"] = this.roundTo4Dp(trade["price"] + trade["bidOfferSpread"] /2);
-           
+
+            trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] / 2);
+            trade["bid"] = this.roundTo4Dp(trade["price"] + trade["bidOfferSpread"] / 2);
+
             trade["bloombergAsk"] = this.roundTo4Dp(trade["ask"] + 0.01);
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             grid.behavior.reindex();
@@ -61,7 +61,7 @@ export class DataGenerator {
     createTrade(i: number): ITrade {
         var price = this.getMeaningfulDouble();
         var bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
-        var ask =this.roundTo4Dp( price + bidOfferSpread / 2);
+        var ask = this.roundTo4Dp(price + bidOfferSpread / 2);
         var bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         var tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         var moodyRating = this.getRandomItem(this.getMoodysRatings())
@@ -80,8 +80,8 @@ export class DataGenerator {
                 "bidOfferSpread": bidOfferSpread,
                 "isLive": this.generateRandomBool(),
                 "moodysRating": moodyRating,
-                "fitchRating": this.getFitchRatingForMoodyRating(moodyRating),
-                "sandpRating": this.getSandPRatingForFitchRating(moodyRating),
+                "fitchRating": this.getRatingFromMoodyRating(moodyRating),
+                "sandpRating": this.getRatingFromMoodyRating(moodyRating),
                 "tradeDate": tradeDate,
                 "settlementDate": this.addDays(tradeDate, 3),
                 "bloombergAsk": this.roundTo4Dp(ask + 0.01),
@@ -230,14 +230,14 @@ export class DataGenerator {
     }
     protected getBidOfferSpreads(): number[] {
         var counterparties = [
-           0.1,
-           0.15,
-           0.2,
-           0.25,
-           0.3,
-           0.35,
-           0.4,
-           0.5
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.5
         ];
         return counterparties;
     }
@@ -332,93 +332,49 @@ export class DataGenerator {
 
 
 
-    protected getFitchRatingForMoodyRating(moodysRating: string): string {
-        switch (moodysRating) {
-            case "Aaa":
-                return "AAA";
-            case "Aa1":
-                return "AA+";
-            case "Aa2":
-                return "AA";
-            case "Aa3":
-                return "AA-";
-            case "A1":
-                return "A+";
-            case "A2":
-                return "A";
-            case "A3":
-                return "A-";
-            case "Baa1":
-                return "BBB+";
-            case "Baa2":
-                return "BBB";
-            case "Baa3":
-                return "BBB-";
-            case "Ba1":
-                return "BB+";
-            case "Ba2":
-                return "BB";
-            case "Ba3":
-                return "BB-";
-            case "B1":
-                return "B+";
-            case "B2":
-                return "B";
-            case "B3":
-                return "B-";
-            case "Caa":
-                return "CCC";
-            case "Ca":
-                return "CC";
-            case "C":
-                return "D";
-            case "WR":
-                return "SD";
-            case "NR":
-                return "NR";
-        }
-    }
 
-    protected getSandPRatingForFitchRating(moodysRating: string): string {
+
+    // for s&P and Fitch we got one of 3 ratings based off the moodys rating
+    protected getRatingFromMoodyRating(moodysRating: string): string {
         switch (moodysRating) {
             case "Aaa":
-                return "AAA";
+                return this.getRandomItem(["AAA", "AA+"]);
             case "Aa1":
-                return "AA+";
+                return this.getRandomItem(["AAA", "AA+", "AA"]);
             case "Aa2":
-                return "AA";
-            case "Aaa3":
-                return "AA-";
+                return this.getRandomItem(["AA+", "AA", "AA-"]);
+            case "Aa3":
+                return this.getRandomItem(["AA", "AA-", "A+"]);
             case "A1":
-                return "A+";
+                return this.getRandomItem(["AA-", "A+", "A"]);
             case "A2":
-                return "A";
+                return this.getRandomItem(["A+", "A", "A-"]);
             case "A3":
-                return "A-";
+                return this.getRandomItem(["A", "A-", "BBB+"]);
             case "Baa1":
-                return "BBB+";
+                return this.getRandomItem(["A-", "BBB+", "BBB"]);
             case "Baa2":
-                return "BBB";
+                return this.getRandomItem(["BBB+", "BBB", "BBB-"]);
             case "Baa3":
-                return "BBB-";
+                return this.getRandomItem(["BBB", "BBB-", "BB+",]);
             case "Ba1":
-                return "BB+";
+                return this.getRandomItem(["BBB-", "BB+", "BB"]);
             case "Ba2":
-                return "BB";
+                return this.getRandomItem(["BB+", "BB", "BB-"]);
             case "Ba3":
-                return "BB-";
+                return this.getRandomItem(["BB", "BB-", "B+"]);
             case "B1":
-                return "B+";
+                return this.getRandomItem(["BB-", "B+", "B"]);
             case "B2":
-                return "B";
+                return this.getRandomItem(["B+", "B", "B-"]);
             case "B3":
-                return "B-";
+                return this.getRandomItem(["B", "B-", "CCC"]);
             case "Caa":
-                return "CCC";
+                return this.getRandomItem(["B-", "CCC", "CC"]);
             case "Ca":
-                return "CC";
+                return this.getRandomItem(["CCC", "CC"]);
             case "C":
-                return "D";
+                return this.getRandomItem(["CC", "D"]);
             case "WR":
                 return "SD";
             case "NR":
