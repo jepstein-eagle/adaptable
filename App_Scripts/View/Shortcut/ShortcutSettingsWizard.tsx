@@ -11,12 +11,12 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
 
 
-interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
+export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
     NumericKeysAvailable: Array<string>
     DateKeysAvailable: Array<string>
 
 }
-interface ShortcutSettingsWizardState {
+export interface ShortcutSettingsWizardState {
     ShortcutKey: string;
     ShortcutResult: any;
     ShortcutAction: ShortcutAction;

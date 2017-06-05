@@ -10,7 +10,7 @@ import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrateg
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
-interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+export interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     ColumnList: Array<IColumn>
     UserFilters: IUserFilter[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>

@@ -6,7 +6,7 @@ import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
-interface PlusMinusExpressionWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
+export interface PlusMinusExpressionWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     ColumnList: Array<IColumn>
     UserFilters: IUserFilter[]
     SelectedColumnId: string

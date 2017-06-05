@@ -6,7 +6,7 @@ import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
 
-interface SingleListBoxProps extends ListGroupProps {
+export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
     UiSelectedValues: Array<any>
     onSelectedChange: (SelectedValues: Array<any>) => void
@@ -17,7 +17,7 @@ interface SingleListBoxProps extends ListGroupProps {
     SelectionMode : SelectionMode
 }
 
-interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
+export interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
     Values: Array<any>
     UiSelectedValues: Array<any>
     FilterValue: string

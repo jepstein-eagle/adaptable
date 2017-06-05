@@ -10,10 +10,10 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ColumnSelector } from '../ColumnSelector'
 
-interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
+export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
     Columns: Array<IColumn>
 }
-interface PlusMinusSettingsWizardState {
+export interface PlusMinusSettingsWizardState {
     ColumnId: string,
     DefaultNudge: number
     ExpressionOption: string

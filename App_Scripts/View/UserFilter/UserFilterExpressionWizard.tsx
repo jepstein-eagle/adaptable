@@ -5,7 +5,7 @@ import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../Expressi
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
-interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilter> {
+export interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     ColumnList: Array<IColumn>
     UserFilters: IUserFilter[]
     SelectedColumnId: string

@@ -7,7 +7,7 @@ import { IAdaptableBlotter, } from '../../Core/Interface/IAdaptableBlotter'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
 export let FilterWrapperFactory = (blotter: IAdaptableBlotter) => {
-    return class FilterWrapper implements IFilterComp {
+    return <any>class FilterWrapper implements IFilterComp {
         private params: IFilterParams
         private filterContainer: HTMLDivElement
         init(params: IFilterParams): void {

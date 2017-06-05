@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 
-interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
+export interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
     ColumnLabel: string
     onEdit: (CustomSort: ICustomSort) => void;

@@ -2,7 +2,7 @@ import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
 
-interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<AdaptableBlotterPopupError> {
+export interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<AdaptableBlotterPopupError> {
     ShowPopup: boolean
     onClose: Function
     Msg: string

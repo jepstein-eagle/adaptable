@@ -4,7 +4,7 @@ import { Helper } from '../../../Core/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 
-interface PanelWithRowProps extends PanelProps {
+export interface PanelWithRowProps extends PanelProps {
     CellInfo: [string, number][]
 }
 

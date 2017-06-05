@@ -6,7 +6,7 @@ import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, 
 import { SortOrder } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 
-interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
+export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
     AvailableValues: Array<any>
     onChange: (SelectedValues: Array<any>) => void
@@ -18,7 +18,7 @@ interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor
     SortMember?: string
 }
 
-interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
+export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
     AvailableValues: Array<any>
     UiSelectedAvailableValues: Array<any>

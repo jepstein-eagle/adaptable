@@ -13,7 +13,7 @@ Very basic - for now! - info box that allows us to show Error where required.
 3. PopoverType - Info, Warning or Error (matching the bootstrap types)
 */
 
-interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
+export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string
     bodyText: any[],
     popoverType: PopoverType

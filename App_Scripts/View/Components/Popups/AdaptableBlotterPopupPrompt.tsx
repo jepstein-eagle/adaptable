@@ -5,7 +5,7 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 import { IAdaptableBlotter, IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 
 
-interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {
+export interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {
     ShowPopup: boolean
     Title: string
     Msg: string

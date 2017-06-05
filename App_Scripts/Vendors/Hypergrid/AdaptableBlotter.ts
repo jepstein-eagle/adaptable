@@ -795,7 +795,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 }
 
-interface CellStyleHypergrid {
+export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle,
     conditionalStyleRow?: IStyle,
     flashBackColor?: string,

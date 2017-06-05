@@ -5,7 +5,7 @@ import { FormControl } from 'react-bootstrap';
 
 
 
-interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
+export interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
 }
 
 export class ColorPicker extends React.Component<ColorPickerProps, {}> {

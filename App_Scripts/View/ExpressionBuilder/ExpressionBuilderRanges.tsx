@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, ListGroupItem, ListGroup, Panel, FormControl, Form, Row, Col, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
+export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     DataType: DataType
     Ranges: Array<IRangeExpression>
     onRangesChange: (Ranges: Array<IRangeExpression>) => void

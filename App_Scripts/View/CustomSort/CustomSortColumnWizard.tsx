@@ -9,11 +9,11 @@ import { SingleListBox } from '../SingleListBox'
 import { StringExtensions } from '../../Core/Extensions';
 import { ColumnSelector } from '../ColumnSelector';
 
-interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
+export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>
 
 }
-interface CustomSortColumnWizardState {
+export interface CustomSortColumnWizardState {
     SelectedColumnId: string
 }
 

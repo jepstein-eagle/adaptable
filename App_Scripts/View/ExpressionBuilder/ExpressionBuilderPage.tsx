@@ -9,7 +9,7 @@ import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 
-interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
+export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     ColumnList: Array<IColumn>
     UserFilters: Array<IUserFilter>
     SelectedColumnId: string

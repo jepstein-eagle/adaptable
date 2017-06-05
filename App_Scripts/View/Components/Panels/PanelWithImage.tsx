@@ -6,7 +6,7 @@ import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 import { AdaptablePopover } from './../../AdaptablePopover';
 import { PopoverType } from '../../../Core/Enums';
 
-interface PanelWithImageProps extends PanelProps {
+export interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
       infoBody?: any[]
 }

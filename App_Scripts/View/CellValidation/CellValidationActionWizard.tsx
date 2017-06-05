@@ -9,10 +9,10 @@ import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
 
-interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
 }
-interface CellValidationSettingsWizardState {
+export interface CellValidationSettingsWizardState {
     CellValidationMode: CellValidationMode;
 }
 

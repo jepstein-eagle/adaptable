@@ -6,7 +6,7 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
-interface AdvancedSearchExpressionWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
+export interface AdvancedSearchExpressionWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     ColumnList: Array<IColumn>
     UserFilters: IUserFilter[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>

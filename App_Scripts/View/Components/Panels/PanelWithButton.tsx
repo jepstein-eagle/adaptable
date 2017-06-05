@@ -6,7 +6,7 @@ import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 import { AdaptablePopover } from './../../AdaptablePopover';
 import { PopoverType } from '../../../Core/Enums';
 
-interface PanelWithButtonProps extends PanelProps {
+export interface PanelWithButtonProps extends PanelProps {
     //use either button content + buttonClick OR button
     buttonContent?: React.ReactNode;
     buttonClick?: () => void;

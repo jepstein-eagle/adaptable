@@ -11,7 +11,7 @@ import { ButtonNew } from './ButtonNew';
 import { ButtonShare } from './ButtonShare';
 import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
 
-interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
+export interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
     shareClick?: () => void;
     showEdit?: boolean

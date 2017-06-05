@@ -4,7 +4,7 @@ import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-
 import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
-interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
+export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
     UserFilterExpressions: Array<IUserFilter>
     SelectedUserFilterExpressions: Array<IUserFilter>
     onUserFilterExpressionChange: (SelectedUserFilterExpressions: Array<IUserFilter>) => void

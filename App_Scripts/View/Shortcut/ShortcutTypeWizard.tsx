@@ -13,9 +13,9 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
 
 
-interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
+export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
-interface ShortcutTypeWizardState {
+export interface ShortcutTypeWizardState {
     DataType: DataType;
 
 }

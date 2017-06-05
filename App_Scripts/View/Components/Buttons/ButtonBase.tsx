@@ -21,7 +21,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     DisplayMode: "Glyph" | "Text" | "Glyph+Text"
 }
 
-interface ButtonBaseProps extends ButtonProps {
+export interface ButtonBaseProps extends ButtonProps {
     ToolTipAndText: string,
     bsStyle: string;
     bsSize: ReactBootstrap.Sizes

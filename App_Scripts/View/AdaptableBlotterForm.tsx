@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { Helper } from '../Core/Helper'
 import { Form, FormProps } from 'react-bootstrap';
 
-interface AdaptableBlotterFormProps extends FormProps {
+export interface AdaptableBlotterFormProps extends FormProps {
 }
 
 export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormProps, {}> {

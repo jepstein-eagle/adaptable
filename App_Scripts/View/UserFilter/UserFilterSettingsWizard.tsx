@@ -9,11 +9,11 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
+export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
 }
-interface UserFilterSettingsWizardState {
+export interface UserFilterSettingsWizardState {
     FilterName: string
 }
 

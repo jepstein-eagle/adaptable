@@ -5,7 +5,7 @@ import { Form, Row, Col, FormGroup, InputGroup, FormControl, Glyphicon, Button }
 import { SortOrder } from '../Core/Enums'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 
-interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxFilterSortComponent> {
+export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxFilterSortComponent> {
     FilterValue: string
     SortOrder: SortOrder
     handleChangeFilterValue: (value: string) => void

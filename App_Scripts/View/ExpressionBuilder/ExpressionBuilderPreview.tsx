@@ -17,7 +17,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
 // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
 
-interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
+export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression
     UserFilters : IUserFilter[]
     onSelectedColumnChange: (ColumnName: string) => void

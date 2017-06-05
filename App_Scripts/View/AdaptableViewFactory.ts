@@ -61,6 +61,6 @@ export const AdaptableDashboardConfigurationViewFactory = new Map<string, string
   [StrategyIds.DashboardShortcutsStrategyId, "DashboardShortcutsToolbarControlConfig"]
 ]);
 
-interface IAdaptableViewFactory {
+export interface IAdaptableViewFactory {
   [key: string]: any;
 }

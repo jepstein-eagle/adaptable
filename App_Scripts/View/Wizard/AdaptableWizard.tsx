@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Button, ListGroupItemProps, Modal, Glyphicon } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './Interface/IAdaptableWizard'
 
-interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
+export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
     Data: any
     onHide: Function;
@@ -12,7 +12,7 @@ interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     StepStartIndex?: number
 }
 
-interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
+export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
     ActiveState: any
     IndexState: number
     ForceFinish: boolean

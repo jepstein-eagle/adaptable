@@ -9,7 +9,7 @@ import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { ButtonClear } from './Components/Buttons/ButtonClear';
 
 
-interface ListBoxFilterFormProps extends ListGroupProps {
+export interface ListBoxFilterFormProps extends ListGroupProps {
     ColumnValues: Array<IRawValueDisplayValuePair>
     UserFilters: Array<IRawValueDisplayValuePair>
     UiSelectedColumnValues: Array<String>
@@ -19,7 +19,7 @@ interface ListBoxFilterFormProps extends ListGroupProps {
     ColumnValueType: DistinctCriteriaPairValue
 }
 
-interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
+export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
     UiSelectedColumnValues: Array<String>
     UiSelectedUserFilters: Array<String>
     FilterValue: string
@@ -197,7 +197,7 @@ let divStyle: React.CSSProperties = {
 }
 
 let userFilterItemStyle: React.CSSProperties = {
-    //'width': '87%',
+    //'width': '87%',export 
     'fontStyle': 'italic',
     'fontSize': 'small',
     'padding': '5px',

@@ -13,10 +13,10 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
 
 
-interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
+export interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
 }
 
-interface ConditionalStyleSettingsWizardState {
+export interface ConditionalStyleSettingsWizardState {
     BackColor: string,
     ForeColor: string,
     FontWeight: FontWeight,

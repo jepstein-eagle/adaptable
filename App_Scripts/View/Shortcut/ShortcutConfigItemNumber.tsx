@@ -8,7 +8,7 @@ import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface ShortcutConfigItemNumberProps extends React.ClassAttributes<ShortcutConfigItemNumber> {
+export interface ShortcutConfigItemNumberProps extends React.ClassAttributes<ShortcutConfigItemNumber> {
     Shortcut: IShortcut
     onDeleteConfirm: Redux.Action;
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;

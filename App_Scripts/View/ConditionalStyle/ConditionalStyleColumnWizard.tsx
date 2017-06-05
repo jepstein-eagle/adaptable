@@ -13,11 +13,11 @@ import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
 
-interface ConditionalStyleColumnWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
+export interface ConditionalStyleColumnWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     Columns: Array<IColumn>
 }
 
-interface ConditionalStyleColumnWizardState {
+export interface ConditionalStyleColumnWizardState {
     ColumnId: string,
     ConditionalStyleScope: ConditionalStyleScope,
 }

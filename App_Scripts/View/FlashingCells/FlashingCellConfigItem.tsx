@@ -8,7 +8,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
 import { ColorPicker } from '../ColorPicker';
 
-interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
+export interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
     Columns: IColumn[];
     FlashingCellDurations: IFlashingCellDuration[];

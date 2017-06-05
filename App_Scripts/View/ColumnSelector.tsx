@@ -6,7 +6,7 @@ import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { SortOrder } from '../Core/Enums';
 
-interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
+export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]
     SelectedColumnId: string
     onColumnChange: (SelectedColumn: IColumn) => void

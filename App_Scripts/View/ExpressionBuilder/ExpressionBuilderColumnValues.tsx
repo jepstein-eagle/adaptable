@@ -5,7 +5,7 @@ import { ListGroupItem, ListGroup, Panel, Form, Row, Col, Button, } from 'react-
 import {  SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 
 
-interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
+export interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
     SelectedValues: Array<any>
     ColumnValues: Array<any>
     onColumnValuesChange: (SelectedValues: Array<any>) => void

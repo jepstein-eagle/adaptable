@@ -6,7 +6,7 @@ import { AdaptableViewFactory } from './../../AdaptableViewFactory';
 import { IStrategy } from '../../../Core/Interface/IStrategy';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 
-interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
+export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
   ComponentClassName: string;
   IsReadOnly: boolean

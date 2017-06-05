@@ -16,7 +16,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ColumnSelector } from '../ColumnSelector';
 
-interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
+export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
     Expression: Expression
     ExpressionMode: ExpressionMode
@@ -27,7 +27,7 @@ interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<
     SelectedColumnId: string
 }
 
-interface ExpressionBuilderConditionSelectorState {
+export interface ExpressionBuilderConditionSelectorState {
     IsFirstTime: boolean
     ColumnValues: Array<any>
     SelectedColumnValues: Array<any>

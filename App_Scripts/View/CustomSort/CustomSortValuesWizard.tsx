@@ -8,11 +8,11 @@ import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums';
 import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 
 
-interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
+export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
 }
-interface CustomSortValuesWizardState {
+export interface CustomSortValuesWizardState {
     ColumnValues: any[],
     SelectedValues: Array<string>
     IsEdit: boolean

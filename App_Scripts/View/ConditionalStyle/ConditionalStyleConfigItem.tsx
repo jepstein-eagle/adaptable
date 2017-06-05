@@ -13,7 +13,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { ColorPicker } from '../ColorPicker';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 
-interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
+export interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
     Columns: IColumn[];
     UserFilters: IUserFilter[]

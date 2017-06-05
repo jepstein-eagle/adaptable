@@ -9,7 +9,7 @@ import { IUserFilter } from '../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 import { StringExtensions } from '../../Core/Extensions';
 
-interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
+export interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     ColumnList: Array<IColumn>
     UserFilters: IUserFilter[]
     SelectedColumnId: string

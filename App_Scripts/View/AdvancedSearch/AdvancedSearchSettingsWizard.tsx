@@ -6,10 +6,10 @@ import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
+export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
 }
 
-interface AdvancedSearchSettingsWizardState {
+export interface AdvancedSearchSettingsWizardState {
     AdvancedSearchName: string
 }
 

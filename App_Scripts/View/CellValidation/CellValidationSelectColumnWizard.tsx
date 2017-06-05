@@ -7,10 +7,10 @@ import { StringExtensions } from '../../Core/Extensions';
 import { SelectionMode } from '../../Core/Enums';
 import { ColumnSelector } from '../ColumnSelector';
 
-interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
+export interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
 }
-interface CellValidationSelectColumnWizardState {
+export interface CellValidationSelectColumnWizardState {
     ColumnId: string
 }
 

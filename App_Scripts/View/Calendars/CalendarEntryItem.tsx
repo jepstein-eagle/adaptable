@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import {  Col, Row, Panel } from 'react-bootstrap';
 import {  ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
 
-interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
+export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;
 }
 

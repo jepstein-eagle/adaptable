@@ -6,7 +6,7 @@ import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Checkbox, O
 import { ShortcutAction } from '../../Core/Enums'
 import { ICalendar } from '../../Core/Interface/ICalendarStrategy';
 
-interface CalendarsConfigItemProps extends React.ClassAttributes<CalendarsConfigItem> {
+export interface CalendarsConfigItemProps extends React.ClassAttributes<CalendarsConfigItem> {
     Calendar: ICalendar;
     CurrentCalendar: string;
     onSelect: (calendar: ICalendar) => void;
