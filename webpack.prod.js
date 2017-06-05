@@ -20,8 +20,7 @@ module.exports = {
         filename: "[name]-bundle.min.js",
         // filename: "[name]-bundle." + PACKAGE.version + ".min.js",
         library: "[name]",
-        libraryTarget: 'var',
-        umdNamedDefine: true
+        libraryTarget: 'umd'
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
