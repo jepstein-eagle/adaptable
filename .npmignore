@@ -1,0 +1,16 @@
+Demo/
+ExtLibs/
+Harness/
+stylesheets/
+node_modules/
+themes/
+tmp/
+UserGuide/
+.vscode/
+travis.yml
+openfin-launcher.js
+postcss-scopify.config.js
+webpackdemobetarelease.config.js
+webpackdemorelease.config.js
+
+
