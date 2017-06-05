@@ -57,7 +57,7 @@
     "release-demo-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemorelease.config.js",
     "release-demo-beta-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemobetarelease.config.js",
     "build-adaptableblotter": "node_modules/.bin/webpack --env=dev",
-    "build-prod": "webpack --config webpack.prod.js",
+    "build-prod": "node_modules/.bin/webpack --config webpack.prod.js",
     "dev-kendo": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
     "dev-aggrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
