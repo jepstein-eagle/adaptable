@@ -11,3 +11,11 @@ script:
     - npm run build-prod
 notifications:
   email: false
+#deploy:
+#  provider: npm
+#  skip_cleanup: true
+#  email: jonathan.naim@gmail.com
+#  api_key: $NPM_TOKEN
+#  on:
+#    tags: true
+#    all_branches: true
