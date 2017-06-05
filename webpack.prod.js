@@ -17,7 +17,8 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist',
-        filename: "[name]-bundle." + PACKAGE.version + ".min.js",
+        filename: "[name]-bundle.min.js",
+        // filename: "[name]-bundle." + PACKAGE.version + ".min.js",
         library: "[name]",
         libraryTarget: 'var',
         umdNamedDefine: true
