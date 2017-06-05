@@ -1,7 +1,7 @@
 {
   "name": "adaptableblotter",
   "version": "1.1.0-beta.9",
-  "description": "",
+  "description": "Powerful data-agnostic grid that sits on top of an underlying grid component and provides all the rich functionality that financial users expect from their grids and blotters",
   "main": "index.js",
   "dependencies": {
     "@types/deep-diff": "0.0.30",
@@ -56,14 +56,44 @@
     "build-themes": "node postcss-scopify.config.js",
     "release-demo-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemorelease.config.js",
     "release-demo-beta-adaptableblotter": "node_modules/.bin/webpack -p --config webpackdemobetarelease.config.js",
-    "build-adaptableblotter": "node_modules/.bin/webpack",
-    "dev-kendo": "node_modules/.bin/webpack-dev-server --content-base Harness/Kendo/",
-    "dev-hypergrid": "node_modules/.bin/webpack-dev-server --content-base Harness/Hypergrid/",
-    "dev-aggrid": "node_modules/.bin/webpack-dev-server --content-base Harness/agGrid/",
-    "dev-adaptablegrid": "node_modules/.bin/webpack-dev-server --content-base Harness/AdaptableGrid/",
+    "build-adaptableblotter": "node_modules/.bin/webpack --env=dev",
+    "build-prod": "webpack --config webpack.prod.js",
+    "dev-kendo": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
+    "dev-hypergrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
+    "dev-aggrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
+    "dev-adaptablegrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
     "openfin": "node openfin-launcher.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "web-components",
+    "grid",
+    "data",
+    "table",
+    "kendo",
+    "openfin",
+    "hypergrid",
+    "ag-grid",
+    "blotter",
+    "kendo-ui"
+  ],
+  "maintainers": [
+    {
+      "name": "jonathannaim",
+      "email": "jonathan.naim@gmail.com"
+    },
+    {
+      "name": "JonnyAdaptableTools",
+      "email": "jonny.wolfson@adaptabletools.com"
+    }
+  ],
+  "author": {
+    "name": "Jonathan Naim",
+    "email": "jo.naim@adaptabletools.com"
+  },
+  "homepage": "http://www.adaptabletools.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathannaim/adaptableblotter.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md"
 }
