@@ -33,7 +33,7 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify('development')
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
-        new CopyWebpackPlugin([{ context: 'themes', from: '**/*', to: 'adaptable-blotter-themes' }]),
+        // new CopyWebpackPlugin([{ context: 'themes', from: '**/*', to: 'adaptable-blotter-themes' }]),
         // new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
         new CopyWebpackPlugin([{ from: 'ExtLibs/**/*', to: '' }])
     ],
