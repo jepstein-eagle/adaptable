@@ -1,5 +1,6 @@
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
-import { DataSourceBase } from './DataSourceBase'
+// import { DataSourceBase } from './DataSourceBase'
+import * as DataSourceBase from 'fin-hypergrid-data-source-base'
 
 //All custom pipelines should extend from pipelineBase
 export let DataSourceIndexed = DataSourceBase.extend('DataSourceIndexed', {

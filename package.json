@@ -19,6 +19,7 @@
     "create-react-class": "^15.5.3",
     "deep-diff": "^0.3.7",
     "express": "^4.15.2",
+    "fin-hypergrid-data-source-base": "^0.4.11",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
