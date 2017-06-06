@@ -113,8 +113,7 @@ export interface IAdaptableBlotterOptions {
     userName?: string,
     primaryKey?: string,
     blotterId?: string,
-    predefinedConfigUrl?: string,
-    themeRootUrl?: string
+    predefinedConfigUrl?: string
 }
 
 export interface IConfigEntity {

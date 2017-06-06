@@ -5,6 +5,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableRemoteConfigServer: true,
     userName: "anonymous",
     blotterId: "adaptable_blotter_id",
-    predefinedConfigUrl: "",
-    themeRootUrl: ""
+    predefinedConfigUrl: ""
 }
