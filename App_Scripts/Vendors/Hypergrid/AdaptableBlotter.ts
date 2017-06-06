@@ -59,6 +59,22 @@ import { ContextMenuReact } from '../../View/ContextMenu'
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc' // aka '▼'
+const filterOffRaw: any = {
+    type: "image/png",
+    data: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAChSURBVChTzZHBCoUgFET9TqEiskgyWoutQvRLRIr+cR7XQAjiJW/1BgZmMUevXsY5xy9OoDEGMcYiUzeB67qibVuwQjVNA6311V+WBeM4vsLDMEApde/1fY9pmtI453neHEKAlBJd1z0fXtc16PbjODK07zvmeUZVVd8nooc75zJIOX3Gm6i0bVsGKf8xKIRIuyJTLgJJ3nvQzsjW2geIsQ/pr9hMVrSncAAAAABJRU5ErkJggg=="
+};
+const filterOnRaw = {
+    type: "image/png",
+    data: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAACoSURBVChTY3BqfP2fHAzWmDbj7f8p294RhVOBasEa02e+/e/VBmQQCTxaX/9PnvYGoj5ywpv/Qd2ENft3vv4f1gfVBAP+nW/+h/a+ATtn1q73KHjytvdgg3070DTBgHvL6/8g22fsQGiaDmSHA21xaybgIpDHixa8hWssnA8NDEIApCh3LkIjiD2INYJCL2X6W3B8gdhEaQQBUOCA4gyE8+e9xaKJgQEA/74BNE3cElkAAAAASUVORK5CYII="
+}
+const filterOn = new Image();
+filterOn.src = 'data:' + filterOnRaw.type + ';base64,' + filterOnRaw.data;
+const filterOff = new Image();
+filterOff.src = 'data:' + filterOffRaw.type + ';base64,' + filterOffRaw.data;
+
+const getFilterIcon = (state: boolean) => {
+    return state ? filterOn : filterOff;
+}
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -157,7 +173,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse
                 let iconPadding = this.grid.properties.iconPadding
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
-                let filterIconWidth = (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0).width
+                let filterIconWidth = getFilterIcon(filterIndex >= 0).width
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
                     let filterContext: IColumnFilterContext = {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
@@ -260,7 +276,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             if (config.isHeaderRow && !config.isHandleColumn) {
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
-                config.value = [null, config.value, (<any>window).fin.Hypergrid.images.filter(filterIndex >= 0)];
+                config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
             }
             if (config.isDataRow) {
                 var x = config.dataCell.x;
