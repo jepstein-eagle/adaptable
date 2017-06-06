@@ -44,8 +44,11 @@ module.exports = {
             {
                 test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015!ts-loader'
             },
-            // handle stylesheets required from node packages
-            { test: /\.css$/, loader: 'style-loader!css-loader' }
+            // handle main stylesheets required 
+            { test: /\.css$/,  exclude: /themes/, loader: 'style-loader!css-loader' },
+                        // handle main stylesheets required 
+            { test: /\.css$/,  exclude: /stylesheets/, loader: 'css-to-string-loader!css-loader' },
+            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]
     },
     devServer: {

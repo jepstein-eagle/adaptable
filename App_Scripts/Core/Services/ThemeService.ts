@@ -1,14 +1,18 @@
 
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { ThemesContent } from '../../../themes/index'
 import { ThemeState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export class ThemeService {
     private ThemeState: ThemeState
-    private theme: HTMLLinkElement
+    private style: HTMLStyleElement
     constructor(private blotter: IAdaptableBlotter) {
-        this.theme = document.createElement("link");
-        this.theme.rel = "stylesheet"
-        document.head.appendChild(this.theme);
+        // Create the <style> tag
+        this.style = document.createElement("style");
+        // WebKit hack :(
+        this.style.appendChild(document.createTextNode(""));
+        // Add the <style> element to the page
+        document.head.appendChild(this.style);
 
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
@@ -18,10 +22,10 @@ export class ThemeService {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme
             if (this.ThemeState.CurrentTheme == "None") {
-                this.theme.href = ""
+                this.style.innerHTML = ""
             }
             else {
-                this.theme.href = this.blotter.BlotterOptions.themeRootUrl +  "adaptable-blotter-themes/" + this.ThemeState.CurrentTheme.toLocaleLowerCase() + "/bootstrap.min.css"
+                this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
             }
         }
     }
