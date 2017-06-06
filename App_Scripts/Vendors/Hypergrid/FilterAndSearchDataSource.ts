@@ -51,7 +51,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
 
             let recordReturnValue = false
-            for (let column of columns.filter(c=>c.Visible)) {
+            for (let column of columns.filter(c => c.Visible)) {
                 let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
                 let stringValueLowerCase = displayValue.toLowerCase()
                 let columnIndex = blotter.getColumnIndex(column.ColumnId)
@@ -133,7 +133,9 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         if (this.quickSearchColor) {
             for (let record of this.quickSearchColor) {
                 let rowIndex = blotter.getRowIndexHypergrid(record.rowID)
-                blotter.removeCellStyleByIndex(record.columnIndex, rowIndex, "QuickSearch")
+                if (rowIndex > -1) {
+                    blotter.removeCellStyleByIndex(record.columnIndex, rowIndex, "QuickSearch")
+                }
             }
         }
         this.quickSearchColor = [];
