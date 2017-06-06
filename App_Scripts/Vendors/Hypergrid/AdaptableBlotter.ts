@@ -1,4 +1,5 @@
-﻿import * as React from "react";
+﻿import '../../../stylesheets/adaptableblotter-style.css'
+import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'

@@ -1,4 +1,5 @@
 ﻿/// <reference path="AdaptableBlotter.d.ts" />
+import '../../../stylesheets/adaptableblotter-style.css'
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";

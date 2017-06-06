@@ -17,8 +17,7 @@ module.exports = {
         filename: "[name]-bundle.js",
         publicPath: "/",
         library: "[name]",
-        libraryTarget: 'var',
-        umdNamedDefine: true
+        libraryTarget: 'umd'
     },
     // Turn on sourcemaps
     devtool: 'source-map',
@@ -35,7 +34,7 @@ module.exports = {
         }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         new CopyWebpackPlugin([{ context: 'themes', from: '**/*', to: 'adaptable-blotter-themes' }]),
-        new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
+        // new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
         new CopyWebpackPlugin([{ from: 'ExtLibs/**/*', to: '' }])
     ],
     module: {
@@ -44,7 +43,9 @@ module.exports = {
             // note that babel-loader is configured to run after ts-loader
             {
                 test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015!ts-loader'
-            }
+            },
+            // handle stylesheets required from node packages
+            { test: /\.css$/, loader: 'style-loader!css-loader' }
         ]
     },
     devServer: {
