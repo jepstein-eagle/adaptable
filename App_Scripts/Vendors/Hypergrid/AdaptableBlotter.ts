@@ -736,7 +736,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
         // let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         // return rowIndex
-        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => x[this.BlotterOptions.primaryKey] == rowIdentifierValue)
+        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => {
+            if (x && x.hasOwnProperty(this.BlotterOptions.primaryKey)) {
+                return x[this.BlotterOptions.primaryKey] == rowIdentifierValue
+            }
+            return false
+        })
         return rowIndex
     }
 
