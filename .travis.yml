@@ -19,3 +19,21 @@ deploy:
  on:
    tags: true
    all_branches: true
+deploy:
+    - provider: npm
+      email: jonathan.naim@gmail.com
+      api_key: $NPM_TOKEN
+      tag: beta
+      skip_cleanup: true
+      on:
+        tags: true
+        all_branches: true
+        condition: "$TRAVIS_TAG =~ .*beta.*$"
+    - provider: npm
+      email: jonathan.naim@gmail.com
+      api_key: $NPM_TOKEN
+      skip_cleanup: true
+      on:
+        tags: true
+        all_branches: true
+        condition: "$TRAVIS_TAG =~ ^((?!beta).)*$"
