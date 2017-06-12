@@ -246,6 +246,25 @@ export module KendoFiltering {
                 dateToCheck = blotter.CalendarService.GetNextWorkingDay();
                 filterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.Equals), field: column.ColumnId, value: dateToCheck };
                 break;
+            case UserFilterHelper.THIS_YEAR_USER_FILTER:
+                // this is a special case where we need to create 2 filters so we do it here and leave the main filterItem null
+                dateToCheck = new Date();
+                let dateToCheckYear: number = dateToCheck.getFullYear();
+                let startDate: Date = new Date(dateToCheckYear, 0, 1);
+                let endDate: Date = new Date(dateToCheckYear, 11, 31);
+
+                let thisYearFilters: kendo.data.DataSourceFilters = { logic: "and", filters: [] }; 
+                let startFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.GreaterThanOrEqual), field: column.ColumnId, value: startDate };
+                thisYearFilters.filters.push(startFilterItem);
+
+                let endFilterItem: kendo.data.DataSourceFilterItem = { operator: getKendoOperatorForLeafOperator(LeafExpressionOperator.LessThanOrEqual), field: column.ColumnId, value: endDate };
+                thisYearFilters.filters.push(endFilterItem);
+
+                newFilters.filters.push(thisYearFilters);
+
+                // filterItem is null as we dont need it
+                filterItem = null;
+                break;
 
             // Numeric Filters
             case UserFilterHelper.POSITIVE_USER_FILTER:
@@ -281,8 +300,9 @@ export module KendoFiltering {
                 break;
         }
 
-        newFilters.filters.push(filterItem);
-
+        if (filterItem != null) {
+            newFilters.filters.push(filterItem);
+        }
         return newFilters;
     }
 
