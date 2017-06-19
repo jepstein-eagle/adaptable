@@ -58,6 +58,31 @@ export class DataGenerator {
         }, 100)
     }
 
+    startTickingDataagGrid(gridOptions: any) {
+        setInterval(() => {
+            let tradeId = this.generateRandomInt(0, 29);
+            gridOptions.api.forEachNodeAfterFilterAndSort((rowNode: any, index: number) => {
+                // only do first 5
+                if (index != tradeId) { return; }
+
+                let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
+                let trade = rowNode;
+                let columnName = "price";
+                let initialNewValue = gridOptions.api.getValue(columnName, trade);
+                let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
+                trade.setDataValue(columnName, newValue)
+                let ask = this.roundTo4Dp(gridOptions.api.getValue("price", trade) - gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                trade.setDataValue("ask", ask)
+                let bid = this.roundTo4Dp(gridOptions.api.getValue("price", trade) + gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                trade.setDataValue("bid", bid)
+
+                trade.setDataValue("bloombergAsk", this.roundTo4Dp(ask + 0.01))
+                trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01))
+
+            });
+        }, 100)
+    }
+
     createTrade(i: number): ITrade {
         var price = this.getMeaningfulDouble();
         var bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());

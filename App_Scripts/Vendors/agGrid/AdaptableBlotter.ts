@@ -455,6 +455,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let rawValue = this.gridOptions.api.getValue(columnId, row)
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
+            if(typeof render == "string")
+            {
+                return rawValue
+            }
             return render({ value: rawValue })
         }
         else {

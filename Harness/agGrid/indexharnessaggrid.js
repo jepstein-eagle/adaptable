@@ -22,6 +22,9 @@ function getSchema(data) {
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
             }
+            else if (p === 'price') {
+                schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: 'animateShowChange' });
+            }
             else {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text' });
             }
@@ -55,7 +58,7 @@ function InitBlotter() {
     var eGridDiv = document.getElementById('grid');
     agGrid.LicenseManager.setLicenseKey('Adaptive_Blotter_IntegrationLicense_5Devs27_March_2019__MTU1MzY0NDgwMDAwMA==9df2c70bc1f2f7f85362f118e62e456b')
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
-    //dataGen.startTickingDataHypergrid(grid)
+    dataGen.startTickingDataagGrid(gridOptions);
 
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
