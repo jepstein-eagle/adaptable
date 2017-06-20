@@ -790,6 +790,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return result
     }
 
+    public getRowCount(): number {
+        let ds = this.grid.behavior.dataModel.dataSource
+        return ds.getRowCount();
+    }
+
     public hideRows(rowIds: string[]): void {
     }
 

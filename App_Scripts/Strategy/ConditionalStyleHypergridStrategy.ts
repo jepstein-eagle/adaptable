@@ -53,15 +53,12 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         if (!this.blotterBypass) {
             this.blotterBypass = this.blotter as AdaptableBlotter
         }
-        let rowIds: string[] = this.blotter.getAllRowIds();
+        let rowCount = this.blotterBypass.getRowCount();
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        for (let rowId of rowIds) {
-            let rowIndex = this.blotterBypass.getRowIndexHypergrid(rowId)
-            if (rowIndex >= 0) {
-                for (var index = 0; index < columns.length; index++) {
-                    this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
-                    this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
-                }
+        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            for (var index = 0; index < columns.length; index++) {
+                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
+                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
             }
         }
 
@@ -78,7 +75,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId), collectionIndex: this.ConditionalStyleState.ConditionalStyleConditions.indexOf(cs) }))
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
-
+            let rowIds: string[] = this.blotter.getAllRowIds();
             rowIds.forEach(rowId => {
 
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
