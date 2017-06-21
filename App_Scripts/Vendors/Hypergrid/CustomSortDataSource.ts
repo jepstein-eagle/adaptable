@@ -22,7 +22,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         let customSort = blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(x => x.ColumnId == fields)
         if (customSort) {
             for (let i = 0; i < tmp.length; i++) {
-                var dataRow = this.dataSource.getRow(i);
+                let dataRow = this.dataSource.getRow(i);
                 tmp[i] = [dataRow, i];
             }
             let direction: number = 1
@@ -32,8 +32,8 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
             tmp.sort(function (a: any, b: any) {
                 let firstElement = a[0]
                 let secondElement = b[0]
-                let firstElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(firstElement), customSort.ColumnId) //firstElement[customSort.ColumnId];
-                let secondElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(secondElement), customSort.ColumnId)//secondElement[customSort.ColumnId];
+                let firstElementValueString = blotter.getDisplayValueFromRecord(firstElement, customSort.ColumnId) //firstElement[customSort.ColumnId];
+                let secondElementValueString = blotter.getDisplayValueFromRecord(secondElement, customSort.ColumnId)//secondElement[customSort.ColumnId];
                 let firstElementValue = firstElement[customSort.ColumnId];
                 let secondElementValue = secondElement[customSort.ColumnId];
                 let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);
@@ -59,7 +59,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         else {
 
             for (let i = 0; i < tmp.length; i++) {
-                var dataRow = this.dataSource.getRow(i);
+                let dataRow = this.dataSource.getRow(i);
                 tmp[i] = [dataRow[fields], i];
             }
             let direction: number = 1
