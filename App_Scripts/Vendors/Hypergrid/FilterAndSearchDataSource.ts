@@ -24,13 +24,12 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     filterTest: function (r: any, rowObject: any) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns
-        let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
 
         //first we assess AdvancedSearch 
         let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
         if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
             let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
-            if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, blotter)) {
+            if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
                 return false;
             }
         }
@@ -39,7 +38,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (columnFilters.length > 0) {
             for (let columnFilter of columnFilters) {
-                if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, blotter)) {
+                if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
                     return false
                 }
             }
@@ -53,6 +52,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             let recordReturnValue = false
             for (let column of columns.filter(c => c.Visible)) {
                 let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
+                let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
                 let stringValueLowerCase = displayValue.toLowerCase()
                 let columnIndex = blotter.getColumnIndex(column.ColumnId)
                 switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {

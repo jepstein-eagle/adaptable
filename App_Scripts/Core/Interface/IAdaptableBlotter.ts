@@ -45,6 +45,7 @@ export interface IAdaptableBlotter {
     getDisplayValueFromRecord(row: any, columnId: string): string
     isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
+    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
 
     // editing related

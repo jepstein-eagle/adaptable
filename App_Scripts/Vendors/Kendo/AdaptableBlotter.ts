@@ -443,7 +443,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setValueBatch(batchValues: ICellInfo[]): void {
         // first update the model, then sync the grid, then tell the AuditService (which will fire an event picked up by Flashing Cells)
-        for (var item of batchValues) {
+        for (let item of batchValues) {
             let model: any = this.grid.dataSource.getByUid(item.Id);
             let oldValue = model[item.ColumnId]
             model[item.ColumnId] = item.Value;
@@ -456,7 +456,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // this line triggers a Databound changed event 
         this.grid.dataSource.sync();
 
-        for (var item of batchValues) {
+        for (let item of batchValues) {
             // todo: work out why we have this line?  seems superfluous....
             let model: any = this.grid.dataSource.getByUid(item.Id);
             this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId);
@@ -474,6 +474,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         else {
             return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+        }
+    }
+
+    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return record[columnName]; }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
         }
     }
 

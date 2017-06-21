@@ -375,6 +375,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return this.gridOptions.api.getValue(columnName, record) }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+        }
+    }
+
     public selectCells(cells: ICellInfo[]): void {
     }
 
@@ -455,8 +464,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let rawValue = this.gridOptions.api.getValue(columnId, row)
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
-            if(typeof render == "string")
-            {
+            if (typeof render == "string") {
                 return rawValue
             }
             return render({ value: rawValue })

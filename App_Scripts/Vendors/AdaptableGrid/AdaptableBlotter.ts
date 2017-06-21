@@ -294,6 +294,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return this.getCellFromRowAndColumnId(record, columnName).getRawValue() }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+        }
+    }
+
     public selectCells(cells: ICellInfo[]): void {
     }
 

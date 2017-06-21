@@ -611,6 +611,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return (columnName: string) => { return this.getDisplayValue(id, columnName); }
         }
     }
+    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+        if (type == "getColumnValue") {
+            return (columnName: string) => { return record[columnName]; }
+        }
+        else {
+            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+        }
+    }
 
     public selectCells(cells: ICellInfo[]): void {
     }

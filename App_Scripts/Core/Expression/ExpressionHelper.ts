@@ -307,6 +307,16 @@ export module ExpressionHelper {
         );
     }
 
+    export function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
+        return IsSatisfied(
+            Expression,
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),
+            columns,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+            blotter
+        );
+    }
 
 
 
