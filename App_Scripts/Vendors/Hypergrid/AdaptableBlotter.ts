@@ -91,6 +91,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
+    private cellStyleHypergridMap: Map<any, CellStyleHypergrid[]> = new Map()
+
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
@@ -287,48 +289,92 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let column = this.grid.behavior.getActiveColumns().find((col: any) => col.index == x)
                 if (column && row) {
                     this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
-                    // this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), config.value, column.name)
                 }
-                let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-                let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
-                let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
-                let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
-                //Lowest priority first then every step will override the properties it needs to override.
-                //probably not needed to optimise as we just assign properties.......
-                if (conditionalStyleRow) {
-                    if (conditionalStyleRow.BackColor) {
-                        config.backgroundColor = conditionalStyleRow.BackColor;
+                let primaryKey = this.getPrimaryKeyValueFromRecord(row)
+                let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
+                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns[x] : null
+                if (cellStyleHypergrid) {
+                    let flashColor = cellStyleHypergrid.flashBackColor
+                    let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn
+                    let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow
+                    let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor
+                    //Lowest priority first then every step will override the properties it needs to override.
+                    //probably not needed to optimise as we just assign properties.......
+                    if (conditionalStyleRow) {
+                        if (conditionalStyleRow.BackColor) {
+                            config.backgroundColor = conditionalStyleRow.BackColor;
+                        }
+                        if (conditionalStyleRow.ForeColor) {
+                            config.color = conditionalStyleRow.ForeColor;
+                        }
+                        if (conditionalStyleRow.FontStyle
+                            || conditionalStyleRow.FontWeight
+                            || conditionalStyleRow.ForeColor
+                            || conditionalStyleRow.FontSize) {
+                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                        }
                     }
-                    if (conditionalStyleRow.ForeColor) {
-                        config.color = conditionalStyleRow.ForeColor;
+                    if (conditionalStyleColumn) {
+                        if (conditionalStyleColumn.BackColor) {
+                            config.backgroundColor = conditionalStyleColumn.BackColor;
+                        }
+                        if (conditionalStyleColumn.ForeColor) {
+                            config.color = conditionalStyleColumn.ForeColor;
+                        }
+                        if (conditionalStyleColumn.FontStyle
+                            || conditionalStyleColumn.FontWeight
+                            || conditionalStyleColumn.ForeColor
+                            || conditionalStyleColumn.FontSize) {
+                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                        }
                     }
-                    if (conditionalStyleRow.FontStyle
-                        || conditionalStyleRow.FontWeight
-                        || conditionalStyleRow.ForeColor
-                        || conditionalStyleRow.FontSize) {
-                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                    if (quickSearchBackColor) {
+                        config.backgroundColor = quickSearchBackColor;
+                    }
+                    if (flashColor) {
+                        config.backgroundColor = flashColor;
                     }
                 }
-                if (conditionalStyleColumn) {
-                    if (conditionalStyleColumn.BackColor) {
-                        config.backgroundColor = conditionalStyleColumn.BackColor;
-                    }
-                    if (conditionalStyleColumn.ForeColor) {
-                        config.color = conditionalStyleColumn.ForeColor;
-                    }
-                    if (conditionalStyleColumn.FontStyle
-                        || conditionalStyleColumn.FontWeight
-                        || conditionalStyleColumn.ForeColor
-                        || conditionalStyleColumn.FontSize) {
-                        config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                    }
-                }
-                if (quickSearchBackColor) {
-                    config.backgroundColor = quickSearchBackColor;
-                }
-                if (flashColor) {
-                    config.backgroundColor = flashColor;
-                }
+                // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+                // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
+                // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
+                // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
+                // //Lowest priority first then every step will override the properties it needs to override.
+                // //probably not needed to optimise as we just assign properties.......
+                // if (conditionalStyleRow) {
+                //     if (conditionalStyleRow.BackColor) {
+                //         config.backgroundColor = conditionalStyleRow.BackColor;
+                //     }
+                //     if (conditionalStyleRow.ForeColor) {
+                //         config.color = conditionalStyleRow.ForeColor;
+                //     }
+                //     if (conditionalStyleRow.FontStyle
+                //         || conditionalStyleRow.FontWeight
+                //         || conditionalStyleRow.ForeColor
+                //         || conditionalStyleRow.FontSize) {
+                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                //     }
+                // }
+                // if (conditionalStyleColumn) {
+                //     if (conditionalStyleColumn.BackColor) {
+                //         config.backgroundColor = conditionalStyleColumn.BackColor;
+                //     }
+                //     if (conditionalStyleColumn.ForeColor) {
+                //         config.color = conditionalStyleColumn.ForeColor;
+                //     }
+                //     if (conditionalStyleColumn.FontStyle
+                //         || conditionalStyleColumn.FontWeight
+                //         || conditionalStyleColumn.ForeColor
+                //         || conditionalStyleColumn.FontSize) {
+                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                //     }
+                // }
+                // if (quickSearchBackColor) {
+                //     config.backgroundColor = quickSearchBackColor;
+                // }
+                // if (flashColor) {
+                //     config.backgroundColor = flashColor;
+                // }
             }
             return this.grid.cellRenderers.get(declaredRendererName);
         };
@@ -706,34 +752,67 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
-        let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex >= 0) {
-            if (style.flashBackColor) {
-                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
-                if (timeout) {
-                    setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
-                }
-            }
-            if (style.quickSearchBackColor) {
-                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
-            }
-            //There is never a timeout for CS
-            // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
-            if (style.conditionalStyleColumn) {
-                this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'conditionalStyleColumn', style.conditionalStyleColumn)
+        let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
+        if (!cellStyleHypergridColumns) {
+            cellStyleHypergridColumns = []
+            this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
+        }
+        let cellStyleHypergrid = cellStyleHypergridColumns[columnIndex]
+        if (!cellStyleHypergrid) {
+            cellStyleHypergrid = {}
+            cellStyleHypergridColumns[columnIndex] = cellStyleHypergrid
+        }
+
+        if (style.flashBackColor) {
+            cellStyleHypergrid.flashBackColor = style.flashBackColor
+            if (timeout) {
+                setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnIndex, 'flash'), timeout);
             }
         }
+        if (style.quickSearchBackColor) {
+            cellStyleHypergrid.quickSearchBackColor = style.quickSearchBackColor
+        }
+        //There is never a timeout for CS
+        if (style.conditionalStyleColumn) {
+            cellStyleHypergrid.conditionalStyleColumn = style.conditionalStyleColumn
+        }
+
+        // let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
+        // if (rowIndex >= 0) {
+        //     if (style.flashBackColor) {
+        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
+        //         if (timeout) {
+        //             setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
+        //         }
+        //     }
+        //     if (style.quickSearchBackColor) {
+        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
+        //     }
+        //     //There is never a timeout for CS
+        //     // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
+        //     if (style.conditionalStyleColumn) {
+        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'conditionalStyleColumn', style.conditionalStyleColumn)
+        //     }
+        // }
     }
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
-        let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        if (rowIndex >= 0) {
-            for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
-                //here we don't call Repaint as we consider that we already are in the repaint loop
-                //There is never a timeout for CS
-                if (style.conditionalStyleRow) {
-                    this.grid.behavior.setCellProperty(index, rowIndex, 'conditionalStyleRow', style.conditionalStyleRow)
-                }
+        let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
+        if (!cellStyleHypergridColumns) {
+            cellStyleHypergridColumns = []
+            this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
+        }
+
+        for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
+            let cellStyleHypergrid = cellStyleHypergridColumns[index]
+            if (!cellStyleHypergrid) {
+                cellStyleHypergrid = {}
+                cellStyleHypergridColumns[index] = cellStyleHypergrid
+            }
+            //here we don't call Repaint as we consider that we already are in the repaint loop
+            //There is never a timeout for CS
+            if (style.conditionalStyleRow) {
+                cellStyleHypergrid.conditionalStyleRow = style.conditionalStyleRow
             }
         }
     }
@@ -764,22 +843,54 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyleByIndex(x: number, y: number, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+    public removeCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+        let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
+        if (!cellStyleHypergridColumns) {
+            cellStyleHypergridColumns = []
+            this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
+        }
+        let cellStyleHypergrid = cellStyleHypergridColumns[columnIndex]
+        if (!cellStyleHypergrid) {
+            cellStyleHypergrid = {}
+            cellStyleHypergridColumns[columnIndex] = cellStyleHypergrid
+        }
         if (style == 'flash') {
-            this.grid.behavior.setCellProperty(x, y, 'flashBackgroundColor', undefined)
+            cellStyleHypergrid.flashBackColor = undefined
             this.grid.repaint()
         }
         if (style == 'csColumn') {
-            this.grid.behavior.setCellProperty(x, y, 'conditionalStyleColumn', undefined)
+            cellStyleHypergrid.conditionalStyleColumn = undefined
             this.grid.repaint()
         }
         if (style == 'csRow') {
-            this.grid.behavior.setCellProperty(x, y, 'conditionalStyleRow', undefined)
+            cellStyleHypergrid.conditionalStyleRow = undefined
             this.grid.repaint()
         }
         if (style == 'QuickSearch') {
-            this.grid.behavior.setCellProperty(x, y, 'quickSearchBackColor', undefined)
+            cellStyleHypergrid.quickSearchBackColor = undefined
         }
+    }
+
+    public removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+        this.cellStyleHypergridMap.forEach((cellStyleHypergridColumns) => {
+            cellStyleHypergridColumns.forEach((cellStyleHypergrid) => {
+                if (style == 'flash') {
+                    cellStyleHypergrid.flashBackColor = undefined
+                    this.grid.repaint()
+                }
+                if (style == 'csColumn') {
+                    cellStyleHypergrid.conditionalStyleColumn = undefined
+                    this.grid.repaint()
+                }
+                if (style == 'csRow') {
+                    cellStyleHypergrid.conditionalStyleRow = undefined
+                    this.grid.repaint()
+                }
+                if (style == 'QuickSearch') {
+                    cellStyleHypergrid.quickSearchBackColor = undefined
+                }
+            })
+        })
     }
 
     public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {

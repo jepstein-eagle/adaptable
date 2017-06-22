@@ -131,12 +131,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     clearColorQuickSearch: function () {
         if (this.quickSearchColor) {
-            for (let record of this.quickSearchColor) {
-                let rowIndex = blotter.getRowIndexHypergrid(record.rowID)
-                if (rowIndex > -1) {
-                    blotter.removeCellStyleByIndex(record.columnIndex, rowIndex, "QuickSearch")
-                }
-            }
+            blotter.removeAllCellStyleHypergrid("QuickSearch")
         }
         this.quickSearchColor = [];
     }

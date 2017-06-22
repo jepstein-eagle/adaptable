@@ -24,28 +24,25 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         //here we don't call Repaint as we consider that we already are in the repaint loop
-        let rowIndex = this.blotterBypass.getRowIndexHypergrid(dataChangedEvent.IdentifierValue)
-        if (rowIndex >= 0) {
-            for (var index = 0; index < columns.length; index++) {
-                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
-                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
-            }
+        for (var index = 0; index < columns.length; index++) {
+            this.blotterBypass.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, index, 'csColumn')
+            this.blotterBypass.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, index, 'csRow')
+        }
 
-            this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
+        this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
 
-                if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
-                    if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
-                    }
-                    else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        let columnIndex = this.blotter.getColumnIndex(c.ColumnId);
-                        if (columnIndex > -1) {
-                            this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { conditionalStyleColumn: c.Style })
-                        }
+            if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
+                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                }
+                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                    let columnIndex = this.blotter.getColumnIndex(c.ColumnId);
+                    if (columnIndex > -1) {
+                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { conditionalStyleColumn: c.Style })
                     }
                 }
-            })
-        }
+            }
+        })
     }
 
     protected InitStyles(): void {
@@ -53,18 +50,12 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         if (!this.blotterBypass) {
             this.blotterBypass = this.blotter as AdaptableBlotter
         }
-        let rowCount = this.blotterBypass.getRowCount();
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-            for (var index = 0; index < columns.length; index++) {
-                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csColumn')
-                this.blotterBypass.removeCellStyleByIndex(index, rowIndex, 'csRow')
-            }
-        }
+        this.blotterBypass.removeAllCellStyleHypergrid('csColumn')
+        this.blotterBypass.removeAllCellStyleHypergrid('csRow')
 
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-
 
             let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)

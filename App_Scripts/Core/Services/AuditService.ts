@@ -30,7 +30,6 @@ export class AuditService implements IAuditService {
         this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
-            //       this.TempDoBidOfferStuffForVideos(dataChangedEvent);
         }
     }
 
