@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { Provider, connect } from 'react-redux';
+import * as _ from 'lodash'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Form, Panel, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
@@ -25,11 +26,23 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     IsReadOnly: boolean
 }
 
+interface QuickSearchToolbarControlComponentState {
+    EditedQuickSearchText: string
+}
 
+class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, QuickSearchToolbarControlComponentState> {
+    constructor(props: QuickSearchToolbarControlComponentProps) {
+        super(props);
+        this.state = { EditedQuickSearchText: this.props.QuickSearchText }
+    }
+    componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
+        this.setState({
+            EditedQuickSearchText: nextProps.QuickSearchText
+        });
+    }
+    debouncedRunQuickSearch = _.debounce(() => this.props.onRunQuickSearch(this.state.EditedQuickSearchText), 250);
 
-class QuickSearchToolbarControlComponent extends React.Component<QuickSearchToolbarControlComponentProps, {}> {
-
-    render(): any {
+    render() {
 
         let tooltipText = this.props.QuickSearchDashboardControl.IsCollapsed ? "Expand" : "Collapse"
         let collapsedContent = <ControlLabel> {StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>
@@ -47,7 +60,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     style={{ width: "120px" }}
                     type="text"
                     placeholder="Search Text"
-                    value={this.props.QuickSearchText}
+                    value={this.state.EditedQuickSearchText}
                     onChange={(x) => this.onUpdateQuickSearchText(x)}
                 />
                 {' '}
@@ -89,7 +102,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     onUpdateQuickSearchText(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onRunQuickSearch(e.value);
+        this.setState({ EditedQuickSearchText: e.value })
+        this.debouncedRunQuickSearch();
     }
 
     onClearQuickSearch() {
