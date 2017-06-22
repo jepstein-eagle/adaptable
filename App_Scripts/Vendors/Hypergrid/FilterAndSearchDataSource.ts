@@ -54,7 +54,6 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                 let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
                 let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
                 let stringValueLowerCase = displayValue.toLowerCase()
-                let columnIndex = blotter.getColumnIndex(column.ColumnId)
                 switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
                     case LeafExpressionOperator.Contains:
                         {
@@ -62,7 +61,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
                                     || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
@@ -78,7 +77,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
                                     || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
@@ -93,7 +92,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                             if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
                                 || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                this.quickSearchColor.push({ rowID: rowId, columnIndex: columnIndex, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
+                                this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
                             }
                             //if we need to display only the rows that matched the quicksearch and no coloring then we can return
                             if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
@@ -126,7 +125,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     colorQuickSearch: function () {
         for (let record of this.quickSearchColor) {
-            blotter.addCellStyleHypergrid(record.rowID, record.columnIndex, record.style)
+            blotter.addCellStyleHypergrid(record.rowID, record.columnId, record.style)
         }
     },
     clearColorQuickSearch: function () {

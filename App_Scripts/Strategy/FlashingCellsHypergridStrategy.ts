@@ -17,13 +17,12 @@ export class FlashingCellsHypergridStrategy extends FlashingCellsStrategy implem
 
 
     protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
-        if (dataChangedEvent.OldValue == null) return;
+        if (dataChangedEvent.OldValue == null) { return; }
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? flashingColumn.DownBackColor : flashingColumn.UpBackColor
-        let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnId);
         //Jo : we know that this function is wrong as it's not cumulative
-        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, columnIndex, { flashBackColor: cellStyle }, flashingColumn.FlashingCellDuration.Duration)
+        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, { flashBackColor: cellStyle }, flashingColumn.FlashingCellDuration.Duration)
     }
 }

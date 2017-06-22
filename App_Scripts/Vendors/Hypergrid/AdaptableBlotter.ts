@@ -91,7 +91,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    private cellStyleHypergridMap: Map<any, CellStyleHypergrid[]> = new Map()
+    private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
 
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -283,16 +283,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
             }
             if (config.isDataRow) {
-                var x = config.dataCell.x;
-                var y = config.dataCell.y;
-                let row = this.grid.behavior.dataModel.dataSource.getRow(y)
-                let column = this.grid.behavior.getActiveColumns().find((col: any) => col.index == x)
-                if (column && row) {
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[column.name], column.name)
+                let row = config.dataRow
+                let columnName = config.columnName
+                if (columnName && row) {
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName)
                 }
                 let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                 let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
-                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns[x] : null
+                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns.get(columnName) : null
                 if (cellStyleHypergrid) {
                     let flashColor = cellStyleHypergrid.flashBackColor
                     let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn
@@ -680,15 +678,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnIndex(columnName: string): number {
-        //be carefull this returns the index y of the cell. Not the actual index in the collection
-        let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
-        return (activeColumn) ? activeColumn.index : -1;
+        // This is not true anymore //be carefull this returns the index y of the cell. Not the actual index in the collection
+        // let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
+        // return (activeColumn) ? activeColumn.index : -1;
+        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnName)
+        if (column) {
+            return column.Index
+        }
+        else {
+            return -1;
+        }
     }
 
 
     public isColumnReadonly(columnId: string): boolean {
         //TODO : implement the logic when the editor is looked up at runtime when overriding getCellEditorAt
-        let colprop = this.grid.behavior.getColumnProperties(this.getColumnIndex(columnId))
+        let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnId);
+        let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
         if (colprop.editor) {
             return false;
         }
@@ -750,23 +756,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         throw 'Not implemented for hypergrid see addCellStyleHypergrid';
     }
 
-    public addCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: CellStyleHypergrid, timeout?: number): void {
+    public addCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
-            cellStyleHypergridColumns = []
+            cellStyleHypergridColumns = new Map()
             this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
         }
-        let cellStyleHypergrid = cellStyleHypergridColumns[columnIndex]
+        let cellStyleHypergrid = cellStyleHypergridColumns.get(columnId)
         if (!cellStyleHypergrid) {
             cellStyleHypergrid = {}
-            cellStyleHypergridColumns[columnIndex] = cellStyleHypergrid
+            cellStyleHypergridColumns.set(columnId, cellStyleHypergrid)
         }
 
         if (style.flashBackColor) {
             cellStyleHypergrid.flashBackColor = style.flashBackColor
             if (timeout) {
-                setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnIndex, 'flash'), timeout);
+                setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnId, 'flash'), timeout);
             }
         }
         if (style.quickSearchBackColor) {
@@ -799,15 +805,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
-            cellStyleHypergridColumns = []
+            cellStyleHypergridColumns = new Map()
             this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
         }
-
-        for (var index = 0; index < this.grid.behavior.getActiveColumns().length; index++) {
-            let cellStyleHypergrid = cellStyleHypergridColumns[index]
+        for (let column of this.AdaptableBlotterStore.TheStore.getState().Grid.Columns) {
+            let cellStyleHypergrid = cellStyleHypergridColumns.get(column.ColumnId)
             if (!cellStyleHypergrid) {
                 cellStyleHypergrid = {}
-                cellStyleHypergridColumns[index] = cellStyleHypergrid
+                cellStyleHypergridColumns.set(column.ColumnId, cellStyleHypergrid)
             }
             //here we don't call Repaint as we consider that we already are in the repaint loop
             //There is never a timeout for CS
@@ -843,16 +848,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public removeCellStyleHypergrid(rowIdentifierValue: any, columnIndex: number, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+    public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
-            cellStyleHypergridColumns = []
+            cellStyleHypergridColumns = new Map()
             this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
         }
-        let cellStyleHypergrid = cellStyleHypergridColumns[columnIndex]
+        let cellStyleHypergrid = cellStyleHypergridColumns.get(columnId)
         if (!cellStyleHypergrid) {
             cellStyleHypergrid = {}
-            cellStyleHypergridColumns[columnIndex] = cellStyleHypergrid
+            cellStyleHypergridColumns.set(columnId, cellStyleHypergrid)
         }
         if (style == 'flash') {
             cellStyleHypergrid.flashBackColor = undefined
