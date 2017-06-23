@@ -121,7 +121,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 adaptableBlotterMiddleware(blotter),
                 middlewareReduxStorage))
         );
-
+        
         //We load the previous saved session. Redux is pretty awesome in its simplicity!
         loadStorage(this.TheStore)
             .then(

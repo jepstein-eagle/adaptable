@@ -24,6 +24,10 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     filterTest: function (r: any, rowObject: any) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns
+        if(columns.length == 0)
+        {
+            return true;
+        }
 
         //first we assess AdvancedSearch 
         let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
