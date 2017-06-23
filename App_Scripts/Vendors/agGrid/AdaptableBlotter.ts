@@ -519,6 +519,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.filterContainer);
+        //ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
 

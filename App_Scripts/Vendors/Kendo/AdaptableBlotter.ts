@@ -746,6 +746,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {

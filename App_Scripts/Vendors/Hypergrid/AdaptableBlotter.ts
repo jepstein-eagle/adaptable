@@ -284,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             if (config.isDataRow) {
                 let row = config.dataRow
-                let columnName = config.columnName
+                let columnName = config.name
                 if (columnName && row) {
                     this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName)
                 }
@@ -939,6 +939,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.filterContainer);
+        ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
 
