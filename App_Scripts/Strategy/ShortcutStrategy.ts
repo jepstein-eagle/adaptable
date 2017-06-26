@@ -85,6 +85,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     ColumnId: activeCell.ColumnId,
                     IdentifierValue: activeCell.Id,
                     Timestamp: Date.now(),
+                    Record: null
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);
