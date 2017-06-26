@@ -91,6 +91,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                             ColumnId: columnValuePair.columnID,
                             IdentifierValue: keyValuePair[0],
                             Timestamp: Date.now(),
+                            Record: null
                         }
 
                         let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);

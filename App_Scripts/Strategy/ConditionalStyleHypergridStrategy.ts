@@ -30,14 +30,25 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         }
 
         this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
-
-            // if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
-            if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
-                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+            if (dataChangedEvent.Record) {
+                // if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
+                if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
+                    if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                    }
+                    else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                    }
                 }
-                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+            }
+            else {
+                if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
+                    if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                    }
+                    else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                    }
                 }
             }
         })
