@@ -13,7 +13,8 @@ export interface IDataChangedEvent {
     NewValue: any;
     ColumnId: string;
     IdentifierValue: any;
-    Timestamp: number
+    Timestamp: number;
+    Record: any;
 }
 
 export interface IColumnDataValueList {
@@ -34,7 +35,7 @@ export interface IDataChangedInfo {
 
 
 export interface IAuditService {
-    CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string): void;
+    CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, record: any): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
     CheckCellChanging(dataChangingEvent: IDataChangingEvent): ICellValidationRule[]
 

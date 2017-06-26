@@ -181,7 +181,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
                 let changedValue = itemsArray[e.field];
                 let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
-                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field);
+                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
             }
         });
 
@@ -459,7 +459,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (let item of batchValues) {
             // todo: work out why we have this line?  seems superfluous....
             let model: any = this.grid.dataSource.getByUid(item.Id);
-            this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId);
+            this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId, model);
         }
     }
 

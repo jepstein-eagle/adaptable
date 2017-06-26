@@ -286,7 +286,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let row = config.dataRow
                 let columnName = config.name
                 if (columnName && row) {
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName)
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName, row)
                 }
                 let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                 let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
