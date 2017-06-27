@@ -577,7 +577,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
         })
-        return Array.from(returnMap.values());
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
 

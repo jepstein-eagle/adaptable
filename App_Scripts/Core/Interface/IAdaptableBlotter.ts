@@ -114,7 +114,8 @@ export interface IAdaptableBlotterOptions {
     userName?: string,
     primaryKey?: string,
     blotterId?: string,
-    predefinedConfigUrl?: string
+    predefinedConfigUrl?: string,
+    maxColumnValueItemsDisplayed: number
 }
 
 export interface IConfigEntity {
