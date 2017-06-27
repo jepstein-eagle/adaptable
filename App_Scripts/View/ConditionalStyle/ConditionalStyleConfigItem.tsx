@@ -7,6 +7,7 @@ import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Co
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helper';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -39,7 +40,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
 
                 <Col md={3} >
                     {this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                        column ? column.FriendlyName : this.props.ConditionalStyleCondition.ColumnId :
+                        column ? column.FriendlyName : this.props.ConditionalStyleCondition.ColumnId + Helper.MissingColumnMagicString :
                         "Whole Row"
                     }
                 </Col>
@@ -61,6 +62,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                     <EntityListActionButtons
                         editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
                         ConfigEntity={this.props.ConditionalStyleCondition}
+                        overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
                         ConfirmDeleteAction={this.props.onDeleteConfirm}>
                     </EntityListActionButtons>
                 </Col>

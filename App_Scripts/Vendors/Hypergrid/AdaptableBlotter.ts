@@ -725,7 +725,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (var index = 0; index < data.length; index++) {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
-            let rawValue = element[columnId]
+            let rawValue: any = null
+            if (element.hasOwnProperty(columnId)) {
+                rawValue = element[columnId]
+            }
+
             if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
                 returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
             }
@@ -748,8 +752,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getDisplayValueFromRecord(row: any, columnId: string) {
         let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
-        let formatter = column.getFormatter()
-        return formatter(row[columnId])
+        if (column) {
+            let formatter = column.getFormatter()
+            return formatter(row[columnId])
+        }
+        return "";
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {

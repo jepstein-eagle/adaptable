@@ -1,6 +1,7 @@
 import { SortOrder } from '../Core/Enums'
 
 export module Helper {
+    export var MissingColumnMagicString = "[MISSING]";
     export function getCharFromKey(event: JQueryKeyEventObject): string;
     export function getCharFromKey(event: KeyboardEvent): string;
     export function getCharFromKey(event: JQueryKeyEventObject | KeyboardEvent): string {

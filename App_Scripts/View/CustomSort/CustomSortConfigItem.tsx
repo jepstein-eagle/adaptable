@@ -1,6 +1,7 @@
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
+import { Helper } from '../../Core/Helper';
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 
@@ -26,6 +27,7 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                     <EntityListActionButtons
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         editClick={() => this.props.onEdit(this.props.CustomSort)}
+                        overrideDisableEdit={this.props.ColumnLabel.includes(Helper.MissingColumnMagicString)}
                         ConfigEntity={this.props.CustomSort}>
                     </EntityListActionButtons>
                 </Col>

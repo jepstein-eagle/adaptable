@@ -67,13 +67,14 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
 
         let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 2], ["Action", 2], ["", 3]];
-
+        
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
+            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={index}>
                 <Row >
                     <Col xs={2}>
-                        {this.props.Columns.find(c => c.ColumnId == x.ColumnId).FriendlyName}
+                        {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
                     </Col>
                     <Col xs={3}>
                         {x.Description}
@@ -91,6 +92,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         <EntityListActionButtons
                             ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
                             editClick={() => this.onEdit(index, x)}
+                            overrideDisableEdit={!column}
                             ConfigEntity={x}>
                         </EntityListActionButtons>
                     </Col>

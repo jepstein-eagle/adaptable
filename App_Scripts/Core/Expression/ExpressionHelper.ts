@@ -3,6 +3,7 @@ import { UserFilterHelper } from '../Services/UserFilterHelper'
 import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
+import { Helper } from '../../Core/Helper';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 
 
@@ -19,7 +20,7 @@ export module ExpressionHelper {
         )
     }
 
- 
+
 
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, userFilters: IUserFilter[]): string {
         let returnValue = ""
@@ -29,7 +30,15 @@ export module ExpressionHelper {
 
         let columnList = GetColumnListFromExpression(Expression)
         for (let columnId of columnList) {
-            let columnFriendlyName = columns.find(x => x.ColumnId == columnId).FriendlyName
+            let column = columns.find(x => x.ColumnId == columnId)
+            let columnFriendlyName: string
+            if (column) {
+                columnFriendlyName = column.FriendlyName
+            }
+            else {
+                columnFriendlyName = columnId + Helper.MissingColumnMagicString
+                console.warn("Could not find column id:" + columnId)
+            }
             let columnToString = ""
 
             // Column Display Values
@@ -77,15 +86,22 @@ export module ExpressionHelper {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
-
             //we need either a column value or user filter expression or range to match the column
             let isColumnSatisfied = false
 
+            let column = columnBlotterList.find(x => x.ColumnId == columnId)
+            if (!column) {
+                console.warn("Could not find column id:" + columnId)
+                isColumnSatisfied = true
+            }
+
             // check for display column values
-            let columnDisplayValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
-            if (columnDisplayValues) {
-                let columnDisplayValue = getDisplayColumnValue(columnDisplayValues.ColumnName)
-                isColumnSatisfied = columnDisplayValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
+            if (!isColumnSatisfied) {
+                let columnDisplayValues = Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
+                if (columnDisplayValues) {
+                    let columnDisplayValue = getDisplayColumnValue(columnDisplayValues.ColumnName)
+                    isColumnSatisfied = columnDisplayValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
+                }
             }
 
             // check for raw column values
@@ -295,7 +311,7 @@ export module ExpressionHelper {
         })
     }
 
-   
+
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,

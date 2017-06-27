@@ -67,7 +67,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 className="list-group-item" key={x.ColumnId + index}>
                 <Row >
                     <Col xs={3}>
-                        {column?column.FriendlyName:x.ColumnId}
+                        {column?column.FriendlyName:x.ColumnId+Helper.MissingColumnMagicString}
                     </Col>
                     <Col xs={2}>
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
@@ -78,6 +78,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     <Col xs={3}>
                         <EntityListActionButtons
                             ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
+                            overrideDisableEdit={!column}
                             editClick={() => this.onEdit(index, x)}
                             ConfigEntity={x}>
                         </EntityListActionButtons>

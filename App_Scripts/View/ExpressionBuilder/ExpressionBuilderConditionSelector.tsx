@@ -105,10 +105,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     render() {
-
-        let selectedColumnDataType: DataType = (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId).DataType;
-        let selectedColumn: IColumn = StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-        let availableExpressionIds: string[] = this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn));
+        let column = (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId)
+        let selectedColumnDataType: DataType = column?column.DataType:null
+        let selectedColumn: IColumn = column;
+    
+        let availableExpressionIds: string[] = column?this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn)):[];
 
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
         let addConditionButtonDisabled: boolean = !this.state.IsFirstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
@@ -148,7 +149,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 }
             </AdaptableBlotterForm>
 
-            {StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId) ? null :
+            {!selectedColumn ? null :
 
                 <div >
                     <AdaptableBlotterForm horizontal>

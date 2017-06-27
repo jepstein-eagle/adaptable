@@ -60,11 +60,10 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
 
   let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
-            if (column == null) return;
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
                 onEdit={(customSort) => this.onEditCustomSort(customSort)}
                 onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-                ColumnLabel={column.FriendlyName}></CustomSortConfigItem>
+                ColumnLabel={column?column.FriendlyName:customSort.ColumnId+Helper.MissingColumnMagicString}></CustomSortConfigItem>
         });
 
         let cellInfo: [string, number][] = [["Column", 3], ["Sort Order", 6], ["", 3]];

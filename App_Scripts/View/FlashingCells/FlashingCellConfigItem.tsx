@@ -22,6 +22,11 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
 
     render(): any {
         let isDisabled = this.props.FlashingColumn.IsPredefined
+        let column = this.props.Columns.find(f => f.ColumnId == this.props.FlashingColumn.ColumnName)
+        if(!column)
+        {
+            return null
+        }
         return <li
             className="list-group-item"
             onClick={() => { } }>
@@ -30,7 +35,7 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
                 </Col>
                 <Col md={4} >
-                    {this.props.Columns.find(f => f.ColumnId == this.props.FlashingColumn.ColumnName).FriendlyName}
+                    {column.FriendlyName}
                 </Col>
                 <Col md={3} >
                     {
