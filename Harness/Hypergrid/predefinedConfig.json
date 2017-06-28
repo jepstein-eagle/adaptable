@@ -35,5 +35,54 @@
 				"IsDynamic": false
 			}
 		]
-	}
+	},
+    "AdvancedSearch": {
+        "AdvancedSearches": [
+            {
+                "Uid": "040b22a3-790e-42e4-a436-a521c869b8fe",
+                "Name": "PrimaryKeyBetween1And50",
+                "Expression": {
+                    "ColumnDisplayValuesExpressions": [],
+                    "ColumnRawValuesExpressions": [],
+                    "UserFilters": [],
+                    "RangeExpressions": [
+                        {
+                            "ColumnName": "tradeId",
+                            "Ranges": [
+                                {
+                                    "Operand1": "1",
+                                    "Operand2": "50",
+                                    "Operator": 7
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "IsPredefined": true
+            },
+            {
+                "Uid": "ded79a23-203b-4792-a9c3-5bee1290f4c0",
+                "Name": "NumberColumn0Between20and70",
+                "Expression": {
+                    "ColumnDisplayValuesExpressions": [],
+                    "ColumnRawValuesExpressions": [],
+                    "UserFilters": [],
+                    "RangeExpressions": [
+                        {
+                            "ColumnName": "price",
+                            "Ranges": [
+                                {
+                                    "Operand1": "20",
+                                    "Operand2": "70",
+                                    "Operator": 7
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "IsPredefined": true
+            }
+        ],
+        "CurrentAdvancedSearchId": ""
+    }
 }

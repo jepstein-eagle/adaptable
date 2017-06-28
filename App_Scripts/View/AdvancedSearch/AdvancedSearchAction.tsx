@@ -164,7 +164,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
                                 DeleteUserFilterExpression={(columnId: string, index: number) => this.onDeleteUserFilterExpression(columnId, index)}
                                 DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}
-                                ShowPanel={false}>
+                                ShowPanel={false}
+                                ReadOnlyMode={selectedAdvancedSearch.IsPredefined}>
                             </ExpressionBuilderPreview>
                         </div>
                     </PanelWithInfo>
