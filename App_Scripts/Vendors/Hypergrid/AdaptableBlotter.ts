@@ -92,6 +92,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public BlotterOptions: IAdaptableBlotterOptions
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
+    private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
 
     constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -779,7 +780,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (style.flashBackColor) {
             cellStyleHypergrid.flashBackColor = style.flashBackColor
             if (timeout) {
-                setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnId, 'flash'), timeout);
+                let cellIntervalColumns = this.cellFlashIntervalHypergridMap.get(rowIdentifierValue);
+                if (!cellIntervalColumns) {
+                    cellIntervalColumns = new Map()
+                    this.cellFlashIntervalHypergridMap.set(rowIdentifierValue, cellIntervalColumns)
+                }
+                let cellFlashIntervalHypergrid = cellIntervalColumns.get(columnId)
+                if (cellFlashIntervalHypergrid) {
+                    clearTimeout(cellFlashIntervalHypergrid)
+                    cellIntervalColumns.set(columnId, null)
+                }
+                let timeoutInterval: number = setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnId, 'flash'), timeout);
+                cellIntervalColumns.set(columnId, timeoutInterval)
             }
         }
         if (style.quickSearchBackColor) {
