@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 301; i++) {
+        for (var i = 1; i < 25000; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -53,7 +53,7 @@ export class DataGenerator {
 
             trade["bloombergAsk"] = this.roundTo4Dp(trade["ask"] + 0.01);
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
-            grid.behavior.reindex();
+            //grid.behavior.reindex();
             grid.repaint()
         }, 100)
     }

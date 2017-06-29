@@ -759,21 +759,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         return "";
     }
-    public getHypergridColumn(columnId: string) {
+    public getColumnFormatter(columnId: string) {
         let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
-        if (column) {
-            return column
+        if (column && column.properties.format) {
+            return column.getFormatter()
         }
         return null;
     }
 
-    public getDisplayValueFromRecordAndColum(row: any, columnHypergrid: any) {
-        if (columnHypergrid) {
-            let formatter = columnHypergrid.getFormatter()
-            return formatter(row[columnHypergrid.name])
-        }
-        return "";
-    }
+    // public getDisplayValueFromRecordAndFormatter(row: any, formatter: any, columnId: string) {
+    //     if (formatter) {
+    //         return formatter(row[columnId])
+    //     }
+    //     return row[columnId];
+    // }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         throw 'Not implemented for hypergrid see addCellStyleHypergrid';

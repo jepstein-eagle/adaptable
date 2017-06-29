@@ -1,5 +1,5 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
-import {  SortOrder } from '../../Core/Enums'
+import { SortOrder } from '../../Core/Enums'
 import { DataSourceIndexed } from './DataSourceIndexed'
 
 //All custom pipelines should extend from pipelineBase
@@ -23,27 +23,25 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         if (customSort) {
             for (let i = 0; i < tmp.length; i++) {
                 let dataRow = this.dataSource.getRow(i);
-                tmp[i] = [dataRow, i];
+                tmp[i] = [dataRow[fields], i];
             }
             let direction: number = 1
             if (this.blotter.sortOrder === SortOrder.Descending) {
                 direction = -1
             }
-            let column = blotter.getHypergridColumn(customSort.ColumnId)
+            let formatter = blotter.getColumnFormatter(customSort.ColumnId)
             tmp.sort(function (a: any, b: any) {
                 let firstElement = a[0]
                 let secondElement = b[0]
-                let firstElementValueString = blotter.getDisplayValueFromRecordAndColum(firstElement, column) //firstElement[customSort.ColumnId];
-                let secondElementValueString = blotter.getDisplayValueFromRecordAndColum(secondElement, column)//secondElement[customSort.ColumnId];
-                let firstElementValue = firstElement[customSort.ColumnId];
-                let secondElementValue = secondElement[customSort.ColumnId];
+                let firstElementValueString = formatter?formatter(firstElement):String(firstElement) //firstElement[customSort.ColumnId];
+                let secondElementValueString = formatter?formatter(secondElement):String(secondElement)//secondElement[customSort.ColumnId];
                 let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);
                 let containsFirstElement = indexFirstElement >= 0;
                 let indexSecondElement = customSort.CustomSortItems.indexOf(secondElementValueString);
                 let containsSecondElement = indexSecondElement >= 0;
                 //if none of the element are in the list we jsut return normal compare
                 if (!containsFirstElement && !containsSecondElement) {
-                    return ((firstElementValue < secondElementValue) ? -1 : 1) * direction;
+                    return ((firstElement < secondElement) ? -1 : 1) * direction;
                 }
                 //if first item not in the list make sure we put it after the second item
                 if (!containsFirstElement) {
