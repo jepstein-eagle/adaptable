@@ -29,11 +29,12 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
             if (this.blotter.sortOrder === SortOrder.Descending) {
                 direction = -1
             }
+            let column = blotter.getHypergridColumn(customSort.ColumnId)
             tmp.sort(function (a: any, b: any) {
                 let firstElement = a[0]
                 let secondElement = b[0]
-                let firstElementValueString = blotter.getDisplayValueFromRecord(firstElement, customSort.ColumnId) //firstElement[customSort.ColumnId];
-                let secondElementValueString = blotter.getDisplayValueFromRecord(secondElement, customSort.ColumnId)//secondElement[customSort.ColumnId];
+                let firstElementValueString = blotter.getDisplayValueFromRecordAndColum(firstElement, column) //firstElement[customSort.ColumnId];
+                let secondElementValueString = blotter.getDisplayValueFromRecordAndColum(secondElement, column)//secondElement[customSort.ColumnId];
                 let firstElementValue = firstElement[customSort.ColumnId];
                 let secondElementValue = secondElement[customSort.ColumnId];
                 let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);
