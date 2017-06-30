@@ -706,12 +706,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCustomSort(columnId: string, comparer: Function): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        this.ReindexAndRepaint()
+        if (this.sortColumnName == columnId) {
+            this.ReindexAndRepaint()
+        }
     }
 
     public removeCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        this.ReindexAndRepaint()
+        if (this.sortColumnName == columnId) {
+            this.ReindexAndRepaint()
+        }
     }
 
     public ReindexAndRepaint() {
