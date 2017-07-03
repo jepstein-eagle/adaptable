@@ -42,7 +42,7 @@ module.exports = {
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
             // note that babel-loader is configured to run after ts-loader
             {
-                test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015!ts-loader'
+                test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015-loose!ts-loader'
             },
             // handle main stylesheets required 
             { test: /\.css$/,  exclude: /themes/, loader: 'style-loader!css-loader' },
