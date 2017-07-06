@@ -11,6 +11,9 @@ script:
     - npm run build-prod
 notifications:
   email: false
+  slack: $SLACK
+    on_success: never
+    on_failure: always
 deploy:
  provider: npm
  skip_cleanup: true
@@ -37,3 +40,5 @@ deploy:
         tags: true
         all_branches: true
         condition: "$TRAVIS_TAG =~ ^((?!beta).)*$"
+after_deploy:
+  - node slack.js --slack ${SLACK} --tag ${$TRAVIS_TAG}
