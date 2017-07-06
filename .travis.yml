@@ -9,8 +9,8 @@ cache:
     - node_modules
 script:
     - npm run build-prod
-# notifications:
-#   - email: false
+notifications:
+  - email: false
 #   - slack: '$SLACK'
 #       on_success: never
 #       on_failure: always
