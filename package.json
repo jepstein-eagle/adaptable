@@ -65,12 +65,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-themes": "node postcss-scopify.config.js",
-    "build-dev": "node_modules/.bin/webpack --config webpack.dev.js",
-    "build-prod": "node_modules/.bin/webpack --config webpack.prod.js -p",
-    "dev-kendo": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
-    "dev-hypergrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
-    "dev-aggrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
-    "dev-adaptablegrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
+    "build-dev": "set arg=all&&webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js -p",
+    "dev-kendo": "set arg=kendo&&webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
+    "dev-hypergrid": "set arg=hypergrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
+    "dev-aggrid": "set arg=aggrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
+    "dev-adaptablegrid": "set arg=adaptablegrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
     "openfin": "node openfin-launcher.js"
   },
   "keywords": [
