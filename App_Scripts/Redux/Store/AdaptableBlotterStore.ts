@@ -63,6 +63,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
+const CREATE_STATE = 'CREATE_STATE';
 export interface ResetUserDataAction extends Redux.Action {
 }
 export interface InitStateAction extends Redux.Action {
@@ -72,6 +73,9 @@ export const ResetUserData = (): ResetUserDataAction => ({
 })
 export const InitState = (): ResetUserDataAction => ({
     type: INIT_STATE
+})
+export const CreateState = (): ResetUserDataAction => ({
+    type: CREATE_STATE
 })
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
@@ -90,7 +94,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
         let engineWithFilter: ReduxStorage.StorageEngine
         let engineReduxStorage: ReduxStorage.StorageEngine
-        //TODO: currently we persits the state after EVERY actions. Need to see what we decide for that
+
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
             engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
@@ -98,7 +102,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
         }
         engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
-        middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter);
+        //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
+        //I think that is a part where we push a bit redux and should have two distinct stores....
+        middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, [CREATE_STATE, MenuRedux.SET_MENUITEMS, GridRedux.SET_GRIDCOLUMNS]);
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
         loadStorage = ReduxStorage.createLoader(engineReduxStorage);
@@ -121,18 +127,21 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 adaptableBlotterMiddleware(blotter),
                 middlewareReduxStorage))
         );
-        
-        //We load the previous saved session. Redux is pretty awesome in its simplicity!
-        loadStorage(this.TheStore)
-            .then(
-            () => this.TheStore.dispatch(InitState()),
-            (e) => {
-                console.log('Failed to load previous adaptable blotter state : ' + e);
-                //for now i'm still initializing the AB even if loading state has failed.... 
-                //we may revisit that later
-                this.TheStore.dispatch(InitState())
-                this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
-            })
+        //We start to build the state once everything is instantiated... I dont like that. Need to change
+        setTimeout(() => {
+            this.TheStore.dispatch(CreateState())
+            //We load the previous saved session. Redux is pretty awesome in its simplicity!
+            loadStorage(this.TheStore)
+                .then(
+                () => this.TheStore.dispatch(InitState()),
+                (e) => {
+                    console.log('Failed to load previous adaptable blotter state : ' + e);
+                    //for now i'm still initializing the AB even if loading state has failed.... 
+                    //we may revisit that later
+                    this.TheStore.dispatch(InitState())
+                    this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
+                })
+        }, 0);
     }
 }
 
@@ -280,6 +289,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     ExportStrategy.ExportBlotter();
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
+                }
+                case CREATE_STATE: {
+                    let returnAction = next(action);
+                    //we create all the menus
+                    adaptableBlotter.createMenu();
+                    //we set the column list from the datasource
+                    adaptableBlotter.setColumnIntoStore();
+                    return returnAction;
                 }
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined

@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { IMenuItem } from '../../Core/Interface/IStrategy';
 import { MenuState } from './Interface/IState'
-const SET_MENUITEMS = 'SET_MENUITEMS';
+export const SET_MENUITEMS = 'SET_MENUITEMS';
 const SHOW_COLUMN_CONTEXT_MENU = 'SHOW_COLUMN_CONTEXT_MENU';
 const HIDE_COLUMN_CONTEXT_MENU = 'HIDE_COLUMN_CONTEXT_MENU';
 const ADD_ITEM_COLUMN_CONTEXT_MENU = 'ADD_ITEM_COLUMN_CONTEXT_MENU';
