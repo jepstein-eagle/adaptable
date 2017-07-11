@@ -16,6 +16,8 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
+import { SearchService } from '../../Core/Services/SearchService'
+import { StyleService } from '../../Core/Services/StyleService'
 import { SearchServiceagGrid } from '../../Core/Services/SearchServiceagGrid'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -28,7 +30,7 @@ import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
+import { ConditionalStyleagGridStrategy } from '../../Strategy/ConditionalStyleagGridStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
@@ -52,7 +54,10 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
+
 import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
+import { NewValueParams } from "ag-grid/dist/lib/entities/colDef"
+
 import { FilterWrapperFactory } from './FilterWrapper'
 
 
@@ -67,6 +72,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
+    public StyleService: StyleService
 
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -80,6 +86,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceagGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
+        this.StyleService = new StyleService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -95,7 +102,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         //this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
@@ -110,9 +117,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.container.ownerDocument.body.appendChild(this.filterContainer)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
-        gridOptions.api.addGlobalListener((type: string, event: any) => {
-            //console.log(event)
-        });
+        // gridOptions.api.addGlobalListener((type: string, event: any) => {
+        //     //console.log(event)
+        // });
 
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
@@ -140,6 +147,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null
+        });
+
+        //replace any by NewValueParams when upgrading to latest agGrid
+        gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
+            let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
+            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
         });
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
@@ -474,6 +487,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public setCellClassRules(cellClassRules: any, columnId: string) {
+        this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+    }
+
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         return null
     }
@@ -515,6 +532,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public applyColumnFilters(): void {
         this.gridOptions.api.onFilterChanged()
+    }
+
+    public refreshView() {
+        this.gridOptions.api.refreshView();
+    }
+
+    public refreshCells(rowNode: RowNode, columnIds: string[]) {
+        this.gridOptions.api.refreshCells([rowNode], columnIds);
     }
 
     destroy() {
