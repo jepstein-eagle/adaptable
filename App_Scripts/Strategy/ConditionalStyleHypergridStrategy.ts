@@ -69,10 +69,9 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
             let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
 
-            //we add the Index of the column to the list so we do not need to reevaluate every row
             let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
-                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId), collectionIndex: this.ConditionalStyleState.ConditionalStyleConditions.indexOf(cs) }))
+                .map(cs => cs)
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
             let rowIds: string[] = this.blotter.getAllRowIds();
@@ -83,9 +82,9 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 for (let column in columnConditionalStylesGroupedByColumn) {
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
-                        if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
-
-                            this.blotterBypass.addCellStyleHypergrid(rowId, columnCS.columnIndex, { conditionalStyleColumn: columnCS.Style })
+                        let localCS : IConditionalStyleCondition = columnCS
+                        if (ExpressionHelper.checkForExpression(localCS.Expression, rowId, columns, this.blotter)) {
+                            this.blotterBypass.addCellStyleHypergrid(rowId, localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
                             break
                         }
                     }
