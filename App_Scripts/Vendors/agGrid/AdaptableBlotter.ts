@@ -64,6 +64,7 @@ import { FilterWrapperFactory } from './FilterWrapper'
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+    private quickSearchHighlights: Map<string, boolean>
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -77,6 +78,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.quickSearchHighlights = new Map()
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -104,7 +106,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         //this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
@@ -160,18 +162,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.isExternalFilterPresent = () => {
             let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0
             let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
-            return isFilterActive || isSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
+            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+            //it means that originaldoesExternalFilterPass will be called to we reinit that collection
+            this.quickSearchHighlights.clear()
+            return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
         }
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns
-            let rowId = this.getPrimaryKeyValueFromRecord(node)
+            // let rowId = this.getPrimaryKeyValueFromRecord(node)
 
             //first we assess AdvancedSearch 
             let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
             if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
                 let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
-                if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
+                    // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
                     return false;
                 }
             }
@@ -180,10 +186,54 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {
-                    if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
+                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
+                        // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
                         return false
                     }
                 }
+            }
+
+            //we assess quicksearch
+            let recordReturnValue = false
+            if (StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch
+                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
+
+                for (let column of columns.filter(c => c.Visible)) {
+                    let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId)
+                    let rowId = this.getPrimaryKeyValueFromRecord(node)
+                    let stringValueLowerCase = displayValue.toLowerCase()
+                    switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true
+                                }
+                            }
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true
+                                }
+                            }
+                            break;
+                    }
+                }
+                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                    recordReturnValue = true;
+                }
+                if (!recordReturnValue) { return false }
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true
         }
@@ -232,7 +282,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         })
 
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(visibleColumns.concat(hiddenColumns)));
+        let allColumns = visibleColumns.concat(hiddenColumns)
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(allColumns));
+        let quickSearchHighlights = this.quickSearchHighlights
+        let blotter = this
+        for (let col of allColumns) {
+            this.setCellClassRules({
+                'Ab-QuickSearch': function (params: any) {
+                    return quickSearchHighlights.has(blotter.getPrimaryKeyValueFromRecord(params.node) + params.colDef.field)
+                }
+            }, col.ColumnId, "QuickSearch")
+        }
+
     }
 
     public hideFilterForm() {
@@ -478,17 +539,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
             if (typeof render == "string") {
-                return rawValue
+                return String(rawValue)
             }
             return render({ value: rawValue })
         }
         else {
-            return rawValue
+            return String(rawValue)
         }
     }
 
-    public setCellClassRules(cellClassRules: any, columnId: string) {
-        this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch") {
+        let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
+        if (localCellClassRules) {
+            if (type == "ConditionalStyle") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-ConditionalStyle-")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            //Is initialized in setColumnIntoStore
+            else if (type == "QuickSearch") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-QuickSearch")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            for (let prop in cellClassRules) {
+                localCellClassRules[prop] = cellClassRules[prop]
+            }
+        }
+        else {
+            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+        }
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {

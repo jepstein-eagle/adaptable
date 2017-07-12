@@ -14,6 +14,8 @@ export class SearchServiceagGrid implements ISearchService {
 
     public ApplySearchOnGrid(): void {
         this.blotter.onFilterChanged()
+        //TODO : This is probably temporary and is used to reevaluate the quicksearch CellClassRules
+        this.blotter.refreshView()
     }
 
     public ApplySearchOnRow(rowIdentifier: string): void {

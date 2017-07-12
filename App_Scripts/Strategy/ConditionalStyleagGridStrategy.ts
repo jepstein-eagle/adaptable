@@ -67,7 +67,7 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                         }
                     }
                 })
-                theBlotter.setCellClassRules(cellClassRules, column.ColumnId);
+                theBlotter.setCellClassRules(cellClassRules, column.ColumnId, "ConditionalStyle");
             }
         }
 
