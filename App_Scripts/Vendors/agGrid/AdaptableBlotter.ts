@@ -109,7 +109,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        //this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
@@ -144,6 +144,57 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = editor
+            //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
+            let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd
+            let isCancelAfterEnd = () => {
+                let dataChangedEvent: IDataChangingEvent
+                dataChangedEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) }
+
+                let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+                if (failedRules.length > 0) { // we have at least one failure or warning
+                    let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+
+                    // first see if its an error = should only be one item in array if so
+                    if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                        let error: IUIError = {
+                            ErrorMsg: errorMessage
+                        }
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                        return true;
+                    } else {
+                        let warningMessage: string = "";
+                        failedRules.forEach(f => {
+                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                        })
+                        let cellInfo: ICellInfo = {
+                            Id: dataChangedEvent.IdentifierValue,
+                            ColumnId: dataChangedEvent.ColumnId,
+                            Value: dataChangedEvent.NewValue
+                        }
+                        let confirmation: IUIConfirmation = {
+                            CancelText: "Cancel Edit",
+                            ConfirmationTitle: "Cell Validation Failed",
+                            ConfirmationMsg: warningMessage,
+                            ConfirmationText: "Bypass Rule",
+                            CancelAction: null,
+                            ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node))
+                        }
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                        return true
+                    }
+                }
+                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false
+                if (!whatToReturn) {
+                    //no failed validation so we raise the edit auditlog
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                        dataChangedEvent.ColumnId,
+                        this.gridOptions.api.getValue(params.column.getColId(), params.node), dataChangedEvent.NewValue)
+                }
+                return whatToReturn
+            }
+            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
         });
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
