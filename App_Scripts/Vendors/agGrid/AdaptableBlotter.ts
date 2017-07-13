@@ -151,7 +151,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._currentEditor = null
         });
 
-        //replace any by NewValueParams when upgrading to latest agGrid
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
@@ -412,7 +411,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
+                this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
+                    cellInfo.ColumnId,
+                    oldValue, cellInfo.Value)
             }
         })
     }
@@ -423,7 +426,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
+                let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
                 rowNode.setDataValue(value.ColumnId, value.Value)
+                this.AuditLogService.AddEditCellAuditLog(value.Id,
+                    value.ColumnId,
+                    oldValue, value.Value)
             }
         })
     }
