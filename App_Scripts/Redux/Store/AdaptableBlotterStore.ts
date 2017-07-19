@@ -135,7 +135,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 .then(
                 () => this.TheStore.dispatch(InitState()),
                 (e) => {
-                    console.log('Failed to load previous adaptable blotter state : ' + e);
+                    console.error('Failed to load previous adaptable blotter state : ' , e);
                     //for now i'm still initializing the AB even if loading state has failed.... 
                     //we may revisit that later
                     this.TheStore.dispatch(InitState())
