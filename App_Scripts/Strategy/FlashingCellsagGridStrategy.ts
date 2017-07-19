@@ -38,6 +38,10 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
         else {
             this.currentFlashing.set(key, { down: isDown, timer: timer })
         }
+        //TODO : since upgrading to v11 it looks like events are dispatched async so we get this
+        //after the cellclassrules eval.... I've put that as a workaround for now but that needs
+        //proper fixing
+        theBlotter.refreshCells(dataChangedEvent.Record, [dataChangedEvent.ColumnId])
     }
 
     protected InitState() {
