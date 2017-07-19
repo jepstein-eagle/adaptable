@@ -200,6 +200,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null
+            //We refresh the filter so we get live search/filter when editing.
+            //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
+            this.onFilterChanged();
         });
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
