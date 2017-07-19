@@ -23,9 +23,10 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
         let oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         let newValueNumber: Number = Number(dataChangedEvent.NewValue);
         let theBlotter = this.blotter as AdaptableBlotter;
-        let currentFlash = this.currentFlashing.get(dataChangedEvent.IdentifierValue)
+        let key = dataChangedEvent.IdentifierValue + flashingColumn.ColumnName
+        let currentFlash = this.currentFlashing.get(key)
         let timer = setTimeout(() => {
-            this.currentFlashing.delete(dataChangedEvent.IdentifierValue)
+            this.currentFlashing.delete(key)
             theBlotter.refreshCells(dataChangedEvent.Record, [dataChangedEvent.ColumnId])
         }, flashingColumn.FlashingCellDuration.Duration)
         let isDown = oldvalueNumber > newValueNumber
@@ -35,7 +36,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
             currentFlash.down = isDown
         }
         else {
-            this.currentFlashing.set(dataChangedEvent.IdentifierValue, { down: isDown, timer: timer })
+            this.currentFlashing.set(key, { down: isDown, timer: timer })
         }
     }
 
@@ -46,13 +47,16 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let theBlotter = this.blotter as AdaptableBlotter
             let flashings = this.currentFlashing
-            // adding this check as things can get mixed up during 'clean user data'
-            if (columns.length > 0 && this.FlashingCellState.FlashingColumns.length > 0) {
-                this.FlashingCellState.FlashingColumns.forEach((fc, index) => {
-                    let cellClassRules: any = {};
+
+            columns.forEach(col => {
+                let fc = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == col.ColumnId)
+                let index = this.FlashingCellState.FlashingColumns.indexOf(fc)
+                let cellClassRules: any = {};
+                if (fc) {
                     cellClassRules["Ab-FlashUp" + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let currentFlash = flashings.get(theBlotter.getPrimaryKeyValueFromRecord(params.node))
+                        let key = primaryKey + col.ColumnId
+                        let currentFlash = flashings.get(key)
                         if (currentFlash && !currentFlash.down) {
                             return true
                         }
@@ -60,16 +64,16 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                     }
                     cellClassRules["Ab-FlashDown" + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let currentFlash = flashings.get(theBlotter.getPrimaryKeyValueFromRecord(params.node))
+                        let key = primaryKey + col.ColumnId
+                        let currentFlash = flashings.get(key)
                         if (currentFlash && currentFlash.down) {
                             return true
                         }
                         return false
                     }
-                    theBlotter.setCellClassRules(cellClassRules, fc.ColumnName, "FlashingCell");
-                })
-            }
-
+                }
+                theBlotter.setCellClassRules(cellClassRules, col.ColumnId, "FlashingCell");
+            })
         }
     }
 }
