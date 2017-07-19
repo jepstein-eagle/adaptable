@@ -345,9 +345,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
     }
-
+    public hideFilterFormPopup : Function
     public hideFilterForm() {
-        throw Error("not implemented yet")
+        if(this.hideFilterFormPopup){
+            this.hideFilterFormPopup()
+        }
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {

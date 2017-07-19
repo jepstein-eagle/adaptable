@@ -3,10 +3,10 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { FilterFormReact } from '../../View/FilterForm';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
-import { IAdaptableBlotter, } from '../../Core/Interface/IAdaptableBlotter'
+import { AdaptableBlotter, } from '../../Vendors/agGrid/AdaptableBlotter'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
-export let FilterWrapperFactory = (blotter: IAdaptableBlotter) => {
+export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
     return <any>class FilterWrapper implements IFilterComp {
         private params: IFilterParams
         private filterContainer: HTMLDivElement
@@ -43,6 +43,7 @@ export let FilterWrapperFactory = (blotter: IAdaptableBlotter) => {
                 Blotter: blotter,
                 ColumnValueType: DistinctCriteriaPairValue.DisplayValue
             };
+            blotter.hideFilterFormPopup = params.hidePopup
             ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
         }
     }
