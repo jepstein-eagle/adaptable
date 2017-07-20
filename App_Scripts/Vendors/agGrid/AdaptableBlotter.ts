@@ -202,7 +202,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._currentEditor = null
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
-            this.onFilterChanged();
+            this.applyColumnFilters();
         });
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
@@ -310,7 +310,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
-    public onFilterChanged() {
+    public applyColumnFilters() {
         this.gridOptions.api.onFilterChanged()
     }
 
@@ -474,6 +474,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     oldValue, cellInfo.Value)
             }
         })
+        this.applyColumnFilters();
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -489,6 +490,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     oldValue, value.Value)
             }
         })
+        this.applyColumnFilters();
     }
 
     public cancelEdit() {
@@ -687,11 +689,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public isGridPageable(): boolean {
         return false
     }
-
-    public applyColumnFilters(): void {
-        this.gridOptions.api.onFilterChanged()
-    }
-
+    
     public refreshView() {
         this.gridOptions.api.refreshView();
     }
