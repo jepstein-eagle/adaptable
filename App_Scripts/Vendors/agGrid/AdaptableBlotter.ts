@@ -71,7 +71,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    private filterContainer: HTMLDivElement
+    private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
 
@@ -112,12 +112,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
-        this.filterContainer = this.container.ownerDocument.createElement("div")
-        this.filterContainer.id = "filterContainer"
-        this.filterContainer.style.position = 'absolute'
-        this.filterContainer.style.visibility = "hidden"
-        this.container.ownerDocument.body.appendChild(this.filterContainer)
-
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
         // gridOptions.api.addGlobalListener((type: string, event: any) => {
         //     //console.log(event)
@@ -136,7 +130,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
-
+        gridContainer.addEventListener("contextmenu", (event) => {
+            event.preventDefault()
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.ShowColumnContextMenu(
+                    "tradeId",
+                    event.clientX,
+                    event.clientY))
+        })
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
             let editor = (<any>this.gridOptions.api).rowRenderer.renderedRows[params.rowIndex].renderedCells[params.column.getColId()].cellEditor
@@ -700,7 +701,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
-        ReactDOM.unmountComponentAtNode(this.filterContainer);
         //ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
