@@ -57,9 +57,9 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 
 import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
 import { NewValueParams } from "ag-grid/dist/lib/entities/colDef"
+import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 
 import { FilterWrapperFactory } from './FilterWrapper'
-
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -71,7 +71,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
 
@@ -130,14 +129,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
-        gridContainer.addEventListener("contextmenu", (event) => {
-            event.preventDefault()
-            this.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.ShowColumnContextMenu(
-                    "tradeId",
-                    event.clientX,
-                    event.clientY))
-        })
+
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
             let editor = (<any>this.gridOptions.api).rowRenderer.renderedRows[params.rowIndex].renderedCells[params.column.getColId()].cellEditor
@@ -297,6 +289,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
             col.initialise()
         })
+
+        let originalgetMainMenuItems = gridOptions.getMainMenuItems;
+        gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
+            //couldnt find a way to listen for menu close. There is a Menu Item Select 
+            //but you can also clsoe the menu from filter and clicking outside the menu....
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.HideColumnContextMenu())
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.ShowColumnContextMenu(
+                    params.column.getColId(),
+                    0,
+                    0))
+            var colMenuItems: (string | MenuItemDef)[]
+            //if there was an initial implementation we init the list of menu items with this one, otherwise we take
+            //the default items
+            if (originalgetMainMenuItems) {
+                let originalMenuItems = originalgetMainMenuItems(params)
+                colMenuItems = originalMenuItems.slice(0);
+            }
+            else {
+                colMenuItems = params.defaultItems.slice(0);
+            }
+            colMenuItems.push('separator')
+            this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
+                let glyph = this.container.ownerDocument.createElement("span")
+                glyph.className = "glyphicon glyphicon-" + x.GlyphIcon
+                colMenuItems.push({
+                    name: x.Label,
+                    action: () => this.AdaptableBlotterStore.TheStore.dispatch(x.Action),
+                    icon: glyph
+                })
+            })
+            return colMenuItems
+        }
     }
 
     private _currentEditor: ICellEditor
@@ -349,9 +375,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
     }
-    public hideFilterFormPopup : Function
+    public hideFilterFormPopup: Function
     public hideFilterForm() {
-        if(this.hideFilterFormPopup){
+        if (this.hideFilterFormPopup) {
             this.hideFilterFormPopup()
         }
     }
@@ -690,7 +716,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public isGridPageable(): boolean {
         return false
     }
-    
+
     public refreshView() {
         this.gridOptions.api.refreshView();
     }
@@ -701,7 +727,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
-        //ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
 
