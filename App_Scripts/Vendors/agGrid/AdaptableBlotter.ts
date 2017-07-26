@@ -425,10 +425,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getActiveCell(): ICellInfo {
         let activeCell = this.gridOptions.api.getFocusedCell()
         let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
-        return {
-            ColumnId: activeCell.column.getColId(),
-            Id: this.getPrimaryKeyValueFromRecord(rowNode),
-            Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+        //if the selected cell is from a group cell we don't return it
+        //that's a design choice as this is used only when editing and you cant edit those cells
+        if (!rowNode.group) {
+            return {
+                ColumnId: activeCell.column.getColId(),
+                Id: this.getPrimaryKeyValueFromRecord(rowNode),
+                Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+            }
         }
     }
 
@@ -443,14 +447,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                 for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
                     let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
-                    let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
-                    let value = this.gridOptions.api.getValue(column, rowNode)
-                    let valueArray = selectionMap.get(primaryKey);
-                    if (valueArray == undefined) {
-                        valueArray = []
-                        selectionMap.set(primaryKey, valueArray);
+                    //if the selected cells are from a group cell we don't return it
+                    //that's a design choice as this is used only when editing and you cant edit those cells
+                    if (!rowNode.group) {
+                        let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
+                        let value = this.gridOptions.api.getValue(column, rowNode)
+                        let valueArray = selectionMap.get(primaryKey);
+                        if (valueArray == undefined) {
+                            valueArray = []
+                            selectionMap.set(primaryKey, valueArray);
+                        }
+                        valueArray.push({ columnID: column.getColId(), value: value });
                     }
-                    valueArray.push({ columnID: column.getColId(), value: value });
                 }
             }
         });
@@ -470,6 +478,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
         let row = this.gridOptions.api.getModel().getRow(0)
+        //if it's a group we need the content of the group
+        if (row.group) {
+            row = row.childrenAfterGroup[0]
+        }
         let value = this.gridOptions.api.getValue(column, row)
         if (value instanceof Date) {
             return DataType.Date
@@ -595,13 +607,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         //we use forEachNode as we want to get all data even the one filtered out...
         let data = this.gridOptions.api.forEachNode(rowNode => {
-            let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
-            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-            }
-            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+            //we do not return the values of the aggregates when in grouping mode
+            //otherwise they would appear in the filter dropdown etc....
+            if (!rowNode.group) {
+                let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
+                let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                }
             }
         })
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
