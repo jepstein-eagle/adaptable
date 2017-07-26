@@ -61,9 +61,13 @@ export class DataGenerator {
     startTickingDataagGrid(gridOptions: any) {
         setInterval(() => {
             let tradeId = this.generateRandomInt(0, 29);
-            gridOptions.api.forEachNodeAfterFilterAndSort((rowNode: any, index: number) => {
-                // only do first 5
-                if (index != tradeId) { return; }
+            gridOptions.api.forEachNode((rowNode: any, index: number) => {
+                if (rowNode.group) {
+                    return;
+                }
+                let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
+                // only do first 30
+                if (rowTradeId != tradeId) { return; }
 
                 let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
                 let trade = rowNode;
