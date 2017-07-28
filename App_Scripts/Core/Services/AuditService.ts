@@ -17,13 +17,27 @@ For now this is a very rough and ready Audit Service which will recieve notifica
 This means that we are able to work out old and new values - though for the first pass its a bit brittle as we look at _pristineData via a method in the Blotter...
 */
 export class AuditService implements IAuditService {
-
     private _columnDataValueList: IColumnDataValueList[];
 
     constructor(private blotter: IAdaptableBlotter) {
 
         this._columnDataValueList = [];
     }
+
+    //This is a bad idea as it duplicates all data but in the end that what getdirtyvalue was doing....
+    //just need to refactor the whole lot. For now it's called only from aggrid
+    Init(initialData: any): void {
+        for (let record of initialData) {
+            for (let prop in record) {
+                if (record.hasOwnProperty(prop)) {
+                    let primaryKey = record[this.blotter.BlotterOptions.primaryKey]
+                    var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: record[prop], ColumnId: prop, IdentifierValue: primaryKey, Timestamp: Date.now(), Record: record };
+                    this.AddDataValuesToList(dataChangedEvent);
+                }
+            }
+        }
+    }
+
 
     public CreateAuditEvent(identifierValue: any, newValue: any, columnId: string, record: any): void {
         var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };

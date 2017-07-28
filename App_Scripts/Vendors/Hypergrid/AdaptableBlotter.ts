@@ -399,6 +399,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
+    public InitAuditService() {
+    }
+
     private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
         var el = document.createElement("span");
         //we we let teh CSS parse build the different properties of the font CSS

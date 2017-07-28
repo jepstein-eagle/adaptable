@@ -38,5 +38,6 @@ export interface IAuditService {
     CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, record: any): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
     CheckCellChanging(dataChangingEvent: IDataChangingEvent): ICellValidationRule[]
+    Init(initialData : any) : void
 
 }

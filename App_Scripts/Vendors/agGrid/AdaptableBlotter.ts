@@ -323,6 +323,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
+
+    }
+
+    public InitAuditService(){
+        //Probably Temporary but we init the Audit service with current data
+        this.AuditService.Init(this.gridOptions.rowData)
     }
 
     private _currentEditor: ICellEditor
