@@ -207,6 +207,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent
         gridOptions.isExternalFilterPresent = () => {
             let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0
+            if (isFilterActive) {
+                //used in particular at init time to show the filter icon correctly
+                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
+                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
+                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true)
+                    }
+                }
+            }
+
             let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
             let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
             //it means that originaldoesExternalFilterPass will be called to we reinit that collection
@@ -326,7 +335,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public InitAuditService(){
+    public InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
         this.AuditService.Init(this.gridOptions.rowData)
     }
