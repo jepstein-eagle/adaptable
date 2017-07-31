@@ -226,7 +226,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.state.SelectedValues.filter(x => this.state.UiSelectedSelectedValues.indexOf(x) < 0));
 
         this.setState({
-            SelectedValues: newSelectedValues
+            SelectedValues: newSelectedValues,
+            UiSelectedSelectedValues: []
         } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(true); });
     }
 
@@ -247,7 +248,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.state.UiSelectedSelectedValues);
 
         this.setState({
-            SelectedValues: newSelectedValues
+            SelectedValues: newSelectedValues,
+            UiSelectedSelectedValues: []
         } as DualListBoxEditorState, () => { this.raiseOnChange(); this.ensureFirstSelectedItemVisible(true); });
 
     }
@@ -279,7 +281,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
-        //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
         this.setState({
             UiSelectedAvailableValues: [],
             SelectedValues: newSelectedValues,
@@ -337,7 +338,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
-        //THIS IS FUCKING BULLSHIT!! ANOTHER IDIOCY FROM TYPESCRIPT/TYPINGS
         this.setState({
             UiSelectedSelectedValues: [],
             SelectedValues: newSelectedValues,
