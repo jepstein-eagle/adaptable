@@ -38,8 +38,8 @@
     "redux-storage-decorator-filter": "^1.1.8"
   },
   "devDependencies": {
-    "ag-grid": "^11.0.0",
-    "ag-grid-enterprise": "^11.0.0",
+    "ag-grid": "^12.0.2",
+    "ag-grid-enterprise": "^12.0.2",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-runtime": "^6.23.0",
