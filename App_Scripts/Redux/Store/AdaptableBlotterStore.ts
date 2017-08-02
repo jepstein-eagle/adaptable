@@ -11,6 +11,7 @@ import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
+import * as CustomColumnRedux from '../ActionsReducers/CustomColumnRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
@@ -58,7 +59,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
     Dashboard: DashboardRedux.DashboardReducer,
-    Entitlements: EntitlementsRedux.EntitlementsReducer
+    Entitlements: EntitlementsRedux.EntitlementsReducer,
+    CustomColumn: CustomColumnRedux.CustomColumnReducer
 });
 
 const RESET_STATE = 'RESET_STATE';

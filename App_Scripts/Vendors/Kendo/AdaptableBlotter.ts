@@ -57,6 +57,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -746,6 +747,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
         this.grid.dataSource.filter(kendoFilters);
     }
+
+    public createCustomColumn(customColumn: ICustomColumn) {
+
+    }
+
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);

@@ -56,10 +56,12 @@ import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
 import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
-import { NewValueParams } from "ag-grid/dist/lib/entities/colDef"
+import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 
 import { FilterWrapperFactory } from './FilterWrapper'
+import { CustomColumnStrategy } from "../../Strategy/CustomColumnStrategy";
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -93,6 +95,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
+        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -332,7 +335,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
-
+        setTimeout(() => {
+            this.createCustomColumn(null)
+        }, 10000);
     }
 
     public InitAuditService() {
@@ -754,6 +759,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
         this.gridOptions.api.refreshCells([rowNode], columnIds);
+    }
+
+    public createCustomColumn(customColumn: ICustomColumn) {
+        let colDef = this.gridOptions.columnDefs
+        colDef.push({
+            headerName: "Price Squared",
+            colId: "PriceSquared",
+            valueGetter: (params: ValueGetterParams) => params.getValue("price") * params.getValue("price")
+        })
+        colDef.push({
+            headerName: "Country + Price",
+            colId: "Country + Price",
+            valueGetter: (params: ValueGetterParams) => params.getValue("country") + params.getValue("price")
+        })
+        this.gridOptions.api.setColumnDefs(colDef)
     }
 
     destroy() {

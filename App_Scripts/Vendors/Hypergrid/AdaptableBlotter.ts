@@ -57,6 +57,7 @@ import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -968,6 +969,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
     }
+
+    public createCustomColumn(customColumn: ICustomColumn) {
+
+    }
+
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);

@@ -24,6 +24,7 @@ import { DashboardConfig } from './Dashboard/DashboardConfig'
 import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
+import { CustomColumnConfig } from "./CustomColumn/CustomColumnConfig";
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortConfig: CustomSortConfig,
@@ -42,7 +43,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationConfig: CellValidationConfig,
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
-  DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig
+  DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
+  CustomColumnConfig: CustomColumnConfig
 }
 
 //here we put the dashboard control for each strategy

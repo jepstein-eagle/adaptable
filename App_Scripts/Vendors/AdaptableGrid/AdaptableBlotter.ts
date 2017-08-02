@@ -53,6 +53,7 @@ import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../../Core/Extensions'
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -549,6 +550,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return matchingRowIds;
         }
     }
+
+        public createCustomColumn(customColumn : ICustomColumn)
+    {
+        
+    }
+
 
     public rendergrid(): void {
         this.grid.render();

@@ -11,11 +11,16 @@ import { IShortcut } from './Interface/IShortcutStrategy';
 import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
+import { ICustomColumn } from "./Interface/ICustomColumnStrategy";
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
+    }
+
+    export function CreateEmptyCustomColumn(): ICustomColumn {
+        return { ColumnId: "", GetValueFunc: "", IsPredefined: false }
     }
 
     export function CreateEmptyPlusMinusCondition(defaultNudgeValue: number): IPlusMinusCondition {
