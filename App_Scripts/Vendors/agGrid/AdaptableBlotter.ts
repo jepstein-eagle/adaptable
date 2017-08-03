@@ -58,6 +58,7 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
 import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 import { FilterWrapperFactory } from './FilterWrapper'
 import { CustomColumnStrategy } from "../../Strategy/CustomColumnStrategy";
@@ -135,7 +136,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
-            let editor = (<any>this.gridOptions.api).rowRenderer.renderedRows[params.rowIndex].renderedCells[params.column.getColId()].cellEditor
+            let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].renderedCells[params.column.getColId()].cellEditor
             //No need to register for the keydown on the editor since we already register on the main div
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
@@ -758,7 +759,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
-        this.gridOptions.api.refreshCells([rowNode], columnIds);
+        this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds });
     }
 
     public createCustomColumn(customColumn: ICustomColumn) {
