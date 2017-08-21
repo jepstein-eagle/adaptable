@@ -15,6 +15,7 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
+import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { SearchServiceHyperGrid } from '../../Core/Services/SearchServiceHyperGrid'
@@ -58,6 +59,7 @@ import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -88,6 +90,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
+    public CustomColumnExpressionService: ICustomColumnExpressionService
     private filterContainer: HTMLDivElement
     private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
@@ -107,6 +110,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceHyperGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, null);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -398,6 +402,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
+
+        setTimeout(() => {
+            this.createCustomColumn(null)
+        }, 10000);
     }
 
     public InitAuditService() {
@@ -969,9 +977,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
     }
-
+    public deleteCustomColumn(customColumnID: string) {
+    }
     public createCustomColumn(customColumn: ICustomColumn) {
-
+        // let state = this.grid.getState()
+        this.grid.behavior.dataModel.schema.push({
+            name: 'PriceSquared',
+            header: 'Price Squared',
+            calculator: (dataRow: any, columnName: string) => dataRow["price"] * dataRow["price"]
+        });
+        // this.grid.behavior.dataModel.schema.push({
+        //     name: 'Country + Price',
+        //     header: 'Country + Price',
+        //     calculator: (dataRow: any, columnName: string) => dataRow["country"] + dataRow["price"]
+        // });
+        this.grid.behavior.createColumns();
+        //this.grid.repaint();
+                this.grid.behavior.changed()
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.setColumnIntoStore();
     }
 
 

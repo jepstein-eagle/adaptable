@@ -18,6 +18,7 @@ export class CustomColumnStrategy extends AdaptableStrategyBase {
 
     InitState() {
         if (this.CustomColumns != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomColumn.CustomColumns) {
+            //All the logic is managed in the redux store middleware
             this.CustomColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomColumn.CustomColumns;
         }
     }

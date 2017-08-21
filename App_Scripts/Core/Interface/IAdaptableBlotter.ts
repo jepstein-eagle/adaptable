@@ -8,6 +8,7 @@ import { ISearchService } from '../Services/Interface/ISearchService'
 import { ICustomColumn } from '../Interface/ICustomColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
+import { ICustomColumnExpressionService } from "../Services/Interface/ICustomColumnExpressionService";
 
 
 export interface IAdaptableBlotter {
@@ -20,6 +21,7 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
+    CustomColumnExpressionService: ICustomColumnExpressionService
     InitAuditService(): void
 
     // Grid Events
@@ -79,6 +81,7 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
 
     //CustomColumn
+    deleteCustomColumn(customColumnId: string): void
     createCustomColumn(customColumn: ICustomColumn): void
 
     // Export

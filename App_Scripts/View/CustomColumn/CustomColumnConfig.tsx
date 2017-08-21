@@ -15,51 +15,57 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
 import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { EntityListActionButtons } from "../Components/Buttons/EntityListActionButtons";
+import { CustomColumnSettingsWizard } from "./CustomColumnSettingsWizard";
+import { CustomColumnExpressionWizard } from "./CustomColumnExpressionWizard";
 
 interface CustomColumnConfigProps extends IStrategyViewPopupProps<CustomColumnConfigComponent> {
     onAddCustomColumn: (customColumn: ICustomColumn) => CustomColumnRedux.CustomColumnAddAction
-    onEditCustomSort: (index: number, customColumn: ICustomColumn) => CustomColumnRedux.CustomColumnEditAction
+    onEditCustomColumn: (index: number, customColumn: ICustomColumn) => CustomColumnRedux.CustomColumnEditAction
     CustomColumns: Array<ICustomColumn>
-    Columns: Array<IColumn>
+    EditedCustomColumnInvalidErrorMsg: string
+    IsExpressionValid: (expression: string) => CustomColumnRedux.CustomColumnIsExpressionValidAction
 }
 
 interface CustomColumnConfigInternalState {
     EditedCustomColumn: ICustomColumn
     WizardStartIndex: number
+    EditedIndexCustomColumn: number
 }
 
 class CustomColumnConfigComponent extends React.Component<CustomColumnConfigProps, CustomColumnConfigInternalState> {
     constructor() {
         super();
-        this.state = { EditedCustomColumn: null, WizardStartIndex: 0 }
-
+        this.state = { EditedCustomColumn: null, WizardStartIndex: 0, EditedIndexCustomColumn: -1 }
     }
-
 
     render() {
         let infoBody: any[] = ["Custom Column Blah blah blah."]
 
 
-        let customColumns = this.props.CustomColumns.map((customSort: ICustomColumn) => {
-            let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
-            return null
-            // return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
-            //     onEdit={(customSort) => this.onEditCustomSort(customSort)}
-            //     onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-            //     ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString}></CustomSortConfigItem>
+        let customColumns = this.props.CustomColumns.map((customColumn: ICustomColumn, index: number) => {
+            return <li
+                className="list-group-item" key={customColumn.ColumnId}>
+                <Row >
+                    <Col xs={3}>
+                        {customColumn.ColumnId}
+                    </Col>
+                    <Col xs={6}>
+                        {customColumn.GetValueFunc}
+                    </Col>
+                    <Col xs={3}>
+                        <EntityListActionButtons
+                            ConfirmDeleteAction={CustomColumnRedux.CustomColumnDelete(index)}
+                            editClick={() => this.onEdit(index, customColumn)}
+                            ConfigEntity={customColumn}>
+                        </EntityListActionButtons>
+                    </Col>
+                </Row>
+            </li>
         });
 
-
-        //         {this.state.EditedCustomColumn &&
-        //     <AdaptableWizard Steps={[<CustomSortColumnWizard Columns={this.props.Columns} />,
-        //     <CustomSortValuesWizard Columns={this.props.Columns} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-        //         Data={this.state.EditedCustomSort}
-        //         StepStartIndex={this.state.WizardStartIndex}
-        //         onHide={() => this.closeWizard()}
-        //         onFinish={() => this.WizardFinish()} ></AdaptableWizard>
-        // }
-        let cellInfo: [string, number][] = [["Custom Column", 3], ["Column Description", 6], ["", 3]];
-        let newButton = <ButtonNew onClick={() => {/*this.CreateCustomColumn()*/}}
+        let cellInfo: [string, number][] = [["Column Name", 3], ["Column Description", 6], ["", 3]];
+        let newButton = <ButtonNew onClick={() => { this.CreateCustomColumn() }}
             overrideTooltip="Create Custom Column"
             DisplayMode="Glyph+Text" />
 
@@ -73,40 +79,47 @@ class CustomColumnConfigComponent extends React.Component<CustomColumnConfigProp
             <ListGroup style={divStyle}>
                 {customColumns}
             </ListGroup>
-
+            {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
+            {this.state.EditedCustomColumn &&
+            
+                <AdaptableWizard Steps={[<CustomColumnSettingsWizard />,
+                <CustomColumnExpressionWizard
+                    GetErrorMessage={() => this.props.EditedCustomColumnInvalidErrorMsg}
+                    IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)} />]}
+                    Data={this.state.EditedCustomColumn}
+                    StepStartIndex={this.state.WizardStartIndex}
+                    onHide={() => this.closeWizard()}
+                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+            }
         </PanelWithButton>
     }
     private wizardSteps: JSX.Element[]
-
+    onEdit(index: number, customColumn: ICustomColumn) {
+        let clonedObject = Helper.cloneObject(customColumn);
+        this.setState({ EditedCustomColumn: clonedObject, WizardStartIndex: 1, EditedIndexCustomColumn: index });
+    }
     closeWizard() {
         this.setState({ EditedCustomColumn: null, WizardStartIndex: 0 });
     }
     WizardFinish() {
-        // if (this.props.CustomColumns.find(x => x.ColumnId == this.state.EditedCustomSort.ColumnId)) {
-        //     this.props.onEditCustomSort(this.state.EditedCustomSort)
-        // }
-        // else {
-        //     this.props.onAddCustomSort(this.state.EditedCustomSort)
-        // }
-
-
-        this.setState({ EditedCustomColumn: null, WizardStartIndex: 0 });
+        if (this.state.EditedIndexCustomColumn != -1) {
+            this.props.onEditCustomColumn(this.state.EditedIndexCustomColumn, this.state.EditedCustomColumn)
+        }
+        else {
+            this.props.onAddCustomColumn(this.state.EditedCustomColumn)
+        }
+        this.setState({ EditedCustomColumn: null, WizardStartIndex: 0, EditedIndexCustomColumn: -1 });
     }
 
-    private onEditCustomColumn(customColumn: ICustomColumn) {
-        //so we dont mutate original object
-        this.setState({ EditedCustomColumn: Helper.cloneObject(customColumn), WizardStartIndex: 1 });
-    }
-
-    CreateCustomSort() {
-        this.setState({ EditedCustomColumn: ObjectFactory.CreateEmptyCustomColumn(), WizardStartIndex: 0 });
+    CreateCustomColumn() {
+        this.setState({ EditedCustomColumn: ObjectFactory.CreateEmptyCustomColumn(), WizardStartIndex: 0, EditedIndexCustomColumn: -1 });
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CustomColumns: state.CustomColumn.CustomColumns,
-        Columns: state.Grid.Columns
+        EditedCustomColumnInvalidErrorMsg: state.CustomColumn.EditedCustomColumnInvalidErrorMsg
     };
 }
 
@@ -114,7 +127,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCustomColumn: (customColumn: ICustomColumn) => dispatch(CustomColumnRedux.CustomColumnAdd(customColumn)),
-        onEditCustomSort: (index: number, customColumn: ICustomColumn) => dispatch(CustomColumnRedux.CustomColumnEdit(index, customColumn)),
+        onEditCustomColumn: (index: number, customColumn: ICustomColumn) => dispatch(CustomColumnRedux.CustomColumnEdit(index, customColumn)),
+        IsExpressionValid: (expression: string) => dispatch(CustomColumnRedux.CustomColumnIsExpressionValid(expression))
     };
 }
 

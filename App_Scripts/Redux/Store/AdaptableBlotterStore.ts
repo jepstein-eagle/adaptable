@@ -137,7 +137,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 .then(
                 () => this.TheStore.dispatch(InitState()),
                 (e) => {
-                    console.error('Failed to load previous adaptable blotter state : ' , e);
+                    console.error('Failed to load previous adaptable blotter state : ', e);
                     //for now i'm still initializing the AB even if loading state has failed.... 
                     //we may revisit that later
                     this.TheStore.dispatch(InitState())
@@ -168,6 +168,36 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case CustomColumnRedux.CUSTOMCOLUMN_IS_EXPRESSION_VALID: {
+                    let returnObj = adaptableBlotter.CustomColumnExpressionService.IsExpressionValid((<CustomColumnRedux.CustomColumnIsExpressionValidAction>action).Expression)
+                    if (!returnObj.IsValid) {
+                        middlewareAPI.dispatch(CustomColumnRedux.CustomColumnSetErrorMessage(returnObj.ErrorMsg))
+                    }
+                    else {
+                        middlewareAPI.dispatch(CustomColumnRedux.CustomColumnSetErrorMessage(null))
+                    }
+                    return next(action);
+                }
+                case CustomColumnRedux.CUSTOMCOLUMN_ADD: {
+                    let returnAction = next(action);
+                    adaptableBlotter.createCustomColumn((<CustomColumnRedux.CustomColumnAddAction>action).CustomColumn)
+                    return returnAction;
+                }
+                case CustomColumnRedux.CUSTOMCOLUMN_DELETE: {
+                    let customColumnState = middlewareAPI.getState().CustomColumn;
+                    let actionTyped = <CustomColumnRedux.CustomColumnDeleteAction>action
+                    adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
+                    let returnAction = next(action);
+                    return returnAction;
+                }
+                case CustomColumnRedux.CUSTOMCOLUMN_EDIT: {
+                    let customColumnState = middlewareAPI.getState().CustomColumn;
+                    let actionTyped = <CustomColumnRedux.CustomColumnEditAction>action
+                    adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
+                    let returnAction = next(action);
+                    adaptableBlotter.createCustomColumn(actionTyped.CustomColumn)
+                    return returnAction;
+                }
                 case FilterRedux.HIDE_FILTER_FORM: {
                     adaptableBlotter.hideFilterForm()
                     return next(action);

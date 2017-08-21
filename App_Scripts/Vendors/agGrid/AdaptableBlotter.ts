@@ -12,6 +12,7 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
+import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
@@ -63,6 +64,7 @@ import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 import { FilterWrapperFactory } from './FilterWrapper'
 import { CustomColumnStrategy } from "../../Strategy/CustomColumnStrategy";
 import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -76,6 +78,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
+    public CustomColumnExpressionService: ICustomColumnExpressionService
 
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -91,6 +94,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -336,9 +340,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
-        setTimeout(() => {
-            this.createCustomColumn(null)
-        }, 10000);
     }
 
     public InitAuditService() {
@@ -762,17 +763,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds });
     }
 
+    public deleteCustomColumn(customColumnID: string) {
+        let colDef = this.gridOptions.columnDefs
+        let colDefIndex = this.gridOptions.columnDefs.findIndex(x => x.headerName == customColumnID)
+        if (colDefIndex > -1) {
+            this.gridOptions.columnDefs.splice(colDefIndex, 1)
+            this.gridOptions.api.setColumnDefs(colDef)
+        }
+    }
     public createCustomColumn(customColumn: ICustomColumn) {
         let colDef = this.gridOptions.columnDefs
         colDef.push({
-            headerName: "Price Squared",
-            colId: "PriceSquared",
-            valueGetter: (params: ValueGetterParams) => params.getValue("price") * params.getValue("price")
-        })
-        colDef.push({
-            headerName: "Country + Price",
-            colId: "Country + Price",
-            valueGetter: (params: ValueGetterParams) => params.getValue("country") + params.getValue("price")
+            headerName: customColumn.ColumnId,
+            colId: customColumn.ColumnId,
+            valueGetter: (params: ValueGetterParams) => this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, params.node)
         })
         this.gridOptions.api.setColumnDefs(colDef)
     }

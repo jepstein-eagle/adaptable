@@ -159,4 +159,5 @@ export interface DashboardState {
 
 export interface CustomColumnState {
     CustomColumns: ICustomColumn[];
+    EditedCustomColumnInvalidErrorMsg: string
 }

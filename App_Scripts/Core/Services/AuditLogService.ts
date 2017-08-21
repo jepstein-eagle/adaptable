@@ -214,8 +214,9 @@ export class AuditLogService {
         }
         if (typeof (obj) == "object") {
             for (let prop in obj) {
-                if (obj.hasOwnProperty(prop))
+                if (obj.hasOwnProperty(prop)) {
                     stringArray.push(prop + ": " + this.convertToText(obj[prop]));
+                }
             }
             return "{" + stringArray.join(",") + "}";
             //is function
