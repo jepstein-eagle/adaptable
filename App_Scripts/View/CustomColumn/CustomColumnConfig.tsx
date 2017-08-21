@@ -100,6 +100,8 @@ class CustomColumnConfigComponent extends React.Component<CustomColumnConfigProp
     }
     closeWizard() {
         this.setState({ EditedCustomColumn: null, WizardStartIndex: 0 });
+        //reset error message
+        this.props.IsExpressionValid("")
     }
     WizardFinish() {
         if (this.state.EditedIndexCustomColumn != -1) {
