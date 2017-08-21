@@ -23,10 +23,10 @@ export class CustomColumnExpressionWizard extends React.Component<CustomColumnEx
         this.state = { GetValueFunc: this.props.Data.GetValueFunc }
     }
     render(): any {
-        let validationState = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
+        let validationState : "error"|null = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
         return <Panel header="Custom Column Expression" bsStyle="primary">
             <AdaptableBlotterForm>
-                <FormGroup controlId="formInlineName">
+                <FormGroup controlId="formInlineName" validationState={validationState}>
                     <ControlLabel >Column Name</ControlLabel>
                     <FormControl value={this.state.GetValueFunc} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
                     <FormControl.Feedback />
