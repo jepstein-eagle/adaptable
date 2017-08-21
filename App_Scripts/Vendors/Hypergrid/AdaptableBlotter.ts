@@ -532,7 +532,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             //this function needs the column.index from the schema
             // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
-            let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
+            //let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
+            //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+            let value = this.valOrFunc(row, column)
             return { Id: primaryKey, ColumnId: column.name, Value: value }
         }
         return null
@@ -553,7 +555,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                     //this function needs the column.index from the schema
                     // let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
-                    let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
+                    // let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
+                    //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+                    let value = this.valOrFunc(row, column)
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
                     // let value = column.getValue(rowIndex)
@@ -661,8 +665,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
-            return (columnName: string) => { return record[columnName]; }
+            let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
+            return (columnName: string) => {
+                let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName);
+                return this.valOrFunc(record, column);
+            }
         }
         else {
             return (columnName: string) => { return this.getDisplayValue(id, columnName); }
@@ -670,7 +677,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            return (columnName: string) => { return record[columnName]; }
+            return (columnName: string) => {
+                let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName)
+                return this.valOrFunc(record, column);
+            }
         }
         else {
             return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
@@ -733,16 +743,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
+        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.grid.behavior.dataModel.getData()
         for (var index = 0; index < data.length; index++) {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
-            let rawValue: any = null
-            if (element.hasOwnProperty(columnId)) {
-                rawValue = element[columnId]
-            }
-
+            let rawValue = this.valOrFunc(element, column)
             if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
                 returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
             }
@@ -767,7 +774,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
         if (column) {
             let formatter = column.getFormatter()
-            return formatter(row[columnId])
+            return formatter(this.valOrFunc(row, column))
         }
         return "";
     }
@@ -984,7 +991,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.dataModel.schema.push({
             name: 'PriceSquared',
             header: 'Price Squared',
-            calculator: (dataRow: any, columnName: string) => dataRow["price"] * dataRow["price"]
+            calculator: (dataRow: any, columnName: string) => {
+                return dataRow["price"] * dataRow["price"]
+            }
         });
         // this.grid.behavior.dataModel.schema.push({
         //     name: 'Country + Price',
@@ -993,7 +1002,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // });
         this.grid.behavior.createColumns();
         //this.grid.repaint();
-                this.grid.behavior.changed()
+        this.grid.behavior.changed()
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
         this.setColumnIntoStore();
@@ -1009,6 +1018,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
+    }
+
+    private valOrFunc(dataRow: any, column: any) {
+        var result, calculator;
+        if (dataRow) {
+            result = dataRow[column.name];
+            calculator = (typeof result)[0] === 'f' && result || column.calculator;
+            if (calculator) {
+                result = calculator(dataRow, column.name);
+            }
+        }
+        return result || result === 0 || result === false ? result : '';
     }
 }
 
