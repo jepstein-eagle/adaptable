@@ -1,4 +1,5 @@
-﻿import '../../../stylesheets/adaptableblotter-style.css'
+﻿import { CustomColumnStrategy } from '../../Strategy/CustomColumnStrategy';
+import '../../../stylesheets/adaptableblotter-style.css'
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -110,12 +111,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceHyperGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
-        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, null);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => {
+            let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
+            return this.valOrFunc(record, column)
+        });
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -402,10 +407,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
-
-        setTimeout(() => {
-            this.createCustomColumn(null)
-        }, 10000);
     }
 
     public InitAuditService() {
@@ -601,6 +602,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         return DataType.Date;
                     case 'object':
                         return DataType.Object;
+                    //for custom column that's what happens
+                    case 'unknown':{
+                        let record = this.grid.behavior.dataModel.getData()[0]
+                        var value = this.valOrFunc(record,column)
+                        if (value instanceof Date) {
+                            return DataType.Date
+                        }
+                        switch (typeof value) {
+                            case 'string':
+                                return DataType.String;
+                            case 'number':
+                                return DataType.Number;
+                            case 'boolean':
+                                return DataType.Boolean;
+                            case 'object':
+                                return DataType.Object;
+                            default:
+                                break;
+                        }
+                    }
                     default:
                         break;
                 }
@@ -987,20 +1008,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public deleteCustomColumn(customColumnID: string) {
     }
     public createCustomColumn(customColumn: ICustomColumn) {
-        // let state = this.grid.getState()
-        this.grid.behavior.dataModel.schema.push({
-            name: 'PriceSquared',
-            header: 'Price Squared',
+        let newSchema = {
+            name: customColumn.ColumnId,
+            header: customColumn.ColumnId,
             calculator: (dataRow: any, columnName: string) => {
-                return dataRow["price"] * dataRow["price"]
+                //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
+                if (Object.keys(dataRow).length == 0) {
+                    return customColumn.ColumnId
+                }
+                return this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, dataRow)
             }
-        });
-        // this.grid.behavior.dataModel.schema.push({
-        //     name: 'Country + Price',
-        //     header: 'Country + Price',
-        //     calculator: (dataRow: any, columnName: string) => dataRow["country"] + dataRow["price"]
-        // });
-        this.grid.behavior.createColumns();
+        }
+        this.grid.behavior.dataModel.schema.push(
+            newSchema
+        );
+        this.grid.behavior.addColumn({
+            index: this.grid.behavior.getColumns().length,
+            header: newSchema.header,
+            calculator: newSchema.calculator
+        })
+        //this.grid.behavior.createColumns();
         //this.grid.repaint();
         this.grid.behavior.changed()
         //if the event columnReorder starts to be fired when changing the order programmatically 
