@@ -297,7 +297,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let row = config.dataRow
                 let columnName = config.name
                 if (columnName && row) {
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName, row)
+                    //check that it doesn't impact perf monitor
+                    let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName);
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row)
                 }
                 let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                 let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
