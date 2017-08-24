@@ -32,4 +32,16 @@ export class CustomColumnExpressionService implements ICustomColumnExpressionSer
             return null;
         }
     }
+
+    getColumnListFromExpression(expression: string) : string[]{
+        let columnList : string[] = []
+        let regEx = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g
+        let match = regEx.exec(expression);
+        while(match !== null) {
+            columnList.push(match[1])
+            match = regEx.exec(expression);
+        }
+        return columnList
+
+    }
 }
