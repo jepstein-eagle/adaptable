@@ -20,7 +20,8 @@ function getSchema(data) {
                 schema.push({ headerName: capitalize(p), field: p });
             }
             else if (p === 'price') {
-                schema.push({ headerName: capitalize(p), field: p, filter: 'text', cellRenderer: 'animateShowChange' });
+                schema.push({ headerName: capitalize(p), field: p, filter: 'text', cellRenderer: 'animateShowChange',
+                headerValueGetter : (params) => {return "Price" + "tptp"} });
             }
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
@@ -57,7 +58,7 @@ function InitBlotter() {
     };
     var eGridDiv = document.getElementById('grid');
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
-    dataGen.startTickingDataagGrid(gridOptions);
+    //dataGen.startTickingDataagGrid(gridOptions);
 
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');

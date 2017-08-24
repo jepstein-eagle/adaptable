@@ -70,6 +70,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     private quickSearchHighlights: Map<string, boolean>
+    private customColumnPathMap: Map<string, string[]> = new Map()
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -209,6 +210,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
+            //so we manually raise.
+            //https://github.com/jonathannaim/adaptableblotter/issues/118
+            let columnList = this.customColumnPathMap.get(params.colDef.field)
+            if (columnList) {
+                columnList.forEach(x => {
+                    let newValue = this.gridOptions.api.getValue(x, params.node)
+                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
+                })
+            }
         });
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
@@ -760,25 +771,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
-        this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds });
+        this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
     }
 
     public deleteCustomColumn(customColumnID: string) {
-        let colDef = this.gridOptions.columnDefs
+        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = this.gridOptions.columnDefs.findIndex(x => x.headerName == customColumnID)
         if (colDefIndex > -1) {
             this.gridOptions.columnDefs.splice(colDefIndex, 1)
             this.gridOptions.api.setColumnDefs(colDef)
         }
+        for (let columnList of this.customColumnPathMap.values()) {
+            let index = columnList.indexOf(customColumnID);
+            if (index > -1) {
+                columnList.splice(index, 1);
+            }
+        }
     }
     public createCustomColumn(customColumn: ICustomColumn) {
-        let colDef = this.gridOptions.columnDefs
+        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         colDef.push({
             headerName: customColumn.ColumnId,
             colId: customColumn.ColumnId,
             valueGetter: (params: ValueGetterParams) => this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, params.node)
         })
         this.gridOptions.api.setColumnDefs(colDef)
+        let columnList = this.CustomColumnExpressionService.getColumnListFromExpression(customColumn.GetValueFunc)
+        for (let column of columnList) {
+            let childrenColumnList = this.customColumnPathMap.get(column)
+            if (!childrenColumnList) {
+                childrenColumnList = []
+                this.customColumnPathMap.set(column, childrenColumnList)
+            }
+            childrenColumnList.push(customColumn.ColumnId)
+        }
     }
 
     destroy() {
