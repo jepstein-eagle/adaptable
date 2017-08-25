@@ -13,7 +13,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 
 export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
-    private FlashingCellState: FlashingCellState
+    protected FlashingCellState: FlashingCellState
     protected FLASH_UP_STYLE: string = "Ab-FlashUp"
     protected FLASH_DOWN_STYLE: string = "Ab-FlashDown"
 
@@ -53,7 +53,7 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
 
     }
 
-    private InitState() {
+    protected InitState() {
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
         }

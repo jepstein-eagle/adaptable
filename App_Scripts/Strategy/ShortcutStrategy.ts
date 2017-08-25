@@ -41,6 +41,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
         let activeCell: ICellInfo = this.blotter.getActiveCell();
+        if (!activeCell) { return; }
         let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)
         if (activeCell && !isReadOnly) {
             let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);

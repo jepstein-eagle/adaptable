@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "1.2.0-beta.23",
+  "version": "1.2.0-beta.40",
   "description": "Powerful data-agnostic grid that sits on top of an underlying grid component and provides all the rich functionality that financial users expect from their grids and blotters",
   "main": "index.js",
   "dependencies": {
@@ -14,6 +14,8 @@
     "@types/react-dom": "^15.5.0",
     "@types/react-redux": "^4.4.40",
     "@types/redux-storage": "^4.0.7",
+    "babel-polyfill": "^6.23.0",
+    "babel-runtime": "^6.23.0",
     "body-parser": "^1.17.1",
     "bootswatch": "^3.3.7",
     "create-react-class": "^15.5.3",
@@ -36,11 +38,13 @@
     "redux-storage-decorator-filter": "^1.1.8"
   },
   "devDependencies": {
-    "ag-grid": "^9.1.0",
-    "ag-grid-enterprise": "^9.1.0",
+    "ag-grid": "^11.0.0",
+    "ag-grid-enterprise": "^11.0.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-loose": "^8.0.0",
     "bootstrap": "^3.3.7",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
@@ -49,9 +53,10 @@
     "html-webpack-plugin": "^2.28.0",
     "openfin-launcher": "^1.3.12",
     "postcss-scopify": "^0.1.9",
+    "request": "^2.81.0",
     "style-loader": "^0.18.2",
     "ts-loader": "^1.3.3",
-    "typescript": "^2.3.2",
+    "typescript": "2.3.2",
     "url-loader": "^0.5.8",
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.16.5",
@@ -60,12 +65,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-themes": "node postcss-scopify.config.js",
-    "build-dev": "node_modules/.bin/webpack --config webpack.dev.js",
-    "build-prod": "node_modules/.bin/webpack --config webpack.prod.js",
-    "dev-kendo": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
-    "dev-hypergrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
-    "dev-aggrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
-    "dev-adaptablegrid": "node_modules/.bin/webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
+    "build-dev": "set arg=all&&webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js -p",
+    "dev-kendo": "set arg=kendo&&webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
+    "dev-hypergrid": "set arg=hypergrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
+    "dev-aggrid": "set arg=aggrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
+    "dev-adaptablegrid": "set arg=adaptablegrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
     "openfin": "node openfin-launcher.js"
   },
   "keywords": [

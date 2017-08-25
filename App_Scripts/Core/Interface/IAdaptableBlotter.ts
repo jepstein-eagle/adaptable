@@ -19,6 +19,7 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
+    InitAuditService() : void
 
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;

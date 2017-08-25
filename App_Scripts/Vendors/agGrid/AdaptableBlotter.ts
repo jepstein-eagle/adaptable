@@ -16,6 +16,8 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
+import { SearchService } from '../../Core/Services/SearchService'
+import { StyleService } from '../../Core/Services/StyleService'
 import { SearchServiceagGrid } from '../../Core/Services/SearchServiceagGrid'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -26,9 +28,9 @@ import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStr
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
-import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
+import { FlashingCellsagGridStrategy } from '../../Strategy/FlashingCellsagGridStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
+import { ConditionalStyleagGridStrategy } from '../../Strategy/ConditionalStyleagGridStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
@@ -52,25 +54,30 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
-import { FilterWrapperFactory } from './FilterWrapper'
 
+import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
+import { NewValueParams } from "ag-grid/dist/lib/entities/colDef"
+import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+
+import { FilterWrapperFactory } from './FilterWrapper'
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+    private quickSearchHighlights: Map<string, boolean>
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
+    public StyleService: StyleService
 
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.quickSearchHighlights = new Map()
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -80,6 +87,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceagGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
+        this.StyleService = new StyleService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -92,27 +100,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
-        //this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
-        //this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
+        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        //this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        //this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        //this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
-        this.filterContainer = this.container.ownerDocument.createElement("div")
-        this.filterContainer.id = "filterContainer"
-        this.filterContainer.style.position = 'absolute'
-        this.filterContainer.style.visibility = "hidden"
-        this.container.ownerDocument.body.appendChild(this.filterContainer)
-
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
-        gridOptions.api.addGlobalListener((type: string, event: any) => {
-            //console.log(event)
-        });
+        // gridOptions.api.addGlobalListener((type: string, event: any) => {
+        //     //console.log(event)
+        // });
 
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
@@ -135,30 +137,102 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = editor
+            //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
+            let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd
+            let isCancelAfterEnd = () => {
+                let dataChangedEvent: IDataChangingEvent
+                dataChangedEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) }
+
+                let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+                if (failedRules.length > 0) { // we have at least one failure or warning
+                    let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+
+                    // first see if its an error = should only be one item in array if so
+                    if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                        let error: IUIError = {
+                            ErrorMsg: errorMessage
+                        }
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                        return true;
+                    } else {
+                        let warningMessage: string = "";
+                        failedRules.forEach(f => {
+                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                        })
+                        let cellInfo: ICellInfo = {
+                            Id: dataChangedEvent.IdentifierValue,
+                            ColumnId: dataChangedEvent.ColumnId,
+                            Value: dataChangedEvent.NewValue
+                        }
+                        let confirmation: IUIConfirmation = {
+                            CancelText: "Cancel Edit",
+                            ConfirmationTitle: "Cell Validation Failed",
+                            ConfirmationMsg: warningMessage,
+                            ConfirmationText: "Bypass Rule",
+                            CancelAction: null,
+                            ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node))
+                        }
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                        return true
+                    }
+                }
+                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false
+                if (!whatToReturn) {
+                    //no failed validation so we raise the edit auditlog
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
+                        dataChangedEvent.ColumnId,
+                        this.gridOptions.api.getValue(params.column.getColId(), params.node), dataChangedEvent.NewValue)
+                }
+                return whatToReturn
+            }
+            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
         });
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null
+            //We refresh the filter so we get live search/filter when editing.
+            //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
+            this.applyColumnFilters();
+        });
+
+        gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
+            let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
+            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
         });
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent
         gridOptions.isExternalFilterPresent = () => {
             let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0
+            if (isFilterActive) {
+                //used in particular at init time to show the filter icon correctly
+                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
+                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
+                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true)
+                    }
+                }
+            }
+
             let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
-            return isFilterActive || isSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
+            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+            //it means that originaldoesExternalFilterPass will be called to we reinit that collection
+            this.quickSearchHighlights.clear()
+            return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
         }
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns
-            let rowId = this.getPrimaryKeyValueFromRecord(node)
+            // let rowId = this.getPrimaryKeyValueFromRecord(node)
 
             //first we assess AdvancedSearch 
             let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
             if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
                 let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
-                if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
+                    // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
                     return false;
                 }
             }
@@ -167,10 +241,54 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {
-                    if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
+                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
+                        // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
                         return false
                     }
                 }
+            }
+
+            //we assess quicksearch
+            let recordReturnValue = false
+            if (StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch
+                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
+
+                for (let column of columns.filter(c => c.Visible)) {
+                    let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId)
+                    let rowId = this.getPrimaryKeyValueFromRecord(node)
+                    let stringValueLowerCase = displayValue.toLowerCase()
+                    switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true
+                                }
+                            }
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true
+                                }
+                            }
+                            break;
+                    }
+                }
+                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                    recordReturnValue = true;
+                }
+                if (!recordReturnValue) { return false }
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true
         }
@@ -180,6 +298,46 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
             col.initialise()
         })
+
+        let originalgetMainMenuItems = gridOptions.getMainMenuItems;
+        gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
+            //couldnt find a way to listen for menu close. There is a Menu Item Select 
+            //but you can also clsoe the menu from filter and clicking outside the menu....
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.HideColumnContextMenu())
+            this.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.ShowColumnContextMenu(
+                    params.column.getColId(),
+                    0,
+                    0))
+            var colMenuItems: (string | MenuItemDef)[]
+            //if there was an initial implementation we init the list of menu items with this one, otherwise we take
+            //the default items
+            if (originalgetMainMenuItems) {
+                let originalMenuItems = originalgetMainMenuItems(params)
+                colMenuItems = originalMenuItems.slice(0);
+            }
+            else {
+                colMenuItems = params.defaultItems.slice(0);
+            }
+            colMenuItems.push('separator')
+            this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
+                let glyph = this.container.ownerDocument.createElement("span")
+                glyph.className = "glyphicon glyphicon-" + x.GlyphIcon
+                colMenuItems.push({
+                    name: x.Label,
+                    action: () => this.AdaptableBlotterStore.TheStore.dispatch(x.Action),
+                    icon: glyph
+                })
+            })
+            return colMenuItems
+        }
+
+    }
+
+    public InitAuditService() {
+        //Probably Temporary but we init the Audit service with current data
+        this.AuditService.Init(this.gridOptions.rowData)
     }
 
     private _currentEditor: ICellEditor
@@ -194,7 +352,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
-    public onFilterChanged() {
+    public applyColumnFilters() {
         this.gridOptions.api.onFilterChanged()
     }
 
@@ -219,11 +377,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         })
 
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(visibleColumns.concat(hiddenColumns)));
-    }
+        let allColumns = visibleColumns.concat(hiddenColumns)
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(allColumns));
+        let quickSearchHighlights = this.quickSearchHighlights
+        let blotter = this
+        for (let col of allColumns) {
+            this.setCellClassRules({
+                'Ab-QuickSearch': function (params: any) {
+                    return quickSearchHighlights.has(blotter.getPrimaryKeyValueFromRecord(params.node) + params.colDef.field)
+                }
+            }, col.ColumnId, "QuickSearch")
+        }
 
+    }
+    public hideFilterFormPopup: Function
     public hideFilterForm() {
-        throw Error("not implemented yet")
+        if (this.hideFilterFormPopup) {
+            this.hideFilterFormPopup()
+        }
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -269,10 +440,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getActiveCell(): ICellInfo {
         let activeCell = this.gridOptions.api.getFocusedCell()
         let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
-        return {
-            ColumnId: activeCell.column.getColId(),
-            Id: this.getPrimaryKeyValueFromRecord(rowNode),
-            Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+        //if the selected cell is from a group cell we don't return it
+        //that's a design choice as this is used only when editing and you cant edit those cells
+        if (!rowNode.group) {
+            return {
+                ColumnId: activeCell.column.getColId(),
+                Id: this.getPrimaryKeyValueFromRecord(rowNode),
+                Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+            }
         }
     }
 
@@ -287,14 +462,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                 for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
                     let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
-                    let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
-                    let value = this.gridOptions.api.getValue(column, rowNode)
-                    let valueArray = selectionMap.get(primaryKey);
-                    if (valueArray == undefined) {
-                        valueArray = []
-                        selectionMap.set(primaryKey, valueArray);
+                    //if the selected cells are from a group cell we don't return it
+                    //that's a design choice as this is used only when editing and you cant edit those cells
+                    if (!rowNode.group) {
+                        let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
+                        let value = this.gridOptions.api.getValue(column, rowNode)
+                        let valueArray = selectionMap.get(primaryKey);
+                        if (valueArray == undefined) {
+                            valueArray = []
+                            selectionMap.set(primaryKey, valueArray);
+                        }
+                        valueArray.push({ columnID: column.getColId(), value: value });
                     }
-                    valueArray.push({ columnID: column.getColId(), value: value });
                 }
             }
         });
@@ -314,6 +493,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         //console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
         let row = this.gridOptions.api.getModel().getRow(0)
+        //if it's a group we need the content of the group
+        if (row.group) {
+            row = row.childrenAfterGroup[0]
+        }
         let value = this.gridOptions.api.getValue(column, row)
         if (value instanceof Date) {
             return DataType.Date
@@ -338,9 +521,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
+                this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
+                    cellInfo.ColumnId,
+                    oldValue, cellInfo.Value)
             }
         })
+        this.applyColumnFilters();
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -349,9 +537,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
+                let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
                 rowNode.setDataValue(value.ColumnId, value.Value)
+                this.AuditLogService.AddEditCellAuditLog(value.Id,
+                    value.ColumnId,
+                    oldValue, value.Value)
             }
         })
+        this.applyColumnFilters();
     }
 
     public cancelEdit() {
@@ -429,13 +622,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         //we use forEachNode as we want to get all data even the one filtered out...
         let data = this.gridOptions.api.forEachNode(rowNode => {
-            let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
-            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-            }
-            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+            //we do not return the values of the aggregates when in grouping mode
+            //otherwise they would appear in the filter dropdown etc....
+            if (!rowNode.group) {
+                let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
+                let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                }
             }
         })
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
@@ -465,12 +662,50 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
             if (typeof render == "string") {
-                return rawValue
+                return String(rawValue)
             }
             return render({ value: rawValue })
         }
         else {
-            return rawValue
+            return String(rawValue)
+        }
+    }
+
+    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell") {
+        let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
+        if (localCellClassRules) {
+            if (type == "ConditionalStyle") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-ConditionalStyle-")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            //Is initialized in setColumnIntoStore
+            else if (type == "QuickSearch") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-QuickSearch")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            //Is initialized in Flash
+            else if (type == "FlashingCell") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-FlashUp")) {
+                        delete localCellClassRules[prop]
+                    }
+                    if (prop.includes("Ab-FlashDown")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            for (let prop in cellClassRules) {
+                localCellClassRules[prop] = cellClassRules[prop]
+            }
+        }
+        else {
+            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
     }
 
@@ -513,14 +748,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-    public applyColumnFilters(): void {
-        this.gridOptions.api.onFilterChanged()
+    public refreshView() {
+        this.gridOptions.api.refreshView();
+    }
+
+    public refreshCells(rowNode: RowNode, columnIds: string[]) {
+        this.gridOptions.api.refreshCells([rowNode], columnIds);
     }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
-        ReactDOM.unmountComponentAtNode(this.filterContainer);
-        //ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
 

@@ -91,20 +91,6 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             }
                         }
                         break;
-                    case LeafExpressionOperator.EndsWith:
-                        {
-                            //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: quickSearchState.QuickSearchBackColor } })
-                            }
-                            //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
-                                return true;
-                            }
-                            recordReturnValue = true
-                        }
-                        break;
                 }
             }
             //if we color only then we just return true....

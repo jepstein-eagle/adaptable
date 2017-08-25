@@ -399,6 +399,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
+    public InitAuditService() {
+    }
+
     private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
         var el = document.createElement("span");
         //we we let teh CSS parse build the different properties of the font CSS
@@ -942,18 +945,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllRowIds(): string[] {
-        let ds = this.grid.behavior.dataModel.dataSource
-        let count = ds.getRowCount();
+        //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
+        let ds = this.grid.behavior.getData()
+        let count = ds.length;
         let result = new Array(count);
         for (var y = 0; y < count; y++) {
-            result[y] = ds.getRow(y)[this.BlotterOptions.primaryKey];
+            result[y] = ds[y][this.BlotterOptions.primaryKey];
         }
         return result
-    }
-
-    public getRowCount(): number {
-        let ds = this.grid.behavior.dataModel.dataSource
-        return ds.getRowCount();
     }
 
     public hideRows(rowIds: string[]): void {

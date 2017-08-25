@@ -249,6 +249,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
+    public InitAuditService() {
+    }
+
     private kendoPopup: kendo.ui.Popup
     public hideFilterForm() {
         if (this.kendoPopup) {

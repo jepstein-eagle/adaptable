@@ -17,8 +17,9 @@ export module Helper {
     export function getStringRepresentionFromKey(event: JQueryKeyEventObject | KeyboardEvent): string {
         if (event.key == null) {
             return event.char // IE
-        } else
+        } else {
             return event.key
+        }
     }
 
     export function moveArray(array: any[], from: number, to: number) {

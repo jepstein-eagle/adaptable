@@ -1,1 +1,7 @@
-﻿/*NOTHING YET*/
+﻿html, body {
+height: 100%
+}
+
+#grid{
+    height: 80%
+}

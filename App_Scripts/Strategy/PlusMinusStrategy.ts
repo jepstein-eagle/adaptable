@@ -63,6 +63,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 for (var columnValuePair of keyValuePair[1]) {
                     let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnID);
                     if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                        //for aggrid as we are getting strings sometimes 
+                        if (typeof columnValuePair.value != "number") {
+                            columnValuePair.value = parseFloat(columnValuePair.value)
+                        }
                         let newValue: ICellInfo;
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
@@ -84,7 +88,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         }
                         //avoid the 0.0000000000x  
                         newValue.Value = parseFloat(newValue.Value.toFixed(12))
-                        
+
                         let dataChangedEvent: IDataChangedEvent = {
                             OldValue: Number(columnValuePair.value),
                             NewValue: newValue.Value,

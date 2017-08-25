@@ -22,7 +22,6 @@ export class FlashingCellsHypergridStrategy extends FlashingCellsStrategy implem
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? flashingColumn.DownBackColor : flashingColumn.UpBackColor
-        //Jo : we know that this function is wrong as it's not cumulative
         this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, { flashBackColor: cellStyle }, flashingColumn.FlashingCellDuration.Duration)
     }
 }

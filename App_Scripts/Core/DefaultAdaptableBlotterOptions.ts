@@ -1,8 +1,8 @@
 import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
-    enableAuditLog: true,
-    enableRemoteConfigServer: true,
+    enableAuditLog: false,
+    enableRemoteConfigServer: false,
     userName: "anonymous",
     blotterId: "adaptable_blotter_id",
     predefinedConfigUrl: "",

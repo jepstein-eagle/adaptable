@@ -3,7 +3,7 @@ import { GridState } from './Interface/IState'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { ICellInfo } from '../../Core/Interface/IStrategy'
 
-const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
+export const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
 export const HIDE_COLUMN = 'HIDE_COLUMN';
 export const SET_GRIDVALUE_LIKE_EDIT = 'SET_GRIDVALUE_LIKE_EDIT';
 
