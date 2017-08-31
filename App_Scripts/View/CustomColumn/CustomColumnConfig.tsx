@@ -18,6 +18,7 @@ import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
 import { EntityListActionButtons } from "../Components/Buttons/EntityListActionButtons";
 import { CustomColumnSettingsWizard } from "./CustomColumnSettingsWizard";
 import { CustomColumnExpressionWizard } from "./CustomColumnExpressionWizard";
+import { SortOrder } from "../../Core/Enums";
 
 interface CustomColumnConfigProps extends IStrategyViewPopupProps<CustomColumnConfigComponent> {
     onAddCustomColumn: (customColumn: ICustomColumn) => CustomColumnRedux.CustomColumnAddAction
@@ -40,10 +41,10 @@ class CustomColumnConfigComponent extends React.Component<CustomColumnConfigProp
     }
 
     render() {
-        let infoBody: any[] = ["Custom Column Blah blah blah."]
+        let infoBody: any[] = ["Custom Column."]
 
-
-        let customColumns = this.props.CustomColumns.map((customColumn: ICustomColumn, index: number) => {
+        let propCustomColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CustomColumns, "ColumnId");
+        let customColumns = propCustomColumns.map((customColumn: ICustomColumn, index: number) => {
             return <li
                 className="list-group-item" key={customColumn.ColumnId}>
                 <Row >
