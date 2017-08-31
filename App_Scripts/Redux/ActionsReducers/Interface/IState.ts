@@ -2,6 +2,7 @@ import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } fr
 import { InputAction } from '../../../Core/Interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
+import { ICustomColumn } from '../../../Core/Interface/ICustomColumnStrategy'
 import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
 import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/Interface/IStrategy'
@@ -154,4 +155,9 @@ export interface LayoutState {
 
 export interface DashboardState {
     DashboardStrategyControls: IDashboardStrategyControlConfiguration[]
+}
+
+export interface CustomColumnState {
+    CustomColumns: ICustomColumn[];
+    EditedCustomColumnInvalidErrorMsg: string
 }

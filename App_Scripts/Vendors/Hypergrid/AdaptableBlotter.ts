@@ -1,4 +1,5 @@
-﻿import '../../../stylesheets/adaptableblotter-style.css'
+﻿import { CustomColumnStrategy } from '../../Strategy/CustomColumnStrategy';
+import '../../../stylesheets/adaptableblotter-style.css'
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -15,6 +16,7 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
+import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { SearchServiceHyperGrid } from '../../Core/Services/SearchServiceHyperGrid'
@@ -57,6 +59,8 @@ import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -87,6 +91,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
+    public CustomColumnExpressionService: ICustomColumnExpressionService
     private filterContainer: HTMLDivElement
     private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
@@ -106,11 +111,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceHyperGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => {
+            let column = this.getHypergridColumn(columnId);
+            return this.valOrFunc(record, column)
+        });
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -287,7 +297,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let row = config.dataRow
                 let columnName = config.name
                 if (columnName && row) {
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), row[columnName], columnName, row)
+                    //check that it doesn't impact perf monitor
+                    let column = this.getHypergridColumn(columnName);
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row)
                 }
                 let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                 let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
@@ -483,7 +495,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public sortOrder: SortOrder
     public toggleSort(gridColumnIndex: number) {
         //Toggle sort one column at a time
-        if (this.sortColumnGridIndex === gridColumnIndex) {
+        //we need the index property not the index of the collection
+        let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
+        if (this.sortColumnGridIndex === gridColumnIndexTransposed) {
             if (this.sortOrder == SortOrder.Descending) {
                 this.sortColumnGridIndex = -1;
             }
@@ -492,7 +506,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         } else {
             this.sortOrder = SortOrder.Ascending
-            this.sortColumnGridIndex = gridColumnIndex;
+            //we need the index property not the index of the collection
+            //this.sortColumnGridIndex = gridColumnIndex;
+            this.sortColumnGridIndex = gridColumnIndexTransposed;
             this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
         }
         this.grid.behavior.reindex();
@@ -523,7 +539,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             //this function needs the column.index from the schema
             // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
-            let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
+            //let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
+            //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+            let value = this.valOrFunc(row, column)
             return { Id: primaryKey, ColumnId: column.name, Value: value }
         }
         return null
@@ -544,7 +562,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                     //this function needs the column.index from the schema
                     // let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
-                    let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
+                    // let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
+                    //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+                    let value = this.valOrFunc(row, column)
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
                     // let value = column.getValue(rowIndex)
@@ -588,6 +608,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         return DataType.Date;
                     case 'object':
                         return DataType.Object;
+                    //for custom column that's what happens
+                    case 'unknown': {
+                        //get First record
+                        let record = this.grid.behavior.dataModel.getData()[0]
+                        var value = this.valOrFunc(record, column)
+                        if (value instanceof Date) {
+                            return DataType.Date
+                        }
+                        switch (typeof value) {
+                            case 'string':
+                                return DataType.String;
+                            case 'number':
+                                return DataType.Number;
+                            case 'boolean':
+                                return DataType.Boolean;
+                            case 'object':
+                                return DataType.Object;
+                            default:
+                                break;
+                        }
+                    }
                     default:
                         break;
                 }
@@ -652,8 +693,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
-            return (columnName: string) => { return record[columnName]; }
+            let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
+            return (columnName: string) => {
+                let column = this.getHypergridColumn(columnName);
+                return this.valOrFunc(record, column);
+            }
         }
         else {
             return (columnName: string) => { return this.getDisplayValue(id, columnName); }
@@ -661,7 +705,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
-            return (columnName: string) => { return record[columnName]; }
+            return (columnName: string) => {
+                let column = this.getHypergridColumn(columnName);
+                return this.valOrFunc(record, column);
+            }
         }
         else {
             return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
@@ -728,16 +775,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
+        let column = this.getHypergridColumn(columnId);
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.grid.behavior.dataModel.getData()
         for (var index = 0; index < data.length; index++) {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
-            let rawValue: any = null
-            if (element.hasOwnProperty(columnId)) {
-                rawValue = element[columnId]
-            }
-
+            let rawValue = this.valOrFunc(element, column)
             if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
                 returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
             }
@@ -759,15 +803,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValueFromRecord(row: any, columnId: string) {
-        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let column = this.getHypergridColumn(columnId);
         if (column) {
             let formatter = column.getFormatter()
-            return formatter(row[columnId])
+            return formatter(this.valOrFunc(row, column))
         }
         return "";
     }
     public getColumnFormatter(columnId: string) {
-        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let column = this.getHypergridColumn(columnId);
         if (column && column.properties.format) {
             return column.getFormatter()
         }
@@ -972,6 +1016,39 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
     }
+    public deleteCustomColumn(customColumnID: string) {
+    }
+    public createCustomColumn(customColumn: ICustomColumn) {
+        let newSchema = {
+            name: customColumn.ColumnId,
+            header: customColumn.ColumnId,
+            calculator: (dataRow: any, columnName: string) => {
+                //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
+                if (Object.keys(dataRow).length == 0) {
+                    return customColumn.ColumnId
+                }
+                return this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, dataRow)
+            }
+        }
+        this.grid.behavior.dataModel.schema.push(
+            newSchema
+        );
+        this.grid.behavior.addColumn({
+            index: this.grid.behavior.getColumns().length,
+            header: newSchema.header,
+            calculator: newSchema.calculator
+        })
+        //this.grid.behavior.createColumns();
+        //this.grid.repaint();
+        this.grid.behavior.changed()
+        //if the event columnReorder starts to be fired when changing the order programmatically 
+        //we'll need to remove that line
+        this.setColumnIntoStore();
+    }
+
+    public getFirstRecord() {
+        return this.grid.behavior.dataModel.getData()[0];
+    }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
@@ -982,6 +1059,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
+    }
+
+    private valOrFunc(dataRow: any, column: any) {
+        var result, calculator;
+        if (dataRow) {
+            result = dataRow[column.name];
+            calculator = (typeof result)[0] === 'f' && result || column.calculator;
+            if (calculator) {
+                result = calculator(dataRow, column.name);
+            }
+        }
+        return result || result === 0 || result === false ? result : '';
+    }
+
+    public getHypergridColumn(columnId: string): any {
+        return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
     }
 }
 

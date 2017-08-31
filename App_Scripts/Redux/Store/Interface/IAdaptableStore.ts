@@ -20,7 +20,8 @@ export interface AdaptableBlotterState {
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Layout: AdaptableBlotterStates.LayoutState;
     Dashboard: AdaptableBlotterStates.DashboardState;
-    Entitlements: AdaptableBlotterStates.EntitlementsState
+    Entitlements: AdaptableBlotterStates.EntitlementsState;
+    CustomColumn: AdaptableBlotterStates.CustomColumnState;
 }
 
 export interface IAdaptableBlotterStore {

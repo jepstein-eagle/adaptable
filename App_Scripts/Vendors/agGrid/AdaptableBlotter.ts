@@ -12,6 +12,7 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
+import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
@@ -56,15 +57,20 @@ import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
 import { GridOptions, Column, Events, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
-import { NewValueParams } from "ag-grid/dist/lib/entities/colDef"
+import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 import { FilterWrapperFactory } from './FilterWrapper'
+import { CustomColumnStrategy } from "../../Strategy/CustomColumnStrategy";
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     private quickSearchHighlights: Map<string, boolean>
+    private customColumnPathMap: Map<string, string[]> = new Map()
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -73,6 +79,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
+    public CustomColumnExpressionService: ICustomColumnExpressionService
 
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -88,11 +95,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
+        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -132,7 +141,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
-            let editor = (<any>this.gridOptions.api).rowRenderer.renderedRows[params.rowIndex].renderedCells[params.column.getColId()].cellEditor
+            let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].renderedCells[params.column.getColId()].cellEditor
             //No need to register for the keydown on the editor since we already register on the main div
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
@@ -201,6 +210,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
+            //so we manually raise.
+            //https://github.com/jonathannaim/adaptableblotter/issues/118
+            let columnList = this.customColumnPathMap.get(params.colDef.field)
+            if (columnList) {
+                columnList.forEach(x => {
+                    let newValue = this.gridOptions.api.getValue(x, params.node)
+                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
+                })
+            }
         });
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
@@ -332,7 +351,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
-
     }
 
     public InitAuditService() {
@@ -748,12 +766,57 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-    public refreshView() {
-        this.gridOptions.api.refreshView();
+    public redrawRows() {
+        this.gridOptions.api.redrawRows();
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
-        this.gridOptions.api.refreshCells([rowNode], columnIds);
+        this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
+    }
+
+    public deleteCustomColumn(customColumnID: string) {
+        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
+        let colDefIndex = this.gridOptions.columnDefs.findIndex(x => x.headerName == customColumnID)
+        if (colDefIndex > -1) {
+            this.gridOptions.columnDefs.splice(colDefIndex, 1)
+            this.gridOptions.api.setColumnDefs(colDef)
+        }
+        for (let columnList of this.customColumnPathMap.values()) {
+            let index = columnList.indexOf(customColumnID);
+            if (index > -1) {
+                columnList.splice(index, 1);
+            }
+        }
+    }
+    public createCustomColumn(customColumn: ICustomColumn) {
+        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
+        colDef.push({
+            headerName: customColumn.ColumnId,
+            colId: customColumn.ColumnId,
+            valueGetter: (params: ValueGetterParams) => this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, params.node)
+        })
+        this.gridOptions.api.setColumnDefs(colDef)
+        let columnList = this.CustomColumnExpressionService.getColumnListFromExpression(customColumn.GetValueFunc)
+        for (let column of columnList) {
+            let childrenColumnList = this.customColumnPathMap.get(column)
+            if (!childrenColumnList) {
+                childrenColumnList = []
+                this.customColumnPathMap.set(column, childrenColumnList)
+            }
+            childrenColumnList.push(customColumn.ColumnId)
+        }
+    }
+
+    public getFirstRecord() {
+        let record: RowNode
+        this.gridOptions.api.forEachNode(rowNode => {
+            if (!rowNode.group) {
+                if (!record) {
+                    record = rowNode
+                }
+            }
+        })
+        return record;
     }
 
     destroy() {

@@ -20,6 +20,7 @@ import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { SearchService } from '../../Core/Services/SearchService'
+import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
@@ -53,6 +54,8 @@ import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../../Core/Extensions'
+import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -65,6 +68,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
+    public CustomColumnExpressionService: ICustomColumnExpressionService
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
@@ -82,6 +86,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
+        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, null);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -548,6 +553,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else {
             return matchingRowIds;
         }
+    }
+
+    public createCustomColumn(customColumn: ICustomColumn) {
+
+    }
+    public deleteCustomColumn(customColumnID: string) {
+    }
+
+    public getFirstRecord(): any {
+        return null;
     }
 
     public rendergrid(): void {

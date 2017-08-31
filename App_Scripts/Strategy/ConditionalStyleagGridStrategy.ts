@@ -41,8 +41,10 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
         if (index !== -1) {
             listOfColumnsToRefresh.splice(index, 1);
         }
-        let theBlotter = this.blotter as AdaptableBlotter
-        theBlotter.refreshCells(dataChangedEvent.Record, listOfColumnsToRefresh);
+        if (listOfColumnsToRefresh.length > 0) {
+            let theBlotter = this.blotter as AdaptableBlotter
+            theBlotter.refreshCells(dataChangedEvent.Record, listOfColumnsToRefresh);
+        }
     }
 
     protected InitStyles(): void {
@@ -71,7 +73,7 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
             }
         }
 
-        theBlotter.refreshView();
+        theBlotter.redrawRows();
     }
 }
 

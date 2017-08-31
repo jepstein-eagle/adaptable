@@ -5,8 +5,10 @@ import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
+import { ICustomColumn } from '../Interface/ICustomColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
+import { ICustomColumnExpressionService } from "../Services/Interface/ICustomColumnExpressionService";
 
 
 export interface IAdaptableBlotter {
@@ -19,7 +21,8 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
-    InitAuditService() : void
+    CustomColumnExpressionService: ICustomColumnExpressionService
+    InitAuditService(): void
 
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
@@ -76,6 +79,11 @@ export interface IAdaptableBlotter {
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
+
+    //CustomColumn
+    deleteCustomColumn(customColumnId: string): void
+    createCustomColumn(customColumn: ICustomColumn): void
+    getFirstRecord(): any
 
     // Export
     exportBlotter(): void
