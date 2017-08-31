@@ -495,7 +495,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public sortOrder: SortOrder
     public toggleSort(gridColumnIndex: number) {
         //Toggle sort one column at a time
-        if (this.sortColumnGridIndex === gridColumnIndex) {
+        //we need the index property not the index of the collection
+        let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
+        if (this.sortColumnGridIndex === gridColumnIndexTransposed) {
             if (this.sortOrder == SortOrder.Descending) {
                 this.sortColumnGridIndex = -1;
             }
@@ -504,7 +506,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         } else {
             this.sortOrder = SortOrder.Ascending
-            this.sortColumnGridIndex = gridColumnIndex;
+            //we need the index property not the index of the collection
+            //this.sortColumnGridIndex = gridColumnIndex;
+            this.sortColumnGridIndex = gridColumnIndexTransposed;
             this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
         }
         this.grid.behavior.reindex();
