@@ -16,6 +16,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         //There is a sort so we init the index array with each items index and we'll sort that
         this.buildIndex()
         let fields = blotter.sortColumnName
+        let hypergridColumn = blotter.getHypergridColumn(blotter.sortColumnName);
         let tmp = new Array(this.index.length);
 
 
@@ -23,7 +24,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         if (customSort) {
             for (let i = 0; i < tmp.length; i++) {
                 let dataRow = this.dataSource.getRow(i);
-                tmp[i] = [dataRow[fields], i];
+                tmp[i] = [this.valOrFunc(dataRow, hypergridColumn), i];
             }
             let direction: number = 1
             if (this.blotter.sortOrder === SortOrder.Descending) {
@@ -59,7 +60,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
 
             for (let i = 0; i < tmp.length; i++) {
                 let dataRow = this.dataSource.getRow(i);
-                tmp[i] = [dataRow[fields], i];
+                tmp[i] = [this.valOrFunc(dataRow, hypergridColumn), i];
             }
             let direction: number = 1
             if (this.blotter.sortOrder === SortOrder.Descending) {
@@ -80,5 +81,16 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         for (let i = 0; i < this.index.length; i++) {
             this.index[i] = tmp[i][1];
         }
+    },
+    valOrFunc : function(dataRow: any, column: any) {
+        var result, calculator;
+        if (dataRow) {
+            result = dataRow[column.name];
+            calculator = (typeof result)[0] === 'f' && result || column.calculator;
+            if (calculator) {
+                result = calculator(dataRow, column.name);
+            }
+        }
+        return result || result === 0 || result === false ? result : '';
     }
 });

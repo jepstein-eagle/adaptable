@@ -112,7 +112,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => {
-            let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
+            let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
         });
 
@@ -298,7 +298,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let columnName = config.name
                 if (columnName && row) {
                     //check that it doesn't impact perf monitor
-                    let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName);
+                    let column = this.getHypergridColumn(columnName);
                     this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row)
                 }
                 let primaryKey = this.getPrimaryKeyValueFromRecord(row)
@@ -690,7 +690,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (type == "getColumnValue") {
             let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
             return (columnName: string) => {
-                let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName);
+                let column = this.getHypergridColumn(columnName);
                 return this.valOrFunc(record, column);
             }
         }
@@ -701,7 +701,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
             return (columnName: string) => {
-                let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnName)
+                let column = this.getHypergridColumn(columnName);
                 return this.valOrFunc(record, column);
             }
         }
@@ -766,7 +766,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let column = this.getHypergridColumn(columnId);
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.grid.behavior.dataModel.getData()
         for (var index = 0; index < data.length; index++) {
@@ -794,7 +794,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValueFromRecord(row: any, columnId: string) {
-        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let column = this.getHypergridColumn(columnId);
         if (column) {
             let formatter = column.getFormatter()
             return formatter(this.valOrFunc(row, column))
@@ -802,7 +802,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return "";
     }
     public getColumnFormatter(columnId: string) {
-        let column = this.grid.behavior.allColumns.find((x: any) => x.name == columnId)
+        let column = this.getHypergridColumn(columnId);
         if (column && column.properties.format) {
             return column.getFormatter()
         }
@@ -1059,6 +1059,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         return result || result === 0 || result === false ? result : '';
+    }
+
+    public getHypergridColumn(columnId: string):any{
+        return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
     }
 }
 
