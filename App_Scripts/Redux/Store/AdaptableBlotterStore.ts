@@ -340,15 +340,24 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     //we set the column list from the datasource
                     adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
+                    let currentLayout = "Default"
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
                         middlewareAPI.dispatch(LayoutRedux.LayoutAdd(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect("Default"));
                     }
                     else {
                         //update default layout with latest columns
                         middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(middlewareAPI.getState().Layout.CurrentLayout));
+                        currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
+                    //Create all custom columns before we load the layout
+                    middlewareAPI.getState().CustomColumn.CustomColumns.forEach(x => {
+                        adaptableBlotter.createCustomColumn(x)
+                    })
+                    if (middlewareAPI.getState().CustomColumn.CustomColumns.length > 0) {
+                        adaptableBlotter.setColumnIntoStore();
+                    }
+                    //load either saved layout or default one
+                    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
                     AdaptableDashboardViewFactory.forEach((control, strategyId) => {

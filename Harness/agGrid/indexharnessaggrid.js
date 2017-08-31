@@ -20,8 +20,7 @@ function getSchema(data) {
                 schema.push({ headerName: capitalize(p), field: p });
             }
             else if (p === 'price') {
-                schema.push({ headerName: capitalize(p), field: p, filter: 'text', cellRenderer: 'animateShowChange',
-                headerValueGetter : (params) => {return "Price" + "tptp"} });
+                schema.push({ headerName: capitalize(p), field: p, filter: 'text', cellRenderer: 'animateShowChange' });
             }
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });

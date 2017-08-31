@@ -73,7 +73,7 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
             }
         }
 
-        theBlotter.refreshView();
+        theBlotter.redrawRows();
     }
 }
 

@@ -766,8 +766,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false
     }
 
-    public refreshView() {
-        this.gridOptions.api.refreshView();
+    public redrawRows() {
+        this.gridOptions.api.redrawRows();
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
