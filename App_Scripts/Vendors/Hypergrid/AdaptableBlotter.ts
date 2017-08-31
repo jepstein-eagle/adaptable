@@ -609,9 +609,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     case 'object':
                         return DataType.Object;
                     //for custom column that's what happens
-                    case 'unknown':{
+                    case 'unknown': {
+                        //get First record
                         let record = this.grid.behavior.dataModel.getData()[0]
-                        var value = this.valOrFunc(record,column)
+                        var value = this.valOrFunc(record, column)
                         if (value instanceof Date) {
                             return DataType.Date
                         }
@@ -1041,6 +1042,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
 
+    public getFirstRecord() {
+        return this.grid.behavior.dataModel.getData()[0];
+    }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
@@ -1065,7 +1069,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return result || result === 0 || result === false ? result : '';
     }
 
-    public getHypergridColumn(columnId: string):any{
+    public getHypergridColumn(columnId: string): any {
         return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
     }
 }

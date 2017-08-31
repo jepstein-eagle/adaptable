@@ -807,6 +807,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public getFirstRecord() {
+        let record: RowNode
+        this.gridOptions.api.forEachNode(rowNode => {
+            if (!rowNode.group) {
+                if (!record) {
+                    record = rowNode
+                }
+            }
+        })
+        return record;
+    }
+
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }

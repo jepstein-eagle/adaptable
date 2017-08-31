@@ -83,6 +83,7 @@ export interface IAdaptableBlotter {
     //CustomColumn
     deleteCustomColumn(customColumnId: string): void
     createCustomColumn(customColumn: ICustomColumn): void
+    getFirstRecord(): any
 
     // Export
     exportBlotter(): void

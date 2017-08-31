@@ -555,13 +555,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-        public createCustomColumn(customColumn : ICustomColumn)
-    {
-        
+    public createCustomColumn(customColumn: ICustomColumn) {
+
     }
     public deleteCustomColumn(customColumnID: string) {
     }
 
+    public getFirstRecord(): any {
+        return null;
+    }
 
     public rendergrid(): void {
         this.grid.render();

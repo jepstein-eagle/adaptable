@@ -9,8 +9,14 @@ export class CustomColumnExpressionService implements ICustomColumnExpressionSer
 
     IsExpressionValid(expression: string): { IsValid: Boolean, ErrorMsg?: string } {
         try {
+            let firstRecord = this.blotter.getFirstRecord();
             math.eval(expression, {
-                Col: (columnId: string) => { return 0 }
+                Col: (columnId: string) => {
+                    try { return this.colFunctionValue(columnId, firstRecord) }
+                    catch (e) {
+                        throw Error("Unknown column " + columnId)
+                    }
+                }
             })
             return { IsValid: true };
         }
@@ -24,7 +30,12 @@ export class CustomColumnExpressionService implements ICustomColumnExpressionSer
         try {
             return math.eval(expression, {
                 node: record,
-                Col: (columnId: string) => { return this.colFunctionValue(columnId, record) }
+                Col: (columnId: string) => {
+                    try { return this.colFunctionValue(columnId, record) }
+                    catch (e) {
+                        throw Error("Unknown column " + columnId)
+                    }
+                }
             })
         }
         catch (e) {
@@ -33,11 +44,11 @@ export class CustomColumnExpressionService implements ICustomColumnExpressionSer
         }
     }
 
-    getColumnListFromExpression(expression: string) : string[]{
-        let columnList : string[] = []
+    getColumnListFromExpression(expression: string): string[] {
+        let columnList: string[] = []
         let regEx = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g
         let match = regEx.exec(expression);
-        while(match !== null) {
+        while (match !== null) {
             columnList.push(match[1])
             match = regEx.exec(expression);
         }

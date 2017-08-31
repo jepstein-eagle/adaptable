@@ -756,7 +756,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public createCustomColumn(customColumn: ICustomColumn) {
 
     }
-
+    public getFirstRecord() : any{
+        return null;
+    }
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
