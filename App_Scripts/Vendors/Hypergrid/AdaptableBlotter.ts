@@ -1017,6 +1017,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint()
     }
     public deleteCustomColumn(customColumnID: string) {
+
+        let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == customColumnID)
+        if (colIndex > -1) {
+            this.grid.behavior.getColumns().splice(colIndex, 1)
+        }
+        let activecolIndex = this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == customColumnID)
+        if (activecolIndex > -1) {
+            this.grid.behavior.getActiveColumns().splice(activecolIndex, 1)
+        }
+        //needs to be last since column.name load up the schema
+        let schemaIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == customColumnID)
+        if (schemaIndex > -1) {
+            this.grid.behavior.dataModel.schema.splice(schemaIndex, 1)
+        }
+        this.grid.behavior.changed()
+        this.setColumnIntoStore();
     }
     public createCustomColumn(customColumn: ICustomColumn) {
         let newSchema = {
@@ -1038,7 +1054,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             header: newSchema.header,
             calculator: newSchema.calculator
         })
-        //this.grid.behavior.createColumns();
+        // this.grid.behavior.createColumns();
         //this.grid.repaint();
         this.grid.behavior.changed()
         //if the event columnReorder starts to be fired when changing the order programmatically 
