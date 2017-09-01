@@ -30,15 +30,15 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
 class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigProps, {}> {
 
     render() {
-        let infoBody:any[] = ["Make numeric cells flash briefly as their value changes",<br/>,<br/>,"Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns",<br/>,<br/>,"Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
+        let infoBody: any[] = ["Make numeric cells flash briefly as their value changes", <br />, <br />, "Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns", <br />, <br />, "Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
-  let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
+        let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
 
         let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
         let cellInfo: [string, number][] = [["Live", 1], ["Column", 4], ["Flash Duration", 3], ["Up Colour", 2], ["Down Colour", 2]];
-        
+
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
         numericColumns.forEach(nc => {
             let existingfc = this.props.FlashingColumns.find(e => e.ColumnName == nc.ColumnId)
@@ -49,7 +49,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
                 allPotentialFlashingColumns.push(existingfc);
             }
         })
-        
+
         let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
             return <FlashingCellConfigItem
                 FlashingColumn={flashingColumn}
@@ -66,7 +66,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} style={topCheckBoxStyle}>
-                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns)}
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns.filter(x => x.IsPredefined == false))}
                         checked={allPotentialFlashingColumns.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
@@ -112,5 +112,5 @@ let divStyle: React.CSSProperties = {
 }
 
 let topCheckBoxStyle = {
-   'margin': '7px'
+    'margin': '7px'
 }
