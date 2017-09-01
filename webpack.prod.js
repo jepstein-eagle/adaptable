@@ -13,7 +13,7 @@ module.exports = {
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         // 'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-        harness: "./Harness/DataGenerator.ts"
+        // harness: "./Harness/DataGenerator.ts"
     },
     output: {
         path: __dirname + '/dist',
