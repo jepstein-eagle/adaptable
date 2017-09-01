@@ -340,7 +340,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         }
                     }
                     if (quickSearchBackColor) {
-                        config.backgroundColor = quickSearchBackColor;
+                        config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
                     }
                     if (flashColor) {
                         config.backgroundColor = flashColor;
@@ -1082,5 +1082,5 @@ export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle,
     conditionalStyleRow?: IStyle,
     flashBackColor?: string,
-    quickSearchBackColor?: string
+    quickSearchBackColor?: boolean
 }
