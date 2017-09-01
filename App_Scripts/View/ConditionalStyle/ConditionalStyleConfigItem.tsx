@@ -27,7 +27,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
     render(): any {
         let isDisabled = this.props.ConditionalStyleCondition.IsPredefined
 
-        let backColorForStyle: string = this.props.ConditionalStyleCondition.Style.BackColor != undefined ? this.props.ConditionalStyleCondition.Style.BackColor : "transparent";
+        let backColorForStyle: string = this.props.ConditionalStyleCondition.Style.BackColor != undefined ? this.props.ConditionalStyleCondition.Style.BackColor : null;
         let foreColorForStyle: string = this.props.ConditionalStyleCondition.Style.ForeColor != undefined ? this.props.ConditionalStyleCondition.Style.ForeColor : "black";
         let fontWeightForStyle: any = this.props.ConditionalStyleCondition.Style.FontWeight == FontWeight.Bold ? "bold" : "normal"
         let fontStyleForStyle: any = this.props.ConditionalStyleCondition.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
@@ -46,10 +46,9 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 </Col>
 
                 <Col md={2} >
-                    <div style={{
-
-                        margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle
-                    }}>Style</div> {/* font size taken out */}
+                    <div className={this.props.ConditionalStyleCondition.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"} style={{
+                        textAlign: 'center', margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle
+                    }}>Style</div>
                 </Col>
 
                 <Col xs={4}>

@@ -12,6 +12,30 @@
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
 }
 
+/*Style to similate transparent background*/
+.adaptableblotter_white_grey_stripes{
+  background: -moz-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); 
+  background: -webkit-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); 
+  background: repeating-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); }
+
 /*Default style for the duallistbox placeholder*/
 button.placeholder {background: #87D0FA;}
 button.placeholder:before {
