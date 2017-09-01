@@ -159,7 +159,7 @@ function InitBlotter() {
         userName: "Jonathan",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        predefinedConfigUrl:"predefinedConfig.json"
+        //predefinedConfigUrl:"predefinedConfig.json"
     });
     var origgetCell = grid.behavior.dataModel.getCell;
     grid.behavior.dataModel.getCell = (config, declaredRendererName) => {

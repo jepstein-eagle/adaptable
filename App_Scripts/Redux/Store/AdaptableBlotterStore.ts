@@ -1,5 +1,6 @@
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
+import migrate from 'redux-storage-decorator-migrate'
 import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
@@ -95,6 +96,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
         let engineWithFilter: ReduxStorage.StorageEngine
+        let engineWithMigrate: ReduxStorage.StorageEngine
         let engineReduxStorage: ReduxStorage.StorageEngine
 
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
@@ -103,13 +105,21 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         else {
             engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
         }
-        engineWithFilter = filter(engineReduxStorage, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
+        // const someExampleMigration = {
+        //     version: 1,
+        //     migration: (state: AdaptableBlotterState) => {
+        //         state.SmartEdit.SmartEditValue = "2"; return { ...state }
+        //     }
+        // }
+        engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
+        engineWithFilter = filter(engineWithMigrate, [], ["Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
+
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, [CREATE_STATE, MenuRedux.SET_MENUITEMS, GridRedux.SET_GRIDCOLUMNS]);
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
-        loadStorage = ReduxStorage.createLoader(engineReduxStorage);
+        loadStorage = ReduxStorage.createLoader(engineWithFilter);
         let composeEnhancers
         if ("production" != process.env.NODE_ENV) {
             composeEnhancers = composeWithDevTools({
