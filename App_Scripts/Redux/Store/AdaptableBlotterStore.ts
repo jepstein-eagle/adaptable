@@ -203,9 +203,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case CustomColumnRedux.CUSTOMCOLUMN_EDIT: {
                     let customColumnState = middlewareAPI.getState().CustomColumn;
                     let actionTyped = <CustomColumnRedux.CustomColumnEditAction>action
+                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
                     let returnAction = next(action);
                     adaptableBlotter.createCustomColumn(actionTyped.CustomColumn)
+                    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
                 case FilterRedux.HIDE_FILTER_FORM: {
