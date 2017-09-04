@@ -27,7 +27,6 @@ export class CustomColumnExpressionWizard extends React.Component<CustomColumnEx
         return <Panel header="Custom Column Expression" bsStyle="primary">
             <AdaptableBlotterForm>
                 <FormGroup controlId="formInlineName" validationState={validationState}>
-                    <ControlLabel >Column Name</ControlLabel>
                     <FormControl value={this.state.GetValueFunc} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
                     <FormControl.Feedback />
                     <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
