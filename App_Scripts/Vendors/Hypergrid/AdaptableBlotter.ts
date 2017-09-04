@@ -1021,11 +1021,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == customColumnID)
         if (colIndex > -1) {
             this.grid.behavior.getColumns().splice(colIndex, 1)
+            //we re-index the Column Object since we are removing the Schema 
+            for (let i = colIndex; i < this.grid.behavior.getColumns().length; i++) {
+                this.grid.behavior.getColumns()[i]._index = this.grid.behavior.getColumns()[i].index - 1
+            }
         }
         let activecolIndex = this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == customColumnID)
         if (activecolIndex > -1) {
             this.grid.behavior.getActiveColumns().splice(activecolIndex, 1)
+            //No need to do it here since the collections share the same instance of Column
+            // for (let i = activecolIndex; i < this.grid.behavior.getActiveColumns().length; i++) {
+            //     this.grid.behavior.getActiveColumns()[i]._index = this.grid.behavior.getActiveColumns()[i].index - 1
+            // }
         }
+
         //needs to be last since column.name load up the schema
         let schemaIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == customColumnID)
         if (schemaIndex > -1) {
