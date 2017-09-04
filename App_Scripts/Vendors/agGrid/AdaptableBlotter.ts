@@ -776,9 +776,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public deleteCustomColumn(customColumnID: string) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
-        let colDefIndex = this.gridOptions.columnDefs.findIndex(x => x.headerName == customColumnID)
+        let colDefIndex = colDef.findIndex(x => x.headerName == customColumnID)
         if (colDefIndex > -1) {
-            this.gridOptions.columnDefs.splice(colDefIndex, 1)
+            colDef.splice(colDefIndex, 1)
             this.gridOptions.api.setColumnDefs(colDef)
         }
         for (let columnList of this.customColumnPathMap.values()) {
