@@ -72,7 +72,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-themes": "node postcss-scopify.config.js",
-    "build-dev": "set arg=all&&webpack --config webpack.dev.js",
+    "build-dev": "webpack --config webpack.dev.js",
     "build-prod": "webpack --config webpack.prod.js -p",
     "dev-kendo": "set arg=kendo&&webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "set arg=hypergrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",

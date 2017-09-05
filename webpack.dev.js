@@ -3,33 +3,31 @@ var path = require('path');
 var failPlugin = require('webpack-fail-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var conditionalEntry;
-if (process.env.arg == "all") {
+var conditionalEntry = {
+    'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
+    'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
+    'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
+    'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+    harness: "./Harness/DataGenerator.ts"
+}
+if (process.env.arg == "kendo") {
     conditionalEntry = {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
-        'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
-        'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
-        'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
-}else if (process.env.arg == "kendo") {
-        conditionalEntry = {
-        'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
-        harness: "./Harness/DataGenerator.ts"
-    };
-}else if (process.env.arg == "hypergrid") {
-        conditionalEntry = {
+} else if (process.env.arg == "hypergrid") {
+    conditionalEntry = {
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
-}else if (process.env.arg == "adaptablegrid") {
-        conditionalEntry = {
+} else if (process.env.arg == "adaptablegrid") {
+    conditionalEntry = {
         'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
 }
 else if (process.env.arg == "aggrid") {
-        conditionalEntry = {
+    conditionalEntry = {
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
