@@ -203,7 +203,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case CustomColumnRedux.CUSTOMCOLUMN_DELETE: {
                     let customColumnState = middlewareAPI.getState().CustomColumn;
                     let actionTyped = <CustomColumnRedux.CustomColumnDeleteAction>action
+                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
+                    let deletedCustomColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == customColumnState.CustomColumns[actionTyped.Index].ColumnId)
                     adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
+                    if (deletedCustomColumnIndex > -1) {
+                        columnsLocalLayout.splice(deletedCustomColumnIndex, 1)
+                    }
+                    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     let returnAction = next(action);
                     return returnAction;
                 }
