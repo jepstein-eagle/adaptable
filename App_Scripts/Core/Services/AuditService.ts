@@ -123,7 +123,7 @@ export class AuditService implements IAuditService {
                 // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
                 for (let expressionRule of expressionRules) {
                     let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRule.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
-                    if (!this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
+                    if (isSatisfiedExpression && !this.IsCellValidationRuleValid(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.CellValidationMode == CellValidationMode.Prevent) {
                             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
