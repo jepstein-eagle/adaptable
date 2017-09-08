@@ -190,7 +190,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 }
                 case CustomColumnRedux.CUSTOMCOLUMN_ADD: {
                     let returnAction = next(action);
+                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     adaptableBlotter.createCustomColumn((<CustomColumnRedux.CustomColumnAddAction>action).CustomColumn)
+                    let newCustomColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CustomColumnRedux.CustomColumnAddAction>action).CustomColumn.ColumnId)
+                    if (newCustomColumn) {
+                        columnsLocalLayout.push(newCustomColumn)
+                    }
+                    //otherwise it will show hidden columns in AgGrid as we are recreating the column collection
+                    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
                 case CustomColumnRedux.CUSTOMCOLUMN_DELETE: {
