@@ -42,7 +42,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
     }
 
     render() {
-        let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.",<br />,"Once created, Calculated Columns are treated like any other column in the Grid."]
+        let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn, index: number) => {
@@ -83,7 +83,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             </ListGroup>
             {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
             {this.state.EditedCalculatedColumn &&
-            
+
                 <AdaptableWizard Steps={[<CalculatedColumnSettingsWizard Columns={this.props.Columns} />,
                 <CalculatedColumnExpressionWizard
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
