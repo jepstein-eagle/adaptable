@@ -787,6 +787,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 columnList.splice(index, 1);
             }
         }
+        this.setColumnIntoStore();
     }
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
@@ -805,6 +806,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
+        this.setColumnIntoStore();
     }
 
     public getFirstRecord() {
