@@ -24,6 +24,7 @@ interface CalculatedColumnConfigProps extends IStrategyViewPopupProps<Calculated
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
     onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnEditAction
     CalculatedColumns: Array<ICalculatedColumn>
+    Columns: IColumn[]
     EditedCalculatedColumnInvalidErrorMsg: string
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
 }
@@ -83,7 +84,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
             {this.state.EditedCalculatedColumn &&
             
-                <AdaptableWizard Steps={[<CalculatedColumnSettingsWizard />,
+                <AdaptableWizard Steps={[<CalculatedColumnSettingsWizard Columns={this.props.Columns} />,
                 <CalculatedColumnExpressionWizard
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)} />]}
@@ -122,6 +123,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
+        Columns: state.Grid.Columns,
         EditedCalculatedColumnInvalidErrorMsg: state.CalculatedColumn.EditedCalculatedColumnInvalidErrorMsg
     };
 }
