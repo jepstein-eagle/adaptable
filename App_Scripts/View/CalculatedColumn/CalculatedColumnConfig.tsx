@@ -66,7 +66,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             </li>
         });
 
-        let cellInfo: [string, number][] = [["Column Name", 3], ["Column Description", 6], ["", 3]];
+        let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
         let newButton = <ButtonNew onClick={() => { this.CreateCalculatedColumn() }}
             overrideTooltip="Create Calculated Column"
             DisplayMode="Glyph+Text" />
