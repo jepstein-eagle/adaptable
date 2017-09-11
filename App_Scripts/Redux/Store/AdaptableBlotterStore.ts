@@ -12,7 +12,7 @@ import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
-import * as CustomColumnRedux from '../ActionsReducers/CustomColumnRedux'
+import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
@@ -61,7 +61,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Layout: LayoutRedux.LayoutReducer,
     Dashboard: DashboardRedux.DashboardReducer,
     Entitlements: EntitlementsRedux.EntitlementsReducer,
-    CustomColumn: CustomColumnRedux.CustomColumnReducer
+    CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -178,48 +178,48 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
-                case CustomColumnRedux.CUSTOMCOLUMN_IS_EXPRESSION_VALID: {
-                    let returnObj = adaptableBlotter.CustomColumnExpressionService.IsExpressionValid((<CustomColumnRedux.CustomColumnIsExpressionValidAction>action).Expression)
+                case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
+                    let returnObj = adaptableBlotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
                     if (!returnObj.IsValid) {
-                        middlewareAPI.dispatch(CustomColumnRedux.CustomColumnSetErrorMessage(returnObj.ErrorMsg))
+                        middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
                     }
                     else {
-                        middlewareAPI.dispatch(CustomColumnRedux.CustomColumnSetErrorMessage(null))
+                        middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(null))
                     }
                     return next(action);
                 }
-                case CustomColumnRedux.CUSTOMCOLUMN_ADD: {
+                case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
                     let returnAction = next(action);
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    adaptableBlotter.createCustomColumn((<CustomColumnRedux.CustomColumnAddAction>action).CustomColumn)
-                    let newCustomColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CustomColumnRedux.CustomColumnAddAction>action).CustomColumn.ColumnId)
-                    if (newCustomColumn) {
-                        columnsLocalLayout.push(newCustomColumn)
+                    adaptableBlotter.createCalculatedColumn((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
+                    let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn.ColumnId)
+                    if (newCalculatedColumn) {
+                        columnsLocalLayout.push(newCalculatedColumn)
                     }
                     //otherwise it will show hidden columns in AgGrid as we are recreating the column collection
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
-                case CustomColumnRedux.CUSTOMCOLUMN_DELETE: {
-                    let customColumnState = middlewareAPI.getState().CustomColumn;
-                    let actionTyped = <CustomColumnRedux.CustomColumnDeleteAction>action
+                case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
+                    let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
+                    let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    let deletedCustomColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == customColumnState.CustomColumns[actionTyped.Index].ColumnId)
-                    adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
-                    if (deletedCustomColumnIndex > -1) {
-                        columnsLocalLayout.splice(deletedCustomColumnIndex, 1)
+                    let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+                    if (deletedCalculatedColumnIndex > -1) {
+                        columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
                     }
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     let returnAction = next(action);
                     return returnAction;
                 }
-                case CustomColumnRedux.CUSTOMCOLUMN_EDIT: {
-                    let customColumnState = middlewareAPI.getState().CustomColumn;
-                    let actionTyped = <CustomColumnRedux.CustomColumnEditAction>action
+                case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
+                    let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
+                    let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    adaptableBlotter.deleteCustomColumn(customColumnState.CustomColumns[actionTyped.Index].ColumnId)
+                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
                     let returnAction = next(action);
-                    adaptableBlotter.createCustomColumn(actionTyped.CustomColumn)
+                    adaptableBlotter.createCalculatedColumn(actionTyped.CalculatedColumn)
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
@@ -374,11 +374,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
-                    //Create all custom columns before we load the layout
-                    middlewareAPI.getState().CustomColumn.CustomColumns.forEach(x => {
-                        adaptableBlotter.createCustomColumn(x)
+                    //Create all calculated columns before we load the layout
+                    middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
+                        adaptableBlotter.createCalculatedColumn(x)
                     })
-                    if (middlewareAPI.getState().CustomColumn.CustomColumns.length > 0) {
+                    if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         adaptableBlotter.setColumnIntoStore();
                     }
                     //load either saved layout or default one

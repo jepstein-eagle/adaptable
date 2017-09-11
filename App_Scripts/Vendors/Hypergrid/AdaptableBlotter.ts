@@ -1,4 +1,4 @@
-﻿import { CustomColumnStrategy } from '../../Strategy/CustomColumnStrategy';
+﻿import { CalculatedColumnStrategy } from '../../Strategy/CalculatedColumnStrategy';
 import '../../../stylesheets/adaptableblotter-style.css'
 
 import * as React from "react";
@@ -16,7 +16,7 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
-import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
+import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { SearchServiceHyperGrid } from '../../Core/Services/SearchServiceHyperGrid'
@@ -59,8 +59,8 @@ import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
-import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
-import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -91,7 +91,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    public CustomColumnExpressionService: ICustomColumnExpressionService
+    public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
     private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
@@ -111,7 +111,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.SearchService = new SearchServiceHyperGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
-        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => {
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
         });
@@ -120,7 +120,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
-        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
+        this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -540,7 +540,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //this function needs the column.index from the schema
             // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
             //let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
-            //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+            //21/08/17 : we now use the valOrFunc in case it;s a calculatedcolumn
             let value = this.valOrFunc(row, column)
             return { Id: primaryKey, ColumnId: column.name, Value: value }
         }
@@ -563,7 +563,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //this function needs the column.index from the schema
                     // let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
                     // let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
-                    //21/08/17 : we now use the valOrFunc in case it;s a customcolumn
+                    //21/08/17 : we now use the valOrFunc in case it;s a calculatedcolumn
                     let value = this.valOrFunc(row, column)
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
@@ -608,7 +608,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         return DataType.Date;
                     case 'object':
                         return DataType.Object;
-                    //for custom column that's what happens
+                    //for calculated column that's what happens
                     case 'unknown': {
                         //get First record
                         let record = this.grid.behavior.dataModel.getData()[0]
@@ -1016,9 +1016,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
     }
-    public deleteCustomColumn(customColumnID: string) {
+    public deleteCalculatedColumn(calculatedColumnID: string) {
 
-        let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == customColumnID)
+        let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == calculatedColumnID)
         if (colIndex > -1) {
             this.grid.behavior.getColumns().splice(colIndex, 1)
             //we re-index the Column Object since we are removing the Schema 
@@ -1026,7 +1026,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.grid.behavior.getColumns()[i]._index = this.grid.behavior.getColumns()[i].index - 1
             }
         }
-        let activecolIndex = this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == customColumnID)
+        let activecolIndex = this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == calculatedColumnID)
         if (activecolIndex > -1) {
             this.grid.behavior.getActiveColumns().splice(activecolIndex, 1)
             //No need to do it here since the collections share the same instance of Column
@@ -1036,23 +1036,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         //needs to be last since column.name load up the schema
-        let schemaIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == customColumnID)
+        let schemaIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == calculatedColumnID)
         if (schemaIndex > -1) {
             this.grid.behavior.dataModel.schema.splice(schemaIndex, 1)
         }
         this.grid.behavior.changed()
         this.setColumnIntoStore();
     }
-    public createCustomColumn(customColumn: ICustomColumn) {
+    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
         let newSchema = {
-            name: customColumn.ColumnId,
-            header: customColumn.ColumnId,
+            name: calculatedColumn.ColumnId,
+            header: calculatedColumn.ColumnId,
             calculator: (dataRow: any, columnName: string) => {
                 //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
                 if (Object.keys(dataRow).length == 0) {
-                    return customColumn.ColumnId
+                    return calculatedColumn.ColumnId
                 }
-                return this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, dataRow)
+                return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.GetValueFunc, dataRow)
             }
         }
         this.grid.behavior.dataModel.schema.push(

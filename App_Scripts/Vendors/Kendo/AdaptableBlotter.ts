@@ -21,7 +21,7 @@ import { SearchService } from '../../Core/Services/SearchService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
+import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
@@ -58,8 +58,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
-import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
-import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -72,7 +72,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    public CustomColumnExpressionService: ICustomColumnExpressionService
+    public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
     private contextMenuContainer: HTMLDivElement
 
@@ -89,7 +89,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
-        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, null)
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -751,9 +751,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
         this.grid.dataSource.filter(kendoFilters);
     }
-    public deleteCustomColumn(customColumnID: string) {
+    public deleteCalculatedColumn(calculatedColumnID: string) {
     }
-    public createCustomColumn(customColumn: ICustomColumn) {
+    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
 
     }
     public getFirstRecord() : any{

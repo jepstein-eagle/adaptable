@@ -53,7 +53,7 @@ export class AuditService implements IAuditService {
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnId;
         let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
-        //in case we created a new custom column
+        //in case we created a new calculated column
         if (!myList) {
             myList = { ColumnName: columnName, CellDataValueList: [] }
             this._columnDataValueList.push(myList)
@@ -78,7 +78,7 @@ export class AuditService implements IAuditService {
         this.checkListExists();
 
         let myList = this._columnDataValueList.find(c => c.ColumnName == dataChangingEvent.ColumnId);
-        //in case we created a new custom column
+        //in case we created a new calculated column
         if (!myList) {
             myList = { ColumnName: dataChangingEvent.ColumnId, CellDataValueList: [] }
             this._columnDataValueList.push(myList)

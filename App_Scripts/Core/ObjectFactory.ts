@@ -11,7 +11,7 @@ import { IShortcut } from './Interface/IShortcutStrategy';
 import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
-import { ICustomColumn } from "./Interface/ICustomColumnStrategy";
+import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
 
 export module ObjectFactory {
 
@@ -19,7 +19,7 @@ export module ObjectFactory {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
 
-    export function CreateEmptyCustomColumn(): ICustomColumn {
+    export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
         return { ColumnId: "", GetValueFunc: "", IsPredefined: false }
     }
 

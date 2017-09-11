@@ -5,10 +5,10 @@ import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { ISearchService } from '../Services/Interface/ISearchService'
-import { ICustomColumn } from '../Interface/ICustomColumnStrategy'
+import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
-import { ICustomColumnExpressionService } from "../Services/Interface/ICustomColumnExpressionService";
+import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 
 
 export interface IAdaptableBlotter {
@@ -21,7 +21,7 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     SearchService: ISearchService
     AuditLogService: AuditLogService
-    CustomColumnExpressionService: ICustomColumnExpressionService
+    CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     InitAuditService(): void
 
     // Grid Events
@@ -80,9 +80,9 @@ export interface IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
 
-    //CustomColumn
-    deleteCustomColumn(customColumnId: string): void
-    createCustomColumn(customColumn: ICustomColumn): void
+    //CalculatedColumn
+    deleteCalculatedColumn(calculatedColumnId: string): void
+    createCalculatedColumn(calculatedColumn: ICalculatedColumn): void
     getFirstRecord(): any
 
     // Export

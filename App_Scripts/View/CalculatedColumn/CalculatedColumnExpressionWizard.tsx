@@ -6,25 +6,25 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { ColumnSelector } from '../ColumnSelector';
-import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
 
-export interface CustomColumnExpressionWizardProps extends AdaptableWizardStepProps<ICustomColumn> {
+export interface CalculatedColumnExpressionWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
     IsExpressionValid: (expression: string) => void
     GetErrorMessage: () => string
 }
-export interface CustomColumnExpressionWizardState {
+export interface CalculatedColumnExpressionWizardState {
     GetValueFunc: string
 }
 
-export class CustomColumnExpressionWizard extends React.Component<CustomColumnExpressionWizardProps, CustomColumnExpressionWizardState> implements AdaptableWizardStep {
-    constructor(props: CustomColumnExpressionWizardProps) {
+export class CalculatedColumnExpressionWizard extends React.Component<CalculatedColumnExpressionWizardProps, CalculatedColumnExpressionWizardState> implements AdaptableWizardStep {
+    constructor(props: CalculatedColumnExpressionWizardProps) {
         super(props);
         this.state = { GetValueFunc: this.props.Data.GetValueFunc }
     }
     render(): any {
         let validationState : "error"|null = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
-        return <Panel header="Custom Column Expression" bsStyle="primary">
+        return <Panel header="Calculated Column Expression" bsStyle="primary">
             <AdaptableBlotterForm>
                 <FormGroup controlId="formInlineName" validationState={validationState}>
                     <FormControl value={this.state.GetValueFunc} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
@@ -48,5 +48,5 @@ export class CustomColumnExpressionWizard extends React.Component<CustomColumnEx
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.GetValueFunc = this.state.GetValueFunc }
     public Back(): void { }
-    public StepName = "Custom Column Expression"
+    public StepName = "Calculated Column Expression"
 }

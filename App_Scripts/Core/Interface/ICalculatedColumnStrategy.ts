@@ -1,6 +1,6 @@
 import { IConfigEntity } from './IAdaptableBlotter'
 
-export interface ICustomColumn extends IConfigEntity {
+export interface ICalculatedColumn extends IConfigEntity {
     ColumnId: string;
     GetValueFunc: string
 }

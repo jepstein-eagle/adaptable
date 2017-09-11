@@ -6,22 +6,22 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
 import { ColumnSelector } from '../ColumnSelector';
-import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
 
-export interface CustomColumnSettingsWizardProps extends AdaptableWizardStepProps<ICustomColumn> {
+export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
 }
-export interface CustomColumnSettingsWizardState {
+export interface CalculatedColumnSettingsWizardState {
     ColumnName: string
 }
 
-export class CustomColumnSettingsWizard extends React.Component<CustomColumnSettingsWizardProps, CustomColumnSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: CustomColumnSettingsWizardProps) {
+export class CalculatedColumnSettingsWizard extends React.Component<CalculatedColumnSettingsWizardProps, CalculatedColumnSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: CalculatedColumnSettingsWizardProps) {
         super(props);
         this.state = { ColumnName: this.props.Data.ColumnId }
     }
     render(): any {
-        return <Panel header="Column Settings" bsStyle="primary">
+        return <Panel header="Calculated Column Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formInlineName">
                     <Col xs={4}>
@@ -45,5 +45,5 @@ export class CustomColumnSettingsWizard extends React.Component<CustomColumnSett
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.ColumnName }
     public Back(): void { }
-    public StepName = "Name your Custom Column"
+    public StepName = "Name your Calculated Column"
 }

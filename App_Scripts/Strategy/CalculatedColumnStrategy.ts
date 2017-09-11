@@ -5,21 +5,21 @@ import { IMenuItem } from '../Core/Interface/IStrategy';
 import { MenuType } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICustomColumn } from "../Core/Interface/ICustomColumnStrategy";
+import { ICalculatedColumn } from "../Core/Interface/ICalculatedColumnStrategy";
 
-export class CustomColumnStrategy extends AdaptableStrategyBase {
-    private CustomColumns: ICustomColumn[]
+export class CalculatedColumnStrategy extends AdaptableStrategyBase {
+    private CalculatedColumns: ICalculatedColumn[]
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CustomColumnStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Custom Column", 'CustomColumnConfig', MenuType.ConfigurationPopup, "th-list");
+        super(StrategyIds.CalculatedColumnStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Calculated Column", 'CalculatedColumnConfig', MenuType.ConfigurationPopup, "th-list");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     InitState() {
-        if (this.CustomColumns != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomColumn.CustomColumns) {
+        if (this.CalculatedColumns != this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns) {
             //All the logic is managed in the redux store middleware
-            this.CustomColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomColumn.CustomColumns;
+            this.CalculatedColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
         }
     }
 }

@@ -12,7 +12,7 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
-import { CustomColumnExpressionService } from '../../Core/Services/CustomColumnExpressionService'
+import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ISearchService } from '../../Core/Services/Interface/ISearchService'
@@ -62,15 +62,15 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 import { FilterWrapperFactory } from './FilterWrapper'
-import { CustomColumnStrategy } from "../../Strategy/CustomColumnStrategy";
-import { ICustomColumn } from "../../Core/Interface/ICustomColumnStrategy";
-import { ICustomColumnExpressionService } from "../../Core/Services/Interface/ICustomColumnExpressionService";
+import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     private quickSearchHighlights: Map<string, boolean>
-    private customColumnPathMap: Map<string, string[]> = new Map()
+    private calculatedColumnPathMap: Map<string, string[]> = new Map()
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -79,7 +79,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
-    public CustomColumnExpressionService: ICustomColumnExpressionService
+    public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
@@ -95,13 +95,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
-        this.CustomColumnExpressionService = new CustomColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
-        this.Strategies.set(StrategyIds.CustomColumnStrategyId, new CustomColumnStrategy(this))
+        this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -213,7 +213,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/jonathannaim/adaptableblotter/issues/118
-            let columnList = this.customColumnPathMap.get(params.colDef.field)
+            let columnList = this.calculatedColumnPathMap.get(params.colDef.field)
             if (columnList) {
                 columnList.forEach(x => {
                     let newValue = this.gridOptions.api.getValue(x, params.node)
@@ -774,36 +774,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
     }
 
-    public deleteCustomColumn(customColumnID: string) {
+    public deleteCalculatedColumn(calculatedColumnID: string) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
-        let colDefIndex = colDef.findIndex(x => x.headerName == customColumnID)
+        let colDefIndex = colDef.findIndex(x => x.headerName == calculatedColumnID)
         if (colDefIndex > -1) {
             colDef.splice(colDefIndex, 1)
             this.gridOptions.api.setColumnDefs(colDef)
         }
-        for (let columnList of this.customColumnPathMap.values()) {
-            let index = columnList.indexOf(customColumnID);
+        for (let columnList of this.calculatedColumnPathMap.values()) {
+            let index = columnList.indexOf(calculatedColumnID);
             if (index > -1) {
                 columnList.splice(index, 1);
             }
         }
     }
-    public createCustomColumn(customColumn: ICustomColumn) {
+    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         colDef.push({
-            headerName: customColumn.ColumnId,
-            colId: customColumn.ColumnId,
-            valueGetter: (params: ValueGetterParams) => this.CustomColumnExpressionService.ComputeExpressionValue(customColumn.GetValueFunc, params.node)
+            headerName: calculatedColumn.ColumnId,
+            colId: calculatedColumn.ColumnId,
+            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.GetValueFunc, params.node)
         })
         this.gridOptions.api.setColumnDefs(colDef)
-        let columnList = this.CustomColumnExpressionService.getColumnListFromExpression(customColumn.GetValueFunc)
+        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.GetValueFunc)
         for (let column of columnList) {
-            let childrenColumnList = this.customColumnPathMap.get(column)
+            let childrenColumnList = this.calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
                 childrenColumnList = []
-                this.customColumnPathMap.set(column, childrenColumnList)
+                this.calculatedColumnPathMap.set(column, childrenColumnList)
             }
-            childrenColumnList.push(customColumn.ColumnId)
+            childrenColumnList.push(calculatedColumn.ColumnId)
         }
     }
 

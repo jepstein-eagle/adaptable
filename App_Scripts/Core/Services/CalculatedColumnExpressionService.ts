@@ -1,9 +1,9 @@
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
-import { ICustomColumnExpressionService } from "./Interface/ICustomColumnExpressionService";
+import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColumnExpressionService";
 import * as math from 'mathjs'
 
-export class CustomColumnExpressionService implements ICustomColumnExpressionService {
+export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
     }
 
