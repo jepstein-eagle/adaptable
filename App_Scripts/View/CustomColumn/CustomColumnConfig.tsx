@@ -71,7 +71,7 @@ class CustomColumnConfigComponent extends React.Component<CustomColumnConfigProp
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText="Custom Column" style={panelStyle} infoBody={infoBody}
-            button={newButton} bsStyle="primary" glyphicon={"th"}>
+            button={newButton} bsStyle="primary" glyphicon={"th-list"}>
             {this.props.CustomColumns.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new Custom Column.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

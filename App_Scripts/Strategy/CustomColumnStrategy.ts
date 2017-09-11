@@ -11,7 +11,7 @@ export class CustomColumnStrategy extends AdaptableStrategyBase {
     private CustomColumns: ICustomColumn[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomColumnStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Custom Column", 'CustomColumnConfig', MenuType.ConfigurationPopup, "th");
+        this.menuItemConfig = this.createMenuItemShowPopup("Custom Column", 'CustomColumnConfig', MenuType.ConfigurationPopup, "th-list");
         this.InitState();
         blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
