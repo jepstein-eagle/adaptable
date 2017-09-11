@@ -621,19 +621,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
+        let sortModel = this.gridOptions.api.getSortModel()
         let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
         if (columnDef) {
             columnDef.comparator = <any>comparer
         }
+        this.gridOptions.api.setSortModel(sortModel)
     }
 
     public removeCustomSort(columnId: string): void {
+        let sortModel = this.gridOptions.api.getSortModel()
         let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
         if (columnDef) {
             columnDef.comparator = null
         }
+        this.gridOptions.api.setSortModel(sortModel)
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
