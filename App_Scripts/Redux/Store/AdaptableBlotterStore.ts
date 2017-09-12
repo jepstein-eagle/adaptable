@@ -391,9 +391,10 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         adaptableBlotter.setColumnIntoStore();
-                                                //We force clone of the state so strategies get reinitialized with the new column.
-                        //it's not ideal and will probably need optimization
-                        middlewareAPI.dispatch(CloneState())
+                        //12/09/17 : thank fuck it's not needed anymore as I changed the init process... That was dirty
+                        // //We force clone of the state so strategies get reinitialized with the new column.
+                        // //it's not ideal and will probably need optimization
+                        // middlewareAPI.dispatch(CloneState())
                     }
                     //load either saved layout or default one
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
