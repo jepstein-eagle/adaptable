@@ -313,9 +313,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.gridOptions.api.destroyFilter(col)
-            this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
-            col.initialise()
+            this.createFilterWrapper(col)
         })
 
         let originalgetMainMenuItems = gridOptions.getMainMenuItems;
@@ -351,6 +349,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
+    }
+
+    private createFilterWrapper(col: Column) {
+        this.gridOptions.api.destroyFilter(col)
+        this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
+        col.initialise()
     }
 
     public InitAuditService() {
@@ -811,6 +815,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
         this.setColumnIntoStore();
+        let col = this.gridOptions.columnApi.getAllGridColumns().find(col => col.getColId() == calculatedColumn.ColumnId)
+        if (col) {
+            this.createFilterWrapper(col)
+        }
     }
 
     public getFirstRecord() {
