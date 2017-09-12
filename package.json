@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "1.2.0-beta.51",
+  "version": "1.2.0-beta.52",
   "description": "Powerful data-agnostic grid that sits on top of an underlying grid component and provides all the rich functionality that financial users expect from their grids and blotters",
   "main": "index.js",
   "dependencies": {
