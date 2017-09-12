@@ -406,7 +406,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (let col of allColumns) {
             this.setCellClassRules({
                 'Ab-QuickSearch': function (params: any) {
-                    return quickSearchHighlights.has(blotter.getPrimaryKeyValueFromRecord(params.node) + params.colDef.field)
+                    let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId
+                    return quickSearchHighlights.has(blotter.getPrimaryKeyValueFromRecord(params.node) + columnId)
                 }
             }, col.ColumnId, "QuickSearch")
         }
