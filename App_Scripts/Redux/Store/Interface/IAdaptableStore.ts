@@ -26,5 +26,5 @@ export interface AdaptableBlotterState {
 
 export interface IAdaptableBlotterStore {
     TheStore: Redux.Store<AdaptableBlotterState>
-    Load: () => void
+    Load: PromiseLike<any>
 }

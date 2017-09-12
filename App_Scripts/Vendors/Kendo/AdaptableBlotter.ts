@@ -253,8 +253,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.createFilterForm(e);
         });
 
-        this.AdaptableBlotterStore.Load()
-        this.Strategies.forEach(strat => strat.InitializeWithRedux())
+        this.AdaptableBlotterStore.Load.then(
+            () => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+            (e) => {
+                console.error('Failed to Init AdaptableBlotterStore : ', e);
+                //for now i'm still initializing the strategies even if loading state has failed.... 
+                //we may revisit that later
+                this.Strategies.forEach(strat => strat.InitializeWithRedux())
+            })
     }
 
     public InitAuditService() {

@@ -3,7 +3,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         var trades: ITrade[] = [];
-        for (var i = 1; i < 301; i++) {
+        for (var i = 1; i < 50001; i++) {
             var trade = this.createTrade(i);
             trades.push(trade);
         }
@@ -118,7 +118,22 @@ export class DataGenerator {
                 "percentChange": this.generateRandomNullableDouble(),
                 "bookingGuid": this.generateUuid(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
-                "lastUpdatedBy": this.getRandomItem(this.getNames())
+                "lastUpdatedBy": this.getRandomItem(this.getNames()),
+                "bid2": bid,
+                "ask2": ask,
+                "bidOfferSpread2": bidOfferSpread,
+                "isLive2": this.generateRandomBool(),
+                "moodysRating2": moodyRating,
+                "fitchRating2": this.getRatingFromMoodyRating(moodyRating),
+                "sandpRating2": this.getRatingFromMoodyRating(moodyRating),
+                "tradeDate2": tradeDate,
+                "settlementDate2": this.addDays(tradeDate, 3),
+                "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
+                "bloombergBid2": this.roundTo4Dp(bid - 0.01),
+                "percentChange2": this.generateRandomNullableDouble(),
+                "bookingGuid2": this.generateUuid(),
+                "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
+                "lastUpdatedBy2": this.getRandomItem(this.getNames())
             };
         return trade;
     }

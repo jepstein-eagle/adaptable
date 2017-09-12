@@ -67,13 +67,9 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
-const CREATE_STATE = 'CREATE_STATE';
-const CLONE_STATE = 'CLONE_STATE';
 export interface ResetUserDataAction extends Redux.Action {
 }
 export interface InitStateAction extends Redux.Action {
-}
-export interface CloneStateAction extends Redux.Action {
 }
 export const ResetUserData = (): ResetUserDataAction => ({
     type: RESET_STATE
@@ -81,19 +77,10 @@ export const ResetUserData = (): ResetUserDataAction => ({
 export const InitState = (): ResetUserDataAction => ({
     type: INIT_STATE
 })
-export const CloneState = (): ResetUserDataAction => ({
-    type: CLONE_STATE
-})
-export const CreateState = (): ResetUserDataAction => ({
-    type: CREATE_STATE
-})
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with fuck all as well
         state = undefined
-    }
-    if (action.type === CLONE_STATE) {
-        state = Helper.cloneObject(state)
     }
 
     return rootReducer(state, action)
@@ -101,7 +88,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
-    public Load: ()=> void
+    public Load: PromiseLike<any>
     constructor(private blotter: IAdaptableBlotter) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
@@ -127,7 +114,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
-        middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, [CREATE_STATE, MenuRedux.SET_MENUITEMS, GridRedux.SET_GRIDCOLUMNS]);
+        middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, [MenuRedux.SET_MENUITEMS, GridRedux.SET_GRIDCOLUMNS]);
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
         loadStorage = ReduxStorage.createLoader(engineWithFilter);
@@ -151,8 +138,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 middlewareReduxStorage))
         );
         //We start to build the state once everything is instantiated... I dont like that. Need to change
-        this.Load = () => {
-            this.TheStore.dispatch(CreateState())
+        this.Load =
             //We load the previous saved session. Redux is pretty awesome in its simplicity!
             loadStorage(this.TheStore)
                 .then(
@@ -164,7 +150,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                     this.TheStore.dispatch(InitState())
                     this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
                 })
-        }
     }
 }
 
@@ -357,14 +342,6 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     ExportStrategy.ExportBlotter();
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
-                }
-                case CREATE_STATE: {
-                    let returnAction = next(action);
-                    //we create all the menus
-                    adaptableBlotter.createMenu();
-                    //we set the column list from the datasource
-                    adaptableBlotter.setColumnIntoStore();
-                    return returnAction;
                 }
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
