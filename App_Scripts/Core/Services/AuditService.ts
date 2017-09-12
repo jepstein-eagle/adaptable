@@ -32,10 +32,32 @@ export class AuditService implements IAuditService {
                 if (record.hasOwnProperty(prop)) {
                     let primaryKey = record[this.blotter.BlotterOptions.primaryKey]
                     var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: record[prop], ColumnId: prop, IdentifierValue: primaryKey, Timestamp: Date.now(), Record: record };
-                    this.AddDataValuesToList(dataChangedEvent);
+                    this.InitAddDataValuesToList(dataChangedEvent);
                 }
             }
         }
+    }
+
+    //slightly optimized version of the AddDataValuesToList so we don't check for data already present
+    private InitAddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
+        this.checkListExists();
+
+        // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
+        let columnName = dataChangedEvent.ColumnId;
+        let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
+        //in case we created a new calculated column
+        if (!myList) {
+            myList = { ColumnName: columnName, CellDataValueList: [] }
+            this._columnDataValueList.push(myList)
+        }
+
+        let cellDataValueList: ICellDataValueList
+        // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
+        dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
+        let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+        cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
+        myList.CellDataValueList.push(cellDataValueList);
+
     }
 
 
