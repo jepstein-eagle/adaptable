@@ -74,26 +74,23 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 .map(cs => cs)
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
-            let rowIds: string[] = this.blotter.getAllRowIds();
-            rowIds.forEach(rowId => {
-
+            this.blotterBypass.forAllRecordsDo((row: any) => {
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
                 //an object with properties that have the name of the groupbykey
                 for (let column in columnConditionalStylesGroupedByColumn) {
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
-                        let localCS : IConditionalStyleCondition = columnCS
-                        if (ExpressionHelper.checkForExpression(localCS.Expression, rowId, columns, this.blotter)) {
-                            this.blotterBypass.addCellStyleHypergrid(rowId, localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
+                        let localCS: IConditionalStyleCondition = columnCS
+                        if (ExpressionHelper.checkForExpressionFromRecord(localCS.Expression, row, columns, this.blotter)) {
+                            this.blotterBypass.addCellStyleHypergrid(this.blotterBypass.getPrimaryKeyValueFromRecord(row), localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
                             break
                         }
                     }
                 }
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
-                    if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
-
-                        this.blotterBypass.addRowStyleHypergrid(rowId, { conditionalStyleRow: rowCS.Style })
+                    if (ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
+                        this.blotterBypass.addRowStyleHypergrid(this.blotterBypass.getPrimaryKeyValueFromRecord(row), { conditionalStyleRow: rowCS.Style })
                         break
                     }
                 }
