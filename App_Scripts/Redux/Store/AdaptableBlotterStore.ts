@@ -40,6 +40,7 @@ import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrat
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
+import { Helper } from "../../Core/Helper";
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -67,15 +68,21 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
 const CREATE_STATE = 'CREATE_STATE';
+const CLONE_STATE = 'CLONE_STATE';
 export interface ResetUserDataAction extends Redux.Action {
 }
 export interface InitStateAction extends Redux.Action {
+}
+export interface CloneStateAction extends Redux.Action {
 }
 export const ResetUserData = (): ResetUserDataAction => ({
     type: RESET_STATE
 })
 export const InitState = (): ResetUserDataAction => ({
     type: INIT_STATE
+})
+export const CloneState = (): ResetUserDataAction => ({
+    type: CLONE_STATE
 })
 export const CreateState = (): ResetUserDataAction => ({
     type: CREATE_STATE
@@ -84,6 +91,9 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with fuck all as well
         state = undefined
+    }
+    if (action.type === CLONE_STATE) {
+        state = Helper.cloneObject(state)
     }
 
     return rootReducer(state, action)
@@ -380,6 +390,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         adaptableBlotter.setColumnIntoStore();
+                        //We force clone of the state so strategies get reinitialized with the new column.
+                        //it's not ideal and will probably need optimization
+                        middlewareAPI.dispatch(CloneState())
                     }
                     //load either saved layout or default one
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
