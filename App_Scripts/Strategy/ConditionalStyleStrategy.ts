@@ -20,13 +20,11 @@ export class ConditionalStyleStrategy extends AdaptableStrategyBase implements I
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Conditional Style", 'ConditionalStyleConfig', MenuType.ConfigurationPopup, "tint");
-        this.InitState()
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
     }
 
-    private InitState() {
+    protected InitState() {
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 

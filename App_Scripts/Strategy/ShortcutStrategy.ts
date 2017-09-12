@@ -24,13 +24,11 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Shortcut", 'ShortcutConfig', MenuType.ConfigurationPopup, "road");
-        this.InitState();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
 
-    InitState() {
+    protected InitState() {
         if (this.NumericShortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts) {
             this.NumericShortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.NumericShortcuts;
         }

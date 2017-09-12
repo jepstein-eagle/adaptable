@@ -23,10 +23,9 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         this.quickSearchOperator = this.GetQuickSearchState().QuickSearchOperator
         this.quickSearchDisplayType = this.GetQuickSearchState().QuickSearchDisplayType
         this.visibleColumns = this.getVisibleColumnIds() // does this return anything
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
-    InitState() {
+    protected InitState() {
         // Run quick search if the quick search text has changed
         let stateQuickSearchText: string = this.GetQuickSearchState().QuickSearchText;
         if (StringExtensions.IsNotNull(this.quickSearchText) && this.quickSearchText != stateQuickSearchText) {

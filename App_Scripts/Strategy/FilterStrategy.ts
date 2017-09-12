@@ -18,7 +18,6 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FilterStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("User Filter", 'UserFilterConfig', MenuType.ConfigurationPopup, "filter");
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     protected addColumnMenuItems(columnId: string): void {
@@ -32,7 +31,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     }
 
 
-    InitState() {
+    protected InitState() {
         if (this.userFilters != this.GetFilterState().UserFilters) {
 
             // call search service as search might need to re-run if its using a filter that has changed / been deleted

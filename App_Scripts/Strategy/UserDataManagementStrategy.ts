@@ -15,6 +15,8 @@ export class UserDataManagementStrategy extends AdaptableStrategyBase implements
         super(StrategyIds.UserDataManagementStrategyId, blotter)
         this.menuItemConfig = new MenuReduxActionItem("Clean User Data", this.Id, ResetUserData(), "user");
     }
+    protected InitState() {
+    }
 
     public getMenuItems(): IMenuItem[] {
         if ("production" == process.env.NODE_ENV) {

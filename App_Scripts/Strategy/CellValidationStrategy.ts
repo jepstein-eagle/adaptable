@@ -18,6 +18,9 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         this.menuItemConfig = this.createMenuItemShowPopup("Cell Validation", 'CellValidationConfig', MenuType.ConfigurationPopup, "flag");
     }
 
+    protected InitState() {
+    }
+
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(

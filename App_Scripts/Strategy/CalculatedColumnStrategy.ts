@@ -12,11 +12,9 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalculatedColumnStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Calculated Column", 'CalculatedColumnConfig', MenuType.ConfigurationPopup, "th-list");
-        this.InitState();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
-    InitState() {
+    protected InitState() {
         if (this.CalculatedColumns != this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns) {
             //All the logic is managed in the redux store middleware
             this.CalculatedColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;

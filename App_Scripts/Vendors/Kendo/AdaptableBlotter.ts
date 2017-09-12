@@ -252,6 +252,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
+
+        this.AdaptableBlotterStore.Load()
+        this.Strategies.forEach(strat => strat.InitializeWithRedux())
     }
 
     public InitAuditService() {

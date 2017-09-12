@@ -409,6 +409,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
+
+        this.AdaptableBlotterStore.Load()
+        this.Strategies.forEach(strat => strat.InitializeWithRedux())
     }
 
     public InitAuditService() {
@@ -689,6 +692,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public cancelEdit() {
         this.grid.abortEditing()
+    }
+
+    public forAllRecordsDo(func: (record: any) => any): any {
+        //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
+        let ds = this.grid.behavior.getData()
+        ds.forEach((row: any) => func(row))
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
@@ -989,14 +998,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllRowIds(): string[] {
-        //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
-        let ds = this.grid.behavior.getData()
-        let count = ds.length;
-        let result = new Array(count);
-        for (var y = 0; y < count; y++) {
-            result[y] = ds[y][this.BlotterOptions.primaryKey];
-        }
-        return result
+        throw Error("Should not be used")
+        // return []
+        // //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
+        // let ds = this.grid.behavior.getData()
+        // let count = ds.length;
+        // let result = new Array(count);
+        // for (var y = 0; y < count; y++) {
+        //     result[y] = ds[y][this.BlotterOptions.primaryKey];
+        // }
+        // return result
     }
 
     public hideRows(rowIds: string[]): void {

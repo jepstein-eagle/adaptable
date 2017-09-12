@@ -21,4 +21,6 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
         super(StrategyIds.TeamSharingStrategyId, blotter)
         this.menuItemConfig = new MenuReduxActionItem("Team Sharing", this.Id, PopupRedux.PopupShowError(error), "share");
     }
+    protected InitState() {
+    }
 }

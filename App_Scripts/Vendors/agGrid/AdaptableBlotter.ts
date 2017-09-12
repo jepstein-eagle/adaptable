@@ -349,6 +349,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return colMenuItems
         }
+
+        this.AdaptableBlotterStore.Load()
+        this.Strategies.forEach(strat => strat.InitializeWithRedux())
     }
 
     private createFilterWrapper(col: Column) {
@@ -758,7 +761,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllRowIds(): string[] {
-        return []
+        throw Error("Should not be used")
+        // return []
     }
 
     public hideRows(rowIds: string[]): void {

@@ -101,6 +101,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
+    public Load: ()=> void
     constructor(private blotter: IAdaptableBlotter) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
@@ -150,7 +151,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 middlewareReduxStorage))
         );
         //We start to build the state once everything is instantiated... I dont like that. Need to change
-        setTimeout(() => {
+        this.Load = () => {
             this.TheStore.dispatch(CreateState())
             //We load the previous saved session. Redux is pretty awesome in its simplicity!
             loadStorage(this.TheStore)
@@ -163,7 +164,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                     this.TheStore.dispatch(InitState())
                     this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
                 })
-        }, 0);
+        }
     }
 }
 
@@ -390,7 +391,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         adaptableBlotter.setColumnIntoStore();
-                        //We force clone of the state so strategies get reinitialized with the new column.
+                                                //We force clone of the state so strategies get reinitialized with the new column.
                         //it's not ideal and will probably need optimization
                         middlewareAPI.dispatch(CloneState())
                     }

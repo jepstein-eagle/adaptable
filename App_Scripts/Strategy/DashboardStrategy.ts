@@ -13,5 +13,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         this.menuItemConfig = this.createMenuItemShowPopup("Dashboard", 'DashboardConfig', MenuType.ConfigurationPopup, "dashboard");
     }
 
-    
+    protected InitState() {
+    }
 }

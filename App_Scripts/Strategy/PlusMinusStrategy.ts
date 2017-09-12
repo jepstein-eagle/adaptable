@@ -20,11 +20,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus", 'PlusMinusConfig', MenuType.ConfigurationPopup, "plus-sign")
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
-    private InitState() {
+    protected InitState() {
         if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
             this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
         }

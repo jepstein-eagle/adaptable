@@ -12,5 +12,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         super(StrategyIds.ThemeStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Theme Picker", 'ThemeConfig', MenuType.ConfigurationPopup, "leaf");
     }
-
+    protected InitState() {
+    }
 }

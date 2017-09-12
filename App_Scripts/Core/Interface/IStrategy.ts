@@ -7,6 +7,7 @@ export interface IStrategy {
     Id: string
     getMenuItems(): IMenuItem[]
     getStrategyEntitlement(): IEntitlement
+    InitializeWithRedux(): void
 }
 
 export interface IMenuItem {

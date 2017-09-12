@@ -12,6 +12,8 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
         super(StrategyIds.CalendarStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Calendars", 'CalendarsConfig', MenuType.ConfigurationPopup, "calendar");
     }
-
+    
+    protected InitState() {
+    }
    
 }

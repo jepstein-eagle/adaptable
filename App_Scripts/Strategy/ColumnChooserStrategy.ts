@@ -13,6 +13,10 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
         super(StrategyIds.ColumnChooserStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup("Column Chooser", "ColumnChooserAction", MenuType.ActionPopup, "list-alt");
     }
+
+    protected InitState() {
+    }
+    
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(new MenuReduxActionItem(

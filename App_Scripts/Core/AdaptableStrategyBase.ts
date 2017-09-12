@@ -10,9 +10,16 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export abstract class AdaptableStrategyBase implements IStrategy {
     private menuIsVisible: boolean
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
-        this.InitBaseState()
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitBaseState())
+
     }
+
+    public InitializeWithRedux() {
+        this.InitBaseState()
+        this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitBaseState())
+        this.InitState();
+        this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+    }
+
 
     private InitBaseState() {
         if (this.menuIsVisible != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.IsVisible) {
@@ -22,6 +29,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             }
         }
     }
+
+    protected abstract InitState() : void
 
     public menuItemConfig: IMenuItem;
 

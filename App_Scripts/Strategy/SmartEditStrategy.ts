@@ -17,6 +17,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.menuItemConfig = this.createMenuItemShowPopup("Smart Edit", 'SmartEditAction', MenuType.ActionPopup, "pencil");
     }
 
+    protected InitState() {
+    }
+
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
         let newValues: ICellInfo[] = [];

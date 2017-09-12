@@ -16,6 +16,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     public ExportBlotter(): void {
         this.blotter.exportBlotter();
     }
-
+    protected InitState() {
+    }
   
 }
