@@ -169,7 +169,8 @@ function InitBlotter() {
                 config.backgroundColor = config.altbackground;
             }
         }
-        return origgetCell(config, declaredRendererName);
+        return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+        // return origgetCell(config, declaredRendererName);
     };
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
 

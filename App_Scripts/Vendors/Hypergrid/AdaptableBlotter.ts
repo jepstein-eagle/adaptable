@@ -989,106 +989,115 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return icon;
         };
+        let originGetCell = grid.behavior.dataModel.getCell;
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            if (config.isHeaderRow && !config.isHandleColumn) {
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
-                config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
-            }
-            if (config.isDataRow) {
-                let row = config.dataRow;
-                let columnName = config.name;
-                if (columnName && row) {
-                    //check that it doesn't impact perf monitor
-                    let column = this.getHypergridColumn(columnName);
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row);
+            try {
+                if (config.isHeaderRow && !config.isHandleColumn) {
+                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
+                    config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
-                let primaryKey = this.getPrimaryKeyValueFromRecord(row);
-                let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);
-                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns.get(columnName) : null;
-                if (cellStyleHypergrid) {
-                    let flashColor = cellStyleHypergrid.flashBackColor;
-                    let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
-                    let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
-                    let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor;
-                    //Lowest priority first then every step will override the properties it needs to override.
-                    //probably not needed to optimise as we just assign properties.......
-                    if (conditionalStyleRow) {
-                        if (conditionalStyleRow.BackColor) {
-                            config.backgroundColor = conditionalStyleRow.BackColor;
+                if (config.isDataRow) {
+                    let row = config.dataRow;
+                    let columnName = config.name;
+                    if (columnName && row) {
+                        //check that it doesn't impact perf monitor
+                        let column = this.getHypergridColumn(columnName);
+                        this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row);
+                    }
+                    let primaryKey = this.getPrimaryKeyValueFromRecord(row);
+                    let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);
+                    let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns.get(columnName) : null;
+                    if (cellStyleHypergrid) {
+                        let flashColor = cellStyleHypergrid.flashBackColor;
+                        let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
+                        let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
+                        let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor;
+                        //Lowest priority first then every step will override the properties it needs to override.
+                        //probably not needed to optimise as we just assign properties.......
+                        if (conditionalStyleRow) {
+                            if (conditionalStyleRow.BackColor) {
+                                config.backgroundColor = conditionalStyleRow.BackColor;
+                            }
+                            if (conditionalStyleRow.ForeColor) {
+                                config.color = conditionalStyleRow.ForeColor;
+                            }
+                            if (conditionalStyleRow.FontStyle
+                                || conditionalStyleRow.FontWeight
+                                || conditionalStyleRow.ForeColor
+                                || conditionalStyleRow.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow);
+                            }
                         }
-                        if (conditionalStyleRow.ForeColor) {
-                            config.color = conditionalStyleRow.ForeColor;
+                        if (conditionalStyleColumn) {
+                            if (conditionalStyleColumn.BackColor) {
+                                config.backgroundColor = conditionalStyleColumn.BackColor;
+                            }
+                            if (conditionalStyleColumn.ForeColor) {
+                                config.color = conditionalStyleColumn.ForeColor;
+                            }
+                            if (conditionalStyleColumn.FontStyle
+                                || conditionalStyleColumn.FontWeight
+                                || conditionalStyleColumn.ForeColor
+                                || conditionalStyleColumn.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
+                            }
                         }
-                        if (conditionalStyleRow.FontStyle
-                            || conditionalStyleRow.FontWeight
-                            || conditionalStyleRow.ForeColor
-                            || conditionalStyleRow.FontSize) {
-                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow);
+                        if (quickSearchBackColor) {
+                            config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
+                        }
+                        if (flashColor) {
+                            config.backgroundColor = flashColor;
                         }
                     }
-                    if (conditionalStyleColumn) {
-                        if (conditionalStyleColumn.BackColor) {
-                            config.backgroundColor = conditionalStyleColumn.BackColor;
-                        }
-                        if (conditionalStyleColumn.ForeColor) {
-                            config.color = conditionalStyleColumn.ForeColor;
-                        }
-                        if (conditionalStyleColumn.FontStyle
-                            || conditionalStyleColumn.FontWeight
-                            || conditionalStyleColumn.ForeColor
-                            || conditionalStyleColumn.FontSize) {
-                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
-                        }
-                    }
-                    if (quickSearchBackColor) {
-                        config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
-                    }
-                    if (flashColor) {
-                        config.backgroundColor = flashColor;
-                    }
+                    // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+                    // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
+                    // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
+                    // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
+                    // //Lowest priority first then every step will override the properties it needs to override.
+                    // //probably not needed to optimise as we just assign properties.......
+                    // if (conditionalStyleRow) {
+                    //     if (conditionalStyleRow.BackColor) {
+                    //         config.backgroundColor = conditionalStyleRow.BackColor;
+                    //     }
+                    //     if (conditionalStyleRow.ForeColor) {
+                    //         config.color = conditionalStyleRow.ForeColor;
+                    //     }
+                    //     if (conditionalStyleRow.FontStyle
+                    //         || conditionalStyleRow.FontWeight
+                    //         || conditionalStyleRow.ForeColor
+                    //         || conditionalStyleRow.FontSize) {
+                    //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                    //     }
+                    // }
+                    // if (conditionalStyleColumn) {
+                    //     if (conditionalStyleColumn.BackColor) {
+                    //         config.backgroundColor = conditionalStyleColumn.BackColor;
+                    //     }
+                    //     if (conditionalStyleColumn.ForeColor) {
+                    //         config.color = conditionalStyleColumn.ForeColor;
+                    //     }
+                    //     if (conditionalStyleColumn.FontStyle
+                    //         || conditionalStyleColumn.FontWeight
+                    //         || conditionalStyleColumn.ForeColor
+                    //         || conditionalStyleColumn.FontSize) {
+                    //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                    //     }
+                    // }
+                    // if (quickSearchBackColor) {
+                    //     config.backgroundColor = quickSearchBackColor;
+                    // }
+                    // if (flashColor) {
+                    //     config.backgroundColor = flashColor;
+                    // }
                 }
-                // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-                // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
-                // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
-                // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
-                // //Lowest priority first then every step will override the properties it needs to override.
-                // //probably not needed to optimise as we just assign properties.......
-                // if (conditionalStyleRow) {
-                //     if (conditionalStyleRow.BackColor) {
-                //         config.backgroundColor = conditionalStyleRow.BackColor;
-                //     }
-                //     if (conditionalStyleRow.ForeColor) {
-                //         config.color = conditionalStyleRow.ForeColor;
-                //     }
-                //     if (conditionalStyleRow.FontStyle
-                //         || conditionalStyleRow.FontWeight
-                //         || conditionalStyleRow.ForeColor
-                //         || conditionalStyleRow.FontSize) {
-                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
-                //     }
-                // }
-                // if (conditionalStyleColumn) {
-                //     if (conditionalStyleColumn.BackColor) {
-                //         config.backgroundColor = conditionalStyleColumn.BackColor;
-                //     }
-                //     if (conditionalStyleColumn.ForeColor) {
-                //         config.color = conditionalStyleColumn.ForeColor;
-                //     }
-                //     if (conditionalStyleColumn.FontStyle
-                //         || conditionalStyleColumn.FontWeight
-                //         || conditionalStyleColumn.ForeColor
-                //         || conditionalStyleColumn.FontSize) {
-                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                //     }
-                // }
-                // if (quickSearchBackColor) {
-                //     config.backgroundColor = quickSearchBackColor;
-                // }
-                // if (flashColor) {
-                //     config.backgroundColor = flashColor;
-                // }
+                //we need to maintain the context of the call
+                return originGetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+                // return originGetCell(config, declaredRendererName);
+                // return this.grid.cellRenderers.get(declaredRendererName);
             }
-            return this.grid.cellRenderers.get(declaredRendererName);
+            catch (err) {
+                console.error("Error during GetCell", err)
+            }
         };
         grid.addEventListener('fin-column-sort', (e: any) => {
             this.toggleSort(e.detail.column);
