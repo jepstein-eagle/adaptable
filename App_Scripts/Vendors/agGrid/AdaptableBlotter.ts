@@ -121,244 +121,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
-        // gridOptions.api.addGlobalListener((type: string, event: any) => {
-        //     //console.log(event)
-        // });
 
-        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
-        //since there are many events and we want them to behave the same
-        let columnEventsThatTriggersStateChange = [Events.EVENT_COLUMN_MOVED,
-        Events.EVENT_GRID_COLUMNS_CHANGED,
-        Events.EVENT_COLUMN_VISIBLE,
-        Events.EVENT_NEW_COLUMNS_LOADED]
-        gridOptions.api.addGlobalListener((type: string, event: any) => {
-            if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
-                this.setColumnIntoStore()
-            }
-        });
-
-        gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event))
-
-        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
-            //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
-            let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor
-            //No need to register for the keydown on the editor since we already register on the main div
-            //TODO: check that it works when edit is popup. That's why I left the line below
-            //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
-            this._currentEditor = editor
-            //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
-            let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd
-            let isCancelAfterEnd = () => {
-                let dataChangedEvent: IDataChangingEvent
-                dataChangedEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) }
-
-                let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-                if (failedRules.length > 0) { // we have at least one failure or warning
-                    let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-
-                    // first see if its an error = should only be one item in array if so
-                    if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
-                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        let error: IUIError = {
-                            ErrorMsg: errorMessage
-                        }
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
-                        return true;
-                    } else {
-                        let warningMessage: string = "";
-                        failedRules.forEach(f => {
-                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-                        })
-                        let cellInfo: ICellInfo = {
-                            Id: dataChangedEvent.IdentifierValue,
-                            ColumnId: dataChangedEvent.ColumnId,
-                            Value: dataChangedEvent.NewValue
-                        }
-                        let confirmation: IUIConfirmation = {
-                            CancelText: "Cancel Edit",
-                            ConfirmationTitle: "Cell Validation Failed",
-                            ConfirmationMsg: warningMessage,
-                            ConfirmationText: "Bypass Rule",
-                            CancelAction: null,
-                            ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node))
-                        }
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-                        return true
-                    }
-                }
-                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false
-                if (!whatToReturn) {
-                    //no failed validation so we raise the edit auditlog
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
-                        dataChangedEvent.ColumnId,
-                        this.gridOptions.api.getValue(params.column.getColId(), params.node), dataChangedEvent.NewValue)
-                }
-                return whatToReturn
-            }
-            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
-        });
-
-        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
-            //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
-            this._currentEditor = null
-            //We refresh the filter so we get live search/filter when editing.
-            //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
-            this.applyColumnFilters();
-        });
-
-        gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
-            let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
-            //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
-            //so we manually raise.
-            //https://github.com/jonathannaim/adaptableblotter/issues/118
-            let columnList = this.calculatedColumnPathMap.get(params.colDef.field)
-            if (columnList) {
-                columnList.forEach(x => {
-                    let newValue = this.gridOptions.api.getValue(x, params.node)
-                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
-                })
-            }
-        });
-
-        //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
-        let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent
-        gridOptions.isExternalFilterPresent = () => {
-            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0
-            if (isFilterActive) {
-                //used in particular at init time to show the filter icon correctly
-                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
-                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
-                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true)
-                    }
-                }
-            }
-
-            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId)
-            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
-            //it means that originaldoesExternalFilterPass will be called to we reinit that collection
-            this.quickSearchHighlights.clear()
-            return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false)
-        }
-        let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass
-        gridOptions.doesExternalFilterPass = (node: RowNode) => {
-            let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns
-            // let rowId = this.getPrimaryKeyValueFromRecord(node)
-
-            //first we assess AdvancedSearch 
-            let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
-            if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
-                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
-                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
-                    // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-                    return false;
-                }
-            }
-
-            //we then assess filters
-            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-            if (columnFilters.length > 0) {
-                for (let columnFilter of columnFilters) {
-                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
-                        // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
-                        return false
-                    }
-                }
-            }
-
-            //we assess quicksearch
-            let recordReturnValue = false
-            if (StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
-                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
-
-                for (let column of columns.filter(c => c.Visible)) {
-                    let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId)
-                    let rowId = this.getPrimaryKeyValueFromRecord(node)
-                    let stringValueLowerCase = displayValue.toLowerCase()
-                    switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
-                        case LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
-                                    }
-                                    recordReturnValue = true
-                                }
-                            }
-                            break;
-                        case LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
-                                    }
-                                    recordReturnValue = true
-                                }
-                            }
-                            break;
-                    }
-                }
-                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
-                    recordReturnValue = true;
-                }
-                if (!recordReturnValue) { return false }
-            }
-            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true
-        }
-
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.createFilterWrapper(col)
-        })
-
-        let originalgetMainMenuItems = gridOptions.getMainMenuItems;
-        gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
-            //couldnt find a way to listen for menu close. There is a Menu Item Select 
-            //but you can also clsoe the menu from filter and clicking outside the menu....
-            this.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.HideColumnContextMenu())
-            this.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.ShowColumnContextMenu(
-                    params.column.getColId(),
-                    0,
-                    0))
-            var colMenuItems: (string | MenuItemDef)[]
-            //if there was an initial implementation we init the list of menu items with this one, otherwise we take
-            //the default items
-            if (originalgetMainMenuItems) {
-                let originalMenuItems = originalgetMainMenuItems(params)
-                colMenuItems = originalMenuItems.slice(0);
-            }
-            else {
-                colMenuItems = params.defaultItems.slice(0);
-            }
-            colMenuItems.push('separator')
-            this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
-                let glyph = this.container.ownerDocument.createElement("span")
-                glyph.className = "glyphicon glyphicon-" + x.GlyphIcon
-                colMenuItems.push({
-                    name: x.Label,
-                    action: () => this.AdaptableBlotterStore.TheStore.dispatch(x.Action),
-                    icon: glyph
-                })
-            })
-            return colMenuItems
-        }
-
-        this.AdaptableBlotterStore.Load.then(
-            () => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        this.AdaptableBlotterStore.Load
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
             (e) => {
                 console.error('Failed to Init AdaptableBlotterStore : ', e);
                 //for now i'm still initializing the strategies even if loading state has failed.... 
                 //we may revisit that later
                 this.Strategies.forEach(strat => strat.InitializeWithRedux())
             })
-
+            .then(
+            () => this.initInternalGridLogic(gridOptions, gridContainer),
+            (e) => {
+                console.error('Failed to Init Strategies : ', e);
+                //for now i'm still initializing the grid even if loading state has failed.... 
+                //we may revisit that later
+                this.initInternalGridLogic(gridOptions, gridContainer)
+            }
+            )
     }
 
     private createFilterWrapper(col: Column) {
@@ -852,5 +632,223 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getQuickSearchRowIds(rowIds: string[]): string[] {
         return null
+    }
+
+    private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {
+        // gridOptions.api.addGlobalListener((type: string, event: any) => {
+        //     //console.log(event)
+        // });
+        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
+        //since there are many events and we want them to behave the same
+        let columnEventsThatTriggersStateChange = [Events.EVENT_COLUMN_MOVED,
+        Events.EVENT_GRID_COLUMNS_CHANGED,
+        Events.EVENT_COLUMN_VISIBLE,
+        Events.EVENT_NEW_COLUMNS_LOADED];
+        gridOptions.api.addGlobalListener((type: string, event: any) => {
+            if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
+                this.setColumnIntoStore();
+            }
+        });
+        gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
+        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
+            //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+            let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor;
+            //No need to register for the keydown on the editor since we already register on the main div
+            //TODO: check that it works when edit is popup. That's why I left the line below
+            //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
+            this._currentEditor = editor;
+            //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
+            let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
+            let isCancelAfterEnd = () => {
+                let dataChangedEvent: IDataChangingEvent;
+                dataChangedEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
+                let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+                if (failedRules.length > 0) {
+                    let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+                    // first see if its an error = should only be one item in array if so
+                    if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                        let error: IUIError = {
+                            ErrorMsg: errorMessage
+                        };
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                        return true;
+                    }
+                    else {
+                        let warningMessage: string = "";
+                        failedRules.forEach(f => {
+                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                        });
+                        let cellInfo: ICellInfo = {
+                            Id: dataChangedEvent.IdentifierValue,
+                            ColumnId: dataChangedEvent.ColumnId,
+                            Value: dataChangedEvent.NewValue
+                        };
+                        let confirmation: IUIConfirmation = {
+                            CancelText: "Cancel Edit",
+                            ConfirmationTitle: "Cell Validation Failed",
+                            ConfirmationMsg: warningMessage,
+                            ConfirmationText: "Bypass Rule",
+                            CancelAction: null,
+                            ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node))
+                        };
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                        return true;
+                    }
+                }
+                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
+                if (!whatToReturn) {
+                    //no failed validation so we raise the edit auditlog
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, this.gridOptions.api.getValue(params.column.getColId(), params.node), dataChangedEvent.NewValue);
+                }
+                return whatToReturn;
+            };
+            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
+        });
+        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
+            //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
+            this._currentEditor = null;
+            //We refresh the filter so we get live search/filter when editing.
+            //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
+            this.applyColumnFilters();
+        });
+        gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
+            let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
+            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
+            //so we manually raise.
+            //https://github.com/jonathannaim/adaptableblotter/issues/118
+            let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
+            if (columnList) {
+                columnList.forEach(x => {
+                    let newValue = this.gridOptions.api.getValue(x, params.node);
+                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
+                });
+            }
+        });
+        //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
+        let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent;
+        gridOptions.isExternalFilterPresent = () => {
+            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0;
+            if (isFilterActive) {
+                //used in particular at init time to show the filter icon correctly
+                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
+                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
+                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
+                    }
+                }
+            }
+            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId);
+            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText);
+            //it means that originaldoesExternalFilterPass will be called to we reinit that collection
+            this.quickSearchHighlights.clear();
+            return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false);
+        };
+        let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
+        gridOptions.doesExternalFilterPass = (node: RowNode) => {
+            let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            // let rowId = this.getPrimaryKeyValueFromRecord(node)
+            //first we assess AdvancedSearch 
+            let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId;
+            if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
+                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
+                    // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                    return false;
+                }
+            }
+            //we then assess filters
+            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+            if (columnFilters.length > 0) {
+                for (let columnFilter of columnFilters) {
+                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
+                        // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
+                        return false;
+                    }
+                }
+            }
+            //we assess quicksearch
+            let recordReturnValue = false;
+            if (StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                for (let column of columns.filter(c => c.Visible)) {
+                    let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
+                    let rowId = this.getPrimaryKeyValueFromRecord(node);
+                    let stringValueLowerCase = displayValue.toLowerCase();
+                    switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true;
+                                }
+                            }
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
+                                    }
+                                    recordReturnValue = true;
+                                }
+                            }
+                            break;
+                    }
+                }
+                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                    recordReturnValue = true;
+                }
+                if (!recordReturnValue) {
+                    return false;
+                }
+            }
+            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+        };
+        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+            this.createFilterWrapper(col);
+        });
+        let originalgetMainMenuItems = gridOptions.getMainMenuItems;
+        gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
+            //couldnt find a way to listen for menu close. There is a Menu Item Select 
+            //but you can also clsoe the menu from filter and clicking outside the menu....
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(params.column.getColId(), 0, 0));
+            var colMenuItems: (string | MenuItemDef)[];
+            //if there was an initial implementation we init the list of menu items with this one, otherwise we take
+            //the default items
+            if (originalgetMainMenuItems) {
+                let originalMenuItems = originalgetMainMenuItems(params);
+                colMenuItems = originalMenuItems.slice(0);
+            }
+            else {
+                colMenuItems = params.defaultItems.slice(0);
+            }
+            colMenuItems.push('separator');
+            this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
+                let glyph = this.container.ownerDocument.createElement("span");
+                glyph.className = "glyphicon glyphicon-" + x.GlyphIcon;
+                colMenuItems.push({
+                    name: x.Label,
+                    action: () => this.AdaptableBlotterStore.TheStore.dispatch(x.Action),
+                    icon: glyph
+                });
+            });
+            return colMenuItems;
+        };
+        this.AdaptableBlotterStore.Load.then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
+            console.error('Failed to Init AdaptableBlotterStore : ', e);
+            //for now i'm still initializing the strategies even if loading state has failed.... 
+            //we may revisit that later
+            this.Strategies.forEach(strat => strat.InitializeWithRedux());
+        });
     }
 }

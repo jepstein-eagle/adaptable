@@ -121,146 +121,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
-        //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
-        //grid.table.bind("keydown",
-        grid.table.keydown((event) => {
-            this._onKeyDown.Dispatch(this, event)
+        this.AdaptableBlotterStore.Load
+        .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        (e) => {
+            console.error('Failed to Init AdaptableBlotterStore : ', e);
+            //for now i'm still initializing the strategies even if loading state has failed.... 
+            //we may revisit that later
+            this.Strategies.forEach(strat => strat.InitializeWithRedux())
         })
-
-        grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
-            this._onGridDataBound.Dispatch(this, this)
-        });
-
-        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-            let dataChangedEvent: IDataChangingEvent
-            for (let col of this.grid.columns) {
-                if (e.values.hasOwnProperty(col.field)) {
-                    dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
-                    break;
-                }
-            }
-
-            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRules.length > 0) { // we have at least one failure or warning
-                // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
-                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    let error: IUIError = {
-                        ErrorMsg: errorMessage
-                    }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
-                    e.preventDefault();
-                } else {
-                    let warningMessage: string = "";
-                    failedRules.forEach(f => {
-                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-                    })
-                    let cellInfo: ICellInfo = {
-                        Id: dataChangedEvent.IdentifierValue,
-                        ColumnId: dataChangedEvent.ColumnId,
-                        Value: dataChangedEvent.NewValue
-                    }
-                    let confirmation: IUIConfirmation = {
-                        CancelText: "Cancel Edit",
-                        ConfirmationTitle: "Cell Validation Failed",
-                        ConfirmationMsg: warningMessage,
-                        ConfirmationText: "Bypass Rule",
-                        CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
-                    }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-                    e.preventDefault();
-                }
-            }
-            //no failed validation so we raise the edit auditlog
-            else {
-                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
-                    dataChangedEvent.ColumnId,
-                    (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
-            }
-        });
-
-        grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
-            if (e.action == "itemchange") {
-                let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
-                let changedValue = itemsArray[e.field];
-                let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
-                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
-            }
-        });
-
-        //Update: 06/1/17 Not needed anymore since we are now computing the DisplayValue
-        //and do not need it to be displayed on screen before being able to evaluate it.
-        //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
-        //can reevaluate the record when the DisplayValue is now computed. i.e. $2.000.000 instead of 2000000
-        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-        //     setTimeout(() => {
-        //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
-        //         for (let valueField in e.values) {
-        //             let changedValue = e.values[valueField];
-        //             let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
-        //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField, true);
-        //         }
-        //     }, 5)
-        // })
-
-        //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
-        grid.bind("columnReorder", () => {
-            // we want to fire this after the DOM manipulation. 
-            // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
-            // http://www.telerik.com/forums/column-reorder-event-delay
-            setTimeout(() => this.setColumnIntoStore(), 5);
-        });
-
-        $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
-            e.preventDefault()
-            this.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.ShowColumnContextMenu(
-                    e.currentTarget.getAttribute("data-field"),
-                    e.clientX,
-                    e.clientY))
-        });
-        // // following code is taken from Telerik website for how to ADD menu items to their column header menu
-        // // not sure yet if we want to use their or our menu, probably former
-        // // would be nice if can work out how to make it re-evaluate during runtime;
-        // // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
-        // grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
-        //     let menu: any = e.container.find(".k-menu").data("kendoMenu");
-        //     var field = e.field;
-        //     var popup = e.container.data('kendoPopup');
-        //     let columnMenuItems: string[] = [];
-        //     let column: IColumn = this.getColumnFromColumnId(field);
-
-        //     // each strategy can add its own menu item if it wants to
-        //     // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
-
-        //     columnMenuItems.forEach(s => menu.append({ text: s }))
-
-        //     // we can add the item this way which is nicer but not doing so for now
-        //     //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
-
-        //     // event handler - each strategy listens and acts accordingly
-        //     menu.bind("select", (e: any) => {
-        //         var menuText = $(e.item).text();
-        //         menu.close();
-        //         popup.close();
-
-        //     });
-        // })
-
-        grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
-            this.createFilterForm(e);
-        });
-
-        this.AdaptableBlotterStore.Load.then(
-            () => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
-            (e) => {
-                console.error('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed.... 
-                //we may revisit that later
-                this.Strategies.forEach(strat => strat.InitializeWithRedux())
-            })
+        .then(
+        () => this.initInternalGridLogic(grid),
+        (e) => {
+            console.error('Failed to Init Strategies : ', e);
+            //for now i'm still initializing the grid even if loading state has failed.... 
+            //we may revisit that later
+            this.initInternalGridLogic(grid)
+        })
     }
 
     public InitAuditService() {
@@ -839,5 +715,120 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
 
+
+    private initInternalGridLogic(grid: kendo.ui.Grid) {
+        //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
+        //grid.table.bind("keydown",
+        grid.table.keydown((event) => {
+        this._onKeyDown.Dispatch(this, event);
+    });
+        grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
+        this._onGridDataBound.Dispatch(this, this);
+    });
+        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+        let dataChangedEvent: IDataChangingEvent;
+        for(let col of this.grid.columns) {
+        if(e.values.hasOwnProperty(col.field)) {
+        dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
+        break;
+    }
+    }
+        let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+        if(failedRules.length> 0) {
+        // first see if its an error = should only be one item in array if so
+        if(failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+        let error: IUIError = {
+        ErrorMsg: errorMessage
+    };
+        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+        e.preventDefault();
+    }
+    else {
+        let warningMessage: string = "";
+        failedRules.forEach(f => {
+        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+    });
+        let cellInfo: ICellInfo = {
+        Id: dataChangedEvent.IdentifierValue,
+        ColumnId: dataChangedEvent.ColumnId,
+        Value: dataChangedEvent.NewValue
+    };
+        let confirmation: IUIConfirmation = {
+        CancelText: "Cancel Edit",
+        ConfirmationTitle: "Cell Validation Failed",
+        ConfirmationMsg: warningMessage,
+        ConfirmationText: "Bypass Rule",
+        CancelAction: null,
+        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
+    };
+        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+        e.preventDefault();
+    }
+    }
+    else {
+        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue);
+    }
+    });
+        grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
+        if(e.action == "itemchange") {
+        let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
+        let changedValue = itemsArray[e.field];
+        let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
+        this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
+    }
+    });
+        //Update: 06/1/17 Not needed anymore since we are now computing the DisplayValue
+        //and do not need it to be displayed on screen before being able to evaluate it.
+        //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
+        //can reevaluate the record when the DisplayValue is now computed. i.e. $2.000.000 instead of 2000000
+        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+        //     setTimeout(() => {
+        //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
+        //         for (let valueField in e.values) {
+        //             let changedValue = e.values[valueField];
+        //             let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
+        //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField, true);
+        //         }
+        //     }, 5)
+        // })
+        //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
+        grid.bind("columnReorder", () => {
+        // we want to fire this after the DOM manipulation. 
+        // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
+        // http://www.telerik.com/forums/column-reorder-event-delay
+        setTimeout(() => this.setColumnIntoStore(), 5);
+    });
+        $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
+        e.preventDefault();
+        this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
+    });
+        // // following code is taken from Telerik website for how to ADD menu items to their column header menu
+        // // not sure yet if we want to use their or our menu, probably former
+        // // would be nice if can work out how to make it re-evaluate during runtime;
+        // // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
+        // grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
+        //     let menu: any = e.container.find(".k-menu").data("kendoMenu");
+        //     var field = e.field;
+        //     var popup = e.container.data('kendoPopup');
+        //     let columnMenuItems: string[] = [];
+        //     let column: IColumn = this.getColumnFromColumnId(field);
+        //     // each strategy can add its own menu item if it wants to
+        //     // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
+        //     columnMenuItems.forEach(s => menu.append({ text: s }))
+        //     // we can add the item this way which is nicer but not doing so for now
+        //     //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
+        //     // event handler - each strategy listens and acts accordingly
+        //     menu.bind("select", (e: any) => {
+        //         var menuText = $(e.item).text();
+        //         menu.close();
+        //         popup.close();
+        //     });
+        // })
+        grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
+        this.createFilterForm(e);
+    });
+    }
 }
 

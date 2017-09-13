@@ -153,270 +153,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
-        grid.addEventListener("fin-keydown", (e: any) => {
-            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
-            //like that we avoid the need to have different logic for different grids....
-            this._onKeyDown.Dispatch(this, e.detail.primitiveEvent)
-        });
-
-        //we'll see if we need to handle differently keydown when in edit mode internally or not....
-        //I think we don't need to but hey.... you never know
-        grid.addEventListener("fin-editor-keydown", (e: any) => {
-            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
-            //like that we avoid the need to have different logic for different grids....
-            this._onKeyDown.Dispatch(this, e.detail.keyEvent)
-        });
-
-        //we hide the filterform if scrolling on the x axis
-        grid.addEventListener('fin-scroll-x', (e: any) => {
-            if (this.filterContainer.style.visibility == 'visible') {
-                this.hideFilterForm()
-            }
-        }
-        )
-
-        grid.addEventListener('fin-click', (e: any) => {
-            if (this.filterContainer.style.visibility == 'visible') {
-                this.hideFilterForm()
-            }
-            if (e.detail.primitiveEvent.isHeaderCell) {
-                //try to check if we are clicking on the filter icon
-                //we remove the scroll as get boundscell look at visible columns only
-                let scrolledX = e.detail.gridCell.x - this.grid.getHScrollValue()
-                let y = e.detail.gridCell.y
-                let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y })
-                let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse
-                let iconPadding = this.grid.properties.iconPadding
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
-                let filterIconWidth = getFilterIcon(filterIndex >= 0).width
-                if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
-                    let filterContext: IColumnFilterContext = {
-                        Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
-                        Blotter: this,
-                        ColumnValueType: DistinctCriteriaPairValue.DisplayValue
-                    };
-                    this.filterContainer.style.visibility = 'visible'
-                    this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px'
-                    this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px'
-                    ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
-                }
-                e.preventDefault()
-            }
-        });
-
-        grid.addEventListener("fin-context-menu", (e: any) => {
-            if (e.detail.primitiveEvent.isHeaderCell) {
-                this.AdaptableBlotterStore.TheStore.dispatch(
-                    MenuRedux.ShowColumnContextMenu(
-                        e.detail.primitiveEvent.column.name,
-                        e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX,
-                        e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY))
-            }
-        });
-
-        grid.addEventListener("fin-before-cell-edit", (event: any) => {
-            let dataChangedEvent: IDataChangingEvent
-            //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
-            //so we use our methods....
-            // var visibleRow = grid.renderer.visibleRows[event.detail.input.event.visibleRow.rowIndex];
-            //they now attached correct row somewhere else....
-            let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex)
-            dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) }
-
-            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-            if (failedRules.length > 0) { // we have at least one failure or warning
-                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
-
-                // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
-                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    let error: IUIError = {
-                        ErrorMsg: errorMessage
-                    }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
-                    event.preventDefault();
-                } else {
-                    let warningMessage: string = "";
-                    failedRules.forEach(f => {
-                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-                    })
-                    let cellInfo: ICellInfo = {
-                        Id: dataChangedEvent.IdentifierValue,
-                        ColumnId: dataChangedEvent.ColumnId,
-                        Value: dataChangedEvent.NewValue
-                    }
-                    let confirmation: IUIConfirmation = {
-                        CancelText: "Cancel Edit",
-                        ConfirmationTitle: "Cell Validation Failed",
-                        ConfirmationMsg: warningMessage,
-                        ConfirmationText: "Bypass Rule",
-                        CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
-                    }
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-                    event.preventDefault();
-                }
-            }
-            //no failed validation so we raise the edit auditlog
-            else {
-                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue,
-                    dataChangedEvent.ColumnId,
-                    (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue)
-            }
-        });
-
-        //We call Reindex so functions like CustomSort, Search and Filter are reapplied
-        grid.addEventListener("fin-after-cell-edit", (e: any) => {
-            this.grid.behavior.reindex();
-        });
-
-        this.sortOrder = SortOrder.Unknown
-        //this is used so the grid displays sort icon when sorting....
-        grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
-            var icon = '';
-            //we now store the displayed column index in the sortColumnGridIndex so no need to transpose the index
-            // if (grid.properties.columnIndexes[columnIndex] == this.sortColumnGridIndex) {
-            if (columnIndex == this.sortColumnGridIndex) {
-                if (this.sortOrder == SortOrder.Ascending) {
-                    icon = UPWARDS_BLACK_ARROW;
-                }
-                else if (this.sortOrder == SortOrder.Descending) {
-                    icon = DOWNWARDS_BLACK_ARROW;
-                }
-            }
-            return icon;
-        }
-
-        grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
-            if (config.isHeaderRow && !config.isHandleColumn) {
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
-                config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
-            }
-            if (config.isDataRow) {
-                let row = config.dataRow
-                let columnName = config.name
-                if (columnName && row) {
-                    //check that it doesn't impact perf monitor
-                    let column = this.getHypergridColumn(columnName);
-                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row)
-                }
-                let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-                let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey)
-                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns.get(columnName) : null
-                if (cellStyleHypergrid) {
-                    let flashColor = cellStyleHypergrid.flashBackColor
-                    let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn
-                    let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow
-                    let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor
-                    //Lowest priority first then every step will override the properties it needs to override.
-                    //probably not needed to optimise as we just assign properties.......
-                    if (conditionalStyleRow) {
-                        if (conditionalStyleRow.BackColor) {
-                            config.backgroundColor = conditionalStyleRow.BackColor;
-                        }
-                        if (conditionalStyleRow.ForeColor) {
-                            config.color = conditionalStyleRow.ForeColor;
-                        }
-                        if (conditionalStyleRow.FontStyle
-                            || conditionalStyleRow.FontWeight
-                            || conditionalStyleRow.ForeColor
-                            || conditionalStyleRow.FontSize) {
-                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
-                        }
-                    }
-                    if (conditionalStyleColumn) {
-                        if (conditionalStyleColumn.BackColor) {
-                            config.backgroundColor = conditionalStyleColumn.BackColor;
-                        }
-                        if (conditionalStyleColumn.ForeColor) {
-                            config.color = conditionalStyleColumn.ForeColor;
-                        }
-                        if (conditionalStyleColumn.FontStyle
-                            || conditionalStyleColumn.FontWeight
-                            || conditionalStyleColumn.ForeColor
-                            || conditionalStyleColumn.FontSize) {
-                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                        }
-                    }
-                    if (quickSearchBackColor) {
-                        config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
-                    }
-                    if (flashColor) {
-                        config.backgroundColor = flashColor;
-                    }
-                }
-                // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-                // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
-                // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
-                // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
-                // //Lowest priority first then every step will override the properties it needs to override.
-                // //probably not needed to optimise as we just assign properties.......
-                // if (conditionalStyleRow) {
-                //     if (conditionalStyleRow.BackColor) {
-                //         config.backgroundColor = conditionalStyleRow.BackColor;
-                //     }
-                //     if (conditionalStyleRow.ForeColor) {
-                //         config.color = conditionalStyleRow.ForeColor;
-                //     }
-                //     if (conditionalStyleRow.FontStyle
-                //         || conditionalStyleRow.FontWeight
-                //         || conditionalStyleRow.ForeColor
-                //         || conditionalStyleRow.FontSize) {
-                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
-                //     }
-                // }
-                // if (conditionalStyleColumn) {
-                //     if (conditionalStyleColumn.BackColor) {
-                //         config.backgroundColor = conditionalStyleColumn.BackColor;
-                //     }
-                //     if (conditionalStyleColumn.ForeColor) {
-                //         config.color = conditionalStyleColumn.ForeColor;
-                //     }
-                //     if (conditionalStyleColumn.FontStyle
-                //         || conditionalStyleColumn.FontWeight
-                //         || conditionalStyleColumn.ForeColor
-                //         || conditionalStyleColumn.FontSize) {
-                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                //     }
-                // }
-                // if (quickSearchBackColor) {
-                //     config.backgroundColor = quickSearchBackColor;
-                // }
-                // if (flashColor) {
-                //     config.backgroundColor = flashColor;
-                // }
-            }
-            return this.grid.cellRenderers.get(declaredRendererName);
-        };
-
-        grid.addEventListener('fin-column-sort', (e: any) => {
-            this.toggleSort(e.detail.column)
-            //in case we want multi column
-            //keys =  event.detail.keys;
-        });
-
-        //We add our sorter pipe last into the existing pipeline
-        let currentDataSources = grid.behavior.dataModel.DataSources;
-        currentDataSources.push(FilterAndSearchDataSource(this))
-        currentDataSources.push(CustomSortDataSource(this))
-
-        grid.setPipeline(currentDataSources, {
-            stash: 'default',
-            apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
-        });
-
-        grid.addEventListener("fin-column-changed-event", () => {
-            setTimeout(() => this.setColumnIntoStore(), 5);
-        });
-
-        this.AdaptableBlotterStore.Load.then(
-            () => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        this.AdaptableBlotterStore.Load
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
             (e) => {
                 console.error('Failed to Init AdaptableBlotterStore : ', e);
                 //for now i'm still initializing the strategies even if loading state has failed.... 
                 //we may revisit that later
                 this.Strategies.forEach(strat => strat.InitializeWithRedux())
+            })
+            .then(
+            () => this.initInternalGridLogic(grid),
+            (e) => {
+                console.error('Failed to Init Strategies : ', e);
+                //for now i'm still initializing the grid even if loading state has failed.... 
+                //we may revisit that later
+                this.initInternalGridLogic(grid)
             })
     }
 
@@ -1117,6 +868,244 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getHypergridColumn(columnId: string): any {
         return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
+    }
+
+    private initInternalGridLogic(grid: any) {
+        grid.addEventListener("fin-keydown", (e: any) => {
+            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
+            //like that we avoid the need to have different logic for different grids....
+            this._onKeyDown.Dispatch(this, e.detail.primitiveEvent);
+        });
+        //we'll see if we need to handle differently keydown when in edit mode internally or not....
+        //I think we don't need to but hey.... you never know
+        grid.addEventListener("fin-editor-keydown", (e: any) => {
+            //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
+            //like that we avoid the need to have different logic for different grids....
+            this._onKeyDown.Dispatch(this, e.detail.keyEvent);
+        });
+        //we hide the filterform if scrolling on the x axis
+        grid.addEventListener('fin-scroll-x', (e: any) => {
+            if (this.filterContainer.style.visibility == 'visible') {
+                this.hideFilterForm();
+            }
+        });
+        grid.addEventListener('fin-click', (e: any) => {
+            if (this.filterContainer.style.visibility == 'visible') {
+                this.hideFilterForm();
+            }
+            if (e.detail.primitiveEvent.isHeaderCell) {
+                //try to check if we are clicking on the filter icon
+                //we remove the scroll as get boundscell look at visible columns only
+                let scrolledX = e.detail.gridCell.x - this.grid.getHScrollValue();
+                let y = e.detail.gridCell.y;
+                let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y });
+                let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse;
+                let iconPadding = this.grid.properties.iconPadding;
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
+                if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
+                    let filterContext: IColumnFilterContext = {
+                        Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
+                        Blotter: this,
+                        ColumnValueType: DistinctCriteriaPairValue.DisplayValue
+                    };
+                    this.filterContainer.style.visibility = 'visible';
+                    this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
+                    this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
+                    ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+                }
+                e.preventDefault();
+            }
+        });
+        grid.addEventListener("fin-context-menu", (e: any) => {
+            if (e.detail.primitiveEvent.isHeaderCell) {
+                this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
+            }
+        });
+        grid.addEventListener("fin-before-cell-edit", (event: any) => {
+            let dataChangedEvent: IDataChangingEvent;
+            //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
+            //so we use our methods....
+            // var visibleRow = grid.renderer.visibleRows[event.detail.input.event.visibleRow.rowIndex];
+            //they now attached correct row somewhere else....
+            let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
+            dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length > 0) {
+                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+                // first see if its an error = should only be one item in array if so
+                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    };
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                    event.preventDefault();
+                }
+                else {
+                    let warningMessage: string = "";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                    });
+                    let cellInfo: ICellInfo = {
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
+                    };
+                    let confirmation: IUIConfirmation = {
+                        CancelText: "Cancel Edit",
+                        ConfirmationTitle: "Cell Validation Failed",
+                        ConfirmationMsg: warningMessage,
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId])
+                    };
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    event.preventDefault();
+                }
+            }
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue);
+            }
+        });
+        //We call Reindex so functions like CustomSort, Search and Filter are reapplied
+        grid.addEventListener("fin-after-cell-edit", (e: any) => {
+            this.grid.behavior.reindex();
+        });
+        this.sortOrder = SortOrder.Unknown;
+        //this is used so the grid displays sort icon when sorting....
+        grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
+            var icon = '';
+            //we now store the displayed column index in the sortColumnGridIndex so no need to transpose the index
+            // if (grid.properties.columnIndexes[columnIndex] == this.sortColumnGridIndex) {
+            if (columnIndex == this.sortColumnGridIndex) {
+                if (this.sortOrder == SortOrder.Ascending) {
+                    icon = UPWARDS_BLACK_ARROW;
+                }
+                else if (this.sortOrder == SortOrder.Descending) {
+                    icon = DOWNWARDS_BLACK_ARROW;
+                }
+            }
+            return icon;
+        };
+        grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+            if (config.isHeaderRow && !config.isHandleColumn) {
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
+                config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
+            }
+            if (config.isDataRow) {
+                let row = config.dataRow;
+                let columnName = config.name;
+                if (columnName && row) {
+                    //check that it doesn't impact perf monitor
+                    let column = this.getHypergridColumn(columnName);
+                    this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnName, row);
+                }
+                let primaryKey = this.getPrimaryKeyValueFromRecord(row);
+                let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);
+                let cellStyleHypergrid = cellStyleHypergridColumns ? cellStyleHypergridColumns.get(columnName) : null;
+                if (cellStyleHypergrid) {
+                    let flashColor = cellStyleHypergrid.flashBackColor;
+                    let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
+                    let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
+                    let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor;
+                    //Lowest priority first then every step will override the properties it needs to override.
+                    //probably not needed to optimise as we just assign properties.......
+                    if (conditionalStyleRow) {
+                        if (conditionalStyleRow.BackColor) {
+                            config.backgroundColor = conditionalStyleRow.BackColor;
+                        }
+                        if (conditionalStyleRow.ForeColor) {
+                            config.color = conditionalStyleRow.ForeColor;
+                        }
+                        if (conditionalStyleRow.FontStyle
+                            || conditionalStyleRow.FontWeight
+                            || conditionalStyleRow.ForeColor
+                            || conditionalStyleRow.FontSize) {
+                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow);
+                        }
+                    }
+                    if (conditionalStyleColumn) {
+                        if (conditionalStyleColumn.BackColor) {
+                            config.backgroundColor = conditionalStyleColumn.BackColor;
+                        }
+                        if (conditionalStyleColumn.ForeColor) {
+                            config.color = conditionalStyleColumn.ForeColor;
+                        }
+                        if (conditionalStyleColumn.FontStyle
+                            || conditionalStyleColumn.FontWeight
+                            || conditionalStyleColumn.ForeColor
+                            || conditionalStyleColumn.FontSize) {
+                            config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
+                        }
+                    }
+                    if (quickSearchBackColor) {
+                        config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
+                    }
+                    if (flashColor) {
+                        config.backgroundColor = flashColor;
+                    }
+                }
+                // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
+                // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
+                // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
+                // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
+                // //Lowest priority first then every step will override the properties it needs to override.
+                // //probably not needed to optimise as we just assign properties.......
+                // if (conditionalStyleRow) {
+                //     if (conditionalStyleRow.BackColor) {
+                //         config.backgroundColor = conditionalStyleRow.BackColor;
+                //     }
+                //     if (conditionalStyleRow.ForeColor) {
+                //         config.color = conditionalStyleRow.ForeColor;
+                //     }
+                //     if (conditionalStyleRow.FontStyle
+                //         || conditionalStyleRow.FontWeight
+                //         || conditionalStyleRow.ForeColor
+                //         || conditionalStyleRow.FontSize) {
+                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
+                //     }
+                // }
+                // if (conditionalStyleColumn) {
+                //     if (conditionalStyleColumn.BackColor) {
+                //         config.backgroundColor = conditionalStyleColumn.BackColor;
+                //     }
+                //     if (conditionalStyleColumn.ForeColor) {
+                //         config.color = conditionalStyleColumn.ForeColor;
+                //     }
+                //     if (conditionalStyleColumn.FontStyle
+                //         || conditionalStyleColumn.FontWeight
+                //         || conditionalStyleColumn.ForeColor
+                //         || conditionalStyleColumn.FontSize) {
+                //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
+                //     }
+                // }
+                // if (quickSearchBackColor) {
+                //     config.backgroundColor = quickSearchBackColor;
+                // }
+                // if (flashColor) {
+                //     config.backgroundColor = flashColor;
+                // }
+            }
+            return this.grid.cellRenderers.get(declaredRendererName);
+        };
+        grid.addEventListener('fin-column-sort', (e: any) => {
+            this.toggleSort(e.detail.column);
+            //in case we want multi column
+            //keys =  event.detail.keys;
+        });
+        //We add our sorter pipe last into the existing pipeline
+        let currentDataSources = grid.behavior.dataModel.DataSources;
+        currentDataSources.push(FilterAndSearchDataSource(this));
+        currentDataSources.push(CustomSortDataSource(this));
+        grid.setPipeline(currentDataSources, {
+            stash: 'default',
+            apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
+        });
+        grid.addEventListener("fin-column-changed-event", () => {
+            setTimeout(() => this.setColumnIntoStore(), 5);
+        });
     }
 }
 

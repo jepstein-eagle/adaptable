@@ -58,7 +58,7 @@ function InitBlotter() {
     };
     var eGridDiv = document.getElementById('grid');
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
-    //dataGen.startTickingDataagGrid(gridOptions);
+    dataGen.startTickingDataagGrid(gridOptions);
 
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
