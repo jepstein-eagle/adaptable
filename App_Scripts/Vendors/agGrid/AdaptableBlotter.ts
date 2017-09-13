@@ -69,7 +69,6 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
-    private quickSearchHighlights: Map<string, boolean>
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
 
     public CalendarService: ICalendarService
@@ -84,7 +83,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
-        this.quickSearchHighlights = new Map()
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -191,13 +189,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let allColumns = visibleColumns.concat(hiddenColumns)
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(allColumns));
-        let quickSearchHighlights = this.quickSearchHighlights
         let blotter = this
         for (let col of allColumns) {
             this.setCellClassRules({
                 'Ab-QuickSearch': function (params: any) {
-                    let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId
-                    return quickSearchHighlights.has(blotter.getPrimaryKeyValueFromRecord(params.node) + columnId)
+                    let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+                    let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                    if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+                        && (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell)) {
+                        let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                        let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
+                        let rowId = blotter.getPrimaryKeyValueFromRecord(params.node);
+                        let stringValueLowerCase = displayValue.toLowerCase();
+                        switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                            case LeafExpressionOperator.Contains:
+                                {
+                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                        return true
+                                    }
+                                }
+                                break;
+                            case LeafExpressionOperator.StartsWith:
+                                {
+                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                        return true
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    return false;
                 }
             }, col.ColumnId, "QuickSearch")
         }
@@ -742,7 +764,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId);
             let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText);
             //it means that originaldoesExternalFilterPass will be called to we reinit that collection
-            this.quickSearchHighlights.clear();
             return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false);
         };
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
@@ -770,8 +791,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             //we assess quicksearch
             let recordReturnValue = false;
-            if (StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
-                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
+                && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.ColourCell) {
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                 for (let column of columns.filter(c => c.Visible)) {
                     let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
@@ -781,35 +803,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         case LeafExpressionOperator.Contains:
                             {
                                 if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
-                                    }
-                                    recordReturnValue = true;
+                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
                                 }
                             }
                             break;
                         case LeafExpressionOperator.StartsWith:
                             {
                                 if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                        this.quickSearchHighlights.set(rowId + column.ColumnId, true);
-                                    }
-                                    recordReturnValue = true;
+                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
                                 }
                             }
                             break;
                     }
                 }
-                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
-                    recordReturnValue = true;
-                }
-                if (!recordReturnValue) {
-                    return false;
-                }
+                return false;
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
