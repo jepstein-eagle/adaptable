@@ -802,7 +802,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
         e.preventDefault();
-        this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
+        this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
     });
         // // following code is taken from Telerik website for how to ADD menu items to their column header menu
         // // not sure yet if we want to use their or our menu, probably former

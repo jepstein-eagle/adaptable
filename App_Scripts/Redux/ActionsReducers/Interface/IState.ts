@@ -34,6 +34,7 @@ export interface MenuState {
 }
 
 export interface IContextMenu {
+    BuildContextMenu: boolean
     IsVisible: boolean
     PositionX: number 
     PositionY: number

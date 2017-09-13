@@ -8,7 +8,7 @@ import { MenuState } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export abstract class AdaptableStrategyBase implements IStrategy {
-    private menuIsVisible: boolean
+    private buildContextMenu: boolean
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
 
     }
@@ -22,9 +22,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
 
     private InitBaseState() {
-        if (this.menuIsVisible != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.IsVisible) {
-            this.menuIsVisible = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.IsVisible;
-            if (this.menuIsVisible) {
+        if (this.buildContextMenu != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu) {
+            this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
+            if (this.buildContextMenu) {
                 this.addColumnMenuItems(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
             }
         }

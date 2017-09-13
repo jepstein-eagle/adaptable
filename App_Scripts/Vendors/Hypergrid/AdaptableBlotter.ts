@@ -919,7 +919,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         grid.addEventListener("fin-context-menu", (e: any) => {
             if (e.detail.primitiveEvent.isHeaderCell) {
-                this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
+                this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
             }
         });
         grid.addEventListener("fin-before-cell-edit", (event: any) => {

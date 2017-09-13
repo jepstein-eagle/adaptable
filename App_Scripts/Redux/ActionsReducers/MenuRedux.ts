@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import { IMenuItem } from '../../Core/Interface/IStrategy';
 import { MenuState } from './Interface/IState'
 export const SET_MENUITEMS = 'SET_MENUITEMS';
+export const BUILD_COLUMN_CONTEXT_MENU = 'BUILD_COLUMN_CONTEXT_MENU';
 const SHOW_COLUMN_CONTEXT_MENU = 'SHOW_COLUMN_CONTEXT_MENU';
 const HIDE_COLUMN_CONTEXT_MENU = 'HIDE_COLUMN_CONTEXT_MENU';
 const ADD_ITEM_COLUMN_CONTEXT_MENU = 'ADD_ITEM_COLUMN_CONTEXT_MENU';
@@ -10,10 +11,13 @@ export interface SetMenuItemsAction extends Redux.Action {
     MenuItems: IMenuItem[];
 }
 
-export interface ShowColumnContextMenuAction extends Redux.Action {
+export interface BuildColumnContextMenuAction extends Redux.Action {
     ColumnId: string;
     PositionX: number
     PositionY: number
+}
+
+export interface ShowColumnContextMenuAction extends Redux.Action {
 }
 
 export interface AddItemColumnContextMenuAction extends Redux.Action {
@@ -29,11 +33,15 @@ export const SetMenuItems = (MenuItems: IMenuItem[]): SetMenuItemsAction => ({
     MenuItems
 })
 
-export const ShowColumnContextMenu = (ColumnId: string, PositionX: number, PositionY: number): ShowColumnContextMenuAction => ({
-    type: SHOW_COLUMN_CONTEXT_MENU,
+export const BuildColumnContextMenu = (ColumnId: string, PositionX: number, PositionY: number): BuildColumnContextMenuAction => ({
+    type: BUILD_COLUMN_CONTEXT_MENU,
     ColumnId,
     PositionX,
     PositionY
+})
+
+export const ShowColumnContextMenu = (): ShowColumnContextMenuAction => ({
+    type: SHOW_COLUMN_CONTEXT_MENU
 })
 
 export const AddItemColumnContextMenu = (Item: IMenuItem): AddItemColumnContextMenuAction => ({
@@ -49,6 +57,7 @@ const initialMenuState: MenuState = {
     MenuItems: [],
     ContextMenu: {
         ColumnId: null,
+        BuildContextMenu: false,
         IsVisible: false,
         PositionX: 0,
         PositionY: 0,
@@ -69,14 +78,15 @@ export const MenuReducer: Redux.Reducer<MenuState> = (state: MenuState = initial
                                 : (a.Label > b.Label) ? 1 : 0))
                     })
             }
-        case SHOW_COLUMN_CONTEXT_MENU:
+        case BUILD_COLUMN_CONTEXT_MENU:
             {
-                let actionTyped = <ShowColumnContextMenuAction>action
+                let actionTyped = <BuildColumnContextMenuAction>action
                 return Object.assign({}, state,
                     {
                         ContextMenu: {
                             ColumnId: actionTyped.ColumnId,
-                            IsVisible: true,
+                            BuildContextMenu: true,
+                            IsVisible: false,
                             PositionX: actionTyped.PositionX,
                             PositionY: actionTyped.PositionY,
                             Items: []
@@ -90,6 +100,7 @@ export const MenuReducer: Redux.Reducer<MenuState> = (state: MenuState = initial
                     {
                         ContextMenu: {
                             ColumnId: state.ContextMenu.ColumnId,
+                            BuildContextMenu: false,
                             IsVisible: false,
                             PositionX: state.ContextMenu.PositionX,
                             PositionY: state.ContextMenu.PositionY,
@@ -103,12 +114,26 @@ export const MenuReducer: Redux.Reducer<MenuState> = (state: MenuState = initial
                 {
                     ContextMenu: {
                         ColumnId: state.ContextMenu.ColumnId,
+                        BuildContextMenu: state.ContextMenu.BuildContextMenu,
                         IsVisible: state.ContextMenu.IsVisible,
                         PositionX: state.ContextMenu.PositionX,
                         PositionY: state.ContextMenu.PositionY,
                         Items: [].concat(state.ContextMenu.Items, actionTyped.Item).sort((a: IMenuItem, b: IMenuItem) =>
                             (a.Label < b.Label) ? -1
                                 : (a.Label > b.Label) ? 1 : 0)
+                    }
+                })
+        }
+        case SHOW_COLUMN_CONTEXT_MENU: {
+            return Object.assign({}, state,
+                {
+                    ContextMenu: {
+                        ColumnId: state.ContextMenu.ColumnId,
+                        BuildContextMenu: state.ContextMenu.BuildContextMenu,
+                        IsVisible: true,
+                        PositionX: state.ContextMenu.PositionX,
+                        PositionY: state.ContextMenu.PositionY,
+                        Items: [].concat(state.ContextMenu.Items)
                     }
                 })
         }

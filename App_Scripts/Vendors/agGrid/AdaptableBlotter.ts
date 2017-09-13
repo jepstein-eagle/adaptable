@@ -828,7 +828,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
             //but you can also clsoe the menu from filter and clicking outside the menu....
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
-            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ShowColumnContextMenu(params.column.getColId(), 0, 0));
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId(), 0, 0));
             var colMenuItems: (string | MenuItemDef)[];
             //if there was an initial implementation we init the list of menu items with this one, otherwise we take
             //the default items

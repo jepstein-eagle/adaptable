@@ -174,6 +174,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
+                    let returnAction = next(action);
+                    middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())
+                    return returnAction;
+                }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
                     let returnObj = adaptableBlotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
                     if (!returnObj.IsValid) {
