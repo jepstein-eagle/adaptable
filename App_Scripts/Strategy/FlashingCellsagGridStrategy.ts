@@ -15,33 +15,13 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
         super(blotterBypass)
         this.currentFlashing = new Map()
     }
-    private currentFlashing: Map<any, { down: boolean, timer: number }>
+    private currentFlashing: Map<any, number>
 
+    protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
+
+    }
 
     protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
-        if (dataChangedEvent.OldValue == null) { return; }
-        let oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
-        let newValueNumber: Number = Number(dataChangedEvent.NewValue);
-        let theBlotter = this.blotter as AdaptableBlotter;
-        let key = dataChangedEvent.IdentifierValue + flashingColumn.ColumnName
-        let currentFlash = this.currentFlashing.get(key)
-        let timer = setTimeout(() => {
-            this.currentFlashing.delete(key)
-            theBlotter.refreshCells(dataChangedEvent.Record, [dataChangedEvent.ColumnId])
-        }, flashingColumn.FlashingCellDuration.Duration)
-        let isDown = oldvalueNumber > newValueNumber
-        if (currentFlash) {
-            clearTimeout(currentFlash.timer)
-            currentFlash.timer = timer
-            currentFlash.down = isDown
-        }
-        else {
-            this.currentFlashing.set(key, { down: isDown, timer: timer })
-        }
-        //TODO : since upgrading to v11 it looks like events are dispatched async so we get this
-        //after the cellclassrules eval.... I've put that as a workaround for now but that needs
-        //proper fixing
-        theBlotter.refreshCells(dataChangedEvent.Record, [dataChangedEvent.ColumnId])
     }
 
     protected InitState() {
@@ -51,26 +31,43 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let theBlotter = this.blotter as AdaptableBlotter
             let flashings = this.currentFlashing
+            let currentFlashing = this.currentFlashing
 
             columns.forEach(col => {
-                let fc = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == col.ColumnId)
+                let fc = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == col.ColumnId && x.IsLive)
                 let index = this.FlashingCellState.FlashingColumns.indexOf(fc)
                 let cellClassRules: any = {};
                 if (fc) {
-                    cellClassRules["Ab-FlashUp" + index] = function (params: any) {
+                    cellClassRules[this.FLASH_UP_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let key = primaryKey + col.ColumnId
-                        let currentFlash = flashings.get(key)
-                        if (currentFlash && !currentFlash.down) {
+                        let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
+                        if (params.value > auditLogValue) {
+                            let key = primaryKey + col.ColumnId
+                            let currentFlashTimer = currentFlashing.get(key)
+                            if (currentFlashTimer) {
+                                clearTimeout(currentFlashTimer)
+                            }
+                            let timer = setTimeout(() => {
+                                theBlotter.refreshCells(params.node, [col.ColumnId])
+                            }, fc.FlashingCellDuration.Duration)
+                            currentFlashing.set(key, timer)
                             return true
                         }
                         return false
                     }
-                    cellClassRules["Ab-FlashDown" + index] = function (params: any) {
+                    cellClassRules[this.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let key = primaryKey + col.ColumnId
-                        let currentFlash = flashings.get(key)
-                        if (currentFlash && currentFlash.down) {
+                        let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
+                        if (params.value < auditLogValue) {
+                            let key = primaryKey + col.ColumnId
+                            let currentFlashTimer = currentFlashing.get(key)
+                            if (currentFlashTimer) {
+                                clearTimeout(currentFlashTimer)
+                            }
+                            let timer = setTimeout(() => {
+                                theBlotter.refreshCells(params.node, [col.ColumnId])
+                            }, fc.FlashingCellDuration.Duration)
+                            currentFlashing.set(key, timer)
                             return true
                         }
                         return false

@@ -96,7 +96,7 @@ export class AuditService implements IAuditService {
         }
     }
 
-    private getExistingDataValue(dataChangingEvent: IDataChangingEvent): any {
+    public getExistingDataValue(dataChangingEvent: IDataChangingEvent): any {
         this.checkListExists();
 
         let myList = this._columnDataValueList.find(c => c.ColumnName == dataChangingEvent.ColumnId);

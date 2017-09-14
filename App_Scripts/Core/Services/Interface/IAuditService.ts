@@ -39,5 +39,5 @@ export interface IAuditService {
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
     CheckCellChanging(dataChangingEvent: IDataChangingEvent): ICellValidationRule[]
     Init(initialData : any) : void
-
+    getExistingDataValue(dataChangingEvent: IDataChangingEvent): any
 }
