@@ -59,7 +59,7 @@ export class AuditService implements IAuditService {
 
     public CreateAuditEvent(identifierValue: any, newValue: any, columnId: string, record: any): void {
         var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };
-        //this.AddDataValuesToList(dataChangedEvent);
+        this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
         }
