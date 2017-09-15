@@ -45,7 +45,8 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
-        let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn, index: number) => {
+        let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
+            let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
             return <li
                 className="list-group-item" key={calculatedColumn.ColumnId}>
                 <Row >
