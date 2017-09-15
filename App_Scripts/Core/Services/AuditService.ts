@@ -1,5 +1,5 @@
 
-import { IAuditService, IDataChangedEvent, IDataChangingEvent, IColumnDataValueList, ICellDataValueList, IDataChangedInfo } from './Interface/IAuditService';
+import { IAuditService, IDataChangedEvent, IDataChangingEvent, IDataChangedInfo } from './Interface/IAuditService';
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
@@ -17,11 +17,10 @@ For now this is a very rough and ready Audit Service which will recieve notifica
 This means that we are able to work out old and new values - though for the first pass its a bit brittle as we look at _pristineData via a method in the Blotter...
 */
 export class AuditService implements IAuditService {
-    private _columnDataValueList: IColumnDataValueList[];
+    private _columnDataValueList: Map<string, Map<any, IDataChangedInfo>>;
 
     constructor(private blotter: IAdaptableBlotter) {
-
-        this._columnDataValueList = [];
+        this._columnDataValueList = new Map();
     }
 
     //This is a bad idea as it duplicates all data but in the end that what getdirtyvalue was doing....
@@ -44,26 +43,23 @@ export class AuditService implements IAuditService {
 
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnId;
-        let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
+        let myList = this._columnDataValueList.get(columnName);
         //in case we created a new calculated column
         if (!myList) {
-            myList = { ColumnName: columnName, CellDataValueList: [] }
-            this._columnDataValueList.push(myList)
+            myList = new Map()
+            this._columnDataValueList.set(columnName, myList)
         }
 
-        let cellDataValueList: ICellDataValueList
         // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
         dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
         let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-        cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
-        myList.CellDataValueList.push(cellDataValueList);
-
+        myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
     }
 
 
     public CreateAuditEvent(identifierValue: any, newValue: any, columnId: string, record: any): void {
         var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };
-        this.AddDataValuesToList(dataChangedEvent);
+        //this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
         }
@@ -74,40 +70,39 @@ export class AuditService implements IAuditService {
 
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
         let columnName = dataChangedEvent.ColumnId;
-        let myList = this._columnDataValueList.find(c => c.ColumnName == columnName);
+        let myList = this._columnDataValueList.get(columnName);
         //in case we created a new calculated column
         if (!myList) {
-            myList = { ColumnName: columnName, CellDataValueList: [] }
-            this._columnDataValueList.push(myList)
+            myList = new Map()
+            this._columnDataValueList.set(columnName, myList)
         }
 
-        let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangedEvent.IdentifierValue);
-        if (cellDataValueList != null) {
-            dataChangedEvent.OldValue = cellDataValueList.DataChangedInfo.NewValue;
-            cellDataValueList.DataChangedInfo.OldValue = dataChangedEvent.OldValue
-            cellDataValueList.DataChangedInfo.NewValue = dataChangedEvent.NewValue
-            cellDataValueList.DataChangedInfo.Timestamp = dataChangedEvent.Timestamp
+        let localdatachangedInfo = myList.get(dataChangedEvent.IdentifierValue);
+        if (localdatachangedInfo) {
+            dataChangedEvent.OldValue = localdatachangedInfo.NewValue;
+            localdatachangedInfo.OldValue = dataChangedEvent.OldValue
+            localdatachangedInfo.NewValue = dataChangedEvent.NewValue
+            localdatachangedInfo.Timestamp = dataChangedEvent.Timestamp
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
-            cellDataValueList = { IdentifierValue: dataChangedEvent.IdentifierValue, DataChangedInfo: datechangedInfo }
-            myList.CellDataValueList.push(cellDataValueList);
+            myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
         }
     }
 
     public getExistingDataValue(dataChangingEvent: IDataChangingEvent): any {
         this.checkListExists();
 
-        let myList = this._columnDataValueList.find(c => c.ColumnName == dataChangingEvent.ColumnId);
+        let myList = this._columnDataValueList.get(dataChangingEvent.ColumnId);
         //in case we created a new calculated column
         if (!myList) {
-            myList = { ColumnName: dataChangingEvent.ColumnId, CellDataValueList: [] }
-            this._columnDataValueList.push(myList)
+            myList = new Map()
+            this._columnDataValueList.set(dataChangingEvent.ColumnId, myList)
         }
-        let cellDataValueList: ICellDataValueList = myList.CellDataValueList.find(d => d.IdentifierValue == dataChangingEvent.IdentifierValue);
-        if (cellDataValueList != null) {
-            return cellDataValueList.DataChangedInfo.NewValue;
+        let localdatachangedInfo = myList.get(dataChangingEvent.IdentifierValue);
+        if (localdatachangedInfo) {
+            return localdatachangedInfo.NewValue;
         }
         else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
             return this.blotter.getDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
@@ -115,10 +110,10 @@ export class AuditService implements IAuditService {
     }
 
     private checkListExists(): void {
-        if (this._columnDataValueList.length == 0) {
+        if (this._columnDataValueList.size == 0) {
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             columns.forEach(c => {
-                this._columnDataValueList.push({ ColumnName: c.ColumnId, CellDataValueList: [] })
+                this._columnDataValueList.set(c.ColumnId, new Map())
             })
         }
     }

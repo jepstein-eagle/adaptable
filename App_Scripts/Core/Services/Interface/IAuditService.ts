@@ -17,16 +17,6 @@ export interface IDataChangedEvent {
     Record: any;
 }
 
-export interface IColumnDataValueList {
-    ColumnName: string;
-    CellDataValueList: ICellDataValueList[];
-}
-
-export interface ICellDataValueList {
-    IdentifierValue: any;
-    DataChangedInfo: IDataChangedInfo,
-}
-
 export interface IDataChangedInfo {
     OldValue: any;
     NewValue: any;
