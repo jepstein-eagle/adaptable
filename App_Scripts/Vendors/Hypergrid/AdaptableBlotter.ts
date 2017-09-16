@@ -992,6 +992,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originGetCell = grid.behavior.dataModel.getCell;
         grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             try {
+                //we run the original one as we don't want it to override our styles. i.e. for ex background color for our flash
+                let originalGetCellReturn: any
+                if (originGetCell) {
+                    //we need to maintain the context of the call
+                    originalGetCellReturn = originGetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+                }
                 if (config.isHeaderRow && !config.isHandleColumn) {
                     let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
@@ -1049,51 +1055,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             config.backgroundColor = flashColor;
                         }
                     }
-                    // let flashColor = this.grid.behavior.getCellProperty(x, y, 'flashBackgroundColor')
-                    // let conditionalStyleColumn: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleColumn')
-                    // let conditionalStyleRow: IStyle = this.grid.behavior.getCellProperty(x, y, 'conditionalStyleRow')
-                    // let quickSearchBackColor = this.grid.behavior.getCellProperty(x, y, 'quickSearchBackColor')
-                    // //Lowest priority first then every step will override the properties it needs to override.
-                    // //probably not needed to optimise as we just assign properties.......
-                    // if (conditionalStyleRow) {
-                    //     if (conditionalStyleRow.BackColor) {
-                    //         config.backgroundColor = conditionalStyleRow.BackColor;
-                    //     }
-                    //     if (conditionalStyleRow.ForeColor) {
-                    //         config.color = conditionalStyleRow.ForeColor;
-                    //     }
-                    //     if (conditionalStyleRow.FontStyle
-                    //         || conditionalStyleRow.FontWeight
-                    //         || conditionalStyleRow.ForeColor
-                    //         || conditionalStyleRow.FontSize) {
-                    //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleRow)
-                    //     }
-                    // }
-                    // if (conditionalStyleColumn) {
-                    //     if (conditionalStyleColumn.BackColor) {
-                    //         config.backgroundColor = conditionalStyleColumn.BackColor;
-                    //     }
-                    //     if (conditionalStyleColumn.ForeColor) {
-                    //         config.color = conditionalStyleColumn.ForeColor;
-                    //     }
-                    //     if (conditionalStyleColumn.FontStyle
-                    //         || conditionalStyleColumn.FontWeight
-                    //         || conditionalStyleColumn.ForeColor
-                    //         || conditionalStyleColumn.FontSize) {
-                    //         config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn)
-                    //     }
-                    // }
-                    // if (quickSearchBackColor) {
-                    //     config.backgroundColor = quickSearchBackColor;
-                    // }
-                    // if (flashColor) {
-                    //     config.backgroundColor = flashColor;
-                    // }
                 }
-                //we need to maintain the context of the call
-                return originGetCell.call(grid.behavior.dataModel, config, declaredRendererName)
-                // return originGetCell(config, declaredRendererName);
-                // return this.grid.cellRenderers.get(declaredRendererName);
+
+                return originalGetCellReturn || this.grid.cellRenderers.get(declaredRendererName);
             }
             catch (err) {
                 console.error("Error during GetCell", err)
