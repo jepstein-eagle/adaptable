@@ -1,7 +1,7 @@
 language: node_js
 # Make the filesystem case insensitive.... Because one of the lib we use is defective.... react-data-menu
-os:
-  - osx
+# os:
+#   - osx
 node_js:
   - "4"
 cache:
