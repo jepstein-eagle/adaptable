@@ -94,62 +94,36 @@ function InitBlotter() {
     var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     grid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
 
-    //Add Edit for Notional column
+    //we enable the edit on some columns
+    grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
+        let editorName = declaredEditorName;
+        if (options.column.name !== "tradeId"
+            && options.column.name !== "changeOnYear"
+            && options.column.name !== "price"
+            && options.column.name !== "bid"
+            && options.column.name !== "ask"
+            && options.column.name !== "isLive"
+            && options.column.name !== "bloomberkAsk"
+            && options.column.name !== "bloomberkBid"
+            && options.column.name !== "percentChange"
+        ) {
+            editorName = 'textfield';
+        }
+        return grid.cellEditors.create(editorName, options);
+    }
+
+    //Add Format for Notional column
     behavior.setColumnProperties(1, {
-        editor: 'textfield',// case-insensitive
         format: 'USDCurrencyFormat'
-    });
-
-    //Add Edit for DeskId column
-    behavior.setColumnProperties(2, {
-        editor: 'textfield',// case-insensitive
-        format: 'number' // also case-insensitive
-    });
-
-    //Add Edit for counterparty column
-    behavior.setColumnProperties(3, {
-        editor: 'textfield',// case-insensitive
-    });
-
-    //Add Edit for Currency column
-    behavior.setColumnProperties(4, {
-        editor: 'textfield',// case-insensitive
-    });
-
-    //Add Edit for Country column
-    behavior.setColumnProperties(5, {
-        editor: 'textfield',// case-insensitive
-    });
-
-    //Add Edit for b/o spread column
-    behavior.setColumnProperties(10, {
-        editor: 'Number',// case-insensitive
-    });
-
-    //Add Edit for moodys column
-    behavior.setColumnProperties(12, {
-        editor: 'textfield',// case-insensitive
-    });
-
-    //Add Edit for fitch column
-    behavior.setColumnProperties(13, {
-        editor: 'textfield',// case-insensitive
-    });
-
-    //Add Edit for snp column
-    behavior.setColumnProperties(14, {
-        editor: 'textfield',// case-insensitive
     });
 
     //Add Edit for Trade Date column
     behavior.setColumnProperties(15, {
-        editor: 'textfield', // Date should work in Chrome apparently but it doesnt
         format: 'shortDateFormat'
     });
 
     //Add Edit for Settlement Date column
     behavior.setColumnProperties(16, {
-        editor: 'textfield',
         format: 'shortDateFormat'
     });
 
@@ -159,7 +133,7 @@ function InitBlotter() {
         userName: "Jonathan",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        predefinedConfigUrl:"predefinedConfig.json"
+        predefinedConfigUrl: "predefinedConfig.json"
     });
     var origgetCell = grid.behavior.dataModel.getCell;
     grid.behavior.dataModel.getCell = (config, declaredRendererName) => {
@@ -172,6 +146,7 @@ function InitBlotter() {
         return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
         // return origgetCell(config, declaredRendererName);
     };
+
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
 
     grid.addProperties(lightTheme);

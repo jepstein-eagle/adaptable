@@ -371,7 +371,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //for calculated column that's what happens
                     case 'unknown': {
                         //get First record
-                        let record = this.grid.behavior.dataModel.getData()[0]
+                        let record = this.getFirstRecord()
                         var value = this.valOrFunc(record, column)
                         if (value instanceof Date) {
                             return DataType.Date
@@ -511,13 +511,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public isColumnReadonly(columnId: string): boolean {
         //TODO : implement the logic when the editor is looked up at runtime when overriding getCellEditorAt
         let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnId);
-        let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
-        if (colprop.editor) {
-            return false;
-        }
-        else {
-            return true
-        }
+        // let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
+        let cellEvent = new this.grid.behavior.CellEvent
+        cellEvent.resetGridCY(activeColumn.index, 1);
+        let editor = this.grid.behavior.getCellEditorAt(cellEvent);
+        return !editor
+
+        // if (colprop.editor) {
+        //     return false;
+        // }
+        // else {
+
+        //     return true
+        // }
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
