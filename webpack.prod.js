@@ -22,6 +22,15 @@ module.exports = {
         library: "[name]",
         libraryTarget: 'umd'
     },
+    externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "ag-grid": "agGrid",
+        "ag-grid/main": "agGrid",
+        "ag-grid/dist/lib/entities/colDef": "agGrid",
+        "ag-grid/dist/lib/entities/gridOptions": "agGrid",
+        "ag-grid/dist/lib/gridApi": "agGrid",
+    },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
