@@ -328,28 +328,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-        //console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId())
+
         let row = this.gridOptions.api.getModel().getRow(0)
         //if it's a group we need the content of the group
         if (row.group) {
             row = row.childrenAfterGroup[0]
         }
         let value = this.gridOptions.api.getValue(column, row)
+        let dataType: DataType
         if (value instanceof Date) {
-            return DataType.Date
+            dataType = DataType.Date
         }
         switch (typeof value) {
             case 'string':
-                return DataType.String;
+                dataType = DataType.String;
+                break
             case 'number':
-                return DataType.Number;
+                dataType = DataType.Number;
+                break
             case 'boolean':
-                return DataType.Boolean;
+                dataType = DataType.Boolean;
+                break
             case 'object':
-                return DataType.Object;
+                dataType = DataType.Object;
+                break
             default:
                 break;
         }
+        console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), DataType[dataType])
+        return dataType
     }
 
 

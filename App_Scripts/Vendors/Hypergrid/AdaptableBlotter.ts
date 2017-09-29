@@ -354,37 +354,47 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         if (column) {
             if (!column.hasOwnProperty('type')) {
-                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name)
+                let dateType: DataType
+
                 switch (column.getType()) {
                     case 'string':
-                        return DataType.String;
+                        dateType = DataType.String;
+                        break;
                     case 'number':
                     case 'int':
                     case 'float':
-                        return DataType.Number;
+                        dateType = DataType.Number;
+                        break
                     case 'boolean':
-                        return DataType.Boolean;
+                        dateType = DataType.Boolean;
+                        break
                     case 'date':
-                        return DataType.Date;
+                        dateType = DataType.Date;
+                        break
                     case 'object':
-                        return DataType.Object;
+                        dateType = DataType.Object;
+                        break
                     //for calculated column that's what happens
                     case 'unknown': {
                         //get First record
                         let record = this.getFirstRecord()
                         var value = this.valOrFunc(record, column)
                         if (value instanceof Date) {
-                            return DataType.Date
+                            dateType = DataType.Date
                         }
                         switch (typeof value) {
                             case 'string':
-                                return DataType.String;
+                                dateType = DataType.String;
+                                break
                             case 'number':
-                                return DataType.Number;
+                                dateType = DataType.Number;
+                                break
                             case 'boolean':
-                                return DataType.Boolean;
+                                dateType = DataType.Boolean;
+                                break
                             case 'object':
-                                return DataType.Object;
+                                dateType = DataType.Object;
+                                break
                             default:
                                 break;
                         }
@@ -392,24 +402,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
+                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name, DataType[dateType])
+                return dateType
             }
-            return DataType.String;
-        }
-        let type = column.type;
-        switch (type) {
-            case 'string':
-                return DataType.String;
-            case 'number':
-                return DataType.Number;
-            case 'boolean':
-                return DataType.Boolean;
-            case 'date':
-                return DataType.Date;
-            case 'object':
-                return DataType.Object;
-            default:
-                break;
-            //  }
+
+            let type = column.type;
+            switch (type) {
+                case 'string':
+                    return DataType.String;
+                case 'number':
+                    return DataType.Number;
+                case 'boolean':
+                    return DataType.Boolean;
+                case 'date':
+                    return DataType.Date;
+                case 'object':
+                    return DataType.Object;
+                default:
+                    break;
+                //  }
+            }
         }
         console.log('columnId does not exist')
         return DataType.String;
