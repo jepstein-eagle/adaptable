@@ -122,21 +122,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         this.AdaptableBlotterStore.Load
-        .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
-        (e) => {
-            console.error('Failed to Init AdaptableBlotterStore : ', e);
-            //for now i'm still initializing the strategies even if loading state has failed.... 
-            //we may revisit that later
-            this.Strategies.forEach(strat => strat.InitializeWithRedux())
-        })
-        .then(
-        () => this.initInternalGridLogic(grid),
-        (e) => {
-            console.error('Failed to Init Strategies : ', e);
-            //for now i'm still initializing the grid even if loading state has failed.... 
-            //we may revisit that later
-            this.initInternalGridLogic(grid)
-        })
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+            (e) => {
+                console.error('Failed to Init AdaptableBlotterStore : ', e);
+                //for now i'm still initializing the strategies even if loading state has failed.... 
+                //we may revisit that later
+                this.Strategies.forEach(strat => strat.InitializeWithRedux())
+            })
+            .then(
+            () => this.initInternalGridLogic(grid),
+            (e) => {
+                console.error('Failed to Init Strategies : ', e);
+                //for now i'm still initializing the grid even if loading state has failed.... 
+                //we may revisit that later
+                this.initInternalGridLogic(grid)
+            })
     }
 
     public InitAuditService() {
@@ -301,9 +301,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             console.log('column is undefined returning String for Type')
             return DataType.String;
         }
-        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
-            console.log('There is no Schema model for the grid. Defaulting to type string for column ' + column)
-            return DataType.String;
+        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') ||
+            !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
+            let type = this.getTypeFromFirstRecord(column.field);
+            console.log('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, DataType[type])
+            return type
         }
 
         let type = this.grid.dataSource.options.schema.model.fields[column.field].type;
@@ -320,7 +322,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             case 'object':
                 return DataType.Object;
             default:
-                break;
+                return this.getTypeFromFirstRecord(column.field);
+        }
+    }
+
+    private getTypeFromFirstRecord(columnId: string): DataType {
+        let row = this.grid.dataSource.data()[0]
+        let value = row[columnId]
+        if (value instanceof Date) {
+            return DataType.Date
+        }
+        switch (typeof value) {
+            case 'string':
+                return DataType.String;
+            case 'number':
+                return DataType.Number;
+            case 'boolean':
+                return DataType.Boolean;
+            case 'object':
+                return DataType.Object;
+            default:
+                return DataType.String;
         }
     }
 
@@ -641,7 +663,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
 
     }
-    public getFirstRecord() : any{
+    public getFirstRecord(): any {
         return null;
     }
 
@@ -720,65 +742,65 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
-        this._onKeyDown.Dispatch(this, event);
-    });
+            this._onKeyDown.Dispatch(this, event);
+        });
         grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
-        this._onGridDataBound.Dispatch(this, this);
-    });
+            this._onGridDataBound.Dispatch(this, this);
+        });
         grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-        let dataChangedEvent: IDataChangingEvent;
-        for(let col of this.grid.columns) {
-        if(e.values.hasOwnProperty(col.field)) {
-        dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
-        break;
-    }
-    }
-        let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
-        if(failedRules.length> 0) {
-        // first see if its an error = should only be one item in array if so
-        if(failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
-        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-        let error: IUIError = {
-        ErrorMsg: errorMessage
-    };
-        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
-        e.preventDefault();
-    }
-    else {
-        let warningMessage: string = "";
-        failedRules.forEach(f => {
-        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-    });
-        let cellInfo: ICellInfo = {
-        Id: dataChangedEvent.IdentifierValue,
-        ColumnId: dataChangedEvent.ColumnId,
-        Value: dataChangedEvent.NewValue
-    };
-        let confirmation: IUIConfirmation = {
-        CancelText: "Cancel Edit",
-        ConfirmationTitle: "Cell Validation Failed",
-        ConfirmationMsg: warningMessage,
-        ConfirmationText: "Bypass Rule",
-        CancelAction: null,
-        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
-    };
-        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-        e.preventDefault();
-    }
-    }
-    else {
-        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue);
-    }
-    });
+            let dataChangedEvent: IDataChangingEvent;
+            for (let col of this.grid.columns) {
+                if (e.values.hasOwnProperty(col.field)) {
+                    dataChangedEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
+                    break;
+                }
+            }
+            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            if (failedRules.length > 0) {
+                // first see if its an error = should only be one item in array if so
+                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                    let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                    let error: IUIError = {
+                        ErrorMsg: errorMessage
+                    };
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                    e.preventDefault();
+                }
+                else {
+                    let warningMessage: string = "";
+                    failedRules.forEach(f => {
+                        warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                    });
+                    let cellInfo: ICellInfo = {
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
+                    };
+                    let confirmation: IUIConfirmation = {
+                        CancelText: "Cancel Edit",
+                        ConfirmationTitle: "Cell Validation Failed",
+                        ConfirmationMsg: warningMessage,
+                        ConfirmationText: "Bypass Rule",
+                        CancelAction: null,
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
+                    };
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                    //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                    e.preventDefault();
+                }
+            }
+            else {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (e.model as any)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue);
+            }
+        });
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
-        if(e.action == "itemchange") {
-        let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
-        let changedValue = itemsArray[e.field];
-        let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
-        this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
-    }
-    });
+            if (e.action == "itemchange") {
+                let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
+                let changedValue = itemsArray[e.field];
+                let identifierValue = this.getPrimaryKeyValueFromRecord(itemsArray);
+                this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
+            }
+        });
         //Update: 06/1/17 Not needed anymore since we are now computing the DisplayValue
         //and do not need it to be displayed on screen before being able to evaluate it.
         //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
@@ -795,15 +817,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // })
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
-        // we want to fire this after the DOM manipulation. 
-        // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
-        // http://www.telerik.com/forums/column-reorder-event-delay
-        setTimeout(() => this.setColumnIntoStore(), 5);
-    });
+            // we want to fire this after the DOM manipulation. 
+            // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
+            // http://www.telerik.com/forums/column-reorder-event-delay
+            setTimeout(() => this.setColumnIntoStore(), 5);
+        });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
-        e.preventDefault();
-        this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
-    });
+            e.preventDefault();
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
+        });
         // // following code is taken from Telerik website for how to ADD menu items to their column header menu
         // // not sure yet if we want to use their or our menu, probably former
         // // would be nice if can work out how to make it re-evaluate during runtime;
@@ -827,8 +849,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     });
         // })
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
-        this.createFilterForm(e);
-    });
+            this.createFilterForm(e);
+        });
     }
 }
 
