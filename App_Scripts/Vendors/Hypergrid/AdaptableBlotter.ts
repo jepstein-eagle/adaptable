@@ -521,21 +521,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-        //TODO : implement the logic when the editor is looked up at runtime when overriding getCellEditorAt
         let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnId);
-        // let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
-        let cellEvent = new this.grid.behavior.CellEvent
-        cellEvent.resetGridCY(activeColumn.index, 1);
-        let editor = this.grid.behavior.getCellEditorAt(cellEvent);
-        return !editor
+        if (this.grid.cellEditor) {
+            if (this.grid.cellEditor.column.name == columnId) {
+                //we are already editing that column so that's an easy answer
+                return false
+            }
+            //in our current use cases as of 02/10/2017 it should never happens that we
+            //check for editable on a different column that we edit
+            else {
+                console.warn("Editing " + this.grid.cellEditor.column.name + " but checking for editable on column " + columnId)
+            }
+        }
+        else {
+            //now instead of checking if editor was defined at design time on the column we try to instantiate the editor
+            //for that column directly
+            // let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
+            let cellEvent = new this.grid.behavior.CellEvent
+            cellEvent.resetGridCY(activeColumn.index, 1);
+            let editor = this.grid.behavior.getCellEditorAt(cellEvent);
+            if(editor)
+            {
+                editor.cancelEditing()
+                editor = null
+                return false;
+            }
+            return true
 
-        // if (colprop.editor) {
-        //     return false;
-        // }
-        // else {
+            // if (colprop.editor) {
+            //     return false;
+            // }
+            // else {
 
-        //     return true
-        // }
+            //     return true
+            // }
+        }
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
