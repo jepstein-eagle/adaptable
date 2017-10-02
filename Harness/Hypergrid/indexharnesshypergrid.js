@@ -45,29 +45,6 @@ function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
 
-
-    var notionalPattern = /^(\d+) EUR$/;
-    var notionalLocalizer = {
-        format: function (value) {
-            if (value != null) {
-                value = value + ' EUR';
-            } else {
-                value = null;
-            }
-            return value;
-        },
-        parse: function (str) {
-            var value, parts = str.match(notionalPattern);
-            if (parts) {
-                value = parts[0]
-            } else {
-                value = 0;
-            }
-            return value;
-        }
-    };
-
-
     var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
     dataGen.startTickingDataHypergrid(grid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
@@ -75,15 +52,8 @@ function InitBlotter() {
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
     //which causes an issue.....
     grid.addProperties({ editOnKeydown: false })
-    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells
-    grid.addProperties({ renderFalsy: true })
     let behavior = grid.behavior;
 
-    //   grid.localization.add('notional', notionalLocalizer);
-    // grid.localization.add('UKCurrencyFormat', new grid.localization.NumberFormatter('en-EN', {
-    //     style: 'currency',
-    //     currency: 'GBP'
-    // }));
     grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -144,7 +114,6 @@ function InitBlotter() {
             }
         }
         return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
-        // return origgetCell(config, declaredRendererName);
     };
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
