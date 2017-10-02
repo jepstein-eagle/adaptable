@@ -460,7 +460,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public cancelEdit() {
-        this.grid.abortEditing()
+        this.grid.cancelEditing()
     }
 
     public forAllRecordsDo(func: (record: any) => any): any {
