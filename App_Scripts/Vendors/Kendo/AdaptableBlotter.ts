@@ -16,8 +16,6 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
-import { ISearchService } from '../../Core/Services/Interface/ISearchService'
-import { SearchService } from '../../Core/Services/SearchService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -46,7 +44,6 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
-import { KendoFiltering } from './KendoFiltering';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -67,7 +64,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    public SearchService: ISearchService
 
     public StyleService: StyleService
     public ThemeService: ThemeService
@@ -85,7 +81,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchService(this);
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
@@ -530,11 +525,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getDisplayValueFromRecord(row: any, columnId: string): string {
         let column = this.grid.columns.find(x => x.field == columnId);
+        let rawValue = row[columnId]
         if (column.format) {
-            return kendo.format(column.format, row[columnId])
+            return kendo.format(column.format, rawValue)
         }
         else {
-            return row[columnId]
+            return String(rawValue)
         }
     }
 
@@ -648,15 +644,84 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public applyColumnFilters(): void {
-
-        // dont need it but helps me to see what is happening!
-        let currentFilters: kendo.data.DataSourceFilters = this.grid.dataSource.filter();
-
-        // for the moment alwyas giong to remove the current filters
-        //   this.grid.dataSource.filter();
-        let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-        let kendoFilters: kendo.data.DataSourceFilters = KendoFiltering.buildKendoFiltersFromAdaptableFilters(columnFilters, this);
-        this.grid.dataSource.filter(kendoFilters);
+        //we remove all style linked to QuickSearch
+        this.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
+        let quickSearchColors: { rowId: any, columnIndex: number }[] = []
+        let myFilter: kendo.data.DataSourceFilterItem = {
+            operator: (record: any) => {
+                let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+                //first we assess AdvancedSearch 
+                let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId;
+                if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
+                    let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+                    if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, record, columns, this)) {
+                        return false;
+                    }
+                }
+                //we then assess filters
+                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+                if (columnFilters.length > 0) {
+                    for (let columnFilter of columnFilters) {
+                        if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, record, columns, this)) {
+                            return false;
+                        }
+                    }
+                }
+                //we assess quicksearch
+                let recordReturnValue = false;
+                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
+                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                    for (let column of columns.filter(c => c.Visible)) {
+                        let displayValue = this.getDisplayValueFromRecord(record, column.ColumnId);
+                        let rowId = this.getPrimaryKeyValueFromRecord(record);
+                        let stringValueLowerCase = displayValue.toLowerCase();
+                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                            case LeafExpressionOperator.Contains:
+                                {
+                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                        //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                            quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
+                                        }
+                                        //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                            return true;
+                                        }
+                                        recordReturnValue = true
+                                    }
+                                }
+                                break;
+                            case LeafExpressionOperator.StartsWith:
+                                {
+                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                        //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
+                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                            quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
+                                        }
+                                        //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                            return true;
+                                        }
+                                        recordReturnValue = true
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    //if we color only then we just return true....
+                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                        return true;
+                    }
+                    return recordReturnValue;
+                }
+                return true;
+            }
+        }
+        this.grid.dataSource.filter(myFilter);
+        quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {
     }
@@ -672,71 +737,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
-    public getQuickSearchRowIds(rowIds: string[]): string[] {
-        let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-        let quickSearchText: string = quickSearchState.QuickSearchText;
-
-        if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
-            return [];
-        }
-
-        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
-        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
-
-        let caseInSensitiveText = quickSearchText.toLowerCase();
-        let matchingRowIds: string[] = [];
-
-        let visibleColumnIndices: number[] = this.grid.columns.filter(c => this.isGridColumnVisible(c)).map(c => { return this.getColumnIndex(c.field) });
-
-        rowIds.forEach(rowId => {
-            var row = this.getRowByRowIdentifier(rowId);
-            let cellMatch: boolean = false;
-
-            for (let visibleColumnIndex of visibleColumnIndices) {
-                var cell = this.getCellByColumnIndexAndRow(row, visibleColumnIndex);
-                let cellText: string = cell.text();
-                if (StringExtensions.IsNotNullOrEmpty(cellText)) {
-                    if (quickSearchOperator == LeafExpressionOperator.Contains) {
-                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
-                    } else {
-                        cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
-                    }
-                    if (cellMatch) {
-                        switch (quickSearchDisplayType) {
-                            case QuickSearchDisplayType.ColourCell:
-                                this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
-                                break;
-                            case QuickSearchDisplayType.ShowRow:
-                                matchingRowIds.push(rowId);
-                                break;
-                            case QuickSearchDisplayType.ShowRowAndColourCell:
-                                this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
-                                matchingRowIds.push(rowId);
-                                break;
-                        }
-                        // now break out of the for loop if just hiding non matching rows
-                        if (quickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
-                            break;
-                        }
-                    }
-                }
-            }
-        })
-
-        //  if only colouring cells then return all rows, otherwise return just the ones which have matched
-        if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
-            return rowIds;
-        } else {
-            return matchingRowIds;
-        }
-    }
-
     private GetGridState(): GridState {
         return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }
-
-
-
 
     private initInternalGridLogic(grid: kendo.ui.Grid) {
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time

@@ -16,10 +16,8 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
-import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
-import { SearchService } from '../../Core/Services/SearchService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -64,7 +62,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    public SearchService: ISearchService
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -82,7 +79,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchService(this);
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
@@ -474,85 +470,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
-    }
-
-
-    public getQuickSearchRowIds(rowIds: string[]): string[] {
-        let quickSearchState: QuickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-        let quickSearchText: string = quickSearchState.QuickSearchText;
-
-        if (StringExtensions.IsNullOrEmpty(quickSearchText)) {
-            return [];
-        }
-
-        let quickSearchOperator: LeafExpressionOperator = quickSearchState.QuickSearchOperator;
-        let quickSearchDisplayType: QuickSearchDisplayType = quickSearchState.QuickSearchDisplayType;
-
-        let caseInSensitiveText = quickSearchText.toLowerCase();
-        let matchingRowIds: string[] = [];
-
-        //  let visibleColumnIndices: number[] = this.grid.columns.filter(c => this.isGridColumnVisible(c)).map(c => { return this.getColumnIndex(c.field) });
-        let visibleColumns: AdaptableGrid.Column[] = this.grid.getVisibleColumns();
-
-        let visibleColumnIndices: number[] = []
-        for (let visibleColumn of visibleColumns) {
-            visibleColumnIndices.push(this.grid.getPositionOfColumn(visibleColumn));
-        }
-
-        let visiblerows: AdaptableGrid.Row[] = this.grid.getVisibleRows();
-
-        visiblerows.forEach(visibleRow => {
-
-            let cellMatch: boolean = false;
-
-            for (let visibleColumnIndex of visibleColumnIndices) {
-
-                let cell: AdaptableGrid.Cell = visibleRow.getCell(visibleColumnIndex);
-                let cellFormatValue: string = cell.getFormattedValue(this.grid);
-
-                if (cellFormatValue != null) {
-                    let cellText: string = cellFormatValue.toString();
-
-                    if (StringExtensions.IsNotNullOrEmpty(cellText)) {
-                        if (quickSearchOperator == LeafExpressionOperator.Contains) {
-                            cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) != -1
-                        } else {
-                            cellMatch = cellText.toLowerCase().indexOf(caseInSensitiveText) == 0
-                        }
-                        if (cellMatch) {
-                            let rowId: number = visibleRow.getId();
-
-                            switch (quickSearchDisplayType) {
-                                case QuickSearchDisplayType.ColourCell:
-                                    this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
-                                    break;
-                                case QuickSearchDisplayType.ShowRow:
-                                    matchingRowIds.push(rowId.toString());
-                                    break;
-                                case QuickSearchDisplayType.ShowRowAndColourCell:
-                                    this.addCellStyle(rowId, visibleColumnIndex, "Ab-QuickSearch")
-                                    matchingRowIds.push(rowId.toString());
-                                    break;
-                            }
-                            // now break out of the for loop if just hiding non matching rows
-                            if (quickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        })
-
-
-
-
-        //  if only colouring cells then return all rows, otherwise return just the ones which have matched
-        if (quickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
-            return rowIds;
-        } else {
-            return matchingRowIds;
-        }
     }
 
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {

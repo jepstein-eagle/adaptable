@@ -15,11 +15,8 @@ import { CalendarService } from '../../Core/Services/CalendarService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
-import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
-import { SearchService } from '../../Core/Services/SearchService'
 import { StyleService } from '../../Core/Services/StyleService'
-import { SearchServiceagGrid } from '../../Core/Services/SearchServiceagGrid'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
@@ -75,7 +72,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
@@ -91,7 +87,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchServiceagGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
@@ -658,11 +653,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
-    }
-
-
-    public getQuickSearchRowIds(rowIds: string[]): string[] {
-        return null
     }
 
     private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {

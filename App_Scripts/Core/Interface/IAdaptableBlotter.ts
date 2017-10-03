@@ -4,7 +4,6 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
-import { ISearchService } from '../Services/Interface/ISearchService'
 import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
@@ -19,7 +18,6 @@ export interface IAdaptableBlotter {
     // Services
     CalendarService: ICalendarService
     AuditService: IAuditService
-    SearchService: ISearchService
     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     InitAuditService(): void
@@ -90,9 +88,6 @@ export interface IAdaptableBlotter {
 
     // Filtering
     applyColumnFilters(): void
-
-    // Quick Search    
-    getQuickSearchRowIds(rowIds: string[]): string[]
 }
 
 export interface ISelectedCells {

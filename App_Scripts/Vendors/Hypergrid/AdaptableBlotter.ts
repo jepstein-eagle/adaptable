@@ -17,9 +17,7 @@ import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import { ISearchService } from '../../Core/Services/Interface/ISearchService'
 import { ThemeService } from '../../Core/Services/ThemeService'
-import { SearchServiceHyperGrid } from '../../Core/Services/SearchServiceHyperGrid'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
@@ -88,7 +86,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
-    public SearchService: ISearchService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -108,7 +105,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
-        this.SearchService = new SearchServiceHyperGrid(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
@@ -886,12 +882,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.filterContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
-
-
-    public getQuickSearchRowIds(rowIds: string[]): string[] {
-        return null
-    }
-
+    
     private valOrFunc(dataRow: any, column: any) {
         var result, calculator;
         if (dataRow) {

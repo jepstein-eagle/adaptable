@@ -21,18 +21,15 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     protected InitState() {
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
-            // for the moment lets keep it really easy and simple
-            // whenever ANYTHING changes in the search state, lets just run the CurrentAdvancedSearch
-            // Only the CurrentSearch can be currently cleared or deleted or edited or added so any change means running search again...
             this.AdvancedSearchState = this.GetAdvancedSearchState();
 
             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                "ApplySearchOnGrid",
+                "ApplySearch",
                 StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearchId) ?
                     "No current Advanced Search" : "Current search Id:" + this.GetAdvancedSearchState().CurrentAdvancedSearchId,
                 this.AdvancedSearchState.AdvancedSearches.find(x => x.Uid == this.GetAdvancedSearchState().CurrentAdvancedSearchId))
 
-            this.blotter.SearchService.ApplySearchOnGrid()
+            this.blotter.applyColumnFilters()
         }
     }
 

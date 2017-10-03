@@ -236,9 +236,6 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     if (currentLayout) {
                         let columns = currentLayout.Columns.map(columnId => middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == columnId));
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
-
-                        // and run search too - is this the responsibility of this strategy to do this? or for search to listen to layouts?
-                        adaptableBlotter.SearchService.ApplySearchOnGrid();
                     }
                     return returnAction;
                 }
