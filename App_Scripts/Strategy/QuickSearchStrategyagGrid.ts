@@ -3,19 +3,17 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
 import { MenuType, LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { Helper } from '../Core/Helper'
+import { QuickSearchStrategy } from './QuickSearchStrategy';
 
 
-export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
-    protected quickSearchState: QuickSearchState
-
-    constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Quick Search", 'QuickSearchConfig', MenuType.ConfigurationPopup, "eye-open");
+export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQuickSearchStrategy {
+    constructor(blotter: AdaptableBlotter) {
+        super(blotter)
     }
 
     protected InitState() {
@@ -28,9 +26,9 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
                 this.quickSearchState)
 
             this.blotter.applyColumnFilters();
+            let theBlotter = this.blotter as AdaptableBlotter
+            //TODO : This is probably temporary and is used to reevaluate the quicksearch CellClassRules
+            theBlotter.redrawRows()
         }
-    }
-    protected GetQuickSearchState(): QuickSearchState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
     }
 }

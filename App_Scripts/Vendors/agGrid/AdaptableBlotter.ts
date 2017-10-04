@@ -29,7 +29,7 @@ import { ExportStrategy } from '../../Strategy/ExportStrategy'
 import { FlashingCellsagGridStrategy } from '../../Strategy/FlashingCellsagGridStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleagGridStrategy } from '../../Strategy/ConditionalStyleagGridStrategy'
-import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
+import { QuickSearchStrategyagGrid } from '../../Strategy/QuickSearchStrategyagGrid'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
@@ -109,7 +109,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
