@@ -28,6 +28,7 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
             return fetch(this.urlPredefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
+                .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
         }
@@ -61,10 +62,33 @@ function FilterPredefinedItems(state: any) {
                         substate[property] = substate[property].filter((x: any) => !x.IsPredefined)
                     }
                 }
+            }
+        }
+    }
+}
+
+//We force the IsPredefined of the predefinedState to be true
+function ForcePredefinedItems(state: any) {
+    // we iterating substate here
+    for (let substateName in state) {
+        if (state.hasOwnProperty(substateName)) {
+            let substate = state[substateName]
+            //we look for arrays of entities and will set predefined Items
+            //works only if array is at rootlevel. Will need enhancement if that was to change
+            for (let property in substate) {
+                if (substate.hasOwnProperty(property)) {
+                    if (Array.isArray(substate[property])) {
+                        let arrayItems = substate[property]
+                        arrayItems.forEach((element: any) => {
+                            element.IsPredefined = true;
+                        });
+                    }
+                }
 
             }
         }
     }
+    return state
 }
 
 function rejectWithMessage(error: any) {
