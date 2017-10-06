@@ -26,6 +26,7 @@ app.get('/adaptableblotter-config', function (req, res) {
             if (fs.existsSync(filename)) {
                 UserConfig = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }))
                 console.log("Sending config for : " + username);
+                ForcePredefinedItems(ApplicationConfig)
                 let mergedStates = MergePredefinedWithUser(ApplicationConfig, UserConfig)
                 res.status(200).send(JSON.stringify(mergedStates))
             }
@@ -97,6 +98,30 @@ function FilterPredefinedItems(state) {
             }
         }
     }
+}
+
+//We force the IsPredefined of the predefinedState to be true
+function ForcePredefinedItems(state) {
+    // we iterating substate here
+    for (let substateName in state) {
+        if (state.hasOwnProperty(substateName)) {
+            let substate = state[substateName]
+            //we look for arrays of entities and will set predefined Items
+            //works only if array is at rootlevel. Will need enhancement if that was to change
+            for (let property in substate) {
+                if (substate.hasOwnProperty(property)) {
+                    if (Array.isArray(substate[property])) {
+                        let arrayItems = substate[property]
+                        arrayItems.forEach(element => {
+                            element.IsPredefined = true;
+                        });
+                    }
+                }
+
+            }
+        }
+    }
+    return state
 }
 
 function customizer(objValue, srcValue) {
