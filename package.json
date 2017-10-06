@@ -7,7 +7,7 @@
     "@types/deep-diff": "0.0.30",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jquery": "^2.0.43",
-    "@types/kendo-ui": "^2017.1.2",
+    "@types/kendo-ui": "^2017.3.1",
     "@types/lodash": "^4.14.64",
     "@types/mathjs": "0.0.34",
     "@types/react": "^15.0.24",
