@@ -1,7 +1,7 @@
 # adaptableblotter
-Repository for the Adaptable Blotter HTML5 version, AdaptableBlotter.JS, written by Adaptable Tools.
+Repository for the Adaptable Blotter HTML5 version - AdaptableBlotter.JS - developed by Adaptable Tools.
 
-AdaptableBlotter.JS is a powerful data-agnostic grid that sits on top of an underlying grid component and provides all the rich functionality that financial users expect from their grids and blotters.
+AdaptableBlotter.JS is a powerful data-agnostic grid that sits on top of an underlying grid component and provides all the advanced, rich functionality that financial users expect from their grids and blotters.
 
 It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. And also offers unparalleled validation and audit functions, vital for the current regulatory and compliance environment.
 
