@@ -7,7 +7,7 @@ It offers - out of the box - incredibly powerful searching, filtering, sorting, 
 
 Grid components supported included Telerik's Kendo Grid, the ag-Grid, OpenFin's Hypergrid and the Adaptable Grid by Adaptable Tools.
 
-Licences are free for devlopment use, but a paid-for annual end user licence is required for each production user.  Please see the LICENSE.md file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
+The Adaptable Blotter is free for development use, but a paid-for annual end user licence is required for each production user.  Please see the LICENSE.md file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
 
 Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.  Or email the Adaptable Tools Support Team at support@adaptabletools.com.
 
