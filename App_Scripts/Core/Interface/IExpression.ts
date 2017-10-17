@@ -17,5 +17,6 @@ export interface IUserFilter extends IConfigEntity {
     Description: string;
     DataType: DataType;
     IsExpressionSatisfied(valueToCheck: any, blotter: IAdaptableBlotter): boolean;
-    Expression: Expression
+    Expression: Expression;
+    IsSystemFilter: boolean;
 }

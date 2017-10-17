@@ -1,5 +1,7 @@
 import { Expression } from '../Expression/Expression'
-import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
+import { ExpressionHelper } from '../Expression/ExpressionHelper'
+import { IRangeExpression } from '../Interface/IExpression';
+import { IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
@@ -110,12 +112,13 @@ export module UserFilterHelper {
             FriendlyName: "Today",
             Description: "Is Date Today",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
                 return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -123,11 +126,12 @@ export module UserFilterHelper {
             FriendlyName: "In Past",
             Description: "Is Date In Past",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck < Date.now();
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -135,11 +139,12 @@ export module UserFilterHelper {
             FriendlyName: "In Future",
             Description: "Is Date In Future",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck > Date.now();
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -147,12 +152,13 @@ export module UserFilterHelper {
             FriendlyName: "Yesterday",
             Description: "Is Date Yesterday",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
                 return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -160,12 +166,13 @@ export module UserFilterHelper {
             FriendlyName: "Tomorrow",
             Description: "Is Date Tomorrow",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
                 return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -173,11 +180,12 @@ export module UserFilterHelper {
             FriendlyName: "Next Working Day",
             Description: "Is Next Working Day",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -185,11 +193,12 @@ export module UserFilterHelper {
             FriendlyName: "Previous Working Day",
             Description: "Is Previous Working Day",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -197,14 +206,15 @@ export module UserFilterHelper {
             FriendlyName: "This Year",
             Description: "In This Year",
             DataType: DataType.Date,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
-                let todayyear:number = today.getFullYear();
+                let todayyear: number = today.getFullYear();
                 let datetocheckyear: number = dateToCheck.getFullYear();
                 return (todayyear == datetocheckyear)
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         // Numeric Predefined user filter Expressions
@@ -213,11 +223,12 @@ export module UserFilterHelper {
             FriendlyName: "Positive",
             Description: "Is Number Positive",
             DataType: DataType.Number,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck > 0);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -225,11 +236,12 @@ export module UserFilterHelper {
             FriendlyName: "Negative",
             Description: "Is Number Negative",
             DataType: DataType.Number,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck < 0);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -237,11 +249,12 @@ export module UserFilterHelper {
             FriendlyName: "Zero",
             Description: "Is Number Zero",
             DataType: DataType.Number,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == 0);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -249,11 +262,12 @@ export module UserFilterHelper {
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
             DataType: DataType.Number,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == null);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -261,11 +275,12 @@ export module UserFilterHelper {
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
             DataType: DataType.Number,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck != null);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         // String Predefined user filter Expressions
@@ -274,11 +289,12 @@ export module UserFilterHelper {
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
             DataType: DataType.String,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNullOrEmpty(stringToCheck));
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -286,11 +302,12 @@ export module UserFilterHelper {
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
             DataType: DataType.String,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         // Boolean Predefined user filter Expressions
@@ -299,11 +316,12 @@ export module UserFilterHelper {
             FriendlyName: "True",
             Description: "Is Value True",
             DataType: DataType.Boolean,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (boolToCheck);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         _predefinedExpressions.push({
@@ -311,11 +329,12 @@ export module UserFilterHelper {
             FriendlyName: "False",
             Description: "Is Value False",
             DataType: DataType.Boolean,
-            Expression: ObjectFactory.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (!boolToCheck);
             },
-            IsPredefined: true
+            IsPredefined: true,
+            IsSystemFilter: true
         });
 
         return _predefinedExpressions;

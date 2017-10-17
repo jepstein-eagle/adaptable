@@ -15,6 +15,8 @@ import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
 
 export module ObjectFactory {
 
+    
+
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
@@ -27,7 +29,7 @@ export module ObjectFactory {
         return {
             ColumnId: "",
             DefaultNudge: defaultNudgeValue,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }
@@ -35,7 +37,7 @@ export module ObjectFactory {
         return {
             Uid: Helper.generateUid(),
             Name: "",
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }
@@ -50,7 +52,7 @@ export module ObjectFactory {
                 Operand2: ""
             },
             HasExpression: false,
-            OtherExpression: CreateEmptyExpression(),
+            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: "",
             IsPredefined: false
         }
@@ -62,11 +64,12 @@ export module ObjectFactory {
             FriendlyName: "",
             Description: "",
             DataType: DataType.String,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (value: any): boolean => {
                 return null;
             },
-            IsPredefined: false
+            IsPredefined: false,
+            IsSystemFilter: false
         };
     }
 
@@ -100,9 +103,6 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateEmptyExpression(): Expression {
-        return new Expression([], [], [], [])
-    }
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -120,7 +120,7 @@ export module ObjectFactory {
             ColumnId: "",
             Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
             ConditionalStyleScope: ConditionalStyleScope.Row,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }

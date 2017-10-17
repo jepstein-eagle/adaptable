@@ -119,8 +119,8 @@ export module ExpressionHelper {
                 if (columnUserFilters) {
                     let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids);
                     for (let userFilter of filteredUserFilters) {
-                        // Predefined userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
-                        if (userFilter.IsPredefined) {
+                        // System userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
+                        if (userFilter.IsSystemFilter) {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);
                         } else {
@@ -334,6 +334,9 @@ export module ExpressionHelper {
         );
     }
 
+    export function CreateEmptyExpression(): Expression {
+        return new Expression([], [], [], [])
+    }
 
-
+  
 } 

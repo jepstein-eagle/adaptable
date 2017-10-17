@@ -1,4 +1,30 @@
 {
+    "Filter": {
+        "UserFilters": [
+            {
+                "Uid": "d81938bc-25f6-46d5-b6d9-77fc619d5571",
+                "FriendlyName": "testytest",
+                "Description": "([Counterparty] In (BNP, Credit Suisse))",
+                "DataType": 0,
+                "Expression": {
+                    "ColumnDisplayValuesExpressions": [
+                        {
+                            "ColumnName": "counterparty",
+                            "ColumnValues": [
+                                "BNP",
+                                "Credit Suisse"
+                            ]
+                        }
+                    ],
+                    "ColumnRawValuesExpressions": [],
+                    "UserFilters": [],
+                    "RangeExpressions": []
+                },
+                "IsPredefined": false
+            }
+        ],
+        "ColumnFilters": []
+    },
     "FlashingCell": {
         "FlashingColumns": [
             {
@@ -23,19 +49,19 @@
             }
         ]
     },
-	"Shortcut": {
-		"NumericShortcuts": [
-			{
-				"ShortcutKey": "D",
-				"ShortcutResult": "52",
-				"ColumnType": 1,
-				"ShortcutAction": 2,
-				"IsLive": true,
-				"IsPredefined": true,
-				"IsDynamic": false
-			}
-		]
-	},
+    "Shortcut": {
+        "NumericShortcuts": [
+            {
+                "ShortcutKey": "D",
+                "ShortcutResult": "52",
+                "ColumnType": 1,
+                "ShortcutAction": 2,
+                "IsLive": true,
+                "IsPredefined": true,
+                "IsDynamic": false
+            }
+        ]
+    },
     "AdvancedSearch": {
         "AdvancedSearches": [
             {
