@@ -4,6 +4,7 @@ import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Core/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
+import { IRange } from '../../../Core/Interface/IRangeStrategy'
 import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/Interface/IStrategy'
 import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
@@ -36,9 +37,9 @@ export interface MenuState {
 export interface IContextMenu {
     BuildContextMenu: boolean
     IsVisible: boolean
-    PositionX: number 
+    PositionX: number
     PositionY: number
-    ColumnId: string 
+    ColumnId: string
     Items: IMenuItem[]
 }
 
@@ -103,6 +104,11 @@ export interface ShortcutState {
     DateShortcuts: Array<IShortcut>;
 }
 
+export interface RangeState {
+    CurrentRangeId: string;
+    Ranges: Array<IRange>;
+}
+
 export interface ExportState {
     FileName: string;
     AllPages: boolean;
@@ -136,7 +142,7 @@ export interface AdvancedSearchState {
 
 export interface FilterState {
     UserFilters: Array<IUserFilter>;
-     ColumnFilters: Array<IColumnFilter>
+    ColumnFilters: Array<IColumnFilter>
 }
 
 

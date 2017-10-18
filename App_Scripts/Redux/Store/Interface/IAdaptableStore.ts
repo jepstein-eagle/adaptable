@@ -22,6 +22,7 @@ export interface AdaptableBlotterState {
     Dashboard: AdaptableBlotterStates.DashboardState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
+    Range: AdaptableBlotterStates.RangeState;
 }
 
 export interface IAdaptableBlotterStore {

@@ -8,7 +8,7 @@ import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
-
+import {IRange} from '../Interface/IRangeStrategy'
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -85,6 +85,7 @@ export interface IAdaptableBlotter {
 
     // Export
     exportBlotter(): void
+    convertRangeToArray(range: IRange): any[]
 
     // Filtering
     applyColumnFilters(): void

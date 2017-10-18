@@ -12,6 +12,7 @@ import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
 import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
+import { IRange } from './Interface/IRangeStrategy';
 
 export module ObjectFactory {
 
@@ -71,6 +72,14 @@ export module ObjectFactory {
             IsPredefined: false,
             IsSystemFilter: false
         };
+    }
+
+    export function CreateEmptyRange(): IRange {
+        return { Uid: Helper.generateUid(),
+            Name: "", 
+            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Columns: [], 
+            IsPredefined: false }
     }
 
     export function CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {

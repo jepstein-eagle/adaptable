@@ -39,6 +39,7 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
+import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
@@ -500,6 +501,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.options.excel.allPages = exportState.AllPages;
         this.grid.options.excel.filterable = exportState.Filterable;
         this.grid.saveAsExcel();
+    }
+
+    public convertRangeToArray(range: IRange): any[] {
+        return null;
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {

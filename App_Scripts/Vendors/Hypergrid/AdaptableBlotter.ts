@@ -1,6 +1,5 @@
 ﻿import { CalculatedColumnStrategy } from '../../Strategy/CalculatedColumnStrategy';
 import '../../../stylesheets/adaptableblotter-style.css'
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
@@ -37,6 +36,8 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { IRange } from '../../Core/Interface/IRangeStrategy'
+import { RangeStrategy } from '../../Strategy/RangeStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -59,6 +60,8 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -134,6 +137,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -536,8 +540,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let cellEvent = new this.grid.behavior.CellEvent
             cellEvent.resetGridCY(activeColumn.index, 1);
             let editor = this.grid.behavior.getCellEditorAt(cellEvent);
-            if(editor)
-            {
+            if (editor) {
                 editor.cancelEditing()
                 editor = null
                 return false;
@@ -595,6 +598,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public exportBlotter(): void {
+    }
+
+    public convertRangeToArray(rangeToConvert: IRange): any[] {
+        var dataToExport: any[] = [];
+        dataToExport[0] = rangeToConvert.Columns;
+        let expressionToCheck: Expression = rangeToConvert.Expression;
+        let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        // but at least it works for now...
+        let rows: any[] = this.grid.behavior.dataModel.getData();
+        rows.forEach(row => {
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, columns, this)) {
+                let newRow: any[] = [];
+                rangeToConvert.Columns.forEach(col => {
+                 //   newRow.push(row[col]) -- not sure if to get raw or display value ?..
+                    newRow.push(this.getDisplayValueFromRecord(row,col))
+                })
+                dataToExport.push(newRow);
+            }
+        })
+        return dataToExport;
     }
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -882,7 +906,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.filterContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
-    
+
     private valOrFunc(dataRow: any, column: any) {
         var result, calculator;
         if (dataRow) {
@@ -1109,6 +1133,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
     }
+
+
 }
 
 export interface CellStyleHypergrid {

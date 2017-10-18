@@ -36,6 +36,7 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -485,6 +486,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
+    public convertRangeToArray(range: IRange): any[] {
+        return null;
+    }
+
     public getDisplayValue(id: any, columnId: string): string {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
@@ -654,6 +659,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }
+    
 
     private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {
         // gridOptions.api.addGlobalListener((type: string, event: any) => {

@@ -37,6 +37,7 @@ import { FilterStrategy } from '../../Strategy/FilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
+import {IRange} from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -374,6 +375,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
+    public convertRangeToArray(range: IRange): any[] {
+        return null;
+
+     }
+ 
+
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
         var cell: AdaptableGrid.Cell = row.getCell(columnIndex);
@@ -484,5 +491,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public rendergrid(): void {
         this.grid.render();
+    }
+
+    public getRecordFromRowId(rowId: string): any{
+        return null
     }
 }
