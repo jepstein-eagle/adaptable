@@ -600,20 +600,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
-    public convertRangeToArray(rangeToConvert: IRange): any[] {
-        var dataToExport: any[] = [];
-        dataToExport[0] = rangeToConvert.Columns;
-        let expressionToCheck: Expression = rangeToConvert.Expression;
+    public convertRangeToArray(range: IRange): any[] {
         let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        var dataToExport: any[] = [];
+        dataToExport[0] = range.Columns.map(c=> columns.find(col=>col.ColumnId==c).FriendlyName);
+        let expressionToCheck: Expression = range.Expression;
+         // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
         // but at least it works for now...
         let rows: any[] = this.grid.behavior.dataModel.getData();
         rows.forEach(row => {
             if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, columns, this)) {
                 let newRow: any[] = [];
-                rangeToConvert.Columns.forEach(col => {
-                 //   newRow.push(row[col]) -- not sure if to get raw or display value ?..
-                    newRow.push(this.getDisplayValueFromRecord(row,col))
+                range.Columns.forEach(col => {
+                    newRow.push(row[col]) //-- not sure if to get raw or display value ?..
+                 //   newRow.push(this.getDisplayValueFromRecord(row,col))
                 })
                 dataToExport.push(newRow);
             }
