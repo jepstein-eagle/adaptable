@@ -38,7 +38,6 @@ class RangeConfigComponent extends React.Component<RangeConfigProps, RangeConfig
     constructor() {
         super();
         this.state = { EditedRange: null, WizardStartIndex: 0 }
-
     }
   
     componentDidMount() {
@@ -52,9 +51,8 @@ class RangeConfigComponent extends React.Component<RangeConfigProps, RangeConfig
     }
 
     render() {
-        let infoBody: any[] = ["Custom Sorts enable you to create your own sort orders for columns where the default (alphabetical ascending or descending) is insufficient.", <br />, <br />,
-            "Use the Wizard to specify and order the column values in the Sort.", <br />, <br />,
-            "A Custom Sort can contain as many column values as required; any values not contained in the Custom Sort will be sorted alphabetically ", <strong>after</strong>, " the sort order has been applied."]
+        let infoBody: any[] = ["Sentence one on ranges", <br />, <br />,
+            "Sentence two on ranges"]
 
 
         let Ranges = this.props.Ranges.map((range: IRange) => {
@@ -137,7 +135,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateRange: (Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Range)),

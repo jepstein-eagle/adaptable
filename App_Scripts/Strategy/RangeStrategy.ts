@@ -16,14 +16,15 @@ export class RangeStrategy extends AdaptableStrategyBase implements IRangeStrate
         this.menuItemConfig = this.createMenuItemShowPopup("Range", 'RangeConfig', MenuType.ConfigurationPopup, "tag");
     }
 
+    // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
     public ConvertRangetoArray(rangeUid: string): any[] {
         let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
         let rangeValues: any[] = this.blotter.convertRangeToArray(rangeToConvert);
-return rangeValues;
+        return rangeValues;
     }
 
     public ConvertRangetoCsv(rangeUid: string): string {
-       let rangeAsArray : any[] = this.ConvertRangetoArray(rangeUid);
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
         return Helper.convertArrayToCsv(rangeAsArray, ",");
     }
 
