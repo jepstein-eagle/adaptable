@@ -80,7 +80,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                             ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                             overrideDisableEdit={!column}
                             editClick={() => this.onEdit(index, x)}
-                            ConfigEntity={x}>
+                            ConfigEntity={x}
+                            EntityName="Plus Minus rule">
                         </EntityListActionButtons>
                     </Col>
                 </Row>

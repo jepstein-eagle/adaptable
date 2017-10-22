@@ -60,7 +60,8 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
                         <EntityListActionButtons
                             ConfirmDeleteAction={CalculatedColumnRedux.CalculatedColumnDelete(index)}
                             editClick={() => this.onEdit(index, calculatedColumn)}
-                            ConfigEntity={calculatedColumn}>
+                            ConfigEntity={calculatedColumn}
+                            EntityName="Calculated Column">
                         </EntityListActionButtons>
                     </Col>
                 </Row>

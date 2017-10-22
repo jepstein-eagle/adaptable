@@ -25,6 +25,7 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     overrideTooltipShare?: string
     ConfigEntity?: IConfigEntity
     ConfirmDeleteAction: Redux.Action
+    EntityName: string
 }
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
@@ -36,6 +37,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         overrideDisableDelete: false,
         overrideDisableShare: false,
         ConfirmDeleteAction: null,
+        EntityName: ""
     };
     render() {
         return <ButtonToolbar>
@@ -52,8 +54,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     overrideTooltip={this.props.overrideTooltipDelete}
                     DisplayMode="Glyph"
                     ConfirmAction={this.props.ConfirmDeleteAction}
-                    ConfirmationMsg={"Are you sure you want to delete this item?"}
-                    ConfirmationTitle={"Delete Item"} />}
+                    ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityName + "?"}
+                    ConfirmationTitle={"Delete " + this.props.EntityName } />}
             {this.props.showShare &&
                 <ButtonShare onClick={() => this.props.shareClick()}
                     overrideDisableButton={this.props.overrideDisableShare}

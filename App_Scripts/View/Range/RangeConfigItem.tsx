@@ -45,7 +45,8 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                     <EntityListActionButtons
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         editClick={() => this.props.onEdit(this.props.Range)}
-                        ConfigEntity={this.props.Range}>
+                        ConfigEntity={this.props.Range}
+                        EntityName="Range">
                     </EntityListActionButtons>
                 </Col>
             </Row>

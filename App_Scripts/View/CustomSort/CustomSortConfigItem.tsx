@@ -28,7 +28,8 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         editClick={() => this.props.onEdit(this.props.CustomSort)}
                         overrideDisableEdit={this.props.ColumnLabel.includes(Helper.MissingColumnMagicString)}
-                        ConfigEntity={this.props.CustomSort}>
+                        ConfigEntity={this.props.CustomSort}
+                        EntityName="Custom Sort">
                     </EntityListActionButtons>
                 </Col>
             </Row>

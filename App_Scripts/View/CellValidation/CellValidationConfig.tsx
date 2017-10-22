@@ -99,7 +99,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                             ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
                             editClick={() => this.onEdit(index, x)}
                             overrideDisableEdit={!column}
-                            ConfigEntity={x}>
+                            ConfigEntity={x}
+                            EntityName="Cell Validation">
                         </EntityListActionButtons>
                     </Col>
                 </Row>

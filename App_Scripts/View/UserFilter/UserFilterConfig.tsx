@@ -84,7 +84,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                             ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
                             overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
                             editClick={() => this.onEditUserFilter(x)}
-                            ConfigEntity={x}>
+                            ConfigEntity={x}
+                            EntityName="User Filter">
                         </EntityListActionButtons>
                     </Col>
                 </Row>

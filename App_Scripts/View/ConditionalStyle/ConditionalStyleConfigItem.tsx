@@ -62,7 +62,8 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                         editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
                         ConfigEntity={this.props.ConditionalStyleCondition}
                         overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}
+                        EntityName="Conditional Style">
                     </EntityListActionButtons>
                 </Col>
             </Row>

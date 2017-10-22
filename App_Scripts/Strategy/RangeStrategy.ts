@@ -19,8 +19,8 @@ export class RangeStrategy extends AdaptableStrategyBase implements IRangeStrate
     // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
     public ConvertRangetoArray(rangeUid: string): any[] {
         let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
-        let cols: IColumn[] = this.getColsForRange(rangeToConvert);
-        let rangeValues: any[] = this.blotter.convertRangeToArray(rangeToConvert, cols);
+        let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
+        let rangeValues: any[] = this.blotter.convertRangeToArray(rangeToConvert, rangeCols);
         return rangeValues;
     }
 
