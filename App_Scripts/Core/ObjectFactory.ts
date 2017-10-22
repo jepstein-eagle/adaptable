@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition, IStyle } from './Interface/IConditionalStyleStrategy';
-import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Core/Enums';
+import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize, RangeScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
@@ -79,6 +79,7 @@ export module ObjectFactory {
             Name: "", 
             Expression: ExpressionHelper.CreateEmptyExpression(),
             Columns: [], 
+            RangeScope: RangeScope.AllColumns,
             IsPredefined: false }
     }
 

@@ -79,6 +79,11 @@ export enum ConditionalStyleScope {
     Row
 }
 
+export enum RangeScope {
+    AllColumns,
+    SelectedColumns
+}
+
 export enum SortOrder {
     Unknown,
     Ascending,

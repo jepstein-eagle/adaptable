@@ -488,19 +488,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
-    public convertRangeToArray(range: IRange): any[] {
-        let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         var dataToExport: any[] = [];
-        dataToExport[0] = range.Columns.map(c=> columns.find(col=>col.ColumnId==c).FriendlyName);
+        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
         let expressionToCheck: Expression = range.Expression;
         // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
         // but at least it works for now...
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, rowNode, columns, this)) {
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, rowNode, rangeColumns, this)) {
                 let newRow: any[] = [];
-                range.Columns.forEach(col => {
-                    newRow.push(this.gridOptions.api.getValue(col, rowNode));// -- not sure if to get raw or display value ?..
-                  //  newRow.push(this.getDisplayValueFromRecord(rowNode, col));
+                rangeColumns.forEach(col => {
+                    newRow.push(this.gridOptions.api.getValue(col.ColumnId, rowNode));// -- not sure if to get raw or display value ?..
+                  //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
                 })
                 dataToExport.push(newRow);
             }

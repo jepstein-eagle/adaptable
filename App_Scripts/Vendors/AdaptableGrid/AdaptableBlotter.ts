@@ -375,7 +375,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
-    public convertRangeToArray(range: IRange): any[] {
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         return null;
 
      }

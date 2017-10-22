@@ -503,7 +503,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.saveAsExcel();
     }
 
-    public convertRangeToArray(range: IRange): any[] {
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         return null;
     }
 

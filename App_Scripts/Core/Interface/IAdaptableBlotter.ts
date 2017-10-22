@@ -85,7 +85,7 @@ export interface IAdaptableBlotter {
 
     // Export
     exportBlotter(): void
-    convertRangeToArray(range: IRange): any[]
+    convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[]
 
     // Filtering
     applyColumnFilters(): void

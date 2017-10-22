@@ -7,6 +7,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
+import { RangeScope } from '../../Core/Enums';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
@@ -22,12 +23,18 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
             className="list-group-item"
             onClick={() => { }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={2}>{this.props.Range.Name}</Col>
+                <Col xs={2}><span style={expressionFontSizeStyle}>
+                    {this.props.Range.Name}
+                </span>
+                </Col>
                 <Col xs={3} >
-                    <span style={expressionFontSizeStyle}>
-                        {this.props.Range.Columns.map(c =>
-                            this.props.Columns.find(col => col.ColumnId == c).FriendlyName).join(', ')}
-                    </span>
+                    {this.props.Range.RangeScope == RangeScope.AllColumns ?
+                        "All Columns" :
+                        <span style={expressionFontSizeStyle}>
+                            {this.props.Range.Columns.map(c =>
+                                this.props.Columns.find(col => col.ColumnId == c).FriendlyName).join(', ')}
+                        </span>
+                    }
                 </Col>
                 <Col xs={4} >
                     <span style={expressionFontSizeStyle}>
