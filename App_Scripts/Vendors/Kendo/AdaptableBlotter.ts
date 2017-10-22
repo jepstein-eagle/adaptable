@@ -39,6 +39,7 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
+import { RangeStrategy } from '../../Strategy/RangeStrategy'
 import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -58,6 +59,8 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { Expression } from '../../Core/Expression/Expression';
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -108,7 +111,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
 
+        
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
@@ -504,7 +509,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
-        return null;
+        var dataToExport: any[] = [];
+        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
+          let expressionToCheck: Expression = range.Expression;
+      
+          // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        // but at least it works for now...
+        let dataSource = this.grid.dataSource.data();
+        for (var i = 0; i < dataSource.length; i++) {
+            let row: any = dataSource[i]
+         
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, this)) {
+                let newRow: any[] = [];
+                rangeColumns.forEach(col => {
+                    newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
+                   // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
+                })
+                dataToExport.push(newRow);
+            }
+        }
+        return dataToExport;
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
