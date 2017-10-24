@@ -51,8 +51,8 @@ class RangeConfigComponent extends React.Component<RangeConfigProps, RangeConfig
     }
 
     render() {
-        let infoBody: any[] = ["Sentence one on ranges", <br />, <br />,
-            "Sentence two on ranges"]
+        let infoBody: any[] = ["Ranges are named sets of columns and values that you can access repeatedly.", <br />, <br />,
+            "You can export a range to CSV via the Export button."]
 
 
         let Ranges = this.props.Ranges.map((range: IRange) => {
