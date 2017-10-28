@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
+import { Form, Dropdown, Panel, FormControl, MenuItem, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -48,14 +48,18 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
         })
 
         let tooltipText = this.props.RangeDashboardControl.IsCollapsed ? "Expand" : "Collapse"
+        let csvMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId)} key={"csv"}><Glyphicon glyph="export" /> {"CSV"}</MenuItem>
+        let clipboardMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId)} key={"clipboard"}><Glyphicon glyph="export" /> {"Clipboard"}</MenuItem>
+        let excelMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId)} key={"excel"}><Glyphicon glyph="export" /> {"Excel"}</MenuItem>
+        let symphonyMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId)} key={"symphony"}><Glyphicon glyph="export" /> {"Symphony"}</MenuItem>
 
         let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-            <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
+            <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
                 {' '}<Glyphicon glyph="th" />{' '}Range{' '}<Glyphicon glyph={this.props.RangeDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
         </OverlayTrigger>
 
-        let collapsedContent = <ControlLabel> {}</ControlLabel>
+        let collapsedContent = <ControlLabel>{savedRange ? savedRange.Name : "None"}</ControlLabel>
 
         let expandedContent = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
@@ -66,11 +70,15 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                     {availableRanges}
                 </FormControl>
                 {' '}
-                <ButtonExport onClick={() => this.props.onExportRange(currentRangeId)}
-                    size="small"
-                    overrideTooltip="Export Range to CSV"
-                    overrideDisableButton={currentRangeId == "select"}
-                    DisplayMode="Glyph+Text" />
+                <Dropdown id="dropdown-functions" disabled= {currentRangeId == "select"} style={smll} >
+                    <Dropdown.Toggle bsStyle="warning" bsClass="hello" style={smll} >
+                        <Glyphicon glyph="export" />{' '}{"Export To"}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {csvMenuItem}
+                        {clipboardMenuItem}
+                    </Dropdown.Menu>
+                </Dropdown>
                 {' '}
                 <ButtonClear onClick={() => this.props.onSelectRange("")}
                     size="small"
@@ -161,4 +169,12 @@ export let RangeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(Ra
 
 var marginButtonStyle = {
     marginTop: '4px'
+};
+
+
+var smll = {
+    marginTop: '1px',
+    marginBottom: '1px',
+    marginRight: '0.5px',
+    padding: '4.5px'
 };
