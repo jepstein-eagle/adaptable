@@ -45,7 +45,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                     return <option value={x.Name} key={index}>{x.Name}</option>
                 }
                 else {
-                    return <option value={x.Name} key={index}>{x.Name + "(Modified)"}</option>
+                    return <option value={x.Name} key={index}>{x.Name + " (Modified)"}</option>
                 }
             }
             else {

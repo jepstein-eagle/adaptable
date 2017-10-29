@@ -3,6 +3,7 @@ import { IRange } from '../../Core/Interface/IRangeStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'
 import { Helper } from '../../Core/Helper';
+import { RangeExportDestination } from '../../Core/Enums';
 
 export const RANGE_EXPORT = 'RANGE_EXPORT';
 export const RANGE_SELECT = 'RANGE_SELECT';
@@ -11,6 +12,7 @@ export const RANGE_DELETE = 'RANGE_DELETE';
 
 export interface RangeExportAction extends Redux.Action {
     RangeToExport: string;
+    RangeExportDestination: RangeExportDestination
 }
 
 export interface RangeSelectAction extends Redux.Action {
@@ -25,9 +27,10 @@ export interface RangeDeleteAction extends Redux.Action {
     Range: IRange
 }
 
-export const RangeExport = (RangeToExport: string): RangeExportAction => ({
+export const RangeExport = (RangeToExport: string, RangeExportDestination: RangeExportDestination): RangeExportAction => ({
     type: RANGE_EXPORT,
-    RangeToExport
+    RangeToExport,
+    RangeExportDestination
 })
 
 export const RangeSelect = (SelectedRangeId: string): RangeSelectAction => ({

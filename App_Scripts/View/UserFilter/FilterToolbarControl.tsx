@@ -38,13 +38,6 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
             this.props.ColumnFilters.length == 1 ?
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
-        let collapsedContent = <ControlLabel>{collapsedText}</ControlLabel>;
-
-        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-            <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
-                {' '}<Glyphicon glyph="filter" />{' '}Filters{' '}<Glyphicon glyph={this.props.FilterDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
-            </Button>
-        </OverlayTrigger>
 
         let columnFilterNames: string = "";
         this.props.ColumnFilters.forEach(x => {
@@ -56,11 +49,25 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
         columnFilterNames = StringExtensions.RemoveTrailingComma(columnFilterNames);
 
 
+        let toolbarHeaderButton = <span>
+            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
+                <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
+                    {' '}<Glyphicon glyph="filter" />{' '}Filters{' '}<Glyphicon glyph={this.props.FilterDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
+                </Button>
+            </OverlayTrigger>
+            {' '}
+           {collapsedText}
+
+
+        </span>
+
+
+
         let expandedContent: any = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <ControlLabel> {columnFilterNames}</ControlLabel>
-                {' '}
-                <ButtonClear onClick={() => this.props.onClearFilters()}
+            <ControlLabel> {columnFilterNames}</ControlLabel>
+            {' '} 
+             <ButtonClear onClick={() => this.props.onClearFilters()}
                     size="small"
                     overrideTooltip="Clear Filters"
                     DisplayMode="Glyph+Text"
@@ -73,8 +80,6 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
                 {this.props.FilterDashboardControl.IsCollapsed ?
                     <span>
                         {toolbarHeaderButton}
-                        {' '}
-                        {collapsedContent}
                     </span>
                     :
                     <span>

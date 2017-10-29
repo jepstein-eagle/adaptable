@@ -37,11 +37,11 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
 
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm >
-                <Dropdown id="dropdown-functions" >
+                <Dropdown id="dropdown-functions" style={smll} >
                     <Dropdown.Toggle>
                         <Glyphicon glyph="home" />{' '}Functions
                             </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu >
                         {configMenuItems}
                     </Dropdown.Menu>
                 </Dropdown>
@@ -70,3 +70,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let FunctionsToolbarControl = connect(mapStateToProps, mapDispatchToProps)(FunctionsToolbarControlComponent);
+
+
+var smll = {
+    marginTop: '0px',
+    marginBottom: '0px',
+    marginRight: '0px',
+    padding: '0px'
+
+};

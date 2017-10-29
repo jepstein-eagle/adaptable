@@ -46,22 +46,25 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let tooltipText = this.props.AdvancedSearchDashboardControl.IsCollapsed ? "Expand" : "Collapse"
 
-        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-            <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
+        let toolbarHeaderButton = <span>
+            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
+            <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
                 {' '}<Glyphicon glyph="search" />{' '}Advanced Search{' '}<Glyphicon glyph={this.props.AdvancedSearchDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
             </Button>
-        </OverlayTrigger>
-
-
-        let expandedContent = <AdaptableBlotterForm inline>
-            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <FormControl componentClass="select" placeholder="select"
+            </OverlayTrigger>
+            {' '}
+            <FormControl componentClass="select" placeholder="select" bsSize="small"
                     value={currentAdvancedSearchId}
                     onChange={(x) => this.onSelectedSearchChanged(x)} >
                     <option value="select" key="select">Select a Search</option>
                     {advancedSearches}
                 </FormControl>
                 {' '}
+      
+        </span>
+
+        let expandedContent = <span>
+            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
                     size="small"
                     overrideTooltip="Clear Current Advanced Search"
@@ -90,16 +93,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
-        </AdaptableBlotterForm>
+        </span>
 
         return (
             <Panel className="small-padding-panel" >
-                <AdaptableBlotterForm >
+                <AdaptableBlotterForm inline>
                         {this.props.AdvancedSearchDashboardControl.IsCollapsed ?
                             <span>
                                 {toolbarHeaderButton}
-                                {' '}
-                                {collapsedContent}
                             </span>
                             :
                             <span>

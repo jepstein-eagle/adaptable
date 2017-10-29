@@ -2,7 +2,7 @@ import { IColumn } from './IAdaptableBlotter';
 import { IConfigEntity } from './IAdaptableBlotter'
 import { IStrategy } from './IStrategy';
 import { Expression } from '../Expression/Expression';
-import { RangeScope } from '../Enums';
+import { RangeScope, RangeExportDestination } from '../Enums';
 
 
 export interface IRange extends IConfigEntity {
@@ -14,7 +14,5 @@ export interface IRange extends IConfigEntity {
 }
 
 export interface IRangeStrategy extends IStrategy {
-  ExportRangeToCsv(rangeUid: string): void
-  ConvertRangetoCsv(rangeUid: string): string 
-   ConvertRangetoArray(rangeUid: string): any[]
+   ExportRange(rangeUid: string, rangeExportDestination: RangeExportDestination): void 
 }

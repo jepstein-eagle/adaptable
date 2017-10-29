@@ -84,6 +84,14 @@ export enum RangeScope {
     SelectedColumns
 }
 
+export enum RangeExportDestination {
+    CSV,
+    JSON,
+    Clipboard,
+    Excel,
+    Symphony
+}
+
 export enum SortOrder {
     Unknown,
     Ascending,

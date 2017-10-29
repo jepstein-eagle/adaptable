@@ -351,7 +351,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case RangeRedux.RANGE_EXPORT: {
                     let rangeStrategy = <IRangeStrategy>(adaptableBlotter.Strategies.get(StrategyIds.RangeStrategyId));
                     let actionTyped = <RangeRedux.RangeExportAction>action;
-                    rangeStrategy.ExportRangeToCsv(actionTyped.RangeToExport);
+                    rangeStrategy.ExportRange(actionTyped.RangeToExport, actionTyped.RangeExportDestination);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
