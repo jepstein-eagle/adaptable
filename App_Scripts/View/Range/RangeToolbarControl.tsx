@@ -68,18 +68,21 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                 <option value="select" key="select">Select a Range</option>
                 {availableRanges}
             </FormControl>
+            {' '}
+            {currentRangeId != "select" &&
+            <DropdownButton bsSize="small" bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
+                {csvMenuItem}
+                {JSONMenuItem}
+                {clipboardMenuItem}
+                {excelMenuItem}
+                {symphonyMenuItem}
+            </DropdownButton>
+            }
         </span>
 
         let expandedContent = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <DropdownButton bsSize="small" bsStyle="warning" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
-                    {csvMenuItem}
-                    {JSONMenuItem}
-                    {clipboardMenuItem}
-                    {excelMenuItem}
-                    {symphonyMenuItem}
-                </DropdownButton>
-                {' '}
+
                 <ButtonClear onClick={() => this.props.onSelectRange("")}
                     size="small"
                     overrideTooltip="Clear Current Range"

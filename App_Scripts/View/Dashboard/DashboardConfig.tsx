@@ -42,8 +42,8 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
             // let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
             let visibleButton = x.IsVisible ?
-                <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
-                : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
+                <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
+                : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
             if (x.Strategy == StrategyIds.FunctionsStrategyId) {
                 //we want to prevent people from hiding the Functions dropdown
                 visibleButton = null
