@@ -7,10 +7,10 @@ import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 
-export class ButtonExport extends React.Component<ButtonProps, {}> {
+export class ButtonErase extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Export"
-            bsStyle='warning'
+        return <ButtonBase ToolTipAndText="X"
+            bsStyle='default'
              bsSize={this.props.size}
              ConfigEntity={this.props.ConfigEntity}
             glyph="export"

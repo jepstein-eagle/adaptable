@@ -14,6 +14,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ButtonErase } from '../Components/Buttons/ButtonErase';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -58,12 +59,16 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     <FormControl
                         style={{ width: "100px" }}
                         bsSize="small"
-                        type="text"
+                        type="text"                    
                         placeholder="Search Text"
                         value={this.state.EditedQuickSearchText}
                         onChange={(x) => this.onUpdateQuickSearchText(x)} />
                 </FormGroup>
-
+                    <ButtonErase onClick={() => this.onClearQuickSearch()}
+                    size="small"
+                    overrideTooltip="Clear Quick Search"
+                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
+                    DisplayMode="Text" />
             </Form>
 
 

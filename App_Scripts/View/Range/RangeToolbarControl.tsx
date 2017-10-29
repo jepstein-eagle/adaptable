@@ -19,7 +19,6 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonExport } from '../Components/Buttons/ButtonExport';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { RangeExportDestination } from '../../Core/Enums';
 
