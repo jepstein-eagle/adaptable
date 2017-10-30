@@ -1,17 +1,17 @@
 import { ConditionalStyleScope } from '../Enums';
 
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
-import { ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/IState';
+import { FlashingCellState, QuickSearchState, ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/IState';
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions';
+import { IConditionalStyleCondition, IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 
 
 //Somehow all this fucking CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
     private FlashingCellState: FlashingCellState
     private ConditionalStyleState: ConditionalStyleState
-    private QuickSearchBackColor: string
+    private QuickSearchState: QuickSearchState
     private sheet: CSSStyleSheet
     private style: HTMLStyleElement
     constructor(private blotter: IAdaptableBlotter) {
@@ -33,10 +33,10 @@ export class StyleService {
 
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
             || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-            || this.QuickSearchBackColor != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor) {
+            || this.QuickSearchState != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-            this.QuickSearchBackColor = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor
+            this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
             this.clearCSSRules()
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyleConditions.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
@@ -46,7 +46,8 @@ export class StyleService {
                 this.addCSSRule(".Ab-ConditionalStyle-" + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
             // quick search
-            this.addCSSRule(".Ab-QuickSearch", 'background-color: ' + this.QuickSearchBackColor + ' !important')
+            this.addCSSRule(".Ab-QuickSearch" , 'background-color: ' + this.QuickSearchState.QuickSearchStyle.BackColor + ' !important;color: ' + this.QuickSearchState.QuickSearchStyle.ForeColor + ' !important;font-weight: ' + FontWeight[this.QuickSearchState.QuickSearchStyle.FontWeight] + ' !important;font-style: ' + FontStyle[this.QuickSearchState.QuickSearchStyle.FontStyle] + ' !important;' + (this.QuickSearchState.QuickSearchStyle.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.QuickSearchStyle.FontSize) + ' !important') : ''))
+            
             //we define last Flash since it has the highest priority
             this.FlashingCellState.FlashingColumns.forEach((element, index) => {
                 this.addCSSRule(".Ab-FlashUp" + index, 'background-color: ' + element.UpBackColor + ' !important')

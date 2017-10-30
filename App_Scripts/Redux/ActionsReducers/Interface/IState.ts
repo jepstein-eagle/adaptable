@@ -10,7 +10,7 @@ import { IMenuItem } from '../../../Core/Interface/IStrategy'
 import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Core/Interface/ICalendarStrategy';
-import { IConditionalStyleCondition } from '../../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition, IStyle } from '../../../Core/Interface/IConditionalStyleStrategy';
 import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
 import { IColumnFilter } from '../../../Core/Interface/IFilterStrategy';
 import { IUserFilter } from '../../../Core/Interface/IExpression';
@@ -129,10 +129,12 @@ export interface ConditionalStyleState {
 }
 
 export interface QuickSearchState {
+    QuickSearchDefaultBackColour: string
+    QuickSearchDefaultForeColour: string
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
-    QuickSearchBackColor: string
+    QuickSearchStyle: IStyle
 }
 
 export interface AdvancedSearchState {

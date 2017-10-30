@@ -682,8 +682,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 cellIntervalColumns.set(columnId, timeoutInterval)
             }
         }
-        if (style.quickSearchBackColor) {
-            cellStyleHypergrid.quickSearchBackColor = style.quickSearchBackColor
+        if (style.quickSearchStyle) {
+            cellStyleHypergrid.quickSearchStyle = style.quickSearchStyle
         }
         //There is never a timeout for CS
         if (style.conditionalStyleColumn) {
@@ -779,7 +779,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.grid.repaint()
         }
         if (style == 'QuickSearch') {
-            cellStyleHypergrid.quickSearchBackColor = undefined
+            cellStyleHypergrid.quickSearchStyle = undefined
         }
     }
 
@@ -799,7 +799,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.grid.repaint()
                 }
                 if (style == 'QuickSearch') {
-                    cellStyleHypergrid.quickSearchBackColor = undefined
+                    cellStyleHypergrid.quickSearchStyle = undefined
                 }
             })
         })
@@ -1069,7 +1069,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let flashColor = cellStyleHypergrid.flashBackColor;
                         let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
                         let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
-                        let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor;
+                        let quickSearchStyle = cellStyleHypergrid.quickSearchStyle;
                         //Lowest priority first then every step will override the properties it needs to override.
                         //probably not needed to optimise as we just assign properties.......
                         if (conditionalStyleRow) {
@@ -1100,9 +1100,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
                             }
                         }
-                        if (quickSearchBackColor) {
-                            config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
+                     
+                        if (quickSearchStyle) {
+                            if (quickSearchStyle.BackColor) {
+                                config.backgroundColor = quickSearchStyle.BackColor;
+                            }
+                            if (quickSearchStyle.ForeColor) {
+                                config.color = quickSearchStyle.ForeColor;
+                            }
+                            if (quickSearchStyle.FontStyle
+                                || quickSearchStyle.FontWeight
+                             //   || quickSearchStyle.ForeColor (JW: I think this line is unnecessary and ditto above with conditional style)
+                                || quickSearchStyle.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, quickSearchStyle);
+                            }
                         }
+
+
+
                         if (flashColor) {
                             config.backgroundColor = flashColor;
                         }
@@ -1140,5 +1155,5 @@ export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle,
     conditionalStyleRow?: IStyle,
     flashBackColor?: string,
-    quickSearchBackColor?: boolean
+    quickSearchStyle?: IStyle
 }

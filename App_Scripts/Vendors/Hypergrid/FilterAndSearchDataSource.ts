@@ -65,7 +65,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
                                     || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: true } })
+                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
@@ -81,7 +81,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                                 //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
                                     || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchBackColor: true } })
+                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
                                 }
                                 //if we need to display only the rows that matched the quicksearch and no coloring then we can return
                                 if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
