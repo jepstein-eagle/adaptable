@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition, IStyle } from './Interface/IConditionalStyleStrategy';
-import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Core/Enums';
+import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize, RangeScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
@@ -12,8 +12,11 @@ import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
 import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
+import { IRange } from './Interface/IRangeStrategy';
 
 export module ObjectFactory {
+
+    
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
@@ -27,7 +30,7 @@ export module ObjectFactory {
         return {
             ColumnId: "",
             DefaultNudge: defaultNudgeValue,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }
@@ -35,7 +38,7 @@ export module ObjectFactory {
         return {
             Uid: Helper.generateUid(),
             Name: "",
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }
@@ -50,7 +53,7 @@ export module ObjectFactory {
                 Operand2: ""
             },
             HasExpression: false,
-            OtherExpression: CreateEmptyExpression(),
+            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: "",
             IsPredefined: false
         }
@@ -62,12 +65,22 @@ export module ObjectFactory {
             FriendlyName: "",
             Description: "",
             DataType: DataType.String,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsExpressionSatisfied: (value: any): boolean => {
                 return null;
             },
-            IsPredefined: false
+            IsPredefined: false,
+            IsSystemFilter: false
         };
+    }
+
+    export function CreateEmptyRange(): IRange {
+        return { Uid: Helper.generateUid(),
+            Name: "", 
+            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Columns: [], 
+            RangeScope: RangeScope.AllColumns,
+            IsPredefined: false }
     }
 
     export function CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
@@ -100,9 +113,6 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateEmptyExpression(): Expression {
-        return new Expression([], [], [], [])
-    }
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -120,7 +130,7 @@ export module ObjectFactory {
             ColumnId: "",
             Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
             ConditionalStyleScope: ConditionalStyleScope.Row,
-            Expression: CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
     }

@@ -54,22 +54,22 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let tooltipText = this.props.LayoutDashboardControl.IsCollapsed ? "Expand" : "Collapse"
 
 
-        let toolbarHeaderButton = <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-            <Button bsStyle="primary" onClick={() => this.expandCollapseClicked()}>
-                {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
-            </Button>
-        </OverlayTrigger>
-
-        let collapsedContent = <ControlLabel> {isLayoutModified ? this.props.CurrentLayout + "(Modified)" : this.props.CurrentLayout}</ControlLabel>
+        let toolbarHeaderButton = <span>
+            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
+                <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
+                    {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
+                </Button>
+            </OverlayTrigger>
+            {' '}               
+            <FormControl componentClass="select" placeholder="select" bsSize="small"
+                value={this.props.CurrentLayout}
+                onChange={(x) => this.onSelectedLayoutChanged(x)} >
+                {availableLayouts}
+            </FormControl>
+        </span>
 
         let expandedContent = <span>
             <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <FormControl componentClass="select" placeholder="select"
-                    value={this.props.CurrentLayout}
-                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
-                    {availableLayouts}
-                </FormControl>
-                {' '}
                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
                     size="small"
                     overrideTooltip="Save Changes to Current Layout"
@@ -100,8 +100,6 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 {this.props.LayoutDashboardControl.IsCollapsed ?
                     <span>
                         {toolbarHeaderButton}
-                        {' '}
-                        {collapsedContent}
                     </span>
                     :
                     <span>

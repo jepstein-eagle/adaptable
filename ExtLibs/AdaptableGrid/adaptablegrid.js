@@ -1314,6 +1314,12 @@ var Cell = function () {
    * @returns {string}
    */
   this.getFormattedValue = function (grid) {
+
+    // Check for empty or nulls
+    if (this.getRawValue() == null || this.getRawValue() == "") {
+      return "";
+    }
+
     switch (this.type) {
       case DataType.Number:
         if (this.format == "" || this.format == null || this.format == undefined) {
@@ -1330,6 +1336,7 @@ var Cell = function () {
       default:
         return this.getRawValue().toString();
     }
+
   }
 
   /**
@@ -1460,34 +1467,14 @@ var Column = function (columnId, friendlyName, type) {
  */
 var DataType = {
   
-  /**
-   * Representing text types
-   * @ignore
-  */
   String: 0,
 
-  /**
-   * Representing numerical types
-   * @ignore
-   */
   Number: 1,
 
-  /**
-   * Either true or false, shown as checkboxes 
-   * @ignore
-   */
   Boolean: 2,
 
-  /**
-   * Can be instantitated with a datepicker
-   * @ignore
-   */
   Date: 3,
-
-  /**
-   * Any other types
-   * @ignore
-   */
+  
   Object: 4
 
 }

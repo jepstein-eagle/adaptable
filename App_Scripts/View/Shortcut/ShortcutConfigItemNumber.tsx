@@ -66,7 +66,8 @@ export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItem
                     <EntityListActionButtons
                         showEdit={false}
                         ConfigEntity={this.props.Shortcut}
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}
+                        EntityName="Shortcut">
                     </EntityListActionButtons>
                 </Col>
 

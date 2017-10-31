@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox } from 'react-bootstrap';
+import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { LeafExpressionOperator, QuickSearchDisplayType, PopoverType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -17,33 +17,37 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
+import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
+    QuickSearchDefaultBackColour: string;
+    QuickSearchDefaultForeColour: string;
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
-    QuickSearchBackColor: string,
+    QuickSearchStyle: IStyle,
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction,
     onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
-    onSetSearchBackColor: (backColor: string) => QuickSearchRedux.QuickSearchSetBackColorAction
+    onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
 }
 
 interface QuickSearchConfigState {
-    EditedQuickSearchText: string
+    EditedQuickSearchText: string,
+    EditedStyle: IStyle
 }
 
 class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps, QuickSearchConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedQuickSearchText: "" }
+        this.state = { EditedQuickSearchText: "", EditedStyle: null }
     }
 
     public componentDidMount() {
-        this.setState({ EditedQuickSearchText: this.props.QuickSearchText });
+        this.setState({ EditedQuickSearchText: this.props.QuickSearchText, EditedStyle: this.props.QuickSearchStyle });
     }
 
     handleQuickSearchTextChange(event: React.FormEvent<any>) {
@@ -70,13 +74,40 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.props.onSetSearchDisplayType(Number.parseInt(e.value));
     }
 
-    onBackColorChange(event: React.FormEvent<any>) {
+    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onSetSearchBackColor(e.value);
+        let style: IStyle = this.state.EditedStyle;
+        style.BackColor = (e.checked) ? this.props.QuickSearchDefaultBackColour : null;
+        this.setState({ EditedStyle: style });
+        this.props.onSetStyle(style);
+    }
+
+    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let style: IStyle = this.state.EditedStyle;
+        style.ForeColor = (e.checked) ? this.props.QuickSearchDefaultForeColour : null;
+        this.setState({ EditedStyle: style });
+        this.props.onSetStyle(style);
+    }
+
+    private onBackColourSelectChange(event: React.FormEvent<ColorPicker>) {
+        let e = event.target as HTMLInputElement;
+        let style: IStyle = this.state.EditedStyle;
+        style.BackColor = e.value;
+        this.setState({ EditedStyle: style });
+        this.props.onSetStyle(style);
+    }
+
+    private onForeColourSelectChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let style: IStyle = this.state.EditedStyle;
+        style.ForeColor = e.value;
+        this.setState({ EditedStyle: style });
+        this.props.onSetStyle(style);
     }
 
     render() {
-        let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.",<br/>,<br/>,"Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).",<br/>,<br/>,"For a more powerful, multi-column, saveable search with a wide range of options, use ", <i>Advanced Search</i>, "."]
+        let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.", <br />, <br />, "Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).", <br />, <br />, "For a more powerful, multi-column, saveable search with a wide range of options, use ", <i>Advanced Search</i>, "."]
 
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
 
@@ -111,14 +142,13 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                 overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
                                 DisplayMode="Glyph+Text" />
                         </Panel>
-
                     </AdaptableBlotterForm>
 
                     <AdaptableBlotterForm horizontal>
                         <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
                             <FormGroup controlId="formInlineSearchOperator">
-                                <Col xs={3}>
+                                <Col xs={4}>
                                     <ControlLabel>Operator:</ControlLabel>
                                 </Col>
                                 <Col xs={8}>
@@ -127,16 +157,16 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                             {optionOperators}
                                         </FormControl>
                                         {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
-                                            bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text",<br/>,<br/>,<b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
+                                            bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
                                     </AdaptableBlotterForm  >
                                 </Col>
                             </FormGroup>
 
                             <FormGroup controlId="formInlineSearchDisplay">
-                                <Col xs={3}>
+                                <Col xs={4}>
                                     <ControlLabel>Behaviour:</ControlLabel>
                                 </Col>
-                                <Col xs={9}>
+                                <Col xs={8}>
                                     <AdaptableBlotterForm inline >
                                         <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
                                             {quickSearchDisplayTypes}
@@ -148,12 +178,30 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                 </Col>
                             </FormGroup>
 
-                            <FormGroup controlId="formInlineSearchBackColor">
-                                <Col xs={3}>
-                                    <ControlLabel>Back Colour: </ControlLabel>
+                            <FormGroup controlId="colorBackStyle">
+                                <Col xs={4} >
+                                    <ControlLabel>Set Back Colour:</ControlLabel>
                                 </Col>
-                                <Col xs={2}>
-                                    <ColorPicker value={this.props.QuickSearchBackColor} onChange={(x) => this.onBackColorChange(x)} />
+                                <Col xs={1}>
+                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColourCheckChange(e)}></Checkbox>
+                                </Col>
+                                <Col xs={7}>
+                                    {this.props.QuickSearchStyle.BackColor != null &&
+                                        <ColorPicker value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                    }
+                                </Col>
+                            </FormGroup>
+                            <FormGroup controlId="colorForeStyle">
+                                <Col xs={4} >
+                                    <ControlLabel>Set Fore Colour:</ControlLabel>
+                                </Col>
+                                <Col xs={1}>
+                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColourCheckChange(e)}></Checkbox>
+                                </Col>
+                                <Col xs={7}>
+                                    {this.props.QuickSearchStyle.ForeColor != null &&
+                                        <ColorPicker value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                    }
                                 </Col>
                             </FormGroup>
 
@@ -183,7 +231,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchText: state.QuickSearch.QuickSearchText,
         QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
-        QuickSearchBackColor: state.QuickSearch.QuickSearchBackColor,
+        QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
+        QuickSearchDefaultBackColour: state.QuickSearch.QuickSearchDefaultBackColour,
+        QuickSearchDefaultForeColour: state.QuickSearch.QuickSearchDefaultForeColour
     };
 }
 
@@ -193,7 +243,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
-        onSetSearchBackColor: (backColor: string) => dispatch(QuickSearchRedux.QuickSearchSetBackColor(backColor)),
+        onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
     };
 }
 

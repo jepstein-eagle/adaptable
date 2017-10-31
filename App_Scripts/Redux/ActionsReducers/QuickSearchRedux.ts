@@ -1,12 +1,16 @@
 import { QuickSearchState } from './Interface/IState';
-import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums';
+import { LeafExpressionOperator, QuickSearchDisplayType, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
+import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as Redux from 'redux'
 
 export const QUICK_SEARCH_RUN = 'QUICK_SEARCH_RUN';
 export const QUICK_SEARCH_CLEAR = 'QUICK_SEARCH_CLEAR';
 export const QUICK_SEARCH_SET_OPERATOR = 'QUICK_SEARCH_SET_OPERATOR';
 export const QUICK_SEARCH_SET_DISPLAY = 'QUICK_SEARCH_SET_DISPLAY';
-export const QUICK_SEARCH_SET_BACK_COLOR = 'QUICK_SEARCH_SET_BACK_COLOR';
+export const QUICK_SEARCH_SET_STYLE = 'QUICK_SEARCH_SET_STYLE';
+export const QUICK_SEARCH_DEFAULT_BACK_COLOUR = '#FFFFCC';
+export const QUICK_SEARCH_DEFAULT_FORE_COLOUR = '#000000';
+
 
 export interface QuickSearchRunAction extends Redux.Action {
     quickSearchText: string
@@ -42,20 +46,25 @@ export const QuickSearchSetDisplay = (quickSearchDisplayType: QuickSearchDisplay
     quickSearchDisplayType
 })
 
-export interface QuickSearchSetBackColorAction extends Redux.Action {
-    backColor: string
+export interface QuickSearchSetStyleAction extends Redux.Action {
+    style: IStyle
 }
 
-export const QuickSearchSetBackColor = (backColor: string): QuickSearchSetBackColorAction => ({
-    type: QUICK_SEARCH_SET_BACK_COLOR,
-    backColor
+export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction => ({
+    type: QUICK_SEARCH_SET_STYLE,
+    style
 })
 
 const initialQuickSearchState: QuickSearchState = {
+    QuickSearchDefaultBackColour: QUICK_SEARCH_DEFAULT_BACK_COLOUR,
+    QuickSearchDefaultForeColour: QUICK_SEARCH_DEFAULT_FORE_COLOUR,
     QuickSearchText: "",
     QuickSearchOperator: LeafExpressionOperator.Contains,
     QuickSearchDisplayType: QuickSearchDisplayType.ColourCell,
-    QuickSearchBackColor: "#FFFFCC"
+    QuickSearchStyle:
+    {
+        BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOUR, // only property we are going to set 
+    }
 }
 
 export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: QuickSearchState = initialQuickSearchState, action: Redux.Action): QuickSearchState => {
@@ -63,13 +72,13 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: Quick
         case QUICK_SEARCH_RUN:
             return Object.assign({}, state, { QuickSearchText: (<QuickSearchRunAction>action).quickSearchText })
         case QUICK_SEARCH_CLEAR:
-            return Object.assign({}, state, { QuickSearchText: ""})
+            return Object.assign({}, state, { QuickSearchText: "" })
         case QUICK_SEARCH_SET_OPERATOR:
             return Object.assign({}, state, { QuickSearchOperator: (<QuickSearchSetSearchOperatorAction>action).quickSearchOperator })
         case QUICK_SEARCH_SET_DISPLAY:
             return Object.assign({}, state, { QuickSearchDisplayType: (<QuickSearchSetSearchDisplayAction>action).quickSearchDisplayType })
-        case QUICK_SEARCH_SET_BACK_COLOR:
-            return Object.assign({}, state, { QuickSearchBackColor: (<QuickSearchSetBackColorAction>action).backColor })
+        case QUICK_SEARCH_SET_STYLE:
+            return Object.assign({}, state, { QuickSearchStyle: (<QuickSearchSetStyleAction>action).style })
         default:
             return state
     }

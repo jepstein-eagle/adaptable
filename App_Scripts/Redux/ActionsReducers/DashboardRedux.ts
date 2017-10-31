@@ -71,6 +71,7 @@ const initialDashboardState: DashboardState = {
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true, IsCollapsed: true },
         { Strategy: StrategyIds.FilterStrategyId, IsVisible: true, IsCollapsed: true },
+        { Strategy: StrategyIds.RangeStrategyId, IsVisible: true, IsCollapsed: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ]
 }

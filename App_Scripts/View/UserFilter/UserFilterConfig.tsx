@@ -68,7 +68,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
 
-        let UserFilterItems = this.props.UserFilters.filter(f => !f.IsPredefined).map((x) => {
+        let UserFilterItems = this.props.UserFilters.filter(f => !f.IsSystemFilter).map((x) => {
             let expressionString = ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)
             return <li
                 className="list-group-item" key={x.Uid}>
@@ -84,7 +84,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                             ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
                             overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
                             editClick={() => this.onEditUserFilter(x)}
-                            ConfigEntity={x}>
+                            ConfigEntity={x}
+                            EntityName="User Filter">
                         </EntityListActionButtons>
                     </Col>
                 </Row>

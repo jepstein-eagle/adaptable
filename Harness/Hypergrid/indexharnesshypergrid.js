@@ -101,7 +101,7 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
-        enableAuditLog: false,
+        enableAuditLog: true,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "predefinedConfig.json"
     });
@@ -165,20 +165,20 @@ var lightTheme = {
 var darkTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: 'white',
-    backgroundColor: '#07071E',
-    altbackground: '#07071E',
+    backgroundColor: '#232b2b',
+    altbackground: '#232b2b',
     foregroundSelectionColor: 'white',
     backgroundSelectionColor: 'rgba(61, 119, 254, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: 'white',
-    columnHeaderBackgroundColor: '#07071E',
+    columnHeaderBackgroundColor: '#232b2b',
     columnHeaderForegroundSelectionColor: 'white',
     columnHeaderBackgroundSelectionColor: '#3D77FE',
 
     rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     rowHeaderColor: 'white',
-    rowHeaderBackgroundColor: '#07071E',
+    rowHeaderBackgroundColor: '#232b2b',
     rowHeaderForegroundSelectionColor: 'white',
     rowHeaderBackgroundSelectionColor: '#3D77FE',
 

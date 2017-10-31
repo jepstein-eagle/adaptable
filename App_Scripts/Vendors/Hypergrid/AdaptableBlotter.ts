@@ -1,6 +1,5 @@
 ﻿import { CalculatedColumnStrategy } from '../../Strategy/CalculatedColumnStrategy';
 import '../../../stylesheets/adaptableblotter-style.css'
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
@@ -37,6 +36,8 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { IRange } from '../../Core/Interface/IRangeStrategy'
+import { RangeStrategy } from '../../Strategy/RangeStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -59,6 +60,8 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -134,6 +137,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -534,8 +538,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
             cellEvent.resetGridCY(this.getColumnIndex(columnId), 1);
             let editor = this.grid.behavior.getCellEditorAt(cellEvent);
-            if(editor)
-            {
+            if (editor) {
                 editor.cancelEditing()
                 editor = null
                 return false;
@@ -585,6 +588,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public exportBlotter(): void {
+    }
+
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
+        var dataToExport: any[] = [];
+        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
+          let expressionToCheck: Expression = range.Expression;
+         // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        // but at least it works for now...
+        let rows: any[] = this.grid.behavior.dataModel.getData();
+        rows.forEach(row => {
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, this)) {
+                let newRow: any[] = [];
+                rangeColumns.forEach(col => {
+                    newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
+                   // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
+                })
+                dataToExport.push(newRow);
+            }
+        })
+        return dataToExport;
     }
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -649,8 +672,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 cellIntervalColumns.set(columnId, timeoutInterval)
             }
         }
-        if (style.quickSearchBackColor) {
-            cellStyleHypergrid.quickSearchBackColor = style.quickSearchBackColor
+        if (style.quickSearchStyle) {
+            cellStyleHypergrid.quickSearchStyle = style.quickSearchStyle
         }
         //There is never a timeout for CS
         if (style.conditionalStyleColumn) {
@@ -746,7 +769,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.grid.repaint()
         }
         if (style == 'QuickSearch') {
-            cellStyleHypergrid.quickSearchBackColor = undefined
+            cellStyleHypergrid.quickSearchStyle = undefined
         }
     }
 
@@ -766,7 +789,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.grid.repaint()
                 }
                 if (style == 'QuickSearch') {
-                    cellStyleHypergrid.quickSearchBackColor = undefined
+                    cellStyleHypergrid.quickSearchStyle = undefined
                 }
             })
         })
@@ -872,7 +895,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.filterContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
-    
+
     private valOrFunc(dataRow: any, column: any) {
         var result, calculator;
         if (dataRow) {
@@ -1036,7 +1059,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let flashColor = cellStyleHypergrid.flashBackColor;
                         let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
                         let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
-                        let quickSearchBackColor = cellStyleHypergrid.quickSearchBackColor;
+                        let quickSearchStyle = cellStyleHypergrid.quickSearchStyle;
                         //Lowest priority first then every step will override the properties it needs to override.
                         //probably not needed to optimise as we just assign properties.......
                         if (conditionalStyleRow) {
@@ -1067,9 +1090,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
                             }
                         }
-                        if (quickSearchBackColor) {
-                            config.backgroundColor = this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchBackColor;
+                     
+                        if (quickSearchStyle) {
+                            if (quickSearchStyle.BackColor) {
+                                config.backgroundColor = quickSearchStyle.BackColor;
+                            }
+                            if (quickSearchStyle.ForeColor) {
+                                config.color = quickSearchStyle.ForeColor;
+                            }
+                            if (quickSearchStyle.FontStyle
+                                || quickSearchStyle.FontWeight
+                             //   || quickSearchStyle.ForeColor (JW: I think this line is unnecessary and ditto above with conditional style)
+                                || quickSearchStyle.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, quickSearchStyle);
+                            }
                         }
+
+
+
                         if (flashColor) {
                             config.backgroundColor = flashColor;
                         }
@@ -1099,11 +1137,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
     }
+
+
 }
 
 export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle,
     conditionalStyleRow?: IStyle,
     flashBackColor?: string,
-    quickSearchBackColor?: boolean
+    quickSearchStyle?: IStyle
 }

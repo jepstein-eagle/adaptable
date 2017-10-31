@@ -36,6 +36,8 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { RangeStrategy } from '../../Strategy/RangeStrategy'
+import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -114,6 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -485,6 +488,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
+        var dataToExport: any[] = [];
+        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
+        let expressionToCheck: Expression = range.Expression;
+        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        // but at least it works for now...
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, rowNode, rangeColumns, this)) {
+                let newRow: any[] = [];
+                rangeColumns.forEach(col => {
+                    newRow.push(this.gridOptions.api.getValue(col.ColumnId, rowNode));// -- not sure if to get raw or display value ?..
+                  //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+                })
+                dataToExport.push(newRow);
+            }
+        })
+        return dataToExport;
+    }
+
     public getDisplayValue(id: any, columnId: string): string {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
@@ -654,6 +676,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }
+
 
     private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {
         // gridOptions.api.addGlobalListener((type: string, event: any) => {

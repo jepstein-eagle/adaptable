@@ -37,6 +37,9 @@ import { FilterStrategy } from '../../Strategy/FilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
+import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { RangeStrategy } from '../../Strategy/RangeStrategy'
+import {IRange} from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -69,7 +72,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
-    //Grid is ANY for now.... Might be good to ask Jason to create definition file?
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
@@ -93,6 +95,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        
         //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
@@ -104,7 +108,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-
+        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
+        
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
@@ -374,6 +379,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
+    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
+        return null;
+
+     }
+ 
+
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
         var cell: AdaptableGrid.Cell = row.getCell(columnIndex);
@@ -484,5 +495,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public rendergrid(): void {
         this.grid.render();
+    }
+
+    public getRecordFromRowId(rowId: string): any{
+        return null
     }
 }

@@ -79,6 +79,19 @@ export enum ConditionalStyleScope {
     Row
 }
 
+export enum RangeScope {
+    AllColumns,
+    SelectedColumns
+}
+
+export enum RangeExportDestination {
+    CSV,
+    JSON,
+    Clipboard,
+    Excel,
+    Symphony
+}
+
 export enum SortOrder {
     Unknown,
     Ascending,

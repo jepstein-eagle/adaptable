@@ -51,7 +51,8 @@ export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDa
                     <EntityListActionButtons
                         showEdit={false}
                         ConfigEntity={this.props.Shortcut}
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}>
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}
+                        EntityName="Shortcut">
                     </EntityListActionButtons>
                 </Col>
 

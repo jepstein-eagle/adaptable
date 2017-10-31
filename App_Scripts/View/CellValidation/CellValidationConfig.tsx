@@ -67,24 +67,30 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
 
         let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 2], ["Action", 2], ["", 3]];
-        
+
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={index}>
                 <Row >
                     <Col xs={2}>
-                        {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
+                        <span style={expressionFontSizeStyle}>
+                            {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
+                        </span>
                     </Col>
                     <Col xs={3}>
-                        {x.Description}
+                        <span style={expressionFontSizeStyle}>
+                            {x.Description}
+                        </span>
                     </Col>
                     <Col xs={2}>
-                        {this.setExpressionDescription(x)}
+                        <span style={expressionFontSizeStyle}>
+                            {this.setExpressionDescription(x)}
+                        </span>
                     </Col>
                     <Col xs={2}>
                         <FormControl componentClass="select" placeholder="select" value={x.CellValidationMode.toString()} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
-                            {CellValidationModeTypes}
+                                {CellValidationModeTypes}
                         </FormControl>
 
                     </Col>
@@ -93,7 +99,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                             ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
                             editClick={() => this.onEdit(index, x)}
                             overrideDisableEdit={!column}
-                            ConfigEntity={x}>
+                            ConfigEntity={x}
+                            EntityName="Cell Validation">
                         </EntityListActionButtons>
                     </Col>
                 </Row>
@@ -203,4 +210,6 @@ let panelStyle = {
     width: '800px'
 }
 
-
+var expressionFontSizeStyle = {
+    fontSize: 'small'
+};

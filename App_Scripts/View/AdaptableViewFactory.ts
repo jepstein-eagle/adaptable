@@ -18,9 +18,11 @@ import { ThemeConfig } from './Theme/ThemeConfig'
 import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
+import { RangeToolbarControl } from './Range/RangeToolbarControl'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
+import { RangeConfig } from './Range/RangeConfig'
 import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
@@ -43,6 +45,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationConfig: CellValidationConfig,
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
+  RangeConfig: RangeConfig,
   DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
   CalculatedColumnConfig: CalculatedColumnConfig
 }
@@ -54,7 +57,8 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.FilterStrategyId, FilterToolbarControl],
-  [StrategyIds.DashboardShortcutsStrategyId, DashboardShortcutsToolbarControl]
+  [StrategyIds.DashboardShortcutsStrategyId, DashboardShortcutsToolbarControl],
+  [StrategyIds.RangeStrategyId, RangeToolbarControl]
 ]);
 
 //here we put the configuration screen of the dashboard control if it exists
