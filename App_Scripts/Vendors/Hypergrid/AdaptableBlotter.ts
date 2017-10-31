@@ -503,9 +503,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnIndex(columnName: string): number {
-        // This is not true anymore //be carefull this returns the index y of the cell. Not the actual index in the collection
-        // let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnName);
-        // return (activeColumn) ? activeColumn.index : -1;
+        //this returns the index of the column in the collection which is as well the index y of the cell in the grid
+        // it doesnt return the index from the schema
         let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnName)
         if (column) {
             return column.Index
@@ -517,7 +516,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-        let activeColumn: any = this.grid.behavior.getActiveColumns().find((x: any) => x.name == columnId);
         if (this.grid.cellEditor) {
             if (this.grid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
@@ -532,9 +530,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         else {
             //now instead of checking if editor was defined at design time on the column we try to instantiate the editor
             //for that column directly
-            // let colprop = this.grid.behavior.getColumnProperties((activeColumn) ? activeColumn.index : -1)
             let cellEvent = new this.grid.behavior.CellEvent
-            cellEvent.resetGridCY(activeColumn.index, 1);
+            //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
+            cellEvent.resetGridCY(this.getColumnIndex(columnId), 1);
             let editor = this.grid.behavior.getCellEditorAt(cellEvent);
             if(editor)
             {
@@ -543,14 +541,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 return false;
             }
             return true
-
-            // if (colprop.editor) {
-            //     return false;
-            // }
-            // else {
-
-            //     return true
-            // }
         }
     }
 
