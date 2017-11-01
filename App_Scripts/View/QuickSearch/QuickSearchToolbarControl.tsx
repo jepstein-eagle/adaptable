@@ -14,6 +14,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -49,17 +50,12 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search
                         </Button>
                 {' '}
-                <FormControl
+                <AdaptableBlotterFormControlTextClear
                     style={{ width: "100px" }}
                     type="text"
                     placeholder="Search Text"
                     value={this.state.EditedQuickSearchText}
-                    onChange={(x) => this.onUpdateQuickSearchText(x)} />
-                {' '}
-                <ButtonClear onClick={() => this.onClearQuickSearch()}
-                    overrideTooltip="Clear Quick Search"
-                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                    DisplayMode="Glyph" />
+                    OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
                     overrideTooltip="Edit Quick Search"
@@ -74,9 +70,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     }
 
-    onUpdateQuickSearchText(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ EditedQuickSearchText: e.value })
+    onUpdateQuickSearchText(quckSearchText: string) {
+        this.setState({ EditedQuickSearchText: quckSearchText })
         this.debouncedRunQuickSearch();
     }
 

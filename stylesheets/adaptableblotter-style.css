@@ -201,6 +201,22 @@ End Context Menu Styles
 /*******************************************
 Searchable DropDown Styles
 ********************************************/
+.adaptable_blotter_typeahead_inline{
+  display: inline-block
+}
+
+.adaptable_blotter_clear_button{
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  height: 14px;
+  margin: auto;
+  font-size: 14px;
+  cursor: pointer;
+  color: #ccc;
+}
+
 .bootstrap-typeahead-clear-button {
   outline: none;
   margin-top: -12px;
