@@ -45,33 +45,29 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Form inline>
-                    <FormGroup controlId="formInlineName">
-                        <Button bsStyle="primary">
-                            {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search
+                <Button bsStyle="primary">
+                    {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search
                         </Button>
-                        {' '}
-                        <FormControl
-                            style={{ width: "100px" }}
-                            type="text"
-                            placeholder="Search Text"
-                            value={this.state.EditedQuickSearchText}
-                            onChange={(x) => this.onUpdateQuickSearchText(x)} />
-                    </FormGroup>
-                    {' '}
-                    <ButtonClear onClick={() => this.onClearQuickSearch()}
-                        overrideTooltip="Clear Quick Search"
-                        overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                        DisplayMode="Glyph" />
-                    {' '}
-                    <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
-                        overrideTooltip="Edit Quick Search"
-                        DisplayMode="Glyph" />
-                </Form>
+                {' '}
+                <FormControl
+                    style={{ width: "100px" }}
+                    type="text"
+                    placeholder="Search Text"
+                    value={this.state.EditedQuickSearchText}
+                    onChange={(x) => this.onUpdateQuickSearchText(x)} />
+                {' '}
+                <ButtonClear onClick={() => this.onClearQuickSearch()}
+                    overrideTooltip="Clear Quick Search"
+                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
+                    DisplayMode="Glyph" />
+                {' '}
+                <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
+                    overrideTooltip="Edit Quick Search"
+                    DisplayMode="Glyph" />
             </div>
         </span>
         return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm >
+            <AdaptableBlotterForm inline >
                 {content}
             </AdaptableBlotterForm>
         </Panel>
