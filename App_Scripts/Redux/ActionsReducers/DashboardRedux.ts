@@ -4,7 +4,6 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 
-const DASHBOARD_CHANGE_COLLAPSE_STATE = 'DASHBOARD_CHANGE_COLLAPSE_STATE';
 const DASHBOARD_CHANGE_VISIBILITY = 'DASHBOARD_CHANGE_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM = 'DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM';
@@ -14,12 +13,6 @@ export interface DashboardChangeControlCollapseStateAction extends Redux.Action 
     StrategyId: string;
     IsCollapsed: boolean
 }
-
-export const ChangeCollapsedStateDashboardControl = (StrategyId: string, IsCollapsed: boolean): DashboardChangeControlCollapseStateAction => ({
-    type: DASHBOARD_CHANGE_COLLAPSE_STATE,
-    StrategyId,
-    IsCollapsed
-})
 
 export interface DashboardChangeControlVisibilityAction extends Redux.Action {
     StrategyId: string;
@@ -65,13 +58,13 @@ export const DashboardSetConfigurationItem = (StrategyId: string, NewConfig: any
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, IsCollapsed: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
-        { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.FilterStrategyId, IsVisible: true, IsCollapsed: true },
-        { Strategy: StrategyIds.RangeStrategyId, IsVisible: true, IsCollapsed: true },
+        { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.DashboardShortcutsStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
+        { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.FilterStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.RangeStrategyId, IsVisible: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ]
 }
@@ -82,14 +75,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
     let dashboardControl: IDashboardStrategyControlConfiguration
 
     switch (action.type) {
-        case DASHBOARD_CHANGE_COLLAPSE_STATE: {
-            let actionTypedCollapsed = <DashboardChangeControlCollapseStateAction>action;
-            dashboardControls = [].concat(state.DashboardStrategyControls);
-            index = dashboardControls.findIndex(a => a.Strategy == actionTypedCollapsed.StrategyId)
-            dashboardControl = dashboardControls[index]
-            dashboardControls[index] = Object.assign({}, dashboardControl, { IsCollapsed: actionTypedCollapsed.IsCollapsed })
-            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
-        }
         case DASHBOARD_CHANGE_VISIBILITY: {
             let actionTypedVisibility = <DashboardChangeControlVisibilityAction>action;
             dashboardControls = [].concat(state.DashboardStrategyControls);
@@ -110,7 +95,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             dashboardControls = [].concat(state.DashboardStrategyControls);
             dashboardControls.push({
                 Strategy : actionTyped.StrategyId,
-                IsCollapsed: true,
                 IsVisible: false 
             })
             return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });

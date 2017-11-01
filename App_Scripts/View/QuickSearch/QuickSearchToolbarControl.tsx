@@ -14,14 +14,12 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ButtonErase } from '../Components/Buttons/ButtonErase';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
     onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction;
     onShowQuickSearchConfig: () => PopupRedux.PopupShowAction;
-    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
@@ -45,70 +43,39 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     render() {
 
-        let tooltipText = this.props.QuickSearchDashboardControl.IsCollapsed ? "Expand" : "Collapse"
-        let collapsedContent = <ControlLabel> {StringExtensions.IsNullOrEmpty(this.props.QuickSearchText) ? "None" : this.props.QuickSearchText}</ControlLabel>
-
-        let toolbarHeaderButton = <span>
-
-            <Form inline>
-                <FormGroup controlId="formInlineName">
-                    <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
-                        {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search{' '}<Glyphicon glyph={this.props.QuickSearchDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
-                    </Button>
+        let content = <span>
+            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                <Form inline>
+                    <FormGroup controlId="formInlineName">
+                        <Button bsStyle="primary">
+                            {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search
+                        </Button>
+                        {' '}
+                        <FormControl
+                            style={{ width: "100px" }}
+                            type="text"
+                            placeholder="Search Text"
+                            value={this.state.EditedQuickSearchText}
+                            onChange={(x) => this.onUpdateQuickSearchText(x)} />
+                    </FormGroup>
                     {' '}
-                    <FormControl
-                        style={{ width: "100px" }}
-                        bsSize="small"
-                        type="text"                    
-                        placeholder="Search Text"
-                        value={this.state.EditedQuickSearchText}
-                        onChange={(x) => this.onUpdateQuickSearchText(x)} />
-                </FormGroup>
-                    <ButtonErase onClick={() => this.onClearQuickSearch()}
-                    size="small"
-                    overrideTooltip="Clear Quick Search"
-                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                    DisplayMode="Text" />
-            </Form>
-
-
-        </span>
-
-        let expandedContent = <span>
-            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <ButtonClear onClick={() => this.onClearQuickSearch()}
-                    size="small"
-                    overrideTooltip="Clear Quick Search"
-                    overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                    DisplayMode="Glyph+Text" />
-                {' '}
-                <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
-                    size="small"
-                    overrideTooltip="Edit Quick Search"
-                    DisplayMode="Glyph+Text" />
+                    <ButtonClear onClick={() => this.onClearQuickSearch()}
+                        overrideTooltip="Clear Quick Search"
+                        overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
+                        DisplayMode="Glyph" />
+                    {' '}
+                    <ButtonEdit onClick={() => this.props.onShowQuickSearchConfig()}
+                        overrideTooltip="Edit Quick Search"
+                        DisplayMode="Glyph" />
+                </Form>
             </div>
         </span>
-
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm >
-                {this.props.QuickSearchDashboardControl.IsCollapsed ?
-                    <span>
-                        {toolbarHeaderButton}
-                    </span>
-                    :
-                    <span>
-                        {toolbarHeaderButton}
-                        {' '}  {' '}
-                        {expandedContent}
-                    </span>
-                }
+                {content}
             </AdaptableBlotterForm>
         </Panel>
 
-    }
-
-    expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.QuickSearchDashboardControl.Strategy, !this.props.QuickSearchDashboardControl.IsCollapsed);
     }
 
     onUpdateQuickSearchText(event: React.FormEvent<any>) {
@@ -134,13 +101,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(newQuickSearchText)),
         onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
         onShowQuickSearchConfig: () => dispatch(PopupRedux.PopupShow("QuickSearchConfig")),
-        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
 
 export let QuickSearchToolbarControl = connect(mapStateToProps, mapDispatchToProps)(QuickSearchToolbarControlComponent);
-
-
-var marginButtonStyle = {
-    marginTop: '4px'
-};

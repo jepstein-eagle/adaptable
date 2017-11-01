@@ -28,7 +28,6 @@ interface RangeToolbarControlComponentProps extends IStrategyViewPopupProps<Rang
     onSelectRange: (rangeUid: string) => RangeRedux.RangeSelectAction;
     onNewRange: () => PopupRedux.PopupShowAction;
     onEditRange: () => PopupRedux.PopupShowAction;
-    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     Columns: IColumn[],
     Ranges: IRange[];
     CurrentRangeId: string;
@@ -48,65 +47,55 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
             return <option value={x.Uid} key={index}>{x.Name}</option>
         })
 
-        let tooltipText = this.props.RangeDashboardControl.IsCollapsed ? "Expand" : "Collapse"
         let csvMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.CSV)} key={"csv"}><Glyphicon glyph="export" /> {"CSV"}</MenuItem>
         let JSONMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.JSON)} key={"json"}><Glyphicon glyph="export" /> {"JSON"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Clipboard)} key={"clipboard"}><Glyphicon glyph="export" /> {"Clipboard"}</MenuItem>
         let excelMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Excel)} key={"excel"}><Glyphicon glyph="export" /> {"Excel"}</MenuItem>
         let symphonyMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Symphony)} key={"symphony"}><Glyphicon glyph="export" /> {"Symphony"}</MenuItem>
 
-        let toolbarHeaderButton = <span>
-            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-                <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
-                    {' '}<Glyphicon glyph="th" />{' '}Range{' '}<Glyphicon glyph={this.props.RangeDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
+        let content = <span>
+            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                <Button bsStyle="primary">
+                    {' '}<Glyphicon glyph="th" />{' '}Range
                 </Button>
-            </OverlayTrigger>
-            {' '}
-            <FormControl componentClass="select" placeholder="select" bsSize="small"
-                value={currentRangeId}
-                onChange={(x) => this.onSelectedRangeChanged(x)} >
-                <option value="select" key="select">Select a Range</option>
-                {availableRanges}
-            </FormControl>
-            {' '}
-            {currentRangeId != "select" &&
-            <DropdownButton bsSize="small" bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
-                {csvMenuItem}
-                {JSONMenuItem}
-                {clipboardMenuItem}
-                {excelMenuItem}
-                {symphonyMenuItem}
-            </DropdownButton>
-            }
-        </span>
-
-        let expandedContent = <span>
-            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-
+                {' '}
+                <FormControl componentClass="select" placeholder="select"
+                    value={currentRangeId}
+                    onChange={(x) => this.onSelectedRangeChanged(x)} >
+                    <option value="select" key="select">Select a Range</option>
+                    {availableRanges}
+                </FormControl>
+                {' '}
+                {currentRangeId != "select" &&
+                    <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
+                        {csvMenuItem}
+                        {JSONMenuItem}
+                        {clipboardMenuItem}
+                        {excelMenuItem}
+                        {symphonyMenuItem}
+                    </DropdownButton>
+                }
+                {' '}
                 <ButtonClear onClick={() => this.props.onSelectRange("")}
-                    size="small"
                     overrideTooltip="Clear Current Range"
                     overrideDisableButton={currentRangeId == "select"}
-                    DisplayMode="Glyph+Text" />
+                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditRange()}
-                    size="small"
                     overrideTooltip="Edit Range"
                     overrideDisableButton={currentRangeId == "select"}
                     ConfigEntity={savedRange}
-                    DisplayMode="Glyph+Text" />
+                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.props.onNewRange()}
-                    size="small"
                     overrideTooltip="Create New Range"
-                    DisplayMode="Glyph+Text" />
+                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    size="small"
                     overrideTooltip="Delete Range"
                     overrideDisableButton={currentRangeId == "select"}
                     ConfigEntity={savedRange}
-                    DisplayMode="Glyph+Text"
+                    DisplayMode="Glyph"
                     ConfirmAction={RangeRedux.RangeDelete(savedRange)}
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedRange ? "" : savedRange.Name + "'?"}
                     ConfirmationTitle={"Delete Range"} />
@@ -114,27 +103,11 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
         </span>
 
         return <Panel className="small-padding-panel" >
-
             <AdaptableBlotterForm inline>
-                {this.props.RangeDashboardControl.IsCollapsed ?
-                    <span>
-                        {toolbarHeaderButton}
-                    </span>
-                    :
-                    <span>
-                        {toolbarHeaderButton}
-                        {' '}  {' '}
-                        {expandedContent}
-                    </span>
-                }
+                {content}
             </AdaptableBlotterForm>
         </Panel>
     }
-
-    expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.RangeDashboardControl.Strategy, !this.props.RangeDashboardControl.IsCollapsed);
-    }
-
 
     private onSelectedRangeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -161,15 +134,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onExportRange: (rangeUid: string, rangeExportDestination: RangeExportDestination) => dispatch(RangeRedux.RangeExport(rangeUid, rangeExportDestination)),
         onSelectRange: (rangeUid: string) => dispatch(RangeRedux.RangeSelect(rangeUid)),
         onNewRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "New")),
-        onEditRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "Edit")),
-        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
+        onEditRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "Edit"))
     };
 }
 
 export let RangeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(RangeToolbarControlComponent);
-
-var marginButtonStyle = {
-    marginTop: '4px'
-};
-
 

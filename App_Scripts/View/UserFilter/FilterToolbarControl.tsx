@@ -16,23 +16,20 @@ import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as StrategyIds from '../../Core/StrategyIds'
+import { AdaptablePopover } from './../AdaptablePopover';
+import { PopoverType } from '../../Core/Enums';
 
 interface FilterToolbarControlComponentProps extends IStrategyViewPopupProps<FilterToolbarControlComponent> {
-    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
     FilterDashboardControl: IDashboardStrategyControlConfiguration,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[]
 }
-
-
-
 class FilterToolbarControlComponent extends React.Component<FilterToolbarControlComponentProps, {}> {
 
     render(): any {
 
-        let tooltipText = this.props.FilterDashboardControl.IsCollapsed ? "Expand" : "Collapse";
         let collapsedText = this.props.ColumnFilters.length == 0 ?
             "None" :
             this.props.ColumnFilters.length == 1 ?
@@ -48,54 +45,27 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
         })
         columnFilterNames = StringExtensions.RemoveTrailingComma(columnFilterNames);
 
-
-        let toolbarHeaderButton = <span>
-            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-                <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
-                    {' '}<Glyphicon glyph="filter" />{' '}Filters{' '}<Glyphicon glyph={this.props.FilterDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
+        let content = <span>
+            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                <Button bsStyle="primary">
+                    {' '}<Glyphicon glyph="filter" />{' '}Filters
                 </Button>
-            </OverlayTrigger>
-            {' '}
-           {collapsedText}
-
-
-        </span>
-
-
-
-        let expandedContent: any = <span>
-            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-            <ControlLabel> {columnFilterNames}</ControlLabel>
-            {' '} 
-             <ButtonClear onClick={() => this.props.onClearFilters()}
-                    size="small"
+                {' '}
+                {collapsedText}{' '}
+                <AdaptablePopover headerText="" bodyText={[columnFilterNames]} popoverType={PopoverType.Info} />
+                {' '}
+                <ButtonClear onClick={() => this.props.onClearFilters()}
                     overrideTooltip="Clear Filters"
-                    DisplayMode="Glyph+Text"
+                    DisplayMode="Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
         </span>
 
         return <Panel className="small-padding-panel">
             <AdaptableBlotterForm inline>
-                {this.props.FilterDashboardControl.IsCollapsed ?
-                    <span>
-                        {toolbarHeaderButton}
-                    </span>
-                    :
-                    <span>
-                        {toolbarHeaderButton}
-                        {' '}  {' '}
-                        {expandedContent}
-                    </span>
-                }
+                {content}
             </AdaptableBlotterForm>
         </Panel>
-
-
-    }
-
-    expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.FilterDashboardControl.Strategy, !this.props.FilterDashboardControl.IsCollapsed);
     }
 }
 
@@ -109,15 +79,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed)),
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
     };
 }
 
 export let FilterToolbarControl = connect(mapStateToProps, mapDispatchToProps)(FilterToolbarControlComponent);
-
-
-var marginButtonStyle = {
-    marginTop: '4px',
-    marginBottom: '4px'
-};

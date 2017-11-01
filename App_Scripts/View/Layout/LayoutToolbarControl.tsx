@@ -23,7 +23,6 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutSaveAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction,
-    onChangeControlCollapsedState: (ControlName: string, IsCollapsed: boolean) => DashboardRedux.DashboardChangeControlCollapseStateAction
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
@@ -51,43 +50,33 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             }
         })
 
-        let tooltipText = this.props.LayoutDashboardControl.IsCollapsed ? "Expand" : "Collapse"
-
-
         let toolbarHeaderButton = <span>
-            <OverlayTrigger overlay={<Tooltip id="toolexpand">{tooltipText}</Tooltip>}>
-                <Button bsStyle="primary" bsSize="small" onClick={() => this.expandCollapseClicked()}>
-                    {' '}<Glyphicon glyph="th" />{' '}Layout{' '}<Glyphicon glyph={this.props.LayoutDashboardControl.IsCollapsed ? "chevron-down" : "chevron-up"} />
+            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                <Button bsStyle="primary">
+                    {' '}<Glyphicon glyph="th" />{' '}Layout
                 </Button>
-            </OverlayTrigger>
-            {' '}               
-            <FormControl componentClass="select" placeholder="select" bsSize="small"
-                value={this.props.CurrentLayout}
-                onChange={(x) => this.onSelectedLayoutChanged(x)} >
-                {availableLayouts}
-            </FormControl>
-        </span>
-
-        let expandedContent = <span>
-            <div style={marginButtonStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+                {' '}
+                <FormControl componentClass="select" placeholder="select"
+                    value={this.props.CurrentLayout}
+                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
+                    {availableLayouts}
+                </FormControl>
+                {' '}
                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                    size="small"
                     overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
-                    DisplayMode="Glyph+Text" />
+                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.onAddLayoutClicked()}
-                    size="small"
                     overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
-                    DisplayMode="Glyph+Text" />
+                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    size="small"
                     overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
-                    DisplayMode="Glyph+Text"
+                    DisplayMode="Glyph"
                     ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                     ConfirmationTitle={"Delete Layout"} />
@@ -95,25 +84,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         </span>
 
         return <Panel className="small-padding-panel" >
-
             <AdaptableBlotterForm inline>
-                {this.props.LayoutDashboardControl.IsCollapsed ?
-                    <span>
-                        {toolbarHeaderButton}
-                    </span>
-                    :
-                    <span>
-                        {toolbarHeaderButton}
-                        {' '}  {' '}
-                        {expandedContent}
-                    </span>
-                }
+                {toolbarHeaderButton}
             </AdaptableBlotterForm>
         </Panel>
-    }
-
-    expandCollapseClicked() {
-        this.props.onChangeControlCollapsedState(this.props.LayoutDashboardControl.Strategy, !this.props.LayoutDashboardControl.IsCollapsed);
     }
 
     private onSaveLayoutClicked() {
@@ -151,12 +125,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onChangeControlCollapsedState: (controlName: string, isCollapsed: boolean) => dispatch(DashboardRedux.ChangeCollapsedStateDashboardControl(controlName, isCollapsed))
     };
 }
 
 export let LayoutToolbarControl = connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);
-
-var marginButtonStyle = {
-    marginTop: '4px'
-};
