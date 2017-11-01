@@ -382,21 +382,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         if (value instanceof Date) {
                             dateType = DataType.Date
                         }
-                        switch (typeof value) {
-                            case 'string':
-                                dateType = DataType.String;
-                                break
-                            case 'number':
-                                dateType = DataType.Number;
-                                break
-                            case 'boolean':
-                                dateType = DataType.Boolean;
-                                break
-                            case 'object':
-                                dateType = DataType.Object;
-                                break
-                            default:
-                                break;
+                        else {
+                            switch (typeof value) {
+                                case 'string':
+                                    dateType = DataType.String;
+                                    break
+                                case 'number':
+                                    dateType = DataType.Number;
+                                    break
+                                case 'boolean':
+                                    dateType = DataType.Boolean;
+                                    break
+                                case 'object':
+                                    dateType = DataType.Object;
+                                    break
+                                default:
+                                    break;
+                            }
                         }
                     }
                     default:
@@ -592,9 +594,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
-          let expressionToCheck: Expression = range.Expression;
-         // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
+        let expressionToCheck: Expression = range.Expression;
+        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
         // but at least it works for now...
         let rows: any[] = this.grid.behavior.dataModel.getData();
         rows.forEach(row => {
@@ -602,7 +604,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let newRow: any[] = [];
                 rangeColumns.forEach(col => {
                     newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
-                   // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
+                    // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
                 })
                 dataToExport.push(newRow);
             }
@@ -1090,7 +1092,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 config.font = this.buildFontCSSShorthand(config.font, conditionalStyleColumn);
                             }
                         }
-                     
+
                         if (quickSearchStyle) {
                             if (quickSearchStyle.BackColor) {
                                 config.backgroundColor = quickSearchStyle.BackColor;
@@ -1100,7 +1102,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             }
                             if (quickSearchStyle.FontStyle
                                 || quickSearchStyle.FontWeight
-                             //   || quickSearchStyle.ForeColor (JW: I think this line is unnecessary and ditto above with conditional style)
+                                //   || quickSearchStyle.ForeColor (JW: I think this line is unnecessary and ditto above with conditional style)
                                 || quickSearchStyle.FontSize) {
                                 config.font = this.buildFontCSSShorthand(config.font, quickSearchStyle);
                             }

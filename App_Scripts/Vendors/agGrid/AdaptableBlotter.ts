@@ -337,21 +337,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (value instanceof Date) {
             dataType = DataType.Date
         }
-        switch (typeof value) {
-            case 'string':
-                dataType = DataType.String;
-                break
-            case 'number':
-                dataType = DataType.Number;
-                break
-            case 'boolean':
-                dataType = DataType.Boolean;
-                break
-            case 'object':
-                dataType = DataType.Object;
-                break
-            default:
-                break;
+        else {
+            switch (typeof value) {
+                case 'string':
+                    dataType = DataType.String;
+                    break
+                case 'number':
+                    dataType = DataType.Number;
+                    break
+                case 'boolean':
+                    dataType = DataType.Boolean;
+                    break
+                case 'object':
+                    dataType = DataType.Object;
+                    break
+                default:
+                    break;
+            }
         }
         console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), DataType[dataType])
         return dataType
@@ -490,7 +492,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
+        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
         let expressionToCheck: Expression = range.Expression;
         // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
         // but at least it works for now...
@@ -499,7 +501,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let newRow: any[] = [];
                 rangeColumns.forEach(col => {
                     newRow.push(this.gridOptions.api.getValue(col.ColumnId, rowNode));// -- not sure if to get raw or display value ?..
-                  //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+                    //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
                 })
                 dataToExport.push(newRow);
             }

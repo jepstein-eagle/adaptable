@@ -113,7 +113,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
 
-        
+
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
@@ -333,17 +333,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (value instanceof Date) {
             return DataType.Date
         }
-        switch (typeof value) {
-            case 'string':
-                return DataType.String;
-            case 'number':
-                return DataType.Number;
-            case 'boolean':
-                return DataType.Boolean;
-            case 'object':
-                return DataType.Object;
-            default:
-                return DataType.String;
+        else {
+            switch (typeof value) {
+                case 'string':
+                    return DataType.String;
+                case 'number':
+                    return DataType.Number;
+                case 'boolean':
+                    return DataType.Boolean;
+                case 'object':
+                    return DataType.Object;
+                default:
+                    return DataType.String;
+            }
         }
     }
 
@@ -510,20 +512,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
         var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c=> c.FriendlyName);
-          let expressionToCheck: Expression = range.Expression;
-      
-          // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
+        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
+        let expressionToCheck: Expression = range.Expression;
+
+        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
         // but at least it works for now...
         let dataSource = this.grid.dataSource.data();
         for (var i = 0; i < dataSource.length; i++) {
             let row: any = dataSource[i]
-         
+
             if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, this)) {
                 let newRow: any[] = [];
                 rangeColumns.forEach(col => {
                     newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
-                   // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
+                    // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
                 })
                 dataToExport.push(newRow);
             }
