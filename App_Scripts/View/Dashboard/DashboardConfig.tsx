@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { Panel, Form, FormControl, ControlLabel, FormGroup, Col, Row, Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
+import { Panel, InputGroup, Form, FormControl, ControlLabel, FormGroup, Col, Row, Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -15,25 +15,29 @@ import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFact
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Helper } from '../../Core/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardStrategyControlConfiguration>;
+    DashboardZoom: Number;
     onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
+    onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
     onMoveControl: (controlName: string, NewIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
 interface DashboardConfigState {
     CurrentDashboardConfig: string;
+    EditedZoomFactor: Number;
 }
 
 class DashboardConfigComponent extends React.Component<DashboardConfigProps, DashboardConfigState> {
     private placeholder: HTMLButtonElement
-    constructor() {
-        super()
+    constructor(props: DashboardConfigProps) {
+        super(props)
         this.placeholder = document.createElement("button");
         this.placeholder.className = "placeholder"
         this.placeholder.classList.add("list-group-item")
         this.placeholder.type = "button"
-        this.state = { CurrentDashboardConfig: "" }
+        this.state = { CurrentDashboardConfig: "", EditedZoomFactor: props.DashboardZoom }
     }
     render() {
 
@@ -70,7 +74,12 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 
         return (
             <PanelWithImage header="Blotter Dashboard" bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon="dashboard" style={panelStyle}>
-
+                <AdaptableBlotterForm inline>
+                    <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
+                    {' '}
+                    <FormControl value={this.state.EditedZoomFactor.toString()} type="number" min="0.5" step="0.05" max="1" placeholder="Enter a Number" onChange={(e) => this.onSetFactorChange(e)} />
+                </AdaptableBlotterForm>
+                {' '}
                 <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}
@@ -87,6 +96,21 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
             </PanelWithImage>
         );
     }
+    private onSetFactorChange(event: React.FormEvent<any>) {
+        const e = event.target as HTMLInputElement;
+        let factor = Number(e.value)
+        if (factor > 1) {
+            factor = 1
+        }
+        if (factor < 0.5 && factor != 0) {
+            factor = 0.5
+        }
+        this.setState({ EditedZoomFactor: factor });
+        if (factor != 0) {
+            this.props.onSetDashboardZoom(factor);
+        }
+    }
+
 
     onCloseConfigPopup() {
         this.setState({ CurrentDashboardConfig: "" })
@@ -161,6 +185,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardControls: state.Dashboard.DashboardStrategyControls,
+        DashboardZoom: state.Dashboard.DashboardZoom,
     };
 }
 
@@ -168,6 +193,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onChangeControlVisibility: (controlName: string, isVisible: boolean) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName, isVisible)),
+        onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
         onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };
 }

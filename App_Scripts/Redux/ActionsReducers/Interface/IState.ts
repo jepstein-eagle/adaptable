@@ -163,7 +163,8 @@ export interface LayoutState {
 }
 
 export interface DashboardState {
-    DashboardStrategyControls: IDashboardStrategyControlConfiguration[]
+    DashboardStrategyControls: IDashboardStrategyControlConfiguration[],
+    DashboardZoom: number
 }
 
 export interface CalculatedColumnState {

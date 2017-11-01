@@ -8,11 +8,7 @@ const DASHBOARD_CHANGE_VISIBILITY = 'DASHBOARD_CHANGE_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM = 'DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM';
 const DASHBOARD_SET_CONFIGURATION_ITEM = 'DASHBOARD_SET_CONFIGURATION_ITEM';
-
-export interface DashboardChangeControlCollapseStateAction extends Redux.Action {
-    StrategyId: string;
-    IsCollapsed: boolean
-}
+const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 
 export interface DashboardChangeControlVisibilityAction extends Redux.Action {
     StrategyId: string;
@@ -23,6 +19,15 @@ export const ChangeVisibilityDashboardControl = (StrategyId: string, IsVisible: 
     type: DASHBOARD_CHANGE_VISIBILITY,
     StrategyId,
     IsVisible
+})
+
+export interface DashboardSetZoomAction extends Redux.Action {
+    Zoom: Number
+}
+
+export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
+    type: DASHBOARD_SET_ZOOM,
+    Zoom
 })
 
 export interface DashboardMoveItemAction extends Redux.Action {
@@ -66,7 +71,8 @@ const initialDashboardState: DashboardState = {
         { Strategy: StrategyIds.FilterStrategyId, IsVisible: true },
         { Strategy: StrategyIds.RangeStrategyId, IsVisible: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
-    ]
+    ],
+    DashboardZoom : 1
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
@@ -89,6 +95,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             index = dashboardControls.findIndex(a => a.Strategy == actionTyped.StrategyId)
             Helper.moveArray(dashboardControls, index, actionTyped.NewIndex)
             return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+        }
+        case DASHBOARD_SET_ZOOM: {
+            let actionTyped = <DashboardSetZoomAction>action;
+            return Object.assign({}, state, { DashboardZoom: actionTyped.Zoom });
         }
         case DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM: {
             let actionTyped = <DashboardCreateDefaultConfigurationItemAction>action;

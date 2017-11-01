@@ -36,7 +36,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 console.error("Cannot find Dashboard Control for " + control.Strategy)
             }
         })
-        return <Row style={{ display: "flex" }}>
+        return <Row style={{ display: "flex", zoom: this.props.DashboardState.DashboardZoom }}>
             {visibleDashboardElements}
         </Row>
     }
