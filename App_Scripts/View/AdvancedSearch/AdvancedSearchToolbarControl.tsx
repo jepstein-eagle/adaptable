@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { Provider, connect } from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead'
 import { Panel, Form, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, HelpBlock, Row } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -17,7 +18,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/StrategyIds'
-
+import { SortOrder } from '../../Core/Enums';
 
 interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchUid: string;
@@ -30,16 +31,20 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
+    componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
+        //if there was a selected search and parent unset the column we then clear the component 
+        // otherwise it's correctly unselected but the input still have the previsous selected text
+        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentAdvancedSearchUid) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentAdvancedSearchUid)) {
+            (this.refs.typeahead as any).getInstance().clear()
+        }
+    }
     render() {
-
-        let advancedSearches = this.props.AdvancedSearches.map(x => {
-            return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
-        })
-
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
 
         let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
             "select" : this.props.CurrentAdvancedSearchUid
+
+        let sortedAdvancedSearches = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
@@ -47,17 +52,15 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     {' '}<Glyphicon glyph="search" />{' '}Advanced Search
                 </Button>
                 {' '}
-                <FormControl componentClass="select" placeholder="select"
-                    value={currentAdvancedSearchId}
-                    onChange={(x) => this.onSelectedSearchChanged(x)} >
-                    <option value="select" key="select">Select a Search</option>
-                    {advancedSearches}
-                </FormControl>
-                {' '}
-                <ButtonClear onClick={() => this.props.onSelectAdvancedSearch("")}
-                    overrideTooltip="Clear Current Advanced Search"
-                    overrideDisableButton={currentAdvancedSearchId == "select"}
-                    DisplayMode="Glyph" />
+                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                    placeholder={"Select a Search"}
+                    labelKey={"Name"}
+                    filterBy={["Name"]}
+                    clearButton={true}
+                    selected={savedSearch ? [savedSearch] : []}
+                    onChange={(selected) => { this.onSelectedSearchChanged(selected) }}
+                    options={sortedAdvancedSearches}
+                />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
                     overrideTooltip="Edit Current Advanced Search"
@@ -90,11 +93,15 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         );
     }
 
-    onSelectedSearchChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let advancedSearchId = (e.value == "select") ? "" : e.value;
-        this.props.onSelectAdvancedSearch(advancedSearchId);
+    onSelectedSearchChanged(selected: IAdvancedSearch[]) {
+        this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Uid : "");
     }
+
+    // onSelectedSearchChanged(event: React.FormEvent<any>) {
+    //     let e = event.target as HTMLInputElement;
+    //     let advancedSearchId = (e.value == "select") ? "" : e.value;
+    //     this.props.onSelectAdvancedSearch(advancedSearchId);
+    // }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

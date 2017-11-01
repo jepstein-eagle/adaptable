@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead'
 import { Form, Dropdown, DropdownButton, Panel, FormControl, MenuItem, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
@@ -21,7 +22,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { RangeExportDestination } from '../../Core/Enums';
-
+import { SortOrder } from '../../Core/Enums';
 
 interface RangeToolbarControlComponentProps extends IStrategyViewPopupProps<RangeToolbarControlComponent> {
     onExportRange: (rangeUid: string, rangeExportDestination: RangeExportDestination) => RangeRedux.RangeExportAction;
@@ -36,9 +37,16 @@ interface RangeToolbarControlComponentProps extends IStrategyViewPopupProps<Rang
 }
 
 class RangeToolbarControlComponent extends React.Component<RangeToolbarControlComponentProps, {}> {
-
+    componentWillReceiveProps(nextProps: RangeToolbarControlComponentProps, nextContext: any) {
+        //if there was a selected search and parent unset the column we then clear the component 
+        // otherwise it's correctly unselected but the input still have the previsous selected text
+        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentRangeId) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentRangeId)) {
+            (this.refs.typeahead as any).getInstance().clear()
+        }
+    }
     render(): any {
         let savedRange: IRange = this.props.Ranges.find(s => s.Uid == this.props.CurrentRangeId);
+        let sortedRanges = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Ranges, "Name")
 
         let currentRangeId = StringExtensions.IsNullOrEmpty(this.props.CurrentRangeId) ?
             "select" : this.props.CurrentRangeId
@@ -59,12 +67,15 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                     {' '}<Glyphicon glyph="th" />{' '}Range
                 </Button>
                 {' '}
-                <FormControl componentClass="select" placeholder="select"
-                    value={currentRangeId}
-                    onChange={(x) => this.onSelectedRangeChanged(x)} >
-                    <option value="select" key="select">Select a Range</option>
-                    {availableRanges}
-                </FormControl>
+                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                    placeholder={"Select a Range"}
+                    labelKey={"Name"}
+                    filterBy={["Name"]}
+                    clearButton={true}
+                    selected={savedRange ? [savedRange] : []}
+                    onChange={(selected) => { this.onSelectedSearchChanged(selected) }}
+                    options={sortedRanges}
+                />
                 {' '}
                 {currentRangeId != "select" &&
                     <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
@@ -75,11 +86,6 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                         {symphonyMenuItem}
                     </DropdownButton>
                 }
-                {' '}
-                <ButtonClear onClick={() => this.props.onSelectRange("")}
-                    overrideTooltip="Clear Current Range"
-                    overrideDisableButton={currentRangeId == "select"}
-                    DisplayMode="Glyph" />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditRange()}
                     overrideTooltip="Edit Range"
@@ -109,13 +115,8 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
         </Panel>
     }
 
-    private onSelectedRangeChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (e.value == "select") {
-            this.props.onSelectRange("");
-        } else {
-            this.props.onSelectRange(e.value);
-        }
+    onSelectedSearchChanged(selected: IRange[]) {
+        this.props.onSelectRange(selected.length > 0 ? selected[0].Uid : "");
     }
 
 }

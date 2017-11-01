@@ -22,7 +22,8 @@ declare module 'react-bootstrap-typeahead' {
         selected?: Array<any>,
         filterBy?: Array<string>,
         clearButton?: Boolean,
-        bodyContainer? : Boolean
+        bodyContainer? : Boolean,
+        className? : string
     }
     export var Typeahead: React.ClassicComponentClass<TypeaheadProps>
     export default Typeahead

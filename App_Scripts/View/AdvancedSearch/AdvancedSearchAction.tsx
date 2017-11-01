@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead'
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
@@ -22,11 +23,13 @@ import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilder
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
+import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { SortOrder } from '../../Core/Enums';
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -47,6 +50,13 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     constructor(props: AdvancedSearchActionProps) {
         super(props);
         this.state = { EditedAdvancedSearch: null, SelectedColumnId: "" };
+    }
+    componentWillReceiveProps(nextProps: AdvancedSearchActionProps, nextContext: any) {
+        //if there was a selected search and parent unset the column we then clear the component 
+        // otherwise it's correctly unselected but the input still have the previsous selected text
+        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentAdvancedSearchUid) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentAdvancedSearchUid)) {
+            (this.refs.typeahead as any).getInstance().clear()
+        }
     }
 
     componentDidMount() {
@@ -69,20 +79,18 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
     }
 
     render() {
-        let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.",<br/>,<br/>,
-            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.",<br/>,<br/>,
+        let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
+            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.", <br />, <br />,
             "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form."]
 
-             let detailsInfoBody: any[] = ["Stuff about details."]
+        let detailsInfoBody: any[] = ["Stuff about details."]
 
-        let advancedSearches = this.props.AdvancedSearches.map(x => {
-            return <option value={x.Uid} key={x.Uid}>{x.Name}</option>
-        })
+        let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
+        let sortedAdvancedSearches = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
         let selectedAdvancedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
         let selectedAdvancedSearchName: string = selectedAdvancedSearch == null ? "" : selectedAdvancedSearch.Name;
 
-        let currentAdvancedSearch: string = selectedAdvancedSearch != null ? selectedAdvancedSearch.Uid : "select";
         let newSearchButton = <ButtonNew onClick={() => this.onNewAdvancedSearch()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text" />
@@ -102,19 +110,17 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                 <ControlLabel>  Current: </ControlLabel>
                             </Col>
                             <Col xs={4}>
-                                <FormControl componentClass="select" placeholder="select"
-                                    value={currentAdvancedSearch}
-                                    onChange={(x) => this.onSelectedSearchChanged(x)} >
-                                    <option value="select" key="select">Select a Search</option>
-                                    {advancedSearches}
-                                </FormControl>
+                                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                                    placeholder={"Select a Search"}
+                                    labelKey={"Name"}
+                                    filterBy={["Name"]}
+                                    clearButton={true}
+                                    selected={savedSearch ? [savedSearch] : []}
+                                    onChange={(selected) => { this.onSelectedSearchChanged(selected) }}
+                                    options={sortedAdvancedSearches}
+                                />
                             </Col>
                             <Col xs={6}>
-                                <ButtonClear onClick={() => this.onClearAdvancedSearch()}
-                                    overrideTooltip="Clear Search"
-                                    overrideDisableButton={selectedAdvancedSearch == null}
-                                    DisplayMode="Glyph+Text" />
-                                {' '}
                                 <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
                                     overrideTooltip="Edit Search"
                                     overrideDisableButton={selectedAdvancedSearch == null}
@@ -187,11 +193,6 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.setState({ EditedAdvancedSearch: clonedSearch } as AdvancedSearchActionInternalState)
     }
 
-    // Clear search:  sets the edited and selected searches to null and calles Redux Select Advanced Search
-    onClearAdvancedSearch() {
-        this.props.onSelectAdvancedSearch("");
-    }
-
     onDeleteColumnValue(columnId: string, value: any) {
         let clonedSearch: IAdvancedSearch = this.getClonedSelectedAdvancedSearch();
         let columnValues = clonedSearch.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
@@ -241,13 +242,8 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
         this.props.onAddUpdateAdvancedSearch(clonedObject);
     }
 
-    onSelectedSearchChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (e.value == "select") {
-            this.onClearAdvancedSearch();
-        } else {
-            this.props.onSelectAdvancedSearch(e.value);
-        }
+    onSelectedSearchChanged(selected: IAdvancedSearch[]) {
+        this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Uid : "");
     }
 }
 
@@ -275,7 +271,7 @@ var divStyle = {
     margin: '6px'
 };
 
-var previewDivStyle : React.CSSProperties = {
+var previewDivStyle: React.CSSProperties = {
     overflowY: 'auto',
     maxHeight: '350px',
 };
