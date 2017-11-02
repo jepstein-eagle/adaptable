@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
+import * as _ from 'lodash'
 import { Provider, connect } from 'react-redux';
 import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -18,7 +19,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
-
+import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
     QuickSearchDefaultBackColour: string;
@@ -28,7 +29,6 @@ interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConf
     QuickSearchDisplayType: QuickSearchDisplayType;
     QuickSearchStyle: IStyle,
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction,
-    onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
     onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
@@ -46,22 +46,15 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.state = { EditedQuickSearchText: "", EditedStyle: null }
     }
 
+    debouncedRunQuickSearch = _.debounce(() => this.props.onRunQuickSearch(this.state.EditedQuickSearchText), 250);    
+
     public componentDidMount() {
         this.setState({ EditedQuickSearchText: this.props.QuickSearchText, EditedStyle: this.props.QuickSearchStyle });
     }
 
-    handleQuickSearchTextChange(event: React.FormEvent<any>) {
-        const e = event.target as HTMLInputElement;
-        this.setState({ EditedQuickSearchText: e.value });
-    }
-
-    onSetQuickSearch() {
-        this.props.onRunQuickSearch(this.state.EditedQuickSearchText);
-    }
-
-    onClearQuickSearch() {
-        this.setState({ EditedQuickSearchText: "" });
-        this.props.onClearQuickSearch();
+    handleQuickSearchTextChange(text: string) {
+        this.setState({ EditedQuickSearchText: text });
+        this.debouncedRunQuickSearch();
     }
 
     onStringOperatorChange(event: React.FormEvent<any>) {
@@ -120,27 +113,16 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
             return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{this.getTextForQuickSearchDisplayType(enumNameAndValue.value)}</option>
         })
 
-
-
         return (
             <span >
                 <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open" infoBody={infoBody}>
-                    <AdaptableBlotterForm inline onSubmit={() => this.onSetQuickSearch()}>
+                    <AdaptableBlotterForm inline>
                         <Panel header={"Search For"} bsStyle="info" >
-                            <FormControl
-                                value={this.state.EditedQuickSearchText}
-                                type="string"
+                            <AdaptableBlotterFormControlTextClear
+                                type="text"
                                 placeholder="Quick Search Text"
-                                onChange={(e) => this.handleQuickSearchTextChange(e)} />
-                            {' '}
-                            <OverlayTrigger overlay={<Tooltip id="tooltipRunSearch">Run Quick Search</Tooltip>}>
-                                <Button bsStyle='success' onClick={() => this.onSetQuickSearch()}>Search</Button>
-                            </OverlayTrigger>
-                            {' '}
-                            <ButtonClear onClick={() => this.onClearQuickSearch()}
-                                overrideTooltip="Clear Quick Search"
-                                overrideDisableButton={StringExtensions.IsEmpty(this.props.QuickSearchText)}
-                                DisplayMode="Glyph+Text" />
+                                value={this.state.EditedQuickSearchText}
+                                OnTextChange={(x) => this.handleQuickSearchTextChange(x)} />
                         </Panel>
                     </AdaptableBlotterForm>
 
@@ -240,7 +222,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(quickSearchText)),
-        onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),

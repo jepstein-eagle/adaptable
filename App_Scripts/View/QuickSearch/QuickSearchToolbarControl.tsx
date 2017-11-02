@@ -19,7 +19,6 @@ import * as StrategyIds from '../../Core/StrategyIds'
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
-    onClearQuickSearch: () => QuickSearchRedux.QuickSearchClearAction;
     onShowQuickSearchConfig: () => PopupRedux.PopupShowAction;
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardStrategyControlConfiguration
@@ -74,10 +73,6 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         this.setState({ EditedQuickSearchText: quckSearchText })
         this.debouncedRunQuickSearch();
     }
-
-    onClearQuickSearch() {
-        this.props.onClearQuickSearch();
-    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -90,7 +85,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(newQuickSearchText)),
-        onClearQuickSearch: () => dispatch(QuickSearchRedux.QuickSearchClear()),
         onShowQuickSearchConfig: () => dispatch(PopupRedux.PopupShow("QuickSearchConfig")),
     };
 }

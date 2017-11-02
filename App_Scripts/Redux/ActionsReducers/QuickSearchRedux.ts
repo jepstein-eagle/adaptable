@@ -4,7 +4,6 @@ import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
 import * as Redux from 'redux'
 
 export const QUICK_SEARCH_RUN = 'QUICK_SEARCH_RUN';
-export const QUICK_SEARCH_CLEAR = 'QUICK_SEARCH_CLEAR';
 export const QUICK_SEARCH_SET_OPERATOR = 'QUICK_SEARCH_SET_OPERATOR';
 export const QUICK_SEARCH_SET_DISPLAY = 'QUICK_SEARCH_SET_DISPLAY';
 export const QUICK_SEARCH_SET_STYLE = 'QUICK_SEARCH_SET_STYLE';
@@ -15,10 +14,6 @@ export const QUICK_SEARCH_DEFAULT_FORE_COLOUR = '#000000';
 export interface QuickSearchRunAction extends Redux.Action {
     quickSearchText: string
 }
-
-export const QuickSearchClear = (): QuickSearchClearAction => ({
-    type: QUICK_SEARCH_CLEAR,
-})
 
 export interface QuickSearchClearAction extends Redux.Action {
 }
@@ -71,8 +66,6 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: Quick
     switch (action.type) {
         case QUICK_SEARCH_RUN:
             return Object.assign({}, state, { QuickSearchText: (<QuickSearchRunAction>action).quickSearchText })
-        case QUICK_SEARCH_CLEAR:
-            return Object.assign({}, state, { QuickSearchText: "" })
         case QUICK_SEARCH_SET_OPERATOR:
             return Object.assign({}, state, { QuickSearchOperator: (<QuickSearchSetSearchOperatorAction>action).quickSearchOperator })
         case QUICK_SEARCH_SET_DISPLAY:
