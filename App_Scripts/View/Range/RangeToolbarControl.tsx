@@ -67,7 +67,7 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                     {' '}<Glyphicon glyph="th" />{' '}Range
                 </Button>
                 {' '}
-                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Ranges found with that search"}
                     placeholder={"Select a Range"}
                     labelKey={"Name"}
                     filterBy={["Name"]}
