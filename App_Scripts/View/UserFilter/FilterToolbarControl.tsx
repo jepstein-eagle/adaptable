@@ -51,8 +51,11 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
                     {' '}<Glyphicon glyph="filter" />{' '}Filters
                 </Button>
                 {' '}
-                {collapsedText}{' '}
-                <AdaptablePopover headerText="" bodyText={[columnFilterNames]} popoverType={PopoverType.Info} />
+                {collapsedText}
+                {' '}
+                {StringExtensions.IsNotNullOrEmpty(columnFilterNames) &&
+                    <AdaptablePopover headerText="" bodyText={[columnFilterNames]} popoverType={PopoverType.Info} />
+                }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
                     overrideTooltip="Clear Filters"
