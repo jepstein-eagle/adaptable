@@ -526,7 +526,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
         let colDef = this.gridOptions.api.getColumnDef(columnId)
         let rawValue = this.gridOptions.api.getValue(columnId, row)
-        if (colDef.cellRenderer) {
+        if (colDef.valueFormatter) {
+            let formatter: any = colDef.valueFormatter
+            let formattedValue = formatter({ value: rawValue })
+            if (colDef.cellRenderer) {
+                let render: any = colDef.cellRenderer
+                if (typeof render == "string") {
+                    return String(formattedValue)
+                }
+                return render({ value: formattedValue })
+            }
+            return formattedValue
+        }
+        else if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
             if (typeof render == "string") {
                 return String(rawValue)
