@@ -534,19 +534,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (typeof render == "string") {
                     return String(formattedValue)
                 }
-                return render({ value: formattedValue })
+                return render({ value: formattedValue })||"";
             }
-            return formattedValue
+            return formattedValue||""
         }
         else if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
             if (typeof render == "string") {
                 return String(rawValue)
             }
-            return render({ value: rawValue })
+            return render({ value: rawValue })||"";
         }
         else {
-            return String(rawValue)
+            return String(rawValue)||"";
         }
     }
 
