@@ -20,6 +20,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { RangeExportDestination } from '../../Core/Enums';
 import { SortOrder } from '../../Core/Enums';
@@ -63,10 +64,6 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="th" />{' '}Range
-                </Button>
-                {' '}
                 <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Ranges found with that search"}
                     placeholder={"Select a Range"}
                     labelKey={"Name"}
@@ -108,11 +105,9 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
             </div>
         </span>
 
-        return <Panel className="small-padding-panel" >
-            <AdaptableBlotterForm inline>
-                {content}
-            </AdaptableBlotterForm>
-        </Panel>
+        return <PanelDashboard headerText="Range" glyphicon="th">
+            {content}
+        </PanelDashboard>
     }
 
     onSelectedSearchChanged(selected: IRange[]) {

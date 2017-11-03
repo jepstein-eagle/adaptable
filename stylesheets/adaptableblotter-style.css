@@ -58,6 +58,10 @@ button.placeholder:before {
     margin-bottom: 0px!important; 
 }
 
+.panel-header-dashboard > [class*='panel-heading'] {
+	padding: 1px 15px;
+}
+
 .panel-with-button-reduce-header-padding > [class*='panel-heading'] {
 	padding-top: 5px;
 	padding-bottom: 5px;

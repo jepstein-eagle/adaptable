@@ -72,7 +72,7 @@ const initialDashboardState: DashboardState = {
         { Strategy: StrategyIds.RangeStrategyId, IsVisible: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ],
-    DashboardZoom : 0.8
+    DashboardZoom : 1
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
