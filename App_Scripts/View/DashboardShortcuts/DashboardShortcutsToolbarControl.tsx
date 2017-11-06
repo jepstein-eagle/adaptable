@@ -37,7 +37,7 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
                 }
             })
         }
-        return <PanelDashboard headerText="Shortcuts" glyphicon="road">
+        return <PanelDashboard headerText="Bookmarks" glyphicon="bookmark">
             {shortcuts}
         </PanelDashboard>
     }
