@@ -105,7 +105,7 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
             </div>
         </span>
 
-        return <PanelDashboard headerText="Range" glyphicon="th">
+        return <PanelDashboard headerText="Range" glyphicon="tag">
             {content}
         </PanelDashboard>
     }
