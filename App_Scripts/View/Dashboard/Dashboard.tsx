@@ -28,7 +28,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
                 let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-                return <Nav key={control.Strategy} style={{ margin: "0px 3px" }} >
+                return <Nav key={control.Strategy} style={{ marginRight: "5px", marginTop:"3px", marginBottom: "3px" }} >
                     {dashboardElememt}
                 </Nav>
             }
