@@ -28,17 +28,17 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
                 let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-                return <span style={{ display: "inline-table", margin: "0px 3px" }} key={control.Strategy}>
+                return <Nav key={control.Strategy} style={{ margin: "0px 3px" }} >
                     {dashboardElememt}
-                </span>
+                </Nav>
             }
             else {
                 console.error("Cannot find Dashboard Control for " + control.Strategy)
             }
         })
-        return <Row style={{ display: "flex", zoom: this.props.DashboardState.DashboardZoom }}>
-            {visibleDashboardElements}
-        </Row>
+        return <Navbar fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
+                {visibleDashboardElements}
+        </Navbar>
     }
 }
 
