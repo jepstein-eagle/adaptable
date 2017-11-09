@@ -3,6 +3,7 @@ import { IRange } from '../../Core/Interface/IRangeStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'
 import { Helper } from '../../Core/Helper';
+import { RangeHelper } from '../../Core/Services/RangeHelper';
 import { RangeExportDestination } from '../../Core/Enums';
 
 export const RANGE_EXPORT = 'RANGE_EXPORT';
@@ -49,7 +50,7 @@ export const RangeDelete = (Range: IRange): RangeDeleteAction => ({
 })
 
 const initialRangeState: RangeState = {
-    Ranges: [],
+    Ranges: RangeHelper.CreateSystemRanges(),
     CurrentRangeId: ""
 }
 
@@ -73,7 +74,7 @@ export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = init
             } else {
                 ranges.push(actionTypedAddUpdate.Range)
             }
-            return Object.assign({}, state, { Ranges: ranges, CurrentRangeId : actionTypedAddUpdate.Range.Uid });
+            return Object.assign({}, state, { Ranges: ranges, CurrentRangeId: actionTypedAddUpdate.Range.Uid });
         }
         case RANGE_DELETE: {
             let actionTypedDelete = (<RangeDeleteAction>action)

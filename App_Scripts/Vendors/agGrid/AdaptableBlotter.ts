@@ -66,6 +66,7 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { RangeHelper } from '../../Core/Services/RangeHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -491,6 +492,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
+        if (RangeHelper.IsSystemRange(range)) {
+            return RangeHelper.BuildSystemRange(range, this);
+        }
+
         var dataToExport: any[] = [];
         dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
         let expressionToCheck: Expression = range.Expression;
@@ -534,19 +539,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (typeof render == "string") {
                     return String(formattedValue)
                 }
-                return render({ value: formattedValue })||"";
+                return render({ value: formattedValue }) || "";
             }
-            return formattedValue||""
+            return formattedValue || ""
         }
         else if (colDef.cellRenderer) {
             let render: any = colDef.cellRenderer
             if (typeof render == "string") {
                 return String(rawValue)
             }
-            return render({ value: rawValue })||"";
+            return render({ value: rawValue }) || "";
         }
         else {
-            return String(rawValue)||"";
+            return String(rawValue) || "";
         }
     }
 
@@ -612,6 +617,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getAllRowIds(): string[] {
         throw Error("Should not be used")
         // return []
+    }
+
+    public getCellValue(columnId: string, row: any): any {
+        return this.gridOptions.api.getValue(columnId, row);
+        // -- not sure if to get raw or display value ?..
+        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+    }
+
+    public getAllRows(): any[] {
+        let rowNodes: any[] = [];
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            rowNodes.push(rowNode);
+        });
+        return rowNodes;
+    }
+
+    public getAllVisibleRows(): any[] {
+        var dataToExport: any[] = [];
+        for (var index = 0; index < this.gridOptions.api.getDisplayedRowCount(); index++) {
+            let row: any = this.gridOptions.api.getDisplayedRowAtIndex(index);
+
+            let newRow: any[] = [];
+            let cols: IColumn[] = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            cols.forEach(col => {
+                newRow.push(this.gridOptions.api.getValue(col.ColumnId, row));// -- not sure if to get raw or display value ?..
+                //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+            })
+            dataToExport.push(newRow);
+
+            //   dataToExport.push(row.data);
+        }
+        return dataToExport;
     }
 
     public hideRows(rowIds: string[]): void {

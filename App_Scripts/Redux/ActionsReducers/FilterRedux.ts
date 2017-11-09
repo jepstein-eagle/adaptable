@@ -70,7 +70,7 @@ export const ColumnFilterDelete = (columnFilter: IColumnFilter): ColumnFilterDel
 
 const initialFilterState:
     FilterState = {
-        UserFilters: UserFilterHelper.CreatePredefinedExpressions(),
+        UserFilters: UserFilterHelper.CreateSystemUserFilters(),
          ColumnFilters: [],
     }
 

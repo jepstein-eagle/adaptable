@@ -378,12 +378,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public exportBlotter(): void {
     }
-
-    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
-        return null;
-
-     }
  
+    public getCellValue(columnId: string, row: any): any {
+        return null;
+        // -- not sure if to get raw or display value ?..
+        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+    }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         var row: AdaptableGrid.Row = this.grid.getRowFromId(rowIdentifierValue);
@@ -436,6 +436,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let rowIDs: any[] = [];
         this.grid.getAllRows().forEach(r => rowIDs.push(r.getId().toString()));
         return rowIDs;
+    }
+
+
+    public getAllRows(): any[] {
+        return null;
+    }
+
+    public getAllVisibleRows(): any[] {
+        return null;
     }
 
     public hideRows(rowIds: string[]): void {

@@ -16,7 +16,7 @@ import { IRange } from './Interface/IRangeStrategy';
 
 export module ObjectFactory {
 
-    
+
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
@@ -75,12 +75,14 @@ export module ObjectFactory {
     }
 
     export function CreateEmptyRange(): IRange {
-        return { Uid: Helper.generateUid(),
-            Name: "", 
+        return {
+            Uid: Helper.generateUid(),
+            Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            Columns: [], 
+            Columns: [],
             RangeScope: RangeScope.AllColumns,
-            IsPredefined: false }
+            IsPredefined: false
+        };
     }
 
     export function CreateDefaultFlashingColumn(column: IColumn): IFlashingColumn {
@@ -140,4 +142,3 @@ export module ObjectFactory {
 
 
 }
-

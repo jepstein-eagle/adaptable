@@ -61,6 +61,7 @@ import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { RangeHelper } from '../../Core/Services/RangeHelper';
 
 
 //icon to indicate toggle state
@@ -434,6 +435,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
         this.cancelEdit()
+        let rowr = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
+
+
 
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
         let oldValue = row[cellInfo.ColumnId]
@@ -592,7 +596,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public exportBlotter(): void {
     }
 
+    public getCellValue(columnId: string, row: any): any {
+        return row[columnId];
+    }
+
     public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
+        if (RangeHelper.IsSystemRange(range)) {
+            return RangeHelper.BuildSystemRange(range, this);
+        }
+
         var dataToExport: any[] = [];
         dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
         let expressionToCheck: Expression = range.Expression;
@@ -611,6 +623,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
         return dataToExport;
     }
+
+
 
     public getDisplayValue(id: any, columnId: string): string {
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
@@ -814,6 +828,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //     result[y] = ds[y][this.BlotterOptions.primaryKey];
         // }
         // return result
+    }
+
+    public getAllRows(): any[] {
+    return  this.grid.behavior.dataModel.getData();
+    }
+
+    public getAllVisibleRows(): any[] {
+     
+      let x: any = this.grid.renderer.visibleRows;
+     return null;
+   //   for (var index = 0; index < this.grid.behavior.renderedRowCount; index++) {
+          //  this.grid.behavior.dataModel.getRow
+     //       return null;
+       // }
     }
 
     public hideRows(rowIds: string[]): void {

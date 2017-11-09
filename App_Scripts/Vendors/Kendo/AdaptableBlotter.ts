@@ -499,7 +499,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-
+    public getCellValue(columnId: string, row: any): any {
+        return row[columnId]
+        // -- not sure if to get raw or display value ?..
+        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+    }
 
     public exportBlotter(): void {
         // get export state
@@ -632,6 +636,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
+    public getAllRows(): any[] {
+        let dataSource = this.grid.dataSource.data();
+      let rows:any[]=[]
+        for (var i = 0; i < dataSource.length; i++) {
+            let row: any = dataSource[i];
+            rows.push(row);
+    };
+    return rows;
+}
+
+    public getAllVisibleRows(): any[] {
+        return null;
+    }
 
     public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
         // this is rather brittle... but its only required the first time we change a cell value

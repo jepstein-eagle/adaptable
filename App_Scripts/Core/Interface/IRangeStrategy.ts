@@ -9,7 +9,7 @@ export interface IRange extends IConfigEntity {
   Uid: string;
   Name: string;
   RangeScope: RangeScope
-  Columns: string[];
+  Columns: string[]
   Expression: Expression
 }
 

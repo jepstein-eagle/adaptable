@@ -71,8 +71,11 @@ export interface IAdaptableBlotter {
 
     // Row Methods
     getAllRowIds(): string[]
+    getAllRows():any[]
+    getAllVisibleRows():any[]
     hideRows(rowIds: string[]): void
     showRows(rowIds: string[]): void
+    getCellValue(columnId: string, row: any): any
 
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
@@ -85,8 +88,7 @@ export interface IAdaptableBlotter {
 
     // Export
     exportBlotter(): void
-    convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[]
-
+  
     // Filtering
     applyColumnFilters(): void
 }

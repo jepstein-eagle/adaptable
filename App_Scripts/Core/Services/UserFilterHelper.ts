@@ -1,9 +1,7 @@
 import { Expression } from '../Expression/Expression'
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
-import { IRangeExpression } from '../Interface/IExpression';
-import { IUserFilter } from '../Interface/IExpression';
-import { LeafExpressionOperator } from '../Enums'
-import { DataType } from '../Enums'
+import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
+import { LeafExpressionOperator, DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -102,12 +100,12 @@ export module UserFilterHelper {
     export const TRUE_USER_FILTER = 'True'
     export const FALSE_USER_FILTER = 'False'
 
-    export function CreatePredefinedExpressions(): Array<IUserFilter> {
+    export function CreateSystemUserFilters(): Array<IUserFilter> {
 
-        let _predefinedExpressions: IUserFilter[] = [];
+        let _systemExpressions: IUserFilter[] = [];
 
         // Date Predefined user filter Expressions
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: TODAY_USER_FILTER,
             FriendlyName: "Today",
             Description: "Is Date Today",
@@ -121,7 +119,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: IN_PAST_USER_FILTER,
             FriendlyName: "In Past",
             Description: "Is Date In Past",
@@ -134,7 +132,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: IN_FUTURE_USER_FILTER,
             FriendlyName: "In Future",
             Description: "Is Date In Future",
@@ -147,7 +145,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: YESTERDAY_USER_FILTER,
             FriendlyName: "Yesterday",
             Description: "Is Date Yesterday",
@@ -161,7 +159,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: TOMORROW_USER_FILTER,
             FriendlyName: "Tomorrow",
             Description: "Is Date Tomorrow",
@@ -175,7 +173,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: NEXT_WORKING_DAY_USER_FILTER,
             FriendlyName: "Next Working Day",
             Description: "Is Next Working Day",
@@ -188,7 +186,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: PREVIOUS_WORKING_DAY_USER_FILTER,
             FriendlyName: "Previous Working Day",
             Description: "Is Previous Working Day",
@@ -201,7 +199,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: THIS_YEAR_USER_FILTER,
             FriendlyName: "This Year",
             Description: "In This Year",
@@ -218,7 +216,7 @@ export module UserFilterHelper {
         });
 
         // Numeric Predefined user filter Expressions
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: POSITIVE_USER_FILTER,
             FriendlyName: "Positive",
             Description: "Is Number Positive",
@@ -231,7 +229,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: NEGATIVE_USER_FILTER,
             FriendlyName: "Negative",
             Description: "Is Number Negative",
@@ -244,7 +242,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: ZERO_USER_FILTER,
             FriendlyName: "Zero",
             Description: "Is Number Zero",
@@ -257,7 +255,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: NUMERIC_BLANKS_USER_FILTER,
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
@@ -270,7 +268,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: NUMERIC_NON_BLANKS_USER_FILTER,
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
@@ -284,7 +282,7 @@ export module UserFilterHelper {
         });
 
         // String Predefined user filter Expressions
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: STRING_BLANKS_USER_FILTER,
             FriendlyName: "Blanks",
             Description: "Is Cell Empty",
@@ -297,7 +295,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: STRING_NON_BLANKS_USER_FILTER,
             FriendlyName: "Non Blanks",
             Description: "Is Cell Populated",
@@ -311,7 +309,7 @@ export module UserFilterHelper {
         });
 
         // Boolean Predefined user filter Expressions
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: TRUE_USER_FILTER,
             FriendlyName: "True",
             Description: "Is Value True",
@@ -324,7 +322,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        _predefinedExpressions.push({
+        _systemExpressions.push({
             Uid: FALSE_USER_FILTER,
             FriendlyName: "False",
             Description: "Is Value False",
@@ -337,7 +335,7 @@ export module UserFilterHelper {
             IsSystemFilter: true
         });
 
-        return _predefinedExpressions;
+        return _systemExpressions;
 
     }
 

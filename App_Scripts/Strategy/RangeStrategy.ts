@@ -5,6 +5,7 @@ import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
 import { MenuType, RangeScope, RangeExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
+import { RangeHelper } from '../Core/Services/RangeHelper';
 import { Expression } from '../Core/Expression/Expression'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 
@@ -42,7 +43,7 @@ export class RangeStrategy extends AdaptableStrategyBase implements IRangeStrate
     private ConvertRangetoArray(rangeUid: string): any[] {
         let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
         let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
-        return this.blotter.convertRangeToArray(rangeToConvert, rangeCols);
+        return RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert, rangeCols);
     }
 
     private ConvertRangetoJSON(rangeUid: string): string {
