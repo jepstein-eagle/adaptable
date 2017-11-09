@@ -20,21 +20,20 @@ export class RangeStrategy extends AdaptableStrategyBase implements IRangeStrate
     public ExportRange(rangeUid: string, rangeExportDestination: RangeExportDestination): void {
         switch (rangeExportDestination) {
             case RangeExportDestination.Clipboard:
-                this.ConvertRangetoJSON(rangeUid);
-                // do something else
+                this.copyToClipboard(rangeUid);
                 break;
             case RangeExportDestination.CSV:
                 this.ConvertRangetoCsv(rangeUid);
                 break;
-            case RangeExportDestination.Excel:
-                //
-                break;
-            case RangeExportDestination.JSON:
-                this.ConvertRangetoJSON(rangeUid);
-                break;
-            case RangeExportDestination.Symphony:
-                //
-                break;
+            // case RangeExportDestination.Excel:
+            //     //
+            //     break;
+            // case RangeExportDestination.JSON:
+            //     this.ConvertRangetoJSON(rangeUid);
+            //     break;
+            // case RangeExportDestination.Symphony:
+            //     //
+            //     break;
         }
     }
 
@@ -48,6 +47,12 @@ export class RangeStrategy extends AdaptableStrategyBase implements IRangeStrate
     private ConvertRangetoJSON(rangeUid: string): string {
         let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
         return JSON.stringify(rangeAsArray)
+    }
+
+    private copyToClipboard(rangeUid: string) {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
+        let csvContent: string = Helper.convertArrayToCsv(rangeAsArray, ",");
+        Helper.copyToClipboard(csvContent)
     }
 
     private ConvertRangetoCsv(rangeUid: string): void {

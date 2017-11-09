@@ -86,10 +86,10 @@ export enum RangeScope {
 
 export enum RangeExportDestination {
     CSV,
-    JSON,
+    // JSON,
     Clipboard,
-    Excel,
-    Symphony
+    // Excel,
+    // Symphony
 }
 
 export enum SortOrder {
