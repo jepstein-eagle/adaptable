@@ -835,9 +835,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllVisibleRows(): any[] {
-     
-      let x: any = this.grid.renderer.visibleRows;
-     return null;
+        return  this.grid.behavior.dataModel.getData();  // this is wrong but dont know how to get visible rows! 
+   //   let x: any = this.grid.renderer.visibleRows;
+  //   return null;
    //   for (var index = 0; index < this.grid.behavior.renderedRowCount; index++) {
           //  this.grid.behavior.dataModel.getRow
      //       return null;

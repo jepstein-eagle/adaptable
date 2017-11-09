@@ -15,30 +15,35 @@ export module RangeHelper {
     }
 
     export function IsSystemRange(range: IRange): boolean {
-        return range.Uid == ALL_DATA_RANGE || range.Uid == VISIBLE_DATA_RANGE;
+        return range.Uid == ALL_DATA_RANGE || range.Uid == ALL_VISIBLE_DATA_RANGE;
     }
 
-   export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[]{
-    if (IsSystemRange(range)) {
-        return BuildSystemRange(range, blotter);
-    }
-  
-    var dataToExport: any[] = [];
-    dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
-    let expressionToCheck: Expression = range.Expression;
-   
-    let rows: any[] = blotter.getAllRows();
-    rows.forEach(row  => {
-        if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, blotter)) {
-            let newRow: any[] = [];
-            rangeColumns.forEach(col => {
-                newRow.push(blotter.getCellValue(col.ColumnId, row));
-            })
-            dataToExport.push(newRow);
+    export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[] {
+        if (IsSystemRange(range)) {
+            return BuildSystemRange(range, blotter);
         }
-    })
-    return dataToExport;
-   }
+
+        var dataToExport: any[] = [];
+        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
+        let expressionToCheck: Expression = range.Expression;
+
+        let rows: any[] = blotter.getAllRows();
+        rows.forEach(row => {
+            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, blotter)) {
+                let newRow = getRowValues(row, rangeColumns, blotter);
+                dataToExport.push(newRow);
+            }
+        })
+        return dataToExport;
+    }
+
+    function getRowValues(row: any, rangeColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
+        let newRow: any[] = [];
+        rangeColumns.forEach(col => {
+            newRow.push(blotter.getCellValue(col.ColumnId, row));
+        })
+        return newRow;
+    }
 
     export function BuildSystemRange(range: IRange, blotter: IAdaptableBlotter) {
         let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -46,15 +51,23 @@ export module RangeHelper {
         var dataToExport: any[] = [];
         dataToExport[0] = colNames;
         if (range.Uid == ALL_DATA_RANGE) {
-            dataToExport.push(...blotter.getAllRows())
-        } else if (range.Uid == VISIBLE_DATA_RANGE) {
-            dataToExport.push(...blotter.getAllVisibleRows())
+            let rows: any[] = blotter.getAllRows();
+            rows.forEach(row => {
+                let newRow = getRowValues(row, cols, blotter);
+                dataToExport.push(newRow);
+            })
+        } else if (range.Uid == ALL_VISIBLE_DATA_RANGE) {
+            let rows: any[] = blotter.getAllVisibleRows();
+            rows.forEach(row => {
+                let newRow = getRowValues(row, cols, blotter);
+                dataToExport.push(newRow);
+            })
         }
         return dataToExport;
     }
 
     export const ALL_DATA_RANGE = 'AllData'
-    export const VISIBLE_DATA_RANGE = 'VisibleData'
+    export const ALL_VISIBLE_DATA_RANGE = 'AllVisibleData'
 
     export function CreateSystemRanges(): Array<IRange> {
 
@@ -70,8 +83,8 @@ export module RangeHelper {
         });
 
         _systemRanges.push({
-            Uid: VISIBLE_DATA_RANGE,
-            Name: "Visible Data",
+            Uid: ALL_VISIBLE_DATA_RANGE,
+            Name: "All Visible Data",
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),

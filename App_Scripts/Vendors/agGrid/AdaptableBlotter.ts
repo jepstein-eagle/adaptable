@@ -634,21 +634,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllVisibleRows(): any[] {
-        var dataToExport: any[] = [];
+        let rowNodes: any[] = [];
         for (var index = 0; index < this.gridOptions.api.getDisplayedRowCount(); index++) {
-            let row: any = this.gridOptions.api.getDisplayedRowAtIndex(index);
-
-            let newRow: any[] = [];
-            let cols: IColumn[] = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            cols.forEach(col => {
-                newRow.push(this.gridOptions.api.getValue(col.ColumnId, row));// -- not sure if to get raw or display value ?..
-                //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
-            })
-            dataToExport.push(newRow);
-
-            //   dataToExport.push(row.data);
-        }
-        return dataToExport;
+            let rowNode: any = this.gridOptions.api.getDisplayedRowAtIndex(index);
+            rowNodes.push(rowNode);
+        };
+        return rowNodes;
     }
 
     public hideRows(rowIds: string[]): void {
