@@ -17,6 +17,7 @@ import { Helper } from '../../Core/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -50,12 +51,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             }
         })
 
-        let toolbarHeaderButton = <span>
+        let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="th" />{' '}Layout
-                </Button>
-                {' '}
                 <FormControl componentClass="select" placeholder="select"
                     value={this.props.CurrentLayout}
                     onChange={(x) => this.onSelectedLayoutChanged(x)} >
@@ -83,11 +80,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <Panel className="small-padding-panel" >
-            <AdaptableBlotterForm inline>
-                {toolbarHeaderButton}
-            </AdaptableBlotterForm>
-        </Panel>
+        return <PanelDashboard headerText="Layout" glyphicon="th">
+            {content}
+        </PanelDashboard>
     }
 
     private onSaveLayoutClicked() {

@@ -12,6 +12,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
+import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 
 interface FunctionsControlComponentProps extends IStrategyViewPopupProps<FunctionsToolbarControlComponent> {
     FunctionsDashboardControl: IDashboardStrategyControlConfiguration
@@ -35,19 +36,16 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
             return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
         });
 
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm >
-                <Dropdown id="dropdown-functions" >
-                    <Dropdown.Toggle>
-                        <Glyphicon glyph="home" />{' '}Functions
+        return <PanelDashboard headerText="Functions" glyphicon="home">
+            <Dropdown id="dropdown-functions">
+                <Dropdown.Toggle>
+                    <Glyphicon glyph="home" />{' '}Functions
                             </Dropdown.Toggle>
-                    <Dropdown.Menu >
-                        {configMenuItems}
-                    </Dropdown.Menu>
-                </Dropdown>
-            </AdaptableBlotterForm>
-
-        </Panel>
+                <Dropdown.Menu >
+                    {configMenuItems}
+                </Dropdown.Menu>
+            </Dropdown>
+        </PanelDashboard>
     }
 
     onClick(menuItem: IMenuItem) {

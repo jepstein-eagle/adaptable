@@ -102,7 +102,7 @@ export module Helper {
     }
 
     // converts an array (or an array of arrays) to CSV
-    export function convertArrayToCsv(array: any[], separator: string=";"): string {
+    export function convertArrayToCsv(array: any[], separator: string = ";"): string {
         var csvContent = '';
         array.forEach(function (infoArray, index) {
             let dataString = infoArray.join(separator);
@@ -112,26 +112,56 @@ export module Helper {
 
     }
 
-    export function createDownloadedFile(content:any, fileName: string, mimeType:string) {
+    export function createDownloadedFile(content: any, fileName: string, mimeType: string) {
         var a = document.createElement('a');
         mimeType = mimeType || 'application/octet-stream';
-      
-        if (navigator.msSaveBlob) { // IE10
-          navigator.msSaveBlob(new Blob([content], {
-            type: mimeType
-          }), fileName);
-        } else if (URL && 'download' in a) { //html5 A[download]
-          a.href = URL.createObjectURL(new Blob([content], {
-            type: mimeType
-          }));
-          a.setAttribute('download', fileName);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        } else {
-          location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
-        }
-      }
 
+        if (navigator.msSaveBlob) { // IE10
+            navigator.msSaveBlob(new Blob([content], {
+                type: mimeType
+            }), fileName);
+        } else if (URL && 'download' in a) { //html5 A[download]
+            a.href = URL.createObjectURL(new Blob([content], {
+                type: mimeType
+            }));
+            a.setAttribute('download', fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+        }
+    }
+
+    // Copies a string to the clipboard. Must be called from within an 
+    // event handler such as click. May return false if it failed, but
+    // this is not always possible. Browser support for Chrome 43+, 
+    // Firefox 42+, Safari 10+, Edge and IE 10+.
+    // IE: The clipboard feature may be disabled by an administrator. By
+    // default a prompt is shown the first time the clipboard is 
+    // used (per session).
+    export function copyToClipboard(text: string) {
+        if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.width = '1px';
+            textarea.style.height = '1px';
+            textarea.style.top = '0px';
+            textarea.style.left = '0px';
+            textarea.style.position = 'absolute';
+            textarea.style.opacity = '0.0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+        console.warn("Copy not available on this computer.");
+    }
 }
 

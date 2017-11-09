@@ -17,6 +17,7 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { SortOrder } from '../../Core/Enums';
 
@@ -48,10 +49,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="search" />{' '}Advanced Search
-                </Button>
-                {' '}
                 <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
                     placeholder={"Select a Search"}
                     labelKey={"Name"}
@@ -82,15 +79,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-
-        return (
-            <Panel className="small-padding-panel" >
-                <AdaptableBlotterForm inline>
-                    {content}
-                </AdaptableBlotterForm>
-
-            </Panel>
-        );
+        return <PanelDashboard headerText="Advanced Search" glyphicon="search">
+            {content}
+        </PanelDashboard>
     }
 
     onSelectedSearchChanged(selected: IAdvancedSearch[]) {

@@ -15,6 +15,7 @@ import { IColumnFilter } from '../../Core/Interface/IFilterStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
@@ -47,10 +48,6 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="filter" />{' '}Filters
-                </Button>
-                {' '}
                 {collapsedText}
                 {' '}
                 {StringExtensions.IsNotNullOrEmpty(columnFilterNames) &&
@@ -64,11 +61,9 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
             </div>
         </span>
 
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm inline>
-                {content}
-            </AdaptableBlotterForm>
-        </Panel>
+        return <PanelDashboard headerText="Filters" glyphicon="filter">
+            {content}
+        </PanelDashboard>
     }
 }
 

@@ -10,6 +10,7 @@ import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interf
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
 
@@ -36,12 +37,9 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
                 }
             })
         }
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm >
-                    {shortcuts}
-            </AdaptableBlotterForm>
-
-        </Panel>
+        return <PanelDashboard headerText="Bookmarks" glyphicon="bookmark">
+            {shortcuts}
+        </PanelDashboard>
     }
 
     onClick(menuItem: IMenuItem) {

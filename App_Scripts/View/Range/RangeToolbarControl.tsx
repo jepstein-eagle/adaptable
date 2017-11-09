@@ -20,6 +20,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { RangeExportDestination } from '../../Core/Enums';
 import { SortOrder } from '../../Core/Enums';
@@ -56,17 +57,13 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
         })
 
         let csvMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.CSV)} key={"csv"}><Glyphicon glyph="export" /> {"CSV"}</MenuItem>
-        let JSONMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.JSON)} key={"json"}><Glyphicon glyph="export" /> {"JSON"}</MenuItem>
+        // let JSONMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.JSON)} key={"json"}><Glyphicon glyph="export" /> {"JSON"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Clipboard)} key={"clipboard"}><Glyphicon glyph="export" /> {"Clipboard"}</MenuItem>
-        let excelMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Excel)} key={"excel"}><Glyphicon glyph="export" /> {"Excel"}</MenuItem>
-        let symphonyMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Symphony)} key={"symphony"}><Glyphicon glyph="export" /> {"Symphony"}</MenuItem>
+        // let excelMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Excel)} key={"excel"}><Glyphicon glyph="export" /> {"Excel"}</MenuItem>
+        // let symphonyMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, RangeExportDestination.Symphony)} key={"symphony"}><Glyphicon glyph="export" /> {"Symphony"}</MenuItem>
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="th" />{' '}Range
-                </Button>
-                {' '}
                 <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Ranges found with that search"}
                     placeholder={"Select a Range"}
                     labelKey={"Name"}
@@ -80,10 +77,7 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
                 {currentRangeId != "select" &&
                     <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
                         {csvMenuItem}
-                        {JSONMenuItem}
                         {clipboardMenuItem}
-                        {excelMenuItem}
-                        {symphonyMenuItem}
                     </DropdownButton>
                 }
                 {' '}
@@ -108,11 +102,9 @@ class RangeToolbarControlComponent extends React.Component<RangeToolbarControlCo
             </div>
         </span>
 
-        return <Panel className="small-padding-panel" >
-            <AdaptableBlotterForm inline>
-                {content}
-            </AdaptableBlotterForm>
-        </Panel>
+        return <PanelDashboard headerText="Range" glyphicon="tag">
+            {content}
+        </PanelDashboard>
     }
 
     onSelectedSearchChanged(selected: IRange[]) {

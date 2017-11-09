@@ -14,6 +14,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/StrategyIds'
 
@@ -45,10 +46,6 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Button bsStyle="primary">
-                    {' '}<Glyphicon glyph="eye-open" />{' '}Quick Search
-                        </Button>
-                {' '}
                 <AdaptableBlotterFormControlTextClear
                     style={{ width: "100px" }}
                     type="text"
@@ -61,12 +58,9 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph" />
             </div>
         </span>
-        return <Panel className="small-padding-panel">
-            <AdaptableBlotterForm inline >
-                {content}
-            </AdaptableBlotterForm>
-        </Panel>
-
+        return <PanelDashboard headerText="Quick Search" glyphicon="eye-open">
+            {content}
+        </PanelDashboard>
     }
 
     onUpdateQuickSearchText(quckSearchText: string) {
