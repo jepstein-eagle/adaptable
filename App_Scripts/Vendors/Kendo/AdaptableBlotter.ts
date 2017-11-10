@@ -647,7 +647,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 }
 
     public getAllVisibleRows(): any[] {
-        return null;
+        let dataSource = this.grid.dataSource.data();
+        let rows:any[]=[]
+          for (var i = 0; i < dataSource.length; i++) {
+              let row: any = dataSource[i];
+              rows.push(row);
+      };
+      return rows;
     }
 
     public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
