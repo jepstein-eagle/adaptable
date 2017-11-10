@@ -624,11 +624,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 }
 
     public getAllVisibleRows(): any[] {
-        // no visibility added yet
-        let dataSource = this.grid.dataSource.data();
+        let view = this.grid.dataSource.view();
         let rows:any[]=[]
-          for (var i = 0; i < dataSource.length; i++) {
-              let row: any = dataSource[i];
+          for (var i = 0; i < view.length; i++) {
+              let row: any = view[i];
               rows.push(row);
       };
       return rows;
