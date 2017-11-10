@@ -69,8 +69,7 @@ export module ObjectFactory {
             IsExpressionSatisfied: (value: any): boolean => {
                 return null;
             },
-            IsPredefined: false,
-            IsSystemFilter: false
+            IsPredefined: false
         };
     }
 

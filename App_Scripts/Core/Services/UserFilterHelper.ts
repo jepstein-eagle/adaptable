@@ -9,6 +9,37 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 
 export module UserFilterHelper {
 
+    export const TODAY_USER_FILTER = 'Today'
+    export const IN_PAST_USER_FILTER = 'InPast'
+    export const IN_FUTURE_USER_FILTER = 'InFuture'
+    export const YESTERDAY_USER_FILTER = 'Yesterday'
+    export const TOMORROW_USER_FILTER = 'Tomorrow'
+    export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
+    export const PREVIOUS_WORKING_DAY_USER_FILTER = 'PreviousWorkingDay'
+    export const THIS_YEAR_USER_FILTER = 'ThisYear'
+
+    // Numeric
+    export const POSITIVE_USER_FILTER = 'Positive'
+    export const NEGATIVE_USER_FILTER = 'Negative'
+    export const ZERO_USER_FILTER = 'Zero'
+    export const NUMERIC_BLANKS_USER_FILTER = 'NumericBlanks'
+    export const NUMERIC_NON_BLANKS_USER_FILTER = 'NumericNonBlanks'
+    // String
+    export const STRING_BLANKS_USER_FILTER = 'StringBlanks'
+    export const STRING_NON_BLANKS_USER_FILTER = 'StringNonBlanks'
+    // Boolean
+    export const TRUE_USER_FILTER = 'True'
+    export const FALSE_USER_FILTER = 'False'
+
+
+    export function IsSystemUserFilter(filter: IUserFilter): boolean  {
+        return filter.Uid ==TODAY_USER_FILTER || filter.Uid== IN_PAST_USER_FILTER|| filter.Uid== IN_FUTURE_USER_FILTER|| filter.Uid== YESTERDAY_USER_FILTER 
+        || filter.Uid ==TOMORROW_USER_FILTER || filter.Uid== NEXT_WORKING_DAY_USER_FILTER|| filter.Uid== PREVIOUS_WORKING_DAY_USER_FILTER|| filter.Uid== THIS_YEAR_USER_FILTER
+        || filter.Uid ==POSITIVE_USER_FILTER || filter.Uid== NEGATIVE_USER_FILTER|| filter.Uid== ZERO_USER_FILTER|| filter.Uid== NUMERIC_BLANKS_USER_FILTER || filter.Uid==NUMERIC_NON_BLANKS_USER_FILTER
+        || filter.Uid ==STRING_BLANKS_USER_FILTER || filter.Uid== STRING_NON_BLANKS_USER_FILTER
+        || filter.Uid== TRUE_USER_FILTER|| filter.Uid== FALSE_USER_FILTER
+    }
+
     export function GetUserFilters(UserFilters: IUserFilter[], userFilterUids: string[]): IUserFilter[] {
         return UserFilters.filter(f => userFilterUids.find(uid => uid == f.Uid) != null)
     }
@@ -77,29 +108,7 @@ export module UserFilterHelper {
         }
     }
 
-    // Date
-    export const TODAY_USER_FILTER = 'Today'
-    export const IN_PAST_USER_FILTER = 'InPast'
-    export const IN_FUTURE_USER_FILTER = 'InFuture'
-    export const YESTERDAY_USER_FILTER = 'Yesterday'
-    export const TOMORROW_USER_FILTER = 'Tomorrow'
-    export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
-    export const PREVIOUS_WORKING_DAY_USER_FILTER = 'PreviousWorkingDay'
-    export const THIS_YEAR_USER_FILTER = 'ThisYear'
-
-    // Numeric
-    export const POSITIVE_USER_FILTER = 'Positive'
-    export const NEGATIVE_USER_FILTER = 'Negative'
-    export const ZERO_USER_FILTER = 'Zero'
-    export const NUMERIC_BLANKS_USER_FILTER = 'NumericBlanks'
-    export const NUMERIC_NON_BLANKS_USER_FILTER = 'NumericNonBlanks'
-    // String
-    export const STRING_BLANKS_USER_FILTER = 'StringBlanks'
-    export const STRING_NON_BLANKS_USER_FILTER = 'StringNonBlanks'
-    // Boolean
-    export const TRUE_USER_FILTER = 'True'
-    export const FALSE_USER_FILTER = 'False'
-
+   
     export function CreateSystemUserFilters(): Array<IUserFilter> {
 
         let _systemExpressions: IUserFilter[] = [];
@@ -115,8 +124,7 @@ export module UserFilterHelper {
                 let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
                 return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -128,8 +136,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck < Date.now();
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -141,8 +148,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return +dateToCheck > Date.now();
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -155,8 +161,7 @@ export module UserFilterHelper {
                 let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
                 return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -169,8 +174,7 @@ export module UserFilterHelper {
                 let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
                 return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -182,8 +186,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -195,8 +198,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
                 return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -211,8 +213,7 @@ export module UserFilterHelper {
                 let datetocheckyear: number = dateToCheck.getFullYear();
                 return (todayyear == datetocheckyear)
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         // Numeric Predefined user filter Expressions
@@ -225,8 +226,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck > 0);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -238,8 +238,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck < 0);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -251,8 +250,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == 0);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -264,8 +262,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck == null);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -277,8 +274,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
                 return (numberToCheck != null);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         // String Predefined user filter Expressions
@@ -291,8 +287,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNullOrEmpty(stringToCheck));
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -304,8 +299,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (stringToCheck: string, blotter: IAdaptableBlotter): boolean => {
                 return (StringExtensions.IsNotNullOrEmpty(stringToCheck));
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         // Boolean Predefined user filter Expressions
@@ -318,8 +312,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (boolToCheck);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         _systemExpressions.push({
@@ -331,8 +324,7 @@ export module UserFilterHelper {
             IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
                 return (!boolToCheck);
             },
-            IsPredefined: true,
-            IsSystemFilter: true
+            IsPredefined: true
         });
 
         return _systemExpressions;

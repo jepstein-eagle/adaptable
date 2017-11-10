@@ -15,7 +15,7 @@ export module RangeHelper {
     }
 
     export function IsSystemRange(range: IRange): boolean {
-        return range.Uid == ALL_DATA_RANGE || range.Uid == ALL_VISIBLE_DATA_RANGE;
+        return range.Uid == ALL_ROWS_RANGE || range.Uid == ALL_VISIBLE_ROWS_RANGE;
     }
 
     export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[] {
@@ -47,16 +47,16 @@ export module RangeHelper {
 
     export function BuildSystemRange(range: IRange, blotter: IAdaptableBlotter) {
         let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let colNames: string[] = cols.map(d => d.ColumnId);
+        let colNames: string[] = cols.map(c => c.FriendlyName);
         var dataToExport: any[] = [];
         dataToExport[0] = colNames;
-        if (range.Uid == ALL_DATA_RANGE) {
+        if (range.Uid == ALL_ROWS_RANGE) {
             let rows: any[] = blotter.getAllRows();
             rows.forEach(row => {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
-        } else if (range.Uid == ALL_VISIBLE_DATA_RANGE) {
+        } else if (range.Uid == ALL_VISIBLE_ROWS_RANGE) {
             let rows: any[] = blotter.getAllVisibleRows();
             rows.forEach(row => {
                 let newRow = getRowValues(row, cols, blotter);
@@ -66,16 +66,16 @@ export module RangeHelper {
         return dataToExport;
     }
 
-    export const ALL_DATA_RANGE = 'AllData'
-    export const ALL_VISIBLE_DATA_RANGE = 'AllVisibleData'
+    export const ALL_ROWS_RANGE = 'AllRows'
+    export const ALL_VISIBLE_ROWS_RANGE = 'AllVisibleRows'
 
     export function CreateSystemRanges(): Array<IRange> {
 
         let _systemRanges: IRange[] = [];
 
         _systemRanges.push({
-            Uid: ALL_DATA_RANGE,
-            Name: "All Data",
+            Uid: ALL_ROWS_RANGE,
+            Name: "All Rows",
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -83,8 +83,8 @@ export module RangeHelper {
         });
 
         _systemRanges.push({
-            Uid: ALL_VISIBLE_DATA_RANGE,
-            Name: "All Visible Data",
+            Uid: ALL_VISIBLE_ROWS_RANGE,
+            Name: "All Visible Rows",
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
