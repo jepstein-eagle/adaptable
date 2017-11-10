@@ -7,15 +7,17 @@ import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 
-
 export module RangeHelper {
+
+    export const ALL_DATA_RANGE = 'AllData'
+    export const ALL_VISIBLE_DATA_RANGE = 'AllVisibleData'
 
     export function GetRanges(Ranges: IRange[], RangeUids: string[]): IRange[] {
         return Ranges.filter(f => RangeUids.find(uid => uid == f.Uid) != null)
     }
 
     export function IsSystemRange(range: IRange): boolean {
-        return range.Uid == ALL_ROWS_RANGE || range.Uid == ALL_VISIBLE_ROWS_RANGE;
+        return range.Uid == ALL_DATA_RANGE || range.Uid == ALL_VISIBLE_DATA_RANGE;
     }
 
     export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[] {
@@ -46,17 +48,18 @@ export module RangeHelper {
     }
 
     export function BuildSystemRange(range: IRange, blotter: IAdaptableBlotter) {
-        let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let colNames: string[] = cols.map(c => c.FriendlyName);
         var dataToExport: any[] = [];
-        dataToExport[0] = colNames;
-        if (range.Uid == ALL_ROWS_RANGE) {
+        if (range.Uid == ALL_DATA_RANGE) {
+            let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            dataToExport[0] = cols.map(c => c.FriendlyName);
             let rows: any[] = blotter.getAllRows();
             rows.forEach(row => {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
-        } else if (range.Uid == ALL_VISIBLE_ROWS_RANGE) {
+        } else if (range.Uid == ALL_VISIBLE_DATA_RANGE) {
+            let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
+            dataToExport[0] = cols.map(c => c.FriendlyName);
             let rows: any[] = blotter.getAllVisibleRows();
             rows.forEach(row => {
                 let newRow = getRowValues(row, cols, blotter);
@@ -66,16 +69,14 @@ export module RangeHelper {
         return dataToExport;
     }
 
-    export const ALL_ROWS_RANGE = 'AllRows'
-    export const ALL_VISIBLE_ROWS_RANGE = 'AllVisibleRows'
-
+  
     export function CreateSystemRanges(): Array<IRange> {
 
         let _systemRanges: IRange[] = [];
 
         _systemRanges.push({
-            Uid: ALL_ROWS_RANGE,
-            Name: "All Rows",
+            Uid: ALL_DATA_RANGE,
+            Name: "All Data",
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -83,8 +84,8 @@ export module RangeHelper {
         });
 
         _systemRanges.push({
-            Uid: ALL_VISIBLE_ROWS_RANGE,
-            Name: "All Visible Rows",
+            Uid: ALL_VISIBLE_DATA_RANGE,
+            Name: "All Visible Data",
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
