@@ -835,13 +835,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getAllVisibleRows(): any[] {
-        return  this.grid.behavior.dataModel.getData();  // this is wrong but dont know how to get visible rows! 
+       let test: any = this.grid.visibleRows;
+       let help: any = this.grid.visibleRows
+    //    return  this.grid.behavior.dataModel.getData();  // this is wrong but dont know how to get visible rows! 
    //   let x: any = this.grid.renderer.visibleRows;
   //   return null;
-   //   for (var index = 0; index < this.grid.behavior.renderedRowCount; index++) {
-          //  this.grid.behavior.dataModel.getRow
-     //       return null;
-       // }
+     for (var index = 0; index < this.grid.behavior.renderedRowCount; index++) {
+         //   this.grid.behavior.View
+           // return null;
+        }
+// this is wrong as its all rows but while I can get the number of rendered rows
+// I cannot work out how to retrieve the actual rows
+// and the visiblerows property mentioned in teh documentation doesnt exist
+        return  this.grid.behavior.dataModel.getData();
     }
 
     public hideRows(rowIds: string[]): void {
