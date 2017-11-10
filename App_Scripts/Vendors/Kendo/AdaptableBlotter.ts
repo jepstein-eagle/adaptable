@@ -502,7 +502,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getCellValue(columnId: string, row: any): any {
         return row[columnId]
         // -- not sure if to get raw or display value ?..
-        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
+        //  return this.getDisplayValueFromRecord(rowNode, col.ColumnId);
     }
 
     public exportBlotter(): void {
@@ -512,29 +512,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.options.excel.allPages = exportState.AllPages;
         this.grid.options.excel.filterable = exportState.Filterable;
         this.grid.saveAsExcel();
-    }
-
-    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
-        var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
-        let expressionToCheck: Expression = range.Expression;
-
-        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
-        // but at least it works for now...
-        let dataSource = this.grid.dataSource.data();
-        for (var i = 0; i < dataSource.length; i++) {
-            let row: any = dataSource[i]
-
-            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, this)) {
-                let newRow: any[] = [];
-                rangeColumns.forEach(col => {
-                    newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
-                    // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
-                })
-                dataToExport.push(newRow);
-            }
-        }
-        return dataToExport;
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
@@ -647,6 +624,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 }
 
     public getAllVisibleRows(): any[] {
+        // no visibility added yet
         let dataSource = this.grid.dataSource.data();
         let rows:any[]=[]
           for (var i = 0; i < dataSource.length; i++) {
