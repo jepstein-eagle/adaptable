@@ -38,8 +38,6 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { RangeStrategy } from '../../Strategy/RangeStrategy'
-import {IRange} from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -97,7 +95,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         
-        //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
@@ -108,7 +106,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
         
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -374,15 +371,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getCellFromRowAndColumnId(row: AdaptableGrid.Row, columnId: string): AdaptableGrid.Cell {
         let columnIndex: number = this.getColumnIndex(columnId);
         return row.getCell(columnIndex);
-    }
-
-    public exportBlotter(): void {
-    }
- 
-    public getCellValue(columnId: string, row: any): any {
-        return null;
-        // -- not sure if to get raw or display value ?..
-        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
     }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {

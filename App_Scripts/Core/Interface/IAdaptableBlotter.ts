@@ -8,7 +8,6 @@ import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
-import {IRange} from '../Interface/IRangeStrategy'
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -75,8 +74,7 @@ export interface IAdaptableBlotter {
     getAllVisibleRows():any[]
     hideRows(rowIds: string[]): void
     showRows(rowIds: string[]): void
-    getCellValue(columnId: string, row: any): any
-
+   
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
@@ -86,9 +84,6 @@ export interface IAdaptableBlotter {
     createCalculatedColumn(calculatedColumn: ICalculatedColumn): void
     getFirstRecord(): any
 
-    // Export
-    exportBlotter(): void
-  
     // Filtering
     applyColumnFilters(): void
 }

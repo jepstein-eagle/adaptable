@@ -36,8 +36,6 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { IRange } from '../../Core/Interface/IRangeStrategy'
-import { RangeStrategy } from '../../Strategy/RangeStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -126,7 +124,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
@@ -138,8 +135,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
-
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
+        
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
@@ -590,40 +587,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
-
-
-
-    public exportBlotter(): void {
-    }
-
-    public getCellValue(columnId: string, row: any): any {
-        return row[columnId];
-    }
-
-    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
-        if (RangeHelper.IsSystemRange(range)) {
-            return RangeHelper.BuildSystemRange(range, this);
-        }
-
-        var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
-        let expressionToCheck: Expression = range.Expression;
-        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
-        // but at least it works for now...
-        let rows: any[] = this.grid.behavior.dataModel.getData();
-        rows.forEach(row => {
-            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, this)) {
-                let newRow: any[] = [];
-                rangeColumns.forEach(col => {
-                    newRow.push(row[col.ColumnId]) //-- not sure if to get raw or display value ?..
-                    // newRow.push(this.getDisplayValueFromRecord(row,col.ColumnId))
-                })
-                dataToExport.push(newRow);
-            }
-        })
-        return dataToExport;
-    }
-
 
 
     public getDisplayValue(id: any, columnId: string): string {

@@ -1,7 +1,7 @@
 import { Expression } from '../Expression/Expression'
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { IRangeExpression } from '../Interface/IExpression';
-import { IRange } from '../Interface/IRangeStrategy';
+import { IRange } from '../Interface/IExportStrategy';
 import { RangeScope } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions'
@@ -42,7 +42,7 @@ export module RangeHelper {
     function getRowValues(row: any, rangeColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
         let newRow: any[] = [];
         rangeColumns.forEach(col => {
-            newRow.push(blotter.getCellValue(col.ColumnId, row));
+            newRow.push(blotter.getDisplayValueFromRecord(row,col.ColumnId));
         })
         return newRow;
     }

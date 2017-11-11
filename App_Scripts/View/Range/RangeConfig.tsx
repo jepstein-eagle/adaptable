@@ -1,4 +1,4 @@
-import { IRange } from '../../Core/Interface/IRangeStrategy';
+import { IRange } from '../../Core/Interface/IExportStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';

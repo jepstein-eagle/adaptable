@@ -12,7 +12,7 @@ import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
 import { Expression } from './Expression/Expression'
 import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
-import { IRange } from './Interface/IRangeStrategy';
+import { IRange } from './Interface/IExportStrategy';
 
 export module ObjectFactory {
 

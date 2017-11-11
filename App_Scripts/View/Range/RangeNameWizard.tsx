@@ -1,4 +1,4 @@
-import { IRange } from '../../Core/Interface/IRangeStrategy';
+import { IRange } from '../../Core/Interface/IExportStrategy';
 import * as React from "react";
 import { ListGroup, ListGroupItem, Panel, FormControl } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'

@@ -36,8 +36,6 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { RangeStrategy } from '../../Strategy/RangeStrategy'
-import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -106,7 +104,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
-        //this.Strategies.set(StrategyIds.ExcelExportStrategyId, new ExcelExportStrategy(this))
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
@@ -117,8 +115,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
-
+      
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         this.AdaptableBlotterStore.Load
@@ -488,31 +485,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public exportBlotter(): void {
-    }
 
-    public convertRangeToArray(range: IRange, rangeColumns: IColumn[]): any[] {
-        if (RangeHelper.IsSystemRange(range)) {
-            return RangeHelper.BuildSystemRange(range, this);
-        }
-
-        var dataToExport: any[] = [];
-        dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
-        let expressionToCheck: Expression = range.Expression;
-        // Ok, I know this bit is shit and Jo will redo using one of his clever pipeline thingies
-        // but at least it works for now...
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, rowNode, rangeColumns, this)) {
-                let newRow: any[] = [];
-                rangeColumns.forEach(col => {
-                    newRow.push(this.gridOptions.api.getValue(col.ColumnId, rowNode));// -- not sure if to get raw or display value ?..
-                    //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
-                })
-                dataToExport.push(newRow);
-            }
-        })
-        return dataToExport;
-    }
 
     public getDisplayValue(id: any, columnId: string): string {
         //ag-grid doesn't support FindRow based on data
@@ -617,12 +590,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getAllRowIds(): string[] {
         throw Error("Should not be used")
         // return []
-    }
-
-    public getCellValue(columnId: string, row: any): any {
-        return this.gridOptions.api.getValue(columnId, row);
-        // -- not sure if to get raw or display value ?..
-        //  newRow.push(this.getDisplayValueFromRecord(rowNode, col.ColumnId));
     }
 
     public getAllRows(): any[] {

@@ -84,10 +84,10 @@ export enum RangeScope {
     SelectedColumns
 }
 
-export enum RangeExportDestination {
+export enum ExportDestination {
     CSV,
-    // JSON,
-    Clipboard,
+    // JSON,    
+    Clipboard
     // Excel,
     // Symphony
 }

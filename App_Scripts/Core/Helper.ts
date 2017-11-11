@@ -102,14 +102,22 @@ export module Helper {
     }
 
     // converts an array (or an array of arrays) to CSV
-    export function convertArrayToCsv(array: any[], separator: string = ";"): string {
+    export function convertArrayToCsv(array: any[], separator: string = " ' "): string {
         var csvContent = '';
         array.forEach(function (infoArray, index) {
-            let dataString = infoArray.join(separator);
-            csvContent += index < array.length ? dataString + '\n' : dataString;
+            var line = [];
+            var item: any
+            var i;
+            for (i = 0; i < infoArray.length; ++i) {
+                item = infoArray[i];
+                if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                    item = '"' + item.replace(/"/g, '""') + '"';
+                }
+                line.push(item);
+            }
+            csvContent += line.join(',') + '\n';
         });
         return csvContent;
-
     }
 
     export function createDownloadedFile(content: any, fileName: string, mimeType: string) {

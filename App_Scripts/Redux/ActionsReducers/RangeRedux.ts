@@ -1,20 +1,14 @@
 import { RangeState } from './Interface/IState';
-import { IRange } from '../../Core/Interface/IRangeStrategy';
+import { IRange } from '../../Core/Interface/IExportStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'
 import { Helper } from '../../Core/Helper';
 import { RangeHelper } from '../../Core/Services/RangeHelper';
-import { RangeExportDestination } from '../../Core/Enums';
 
-export const RANGE_EXPORT = 'RANGE_EXPORT';
 export const RANGE_SELECT = 'RANGE_SELECT';
 export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';
 export const RANGE_DELETE = 'RANGE_DELETE';
 
-export interface RangeExportAction extends Redux.Action {
-    RangeToExport: string;
-    RangeExportDestination: RangeExportDestination
-}
 
 export interface RangeSelectAction extends Redux.Action {
     SelectedRangeId: string;
@@ -28,11 +22,7 @@ export interface RangeDeleteAction extends Redux.Action {
     Range: IRange
 }
 
-export const RangeExport = (RangeToExport: string, RangeExportDestination: RangeExportDestination): RangeExportAction => ({
-    type: RANGE_EXPORT,
-    RangeToExport,
-    RangeExportDestination
-})
+
 
 export const RangeSelect = (SelectedRangeId: string): RangeSelectAction => ({
     type: RANGE_SELECT,
@@ -59,8 +49,7 @@ export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = init
     let ranges: IRange[] = [].concat(state.Ranges);
 
     switch (action.type) {
-        case RANGE_EXPORT:
-            return state
+       
         case RANGE_SELECT:
             return Object.assign({}, state, { CurrentRangeId: (<RangeSelectAction>action).SelectedRangeId })
 

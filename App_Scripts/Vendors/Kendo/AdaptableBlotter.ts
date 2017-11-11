@@ -39,8 +39,6 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
-import { RangeStrategy } from '../../Strategy/RangeStrategy'
-import { IRange } from '../../Core/Interface/IRangeStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
@@ -111,8 +109,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.RangeStrategyId, new RangeStrategy(this))
-
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
+        
 
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
@@ -498,21 +496,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
-
-    public getCellValue(columnId: string, row: any): any {
-        return row[columnId]
-        // -- not sure if to get raw or display value ?..
-        //  return this.getDisplayValueFromRecord(rowNode, col.ColumnId);
-    }
-
-    public exportBlotter(): void {
+//    public exportBlotter(): void {
         // get export state
-        let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
-        this.grid.options.excel.fileName = exportState.FileName + ".xlsx";
-        this.grid.options.excel.allPages = exportState.AllPages;
-        this.grid.options.excel.filterable = exportState.Filterable;
-        this.grid.saveAsExcel();
-    }
+  //      let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
+      //  this.grid.options.excel.fileName = exportState.FileName + ".xlsx";
+    //    this.grid.options.excel.allPages = exportState.AllPages;
+    //    this.grid.options.excel.filterable = exportState.Filterable;
+   //     this.grid.saveAsExcel();
+ //   }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
         //be careful here if we ever change to real primary key for kendo as we rely on UID

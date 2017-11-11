@@ -18,7 +18,7 @@ import { ThemeConfig } from './Theme/ThemeConfig'
 import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
-import { RangeToolbarControl } from './Range/RangeToolbarControl'
+import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
@@ -58,7 +58,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.FilterStrategyId, FilterToolbarControl],
   [StrategyIds.DashboardShortcutsStrategyId, DashboardShortcutsToolbarControl],
-  [StrategyIds.RangeStrategyId, RangeToolbarControl]
+  [StrategyIds.ExportStrategyId, ExportToolbarControl]
 ]);
 
 //here we put the configuration screen of the dashboard control if it exists
