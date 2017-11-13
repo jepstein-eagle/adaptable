@@ -59,8 +59,6 @@ import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { RangeHelper } from '../../Core/Services/RangeHelper';
-
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

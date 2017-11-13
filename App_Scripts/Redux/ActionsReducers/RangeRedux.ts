@@ -9,7 +9,6 @@ export const RANGE_SELECT = 'RANGE_SELECT';
 export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';
 export const RANGE_DELETE = 'RANGE_DELETE';
 
-
 export interface RangeSelectAction extends Redux.Action {
     SelectedRangeId: string;
 }
@@ -21,8 +20,6 @@ export interface RangeAddUpdateAction extends Redux.Action {
 export interface RangeDeleteAction extends Redux.Action {
     Range: IRange
 }
-
-
 
 export const RangeSelect = (SelectedRangeId: string): RangeSelectAction => ({
     type: RANGE_SELECT,
@@ -55,7 +52,6 @@ export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = init
 
         case RANGE_ADD_UPDATE: {
             let actionTypedAddUpdate = (<RangeAddUpdateAction>action)
-
             index = ranges.findIndex(r => r.Uid == actionTypedAddUpdate.Range.Uid)
             if (index != -1) {  // it exists
                 actionTypedAddUpdate.Range.Uid = Helper.generateUid();
@@ -70,7 +66,6 @@ export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = init
             index = ranges.findIndex(r => r.Uid == actionTypedDelete.Range.Uid)
             ranges.splice(index, 1);
             return Object.assign({}, state, { Ranges: ranges, CurrentRangeId: "" })
-
         }
         default:
             return state

@@ -48,7 +48,7 @@ import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilte
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import { ExportState, QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
+import {  QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../../Core/Extensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -109,8 +109,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        
+     
 
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
@@ -495,15 +494,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
-
-//    public exportBlotter(): void {
-        // get export state
-  //      let exportState: ExportState = this.AdaptableBlotterStore.TheStore.getState().Export;
-      //  this.grid.options.excel.fileName = exportState.FileName + ".xlsx";
-    //    this.grid.options.excel.allPages = exportState.AllPages;
-    //    this.grid.options.excel.filterable = exportState.Filterable;
-   //     this.grid.saveAsExcel();
- //   }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
         //be careful here if we ever change to real primary key for kendo as we rely on UID

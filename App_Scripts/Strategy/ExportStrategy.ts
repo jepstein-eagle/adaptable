@@ -11,7 +11,7 @@ import { Expression } from '../Core/Expression/Expression'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
-   
+
     private Ranges: IRange[]
 
     constructor(blotter: IAdaptableBlotter) {
@@ -20,66 +20,68 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     public Export(rangeUid: string, exportDestination: ExportDestination): void {
-            switch (exportDestination) {
-                case ExportDestination.Clipboard:
-                    this.copyToClipboard(rangeUid);
-                    break;
-                case ExportDestination.CSV:
-                    this.ConvertRangetoCsv(rangeUid);
-                    break;
-                // case RangeExportDestination.Excel:
-                //     //
-                //     break;
-                // case RangeExportDestination.JSON:
-                //     this.ConvertRangetoJSON(rangeUid);
-                //     break;
-                // case RangeExportDestination.Symphony:
-                //     //
-                //     break;
-            }
+        switch (exportDestination) {
+            case ExportDestination.Clipboard:
+                this.copyToClipboard(rangeUid);
+                break;
+            case ExportDestination.CSV:
+                this.convertRangetoCsv(rangeUid);
+                break;
+            // case RangeExportDestination.Excel:
+            //     //
+            //     break;
+            // case RangeExportDestination.JSON:
+            //     this.convertRangetoJSON(rangeUid);
+            //     break;
+            // case RangeExportDestination.Symphony:
+            //     //
+            //     break;
         }
-    
-        // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
-        private ConvertRangetoArray(rangeUid: string): any[] {
-            let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
-            let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
-            return RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert, rangeCols);
-        }
-    
-        private ConvertRangetoJSON(rangeUid: string): string {
-            let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
-            return JSON.stringify(rangeAsArray)
-        }
-    
-        private copyToClipboard(rangeUid: string) {
-            let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
-            let csvContent: string = Helper.convertArrayToCsv(rangeAsArray, ",");
-            Helper.copyToClipboard(csvContent)
-        }
-    
-        private ConvertRangetoCsv(rangeUid: string): void {
-            let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
-            let csvContent: string = Helper.convertArrayToCsv(rangeAsArray, ",");
-            let csvFileName: string = this.getRangeFromUid(rangeUid).Name + ".csv"
-            Helper.createDownloadedFile(csvContent, csvFileName, 'text/csv;encoding:utf-8');
-        }
-    
-        private getColsForRange(range: IRange): IColumn[] {
-            let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let cols: IColumn[] = (range.RangeScope == RangeScope.AllColumns) ?
-                allCols :
-                range.Columns.map(c => allCols.find(col => col.ColumnId == c));
-            return cols;
-        }
-    
-        private getRangeFromUid(rangeUid: string): IRange {
-            return this.Ranges.find(r => r.Uid == rangeUid);
-        }
-    
-        protected InitState() {
-            if (this.Ranges != this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges) {
-                this.Ranges = this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges;
-            }
-        }
-    
     }
+
+    private convertRangetoCsv(rangeUid: string): void {
+        let csvContent: string = this.createCSVContent(rangeUid);
+        let csvFileName: string = this.getRangeFromUid(rangeUid).Name + ".csv"
+        Helper.createDownloadedFile(csvContent, csvFileName, 'text/csv;encoding:utf-8');
+    }
+
+    private copyToClipboard(rangeUid: string) {
+        let csvContent: string = this.createCSVContent(rangeUid);
+        Helper.copyToClipboard(csvContent)
+    }
+
+    private convertRangetoJSON(rangeUid: string): string {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
+        return JSON.stringify(rangeAsArray)
+    }
+
+    private createCSVContent(rangeUid: string): string {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
+        return Helper.convertArrayToCsv(rangeAsArray, ",");
+    }
+
+    // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
+    private ConvertRangetoArray(rangeUid: string): any[] {
+        let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
+        let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
+        return RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert, rangeCols);
+    }
+
+    private getColsForRange(range: IRange): IColumn[] {
+        let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        return (range.RangeScope == RangeScope.AllColumns) ?
+            allCols :
+            range.Columns.map(c => allCols.find(col => col.ColumnId == c));
+    }
+
+    private getRangeFromUid(rangeUid: string): IRange {
+        return this.Ranges.find(r => r.Uid == rangeUid);
+    }
+
+    protected InitState() {
+        if (this.Ranges != this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges) {
+            this.Ranges = this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges;
+        }
+    }
+
+}

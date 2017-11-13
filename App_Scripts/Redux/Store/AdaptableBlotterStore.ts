@@ -35,7 +35,6 @@ import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
-//import { IRangeStrategy } from '../../Core/Interface/IRangeStrategy'
 import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
@@ -350,14 +349,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
-                //   case RangeRedux.RANGE_EXPORT: {
-                //         let rangeStrategy = <IRangeStrategy>(adaptableBlotter.Strategies.get(StrategyIds.RangeStrategyId));
-                //          let actionTyped = <RangeRedux.RangeExportAction>action;
-                //           rangeStrategy.ExportRange(actionTyped.RangeToExport, actionTyped.RangeExportDestination);
-                //           middlewareAPI.dispatch(PopupRedux.PopupHide());
-                //            return next(action);
-                //        }
-
+               
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:

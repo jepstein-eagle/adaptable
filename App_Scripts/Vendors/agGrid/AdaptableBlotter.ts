@@ -64,7 +64,6 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-import { RangeHelper } from '../../Core/Services/RangeHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -483,9 +482,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
-
-
-
 
     public getDisplayValue(id: any, columnId: string): string {
         //ag-grid doesn't support FindRow based on data
