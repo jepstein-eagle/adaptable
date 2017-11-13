@@ -76,6 +76,8 @@ export interface IConfirmationPopup {
     CancelText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
+    ShowCommentBox: boolean,
+    ConfirmationComment:string;
 }
 
 export interface IPromptPopup {

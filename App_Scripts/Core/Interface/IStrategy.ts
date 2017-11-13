@@ -34,6 +34,7 @@ export interface IUIConfirmation {
     CancelText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
+    ShowCommentBox: boolean;
 }
 
 

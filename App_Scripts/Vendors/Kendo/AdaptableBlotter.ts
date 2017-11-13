@@ -797,7 +797,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId])
+                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId]),
+                        ShowCommentBox: true
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware

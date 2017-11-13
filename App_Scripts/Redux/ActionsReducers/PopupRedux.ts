@@ -32,7 +32,9 @@ export interface PopupHidePromptAction extends Redux.Action { }
 
 export interface PopupConfirmPromptAction extends InputAction { }
 
-export interface PopupConfirmConfirmationAction extends Redux.Action { }
+export interface PopupConfirmConfirmationAction extends Redux.Action {
+    comment: string
+}
 
 export interface PopupCancelConfirmationAction extends Redux.Action { }
 
@@ -74,8 +76,9 @@ export const PopupConfirmPrompt = (InputText: string): PopupConfirmPromptAction 
     InputText
 })
 
-export const PopupConfirmConfirmation = (): PopupConfirmConfirmationAction => ({
-    type: POPUP_CONFIRM_CONFIRMATION
+export const PopupConfirmConfirmation = (comment: string): PopupConfirmConfirmationAction => ({
+    type: POPUP_CONFIRM_CONFIRMATION,
+    comment
 })
 
 export const PopupCancelConfirmation = (): PopupCancelConfirmationAction => ({
@@ -128,7 +131,9 @@ const initialPopupState: PopupState = {
         ConfirmationText: "",
         CancelText: "",
         CancelAction: null,
-        ConfirmAction: null
+        ConfirmAction: null,
+        ShowCommentBox: false,
+        ConfirmationComment : null
     },
     PromptPopup: {
         ShowPromptPopup: false,
@@ -168,6 +173,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
         }
 
         case POPUP_CONFIRM_CONFIRMATION: {
+            let actionTyped = (<PopupConfirmConfirmationAction>action)
             //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
             let newConfirmationPopup: IConfirmationPopup = {
                 ShowConfirmationPopup: false,
@@ -176,7 +182,9 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
                 ConfirmationText: "",
                 CancelText: "",
                 ConfirmAction: null,
-                CancelAction: null
+                CancelAction: null,
+                ShowCommentBox: false,
+                ConfirmationComment : actionTyped.comment
             }
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }
@@ -189,7 +197,9 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
                 ConfirmationText: "",
                 CancelText: "",
                 ConfirmAction: null,
-                CancelAction: null
+                CancelAction: null,
+                ShowCommentBox: false,
+                ConfirmationComment: null
             }
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }
@@ -220,7 +230,9 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
                 ConfirmationText: actionTyped.Confirmation.ConfirmationText,
                 CancelText: actionTyped.Confirmation.CancelText,
                 ConfirmAction: actionTyped.Confirmation.ConfirmAction,
-                CancelAction: actionTyped.Confirmation.CancelAction
+                CancelAction: actionTyped.Confirmation.CancelAction,
+                ShowCommentBox: actionTyped.Confirmation.ShowCommentBox,
+                ConfirmationComment: null
             }
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }

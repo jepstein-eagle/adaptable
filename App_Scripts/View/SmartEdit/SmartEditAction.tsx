@@ -173,7 +173,8 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
             ConfirmationMsg: "Do you want to continue?",
             ConfirmationText: "Bypass Rule",
             CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true)
+            ConfirmAction: SmartEditRedux.SmartEditApply(true),
+            ShowCommentBox: true
         }
         this.props.onConfirmWarningCellValidation(confirmation)
     }

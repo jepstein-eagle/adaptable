@@ -164,7 +164,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 ConfirmationMsg: warningMessage,
                 ConfirmationText: "Bypass Rule",
                 CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
+                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString),
+                ShowCommentBox: true
             }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
         }

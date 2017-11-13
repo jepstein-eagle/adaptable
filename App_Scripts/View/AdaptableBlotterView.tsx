@@ -33,7 +33,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
     onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
     onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
-    onConfirmConfirmationPopup: () => PopupRedux.PopupConfirmConfirmationAction;
+    onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
 }
@@ -67,7 +67,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     CancelText={this.props.PopupState.ConfirmationPopup.CancelText}
                     ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}
                     onCancel={this.props.onCancelConfirmationPopup}
-                    onConfirm={this.props.onConfirmConfirmationPopup} />
+                    onConfirm={this.props.onConfirmConfirmationPopup}
+                    ShowCommentBox={this.props.PopupState.ConfirmationPopup.ShowCommentBox} />
 
                 {/*  The main model window where action and configuration screens are 'hosted' */}
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ActionConfigurationPopup.ShowPopup}
@@ -100,7 +101,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
-        onConfirmConfirmationPopup: () => dispatch(PopupRedux.PopupConfirmConfirmation()),
+        onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
         showPopup: (componentClassName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShow(componentClassName, isReadOnly, params)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
