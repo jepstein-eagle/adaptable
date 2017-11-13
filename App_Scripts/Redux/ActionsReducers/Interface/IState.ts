@@ -168,3 +168,7 @@ export interface CalculatedColumnState {
     CalculatedColumns: ICalculatedColumn[];
     EditedCalculatedColumnInvalidErrorMsg: string
 }
+
+export interface UIControlConfigState {
+    PredefinedColorChoices: string[];
+}

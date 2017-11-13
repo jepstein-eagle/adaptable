@@ -26,6 +26,7 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     ConditionalStyleConditions: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     UserFilters: IUserFilter[],
+    PredefinedColorChoices: string[],
     onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 }
 
@@ -92,7 +93,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 <AdaptableWizard Steps={
                     [
                         <ConditionalStyleColumnWizard Columns={this.props.Columns} />,
-                        <ConditionalStyleSettingsWizard />,
+                        <ConditionalStyleSettingsWizard PredefinedColorChoices={this.props.PredefinedColorChoices} />,
                         <ConditionalStyleExpressionWizard
                             ColumnList={this.props.Columns}
                             UserFilters={this.props.UserFilters}
@@ -132,7 +133,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyleConditions: state.ConditionalStyle.ConditionalStyleConditions,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters
+        UserFilters: state.Filter.UserFilters,
+        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

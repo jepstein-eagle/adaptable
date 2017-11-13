@@ -14,6 +14,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 
 
 export interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
+    PredefinedColorChoices: string[]
 }
 
 export interface ConditionalStyleSettingsWizardState {
@@ -56,7 +57,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         </Col>
                         <Col xs={8}>
                             {this.state.BackColor != null &&
-                                <ColorPicker value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                             }
                         </Col>
                     </FormGroup>
@@ -66,7 +67,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                         </Col>
                         <Col xs={8}>
                             {this.state.ForeColor != null &&
-                                <ColorPicker value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                             }
                         </Col>
 

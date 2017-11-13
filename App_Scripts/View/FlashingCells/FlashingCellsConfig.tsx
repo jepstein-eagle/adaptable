@@ -19,6 +19,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
     FlashingColumns: Array<IFlashingColumn>,
     Columns: IColumn[],
+    PredefinedColorChoices: string[],
     onSelectColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingCellSelectAction,
     onSelectAllColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
     onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => FlashingCellsRedux.FlashingCellChangeDurationAction
@@ -56,6 +57,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
                 key={flashingColumn.ColumnName}
                 Columns={this.props.Columns}
                 FlashingCellDurations={flashingCellDurations}
+                PredefinedColorChoices={this.props.PredefinedColorChoices}
                 onSelect={(flashingColumn) => this.props.onSelectColumn(flashingColumn)}
                 onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}
                 onChangeDownColorFlashingColumn={(flashingColumn, DownColor) => this.props.onChangeDownColorFlashingColumn(flashingColumn, DownColor)}
@@ -86,7 +88,8 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FlashingColumns: state.FlashingCell.FlashingColumns,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

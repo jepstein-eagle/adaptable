@@ -28,6 +28,7 @@ interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConf
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
     QuickSearchStyle: IStyle,
+    PredefinedColorChoices: string[],
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
@@ -169,7 +170,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                 </Col>
                                 <Col xs={7}>
                                     {this.props.QuickSearchStyle.BackColor != null &&
-                                        <ColorPicker value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
                                     }
                                 </Col>
                             </FormGroup>
@@ -182,7 +183,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                 </Col>
                                 <Col xs={7}>
                                     {this.props.QuickSearchStyle.ForeColor != null &&
-                                        <ColorPicker value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
                                     }
                                 </Col>
                             </FormGroup>
@@ -215,7 +216,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
         QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
         QuickSearchDefaultBackColour: state.QuickSearch.QuickSearchDefaultBackColour,
-        QuickSearchDefaultForeColour: state.QuickSearch.QuickSearchDefaultForeColour
+        QuickSearchDefaultForeColour: state.QuickSearch.QuickSearchDefaultForeColour,
+        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

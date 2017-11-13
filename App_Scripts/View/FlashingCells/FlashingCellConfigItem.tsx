@@ -11,6 +11,7 @@ import { ColorPicker } from '../ColorPicker';
 export interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
     Columns: IColumn[];
+    PredefinedColorChoices: string[];
     FlashingCellDurations: IFlashingCellDuration[];
     onSelect: (flashingColumn: IFlashingColumn) => void;
     onChangeFlashingDuration: (flashingColumn: IFlashingColumn, NewFlashDuration: IFlashingCellDuration) => void;
@@ -49,10 +50,10 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
                     }
                 </Col>
                 <Col md={2} >
-                    <ColorPicker disabled={isDisabled} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
+                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
                 </Col>
                 <Col md={2} >
-                    <ColorPicker disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
                 </Col>
             </Row>
         </li>
