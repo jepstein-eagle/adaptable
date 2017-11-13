@@ -127,7 +127,6 @@ export module ObjectFactory {
 
     export function CreateEmptyConditionalStyle(): IConditionalStyleCondition {
         return {
-            Uid: Helper.generateUid(),
             ColumnId: "",
             Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
             ConditionalStyleScope: ConditionalStyleScope.Row,

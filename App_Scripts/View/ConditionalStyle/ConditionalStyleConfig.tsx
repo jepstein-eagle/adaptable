@@ -27,11 +27,12 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     Columns: IColumn[],
     UserFilters: IUserFilter[],
     PredefinedColorChoices: string[],
-    onAddEditConditionalStyle: (condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
+    onAddEditConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 }
 
 interface ConditionalStyleConfigState {
     EditedConditionalStyleCondition: IConditionalStyleCondition
+    EditedIndexConditionalStyleCondition: number
     WizardStartIndex: number
 }
 
@@ -39,7 +40,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     constructor() {
         super();
-        this.state = { EditedConditionalStyleCondition: null, WizardStartIndex: 0 }
+        this.state = { EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 }
     }
 
     componentDidMount() {
@@ -61,14 +62,14 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         let cellInfo: [string, number][] = [["Where Applied", 3], ["Style", 2], ["Description", 4], ["", 3]];
 
-        let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition) => {
+        let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
-                key={conditionalStyleCondition.Uid}
+                key={"CS" + index}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
-                onEdit={(conditionalStyleCondition) => this.onEdit(conditionalStyleCondition)}
-                onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyleCondition)} >
+                onEdit={(conditionalStyleCondition) => this.onEdit(index, conditionalStyleCondition)}
+                onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyleCondition)} >
             </ConditionalStyleConfigItem>
         });
 
@@ -110,22 +111,22 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onAdd() {
         let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
-        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 0 });
+        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 
-    onEdit(condition: IConditionalStyleCondition) {
+    onEdit(index: number, condition: IConditionalStyleCondition) {
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 0 });
+        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: index });
     }
 
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0 });
+        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 
     WizardFinish() {
-        this.props.onAddEditConditionalStyle(this.state.EditedConditionalStyleCondition);
-        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0 });
+        this.props.onAddEditConditionalStyle(this.state.EditedIndexConditionalStyleCondition, this.state.EditedConditionalStyleCondition);
+        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 }
 
@@ -140,7 +141,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditConditionalStyle: (conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(conditionalStyleCondition)),
+        onAddEditConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
     };
 }
 
