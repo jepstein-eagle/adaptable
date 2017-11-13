@@ -43,6 +43,11 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 
         let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
             let dashboardControl = AdaptableDashboardViewFactory.get(x.Strategy);
+            if(!dashboardControl)
+            {
+                console.error("Unknown Dashboard control <" + x.Strategy + "> from the user config", x)
+                return null
+            }
             // let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
             let visibleButton = x.IsVisible ?
