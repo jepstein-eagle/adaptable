@@ -43,7 +43,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, {}> {
 
     render() {
 
-        let infoBody: any[] = ["Use layouts to create and manage multiple named, sets of ordered columns", <br />, <br />, "To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)", <br />, <br />, "To create a new layout, enter a name in the 'Save As New Layout' textbox."]
+        let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br/>,<br/>]
         let sortedRanges = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Ranges, "Name")
         let rangeEntity = this.props.Ranges.find(x => x.Uid == this.props.CurrentRange)
         let rangeEntityUid = rangeEntity ? rangeEntity.Uid : ""
