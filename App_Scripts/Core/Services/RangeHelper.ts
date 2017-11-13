@@ -17,7 +17,7 @@ export module RangeHelper {
     }
 
     export function IsSystemRange(range: IRange): boolean {
-        return range.Uid == ALL_DATA_RANGE || range.Uid == ALL_VISIBLE_DATA_RANGE;
+        return range==null||range.Uid == ALL_DATA_RANGE || range.Uid == ALL_VISIBLE_DATA_RANGE;
     }
 
     export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[] {

@@ -23,8 +23,8 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
-import { ExportDestination } from '../../Core/Enums';
-import { SortOrder } from '../../Core/Enums';
+import { ExportDestination, SortOrder } from '../../Core/Enums';
+import { RangeHelper } from "../../Core/Services/RangeHelper";
 
 interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<ExportToolbarControlComponent> {
     onExportRange: (rangeUid: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
@@ -73,7 +73,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     selected={savedRange ? [savedRange] : []}
                     onChange={(selected) => { this.onSelectedRangeChanged(selected) }}
                     options={sortedRanges}
-                />
+                /> 
                 {' '}
                 {currentRangeId != "select" &&
                     <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
@@ -84,7 +84,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditRange()}
                     overrideTooltip="Edit Range"
-                    overrideDisableButton={currentRangeId == "select"}
+                    overrideDisableButton={RangeHelper.IsSystemRange(savedRange)}
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph" />
                 {' '}
@@ -94,7 +94,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 {' '}
                 <ButtonDelete
                     overrideTooltip="Delete Range"
-                    overrideDisableButton={currentRangeId == "select"}
+                    overrideDisableButton={RangeHelper.IsSystemRange(savedRange)}
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph"
                     ConfirmAction={RangeRedux.RangeDelete(savedRange)}
