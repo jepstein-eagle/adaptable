@@ -120,7 +120,10 @@ export module RangeHelper {
                     if (!colNames.find(x => x == cols.find(c => c.ColumnId == cvPair.columnID).FriendlyName)) {
                         return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
                     }
-                    values.push(cvPair.value);
+                    // values.push(cvPair.value);
+                    //we want the displayValue now
+                    values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnID));
+                    
                 }
                 dataToExport.push(values);
             }
