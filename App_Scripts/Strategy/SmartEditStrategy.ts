@@ -63,8 +63,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     }
                 }
             }
-            
+
             let selectedColumnId: string = pair[1][0].columnID;
+            //for multiple range the column can be different for all records
             if (!columnId) {
                 columnId = selectedColumnId
             }
