@@ -1,13 +1,13 @@
-import { IRange } from '../../Core/Interface/IExportStrategy';
+import { IRange } from '../../../Core/Interface/IExportStrategy';
 import * as React from "react";
 import { ListGroup, ListGroupItem, Panel, FormControl } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { SelectionMode } from '../../Core/Enums';
-import { SingleListBox } from '../SingleListBox'
-import { StringExtensions } from '../../Core/Extensions';
-import { ColumnSelector } from '../ColumnSelector';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { SelectionMode } from '../../../Core/Enums';
+import { SingleListBox } from '../../SingleListBox'
+import { StringExtensions } from '../../../Core/Extensions';
+import { ColumnSelector } from '../../ColumnSelector';
 
 export interface RangeNameWizardProps extends AdaptableWizardStepProps<IRange> {
 

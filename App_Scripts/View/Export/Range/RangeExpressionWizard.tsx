@@ -1,13 +1,13 @@
 import * as React from "react";
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
-import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { IRange } from '../../Core/Interface/IExportStrategy';
-import { Expression } from '../../Core/Expression/Expression';
-import { IUserFilter } from '../../Core/Interface/IExpression'
-import { DistinctCriteriaPairValue } from '../../Core/Enums'
-import { StringExtensions } from '../../Core/Extensions';
+import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../../ExpressionBuilder/ExpressionBuilderPage'
+import { IRange } from '../../../Core/Interface/IExportStrategy';
+import { Expression } from '../../../Core/Expression/Expression';
+import { IUserFilter } from '../../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { StringExtensions } from '../../../Core/Extensions';
 
 export interface RangeExpressionWizardProps extends AdaptableWizardStepProps<IRange> {
     ColumnList: Array<IColumn>

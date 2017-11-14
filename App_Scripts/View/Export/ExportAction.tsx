@@ -3,7 +3,9 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
-import { FormControl, Panel, Form, FormGroup, MenuItem, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip, DropdownButton } from 'react-bootstrap';
+import { FormControl, Panel, Form, FormGroup, ListGroup, MenuItem, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip, DropdownButton } from 'react-bootstrap';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -27,104 +29,158 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
 import { Helper } from '../../Core/Helper';
+import { AdaptableWizard } from './../Wizard/AdaptableWizard'
+import { EmptyConfigItem } from './Range/EmptyConfigItem'
+import { RangeConfigItem } from './Range/RangeConfigItem'
+import { RangeColumnsWizard } from './Range/RangeColumnsWizard'
+import { RangeNameWizard } from './Range/RangeNameWizard'
+import { RangeExpressionWizard } from './Range/RangeExpressionWizard'
+import { ObjectFactory } from '../../Core/ObjectFactory';
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
     Ranges: IRange[],
     CurrentRange: string,
     onExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
-    onSelectRange: (rangeUid: string) => RangeRedux.RangeSelectAction;
-    onNewRange: () => PopupRedux.PopupShowAction;
-    onEditRange: () => PopupRedux.PopupShowAction;
-
+    onAddUpdateRange: (Range: IRange) => RangeRedux.RangeAddUpdateAction
+    UserFilters: IUserFilter[]
+    Columns: Array<IColumn>
 }
 
-class ExportActionComponent extends React.Component<ExportActionProps, {}> {
+interface RangeConfigInternalState {
+    EditedRange: IRange
+    WizardStartIndex: number
+}
+
+class ExportActionComponent extends React.Component<ExportActionProps, RangeConfigInternalState> {
+
+    constructor() {
+        super();
+        this.state = { EditedRange: null, WizardStartIndex: 0 }
+    }
+
+    componentDidMount() {
+        if (this.props.PopupParams == "New") {
+            this.onNewRange()
+        }
+        if (this.props.PopupParams == "Edit") {
+            let clonedRange: IRange = this.getClonedSelectedRange();
+            this.onEditRange(clonedRange)
+        }
+    }
 
     render() {
 
-        let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br/>,<br/>]
-        let sortedRanges = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Ranges, "Name")
-        let rangeEntity = this.props.Ranges.find(x => x.Uid == this.props.CurrentRange)
-        let rangeEntityUid = rangeEntity ? rangeEntity.Uid : ""
-        let rangeEntityName = rangeEntity ? rangeEntity.Name : ""
+        let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br />, <br />]
 
-        let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(rangeEntityUid, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
-        let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(rangeEntityUid, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
+        let Ranges = this.props.Ranges.map((range: IRange) => {
+            return <RangeConfigItem Range={range} key={range.Uid}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                onExport={(rangeUid, exportDestination) => this.onExportRange(rangeUid, exportDestination)}
+                onEdit={(Range) => this.onEditRange(range)}
+                onDeleteConfirm={RangeRedux.RangeDelete(range)} />
+        });
+        let emptyConfigItem = 
+             <EmptyConfigItem  />
+        
+
+        let cellInfo: [string, number][] = [["Range", 2], ["Columns", 3], ["Expression", 3], ["",4]];
+        let newButton = <ButtonNew onClick={() => this.onNewRange()}
+            overrideTooltip="Create Range"
+            DisplayMode="Glyph+Text" />
+
 
         return (
-            <PanelWithImage header="Export" bsStyle="primary" glyphicon="th" infoBody={infoBody}>
+            <PanelWithButton headerText="Export" bsStyle="primary" glyphicon="export" infoBody={infoBody} button={newButton} style={panelStyle}>
+                {this.props.Ranges.length == 0 ?
+                    <Well bsSize="small">Click 'New' to create a new Range.  A range is named group of columns and Unique values..</Well>
+                    : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                }
 
-                <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="load">
-                    <Col xs={2} >
-                                <ControlLabel >Range:</ControlLabel>
-                            </Col>
-                              <Col xs={4}>
-                            <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Ranges found with that search"}
-                                placeholder={"Select a Range"}
-                                labelKey={"Name"}
-                                filterBy={["Name"]}
-                                clearButton={true}
-                                selected={rangeEntity ? [rangeEntity] : []}
-                                onChange={(selected) => { this.onSelectedRangeChanged(selected) }}
-                                options={sortedRanges}
-                            />
-                        </Col>
-                        <Col xs={6}>
-                            {' '}
-                            <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={rangeEntityName == ""} >
-                                {csvMenuItem}
-                                {clipboardMenuItem}
-                            </DropdownButton>
-                            {' '}
-                            <ButtonEdit onClick={() => this.props.onEditRange()}
-                                overrideTooltip="Edit Range"
-                                overrideDisableButton={RangeHelper.IsSystemRange(rangeEntity)}
-                                ConfigEntity={rangeEntity}
-                                DisplayMode="Glyph" />
-                            {' '}
-                            <ButtonNew onClick={() => this.props.onNewRange()}
-                                overrideTooltip="Create New Range"
-                                DisplayMode="Glyph" />
-                            {' '}
-                            <ButtonDelete
-                                overrideTooltip="Delete Range"
-                                overrideDisableButton={RangeHelper.IsSystemRange(rangeEntity)}
-                                ConfigEntity={rangeEntity}
-                                DisplayMode="Glyph"
-                                ConfirmAction={RangeRedux.RangeDelete(rangeEntity)}
-                                ConfirmationMsg={"Are you sure you want to delete '" + rangeEntityName + "'?"}
-                                ConfirmationTitle={"Delete Range"} />
-                        </Col>
-                    </FormGroup>
-                </AdaptableBlotterForm>
-
-            </PanelWithImage>
+                <ListGroup style={divStyle}>
+                    {Ranges}
+                    {emptyConfigItem}
+                </ListGroup>
+                {this.state.EditedRange &&
+                    <AdaptableWizard Steps={[
+                        <RangeColumnsWizard Columns={this.props.Columns} />,
+                        <RangeExpressionWizard ColumnList={this.props.Columns}
+                            UserFilters={this.props.UserFilters}
+                            SelectedColumnId={null}
+                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+                        <RangeNameWizard />,
+                    ]}
+                        Data={this.state.EditedRange}
+                        StepStartIndex={this.state.WizardStartIndex}
+                        onHide={() => this.closeWizard()}
+                        onFinish={() => this.WizardFinish()} >
+                    </AdaptableWizard>
+                }
+            </PanelWithButton>
+    
         );
     }
 
-    onSelectedRangeChanged(selected: IRange[]) {
-        this.props.onSelectRange(selected.length > 0 ? selected[0].Uid : "");
+    private wizardSteps: JSX.Element[]
+
+    closeWizard() {
+        this.props.onClearPopupParams()
+        this.setState({ EditedRange: null, WizardStartIndex: 0 });
+    }
+    WizardFinish() {
+        this.props.onAddUpdateRange(this.state.EditedRange)
+        this.setState({ EditedRange: null, WizardStartIndex: 0 });
     }
 
+    onNewRange() {
+        this.setState({ EditedRange: ObjectFactory.CreateEmptyRange(), WizardStartIndex: 0 })
+    }
+
+    // Edit range: sets the edited range to the current selected range which will force the wizard to show
+    onEditRange(rangeToEdit: IRange) {
+        this.setState({ EditedRange: rangeToEdit, WizardStartIndex: 0 })
+    }
+
+    onExportRange(rangeUid: string, exportDestination: ExportDestination) {
+        this.props.onExport(rangeUid, exportDestination);
+    }
+
+    private getClonedSelectedRange() {
+        //we clone the object since there are methods that change directly the object from the state and 
+        //I'm rewrtting enough of the component like that
+        let selectedRange: IRange = this.props.Ranges.find(a => a.Uid == this.props.CurrentRange);
+        if (selectedRange) {
+            selectedRange = Helper.cloneObject(selectedRange)
+        }
+        return selectedRange
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Ranges: state.Range.Ranges,
         CurrentRange: state.Range.CurrentRangeId,
+   Columns: state.Grid.Columns,
+        UserFilters: state.Filter.UserFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectRange: (value: string) => dispatch(RangeRedux.RangeSelect(value)),
         onExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(value, exportDestination)),
-        onNewRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "New")),
-        onEditRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "Edit"))
-    };
+        onAddUpdateRange: (Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Range))
+     };
 }
 
 export let ExportAction = connect(mapStateToProps, mapDispatchToProps)(ExportActionComponent);
+
+let divStyle: React.CSSProperties = {
+    'overflowY': 'auto',
+    'maxHeight': '300px'
+}
+
+let panelStyle = {
+    width: '800px',
+ }
 

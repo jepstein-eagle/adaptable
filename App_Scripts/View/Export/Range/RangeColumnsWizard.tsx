@@ -1,15 +1,15 @@
-import { IRange } from '../../Core/Interface/IExportStrategy';
+import { IRange } from '../../../Core/Interface/IExportStrategy';
 import * as React from "react";
 import { ListGroup, ListGroupItem, Panel, Col, Radio } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { SingleListBox } from '../SingleListBox'
-import { StringExtensions } from '../../Core/Extensions';
-import { ColumnSelector } from '../ColumnSelector';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { AdaptablePopover } from '../AdaptablePopover';
-import { RangeScope, SelectionMode, PopoverType } from '../../Core/Enums';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { SingleListBox } from '../../SingleListBox'
+import { StringExtensions } from '../../../Core/Extensions';
+import { ColumnSelector } from '../../ColumnSelector';
+import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
+import { AdaptablePopover } from '../../AdaptablePopover';
+import { RangeScope, SelectionMode, PopoverType } from '../../../Core/Enums';
 
 export interface RangeColumnsWizardProps extends AdaptableWizardStepProps<IRange> {
     Columns: Array<IColumn>

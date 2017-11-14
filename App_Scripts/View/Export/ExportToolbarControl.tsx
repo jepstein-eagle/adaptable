@@ -127,8 +127,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onExportRange: (rangeUid: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(rangeUid, exportDestination)),
         onSelectRange: (rangeUid: string) => dispatch(RangeRedux.RangeSelect(rangeUid)),
-        onNewRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "New")),
-        onEditRange: () => dispatch(PopupRedux.PopupShow("RangeConfig", false, "Edit"))
+        onNewRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "New")),
+        onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit"))
     };
 }
 

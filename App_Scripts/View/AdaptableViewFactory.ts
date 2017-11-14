@@ -22,7 +22,6 @@ import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
-import { RangeConfig } from './Range/RangeConfig'
 import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } from '../Core/StrategyIds'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
@@ -45,7 +44,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationConfig: CellValidationConfig,
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
-  RangeConfig: RangeConfig,
   DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
   CalculatedColumnConfig: CalculatedColumnConfig
 }
