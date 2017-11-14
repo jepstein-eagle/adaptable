@@ -85,7 +85,6 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditRange()}
                     overrideTooltip="Edit Range"
-                    overrideDisableButton={RangeHelper.IsSystemRange(savedRange)}
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph" />
                 {' '}
@@ -95,7 +94,6 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 {' '}
                 <ButtonDelete
                     overrideTooltip="Delete Range"
-                    overrideDisableButton={RangeHelper.IsSystemRange(savedRange)}
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph"
                     ConfirmAction={RangeRedux.RangeDelete(savedRangeIndex)}

@@ -15,7 +15,7 @@ export module RangeHelper {
     export const VISIBLE_DATA_RANGE = 'Visible Data'
     export const SELECTED_CELLS_RANGE = 'Selected Cells'
 
-    export function IsSystemRange(range: IRange): boolean {
+    function IsSystemRange(range: IRange): boolean {
         return range == null || range.Name == ALL_DATA_RANGE || range.Name == VISIBLE_DATA_RANGE || range.Name == SELECTED_CELLS_RANGE;
     }
 
