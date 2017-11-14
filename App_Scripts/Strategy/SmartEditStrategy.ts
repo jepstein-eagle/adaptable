@@ -54,7 +54,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
-
+        let columnId: string
         for (let pair of selectedCells.Selection) {
             if (pair[1].length > 1) {
                 return {
@@ -63,9 +63,18 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     }
                 }
             }
-
-            // just test the first item rather than all of them because if first passes/fails then all will...
-            let selectedColumnId: string = pair[1][0].columnID;;
+            
+            let selectedColumnId: string = pair[1][0].columnID;
+            if (!columnId) {
+                columnId = selectedColumnId
+            }
+            else if (columnId != selectedColumnId) {
+                return {
+                    Error: {
+                        ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
+                    }
+                }
+            }
 
             // test column is numeric
             let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedColumnId);
@@ -86,9 +95,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 }
 
             }
-            return true;
         }
-
+        return true;
 
     }
 
