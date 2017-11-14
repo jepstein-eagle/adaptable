@@ -32,12 +32,11 @@ export module UserFilterHelper {
     export const FALSE_USER_FILTER = 'False'
 
 
-    export function IsSystemUserFilter(filter: IUserFilter): boolean  {
-        return filter.Uid ==TODAY_USER_FILTER || filter.Uid== IN_PAST_USER_FILTER|| filter.Uid== IN_FUTURE_USER_FILTER|| filter.Uid== YESTERDAY_USER_FILTER 
-        || filter.Uid ==TOMORROW_USER_FILTER || filter.Uid== NEXT_WORKING_DAY_USER_FILTER|| filter.Uid== PREVIOUS_WORKING_DAY_USER_FILTER|| filter.Uid== THIS_YEAR_USER_FILTER
-        || filter.Uid ==POSITIVE_USER_FILTER || filter.Uid== NEGATIVE_USER_FILTER|| filter.Uid== ZERO_USER_FILTER|| filter.Uid== NUMERIC_BLANKS_USER_FILTER || filter.Uid==NUMERIC_NON_BLANKS_USER_FILTER
-        || filter.Uid ==STRING_BLANKS_USER_FILTER || filter.Uid== STRING_NON_BLANKS_USER_FILTER
-        || filter.Uid== TRUE_USER_FILTER|| filter.Uid== FALSE_USER_FILTER
+    export function IsSystemUserFilter(filter: IUserFilter): boolean {
+        if (filter.IsExpressionSatisfied) {
+            return true
+        }
+        return false
     }
 
     export function GetUserFilters(UserFilters: IUserFilter[], userFilterUids: string[]): IUserFilter[] {
@@ -108,7 +107,7 @@ export module UserFilterHelper {
         }
     }
 
-   
+
     export function CreateSystemUserFilters(): Array<IUserFilter> {
 
         let _systemExpressions: IUserFilter[] = [];
