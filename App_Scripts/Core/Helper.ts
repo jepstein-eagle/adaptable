@@ -160,6 +160,7 @@ export module Helper {
             textarea.style.opacity = '0.0';
             document.body.appendChild(textarea);
             textarea.select();
+            textarea.focus();
             try {
                 return document.execCommand("copy");  // Security exception may be thrown by some browsers.
             } catch (ex) {
