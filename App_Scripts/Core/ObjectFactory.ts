@@ -75,7 +75,6 @@ export module ObjectFactory {
 
     export function CreateEmptyRange(): IRange {
         return {
-            Uid: Helper.generateUid(),
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
             Columns: [],

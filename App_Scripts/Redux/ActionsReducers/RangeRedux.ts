@@ -10,62 +10,61 @@ export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';
 export const RANGE_DELETE = 'RANGE_DELETE';
 
 export interface RangeSelectAction extends Redux.Action {
-    SelectedRangeId: string;
+    SelectedRange: string;
 }
 
 export interface RangeAddUpdateAction extends Redux.Action {
+    Index: number,
     Range: IRange
 }
 
 export interface RangeDeleteAction extends Redux.Action {
-    Range: IRange
+    Index: number
 }
 
-export const RangeSelect = (SelectedRangeId: string): RangeSelectAction => ({
+export const RangeSelect = (SelectedRange: string): RangeSelectAction => ({
     type: RANGE_SELECT,
-    SelectedRangeId
+    SelectedRange
 })
 
-export const RangeAddUpdate = (Range: IRange): RangeAddUpdateAction => ({
+export const RangeAddUpdate = (Index: number, Range: IRange): RangeAddUpdateAction => ({
     type: RANGE_ADD_UPDATE,
+    Index,
     Range
 })
 
-export const RangeDelete = (Range: IRange): RangeDeleteAction => ({
+export const RangeDelete = (Index: number): RangeDeleteAction => ({
     type: RANGE_DELETE,
-    Range
+    Index
 })
 
 const initialRangeState: RangeState = {
     Ranges: RangeHelper.CreateSystemRanges(),
-    CurrentRangeId: ""
+    CurrentRange: ""
 }
 
 export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = initialRangeState, action: Redux.Action): RangeState => {
-    let index: number;
-    let ranges: IRange[] = [].concat(state.Ranges);
-
     switch (action.type) {
-       
         case RANGE_SELECT:
-            return Object.assign({}, state, { CurrentRangeId: (<RangeSelectAction>action).SelectedRangeId })
+            return Object.assign({}, state, { CurrentRange: (<RangeSelectAction>action).SelectedRange })
 
         case RANGE_ADD_UPDATE: {
+            let ranges: IRange[] = [].concat(state.Ranges);
+
             let actionTypedAddUpdate = (<RangeAddUpdateAction>action)
-            index = ranges.findIndex(r => r.Uid == actionTypedAddUpdate.Range.Uid)
-            if (index != -1) {  // it exists
-                actionTypedAddUpdate.Range.Uid = Helper.generateUid();
-                ranges[index] = actionTypedAddUpdate.Range
+            if (actionTypedAddUpdate.Index != -1) {  // it exists
+                ranges[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Range
             } else {
                 ranges.push(actionTypedAddUpdate.Range)
             }
-            return Object.assign({}, state, { Ranges: ranges, CurrentRangeId: actionTypedAddUpdate.Range.Uid });
+            return Object.assign({}, state, { Ranges: ranges, CurrentRange: actionTypedAddUpdate.Range.Name });
         }
         case RANGE_DELETE: {
+            let ranges: IRange[] = [].concat(state.Ranges);
+
             let actionTypedDelete = (<RangeDeleteAction>action)
-            index = ranges.findIndex(r => r.Uid == actionTypedDelete.Range.Uid)
-            ranges.splice(index, 1);
-            return Object.assign({}, state, { Ranges: ranges, CurrentRangeId: "" })
+            ranges.splice(actionTypedDelete.Index, 1);
+            return Object.assign({}, state, { Ranges: ranges, CurrentRange: "" })
         }
         default:
             return state

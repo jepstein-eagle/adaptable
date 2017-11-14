@@ -5,13 +5,13 @@ import * as Redux from 'redux'
 export const EXPORT = 'EXPORT';
 
 export interface ExportAction extends Redux.Action {
-    RangeId: string;
+    Range: string;
     ExportDestination: ExportDestination
 }
 
-export const Export = (RangeId: string, ExportDestination: ExportDestination): ExportAction => ({
+export const Export = (Range: string, ExportDestination: ExportDestination): ExportAction => ({
     type: EXPORT,
-    RangeId,
+    Range,
     ExportDestination
 })
 

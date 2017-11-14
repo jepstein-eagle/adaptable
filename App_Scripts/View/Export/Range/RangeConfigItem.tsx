@@ -13,9 +13,10 @@ import { RangeHelper } from '../../../Core/Services/RangeHelper';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
+    IsLast : boolean
     UserFilters: IUserFilter[]
-    onEdit: (Range: IRange) => void;
-    onExport: (value: string, exportDestination: ExportDestination) => void;
+    onEdit: () => void;
+    onExport: (exportDestination: ExportDestination) => void;
     onDeleteConfirm: Redux.Action;
     Columns: Array<IColumn>
 }
@@ -23,8 +24,8 @@ export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigI
 export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
     render(): any {
 
-        let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(this.props.Range.Uid, ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
-        let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(this.props.Range.Uid, ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
+        let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
+        let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
 
         return <li
             className="list-group-item"
@@ -46,7 +47,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                 </Col>
                 <Col xs={1}>
                     <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">Export</Tooltip>}>
-                        <Dropdown id="dropdown-functions" >
+                        <Dropdown id="dropdown-functions" dropup={this.props.IsLast} >
                             <Dropdown.Toggle>
                                 <Glyphicon glyph="export" />
                             </Dropdown.Toggle>
@@ -60,7 +61,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                 <Col xs={3}>
                     <EntityListActionButtons
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
-                        editClick={() => this.props.onEdit(this.props.Range)}
+                        editClick={() => this.props.onEdit()}
                         ConfigEntity={this.props.Range}
                         EntityName="Range">
                     </EntityListActionButtons>

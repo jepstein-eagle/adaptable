@@ -10,25 +10,21 @@ import { IUserFilter } from '../../Core/Interface/IExpression';
 
 export module RangeHelper {
 
-    export const ALL_DATA_RANGE = 'AllData'
-    export const VISIBLE_DATA_RANGE = 'VisibleData'
-    export const SELECTED_CELLS_RANGE = 'SelectedCells'
-
-    export function GetRanges(Ranges: IRange[], RangeUids: string[]): IRange[] {
-        return Ranges.filter(f => RangeUids.find(uid => uid == f.Uid) != null)
-    }
+    export const ALL_DATA_RANGE = 'All Data'
+    export const VISIBLE_DATA_RANGE = 'Visible Data'
+    export const SELECTED_CELLS_RANGE = 'Selected Cells'
 
     export function IsSystemRange(range: IRange): boolean {
-        return range == null || range.Uid == ALL_DATA_RANGE || range.Uid == VISIBLE_DATA_RANGE || range.Uid == SELECTED_CELLS_RANGE;
+        return range == null || range.Name == ALL_DATA_RANGE || range.Name == VISIBLE_DATA_RANGE || range.Name == SELECTED_CELLS_RANGE;
     }
 
     export function GetRangeColumnsDescription(range: IRange, cols: IColumn[]): string {
         if (IsSystemRange(range)) {
-            if (range.Uid == ALL_DATA_RANGE) {
+            if (range.Name == ALL_DATA_RANGE) {
                 return "All Columns";
-            } else if (range.Uid == VISIBLE_DATA_RANGE) {
+            } else if (range.Name == VISIBLE_DATA_RANGE) {
                 return "Visible Columns";
-            } else if (range.Uid == SELECTED_CELLS_RANGE) {
+            } else if (range.Name == SELECTED_CELLS_RANGE) {
                 return "Selected Columns";
             }
         }
@@ -40,11 +36,11 @@ export module RangeHelper {
 
     export function GetRangeExpressionDescription(range: IRange, cols: IColumn[], userFilters: IUserFilter[]): string {
         if (IsSystemRange(range)) {
-            if (range.Uid == ALL_DATA_RANGE) {
+            if (range.Name == ALL_DATA_RANGE) {
                 return "All Blotter Data";
-            } else if (range.Uid == VISIBLE_DATA_RANGE) {
+            } else if (range.Name == VISIBLE_DATA_RANGE) {
                 return "All Visible Data";
-            } else if (range.Uid == SELECTED_CELLS_RANGE) {
+            } else if (range.Name == SELECTED_CELLS_RANGE) {
                 return "Selected Cells Data";
             }
         }
@@ -80,7 +76,7 @@ export module RangeHelper {
 
     function buildSystemRange(range: IRange, blotter: IAdaptableBlotter) {
         var dataToExport: any[] = [];
-        if (range.Uid == ALL_DATA_RANGE) {
+        if (range.Name == ALL_DATA_RANGE) {
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             dataToExport[0] = cols.map(c => c.FriendlyName);
             let rows: any[] = blotter.getAllRows();
@@ -88,7 +84,7 @@ export module RangeHelper {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
-        } else if (range.Uid == VISIBLE_DATA_RANGE) {
+        } else if (range.Name == VISIBLE_DATA_RANGE) {
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
             dataToExport[0] = cols.map(c => c.FriendlyName);
             let rows: any[] = blotter.getAllVisibleRows();
@@ -96,7 +92,7 @@ export module RangeHelper {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
-        } else if (range.Uid == SELECTED_CELLS_RANGE) {
+        } else if (range.Name == SELECTED_CELLS_RANGE) {
             let selectedCells: ISelectedCells = blotter.getSelectedCells();
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
@@ -131,8 +127,7 @@ export module RangeHelper {
         let _systemRanges: IRange[] = [];
 
         _systemRanges.push({
-            Uid: ALL_DATA_RANGE,
-            Name: "All Data",
+            Name: ALL_DATA_RANGE,
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -140,8 +135,7 @@ export module RangeHelper {
         });
 
         _systemRanges.push({
-            Uid: VISIBLE_DATA_RANGE,
-            Name: "Visible Data",
+            Name: VISIBLE_DATA_RANGE,
             RangeScope: RangeScope.AllColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -149,8 +143,7 @@ export module RangeHelper {
         });
 
         _systemRanges.push({
-            Uid: SELECTED_CELLS_RANGE,
-            Name: "Selected Cells",
+            Name: SELECTED_CELLS_RANGE,
             RangeScope: RangeScope.SelectedColumns,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),

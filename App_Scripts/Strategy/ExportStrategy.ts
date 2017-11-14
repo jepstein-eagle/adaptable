@@ -19,13 +19,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', MenuType.ActionPopup, "export");
     }
 
-    public Export(rangeUid: string, exportDestination: ExportDestination): void {
+    public Export(rangeName: string, exportDestination: ExportDestination): void {
         switch (exportDestination) {
             case ExportDestination.Clipboard:
-                this.copyToClipboard(rangeUid);
+                this.copyToClipboard(rangeName);
                 break;
             case ExportDestination.CSV:
-                this.convertRangetoCsv(rangeUid);
+                this.convertRangetoCsv(rangeName);
                 break;
             // case RangeExportDestination.Excel:
             //     //
@@ -39,30 +39,30 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         }
     }
 
-    private convertRangetoCsv(rangeUid: string): void {
-        let csvContent: string = this.createCSVContent(rangeUid);
-        let csvFileName: string = this.getRangeFromUid(rangeUid).Name + ".csv"
+    private convertRangetoCsv(rangeName: string): void {
+        let csvContent: string = this.createCSVContent(rangeName);
+        let csvFileName: string = this.getRange(rangeName).Name + ".csv"
         Helper.createDownloadedFile(csvContent, csvFileName, 'text/csv;encoding:utf-8');
     }
 
-    private copyToClipboard(rangeUid: string) {
-        let csvContent: string = this.createCSVContent(rangeUid);
+    private copyToClipboard(rangeName: string) {
+        let csvContent: string = this.createCSVContent(rangeName);
         Helper.copyToClipboard(csvContent)
     }
 
-    private convertRangetoJSON(rangeUid: string): string {
-        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
+    private convertRangetoJSON(rangeName: string): string {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeName);
         return JSON.stringify(rangeAsArray)
     }
 
-    private createCSVContent(rangeUid: string): string {
-        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeUid);
+    private createCSVContent(rangeName: string): string {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeName);
         return Helper.convertArrayToCsv(rangeAsArray, ",");
     }
 
     // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
-    private ConvertRangetoArray(rangeUid: string): any[] {
-        let rangeToConvert: IRange = this.getRangeFromUid(rangeUid);
+    private ConvertRangetoArray(rangeName: string): any[] {
+        let rangeToConvert: IRange = this.getRange(rangeName);
         let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
         return RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert, rangeCols);
     }
@@ -74,8 +74,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             range.Columns.map(c => allCols.find(col => col.ColumnId == c));
     }
 
-    private getRangeFromUid(rangeUid: string): IRange {
-        return this.Ranges.find(r => r.Uid == rangeUid);
+    private getRange(rangeName: string): IRange {
+        return this.Ranges.find(r => r.Name == rangeName);
     }
 
     protected InitState() {

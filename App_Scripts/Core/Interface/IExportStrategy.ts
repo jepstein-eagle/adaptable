@@ -7,7 +7,6 @@ import { RangeScope, ExportDestination } from '../Enums';
 
 
 export interface IRange extends IConfigEntity {
-    Uid: string;
     Name: string;
     RangeScope: RangeScope
     Columns: string[]
@@ -15,7 +14,7 @@ export interface IRange extends IConfigEntity {
   }
   
   export interface IExportStrategy extends IStrategy {
-     Export(rangeUid: string, exportDestination: ExportDestination): void 
+     Export(rangeName: string, exportDestination: ExportDestination): void 
   }
 
 

@@ -30,7 +30,6 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { EmptyConfigItem } from './Range/EmptyConfigItem'
 import { RangeConfigItem } from './Range/RangeConfigItem'
 import { RangeColumnsWizard } from './Range/RangeColumnsWizard'
 import { RangeNameWizard } from './Range/RangeNameWizard'
@@ -42,7 +41,7 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
     Ranges: IRange[],
     CurrentRange: string,
     onExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
-    onAddUpdateRange: (Range: IRange) => RangeRedux.RangeAddUpdateAction
+    onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
 }
@@ -50,13 +49,14 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
 interface RangeConfigInternalState {
     EditedRange: IRange
     WizardStartIndex: number
+    EditedIndexRange: number
 }
 
 class ExportActionComponent extends React.Component<ExportActionProps, RangeConfigInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedRange: null, WizardStartIndex: 0 }
+        this.state = { EditedRange: null, WizardStartIndex: 0, EditedIndexRange: -1 }
     }
 
     componentDidMount() {
@@ -64,8 +64,9 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
             this.onNewRange()
         }
         if (this.props.PopupParams == "Edit") {
-            let clonedRange: IRange = this.getClonedSelectedRange();
-            this.onEditRange(clonedRange)
+            let selectedRange: IRange = this.props.Ranges.find(a => a.Name == this.props.CurrentRange);
+            let selectedRangeIndex = this.props.Ranges.findIndex(a => a.Name == this.props.CurrentRange);
+            this.onEditRange(selectedRangeIndex, selectedRange)
         }
     }
 
@@ -73,19 +74,17 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
         let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br />, <br />]
 
-        let Ranges = this.props.Ranges.map((range: IRange) => {
-            return <RangeConfigItem Range={range} key={range.Uid}
+        let Ranges = this.props.Ranges.map((range: IRange, index) => {
+            return <RangeConfigItem Range={range} key={index}
                 Columns={this.props.Columns}
+                IsLast={index == this.props.Ranges.length - 1}
                 UserFilters={this.props.UserFilters}
-                onExport={(rangeUid, exportDestination) => this.onExportRange(rangeUid, exportDestination)}
-                onEdit={(Range) => this.onEditRange(range)}
-                onDeleteConfirm={RangeRedux.RangeDelete(range)} />
+                onExport={(exportDestination) => this.onExportRange(range.Name, exportDestination)}
+                onEdit={() => this.onEditRange(index, range)}
+                onDeleteConfirm={RangeRedux.RangeDelete(index)} />
         });
-        let emptyConfigItem = 
-             <EmptyConfigItem  />
-        
 
-        let cellInfo: [string, number][] = [["Range", 2], ["Columns", 3], ["Expression", 3], ["",4]];
+        let cellInfo: [string, number][] = [["Range", 2], ["Columns", 3], ["Expression", 3], ["", 4]];
         let newButton = <ButtonNew onClick={() => this.onNewRange()}
             overrideTooltip="Create Range"
             DisplayMode="Glyph+Text" />
@@ -100,7 +99,6 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
                 <ListGroup style={divStyle}>
                     {Ranges}
-                    {emptyConfigItem}
                 </ListGroup>
                 {this.state.EditedRange &&
                     <AdaptableWizard Steps={[
@@ -118,7 +116,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                     </AdaptableWizard>
                 }
             </PanelWithButton>
-    
+
         );
     }
 
@@ -126,42 +124,32 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedRange: null, WizardStartIndex: 0 });
+        this.setState({ EditedRange: null, WizardStartIndex: 0, EditedIndexRange: -1 });
     }
     WizardFinish() {
-        this.props.onAddUpdateRange(this.state.EditedRange)
-        this.setState({ EditedRange: null, WizardStartIndex: 0 });
+        this.props.onAddUpdateRange(this.state.EditedIndexRange, this.state.EditedRange)
+        this.setState({ EditedRange: null, WizardStartIndex: 0, EditedIndexRange: -1 });
     }
 
     onNewRange() {
-        this.setState({ EditedRange: ObjectFactory.CreateEmptyRange(), WizardStartIndex: 0 })
+        this.setState({ EditedRange: ObjectFactory.CreateEmptyRange(), WizardStartIndex: 0, EditedIndexRange: -1 })
     }
 
-    // Edit range: sets the edited range to the current selected range which will force the wizard to show
-    onEditRange(rangeToEdit: IRange) {
-        this.setState({ EditedRange: rangeToEdit, WizardStartIndex: 0 })
+    onEditRange(index: number, rangeToEdit: IRange) {
+        let clonedRangeToEdit = Helper.cloneObject(rangeToEdit)
+        this.setState({ EditedRange: clonedRangeToEdit, WizardStartIndex: 0, EditedIndexRange: index })
     }
 
-    onExportRange(rangeUid: string, exportDestination: ExportDestination) {
-        this.props.onExport(rangeUid, exportDestination);
-    }
-
-    private getClonedSelectedRange() {
-        //we clone the object since there are methods that change directly the object from the state and 
-        //I'm rewrtting enough of the component like that
-        let selectedRange: IRange = this.props.Ranges.find(a => a.Uid == this.props.CurrentRange);
-        if (selectedRange) {
-            selectedRange = Helper.cloneObject(selectedRange)
-        }
-        return selectedRange
+    onExportRange(range: string, exportDestination: ExportDestination) {
+        this.props.onExport(range, exportDestination);
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Ranges: state.Range.Ranges,
-        CurrentRange: state.Range.CurrentRangeId,
-   Columns: state.Grid.Columns,
+        CurrentRange: state.Range.CurrentRange,
+        Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
     };
 }
@@ -169,8 +157,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(value, exportDestination)),
-        onAddUpdateRange: (Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Range))
-     };
+        onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range))
+    };
 }
 
 export let ExportAction = connect(mapStateToProps, mapDispatchToProps)(ExportActionComponent);
@@ -178,9 +166,10 @@ export let ExportAction = connect(mapStateToProps, mapDispatchToProps)(ExportAct
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '300px'
+    
 }
 
 let panelStyle = {
     width: '800px',
- }
+}
 
