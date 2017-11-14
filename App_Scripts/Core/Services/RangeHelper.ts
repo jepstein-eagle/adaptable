@@ -1,3 +1,4 @@
+import { IStrategyActionReturn } from '../Interface/IStrategy';
 import { Expression } from '../Expression/Expression'
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { IRangeExpression } from '../Interface/IExpression';
@@ -47,7 +48,7 @@ export module RangeHelper {
         return ExpressionHelper.ConvertExpressionToString(range.Expression, cols, userFilters)
     }
 
-    export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): any[] {
+    export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): IStrategyActionReturn<any[]> {
         if (IsSystemRange(range)) {
             return buildSystemRange(range, blotter);
         }
@@ -63,7 +64,7 @@ export module RangeHelper {
                 dataToExport.push(newRow);
             }
         })
-        return dataToExport;
+        return { ActionReturn: dataToExport };
     }
 
     function getRowValues(row: any, rangeColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
@@ -74,7 +75,7 @@ export module RangeHelper {
         return newRow;
     }
 
-    function buildSystemRange(range: IRange, blotter: IAdaptableBlotter) {
+    function buildSystemRange(range: IRange, blotter: IAdaptableBlotter): IStrategyActionReturn<any[]> {
         var dataToExport: any[] = [];
         if (range.Name == ALL_DATA_RANGE) {
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -98,7 +99,7 @@ export module RangeHelper {
 
             if (selectedCells.Selection.size == 0) {
                 // some way of saying we cannot export anything
-                return dataToExport;
+                return { ActionReturn: dataToExport, Error: { ErrorMsg: "No cells are selected" } };
             }
 
             // first get column names - just look at first entry as colnames will be same for each
@@ -112,13 +113,19 @@ export module RangeHelper {
 
             for (var keyValuePair of selectedCells.Selection) {
                 let values: any[] = []
+                if (keyValuePair[1].length != colNames.length) {
+                    return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
+                }
                 for (var cvPair of keyValuePair[1]) {
+                    if (!colNames.find(x => x == cols.find(c => c.ColumnId == cvPair.columnID).FriendlyName)) {
+                        return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
+                    }
                     values.push(cvPair.value);
                 }
                 dataToExport.push(values);
             }
         }
-        return dataToExport;
+        return { ActionReturn: dataToExport };
     }
 
 
