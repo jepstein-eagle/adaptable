@@ -592,24 +592,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    public getAllRows(): any[] {
-        let dataSource = this.grid.dataSource.data();
-        let rows: any[] = []
-        for (var i = 0; i < dataSource.length; i++) {
-            let row: any = dataSource[i];
-            rows.push(row);
-        };
-        return rows;
-    }
-
-    public getAllVisibleRows(): any[] {
-        let view = this.grid.dataSource.view();
-        let rows: any[] = []
-        for (var i = 0; i < view.length; i++) {
-            let row: any = view[i];
-            rows.push(row);
-        };
-        return rows;
+    public forAllVisibleRecordsDo(func: (record: any) => any) {
+        let dataSource = this.grid.dataSource.view();
+        dataSource.forEach(row => {
+            func(row)
+        });
     }
 
     public isGridPageable(): boolean {

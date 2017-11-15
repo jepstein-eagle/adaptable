@@ -398,9 +398,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
-        this.getAllRowIds().forEach(r => {
-            this.removeRowStyle(r, "Ab-ConditionalStyle-0")
-        })
+        // this.getAllRowIds().forEach(r => {
+        //     this.removeRowStyle(r, "Ab-ConditionalStyle-0")
+        // })
 
     }
 
@@ -419,15 +419,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public forAllRecordsDo(func: (record: any) => any) {
+        //jo:not tested, not even tried
         this.grid.getAllRows().forEach(r => func(r));
     }
 
-    public getAllRowIds(): string[] {
-        let rowIDs: any[] = [];
-        this.grid.getAllRows().forEach(r => rowIDs.push(r.getId().toString()));
-        return rowIDs;
+    public forAllVisibleRecordsDo(func: (record: any) => any) {
+        //jo:not tested, not even tried 
+        this.grid.getVisibleRows().forEach(r => func(r));
     }
-
 
     public getAllRows(): any[] {
         return null;

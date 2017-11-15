@@ -470,6 +470,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ds.forEach((row: any) => func(row))
     }
 
+    public forAllVisibleRecordsDo(func: (record: any) => any) {
+        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
+        for (var index = 0; index < rowCount; index++) {
+            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+            func(element)
+        }
+    }
+
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
         if (type == "getColumnValue") {
             let record = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
@@ -776,33 +784,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeRowStyle(rowIdentifierValue: any, style: string): void {
-    }
-
-    public getAllRowIds(): string[] {
-        throw Error("Should not be used")
-        // return []
-        // //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
-        // let ds = this.grid.behavior.getData()
-        // let count = ds.length;
-        // let result = new Array(count);
-        // for (var y = 0; y < count; y++) {
-        //     result[y] = ds[y][this.BlotterOptions.primaryKey];
-        // }
-        // return result
-    }
-
-    public getAllRows(): any[] {
-        return this.grid.behavior.dataModel.getData();
-    }
-
-    public getAllVisibleRows(): any[] {
-        let rows: any[] = [];
-        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
-        for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
-            rows.push(element);
-        }
-        return rows;
     }
 
     public isGridPageable(): boolean {

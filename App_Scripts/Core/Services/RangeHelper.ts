@@ -57,8 +57,7 @@ export module RangeHelper {
         dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
         let expressionToCheck: Expression = range.Expression;
 
-        let rows: any[] = blotter.getAllRows();
-        rows.forEach(row => {
+        blotter.forAllRecordsDo((row) => {
             if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, blotter)) {
                 let newRow = getRowValues(row, rangeColumns, blotter);
                 dataToExport.push(newRow);
@@ -80,16 +79,14 @@ export module RangeHelper {
         if (range.Name == ALL_DATA_RANGE) {
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             dataToExport[0] = cols.map(c => c.FriendlyName);
-            let rows: any[] = blotter.getAllRows();
-            rows.forEach(row => {
+            blotter.forAllRecordsDo((row) => {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
         } else if (range.Name == VISIBLE_DATA_RANGE) {
             let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
             dataToExport[0] = cols.map(c => c.FriendlyName);
-            let rows: any[] = blotter.getAllVisibleRows();
-            rows.forEach(row => {
+            blotter.forAllVisibleRecordsDo((row) => {
                 let newRow = getRowValues(row, cols, blotter);
                 dataToExport.push(newRow);
             })
@@ -123,7 +120,7 @@ export module RangeHelper {
                     // values.push(cvPair.value);
                     //we want the displayValue now
                     values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnID));
-                    
+
                 }
                 dataToExport.push(values);
             }

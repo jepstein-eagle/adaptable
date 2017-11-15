@@ -67,8 +67,7 @@ export interface IAdaptableBlotter {
 
     // Row Methods
     forAllRecordsDo(func: (record: any) => any): void;
-    getAllRows():any[]
-    getAllVisibleRows():any[]
+    forAllVisibleRecordsDo(func: (record: any) => any): void;
    
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
