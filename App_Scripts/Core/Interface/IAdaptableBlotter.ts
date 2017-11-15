@@ -38,7 +38,6 @@ export interface IAdaptableBlotter {
 
 
     // column related
-    getColumnHeader(columnId: string): string
     getColumnIndex(columnName: string): number
     setColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>

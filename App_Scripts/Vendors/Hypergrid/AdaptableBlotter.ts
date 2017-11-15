@@ -293,10 +293,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let row = this.grid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
             let primaryKey = this.getPrimaryKeyValueFromRecord(row)
 
-            //this function needs the column.index from the schema
-            // let value = this.grid.behavior.dataModel.dataSource.getValue(currentCell.origin.x, currentCell.origin.y)
-            //let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, currentCell.origin.y)
-            //21/08/17 : we now use the valOrFunc in case it;s a calculatedcolumn
             let value = this.valOrFunc(row, column)
             return { Id: primaryKey, ColumnId: column.name, Value: value }
         }
@@ -313,13 +309,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.grid.behavior.getActiveColumns()[columnIndex]
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
-                    // for (let rowIndex = rectangle.firstSelectedCell.y; rowIndex <= rectangle.lastSelectedCell.y; rowIndex++) {
                     let row = this.grid.behavior.dataModel.dataSource.getRow(rowIndex)
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
-                    //this function needs the column.index from the schema
-                    // let value = this.grid.behavior.dataModel.dataSource.getValue(columnIndex, rowIndex)
-                    // let value = this.grid.behavior.dataModel.dataSource.getValue(column.index, rowIndex)
-                    //21/08/17 : we now use the valOrFunc in case it;s a calculatedcolumn
                     let value = this.valOrFunc(row, column)
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
@@ -430,11 +421,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //so we just close editor for now even if not the one where we set the value
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
         this.cancelEdit()
-        let rowr = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
-
-
 
         let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
+
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
 
@@ -503,16 +492,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectCells(cells: ICellInfo[]): void {
-    }
-
-    public getColumnHeader(columnId: string): string {
-        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
-        if (column) {
-            return column.FriendlyName
-        }
-        else {
-            return "";
-        }
     }
 
     public getColumnIndex(columnName: string): number {
@@ -608,6 +587,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         return "";
     }
+
     public getColumnFormatter(columnId: string) {
         let column = this.getHypergridColumn(columnId);
         if (column && column.properties.format) {
@@ -615,13 +595,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         return null;
     }
-
-    // public getDisplayValueFromRecordAndFormatter(row: any, formatter: any, columnId: string) {
-    //     if (formatter) {
-    //         return formatter(row[columnId])
-    //     }
-    //     return row[columnId];
-    // }
 
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
         throw 'Not implemented for hypergrid see addCellStyleHypergrid';
@@ -664,24 +637,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (style.conditionalStyleColumn) {
             cellStyleHypergrid.conditionalStyleColumn = style.conditionalStyleColumn
         }
-
-        // let rowIndex = this.getRowIndexHypergrid(rowIdentifierValue)
-        // if (rowIndex >= 0) {
-        //     if (style.flashBackColor) {
-        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'flashBackgroundColor', style.flashBackColor)
-        //         if (timeout) {
-        //             setTimeout(() => this.removeCellStyleByIndex(columnIndex, rowIndex, 'flash'), timeout);
-        //         }
-        //     }
-        //     if (style.quickSearchBackColor) {
-        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'quickSearchBackColor', style.quickSearchBackColor)
-        //     }
-        //     //There is never a timeout for CS
-        //     // we have a bug where if the forecolor is not selected (as is now possible) it defaults to using white?  not sure why it doenst ignore it. 
-        //     if (style.conditionalStyleColumn) {
-        //         this.grid.behavior.setCellProperty(columnIndex, rowIndex, 'conditionalStyleColumn', style.conditionalStyleColumn)
-        //     }
-        // }
     }
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
@@ -840,11 +795,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             header: newSchema.header,
             calculator: newSchema.calculator
         })
-        // this.grid.behavior.createColumns();
-        //this.grid.repaint();
+
         this.grid.behavior.changed()
-        //if the event columnReorder starts to be fired when changing the order programmatically 
-        //we'll need to remove that line
         this.setColumnIntoStore();
     }
 
@@ -928,10 +880,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         grid.addEventListener("fin-before-cell-edit", (event: any) => {
             let dataChangedEvent: IDataChangingEvent;
-            //there is a bug in hypergrid 07/02/16 and the row object on the event is the row below the one currently edited
-            //so we use our methods....
-            // var visibleRow = grid.renderer.visibleRows[event.detail.input.event.visibleRow.rowIndex];
-            //they now attached correct row somewhere else....
             let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
@@ -982,8 +930,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            //we now store the displayed column index in the sortColumnGridIndex so no need to transpose the index
-            // if (grid.properties.columnIndexes[columnIndex] == this.sortColumnGridIndex) {
             if (columnIndex == this.sortColumnGridIndex) {
                 if (this.sortOrder == SortOrder.Ascending) {
                     icon = UPWARDS_BLACK_ARROW;
@@ -1069,8 +1015,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             }
                         }
 
-
-
                         if (flashColor) {
                             config.backgroundColor = flashColor;
                         }
@@ -1100,8 +1044,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
     }
-
-
 }
 
 export interface CellStyleHypergrid {

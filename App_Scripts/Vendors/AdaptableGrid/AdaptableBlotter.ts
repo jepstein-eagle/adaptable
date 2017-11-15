@@ -312,10 +312,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public selectCells(cells: ICellInfo[]): void {
     }
 
-    public getColumnHeader(columnId: string): string {
-        return null
-    }
-
     public getColumnIndex(columnId: string): number {
         let column: AdaptableGrid.Column = this.grid.getColumnFromId(columnId);
         let columnIndex: number = this.grid.getPositionOfColumn(column);

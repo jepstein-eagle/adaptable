@@ -323,7 +323,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-
         let row = this.gridOptions.api.getModel().getRow(0)
         //if it's a group we need the content of the group
         if (row.group) {
@@ -419,10 +418,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectCells(cells: ICellInfo[]): void {
-    }
-
-    public getColumnHeader(columnId: string): string {
-        return null
     }
 
     public getColumnIndex(columnName: string): number {

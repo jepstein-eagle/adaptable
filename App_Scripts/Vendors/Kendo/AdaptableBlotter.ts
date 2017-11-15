@@ -419,21 +419,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.select(selectorQuery);
     }
 
-    public getColumnHeader(columnId: string): string {
-        let column = this.GetGridState().Columns.find(x => x.ColumnId == columnId);
-        if (column) {
-            return column.FriendlyName
-        }
-        else {
-            return "";
-        }
-    }
-
     public getColumnIndex(columnName: string): number {
         return this.grid.columns.findIndex(x => x.field == columnName);
     }
 
-    public getColumnFromColumnId(columnId: string): IColumn {
+    private getColumnFromColumnId(columnId: string): IColumn {
         return this.GetGridState().Columns.find(c => c.ColumnId == columnId);
     }
 
@@ -512,10 +502,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getDisplayValue(id: any, columnId: string): string {
         let record: kendo.data.Model = this.grid.dataSource.getByUid(id);
         return this.getDisplayValueFromRecord(record, columnId)
-        // let columnIndex = this.getColumnIndex(columnId)
-        // let row = this.getRowByRowIdentifier(id)
-        // let cell = this.getCellByColumnIndexAndRow(row, columnIndex)
-        // return cell.text();
     }
 
     public getDisplayValueFromRecord(row: any, columnId: string): string {
@@ -528,7 +514,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return String(rawValue)
         }
     }
-
 
     //Jo: we know that this function is wrong as it's not cumulative
     public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
@@ -768,20 +753,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.AuditService.CreateAuditEvent(identifierValue, changedValue, e.field, itemsArray);
             }
         });
-        //Update: 06/1/17 Not needed anymore since we are now computing the DisplayValue
-        //and do not need it to be displayed on screen before being able to evaluate it.
-        //we plug the AuditService on the Save event and wait for the editor to disappear so conditional style
-        //can reevaluate the record when the DisplayValue is now computed. i.e. $2.000.000 instead of 2000000
-        // grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
-        //     setTimeout(() => {
-        //         //I use "in"" instead of "of" on purpose here as I'm iterating on the properties of the object and not an array
-        //         for (let valueField in e.values) {
-        //             let changedValue = e.values[valueField];
-        //             let identifierValue = this.getPrimaryKeyValueFromRecord(e.model);
-        //             this.AuditService.CreateAuditEvent(identifierValue, changedValue, valueField, true);
-        //         }
-        //     }, 5)
-        // })
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
@@ -793,28 +764,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             e.preventDefault();
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
         });
-        // // following code is taken from Telerik website for how to ADD menu items to their column header menu
-        // // not sure yet if we want to use their or our menu, probably former
-        // // would be nice if can work out how to make it re-evaluate during runtime;
-        // // at the moment its only correct the FIRST time it runs for a column which is generally ok but not always accurate
-        // grid.bind("columnMenuInit", (e: kendo.ui.GridColumnMenuInitEvent) => {
-        //     let menu: any = e.container.find(".k-menu").data("kendoMenu");
-        //     var field = e.field;
-        //     var popup = e.container.data('kendoPopup');
-        //     let columnMenuItems: string[] = [];
-        //     let column: IColumn = this.getColumnFromColumnId(field);
-        //     // each strategy can add its own menu item if it wants to
-        //     // this.Strategies.forEach(s => s.addColumnMenuItem(column, columnMenuItems));
-        //     columnMenuItems.forEach(s => menu.append({ text: s }))
-        //     // we can add the item this way which is nicer but not doing so for now
-        //     //  $(e.container).find("ul").append('<li id="my-id" class="k-item k-state-default" role="menuitem"><span class="k-link"><b>Manual entry</b></span></li>');
-        //     // event handler - each strategy listens and acts accordingly
-        //     menu.bind("select", (e: any) => {
-        //         var menuText = $(e.item).text();
-        //         menu.close();
-        //         popup.close();
-        //     });
-        // })
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
