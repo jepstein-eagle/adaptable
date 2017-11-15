@@ -805,9 +805,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return rows;
     }
 
-    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
-    }
-
     public isGridPageable(): boolean {
         return false
     }

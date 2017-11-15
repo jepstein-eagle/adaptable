@@ -48,7 +48,7 @@ import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilte
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import {  QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
+import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../../Core/Extensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -109,7 +109,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-     
+
 
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
@@ -138,6 +138,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public InitAuditService() {
+        //Probably Temporary but we init the Audit service with current data
+        this.AuditService.Init(this.grid.dataSource.data())
     }
 
     private kendoPopup: kendo.ui.Popup
@@ -596,41 +598,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getAllRows(): any[] {
         let dataSource = this.grid.dataSource.data();
-      let rows:any[]=[]
+        let rows: any[] = []
         for (var i = 0; i < dataSource.length; i++) {
             let row: any = dataSource[i];
             rows.push(row);
-    };
-    return rows;
-}
+        };
+        return rows;
+    }
 
     public getAllVisibleRows(): any[] {
         let view = this.grid.dataSource.view();
-        let rows:any[]=[]
-          for (var i = 0; i < view.length; i++) {
-              let row: any = view[i];
-              rows.push(row);
-      };
-      return rows;
-    }
-
-    public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
-        // this is rather brittle... but its only required the first time we change a cell value
-        var dataSource = this.grid.dataSource;
-        var dataSourceCopy: any = dataSource;
-        var testarray: any = dataSourceCopy._data;
-        var currentRowIndex: number;
-        for (var i = 0; i < testarray.length; i++) {
-            var myRow: any = testarray[i];
-            var uidValue = this.getPrimaryKeyValueFromRecord(myRow);
-            if (uidValue != null && uidValue == identifierValue) {
-                currentRowIndex = i;
-                break;
-            }
-        }
-        var oldRow = dataSourceCopy._pristineData[currentRowIndex];
-        var oldValue = oldRow[columnName];
-        return oldValue;
+        let rows: any[] = []
+        for (var i = 0; i < view.length; i++) {
+            let row: any = view[i];
+            rows.push(row);
+        };
+        return rows;
     }
 
     public isGridPageable(): boolean {

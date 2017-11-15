@@ -65,9 +65,6 @@ export interface IAdaptableBlotter {
     removeAllRowStylesWithRegex(regex: RegExp): void
     removeAllCellStylesWithRegex(regex: RegExp): void
 
-    // get dirty data
-    getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any
-
     // Row Methods
     getAllRowIds(): string[]
     getAllRows():any[]

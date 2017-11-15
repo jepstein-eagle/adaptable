@@ -24,11 +24,12 @@ export class AuditService implements IAuditService {
     }
 
     //This is a bad idea as it duplicates all data but in the end that what getdirtyvalue was doing....
-    //just need to refactor the whole lot. For now it's called only from aggrid
+    //just need to refactor the whole lot. For now it's called only from aggrid and kendo
     Init(initialData: any): void {
+        let colummns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         for (let record of initialData) {
             for (let prop in record) {
-                if (record.hasOwnProperty(prop)) {
+                if (record.hasOwnProperty(prop) && colummns.find(x=>x.ColumnId == prop)) {
                     let primaryKey = record[this.blotter.BlotterOptions.primaryKey]
                     var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: record[prop], ColumnId: prop, IdentifierValue: primaryKey, Timestamp: Date.now(), Record: record };
                     this.InitAddDataValuesToList(dataChangedEvent);
@@ -50,8 +51,6 @@ export class AuditService implements IAuditService {
             this._columnDataValueList.set(columnName, myList)
         }
 
-        // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-        dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
         let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
         myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
     }
@@ -84,8 +83,7 @@ export class AuditService implements IAuditService {
             localdatachangedInfo.NewValue = dataChangedEvent.NewValue
             localdatachangedInfo.Timestamp = dataChangedEvent.Timestamp
         }
-        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-            dataChangedEvent.OldValue = this.blotter.getDirtyValueForColumnFromDataSource(dataChangedEvent.ColumnId, dataChangedEvent.IdentifierValue);;
+        else { 
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
             myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
         }
@@ -104,9 +102,7 @@ export class AuditService implements IAuditService {
         if (localdatachangedInfo) {
             return localdatachangedInfo.NewValue;
         }
-        else { // this is the first time we have updated this cell so lets see if we can at least try to get the value from the grid...
-            return this.blotter.getDirtyValueForColumnFromDataSource(dataChangingEvent.ColumnId, dataChangingEvent.IdentifierValue);;
-        }
+        return null
     }
 
     private checkListExists(): void {
