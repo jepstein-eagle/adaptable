@@ -66,7 +66,7 @@ export interface IAdaptableBlotter {
     removeAllCellStylesWithRegex(regex: RegExp): void
 
     // Row Methods
-    getAllRowIds(): string[]
+    forAllRecordsDo(func: (record: any) => any): void;
     getAllRows():any[]
     getAllVisibleRows():any[]
    

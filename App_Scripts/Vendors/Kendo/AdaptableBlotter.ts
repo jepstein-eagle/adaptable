@@ -595,6 +595,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return uidList;
     }
 
+    public forAllRecordsDo(func: (record: any) => any) {
+        let dataSource = this.grid.dataSource.data();
+        dataSource.forEach(row => {
+            func(row)
+        });
+    }
+
 
     public getAllRows(): any[] {
         let dataSource = this.grid.dataSource.data();

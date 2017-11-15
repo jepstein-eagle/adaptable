@@ -583,9 +583,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public removeRowStyle(rowIdentifierValue: any, style: string): void {
     }
 
-    public getAllRowIds(): string[] {
-        throw Error("Should not be used")
-        // return []
+    public forAllRecordsDo(func: (record: any) => any) {
+        this.gridOptions.api.getModel().forEachNode(rowNode => {
+            func(rowNode)
+        });
     }
 
     public getAllRows(): any[] {

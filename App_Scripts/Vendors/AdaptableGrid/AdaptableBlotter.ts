@@ -94,7 +94,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
-        
+
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
@@ -106,7 +106,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        
+
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
@@ -418,7 +418,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-
+    public forAllRecordsDo(func: (record: any) => any) {
+        this.grid.getAllRows().forEach(r => func(r));
+    }
 
     public getAllRowIds(): string[] {
         let rowIDs: any[] = [];
@@ -491,7 +493,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.render();
     }
 
-    public getRecordFromRowId(rowId: string): any{
+    public getRecordFromRowId(rowId: string): any {
         return null
     }
 }
