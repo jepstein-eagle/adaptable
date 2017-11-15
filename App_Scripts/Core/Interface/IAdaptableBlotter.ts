@@ -72,8 +72,6 @@ export interface IAdaptableBlotter {
     getAllRowIds(): string[]
     getAllRows():any[]
     getAllVisibleRows():any[]
-    hideRows(rowIds: string[]): void
-    showRows(rowIds: string[]): void
    
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void

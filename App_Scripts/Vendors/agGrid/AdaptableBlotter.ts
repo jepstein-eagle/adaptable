@@ -605,13 +605,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return rowNodes;
     }
 
-    public hideRows(rowIds: string[]): void {
-    }
-
-    public showRows(rowIds: string[]): void {
-
-    }
-
     public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
 

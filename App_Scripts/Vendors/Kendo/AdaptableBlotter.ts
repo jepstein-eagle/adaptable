@@ -640,21 +640,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public hideRows(rowIds: string[]): void {
-        rowIds.forEach(rowID => {
-            var row = this.getRowByRowIdentifier(rowID);
-            row.hide();
-        })
-    }
-
-    public showRows(rowIds: string[]): void {
-        rowIds.forEach(rowID => {
-            var row = this.getRowByRowIdentifier(rowID);
-            row.show();
-        })
-    }
-
-
     public applyColumnFilters(): void {
         //we remove all style linked to QuickSearch
         this.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));

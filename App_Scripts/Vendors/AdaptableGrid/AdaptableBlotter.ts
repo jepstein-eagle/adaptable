@@ -435,35 +435,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null;
     }
 
-    public hideRows(rowIds: string[]): void {
-        // doing it long way to see if it works...
-        // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.
+    // public hideRows(rowIds: string[]): void {
+    //     // doing it long way to see if it works...
+    //     // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.
 
-        let rowsToHide: AdaptableGrid.Row[] = []
+    //     let rowsToHide: AdaptableGrid.Row[] = []
 
-        rowIds.forEach(r => rowsToHide.push(this.grid.getRowFromId(r)));
+    //     rowIds.forEach(r => rowsToHide.push(this.grid.getRowFromId(r)));
 
-        rowsToHide.forEach(rowToHide => {
-            if (rowToHide.isVisible()) {
-                rowToHide.setHidden(this.grid);
-            }
-        })
+    //     rowsToHide.forEach(rowToHide => {
+    //         if (rowToHide.isVisible()) {
+    //             rowToHide.setHidden(this.grid);
+    //         }
+    //     })
 
-        //     this.grid.render();
-    }
+    //     //     this.grid.render();
+    // }
 
-    public showRows(rowIds: string[]): void {
-        let rowsToShow: AdaptableGrid.Row[] = []
+    // public showRows(rowIds: string[]): void {
+    //     let rowsToShow: AdaptableGrid.Row[] = []
 
-        rowIds.forEach(r => rowsToShow.push(this.grid.getRowFromId(r)));
+    //     rowIds.forEach(r => rowsToShow.push(this.grid.getRowFromId(r)));
 
-        rowsToShow.forEach(rowToShow => {
-            if (!rowToShow.isVisible()) {
-                rowToShow.setVisible(this.grid);
-            }
-        })
+    //     rowsToShow.forEach(rowToShow => {
+    //         if (!rowToShow.isVisible()) {
+    //             rowToShow.setVisible(this.grid);
+    //         }
+    //     })
 
-    }
+    // }
 
     public getDirtyValueForColumnFromDataSource(columnName: string, identifierValue: any): any {
     }
