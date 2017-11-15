@@ -53,8 +53,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-            let rowIds: string[] = this.blotter.getAllRowIds();
-
+            
             let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
 
@@ -65,23 +64,23 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
 
-            rowIds.forEach(rowId => {
-
+            this.blotter.forAllRecordsDo((row: any) => {
+                let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
                 //an object with properties that have the name of the groupbykey
                 for (let column in columnConditionalStylesGroupedByColumn) {
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
-                        if (ExpressionHelper.checkForExpression(columnCS.Expression, rowId, columns, this.blotter)) {
-                            this.blotter.addCellStyle(rowId, columnCS.columnIndex, this.ConsitionalStylePrefix + columnCS.collectionIndex)
+                        if (ExpressionHelper.checkForExpressionFromRecord(columnCS.Expression, row, columns, this.blotter)) {
+                            this.blotter.addCellStyle(primaryKey, columnCS.columnIndex, this.ConsitionalStylePrefix + columnCS.collectionIndex)
                             break
                         }
                     }
                 }
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
-                    if (ExpressionHelper.checkForExpression(rowCS.Expression, rowId, columns, this.blotter)) {
-                        this.blotter.addRowStyle(rowId, this.ConsitionalStylePrefix + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
+                    if (ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
+                        this.blotter.addRowStyle(primaryKey, this.ConsitionalStylePrefix + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
                         break
                     }
                 }

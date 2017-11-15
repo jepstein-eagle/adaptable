@@ -585,23 +585,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    // Im sure this is wrong! But for now want to try it..
-    public getAllRowIds(): string[] {
-        var dataSource = this.grid.dataSource.data();
-        let uidList: string[] = [];
-        for (var i = 0; i < dataSource.length; i++) {
-            uidList.push(this.getPrimaryKeyValueFromRecord(dataSource[i]));
-        }
-        return uidList;
-    }
-
     public forAllRecordsDo(func: (record: any) => any) {
         let dataSource = this.grid.dataSource.data();
         dataSource.forEach(row => {
             func(row)
         });
     }
-
 
     public getAllRows(): any[] {
         let dataSource = this.grid.dataSource.data();
