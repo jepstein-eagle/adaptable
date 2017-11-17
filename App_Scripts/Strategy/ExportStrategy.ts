@@ -40,7 +40,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private copyToClipboard(rangeName: string) {
-        let csvContent: string = this.createCSVContent(rangeName);
+        let csvContent: string = this.createTabularContent(rangeName);
         if (csvContent) {
             Helper.copyToClipboard(csvContent)
         }
@@ -50,6 +50,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         let rangeAsArray: any[] = this.ConvertRangetoArray(rangeName);
         if (rangeAsArray) {
             return Helper.convertArrayToCsv(rangeAsArray, ",");
+        }
+        return null
+    }
+
+    private createTabularContent(rangeName: string): string {
+        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeName);
+        if (rangeAsArray) {
+            return Helper.convertArrayToCsv(rangeAsArray, "\t");
         }
         return null
     }

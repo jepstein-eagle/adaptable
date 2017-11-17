@@ -110,12 +110,14 @@ export module Helper {
             var i;
             for (i = 0; i < infoArray.length; ++i) {
                 item = infoArray[i];
-                if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
-                    item = '"' + item.replace(/"/g, '""') + '"';
+                if (separator == ",") {
+                    if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                        item = '"' + item.replace(/"/g, '""') + '"';
+                    }
                 }
                 line.push(item);
             }
-            csvContent += line.join(',') + '\n';
+            csvContent += line.join(separator) + '\n';
         });
         return csvContent;
     }
