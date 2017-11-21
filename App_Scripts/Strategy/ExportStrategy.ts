@@ -10,6 +10,7 @@ import { Helper } from '../Core/Helper';
 import { RangeHelper } from '../Core/Services/RangeHelper';
 import { Expression } from '../Core/Expression/Expression'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
+import { OpenfinHelper } from '../Core/OpenfinHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
@@ -27,6 +28,16 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 break;
             case ExportDestination.CSV:
                 this.convertRangetoCsv(rangeName);
+                break;
+            case ExportDestination.OpenfinExcel:
+                OpenfinHelper.initOpenFinExcel().then(resolve => {
+                    setInterval(() => {
+                        let rangeAsArray: any[] = this.ConvertRangetoArray(rangeName);
+                        if (rangeAsArray) {
+                            OpenfinHelper.pushData(rangeAsArray);
+                        }
+                    }, 100)
+                });
                 break;
         }
     }

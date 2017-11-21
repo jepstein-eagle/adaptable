@@ -5,15 +5,28 @@
     "description": "OpenFin with Adaptable Blotter",
     "url": "http://localhost:8080",
     "uuid": "openfin-adaptable-blotter",
-    "autoShow": true
+    "autoShow": true,
+    "preload": [
+      {
+        "url": "http://localhost:8080/ExtLibs/OpenfinPlugins/fin.desktop.Excel.js"
+      }
+    ]
   },
   "runtime": {
     "arguments": "",
-    "version": "stable"
-  },
+    "version": "7.*"
+},
   "shortcut": {
     "company": "Adaptable Tools",
     "description": "Adaptable Blotter",
     "name": "Adaptable Blotter"
-  }
+  },
+  "appAssets": [
+    {
+      "src": "http://localhost:8080/ExtLibs/OpenfinPlugins/add-in.zip",
+      "alias": "excel-api-addin",
+      "version": "1.7.1",
+      "forceDownload": true
+    }
+  ]
 }

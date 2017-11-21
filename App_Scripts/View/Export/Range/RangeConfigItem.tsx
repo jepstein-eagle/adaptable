@@ -10,6 +10,7 @@ import { ExpressionHelper } from '../../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { RangeScope, ExportDestination } from '../../../Core/Enums';
 import { RangeHelper } from '../../../Core/Services/RangeHelper';
+import { OpenfinHelper } from '../../../Core/OpenfinHelper';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
@@ -26,6 +27,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
 
         let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
+        let openfinExcelMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Live Openfin Excel"}</MenuItem>
 
         return <li
             className="list-group-item"
@@ -54,6 +56,9 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                             <Dropdown.Menu >
                                 {csvMenuItem}
                                 {clipboardMenuItem}
+                                {
+                                    OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
                     </OverlayTrigger>

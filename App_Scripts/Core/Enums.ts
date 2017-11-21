@@ -87,7 +87,8 @@ export enum RangeScope {
 export enum ExportDestination {
     CSV,
     // JSON,    
-    Clipboard
+    Clipboard,
+    OpenfinExcel
     // Excel,
     // Symphony
 }
