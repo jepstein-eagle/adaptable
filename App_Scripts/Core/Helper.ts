@@ -104,21 +104,33 @@ export module Helper {
     // converts an array (or an array of arrays) to CSV
     export function convertArrayToCsv(array: any[], separator: string = " ' "): string {
         var csvContent = '';
-        array.forEach(function (infoArray, index) {
-            var line = [];
-            var item: any
-            var i;
-            for (i = 0; i < infoArray.length; ++i) {
-                item = infoArray[i];
-                if (separator == ",") {
+        array.forEach((x, index) => {
+            if (separator == ",") {
+                x.forEach((item: string) => {
                     if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
                         item = '"' + item.replace(/"/g, '""') + '"';
                     }
-                }
-                line.push(item);
+                })
+
             }
-            csvContent += line.join(separator) + '\n';
-        });
+            csvContent += x.join(separator) + (index != array.length - 1 ? '\n' : '');
+        })
+        //Jo: weird logic
+        // array.forEach(function (infoArray, index) {
+        //     var line = [];
+        //     var item: any
+        //     var i;
+        //     for (i = 0; i < infoArray.length; ++i) {
+        //         item = infoArray[i];
+        //         if (separator == ",") {
+        //             if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+        //                 item = '"' + item.replace(/"/g, '""') + '"';
+        //             }
+        //         }
+        //         line.push(item);
+        //     }
+        //     csvContent += line.join(separator) + '\n';
+        // });
         return csvContent;
     }
 
