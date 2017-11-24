@@ -108,6 +108,7 @@ export interface ShortcutState {
 
 export interface RangeState {
     CurrentRange: string;
+    CurrentLiveRange : string;
     Ranges: Array<IRange>;
 }
 

@@ -25,6 +25,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
+import { OpenfinHelper } from '../../Core/OpenfinHelper';
 
 interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<ExportToolbarControlComponent> {
     onExportRange: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
@@ -59,10 +60,8 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         })
 
         let csvMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
-        // let JSONMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.JSON)} key={"json"}><Glyphicon glyph="export" /> {"JSON"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
-        // let excelMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Excel)} key={"excel"}><Glyphicon glyph="export" /> {"Excel"}</MenuItem>
-        // let symphonyMenuItem: any = <MenuItem disabled={true} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Symphony)} key={"symphony"}><Glyphicon glyph="export" /> {"Symphony"}</MenuItem>
+        let openfinExcelMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"OpenfinExcel"}</MenuItem>
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
@@ -74,12 +73,15 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     selected={savedRange ? [savedRange] : []}
                     onChange={(selected) => { this.onSelectedRangeChanged(selected) }}
                     options={sortedRanges}
-                /> 
+                />
                 {' '}
                 {currentRangeId != "select" &&
                     <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
                         {csvMenuItem}
                         {clipboardMenuItem}
+                        {
+                            OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                        }
                     </DropdownButton>
                 }
                 {' '}

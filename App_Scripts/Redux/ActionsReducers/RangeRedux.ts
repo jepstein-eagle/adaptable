@@ -13,6 +13,10 @@ export interface RangeSelectAction extends Redux.Action {
     SelectedRange: string;
 }
 
+export interface RangeStartLiveAction extends Redux.Action {
+    Range: string;
+}
+
 export interface RangeAddUpdateAction extends Redux.Action {
     Index: number,
     Range: IRange
@@ -40,14 +44,14 @@ export const RangeDelete = (Index: number): RangeDeleteAction => ({
 
 const initialRangeState: RangeState = {
     Ranges: RangeHelper.CreateSystemRanges(),
-    CurrentRange: ""
+    CurrentRange: "",
+    CurrentLiveRange: ""
 }
 
 export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = initialRangeState, action: Redux.Action): RangeState => {
     switch (action.type) {
         case RANGE_SELECT:
             return Object.assign({}, state, { CurrentRange: (<RangeSelectAction>action).SelectedRange })
-
         case RANGE_ADD_UPDATE: {
             let ranges: IRange[] = [].concat(state.Ranges);
 
