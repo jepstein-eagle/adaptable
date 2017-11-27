@@ -36,7 +36,6 @@ const initialCalendarState: ConditionalStyleState = {
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {
-    let index: number;
     let conditions: IConditionalStyleCondition[]
 
     switch (action.type) {
@@ -44,7 +43,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (st
             let actionTypedAddUpdate = (<ConditionalStyleAddUpdateAction>action)
             conditions = [].concat(state.ConditionalStyleConditions)
             if (actionTypedAddUpdate.Index != -1) {  // it exists
-                conditions[index] = actionTypedAddUpdate.conditionalStyleCondition
+                conditions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.conditionalStyleCondition
             } else {
                 conditions.push(actionTypedAddUpdate.conditionalStyleCondition)
             }
