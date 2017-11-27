@@ -66,9 +66,6 @@ export module ObjectFactory {
             Description: "",
             DataType: DataType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsExpressionSatisfied: (value: any): boolean => {
-                return null;
-            },
             IsPredefined: false
         };
     }

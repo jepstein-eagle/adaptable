@@ -16,6 +16,6 @@ export interface IUserFilter extends IConfigEntity {
     FriendlyName: string;
     Description: string;
     DataType: DataType;
-    IsExpressionSatisfied(valueToCheck: any, blotter: IAdaptableBlotter): boolean;
+    IsExpressionSatisfied?: (valueToCheck: any, blotter: IAdaptableBlotter) => boolean;
     Expression: Expression;
 }
