@@ -3,6 +3,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
 import { IExportStrategy, IRange } from '../Core/Interface/IExportStrategy'
 import { MenuType, RangeScope, ExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
@@ -12,13 +13,10 @@ import { Expression } from '../Core/Expression/Expression'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { OpenfinHelper } from '../Core/OpenfinHelper';
 import * as _ from 'lodash'
+import { RangeState } from '../Redux/ActionsReducers/Interface/IState';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
-    private Ranges: IRange[]
-    private currentLiveExcel: {
-        workbookName: string,
-        range: string
-    }[] = []
+    private RangeState: RangeState
 
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToOpenfinExcel(), 500);
 
@@ -27,23 +25,20 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', MenuType.ActionPopup, "export");
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
-            this.currentLiveExcel = []
         })
         OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
-            console.log("Workbook closed:" + workbook.name);
-            let idx = this.currentLiveExcel.findIndex(x => x.workbookName == workbook.name)
-            if (idx != -1) {
-                this.currentLiveExcel.splice(idx, 1)
-                console.log("Live Excel stopped for Workbook :" + workbook.name);
-            }
+            console.log("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
+            let liveRange = this.RangeState.CurrentLiveRanges.find(x => x.WorkbookName == workbook.name)
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                RangeRedux.RangeStopLive(liveRange.Range, ExportDestination.OpenfinExcel));
         })
         OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
             console.log("Workbook Saved", workbookSavedEvent);
-            let cle = this.currentLiveExcel.find(x => x.workbookName == workbookSavedEvent.OldName)
-            if (cle) {
-                cle.workbookName = workbookSavedEvent.NewName
-                console.log("Workbook Saved", workbookSavedEvent);
-            }
+            let liveRange = this.RangeState.CurrentLiveRanges.find(x => x.WorkbookName == workbookSavedEvent.OldName)
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                RangeRedux.RangeStopLive(liveRange.Range, ExportDestination.OpenfinExcel));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                RangeRedux.RangeStartLive(liveRange.Range, workbookSavedEvent.NewName, ExportDestination.OpenfinExcel));
         })
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, event) => {
             this.throttledRecomputeAndSendLiveExcelEvent()
@@ -51,11 +46,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private sendNewDataToOpenfinExcel() {
-        if (this.currentLiveExcel.length > 0) {
-            this.currentLiveExcel.forEach(cle => {
-                let rangeAsArray: any[] = this.ConvertRangetoArray(cle.range);
+        if (this.RangeState.CurrentLiveRanges.length > 0) {
+            this.RangeState.CurrentLiveRanges.forEach(cle => {
+                let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
                 if (rangeAsArray) {
-                    OpenfinHelper.pushData(cle.workbookName, rangeAsArray);
+                    OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
                 }
             })
         }
@@ -72,10 +67,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             case ExportDestination.OpenfinExcel:
                 OpenfinHelper.initOpenFinExcel()//.then((workbook) => OpenfinHelper.addRangeWorkSheet(workbook, rangeName))
                     .then((workbookName) => {
-                        this.currentLiveExcel.push({
-                            workbookName: workbookName,
-                            range: rangeName
-                        })
+                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                            RangeRedux.RangeStartLive(rangeName, workbookName, ExportDestination.OpenfinExcel));
                     });
                 break;
         }
@@ -132,12 +125,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private getRange(rangeName: string): IRange {
-        return this.Ranges.find(r => r.Name == rangeName);
+        return this.RangeState.Ranges.find(r => r.Name == rangeName);
     }
 
+
     protected InitState() {
-        if (this.Ranges != this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges) {
-            this.Ranges = this.blotter.AdaptableBlotterStore.TheStore.getState().Range.Ranges;
+        if (this.RangeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Range) {
+            this.RangeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Range;
         }
     }
 

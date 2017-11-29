@@ -88,7 +88,8 @@ export enum ExportDestination {
     CSV,
     // JSON,    
     Clipboard,
-    OpenfinExcel
+    OpenfinExcel,
+    iPushPull
     // Excel,
     // Symphony
 }

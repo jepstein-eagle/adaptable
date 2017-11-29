@@ -1,4 +1,5 @@
-import { RangeState } from './Interface/IState';
+import { ExportDestination } from '../../Core/Enums';
+import { RangeState, ILiveRange } from './Interface/IState';
 import { IRange } from '../../Core/Interface/IExportStrategy';
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'
@@ -8,6 +9,8 @@ import { RangeHelper } from '../../Core/Services/RangeHelper';
 export const RANGE_SELECT = 'RANGE_SELECT';
 export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';
 export const RANGE_DELETE = 'RANGE_DELETE';
+export const RANGE_START_LIVE = 'RANGE_START_LIVE';
+export const RANGE_STOP_LIVE = 'RANGE_STOP_LIVE';
 
 export interface RangeSelectAction extends Redux.Action {
     SelectedRange: string;
@@ -15,13 +18,32 @@ export interface RangeSelectAction extends Redux.Action {
 
 export interface RangeStartLiveAction extends Redux.Action {
     Range: string;
+    ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    WorkbookName: string
 }
+
+export const RangeStartLive = (Range: string, WorkbookName: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStartLiveAction => ({
+    type: RANGE_START_LIVE,
+    Range,
+    ExportDestination,
+    WorkbookName
+})
+
+export interface RangeStopLiveAction extends Redux.Action {
+    Range: string;
+    ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+}
+
+export const RangeStopLive = (Range: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStopLiveAction => ({
+    type: RANGE_STOP_LIVE,
+    Range,
+    ExportDestination
+})
 
 export interface RangeAddUpdateAction extends Redux.Action {
     Index: number,
     Range: IRange
 }
-
 export interface RangeDeleteAction extends Redux.Action {
     Index: number
 }
@@ -45,13 +67,30 @@ export const RangeDelete = (Index: number): RangeDeleteAction => ({
 const initialRangeState: RangeState = {
     Ranges: RangeHelper.CreateSystemRanges(),
     CurrentRange: "",
-    CurrentLiveRange: ""
+    CurrentLiveRanges: []
 }
 
 export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = initialRangeState, action: Redux.Action): RangeState => {
     switch (action.type) {
         case RANGE_SELECT:
             return Object.assign({}, state, { CurrentRange: (<RangeSelectAction>action).SelectedRange })
+        case RANGE_START_LIVE: {
+            let actionTyped = (<RangeStartLiveAction>action)
+            let currentLiveRanges: ILiveRange[] = [].concat(state.CurrentLiveRanges);
+            currentLiveRanges.push({
+                ExportDestination: actionTyped.ExportDestination,
+                Range: actionTyped.Range,
+                WorkbookName: actionTyped.WorkbookName
+            })
+            return Object.assign({}, state, { CurrentLiveRanges: currentLiveRanges })
+        }
+        case RANGE_STOP_LIVE: {
+            let actionTyped = (<RangeStopLiveAction>action)
+            let currentLiveRanges: ILiveRange[] = [].concat(state.CurrentLiveRanges);
+            let index = currentLiveRanges.findIndex(x => x.Range == actionTyped.Range && x.ExportDestination == actionTyped.ExportDestination)
+            currentLiveRanges.splice(index, 1)
+            return Object.assign({}, state, { CurrentLiveRanges: currentLiveRanges })
+        }
         case RANGE_ADD_UPDATE: {
             let ranges: IRange[] = [].concat(state.Ranges);
 

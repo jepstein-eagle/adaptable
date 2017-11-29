@@ -1,4 +1,4 @@
-import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType, ExportDestination } from '../../../Core/Enums'
 import { InputAction } from '../../../Core/Interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
@@ -108,8 +108,14 @@ export interface ShortcutState {
 
 export interface RangeState {
     CurrentRange: string;
-    CurrentLiveRange : string;
+    CurrentLiveRanges : ILiveRange[];
     Ranges: Array<IRange>;
+}
+
+export interface ILiveRange {
+    WorkbookName: string,
+    Range: string,
+    ExportDestination : ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 }
 
 export interface ExportState {
