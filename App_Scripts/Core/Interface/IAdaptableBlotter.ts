@@ -27,7 +27,6 @@ export interface IAdaptableBlotter {
 
     // General
     createMenu(): void
-    isGridPageable(): boolean
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
 

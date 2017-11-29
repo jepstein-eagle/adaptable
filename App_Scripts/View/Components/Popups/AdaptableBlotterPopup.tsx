@@ -24,7 +24,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       var body = React.createElement(bodyElement,
         {
           getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
-          isGridPageable: () => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.isGridPageable : false,
           PopupParams: this.props.PopupParams,
           onClearPopupParams: () => this.props.onClearPopupParams()
         });

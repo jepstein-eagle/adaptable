@@ -590,10 +590,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    public isGridPageable(): boolean {
-        return false
-    }
-
     public redrawRows() {
         this.gridOptions.api.redrawRows();
     }

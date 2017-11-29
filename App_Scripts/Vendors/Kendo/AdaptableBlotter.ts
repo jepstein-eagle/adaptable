@@ -584,13 +584,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    public isGridPageable(): boolean {
-        if (this.grid.options.pageable) {
-            return true;
-        }
-        return false;
-    }
-
     public applyColumnFilters(): void {
         //we remove all style linked to QuickSearch
         this.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));

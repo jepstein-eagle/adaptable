@@ -143,7 +143,6 @@ export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormC
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
     <FilterForm
         getColumnValueDisplayValuePairDistinctList={(columnId: string, distinctCriteria: DistinctCriteriaPairValue) => FilterContext.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria)}
-        isGridPageable={() => FilterContext.Blotter.isGridPageable}
         Blotter={FilterContext.Blotter} CurrentColumn={FilterContext.Column} ColumnValueType={FilterContext.ColumnValueType} />
 </Provider>;
 

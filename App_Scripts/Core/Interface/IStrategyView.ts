@@ -7,7 +7,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 
 export interface IStrategyViewPopupProps<View> extends React.ClassAttributes<View> {
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    isGridPageable: () => boolean,
     PopupParams: string,
     onClearPopupParams: () => PopupRedux.PopupClearParamAction,
 }

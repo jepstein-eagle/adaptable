@@ -741,10 +741,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public removeRowStyle(rowIdentifierValue: any, style: string): void {
     }
 
-    public isGridPageable(): boolean {
-        return false
-    }
-
     public applyColumnFilters(): void {
         this.ReindexAndRepaint()
     }

@@ -461,11 +461,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //     })
 
     // }
-
-    public isGridPageable(): boolean {
-        return false
-    }
-
+    
     public applyColumnFilters(): void {
         return null
     }
