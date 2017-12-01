@@ -1,4 +1,3 @@
-Demo/
 ExtLibs/
 Harness/
 stylesheets/
@@ -10,7 +9,10 @@ UserGuide/
 travis.yml
 openfin-launcher.js
 postcss-scopify.config.js
-webpackdemobetarelease.config.js
-webpackdemorelease.config.js
+slack.js
+tsconfig.json
+tslint.js
+webpack.dev.js
+webpack.prod.js
 
 
