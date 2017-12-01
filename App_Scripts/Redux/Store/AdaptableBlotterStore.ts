@@ -114,7 +114,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....

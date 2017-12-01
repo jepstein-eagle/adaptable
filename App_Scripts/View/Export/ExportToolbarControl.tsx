@@ -26,15 +26,18 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
 import { OpenfinHelper } from '../../Core/OpenfinHelper';
+import { ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
 
 interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<ExportToolbarControlComponent> {
     onExportRange: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
     onSelectRange: (range: string) => RangeRedux.RangeSelectAction;
     onNewRange: () => PopupRedux.PopupShowAction;
     onEditRange: () => PopupRedux.PopupShowAction;
+    onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => RangeRedux.RangeStopLiveAction;
     Columns: IColumn[],
     Ranges: IRange[];
     CurrentRange: string;
+    LiveRanges: ILiveRange[];
     RangeDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
 }
@@ -59,9 +62,16 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
-        let csvMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
-        let clipboardMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
-        let openfinExcelMenuItem: any = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"OpenfinExcel"}</MenuItem>
+        let csvMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
+        let clipboardMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
+        let openfinExcelMenuItem 
+        if(this.props.LiveRanges.find(x=>x.Range == currentRangeId)){
+            openfinExcelMenuItem= <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
+        }
+        else{
+            openfinExcelMenuItem= <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
+        }
+        
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
@@ -120,6 +130,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentRange: state.Range.CurrentRange,
         Ranges: state.Range.Ranges,
         Columns: state.Grid.Columns,
+        LiveRanges: state.Range.CurrentLiveRanges,
         RangeDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ExportStrategyId)
     };
 }
@@ -128,6 +139,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onExportRange: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(range, exportDestination)),
         onSelectRange: (range: string) => dispatch(RangeRedux.RangeSelect(range)),
+        onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
         onNewRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "New")),
         onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit"))
     };

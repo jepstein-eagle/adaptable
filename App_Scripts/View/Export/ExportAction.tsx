@@ -35,10 +35,12 @@ import { RangeColumnsWizard } from './Range/RangeColumnsWizard'
 import { RangeNameWizard } from './Range/RangeNameWizard'
 import { RangeExpressionWizard } from './Range/RangeExpressionWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
     Ranges: IRange[],
+    LiveRanges: ILiveRange[];
     CurrentRange: string,
     onExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
     onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction
@@ -79,6 +81,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                 Columns={this.props.Columns}
                 IsLast={index == this.props.Ranges.length - 1}
                 UserFilters={this.props.UserFilters}
+                LiveRanges={this.props.LiveRanges}
                 onExport={(exportDestination) => this.onExportRange(range.Name, exportDestination)}
                 onEdit={() => this.onEditRange(index, range)}
                 onDeleteConfirm={RangeRedux.RangeDelete(index)} />
@@ -149,6 +152,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Ranges: state.Range.Ranges,
         CurrentRange: state.Range.CurrentRange,
+        LiveRanges: state.Range.CurrentLiveRanges,
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
     };

@@ -11,11 +11,13 @@ import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { RangeScope, ExportDestination } from '../../../Core/Enums';
 import { RangeHelper } from '../../../Core/Services/RangeHelper';
 import { OpenfinHelper } from '../../../Core/OpenfinHelper';
+import { ILiveRange } from '../../../Redux/ActionsReducers/Interface/IState';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
     IsLast : boolean
     UserFilters: IUserFilter[]
+    LiveRanges : ILiveRange[]
     onEdit: () => void;
     onExport: (exportDestination: ExportDestination) => void;
     onDeleteConfirm: Redux.Action;
@@ -27,8 +29,14 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
 
         let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
-        let openfinExcelMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Live Openfin Excel"}</MenuItem>
-
+        let openfinExcelMenuItem 
+        if(this.props.LiveRanges.find(x=>x.Range == this.props.Range.Name)){
+            openfinExcelMenuItem= <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
+        }
+        else{
+            openfinExcelMenuItem= <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
+        }
+        
         return <li
             className="list-group-item"
             onClick={() => { }}>
