@@ -71,7 +71,7 @@ export module iPushPullHelper {
             var $inj = angular.element(document).injector();
             var serv = $inj.get('ippPageService');
             //PROD
-            page = new serv("Blotter ", "SYInt")
+            page = new serv("Blotter", "SYInt")
             //TEST
             // page = new serv("MyDataPage", "NAIM")
 
