@@ -26,6 +26,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
 import { OpenfinHelper } from '../../Core/OpenfinHelper';
+import { iPushPullHelper } from '../../Core/iPushPullHelper';
 import { ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
 
 interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -64,14 +65,22 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
 
         let csvMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
         let clipboardMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
-        let openfinExcelMenuItem 
-        if(this.props.LiveRanges.find(x=>x.Range == currentRangeId)){
-            openfinExcelMenuItem= <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
+        let openfinExcelMenuItem
+        if (this.props.LiveRanges.find(x => x.Range == currentRangeId && x.ExportDestination == ExportDestination.OpenfinExcel)) {
+            openfinExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
         }
-        else{
-            openfinExcelMenuItem= <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
+        else {
+            openfinExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
         }
-        
+
+        let iPushPullExcelMenuItem
+        if (this.props.LiveRanges.find(x => x.Range == currentRangeId && x.ExportDestination == ExportDestination.iPushPull)) {
+            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.iPushPull)} key={"OpenfinExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
+        }
+        else {
+            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.iPushPull)} key={"OpenfinExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
+        }
+
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
@@ -91,6 +100,9 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                         {clipboardMenuItem}
                         {
                             OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                        }
+                        {
+                            iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
                         }
                     </DropdownButton>
                 }

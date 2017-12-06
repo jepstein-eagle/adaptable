@@ -14,11 +14,12 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { OpenfinHelper } from '../Core/OpenfinHelper';
 import * as _ from 'lodash'
 import { RangeState } from '../Redux/ActionsReducers/Interface/IState';
+import { iPushPullHelper } from '../Core/iPushPullHelper';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
     private RangeState: RangeState
 
-    private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToOpenfinExcel(), 500);
+    private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToOpenfinExcel(), 2000);
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
@@ -50,7 +51,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.RangeState.CurrentLiveRanges.forEach(cle => {
                 let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
                 if (rangeAsArray) {
-                    OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
+                    if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
+                        OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
+                    }
+                    else if (cle.ExportDestination == ExportDestination.iPushPull) {
+                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray);
+                    }
                 }
             })
         }
@@ -70,6 +76,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                             RangeRedux.RangeStartLive(rangeName, workbookName, ExportDestination.OpenfinExcel));
                     });
+                break;
+            case ExportDestination.iPushPull:
+                iPushPullHelper.LoadPage().then(() => {
+                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                        RangeRedux.RangeStartLive(rangeName, "JoTest", ExportDestination.iPushPull));
+
+                })
                 break;
         }
     }

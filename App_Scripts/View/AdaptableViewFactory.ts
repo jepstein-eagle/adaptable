@@ -19,6 +19,7 @@ import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
+import { IPushPullLogin } from './Export/IPushPullLogin'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
@@ -45,7 +46,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
   DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
-  CalculatedColumnConfig: CalculatedColumnConfig
+  CalculatedColumnConfig: CalculatedColumnConfig,
+  IPushPullLogin: IPushPullLogin
 }
 
 //here we put the dashboard control for each strategy

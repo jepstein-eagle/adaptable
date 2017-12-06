@@ -1,3 +1,4 @@
+import { ExportDestination } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -43,6 +44,7 @@ import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdap
 import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
+import { iPushPullHelper } from "../../Core/iPushPullHelper";
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -66,7 +68,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     Range: RangeRedux.RangeReducer,
-    UIControlConfig : UIControlConfigRedux.UIControlConfigStateReducer
+    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -347,11 +349,27 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case ExportRedux.EXPORT: {
                     let exportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportAction>action;
-                    exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination);
-                    middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, JSON.stringify(actionTyped)))
+                    }
+                    else {
+                        exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination);
+                        middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    }
                     return next(action);
                 }
-               
+
+                case ExportRedux.IPP_LOGIN: {
+                    let actionTyped = <ExportRedux.IPPLoginAction>action;
+                    iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
+                        middlewareAPI.dispatch(actionTyped.SuccessAction)
+                        middlewareAPI.dispatch(PopupRedux.PopupHide())
+                    }).catch((error: string) => {
+                        console.error("Login failed", error);
+                    })
+                    return next(action);
+                }
+
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:
