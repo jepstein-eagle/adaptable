@@ -76,12 +76,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     .then((workbookName) => {
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                             RangeRedux.RangeStartLive(rangeName, workbookName, ExportDestination.OpenfinExcel));
+                            this.throttledRecomputeAndSendLiveExcelEvent()
                     });
                 break;
             case ExportDestination.iPushPull:
                 iPushPullHelper.LoadPage().then(() => {
                     this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                         RangeRedux.RangeStartLive(rangeName, "JoTest", ExportDestination.iPushPull));
+                        this.throttledRecomputeAndSendLiveExcelEvent()
 
                 })
                 break;
