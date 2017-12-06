@@ -653,6 +653,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
+    //TEMPORARY : JO
+    public getIPPStyle() : any {
+        return null
+    }
+
 
     private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {
         // gridOptions.api.addGlobalListener((type: string, event: any) => {

@@ -678,6 +678,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
+    //TEMPORARY : JO
+    public getIPPStyle(): any {
+        return null
+    }
+
     private GetGridState(): GridState {
         return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }

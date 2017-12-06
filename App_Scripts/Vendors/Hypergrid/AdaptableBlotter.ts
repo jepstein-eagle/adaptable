@@ -134,7 +134,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        
+
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
@@ -820,6 +820,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getHypergridColumn(columnId: string): any {
         return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
+    }
+
+    //TEMPORARY : JO
+    public getIPPStyle() {
+        return {
+            headerColor: this.grid.properties.columnHeaderColor,
+            headerBackColor: this.grid.properties.columnHeaderBackgroundColor,
+            headerFont: this.grid.properties.columnHeaderFont,
+            color: this.grid.properties.color,
+            backColor: this.grid.properties.backgroundColor,
+            altBackColor: this.grid.properties.altbackground || this.grid.properties.backgroundColor,
+            font: this.grid.properties.font,
+            height: this.grid.properties.defaultRowHeight,
+            columnWidths: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                return { columnFriendlyName: col.FriendlyName, width: this.getHypergridColumn(col.ColumnId).getWidth()}
+            })
+        }
     }
 
     private initInternalGridLogic(grid: any) {

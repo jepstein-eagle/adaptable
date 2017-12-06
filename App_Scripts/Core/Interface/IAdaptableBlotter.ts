@@ -66,7 +66,7 @@ export interface IAdaptableBlotter {
     // Row Methods
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
-   
+
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
@@ -78,6 +78,18 @@ export interface IAdaptableBlotter {
 
     // Filtering
     applyColumnFilters(): void
+    //TEMPORARY : JO
+    getIPPStyle(): {
+        headerColor: string,
+        headerBackColor: string,
+        headerFont: string,
+        color: string,
+        backColor: string,
+        altBackColor: string,
+        font: string,
+        columnWidths: { columnFriendlyName: string, width: number }[]
+        height:number
+    }
 }
 
 export interface ISelectedCells {

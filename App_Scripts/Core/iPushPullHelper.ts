@@ -21,21 +21,21 @@ export module iPushPullHelper {
             if (!iPushPullApp) {
                 iPushPullApp = angular.module("myApp", ["ipushpull"])
                 //PROD
-                // iPushPullApp.config(["ippConfigProvider", (ippConfigProvider: any) => {
-                //     ippConfigProvider.set({
-                //         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-                //         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-                //     });
-                // }]);
-                //TEST
                 iPushPullApp.config(["ippConfigProvider", (ippConfigProvider: any) => {
                     ippConfigProvider.set({
-                        api_url: "https://test.ipushpull.com/api/1.0",
-                        ws_url: "https://test.ipushpull.com",
-                        api_key: "rG25WWuOdEhLejupBc9TfPyB4womfOibmPHdBytJ",
-                        api_secret: "Icfcc8eceP1eNUt9EEAaa8mHjCfyAhaiG0EXBurhy2GWSqkDgakxAKr76hXBeNaymAkpG2NGfK6a3ScgCNSyZhIWxGTmuyi35YNQXMW5JT1e4zeazpfva14NUIevROE9",
+                        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+                        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
                     });
                 }]);
+                //TEST
+                // iPushPullApp.config(["ippConfigProvider", (ippConfigProvider: any) => {
+                //     ippConfigProvider.set({
+                //         api_url: "https://test.ipushpull.com/api/1.0",
+                //         ws_url: "https://test.ipushpull.com",
+                //         api_key: "rG25WWuOdEhLejupBc9TfPyB4womfOibmPHdBytJ",
+                //         api_secret: "Icfcc8eceP1eNUt9EEAaa8mHjCfyAhaiG0EXBurhy2GWSqkDgakxAKr76hXBeNaymAkpG2NGfK6a3ScgCNSyZhIWxGTmuyi35YNQXMW5JT1e4zeazpfva14NUIevROE9",
+                //     });
+                // }]);
                 angular.bootstrap(document, ['myApp']);
             }
         }
@@ -46,8 +46,7 @@ export module iPushPullHelper {
         }
     }
 
-    export function Login(login : string, password:string ): Promise<any>
-    {
+    export function Login(login: string, password: string): Promise<any> {
         return new Promise<string>((resolve: any, reject: any) => {
             let angular = (<any>window).angular
             let $inj = angular.element(document).injector();
@@ -72,9 +71,9 @@ export module iPushPullHelper {
             var $inj = angular.element(document).injector();
             var serv = $inj.get('ippPageService');
             //PROD
-            // page = new serv("JoTest", "jo_naim")
+            page = new serv("Blotter ", "SYInt")
             //TEST
-            page = new serv("MyDataPage", "NAIM")
+            // page = new serv("MyDataPage", "NAIM")
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
                 console.log("Page Ready")
@@ -86,14 +85,25 @@ export module iPushPullHelper {
         });
     }
 
-    export function pushData(workBookName: string, data: any[]) {
+    export function pushData(workBookName: string, data: any[], style: {
+        headerColor: string,
+        headerBackColor: string,
+        headerFont: string,
+        color: string,
+        backColor: string,
+        altBackColor: string,
+        font: string,
+        height: number,
+        columnWidths: { columnFriendlyName: string, width: number }[]
+    }) {
+
         var newData = data.map(function (row: any, i: number) {
-            return row.map((cell: any) => {
+            return row.map((cell: any, y: number) => {
                 return {
                     "value": cell,
                     "formatted_value": cell,
-                    "style": {
-                        "background-color": i == 0 ? '#d9ecf5' : i % 2 ? "FFFFFF" : '#e6f2f8',
+                    "style": style != null ? {
+                        "background-color": i == 0 ? style.headerBackColor : i % 2 ? style.backColor : style.altBackColor,
                         "bbc": "000000",
                         "bbs": "none",
                         "bbw": "none",
@@ -106,19 +116,47 @@ export module iPushPullHelper {
                         "tbc": "000000",
                         "tbs": "none",
                         "tbw": "none",
-                        "color": i == 0 ? "#00435e" : "#003f59"/*"000000"*/,
-                        "font-family": "Calibri",
-                        "font-size": "11pt",
-                        "font-style": "normal",
-                        "font-weight": "400",
-                        "height": "20px",
+                        "color": i == 0 ? style.headerColor : style.color,
+                        "font": style.font,
+                        // "font-family": "Calibri",
+                        // "font-size": "11pt",
+                        // "font-style": "normal",
+                        // "font-weight": "400",
+                        "height": String(style.height) + "px",
                         "text-align": "right",
                         "vertical-align": "bottom",
                         "white-space": "nowrap",
-                        "width": "64px",
+                        "width": String(style.columnWidths.find(x => x.columnFriendlyName == data[0][y]).width) + "px",
                         "text-wrap": "normal",
                         "word-wrap": "normal"
-                    }
+                    } :
+                        {
+                            "background-color": i == 0 ? '#d9ecf5' : i % 2 ? "FFFFFF" : '#e6f2f8',
+                            "bbc": "000000",
+                            "bbs": "none",
+                            "bbw": "none",
+                            "lbc": "000000",
+                            "lbs": "none",
+                            "lbw": "none",
+                            "rbc": "000000",
+                            "rbs": "none",
+                            "rbw": "none",
+                            "tbc": "000000",
+                            "tbs": "none",
+                            "tbw": "none",
+                            "color": i == 0 ? "#00435e" : "#003f59"/*"000000"*/,
+                            "font-family": "Calibri",
+                            "font-size": "11pt",
+                            "font-style": "normal",
+                            "font-weight": "400",
+                            "height": "20px",
+                            "text-align": "right",
+                            "vertical-align": "bottom",
+                            "white-space": "nowrap",
+                            "width": "64px",
+                            "text-wrap": "normal",
+                            "word-wrap": "normal"
+                        }
                 }
             })
         });

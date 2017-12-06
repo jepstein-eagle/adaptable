@@ -487,4 +487,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRecordFromRowId(rowId: string): any {
         return null
     }
+        //TEMPORARY : JO
+        public getIPPStyle() : any {
+            return null
+        }
 }

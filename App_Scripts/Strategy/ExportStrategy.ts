@@ -55,7 +55,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                         OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
                     }
                     else if (cle.ExportDestination == ExportDestination.iPushPull) {
-                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray);
+                        let style = this.blotter.getIPPStyle()
+                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, style);
                     }
                 }
             })
