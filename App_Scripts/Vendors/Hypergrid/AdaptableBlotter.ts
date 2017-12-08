@@ -59,6 +59,7 @@ import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { iPushPullHelper } from '../../Core/iPushPullHelper';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -146,6 +147,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.contextMenuContainer.style.position = 'absolute'
         this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
+
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 

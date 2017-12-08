@@ -63,7 +63,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         }
     }
 
-    public Export(rangeName: string, exportDestination: ExportDestination): void {
+    public Export(rangeName: string, exportDestination: ExportDestination,folder?:string, page?:string): void {
         switch (exportDestination) {
             case ExportDestination.Clipboard:
                 this.copyToClipboard(rangeName);
@@ -80,9 +80,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     });
                 break;
             case ExportDestination.iPushPull:
-                iPushPullHelper.LoadPage().then(() => {
+                iPushPullHelper.LoadPage(folder, page).then(() => {
                     this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                        RangeRedux.RangeStartLive(rangeName, "JoTest", ExportDestination.iPushPull));
+                        RangeRedux.RangeStartLive(rangeName, page, ExportDestination.iPushPull));
                         this.throttledRecomputeAndSendLiveExcelEvent()
 
                 })

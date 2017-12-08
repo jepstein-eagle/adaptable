@@ -45,6 +45,7 @@ import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
+import { IPPDomain } from '../ActionsReducers/Interface/IState';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -350,7 +351,20 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                     let exportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, JSON.stringify(actionTyped)))
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Range))
+                    }
+                    else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
+                        iPushPullHelper.GetDomainPages().then((domainpages: IPPDomain[]) => {
+                            middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
+                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                        }).catch((err: any) => {
+                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(err))
+                        })
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, actionTyped.Range))
+                    }
+                    else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
+                        exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
+                        middlewareAPI.dispatch(PopupRedux.PopupHide());
                     }
                     else {
                         exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination);
@@ -362,11 +376,29 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                 case ExportRedux.IPP_LOGIN: {
                     let actionTyped = <ExportRedux.IPPLoginAction>action;
                     iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
-                        middlewareAPI.dispatch(actionTyped.SuccessAction)
+                        let range = middlewareAPI.getState().Popup.ActionConfigurationPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
+                        middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                        iPushPullHelper.GetDomainPages().then((domainpages: IPPDomain[]) => {
+                            middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
+                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                        }).catch((error: any) => {
+                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(error))
+                        })
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, range))
                     }).catch((error: string) => {
                         console.error("Login failed", error);
+                        middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(error))
                     })
+                    return next(action);
+                }
+                case RangeRedux.RANGE_STOP_LIVE: {
+                    let actionTyped = (<RangeRedux.RangeStopLiveAction>action)
+                    if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
+                        let currentLiveRanges = middlewareAPI.getState().Range.CurrentLiveRanges
+                        let lre = currentLiveRanges.find(x => x.Range == actionTyped.Range && x.ExportDestination == actionTyped.ExportDestination)
+                        iPushPullHelper.UnloadPage(lre.WorkbookName)
+                    }
                     return next(action);
                 }
 

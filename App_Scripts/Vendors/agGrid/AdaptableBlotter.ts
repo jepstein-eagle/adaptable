@@ -64,6 +64,7 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { iPushPullHelper } from '../../Core/iPushPullHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -114,6 +115,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
+
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
       
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 

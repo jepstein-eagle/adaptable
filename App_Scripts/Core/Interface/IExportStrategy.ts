@@ -14,7 +14,7 @@ export interface IRange extends IConfigEntity {
   }
   
   export interface IExportStrategy extends IStrategy {
-     Export(rangeName: string, exportDestination: ExportDestination): void 
+     Export(rangeName: string, exportDestination: ExportDestination, folder?:string, page?:string): void 
   }
 
 

@@ -58,6 +58,7 @@ import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { Expression } from '../../Core/Expression/Expression';
+import { iPushPullHelper } from '../../Core/iPushPullHelper';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -116,6 +117,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.contextMenuContainer.style.position = 'absolute'
         this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
+
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 

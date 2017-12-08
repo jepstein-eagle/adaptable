@@ -11,6 +11,7 @@ export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';
 export const RANGE_DELETE = 'RANGE_DELETE';
 export const RANGE_START_LIVE = 'RANGE_START_LIVE';
 export const RANGE_STOP_LIVE = 'RANGE_STOP_LIVE';
+export const RANGE_SET_ERROR_MSG = 'RANGE_SET_ERROR_MSG';
 
 export interface RangeSelectAction extends Redux.Action {
     SelectedRange: string;
@@ -27,6 +28,15 @@ export const RangeStartLive = (Range: string, WorkbookName: string, ExportDestin
     Range,
     ExportDestination,
     WorkbookName
+})
+
+export interface RangeSetErrorMsgAction extends Redux.Action {
+    ErrorMsg: string
+}
+
+export const RangeSetErrorMsg = (ErrorMsg: string): RangeSetErrorMsgAction => ({
+    type: RANGE_SET_ERROR_MSG,
+    ErrorMsg
 })
 
 export interface RangeStopLiveAction extends Redux.Action {
@@ -67,7 +77,8 @@ export const RangeDelete = (Index: number): RangeDeleteAction => ({
 const initialRangeState: RangeState = {
     Ranges: RangeHelper.CreateSystemRanges(),
     CurrentRange: "",
-    CurrentLiveRanges: []
+    CurrentLiveRanges: [],
+    ErrorMsg: ""
 }
 
 export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = initialRangeState, action: Redux.Action): RangeState => {
@@ -90,6 +101,10 @@ export const RangeReducer: Redux.Reducer<RangeState> = (state: RangeState = init
             let index = currentLiveRanges.findIndex(x => x.Range == actionTyped.Range && x.ExportDestination == actionTyped.ExportDestination)
             currentLiveRanges.splice(index, 1)
             return Object.assign({}, state, { CurrentLiveRanges: currentLiveRanges })
+        }
+        case RANGE_SET_ERROR_MSG: {
+            let actionTyped = (<RangeSetErrorMsgAction>action)
+            return Object.assign({}, state, { ErrorMsg: actionTyped.ErrorMsg })
         }
         case RANGE_ADD_UPDATE: {
             let ranges: IRange[] = [].concat(state.Ranges);

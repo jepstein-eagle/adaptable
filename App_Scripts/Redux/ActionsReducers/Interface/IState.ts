@@ -110,6 +110,7 @@ export interface RangeState {
     CurrentRange: string;
     CurrentLiveRanges : ILiveRange[];
     Ranges: Array<IRange>;
+    ErrorMsg : string;
 }
 
 export interface ILiveRange {
@@ -119,6 +120,12 @@ export interface ILiveRange {
 }
 
 export interface ExportState {
+    IPPDomainsPages: IPPDomain[]
+}
+
+export interface IPPDomain{
+    Name : string
+    Pages : string[]
 }
 
 export interface FlashingCellState {

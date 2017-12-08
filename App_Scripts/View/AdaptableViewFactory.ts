@@ -27,6 +27,7 @@ import { AdvancedSearchStrategyId, QuickSearchStrategyId, LayoutStrategyId } fro
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
 import { CalculatedColumnConfig } from "./CalculatedColumn/CalculatedColumnConfig";
+import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortConfig: CustomSortConfig,
@@ -47,7 +48,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   DashboardConfig: DashboardConfig,
   DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
   CalculatedColumnConfig: CalculatedColumnConfig,
-  IPushPullLogin: IPushPullLogin
+  IPushPullLogin: IPushPullLogin,
+  IPushPullDomainPageSelector : IPushPullDomainPageSelector
 }
 
 //here we put the dashboard control for each strategy
