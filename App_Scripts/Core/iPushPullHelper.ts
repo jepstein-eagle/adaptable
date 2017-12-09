@@ -79,7 +79,6 @@ export module iPushPullHelper {
 
     export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
         return new Promise<any>((resolve: any, reject: any) => {
-            console.log('Loading IPP PAge');
             let angular = (<any>window).angular
             let $inj = angular.element(document).injector();
             let serv = $inj.get('ippPageService');
@@ -99,8 +98,8 @@ export module iPushPullHelper {
     export function UnloadPage(page: string) {
         let pageIPP = pages.find(x => x.data.name == page)
         if (pageIPP) {
-            pageIPP.destroy()
             let pageIPPIdx = pages.findIndex(x => x.data.name == page)
+            pageIPP.destroy()
             pages.splice(pageIPPIdx, 1)
             console.log("Page Unloaded : " + page)
         }
@@ -183,12 +182,15 @@ export module iPushPullHelper {
         });
 
         let pageIPP = pages.find(x => x.data.name == page)
-        pageIPP.Content.canDoDelta = false;
-        pageIPP.Content.update(newData, true);
-        pageIPP.push().then(function () {
-            console.log('Data pushed for page : ' + page);
-        }, (err: any) => {
-            console.log('Error pushing Data for page : ' + page);
-        });
+        //JO : check why sometimes page.data.name is not immediatly available
+        if (pageIPP) {
+            pageIPP.Content.canDoDelta = false;
+            pageIPP.Content.update(newData, true);
+            pageIPP.push().then(function () {
+                console.log('Data pushed for page : ' + page);
+            }, (err: any) => {
+                console.log('Error pushing Data for page : ' + page);
+            });
+        }
     }
 }
