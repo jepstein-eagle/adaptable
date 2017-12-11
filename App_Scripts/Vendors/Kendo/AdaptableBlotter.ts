@@ -232,6 +232,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
+    private _onSelectedCellsChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSelectedCellsChanged;
+    }
+
+    private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onRefresh;
+    }
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
@@ -472,6 +481,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private ReInitGrid() {
         this.grid.setDataSource(this.grid.dataSource);
+        this._onRefresh.Dispatch(this, this)
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -760,6 +770,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
             // http://www.telerik.com/forums/column-reorder-event-delay
             setTimeout(() => this.setColumnIntoStore(), 5);
+        });
+        //I find that kendo hasnt' been too smart in their naming since it looks like very much the change on the datasource
+        grid.bind("change", () => {
+            this._onSelectedCellsChanged.Dispatch(this, this)
         });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
             e.preventDefault();

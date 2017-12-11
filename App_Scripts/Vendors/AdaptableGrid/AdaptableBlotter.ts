@@ -136,6 +136,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
+    private _onSelectedCellsChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSelectedCellsChanged;
+    }
+
+    private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onRefresh;
+    }
+
 
     public setColumnIntoStore() {
         let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {

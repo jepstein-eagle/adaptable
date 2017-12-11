@@ -19,7 +19,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     private RangeState: RangeState
 
-    private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToOpenfinExcel(), 2000);
+    private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
@@ -44,10 +44,21 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, event) => {
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
+        this.blotter.onRefresh().Subscribe((sender, event) => {
+            this.throttledRecomputeAndSendLiveExcelEvent()
+        })
+        this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
+            if (this.RangeState) {
+                let liveRange = this.RangeState.CurrentLiveRanges.find(x => x.Range == RangeHelper.SELECTED_CELLS_RANGE)
+                if (liveRange) {
+                    this.throttledRecomputeAndSendLiveExcelEvent()
+                }
+            }
+        })
     }
 
-    private sendNewDataToOpenfinExcel() {
-        if (this.RangeState.CurrentLiveRanges.length > 0) {
+    private sendNewDataToLiveExcel() {
+        if (this.RangeState && this.RangeState.CurrentLiveRanges.length > 0) {
             let ippStyle = this.blotter.getIPPStyle()
             this.RangeState.CurrentLiveRanges.forEach(cle => {
                 let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);

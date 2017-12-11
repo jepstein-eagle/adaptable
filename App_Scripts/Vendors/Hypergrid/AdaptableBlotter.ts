@@ -250,6 +250,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridDataBound;
     }
 
+    private _onSelectedCellsChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSelectedCellsChanged;
+    }
+
+    private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onRefresh;
+    }
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
@@ -563,6 +573,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ReindexAndRepaint() {
         this.grid.behavior.reindex();
         this.grid.repaint();
+        this._onRefresh.Dispatch(this, this);
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -968,6 +979,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
             this.grid.behavior.reindex();
+        });
+        grid.addEventListener('fin-selection-changed', () => {
+            this._onSelectedCellsChanged.Dispatch(this, this)
         });
         this.sortOrder = SortOrder.Unknown;
         //this is used so the grid displays sort icon when sorting....

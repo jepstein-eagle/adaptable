@@ -23,6 +23,8 @@ export interface IAdaptableBlotter {
 
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     // General

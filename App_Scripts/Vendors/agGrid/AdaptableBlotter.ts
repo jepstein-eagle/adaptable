@@ -117,7 +117,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
-      
+
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         this.AdaptableBlotterStore.Load
@@ -160,6 +160,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onGridDataBound: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onGridDataBound;
+    }
+
+    private _onSelectedCellsChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSelectedCellsChanged;
+    }
+
+    private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onRefresh;
     }
 
     public applyColumnFilters() {
@@ -595,6 +605,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public redrawRows() {
         this.gridOptions.api.redrawRows();
+        this._onRefresh.Dispatch(this, this)
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
@@ -657,7 +668,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     //TEMPORARY : JO
-    public getIPPStyle() : any {
+    public getIPPStyle(): any {
         return null
     }
 
@@ -741,6 +752,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
             this.applyColumnFilters();
+        });
+        gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
+            this._onSelectedCellsChanged.Dispatch(this, this)
         });
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
