@@ -51,12 +51,12 @@ export module iPushPullHelper {
         })
     }
 
-    export function GetDomainPages(): Promise<IPPDomain[]> {
+    export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
         return new Promise<IPPDomain[]>((resolve: any, reject: any) => {
             let angular = (<any>window).angular
             let $inj = angular.element(document).injector();
             var serv2 = $inj.get('ippApiService');
-            serv2.getDomainsAndPages()
+            serv2.getDomainsAndPages(clientId)
                 .then((x: any) => {
                     let result: IPPDomain[] = x.data.domains.map((domain: any) => {
                         return {

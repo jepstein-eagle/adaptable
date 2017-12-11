@@ -354,7 +354,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Range))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
-                        iPushPullHelper.GetDomainPages().then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
                         }).catch((err: any) => {
@@ -379,7 +379,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Mi
                         let range = middlewareAPI.getState().Popup.ActionConfigurationPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
                         middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
-                        iPushPullHelper.GetDomainPages().then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
                         }).catch((error: any) => {

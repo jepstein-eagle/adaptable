@@ -12,7 +12,7 @@ import { Helper } from '../../Core/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
-import { IPPDomain } from "../../Redux/ActionsReducers/Interface/IState";
+import { IPPDomain, ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
 import { StringExtensions } from "../../Core/Extensions";
 import { ExportDestination } from "../../Core/Enums";
 
@@ -21,6 +21,7 @@ interface IPushPullDomainPageSelectorProps extends IStrategyViewPopupProps<IPush
     onExport: (value: string, folder: string, page: string) => ExportRedux.ExportAction;
     onCancel: () => PopupRedux.PopupHideAction
     ErrorMsg: string
+    LiveRanges: ILiveRange[];
 }
 
 interface IPushPullDomainPageSelectorInternalState {
@@ -43,6 +44,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
                     value={x.Name} ><Glyphicon glyph="folder-open" ></Glyphicon>{' '}{x.Name}</ListGroupItem>)
                 x.Pages.forEach((page: string) => {
                     itemsElements.push(<ListGroupItem key={page} style={{ paddingLeft: '30px' }}
+                        disabled={this.props.LiveRanges.findIndex(x => x.WorkbookName == page) > -1}
                         onClick={() => { this.SelectPage(page) }} active={this.state.SelectedPage == page}
                         value={page} ><Glyphicon glyph="cloud-download" ></Glyphicon>{' '}{page}</ListGroupItem>)
                 })
@@ -83,14 +85,15 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         IPPDomainsPages: state.Export.IPPDomainsPages,
-        ErrorMsg: state.Range.ErrorMsg
+        ErrorMsg: state.Range.ErrorMsg,
+        LiveRanges: state.Range.CurrentLiveRanges,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.Export(value, ExportDestination.iPushPull, folder, page)),
-        onCancel: () => {dispatch(PopupRedux.PopupHide()); dispatch(RangeRedux.RangeSetErrorMsg(""))}
+        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(RangeRedux.RangeSetErrorMsg("")) }
     };
 }
 
