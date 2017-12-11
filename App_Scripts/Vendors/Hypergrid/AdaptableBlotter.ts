@@ -44,7 +44,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
 import { EnumExtensions } from '../../Core/Extensions';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, FontSize, FontStyle, FontWeight } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions, IPPStyle } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -186,6 +186,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         //we return the new font CSS shorthand
         return el.style.font
+    }
+
+    private buildFontCSSProperties(fontCssShortHand: string): CSSStyleDeclaration {
+        var el = document.createElement("span");
+        //we we let teh CSS parse build the different properties of the font CSS
+        el.style.font = fontCssShortHand
+        //we return the new style
+        return el.style
     }
 
     public setColumnIntoStore() {
@@ -826,19 +834,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     //TEMPORARY : JO
-    public getIPPStyle() {
+    public getIPPStyle(): IPPStyle {
+        let headerFontStyle = this.buildFontCSSProperties(this.grid.properties.columnHeaderFont)
+        let fontStyle = this.buildFontCSSProperties(this.grid.properties.font)
         return {
-            headerColor: this.grid.properties.columnHeaderColor,
-            headerBackColor: this.grid.properties.columnHeaderBackgroundColor,
-            headerFont: this.grid.properties.columnHeaderFont,
-            color: this.grid.properties.color,
-            backColor: this.grid.properties.backgroundColor,
-            altBackColor: this.grid.properties.altbackground || this.grid.properties.backgroundColor,
-            font: this.grid.properties.font,
-            height: this.grid.properties.defaultRowHeight,
-            columnWidths: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
-                return { columnFriendlyName: col.FriendlyName, width: this.getHypergridColumn(col.ColumnId).getWidth()}
-            })
+            Header: {
+                headerColor: this.grid.properties.columnHeaderColor,
+                headerBackColor: this.grid.properties.columnHeaderBackgroundColor,
+                headerFontFamily: headerFontStyle.fontFamily,
+                headerFontSize: headerFontStyle.fontSize,
+                headerFontStyle: headerFontStyle.fontStyle,
+                headerFontWeight: headerFontStyle.fontWeight,
+                height: this.grid.properties.defaultRowHeight,
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                    let colHypergrid = this.getHypergridColumn(col.ColumnId)
+                    return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.columnHeader.halign }
+                })
+            },
+            Row: {
+                color: this.grid.properties.color,
+                backColor: this.grid.properties.backgroundColor,
+                altBackColor: this.grid.properties.altbackground || this.grid.properties.backgroundColor,
+                fontFamily: fontStyle.fontFamily,
+                fontSize: fontStyle.fontSize,
+                fontStyle: fontStyle.fontStyle,
+                fontWeight: fontStyle.fontWeight,
+                height: this.grid.properties.defaultRowHeight,
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                    let colHypergrid = this.getHypergridColumn(col.ColumnId)
+                    return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.halign }
+                })
+            },
+
         }
     }
 

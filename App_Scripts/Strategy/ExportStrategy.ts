@@ -48,6 +48,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     private sendNewDataToOpenfinExcel() {
         if (this.RangeState.CurrentLiveRanges.length > 0) {
+            let ippStyle = this.blotter.getIPPStyle()
             this.RangeState.CurrentLiveRanges.forEach(cle => {
                 let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
                 if (rangeAsArray) {
@@ -55,15 +56,18 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                         OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
                     }
                     else if (cle.ExportDestination == ExportDestination.iPushPull) {
-                        let style = this.blotter.getIPPStyle()
-                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, style);
+                        //we there is no logic related to the range so we want to get it only one time
+                        if (!ippStyle) {
+                            ippStyle = this.blotter.getIPPStyle()
+                        }
+                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, ippStyle);
                     }
                 }
             })
         }
     }
 
-    public Export(rangeName: string, exportDestination: ExportDestination,folder?:string, page?:string): void {
+    public Export(rangeName: string, exportDestination: ExportDestination, folder?: string, page?: string): void {
         switch (exportDestination) {
             case ExportDestination.Clipboard:
                 this.copyToClipboard(rangeName);
@@ -76,14 +80,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     .then((workbookName) => {
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                             RangeRedux.RangeStartLive(rangeName, workbookName, ExportDestination.OpenfinExcel));
-                            this.throttledRecomputeAndSendLiveExcelEvent()
+                        this.throttledRecomputeAndSendLiveExcelEvent()
                     });
                 break;
             case ExportDestination.iPushPull:
                 iPushPullHelper.LoadPage(folder, page).then(() => {
                     this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                         RangeRedux.RangeStartLive(rangeName, page, ExportDestination.iPushPull));
-                        this.throttledRecomputeAndSendLiveExcelEvent()
+                    this.throttledRecomputeAndSendLiveExcelEvent()
 
                 })
                 break;

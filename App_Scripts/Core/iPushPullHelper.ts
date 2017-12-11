@@ -1,6 +1,7 @@
 import { IEvent } from './Interface/IEvent';
 import { EventDispatcher } from './EventDispatcher';
 import { IPPDomain } from '../Redux/ActionsReducers/Interface/IState';
+import { IPPStyle } from './Interface/IAdaptableBlotter';
 
 export module iPushPullHelper {
     export enum ServiceStatus {
@@ -105,17 +106,7 @@ export module iPushPullHelper {
         }
     }
 
-    export function pushData(page: string, data: any[], style: {
-        headerColor: string,
-        headerBackColor: string,
-        headerFont: string,
-        color: string,
-        backColor: string,
-        altBackColor: string,
-        font: string,
-        height: number,
-        columnWidths: { columnFriendlyName: string, width: number }[]
-    }) {
+    export function pushData(page: string, data: any[], style: IPPStyle) {
 
         var newData = data.map(function (row: any, i: number) {
             return row.map((cell: any, y: number) => {
@@ -123,7 +114,7 @@ export module iPushPullHelper {
                     "value": cell,
                     "formatted_value": cell,
                     "style": style != null ? {
-                        "background-color": i == 0 ? style.headerBackColor : i % 2 ? style.backColor : style.altBackColor,
+                        "background-color": i == 0 ? style.Header.headerBackColor : i % 2 ? style.Row.backColor : style.Row.altBackColor,
                         "bbc": "000000",
                         "bbs": "none",
                         "bbw": "none",
@@ -136,17 +127,17 @@ export module iPushPullHelper {
                         "tbc": "000000",
                         "tbs": "none",
                         "tbw": "none",
-                        "color": i == 0 ? style.headerColor : style.color,
-                        "font": style.font,
-                        // "font-family": "Calibri",
-                        // "font-size": "11pt",
-                        // "font-style": "normal",
-                        // "font-weight": "400",
-                        "height": String(style.height) + "px",
+                        "color": i == 0 ? style.Header.headerColor : style.Row.color,
+                        "font-family": i == 0 ? style.Header.headerFontFamily : style.Row.fontFamily,
+                        "font-size": i == 0 ? style.Header.headerFontSize : style.Row.fontSize,
+                        "font-style": i == 0 ? style.Header.headerFontStyle : style.Row.fontStyle,
+                        "font-weight": i == 0 ? style.Header.headerFontWeight : style.Row.fontWeight,
+                        "height": i == 0 ? String(style.Header.height) + "px" : String(style.Row.height) + "px",
                         "text-align": "right",
                         "vertical-align": "bottom",
                         "white-space": "nowrap",
-                        "width": String(style.columnWidths.find(x => x.columnFriendlyName == data[0][y]).width) + "px",
+                        "width": i == 0 ? String(style.Header.Columns.find(x => x.columnFriendlyName == data[0][y]).width) + "px"
+                            : String(style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]).width) + "px",
                         "text-wrap": "normal",
                         "word-wrap": "normal"
                     } :
