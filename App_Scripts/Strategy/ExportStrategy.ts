@@ -18,6 +18,7 @@ import { iPushPullHelper } from '../Core/iPushPullHelper';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
     private RangeState: RangeState
+    private isSendingData = false
 
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
@@ -58,22 +59,65 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private sendNewDataToLiveExcel() {
+        //we wait for the last sendNewDataToLiveExcel to finish
+        if (this.isSendingData == true) {
+            this.throttledRecomputeAndSendLiveExcelEvent()
+            return
+        }
         if (this.RangeState && this.RangeState.CurrentLiveRanges.length > 0) {
+            this.isSendingData = true
             let ippStyle = this.blotter.getIPPStyle()
+            let promises: Promise<any>[] = []
             this.RangeState.CurrentLiveRanges.forEach(cle => {
-                let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
-                if (rangeAsArray) {
-                    if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
-                        OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray);
-                    }
-                    else if (cle.ExportDestination == ExportDestination.iPushPull) {
-                        //we there is no logic related to the range so we want to get it only one time
-                        if (!ippStyle) {
-                            ippStyle = this.blotter.getIPPStyle()
-                        }
-                        iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, ippStyle);
-                    }
+                if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
+                    promises.push(
+                        Promise.resolve().then(() => {
+                            return new Promise<any>((resolve, reject) => {
+                                let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
+                                if (rangeAsArray) {
+                                    resolve(rangeAsArray);
+                                } else {
+                                    reject();
+                                }
+                            })
+                        }).then((rangeAsArray) => {
+                            return OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray)
+                        })
+                        // .catch(() => {
+                        //     console.log("Live Excel failed to send data:" + cle.Range)
+                        // })
+                    )
                 }
+                else if (cle.ExportDestination == ExportDestination.iPushPull) {
+                    //we there is no logic related to the range so we want to get it only one time
+                    if (!ippStyle) {
+                        ippStyle = this.blotter.getIPPStyle()
+                    }
+                    promises.push(
+                        Promise.resolve().then(() => {
+                            return new Promise<any>((resolve, reject) => {
+                                let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
+                                if (rangeAsArray) {
+                                    resolve(rangeAsArray);
+                                } else {
+                                    reject();
+                                }
+                            })
+                        }).then((rangeAsArray) => {
+                            return iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, ippStyle)
+                        })
+                        // .catch(() => {
+                        //     console.log("Live Excel failed to send data:" + cle.Range)
+                        // })
+                    )
+                }
+            })
+            Promise.all(promises).then(() => {
+                console.log("All Data Sent")
+                this.isSendingData = false
+            }).catch(() => {
+                console.log("One live Excel failed to send data")
+                this.isSendingData = false
             })
         }
     }

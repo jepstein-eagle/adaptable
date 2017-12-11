@@ -76,7 +76,7 @@ export module iPushPullHelper {
         })
     }
 
-    var pages :  Map<string, any> = new Map()
+    var pages: Map<string, any> = new Map()
     export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
         return new Promise<any>((resolve: any, reject: any) => {
             let angular = (<any>window).angular
@@ -104,43 +104,17 @@ export module iPushPullHelper {
         }
     }
 
-    export function pushData(page: string, data: any[], style: IPPStyle) {
-
-        var newData = data.map(function (row: any, i: number) {
-            return row.map((cell: any, y: number) => {
-                return {
-                    "value": cell,
-                    "formatted_value": cell,
-                    "style": style != null ? {
-                        "background-color": i == 0 ? style.Header.headerBackColor : i % 2 ? style.Row.backColor : style.Row.altBackColor,
-                        "bbc": "000000",
-                        "bbs": "none",
-                        "bbw": "none",
-                        "lbc": "000000",
-                        "lbs": "none",
-                        "lbw": "none",
-                        "rbc": "000000",
-                        "rbs": "none",
-                        "rbw": "none",
-                        "tbc": "000000",
-                        "tbs": "none",
-                        "tbw": "none",
-                        "color": i == 0 ? style.Header.headerColor : style.Row.color,
-                        "font-family": i == 0 ? style.Header.headerFontFamily : style.Row.fontFamily,
-                        "font-size": i == 0 ? style.Header.headerFontSize : style.Row.fontSize,
-                        "font-style": i == 0 ? style.Header.headerFontStyle : style.Row.fontStyle,
-                        "font-weight": i == 0 ? style.Header.headerFontWeight : style.Row.fontWeight,
-                        "height": i == 0 ? String(style.Header.height) + "px" : String(style.Row.height) + "px",
-                        "text-align": "right",
-                        "vertical-align": "bottom",
-                        "white-space": "nowrap",
-                        "width": i == 0 ? String(style.Header.Columns.find(x => x.columnFriendlyName == data[0][y]).width) + "px"
-                            : String(style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]).width) + "px",
-                        "text-wrap": "normal",
-                        "word-wrap": "normal"
-                    } :
-                        {
-                            "background-color": i == 0 ? '#d9ecf5' : i % 2 ? "FFFFFF" : '#e6f2f8',
+    export function pushData(page: string, data: any[], style: IPPStyle): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            var newData = data.map(function (row: any, i: number) {
+                return row.map((cell: any, y: number) => {
+                    let col = (i == 0 ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y]) :
+                        style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]))
+                    return {
+                        "value": cell,
+                        "formatted_value": cell,
+                        "style": style != null ? {
+                            "background-color": i == 0 ? style.Header.headerBackColor : i % 2 ? style.Row.backColor : style.Row.altBackColor,
                             "bbc": "000000",
                             "bbs": "none",
                             "bbw": "none",
@@ -153,33 +127,61 @@ export module iPushPullHelper {
                             "tbc": "000000",
                             "tbs": "none",
                             "tbw": "none",
-                            "color": i == 0 ? "#00435e" : "#003f59"/*"000000"*/,
-                            "font-family": "Calibri",
-                            "font-size": "11pt",
-                            "font-style": "normal",
-                            "font-weight": "400",
-                            "height": "20px",
-                            "text-align": "right",
+                            "color": i == 0 ? style.Header.headerColor : style.Row.color,
+                            "font-family": i == 0 ? style.Header.headerFontFamily : style.Row.fontFamily,
+                            "font-size": i == 0 ? style.Header.headerFontSize : style.Row.fontSize,
+                            "font-style": i == 0 ? style.Header.headerFontStyle : style.Row.fontStyle,
+                            "font-weight": i == 0 ? style.Header.headerFontWeight : style.Row.fontWeight,
+                            "height": i == 0 ? String(style.Header.height) + "px" : String(style.Row.height) + "px",
+                            "text-align": i == 0 ? col.textAlign : col.textAlign,
                             "vertical-align": "bottom",
                             "white-space": "nowrap",
-                            "width": "64px",
+                            "width": i == 0 ? String(col.width) + "px"
+                                : String(col.width) + "px",
                             "text-wrap": "normal",
                             "word-wrap": "normal"
-                        }
-                }
-            })
-        });
+                        } :
+                            {
+                                "background-color": i == 0 ? '#d9ecf5' : i % 2 ? "FFFFFF" : '#e6f2f8',
+                                "bbc": "000000",
+                                "bbs": "none",
+                                "bbw": "none",
+                                "lbc": "000000",
+                                "lbs": "none",
+                                "lbw": "none",
+                                "rbc": "000000",
+                                "rbs": "none",
+                                "rbw": "none",
+                                "tbc": "000000",
+                                "tbs": "none",
+                                "tbw": "none",
+                                "color": i == 0 ? "#00435e" : "#003f59"/*"000000"*/,
+                                "font-family": "Calibri",
+                                "font-size": "11pt",
+                                "font-style": "normal",
+                                "font-weight": "400",
+                                "height": "20px",
+                                "text-align": "right",
+                                "vertical-align": "bottom",
+                                "white-space": "nowrap",
+                                "width": "64px",
+                                "text-wrap": "normal",
+                                "word-wrap": "normal"
+                            }
+                    }
+                })
+            });
 
-        let pageIPP = pages.get(page)
-        //JO : check why sometimes page.data.name is not immediatly available
-        if (pageIPP) {
+            let pageIPP = pages.get(page)
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
                 console.log('Data pushed for page : ' + page);
+                resolve()
             }, (err: any) => {
                 console.log('Error pushing Data for page : ' + page);
+                reject();
             });
-        }
+        })
     }
 }

@@ -70,14 +70,17 @@ export module OpenfinHelper {
     //         // });
     //     });
     // }
-    export function pushData(workBookName: string, data: any[]) {
-        let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
-        if (!workBook) {
-            console.error("Cannot find workbook:" + workBookName);
-            return
-        }
-        let worksheet = workBook.getWorksheetByName("Sheet1")
-        worksheet.setCells(data, "A1");
+    export function pushData(workBookName: string, data: any[]): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
+            if (!workBook) {
+                console.error("Cannot find workbook:" + workBookName);
+                return
+            }
+            let worksheet = workBook.getWorksheetByName("Sheet1")
+            worksheet.setCells(data, "A1");
+            resolve();
+        })
     }
     export function initOpenFinExcel(): Promise<string> {
         // fin.desktop.main(function () {
@@ -179,7 +182,7 @@ export module OpenfinHelper {
             fin.desktop.Excel.install((ack: any) => {
                 console.log("Add-In Registration callback", ack);
                 //if (ack.success) {
-                    resolve();
+                resolve();
                 //}
             });
         });
@@ -205,7 +208,7 @@ export module OpenfinHelper {
     function onWorkbookSaved(event: any) {
         _onWorkbookSaved.Dispatch(this, { OldName: event.oldWorkbookName, NewName: event.workbook.name });
     }
-    function onWorkbookActivated(event:any) {
+    function onWorkbookActivated(event: any) {
         console.log("Workbook Activated: " + event.target.name)
         event.target.getWorksheets((ack: any) => {
             console.log('getWorksheets:', ack);
