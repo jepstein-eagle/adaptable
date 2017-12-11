@@ -76,8 +76,7 @@ export module iPushPullHelper {
         })
     }
 
-    var pages: any[] = []
-
+    var pages :  Map<string, any> = new Map()
     export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
         return new Promise<any>((resolve: any, reject: any) => {
             let angular = (<any>window).angular
@@ -87,7 +86,7 @@ export module iPushPullHelper {
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
                 console.log("Page Ready : " + pageIPP)
-                pages.push(page)
+                pages.set(pageIPP, page)
                 resolve(page);
                 //we return true so it removes the listener for new content.
                 //IPP should add that line to their wiki
@@ -97,11 +96,10 @@ export module iPushPullHelper {
     }
 
     export function UnloadPage(page: string) {
-        let pageIPP = pages.find(x => x.data.name == page)
+        let pageIPP = pages.get(page)
         if (pageIPP) {
-            let pageIPPIdx = pages.findIndex(x => x.data.name == page)
             pageIPP.destroy()
-            pages.splice(pageIPPIdx, 1)
+            pages.delete(page)
             console.log("Page Unloaded : " + page)
         }
     }
@@ -172,7 +170,7 @@ export module iPushPullHelper {
             })
         });
 
-        let pageIPP = pages.find(x => x.data.name == page)
+        let pageIPP = pages.get(page)
         //JO : check why sometimes page.data.name is not immediatly available
         if (pageIPP) {
             pageIPP.Content.canDoDelta = false;
