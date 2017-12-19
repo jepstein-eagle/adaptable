@@ -75,10 +75,10 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
 
         let iPushPullExcelMenuItem
         if (this.props.LiveRanges.find(x => x.Range == currentRangeId && x.ExportDestination == ExportDestination.iPushPull)) {
-            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.iPushPull)} key={"OpenfinExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
+            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
         }
         else {
-            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.iPushPull)} key={"OpenfinExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
+            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
         }
 
 
