@@ -45,6 +45,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
         else {
             iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
         }
+        let hasLive = this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         return <li
             className="list-group-item"
@@ -65,9 +66,9 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                     </span>
                 </Col>
                 <Col xs={1}>
-                    <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">Export</Tooltip>}>
-                        <Dropdown id="dropdown-functions" dropup={this.props.IsLast} >
-                            <Dropdown.Toggle>
+                    <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">{hasLive ? "Has a live export active." : "Export"}</Tooltip>}>
+                        <Dropdown id="dropdown-functions" dropup={this.props.IsLast}  >
+                            <Dropdown.Toggle bsStyle={hasLive ? "success" : "default"}>
                                 <Glyphicon glyph="export" />
                             </Dropdown.Toggle>
                             <Dropdown.Menu >
