@@ -17,6 +17,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/StrategyIds'
+import { IUIConfirmation } from "../../Core/Interface/IStrategy";
 
 interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
@@ -24,6 +25,7 @@ interface QuickSearchToolbarControlComponentProps extends IStrategyViewPopupProp
     QuickSearchText: string
     QuickSearchDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
 }
 
 interface QuickSearchToolbarControlComponentState {
@@ -58,7 +60,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph" />
             </div>
         </span>
-        return <PanelDashboard headerText="Quick Search" glyphicon="eye-open">
+        return <PanelDashboard headerText="Quick Search" glyphicon="eye-open" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {content}
         </PanelDashboard>
     }
@@ -66,6 +68,11 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     onUpdateQuickSearchText(quckSearchText: string) {
         this.setState({ EditedQuickSearchText: quckSearchText })
         this.debouncedRunQuickSearch();
+    }
+
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.QuickSearchDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
     }
 }
 
@@ -80,6 +87,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(newQuickSearchText)),
         onShowQuickSearchConfig: () => dispatch(PopupRedux.PopupShow("QuickSearchConfig")),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

@@ -19,6 +19,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
+import { IUIConfirmation } from "../../Core/Interface/IStrategy";
 
 interface FilterToolbarControlComponentProps extends IStrategyViewPopupProps<FilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
@@ -26,6 +27,7 @@ interface FilterToolbarControlComponentProps extends IStrategyViewPopupProps<Fil
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[]
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
 }
 class FilterToolbarControlComponent extends React.Component<FilterToolbarControlComponentProps, {}> {
 
@@ -61,9 +63,13 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Filters" glyphicon="filter">
+        return <PanelDashboard headerText="Filters" glyphicon="filter" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {content}
         </PanelDashboard>
+    }
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.FilterDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
     }
 }
 
@@ -78,6 +84,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

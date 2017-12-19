@@ -28,7 +28,9 @@ interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttribut
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
     AdvancedSearchDashboardControl: IDashboardStrategyControlConfiguration
-    IsReadOnly: boolean
+    IsReadOnly: boolean,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
+
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
@@ -79,13 +81,18 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText="Advanced Search" glyphicon="search">
+        return <PanelDashboard headerText="Advanced Search" glyphicon="search" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {content}
         </PanelDashboard>
     }
 
     onSelectedSearchChanged(selected: IAdvancedSearch[]) {
         this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Uid : "");
+    }
+
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.AdvancedSearchDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
     }
 
     // onSelectedSearchChanged(event: React.FormEvent<any>) {
@@ -107,7 +114,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "Edit"))
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "Edit")),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

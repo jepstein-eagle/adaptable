@@ -41,6 +41,7 @@ interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<Exp
     LiveRanges: ILiveRange[];
     RangeDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
 }
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
@@ -126,13 +127,17 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Export" glyphicon="export">
+        return <PanelDashboard headerText="Export" glyphicon="export" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {content}
         </PanelDashboard>
     }
 
     onSelectedRangeChanged(selected: IRange[]) {
         this.props.onSelectRange(selected.length > 0 ? selected[0].Name : "");
+    }
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.RangeDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
     }
 
 }
@@ -153,7 +158,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectRange: (range: string) => dispatch(RangeRedux.RangeSelect(range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
         onNewRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "New")),
-        onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit"))
+        onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit")),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

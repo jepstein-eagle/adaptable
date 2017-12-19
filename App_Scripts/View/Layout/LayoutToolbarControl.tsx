@@ -29,6 +29,8 @@ interface LayoutToolbarControlComponentProps extends IStrategyViewPopupProps<Lay
     CurrentLayout: string;
     LayoutDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
+
 }
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
@@ -80,7 +82,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Layout" glyphicon="th">
+        return <PanelDashboard headerText="Layout" glyphicon="th" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {content}
         </PanelDashboard>
     }
@@ -103,6 +105,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onLoadLayout(e.value);
     }
 
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.LayoutDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -120,6 +127,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

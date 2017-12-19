@@ -11,7 +11,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
-import { IMenuItem } from '../../Core/Interface/IStrategy'
+import { IMenuItem, IUIConfirmation } from '../../Core/Interface/IStrategy'
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 
 interface FunctionsControlComponentProps extends IStrategyViewPopupProps<FunctionsToolbarControlComponent> {
@@ -19,7 +19,8 @@ interface FunctionsControlComponentProps extends IStrategyViewPopupProps<Functio
     IsReadOnly: boolean,
     MenuState: MenuState,
     EntitlementsState: EntitlementsState
-    onClick: (action: Redux.Action) => Redux.Action
+    onClick: (action: Redux.Action) => Redux.Action,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
 }
 
 class FunctionsToolbarControlComponent extends React.Component<FunctionsControlComponentProps, {}> {
@@ -36,7 +37,7 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
             return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}><Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}</MenuItem>
         });
 
-        return <PanelDashboard headerText="Functions" glyphicon="home">
+        return <PanelDashboard headerText="Functions" glyphicon="home" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             <Dropdown id="dropdown-functions">
                 <Dropdown.Toggle>
                     <Glyphicon glyph="home" />{' '}Functions
@@ -51,6 +52,11 @@ class FunctionsToolbarControlComponent extends React.Component<FunctionsControlC
     onClick(menuItem: IMenuItem) {
         this.props.onClick(menuItem.Action)
     }
+
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.FunctionsDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -63,7 +69,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClick: (action: Redux.Action) => dispatch(action)
+        onClick: (action: Redux.Action) => dispatch(action),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 

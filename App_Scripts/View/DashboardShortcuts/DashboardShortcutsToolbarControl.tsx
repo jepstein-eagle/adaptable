@@ -12,14 +12,15 @@ import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDa
 import { Helper } from '../../Core/Helper';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
-import { IMenuItem } from '../../Core/Interface/IStrategy'
+import { IMenuItem, IUIConfirmation } from '../../Core/Interface/IStrategy'
 
 interface DashboardShortcutsControlComponentProps extends IStrategyViewPopupProps<DashboardShortcutsToolbarControlComponent> {
     DashboardShortcutsDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean,
     MenuState: MenuState,
     EntitlementsState: EntitlementsState
-    onClick: (action: Redux.Action) => Redux.Action
+    onClick: (action: Redux.Action) => Redux.Action,
+    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
 }
 
 class DashboardShortcutsToolbarControlComponent extends React.Component<DashboardShortcutsControlComponentProps, {}> {
@@ -37,13 +38,17 @@ class DashboardShortcutsToolbarControlComponent extends React.Component<Dashboar
                 }
             })
         }
-        return <PanelDashboard headerText="Bookmarks" glyphicon="bookmark">
+        return <PanelDashboard headerText="Bookmarks" glyphicon="bookmark" onHideControl={(confirmation) => this.hideControl(confirmation)}>
             {shortcuts}
         </PanelDashboard>
     }
 
     onClick(menuItem: IMenuItem) {
         this.props.onClick(menuItem.Action)
+    }
+    hideControl(confirmation: IUIConfirmation) {
+        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.DashboardShortcutsDashboardControl.Strategy, false);
+        this.props.onConfirmWarning(confirmation)
     }
 }
 
@@ -57,7 +62,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClick: (action: Redux.Action) => dispatch(action)
+        onClick: (action: Redux.Action) => dispatch(action),
+        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
 }
 
