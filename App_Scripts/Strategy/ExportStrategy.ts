@@ -19,6 +19,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     private RangeState: RangeState
     private isSendingData = false
+    private workAroundOpenfinExcelDataDimension: Map<string, { x: number, y: number }> = new Map()
 
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
@@ -73,8 +74,36 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     promises.push(
                         Promise.resolve().then(() => {
                             return new Promise<any>((resolve, reject) => {
+                                //we want to erase old cells in case we are sending less data
+                                //we don't want to call clearCellContent as it makes the excel sheet to blink
+                                //and also is incorrrect as until we call setcells again we've lost all values in excel which might upset
+                                //some macros
+                                let previousDimension = this.workAroundOpenfinExcelDataDimension.get(cle.Range)
                                 let rangeAsArray: any[] = this.ConvertRangetoArray(cle.Range);
+                                let newDimension = { x: rangeAsArray[0].length, y: rangeAsArray.length }
+                                if (previousDimension) {
+                                    let missingNumberOfRows = previousDimension.y - newDimension.y
+                                    let missingNumberOfColumns = previousDimension.x - newDimension.x
+                                    if (missingNumberOfRows > 0) {
+                                        for (let i = 0; i < missingNumberOfRows; i++) {
+                                            let newRow = []
+                                            for (let j = 0; j < newDimension.x; j++) {
+                                                newRow.push(null)
+                                            }
+                                            rangeAsArray.push(newRow)
+                                        }
+                                    }
+                                    if (missingNumberOfColumns > 0) {
+                                        //missing column
+                                        rangeAsArray.forEach(row => {
+                                            for (let j = 0; j < missingNumberOfColumns; j++) {
+                                                row.push(null)
+                                            }
+                                        })
+                                    }
+                                }
                                 if (rangeAsArray) {
+                                    this.workAroundOpenfinExcelDataDimension.set(cle.Range, newDimension)
                                     resolve(rangeAsArray);
                                 } else {
                                     reject();
