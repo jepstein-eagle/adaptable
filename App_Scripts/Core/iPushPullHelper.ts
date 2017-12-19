@@ -110,11 +110,10 @@ export module iPushPullHelper {
                 return row.map((cell: any, y: number) => {
                     let col = (i == 0 ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y]) :
                         style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]))
-                    return {
-                        "value": cell,
-                        "formatted_value": cell,
-                        "style": style != null ? {
-                            "background-color": i == 0 ? style.Header.headerBackColor : i % 2 ? style.Row.backColor : style.Row.altBackColor,
+                    let styleIPP: any
+                    if (i == 0) {
+                        styleIPP = {
+                            "background-color": style.Header.headerBackColor,
                             "bbc": "000000",
                             "bbs": "none",
                             "bbw": "none",
@@ -127,47 +126,40 @@ export module iPushPullHelper {
                             "tbc": "000000",
                             "tbs": "none",
                             "tbw": "none",
-                            "color": i == 0 ? style.Header.headerColor : style.Row.color,
-                            "font-family": i == 0 ? style.Header.headerFontFamily : style.Row.fontFamily,
-                            "font-size": i == 0 ? style.Header.headerFontSize : style.Row.fontSize,
-                            "font-style": i == 0 ? style.Header.headerFontStyle : style.Row.fontStyle,
-                            "font-weight": i == 0 ? style.Header.headerFontWeight : style.Row.fontWeight,
-                            "height": i == 0 ? String(style.Header.height) + "px" : String(style.Row.height) + "px",
-                            "text-align": i == 0 ? col.textAlign : col.textAlign,
+                            "color": style.Header.headerColor,
+                            "font-family": style.Header.headerFontFamily,
+                            "font-size": style.Header.headerFontSize,
+                            "font-style": style.Header.headerFontStyle,
+                            "font-weight": style.Header.headerFontWeight,
+                            "height": String(style.Header.height) + "px",
+                            "text-align": col.textAlign,
                             "vertical-align": "bottom",
                             "white-space": "nowrap",
-                            "width": i == 0 ? String(col.width) + "px"
-                                : String(col.width) + "px",
+                            "width": String(col.width) + "px",
                             "text-wrap": "normal",
                             "word-wrap": "normal"
-                        } :
-                            {
-                                "background-color": i == 0 ? '#d9ecf5' : i % 2 ? "FFFFFF" : '#e6f2f8',
-                                "bbc": "000000",
-                                "bbs": "none",
-                                "bbw": "none",
-                                "lbc": "000000",
-                                "lbs": "none",
-                                "lbw": "none",
-                                "rbc": "000000",
-                                "rbs": "none",
-                                "rbw": "none",
-                                "tbc": "000000",
-                                "tbs": "none",
-                                "tbw": "none",
-                                "color": i == 0 ? "#00435e" : "#003f59"/*"000000"*/,
-                                "font-family": "Calibri",
-                                "font-size": "11pt",
-                                "font-style": "normal",
-                                "font-weight": "400",
-                                "height": "20px",
-                                "text-align": "right",
-                                "vertical-align": "bottom",
-                                "white-space": "nowrap",
-                                "width": "64px",
-                                "text-wrap": "normal",
-                                "word-wrap": "normal"
-                            }
+                        }
+                    }
+                    else if (i == 1) {
+                        styleIPP = {
+                            "background-color": i % 2 ? style.Row.backColor : style.Row.altBackColor,
+                            "color": style.Row.color,
+                            "font-family": style.Row.fontFamily,
+                            "font-size": style.Row.fontSize,
+                            "font-style": style.Row.fontStyle,
+                            "font-weight": style.Row.fontWeight,
+                            "text-align": col.textAlign
+                        }
+                    }
+                    else {
+                        styleIPP = {
+                            "background-color": i % 2 ? style.Row.backColor : style.Row.altBackColor,
+                        }
+                    }
+                    return {
+                        "value": cell,
+                        "formatted_value": cell,
+                        "style": styleIPP
                     }
                 })
             });
