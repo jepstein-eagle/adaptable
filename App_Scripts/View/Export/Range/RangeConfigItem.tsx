@@ -12,14 +12,16 @@ import { RangeScope, ExportDestination } from '../../../Core/Enums';
 import { RangeHelper } from '../../../Core/Services/RangeHelper';
 import { OpenfinHelper } from '../../../Core/OpenfinHelper';
 import { ILiveRange } from '../../../Redux/ActionsReducers/Interface/IState';
+import { iPushPullHelper } from '../../../Core/iPushPullHelper';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
-    IsLast : boolean
+    IsLast: boolean
     UserFilters: IUserFilter[]
-    LiveRanges : ILiveRange[]
+    LiveRanges: ILiveRange[]
     onEdit: () => void;
     onExport: (exportDestination: ExportDestination) => void;
+    onRangeStopLive: (exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => void,
     onDeleteConfirm: Redux.Action;
     Columns: Array<IColumn>
 }
@@ -29,21 +31,21 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
 
         let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
-        let openfinExcelMenuItem 
-        if(this.props.LiveRanges.find(x=>x.Range == this.props.Range.Name)){
-            openfinExcelMenuItem= <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
+        let openfinExcelMenuItem
+        if (this.props.LiveRanges.find(x => x.Range == this.props.Range.Name)) {
+            openfinExcelMenuItem = <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
         }
-        else{
-            openfinExcelMenuItem= <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
+        else {
+            openfinExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
         }
-        // let iPushPullExcelMenuItem
-        // if (this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull)) {
-        //     iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
-        // }
-        // else {
-        //     iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
-        // }
-        
+        let iPushPullExcelMenuItem
+        if (this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull)) {
+            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
+        }
+        else {
+            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
+        }
+
         return <li
             className="list-group-item"
             onClick={() => { }}>
@@ -73,6 +75,9 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                                 {clipboardMenuItem}
                                 {
                                     OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                                }
+                                {
+                                    iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
                                 }
                             </Dropdown.Menu>
                         </Dropdown>

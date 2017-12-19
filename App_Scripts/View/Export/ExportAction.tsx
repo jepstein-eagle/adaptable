@@ -43,7 +43,8 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
     LiveRanges: ILiveRange[];
     CurrentRange: string,
     onExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
-    onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction
+    onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction;
+    onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => RangeRedux.RangeStopLiveAction;
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
 }
@@ -83,6 +84,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                 UserFilters={this.props.UserFilters}
                 LiveRanges={this.props.LiveRanges}
                 onExport={(exportDestination) => this.onExportRange(range.Name, exportDestination)}
+                onRangeStopLive={(exportDestination) => this.props.onRangeStopLive(range.Name, exportDestination)}
                 onEdit={() => this.onEditRange(index, range)}
                 onDeleteConfirm={RangeRedux.RangeDelete(index)} />
         });
@@ -161,7 +163,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(value, exportDestination)),
-        onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range))
+        onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
+        onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
     };
 }
 
