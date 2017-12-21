@@ -32,8 +32,7 @@ module.exports = {
         "ag-grid/dist/lib/gridApi": "agGrid",
     },
     resolve: {
-        // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
 
     plugins: [
@@ -41,6 +40,15 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
+        new webpack.SourceMapDevToolPlugin({
+            filename: '[file].map'
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         // new CopyWebpackPlugin([{ context: 'themes', from: '**/*', to: 'adaptable-blotter-themes' }]),
         // new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }])
