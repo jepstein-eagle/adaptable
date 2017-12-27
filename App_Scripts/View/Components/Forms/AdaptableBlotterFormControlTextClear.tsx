@@ -9,13 +9,15 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 
 export interface AdaptableBlotterFormControlTextClearProps extends FormControlProps {
     OnTextChange: (textValue: string) => void
+    autoFocus?: boolean
 }
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<AdaptableBlotterFormControlTextClearProps, {}> {
     render() {
         return <ButtonGroup>
             <FormControl
-                style={this.props.style}
+               autoFocus = {this.props.autoFocus}
+               style={this.props.style}
                 type="text"
                 placeholder={this.props.placeholder}
                 value={this.props.value}

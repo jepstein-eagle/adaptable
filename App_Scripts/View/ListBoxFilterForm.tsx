@@ -7,6 +7,8 @@ import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, Lis
 import { StringExtensions } from '../Core/Extensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { ButtonClear } from './Components/Buttons/ButtonClear';
+import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
+import { QuickSearchConfig } from "./QuickSearch/QuickSearchConfig";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -91,23 +93,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             }
         })
 
-        let header = <FormGroup style={{ margin: 0 }}>
-            <InputGroup>
-                <FormControl autoFocus
-                    type="text"
-                    value={this.state.FilterValue}
-                    placeholder="Search"
-                    onChange={(e) => this.handleChangeFilterValue(e)}
-                />
-                <InputGroup.Button>
-                    <ButtonClear onClick={() => this.clearFilter()}
-                        overrideTooltip="Clear Filter"
-                        overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.FilterValue)}
-                        DisplayMode="Glyph" />
-
-                </InputGroup.Button>
-            </InputGroup>
-        </FormGroup>
+        let header = <AdaptableBlotterFormControlTextClear
+            autoFocus={true}
+            type="text"
+            placeholder="Search Filters"
+            value={this.state.FilterValue}
+            OnTextChange={(x) => this.onUpdateFilterSearch(x)} />
 
         return <div>
             {header}
@@ -119,11 +110,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         </div>;
     }
 
-    handleChangeFilterValue(x: React.FormEvent<any>) {
-        let e = x.target as HTMLInputElement;
-        this.setState({
-            FilterValue: e.value
-        } as ListBoxFilterFormState);
+    onUpdateFilterSearch(filterSearch: string) {
+        this.setState({ FilterValue: filterSearch } as ListBoxFilterFormState);
     }
 
     clearFilter() {
