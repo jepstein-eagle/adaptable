@@ -66,6 +66,10 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "Jonathan",
         enableAuditLog: false,
-        enableRemoteConfigServer: false
+        enableRemoteConfigServer: false,
+        iPushPullConfig: {
+            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+        }
     });
 }

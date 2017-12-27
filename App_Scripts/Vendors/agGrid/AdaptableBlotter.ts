@@ -44,7 +44,7 @@ import { Helper } from '../../Core/Helper';
 import { StringExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
 import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
@@ -65,6 +65,7 @@ import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrateg
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
+import { Color } from '../../Core/color';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -668,8 +669,46 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     //TEMPORARY : JO
-    public getIPPStyle(): any {
-        return null
+    public getIPPStyle(): IPPStyle {
+        let headerFirstCol: HTMLElement = document.querySelectorAll(".ag-header-cell").item(0) as HTMLElement
+        let header: HTMLElement = document.querySelector(".ag-header") as HTMLElement
+        let headerColStyle = window.getComputedStyle(header, null)
+        let firstRow: HTMLElement = document.querySelector(".ag-row-even") as HTMLElement
+        let firstRowStyle = window.getComputedStyle(firstRow, null)
+        let secondRow: HTMLElement = document.querySelector(".ag-row-odd") as HTMLElement
+        let secondRowStyle = window.getComputedStyle(secondRow, null)
+        return {
+            Header: {
+                headerColor: new Color(headerColStyle.color).toHex(),
+                headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
+                headerFontFamily: headerColStyle.fontFamily,
+                headerFontSize: headerColStyle.fontSize,
+                headerFontStyle: headerColStyle.fontStyle,
+                headerFontWeight: headerColStyle.fontWeight,
+                height: Number(headerColStyle.height.replace("px","")),
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                    let headerColumn: HTMLElement = document.querySelector(".ag-header-cell[col-id='" + col.ColumnId + "']") as HTMLElement
+                    let headerColumnStyle = window.getComputedStyle(headerColumn||headerFirstCol, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+                })
+            },
+            Row: {
+                color: new Color(firstRowStyle.color).toHex(),
+                backColor: new Color(firstRowStyle.backgroundColor).toHex(),
+                altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
+                fontFamily: firstRowStyle.fontFamily,
+                fontSize: firstRowStyle.fontSize,
+                fontStyle: firstRowStyle.fontStyle,
+                fontWeight: firstRowStyle.fontWeight,
+                height: Number(firstRowStyle.height),
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                    let cellElement: HTMLElement = document.querySelector(".ag-cell[col-id='" + col.ColumnId + "']") as HTMLElement
+                    let headerColumnStyle = window.getComputedStyle(cellElement||firstRow, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+                })
+            },
+
+        }
     }
 
 
