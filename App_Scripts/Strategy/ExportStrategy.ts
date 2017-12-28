@@ -28,12 +28,18 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', MenuType.ActionPopup, "export");
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
+            this.RangeState.CurrentLiveRanges.forEach(cle => {
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                    RangeRedux.RangeStopLive(cle.Range, ExportDestination.OpenfinExcel));
+            })
         })
         OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
             console.log("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
             let liveRange = this.RangeState.CurrentLiveRanges.find(x => x.WorkbookName == workbook.name)
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                RangeRedux.RangeStopLive(liveRange.Range, ExportDestination.OpenfinExcel));
+            if (liveRange) {
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                    RangeRedux.RangeStopLive(liveRange.Range, ExportDestination.OpenfinExcel));
+            }
         })
         OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
             console.log("Workbook Saved", workbookSavedEvent);
@@ -112,9 +118,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                         }).then((rangeAsArray) => {
                             return OpenfinHelper.pushData(cle.WorkbookName, rangeAsArray)
                         })
-                        // .catch(() => {
-                        //     console.log("Live Excel failed to send data:" + cle.Range)
-                        // })
+                            .catch((reason) => {
+                                console.log("Live Excel failed to send data for [" + cle.Range + "]", reason)
+                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                                    RangeRedux.RangeStopLive(cle.Range, ExportDestination.OpenfinExcel));
+                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                                    PopupRedux.PopupShowError({ ErrorMsg: "Live Excel failed to send data for [" + cle.Range + "]. This live export has been stopped" })
+                                )
+                            })
                     )
                 }
                 else if (cle.ExportDestination == ExportDestination.iPushPull) {
@@ -135,9 +146,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                         }).then((rangeAsArray) => {
                             return iPushPullHelper.pushData(cle.WorkbookName, rangeAsArray, ippStyle)
                         })
-                        // .catch(() => {
-                        //     console.log("Live Excel failed to send data:" + cle.Range)
-                        // })
+                            .catch((reason) => {
+                                console.log("Live Excel failed to send data for [" + cle.Range + "]", reason)
+                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                                    RangeRedux.RangeStopLive(cle.Range, ExportDestination.iPushPull));
+                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                                    PopupRedux.PopupShowError({ ErrorMsg: "Live Excel failed to send data for [" + cle.Range + "]. This live export has been stopped" })
+                                )
+                            })
                     )
                 }
             })
@@ -164,14 +180,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     .then((workbookName) => {
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                             RangeRedux.RangeStartLive(rangeName, workbookName, ExportDestination.OpenfinExcel));
-                        this.throttledRecomputeAndSendLiveExcelEvent()
+                        setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent() }, 500)
                     });
                 break;
             case ExportDestination.iPushPull:
                 iPushPullHelper.LoadPage(folder, page).then(() => {
                     this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                         RangeRedux.RangeStartLive(rangeName, page, ExportDestination.iPushPull));
-                    this.throttledRecomputeAndSendLiveExcelEvent()
+                    setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent() }, 500)
 
                 })
                 break;

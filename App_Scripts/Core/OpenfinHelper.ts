@@ -75,7 +75,7 @@ export module OpenfinHelper {
             let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
             if (!workBook) {
                 console.error("Cannot find workbook:" + workBookName);
-                return
+                reject("Cannot find workbook:" + workBookName)
             }
             let worksheet = workBook.getWorksheetByName("Sheet1")
             worksheet.setCells(data, "A1");
