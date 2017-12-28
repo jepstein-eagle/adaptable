@@ -17,6 +17,7 @@ export class Color {
                 this.r = parseInt(r.substr(0, 2), 16);
                 this.g = parseInt(r.substr(2, 2), 16);
                 this.b = parseInt(r.substr(4, 2), 16);
+                this.a = 1
             } else if (r.indexOf('rgb') === 0) {
                 const res = RGB_COLOR_REGEX.exec(r);
                 this.r = parseInt(res[1], 10);
@@ -33,7 +34,19 @@ export class Color {
     }
 
     toHex() {
-        return '#' + this.r.toString(16) + this.g.toString(16) + this.b.toString(16);
+        if(this.a === 0){
+          return '#fff'
+        }
+        return '#' + this.convertRadix(this.r) + this.convertRadix(this.g) + this.convertRadix(this.b);
+    }
+
+    convertRadix(input: number){
+      let converted = input.toString(16)
+      if(converted.length == 1)
+      {
+        converted = '0' + converted
+      }
+      return converted
     }
 
     toRgb() {

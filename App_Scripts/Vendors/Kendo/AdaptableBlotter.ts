@@ -43,7 +43,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -59,6 +59,7 @@ import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrateg
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { Expression } from '../../Core/Expression/Expression';
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
+import { Color } from '../../Core/color';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -691,10 +692,49 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
-    //TEMPORARY : JO
-    public getIPPStyle(): any {
-        return null
+ //TEMPORARY : JO
+ public getIPPStyle(): IPPStyle {
+    let headerFirstCol: HTMLElement = document.querySelectorAll(".k-header").item(0) as HTMLElement
+    let header: HTMLElement = document.querySelector(".k-grid-header") as HTMLElement
+    let headerColStyle = window.getComputedStyle(header, null)
+    let firstRow: HTMLElement = document.querySelector("tbody[role='rowgroup']").firstElementChild as HTMLElement
+    let firstRowStyle = window.getComputedStyle(firstRow, null)
+    let secondRow: HTMLElement = document.querySelector(".k-alt") as HTMLElement
+    let secondRowStyle = window.getComputedStyle(secondRow, null)
+    return {
+        Header: {
+            headerColor: new Color(headerColStyle.color).toHex(),
+            headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
+            headerFontFamily: headerColStyle.fontFamily,
+            headerFontSize: headerColStyle.fontSize,
+            headerFontStyle: headerColStyle.fontStyle,
+            headerFontWeight: headerColStyle.fontWeight,
+            height: Number(headerColStyle.height.replace("px","")),
+            Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                let headerColumn: HTMLElement = document.querySelector(".k-header[data-field='" + col.ColumnId + "']") as HTMLElement
+                let headerColumnStyle = window.getComputedStyle(headerColumn||headerFirstCol, null)
+                return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+            })
+        },
+        Row: {
+            color: new Color(firstRowStyle.color).toHex(),
+            backColor: new Color(firstRowStyle.backgroundColor).toHex(),
+            altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
+            fontFamily: firstRowStyle.fontFamily,
+            fontSize: firstRowStyle.fontSize,
+            fontStyle: firstRowStyle.fontStyle,
+            fontWeight: firstRowStyle.fontWeight,
+            height: Number(firstRowStyle.height.replace("px","")),
+            Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map((col,index) => {
+                let cellElement: HTMLElement = firstRow.children.item(index + 1) as HTMLElement
+                let headerColumnStyle = window.getComputedStyle(cellElement||firstRow, null)
+                return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+            })
+        },
+
     }
+}
+
 
     private GetGridState(): GridState {
         return this.AdaptableBlotterStore.TheStore.getState().Grid;

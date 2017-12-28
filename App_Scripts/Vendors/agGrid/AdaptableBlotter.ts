@@ -700,7 +700,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 fontSize: firstRowStyle.fontSize,
                 fontStyle: firstRowStyle.fontStyle,
                 fontWeight: firstRowStyle.fontWeight,
-                height: Number(firstRowStyle.height),
+                height: Number(firstRowStyle.height.replace("px","")),
                 Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let cellElement: HTMLElement = document.querySelector(".ag-cell[col-id='" + col.ColumnId + "']") as HTMLElement
                     let headerColumnStyle = window.getComputedStyle(cellElement||firstRow, null)
