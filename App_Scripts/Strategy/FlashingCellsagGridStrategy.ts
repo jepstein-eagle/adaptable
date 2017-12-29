@@ -11,8 +11,8 @@ import { MenuType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
-    constructor(private blotterBypass: AdaptableBlotter) {
-        super(blotterBypass)
+    constructor(blotter: AdaptableBlotter) {
+        super(blotter)
         this.currentFlashing = new Map()
     }
     private currentFlashing: Map<any, number>

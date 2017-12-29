@@ -12,7 +12,7 @@ import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 
-export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
+export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
     protected FLASH_UP_STYLE: string = "Ab-FlashUp"
     protected FLASH_DOWN_STYLE: string = "Ab-FlashDown"
@@ -65,15 +65,6 @@ export class FlashingCellsStrategy extends AdaptableStrategyBase implements IFla
         }
     }
 
-    protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
-        if (dataChangedEvent.OldValue == null) return;
-        var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
-        var newValueNumber: Number = Number(dataChangedEvent.NewValue);
-
-        var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
-        let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnId);
-        //Jo : we know that this function is wrong as it's not cumulative
-        this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration.Duration)
-    }
+    protected abstract FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void ;
 
 }

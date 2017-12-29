@@ -618,10 +618,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null;
     }
 
-    public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
-        throw 'Not implemented for hypergrid see addCellStyleHypergrid';
-    }
-
     public addCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: CellStyleHypergrid, timeout?: number): void {
         //here we don't call Repaint as we consider that we already are in the repaint loop
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
@@ -696,17 +692,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return rowIndex
     }
 
-    public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
-        throw 'Not implemented for hypergrid see addRowStyleHypergrid';
-    }
-
-    public removeAllCellStylesWithRegex(regex: RegExp): void {
-    }
-
-    public removeAllRowStylesWithRegex(regex: RegExp): void {
-    }
-
-
     public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
@@ -755,12 +740,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             })
         })
-    }
-
-    public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
-    }
-
-    public removeRowStyle(rowIdentifierValue: any, style: string): void {
     }
 
     public applyColumnFilters(): void {

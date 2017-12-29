@@ -16,17 +16,18 @@ import { MenuType } from '../Core/Enums';
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
-    constructor(private blotterBypass: AdaptableBlotter) {
-        super(blotterBypass)
+    constructor(blotter: AdaptableBlotter) {
+        super(blotter)
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+        let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         //here we don't call Repaint as we consider that we already are in the repaint loop
         for (let column of columns) {
-            this.blotterBypass.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csColumn')
-            this.blotterBypass.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csRow')
+            theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csColumn')
+            theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csRow')
         }
 
         this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
@@ -34,20 +35,20 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 // if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                 if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                        theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
                     }
                 }
             }
             else {
                 if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        this.blotterBypass.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                        theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                     }
                     else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        this.blotterBypass.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
                     }
                 }
             }
@@ -55,13 +56,10 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
     }
 
     protected InitStyles(): void {
-        //JO: temp fix
-        if (!this.blotterBypass) {
-            this.blotterBypass = this.blotter as AdaptableBlotter
-        }
+        let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        this.blotterBypass.removeAllCellStyleHypergrid('csColumn')
-        this.blotterBypass.removeAllCellStyleHypergrid('csRow')
+        theBlotter.removeAllCellStyleHypergrid('csColumn')
+        theBlotter.removeAllCellStyleHypergrid('csRow')
 
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
@@ -74,7 +72,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 .map(cs => cs)
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
-            this.blotterBypass.forAllRecordsDo((row: any) => {
+            theBlotter.forAllRecordsDo((row: any) => {
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
                 //an object with properties that have the name of the groupbykey
                 for (let column in columnConditionalStylesGroupedByColumn) {
@@ -82,7 +80,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         let localCS: IConditionalStyleCondition = columnCS
                         if (ExpressionHelper.checkForExpressionFromRecord(localCS.Expression, row, columns, this.blotter)) {
-                            this.blotterBypass.addCellStyleHypergrid(this.blotterBypass.getPrimaryKeyValueFromRecord(row), localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
+                            theBlotter.addCellStyleHypergrid(theBlotter.getPrimaryKeyValueFromRecord(row), localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
                             break
                         }
                     }
@@ -90,13 +88,13 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
-                        this.blotterBypass.addRowStyleHypergrid(this.blotterBypass.getPrimaryKeyValueFromRecord(row), { conditionalStyleRow: rowCS.Style })
+                        theBlotter.addRowStyleHypergrid(theBlotter.getPrimaryKeyValueFromRecord(row), { conditionalStyleRow: rowCS.Style })
                         break
                     }
                 }
             })
         }
-        this.blotterBypass.ReindexAndRepaint();
+        theBlotter.ReindexAndRepaint();
     }
 }
 

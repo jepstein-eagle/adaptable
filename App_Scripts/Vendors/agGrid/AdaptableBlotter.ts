@@ -571,27 +571,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void {
-        return null
-    }
-
-    public addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void {
-
-    }
-
-    public removeAllCellStylesWithRegex(regex: RegExp): void {
-    }
-
-    public removeAllRowStylesWithRegex(regex: RegExp): void {
-    }
-
-
-    public removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void {
-    }
-
-    public removeRowStyle(rowIdentifierValue: any, style: string): void {
-    }
-
     public forAllRecordsDo(func: (record: any) => any) {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             func(rowNode)

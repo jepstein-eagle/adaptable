@@ -56,15 +56,6 @@ export interface IAdaptableBlotter {
     gridHasCurrentEditValue(): boolean
     getCurrentCellEditValue(): any
 
-
-    // cell styling methods
-    addCellStyle(rowIdentifierValue: any, columnIndex: number, style: string, timeout?: number): void
-    removeCellStyle(rowIdentifierValue: any, columnIndex: number, style: string): void
-    addRowStyle(rowIdentifierValue: any, style: string, timeout?: number): void
-    removeRowStyle(rowIdentifierValue: any, style: string): void
-    removeAllRowStylesWithRegex(regex: RegExp): void
-    removeAllCellStylesWithRegex(regex: RegExp): void
-
     // Row Methods
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;

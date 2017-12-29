@@ -28,7 +28,7 @@ import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStr
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
-import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
+import { FlashingCellsKendoStrategy } from '../../Strategy/FlashingCellsKendoStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleKendoStrategy } from '../../Strategy/ConditionalStyleKendoStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
@@ -100,7 +100,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, true))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))

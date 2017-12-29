@@ -1,4 +1,4 @@
-import {ConditionalStyleStrategy} from './ConditionalStyleStrategy';
+import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
 import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
@@ -14,46 +14,49 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { MenuType } from '../Core/Enums';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 
 export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     private ConsitionalStylePrefix = "Ab-ConditionalStyle-"
-    constructor(blotter: IAdaptableBlotter) {
+    constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+        let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
 
             if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                 if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    this.blotter.addRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
+                    theBlotter.addRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
                 }
                 else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    this.blotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
+                    theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
                 }
             }
             else {
                 if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    this.blotter.removeRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
+                    theBlotter.removeRowStyle(dataChangedEvent.IdentifierValue, this.ConsitionalStylePrefix + index)
                 }
                 else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    this.blotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
+                    theBlotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, this.ConsitionalStylePrefix + index)
                 }
             }
         })
     }
 
     protected InitStyles(): void {
-        this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
-        this.blotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
+        let theBlotter = this.blotter as AdaptableBlotter
+        theBlotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
+        theBlotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
 
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
-            
+
             let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
 
@@ -72,7 +75,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper.checkForExpressionFromRecord(columnCS.Expression, row, columns, this.blotter)) {
-                            this.blotter.addCellStyle(primaryKey, columnCS.columnIndex, this.ConsitionalStylePrefix + columnCS.collectionIndex)
+                            theBlotter.addCellStyle(primaryKey, columnCS.columnIndex, this.ConsitionalStylePrefix + columnCS.collectionIndex)
                             break
                         }
                     }
@@ -80,7 +83,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
-                        this.blotter.addRowStyle(primaryKey, this.ConsitionalStylePrefix + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
+                        theBlotter.addRowStyle(primaryKey, this.ConsitionalStylePrefix + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
                         break
                     }
                 }
