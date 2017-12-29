@@ -97,7 +97,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
             }
         }
-        return true;
+        return {ActionReturn : true};
 
     }
 

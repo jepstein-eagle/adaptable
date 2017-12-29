@@ -744,7 +744,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
         grid.table.keydown((event) => {
-            this._onKeyDown.Dispatch(this, event);
+            this._onKeyDown.Dispatch(this, <any>event);
         });
         grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
             this._onGridDataBound.Dispatch(this, this);

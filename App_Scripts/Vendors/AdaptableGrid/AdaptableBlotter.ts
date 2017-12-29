@@ -116,7 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
         $(grid).keydown((event) => {
-            this._onKeyDown.Dispatch(this, event)
+            this._onKeyDown.Dispatch(this, <any>event)
         })
 
 

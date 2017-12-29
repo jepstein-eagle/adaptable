@@ -160,7 +160,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     }
 }
 
-var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter) : any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             let oldState = middlewareAPI.getState()
@@ -177,7 +177,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Midd
     }
 }
 
-var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): Redux.Middleware => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter) : any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
