@@ -20,4 +20,17 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase {
             this.CalculatedColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
         }
     }
+
+    protected addColumnMenuItems(columnId: string): void {
+        let column = this.CalculatedColumns.find(c => c.ColumnId == columnId);
+        if (column) {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
+                MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
+                    "Edit Calculated Column",
+                    'CalculatedColumnConfig',
+                    MenuType.ConfigurationPopup,
+                    "th-list",
+                    "Edit|" + columnId)))
+        }
+    }
 }

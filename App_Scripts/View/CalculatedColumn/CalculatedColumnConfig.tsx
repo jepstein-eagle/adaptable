@@ -41,6 +41,18 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         this.state = { EditedCalculatedColumn: null, WizardStartIndex: 0, EditedIndexCalculatedColumn: -1 }
     }
 
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            // only editing is possible - you cannot create a new calc column from the column menu
+            if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
+                let calculatedColumn = this.props.CalculatedColumns.find(x => x.ColumnId == arrayParams[1])
+                let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
+                this.onEdit(index, calculatedColumn)
+            }
+        }
+    }
+
     render() {
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
