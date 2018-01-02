@@ -317,7 +317,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (!this.grid.dataSource.options.schema.hasOwnProperty('model') ||
             !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             let type = this.getTypeFromFirstRecord(column.field);
-            console.log('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, DataType[type])
+            console.log('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
             return type
         }
 

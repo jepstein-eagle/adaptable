@@ -2,9 +2,9 @@ import { FontSize } from '../Core/Enums'
 
 export module EnumExtensions {
 
-    export function getNamesAndValues<T extends number>(e: any) {
-        return EnumExtensions.getNames(e).map(n => ({ name: n, value: e[n] as T }));
-    }
+    // export function getNamesAndValues<T extends number>(e: any) {
+    //     return EnumExtensions.getNames(e).map(n => ({ name: n, value: e[n] as T }));
+    // }
 
     export function getNames(e: any) {
         return EnumExtensions.getObjValues(e).filter(v => typeof v === "string") as string[];

@@ -61,8 +61,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
-        let CellValidationModeTypes = EnumExtensions.getNamesAndValues(CellValidationMode).map((enumNameAndValue: any) => {
-            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumNameAndValue.name)}</option>
+        let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
+            return <option key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
         })
 
 
@@ -89,7 +89,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         </span>
                     </Col>
                     <Col xs={2}>
-                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationMode.toString()} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
+                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
                                 {CellValidationModeTypes}
                         </FormControl>
 
@@ -160,7 +160,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
     private onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeCellValidationMode(index, Number.parseInt(e.value));
+        this.props.onChangeCellValidationMode(index, e.value as CellValidationMode);
     }
 
     closeWizard() {

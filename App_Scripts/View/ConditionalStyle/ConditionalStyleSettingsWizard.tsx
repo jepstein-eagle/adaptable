@@ -40,8 +40,8 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
     render() {
 
-        let optionFontSizes = EnumExtensions.getNamesAndValues(FontSize).map((fontSizeNameAndValue: any) => {
-            return <option key={fontSizeNameAndValue.value} value={fontSizeNameAndValue.value}>{fontSizeNameAndValue.name}</option>
+        let optionFontSizes = EnumExtensions.getNames(FontSize).map((fontSizeName) => {
+            return <option key={fontSizeName} value={fontSizeName}>{fontSizeName}</option>
         })
 
         return <Panel header="Style" bsStyle="primary">
@@ -79,7 +79,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="fontWeight">
                         <Col xs={12} >
-                            <Checkbox value={FontWeight.Normal.toString()} checked={this.state.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
+                            <Checkbox value={FontWeight.Normal} checked={this.state.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
                         </Col>
                     </FormGroup>
 
@@ -96,7 +96,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
                             {/*we use the componentclass fieldset to indicate its not a new form...*/}
                             {this.state.FontSize != null &&
                                 < AdaptableBlotterForm inline componentClass='fieldset' >
-                                    <FormControl componentClass="select" placeholder="select" value={this.state.FontSize.toString()} onChange={(x) => this.onFontSizeChange(x)} >
+                                    <FormControl componentClass="select" placeholder="select" value={this.state.FontSize} onChange={(x) => this.onFontSizeChange(x)} >
                                         {optionFontSizes}
                                     </FormControl>
                                     {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
@@ -166,7 +166,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
 
     private onFontSizeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ FontSize: Number.parseInt(e.value) } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ FontSize: e.value } as ConditionalStyleSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

@@ -22,7 +22,7 @@ export class AuditLogService {
     public AddEditCellAuditLog(primarykey: string, columnId: string, oldValue: any, newValue: any) {
         if (typeof oldValue == "string" && typeof newValue == "string") {
             this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
+                adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -37,7 +37,7 @@ export class AuditLogService {
         }
         else if (typeof oldValue == "number" && typeof newValue == "number") {
             this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
+                adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -54,7 +54,7 @@ export class AuditLogService {
         }
         else if (typeof oldValue == "boolean" && typeof newValue == "boolean") {
             this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
+                adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -71,7 +71,7 @@ export class AuditLogService {
         }
         else if (oldValue instanceof Date && newValue instanceof Date) {
             this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
+                adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -88,7 +88,7 @@ export class AuditLogService {
         }
         else {
             this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.CellEdit],
+                adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -105,7 +105,7 @@ export class AuditLogService {
 
     public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[], actionType: string) {
         this.auditLogQueue.push({
-            adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.StateChange],
+            adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: this.blotter.BlotterOptions.userName,
             adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -118,7 +118,7 @@ export class AuditLogService {
 
     public AddAdaptableBlotterFunctionLog(functionName: string, action: string, info: string, data?: any) {
         this.auditLogQueue.push({
-            adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.AdaptableBlotterFunction],
+            adaptableblotter_auditlog_trigger: AuditLogTrigger.AdaptableBlotterFunction,
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: this.blotter.BlotterOptions.userName,
             adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
@@ -135,7 +135,7 @@ export class AuditLogService {
 
     private ping() {
         let pingMessage: IAuditLogEntry = {
-            adaptableblotter_auditlog_trigger: AuditLogTrigger[AuditLogTrigger.Ping],
+            adaptableblotter_auditlog_trigger: AuditLogTrigger.Ping,
             adaptableblotter_client_timestamp: new Date(),
             adaptableblotter_username: this.blotter.BlotterOptions.userName,
             adaptableblotter_id: this.blotter.BlotterOptions.blotterId,

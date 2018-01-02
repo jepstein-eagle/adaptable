@@ -365,7 +365,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), DataType[dataType])
+        console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), dataType)
         return dataType
     }
 

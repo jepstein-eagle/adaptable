@@ -178,8 +178,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we we let teh CSS parse build the different properties of the font CSS
         el.style.font = fontCssShortHand
         //we now update individual properties
-        el.style.fontWeight = FontWeight[newStyle.FontWeight].toLocaleLowerCase()
-        el.style.fontStyle = FontStyle[newStyle.FontStyle].toLocaleLowerCase()
+        el.style.fontWeight = newStyle.FontWeight.toLocaleLowerCase()
+        el.style.fontStyle = newStyle.FontStyle.toLocaleLowerCase()
         //font size can be null
         if (newStyle.FontSize) {
             el.style.fontSize = EnumExtensions.getCssFontSizeFromFontSizeEnum(newStyle.FontSize)
@@ -412,7 +412,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
-                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name, DataType[dateType])
+                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name, dateType)
                 return dateType
             }
 

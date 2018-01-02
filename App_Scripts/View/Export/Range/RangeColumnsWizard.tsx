@@ -29,7 +29,7 @@ export class RangeColumnsWizard extends React.Component<RangeColumnsWizardProps,
             , RangeScope: this.props.Data.RangeScope
         }
     }
-    render(): any {
+    render() {
         return <Panel header="Select Columns for the Range" bsStyle="primary">
             <Col xs={12} style={radioMarginStyle}>
                 <AdaptableBlotterForm inline>

@@ -2,61 +2,61 @@
 // General Enums
 // should really rename this DataType
 export enum DataType {
-    String,
-    Number,
-    Boolean,
-    Date,
-    Object
+    String = "String",
+    Number = "Number",
+    Boolean = "Boolean",
+    Date = "Date",
+    Object = "Object"
 }
 
 export enum ExpressionMode {
-    SingleColumn,
-    MultiColumn
+    SingleColumn = "SingleColumn",
+    MultiColumn = "MultiColumn"
 }
 
 export enum LeafExpressionOperator {
-    Unknown,
+    Unknown = "Unknown",
     //Numeric and Date
-    GreaterThan,
-    LessThan,
-    Equals,
-    NotEquals,
-    GreaterThanOrEqual,
-    LessThanOrEqual,
-    Between,
+    GreaterThan = "GreaterThan",
+    LessThan = "LessThan",
+    Equals = "Equals",
+    NotEquals = "NotEquals",
+    GreaterThanOrEqual = "GreaterThanOrEqual",
+    LessThanOrEqual = "LessThanOrEqual",
+    Between = "Between",
     //String
-    Contains,
-    StartsWith,
-    EndsWith,
-    Regex,
+    Contains = "Contains",
+    StartsWith = "StartsWith",
+    EndsWith = "EndsWith",
+    Regex = "Regex",
     // Cell Validations
-    None,
-    ValueChange,
-    PercentChange,
-    NotBetween,
-    IsPositive,
-    IsNegative,
-    IsTrue,
-    IsFalse
+    None = "None",
+    ValueChange = "ValueChange",
+    PercentChange = "PercentChange",
+    NotBetween = "NotBetween",
+    IsPositive = "IsPositive",
+    IsNegative = "IsNegative",
+    IsTrue = "IsTrue",
+    IsFalse = "IsFalse"
 }
 
 export enum MenuType {
-    ConfigurationPopup,
-    ActionPopup,
-    ReduxAction
+    ConfigurationPopup = "ConfigurationPopup",
+    ActionPopup = "ActionPopup",
+    ReduxAction = "ReduxAction"
 }
 
 export enum PopoverType {
-    Info,
-    Warning,
-    Error
+    Info = "Info",
+    Warning = "Warning",
+    Error = "Error"
 }
 
 // Enums used in Strategies
 export enum SmartEditOperation {
-    Add,
-    Multiply,
-    Replace
+    Add = "Add",
+    Multiply = "Multiply",
+    Replace = "Replace"
 }
 
 export enum ShortcutAction {
@@ -68,75 +68,72 @@ export enum ShortcutAction {
 }
 
 export enum ConditionalStyleScope {
-    Column,
-    Row
+    Column = "Column",
+    Row = "Row"
 }
 
 export enum RangeScope {
-    AllColumns,
-    SelectedColumns
+    AllColumns = "AllColumns",
+    SelectedColumns = "SelectedColumns"
 }
 
 export enum ExportDestination {
-    CSV,
-    // JSON,    
-    Clipboard,
-    OpenfinExcel,
-    iPushPull
-    // Excel,
-    // Symphony
+    CSV = "CSV",
+    Clipboard = "Clipboard",
+    OpenfinExcel = "OpenfinExcel",
+    iPushPull = "iPushPull"
 }
 
 export enum SortOrder {
-    Unknown,
-    Ascending,
-    Descending
+    Unknown = "Unknown",
+    Ascending = "Ascending",
+    Descending = "Descending"
 }
 
 export enum QuickSearchDisplayType {
-    ColourCell,
-    ShowRow,
-    ShowRowAndColourCell
+    ColourCell = "ColourCell",
+    ShowRow = "ShowRow",
+    ShowRowAndColourCell = "ShowRowAndColourCell"
 }
 
 export enum AuditLogTrigger {
-    CellEdit,
-    StateChange,
-    AdaptableBlotterFunction,
-    Ping
+    CellEdit = "CellEdit",
+    StateChange = "StateChange",
+    AdaptableBlotterFunction = "AdaptableBlotterFunction",
+    Ping = "Ping"
 }
 
 export enum CellValidationMode {
-    Warning,
-    Prevent
+    Warning = "Warning",
+    Prevent = "Prevent"
 }
 
 export enum SelectionMode {
-    Multi,
-    Single
+    Multi = "Multi",
+    Single = "Single"
 }
 
 //make sure enum items match IRawValueDisplayValuePair
 export enum DistinctCriteriaPairValue {
-    RawValue,
-    DisplayValue
+    RawValue = "RawValue",
+    DisplayValue = "DisplayValue"
 }
 
 export enum FontWeight {
-    Normal,
-    Bold
+    Normal = "Normal",
+    Bold = "Bold"
 }
 
 export enum FontStyle {
-    Normal,
-    Italic
+    Normal = "Normal",
+    Italic = "Italic"
 }
 
 export enum FontSize {
-    XSmall,
-    Small,
-    Medium,
-    Large,
-    XLarge
+    XSmall = "XSmall",
+    Small = "Small",
+    Medium = "Medium",
+    Large = "Large",
+    XLarge = "XLarge"
 }
 

@@ -122,7 +122,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         this.props.onRangesChange([].concat(this.props.Ranges, { Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Unknown }))
     }
 
-    private onLeafExpressionOperatorChange(index: number, x: number) {
+    private onLeafExpressionOperatorChange(index: number, x: LeafExpressionOperator) {
         let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operator: x })

@@ -5,10 +5,10 @@ import { IPPStyle } from './Interface/IAdaptableBlotter';
 
 export module iPushPullHelper {
     export enum ServiceStatus {
-        Unknown,
-        Disconnected,
-        Connected,
-        Error
+        Unknown = "Unknown",
+        Disconnected = "Disconnected",
+        Connected = "Connected",
+        Error = "Error"
     }
     export var IPPStatus: ServiceStatus = ServiceStatus.Unknown
     let iPushPullApp: angular.IModule

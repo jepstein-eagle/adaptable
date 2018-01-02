@@ -60,12 +60,12 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
     onStringOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onSetSearchOperator(Number.parseInt(e.value));
+        this.props.onSetSearchOperator(e.value as LeafExpressionOperator);
     }
 
     onDisplayTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onSetSearchDisplayType(Number.parseInt(e.value));
+        this.props.onSetSearchDisplayType(e.value as QuickSearchDisplayType);
     }
 
     private onUseBackColourCheckChange(event: React.FormEvent<any>) {
@@ -105,13 +105,13 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
 
-        let optionOperators = EnumExtensions.getNamesAndValues(LeafExpressionOperator).filter
-            (nv => stringOperators.find(s => s == nv.value) != null).map((stringOperatorNameAndValue: any) => {
-                return <option key={stringOperatorNameAndValue.value} value={stringOperatorNameAndValue.value}>{ExpressionHelper.OperatorToFriendlyString(stringOperatorNameAndValue.value)}</option>
+        let optionOperators = EnumExtensions.getNames(LeafExpressionOperator).filter
+            (name => stringOperators.find(s => s == name) != null).map((stringOperatorName) => {
+                return <option key={stringOperatorName} value={stringOperatorName}>{ExpressionHelper.OperatorToFriendlyString(stringOperatorName as LeafExpressionOperator)}</option>
             })
 
-        let quickSearchDisplayTypes = EnumExtensions.getNamesAndValues(QuickSearchDisplayType).map((enumNameAndValue: any) => {
-            return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{this.getTextForQuickSearchDisplayType(enumNameAndValue.value)}</option>
+        let quickSearchDisplayTypes = EnumExtensions.getNames(QuickSearchDisplayType).map((enumName) => {
+            return <option key={enumName} value={enumName}>{this.getTextForQuickSearchDisplayType(enumName as QuickSearchDisplayType)}</option>
         })
 
         return (

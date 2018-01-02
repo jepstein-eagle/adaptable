@@ -6,11 +6,11 @@ export module OpenfinHelper {
     declare var fin: any;
     declare var chrome: any;
     enum ExcelServiceStatus {
-        Unknown,
-        Disconnected,
-        Connecting,
-        Connected,
-        Error
+        Unknown = "Unknown",
+        Disconnected = "Disconnected",
+        Connecting = "Connecting",
+        Connected = "Connected",
+        Error = "Error"
     }
     let excelStatus: ExcelServiceStatus = ExcelServiceStatus.Unknown
     let _onExcelDisconnected: EventDispatcher<any, any> = new EventDispatcher<any, any>();

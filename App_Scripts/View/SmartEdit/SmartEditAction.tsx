@@ -46,15 +46,17 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
 
 
     render() {
-        let infoBody: any[] = ["Click ",<i><b>Apply to Grid</b></i>,
-        " button to update all selected cells with the values showing in the Preview Results grid.",<br/>, <br/>,
-        "3 operations are available to update the selected cells with the inputted value:",<br/>,
-        <strong>Add</strong>," the value to selected cells",<br/>,
-        <strong>Multiply</strong>," selected cells by the value",<br/>,
-        <strong>Replace</strong>," selected cells with the value (i.e. Bulk Update)",<br/>, <br/>,
-        "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
+        let infoBody: any[] = ["Click ", <i><b>Apply to Grid</b></i>,
+            " button to update all selected cells with the values showing in the Preview Results grid.", <br />, <br />,
+            "3 operations are available to update the selected cells with the inputted value:", <br />,
+            <strong>Add</strong>, " the value to selected cells", <br />,
+            <strong>Multiply</strong>, " selected cells by the value", <br />,
+            <strong>Replace</strong>, " selected cells with the value (i.e. Bulk Update)", <br />, <br />,
+            "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
-        let previewHeader: string = this.props.Preview != null ? "Preview Results: " + this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId).FriendlyName : "";
+        let col = this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId)
+
+        let previewHeader: string = this.props.Preview != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
         let globalHasValidationPrevent = false
         let globalHasValidationWarning = false
         let globalHasOnlyValidationPrevent = true
@@ -115,9 +117,9 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
                                 <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
-                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Add)}>{SmartEditOperation[SmartEditOperation.Add]}</MenuItem>
-                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation[SmartEditOperation.Multiply]}</MenuItem>
-                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation[SmartEditOperation.Replace]}</MenuItem>
+                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Add)}>{SmartEditOperation.Add}</MenuItem>
+                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation.Multiply}</MenuItem>
+                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation.Replace}</MenuItem>
                                 </DropdownButton>
                                 <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>

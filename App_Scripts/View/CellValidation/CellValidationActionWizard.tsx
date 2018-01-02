@@ -34,12 +34,12 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
                         <HelpBlock>Choose what should happen to an edit when cell validation fails.</HelpBlock>
                     </Col>
                     <Col xs={12} style={divStyle}>
-                        <Radio inline value={CellValidationMode.Prevent.toString()} checked={this.state.CellValidationMode == CellValidationMode.Prevent} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
+                        <Radio inline value={CellValidationMode.Prevent} checked={this.state.CellValidationMode == CellValidationMode.Prevent} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
                         {' '}{' '}
                         <AdaptablePopover headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} popoverType={PopoverType.Info} />
                     </Col>
                     <Col xs={12} style={divStyle}>
-                        <Radio inline value={CellValidationMode.Warning.toString()} checked={this.state.CellValidationMode == CellValidationMode.Warning} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
+                        <Radio inline value={CellValidationMode.Warning} checked={this.state.CellValidationMode == CellValidationMode.Warning} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
                         {' '}<AdaptablePopover headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
@@ -52,7 +52,7 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
 
     private onCellValidationModeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationMode: Number.parseInt(e.value) } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ CellValidationMode: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 
