@@ -117,7 +117,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -160,7 +160,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     }
 }
 
-var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter) : any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             let oldState = middlewareAPI.getState()
@@ -177,7 +177,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter) : any => fu
     }
 }
 
-var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter) : any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
