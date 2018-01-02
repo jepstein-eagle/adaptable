@@ -60,12 +60,12 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         })
 
         // sort out actions
-        let optionActions = EnumExtensions.getNamesAndValues(ShortcutAction).filter
-            (nv => nv.value != ShortcutAction.Replace).map((enumNameAndValue: any) => {
-                return <option key={enumNameAndValue.value} value={enumNameAndValue.value}>{enumNameAndValue.name}</option>
+        let optionActions = EnumExtensions.getNames(ShortcutAction).filter
+            (name => name != ShortcutAction.Replace).map((enumName) => {
+                return <option key={enumName} value={enumName}>{enumName}</option>
             })
 
-        let currentActionValue = this.state.ShortcutAction.toString();
+        let currentActionValue = this.state.ShortcutAction;
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
         let currentDynamicResult = this.state.ShortcutResult != "" ? this.state.ShortcutResult : "select"
 
@@ -194,7 +194,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
     private onShortcutActionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ShortcutAction: Number.parseInt(e.value) } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ShortcutAction: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onDynamicResultChanged(event: React.FormEvent<any>) {

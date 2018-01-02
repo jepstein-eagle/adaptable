@@ -3,7 +3,6 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { ShortcutAction } from '../../Core/Enums'
 import { ICalendar } from '../../Core/Interface/ICalendarStrategy';
 
 export interface CalendarsConfigItemProps extends React.ClassAttributes<CalendarsConfigItem> {

@@ -60,11 +60,11 @@ export enum SmartEditOperation {
 }
 
 export enum ShortcutAction {
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    Replace
+    Add = "Add",
+    Subtract = "Subtract",
+    Multiply = "Multiply",
+    Divide = "Divide",
+    Replace = "Replace"
 }
 
 export enum ConditionalStyleScope {
@@ -133,7 +133,7 @@ export enum FontStyle {
 }
 
 export enum FontSize {
-   XSmall,
+    XSmall,
     Small,
     Medium,
     Large,
