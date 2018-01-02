@@ -4,7 +4,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuType } from '../Core/Enums';
@@ -49,7 +49,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                             }
                             let timer = setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
-                            }, fc.FlashingCellDuration.Duration)
+                            }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
                             return true
                         }
@@ -66,7 +66,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                             }
                             let timer = setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
-                            }, fc.FlashingCellDuration.Duration)
+                            }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
                             return true
                         }

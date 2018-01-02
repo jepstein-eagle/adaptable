@@ -6,7 +6,7 @@ import { IConditionalStyleCondition, IStyle } from './Interface/IConditionalStyl
 import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize, RangeScope } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingColumn, IFlashingCellDuration } from './Interface/IFlashingCellsStrategy'
+import { IFlashingColumn } from './Interface/IFlashingCellsStrategy'
 import { IShortcut } from './Interface/IShortcutStrategy';
 import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
@@ -84,19 +84,14 @@ export module ObjectFactory {
         return {
             IsLive: false,
             ColumnName: column.ColumnId,
-            FlashingCellDuration: GetFlashingCellDurations().find(f => f.Name == "1/2 Second"),
+            FlashingCellDuration: 500,
             UpBackColor: '#008000', DownBackColor: '#FF0000',
             IsPredefined: false
         };
     }
 
-    export function GetFlashingCellDurations(): IFlashingCellDuration[] {
-        return [
-            { Name: "1/4 Second", Duration: 250 },
-            { Name: "1/2 Second", Duration: 500 },
-            { Name: "3/4 Second", Duration: 250 },
-            { Name: "1 Second", Duration: 1000 },
-        ]
+    export function GetFlashingCellDurations(): number[] {
+        return [250, 500, 750, 1000]
     }
 
     export function CreateEmptyShortcut(): IShortcut {

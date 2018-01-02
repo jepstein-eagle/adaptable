@@ -1,5 +1,5 @@
 import { FlashingCellState } from './Interface/IState';
-import { IFlashingColumn, IFlashingCellDuration } from '../../Core/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
 import * as Redux from 'redux'
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
@@ -19,7 +19,7 @@ export interface FlashingCellSelectAllAction extends Redux.Action {
 
 export interface FlashingCellChangeDurationAction extends Redux.Action {
     FlashingColumn: IFlashingColumn,
-    NewFlashDuration: IFlashingCellDuration;
+    NewFlashDuration: number;
 }
 
 export interface FlashingCellChangeUpColorAction extends Redux.Action {
@@ -42,7 +42,7 @@ export const FlashingCellSelectAll = (NumericColumns: IFlashingColumn[]): Flashi
     NumericColumns
 })
 
-export const FlashingCellChangeDuration = (FlashingColumn: IFlashingColumn, NewFlashDuration: IFlashingCellDuration): FlashingCellChangeDurationAction => ({
+export const FlashingCellChangeDuration = (FlashingColumn: IFlashingColumn, NewFlashDuration: number): FlashingCellChangeDurationAction => ({
     type: FLASHING_CELL_CHANGE_DURATION,
     FlashingColumn,
     NewFlashDuration
@@ -69,7 +69,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
 
         case FLASHING_CELL_SELECT: {
             let selectedFlashingCell = (<FlashingCellSelectAction>action).FlashingColumn
-            var items: Array<IFlashingColumn> = [].concat(state.FlashingColumns);
+            let items: Array<IFlashingColumn> = [].concat(state.FlashingColumns);
             selectedFlashingCell = Object.assign({}, selectedFlashingCell, {
                 IsLive: !selectedFlashingCell.IsLive
             });
@@ -84,9 +84,9 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             });
         }
         case FLASHING_CELL_SELECT_ALL: {
-            var numericColumns: Array<IFlashingColumn> = (<FlashingCellSelectAllAction>action).NumericColumns;
-            var shouldTurnOn = !numericColumns.every(n => n.IsLive);
-            var items: Array<IFlashingColumn> = [].concat(state.FlashingColumns);
+            let numericColumns: Array<IFlashingColumn> = (<FlashingCellSelectAllAction>action).NumericColumns;
+            let shouldTurnOn = !numericColumns.every(n => n.IsLive);
+            let items: Array<IFlashingColumn> = [].concat(state.FlashingColumns);
             numericColumns.forEach(column => {
                 let index = items.findIndex(i => i.ColumnName == column.ColumnName);
                 if (index != -1) {  // it exists

@@ -4,7 +4,7 @@ import * as StrategyIds from '../Core/StrategyIds'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuType, DataType } from '../Core/Enums';

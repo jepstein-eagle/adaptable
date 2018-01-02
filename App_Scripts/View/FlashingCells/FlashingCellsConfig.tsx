@@ -5,7 +5,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IFlashingColumn, IFlashingCellDuration, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn, IFlashingCellsStrategy } from '../../Core/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
@@ -22,7 +22,7 @@ interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCells
     PredefinedColorChoices: string[],
     onSelectColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingCellSelectAction,
     onSelectAllColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
-    onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => FlashingCellsRedux.FlashingCellChangeDurationAction
+    onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
     onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => FlashingCellsRedux.FlashingCellChangeDownColorAction
     onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => FlashingCellsRedux.FlashingCellChangeUpColorAction
 
@@ -33,7 +33,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
     render() {
         let infoBody: any[] = ["Make numeric cells flash briefly as their value changes", <br />, <br />, "Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns", <br />, <br />, "Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
-        let flashingCellDurations: IFlashingCellDuration[] = ObjectFactory.GetFlashingCellDurations();
+        let flashingCellDurations = ObjectFactory.GetFlashingCellDurations();
 
         let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
@@ -97,7 +97,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),
         onSelectAllColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.FlashingCellSelectAll(numericColumns)),
-        onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: IFlashingCellDuration) => dispatch(FlashingCellsRedux.FlashingCellChangeDuration(flashingCell, newFlashDuration)),
+        onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: number) => dispatch(FlashingCellsRedux.FlashingCellChangeDuration(flashingCell, newFlashDuration)),
         onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeDownColor(flashingCell, DownColor)),
         onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeUpColor(flashingCell, UpColor))
     };

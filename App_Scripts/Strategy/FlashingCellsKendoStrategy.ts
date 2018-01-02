@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn, IFlashingCellDuration } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuType } from '../Core/Enums';
@@ -24,6 +24,6 @@ export class FlashingCellsKendoStrategy extends FlashingCellsStrategy implements
         var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnId);
         //Jo : we know that this function is wrong as it's not cumulative
-        theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration.Duration)
+        theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration)
     }
 }
