@@ -9,13 +9,6 @@ export enum DataType {
     Object
 }
 
-export enum BooleanOperator {
-    And,
-    Or,
-    Not
-}
-
-
 export enum ExpressionMode {
     SingleColumn,
     MultiColumn
@@ -104,32 +97,6 @@ export enum QuickSearchDisplayType {
     ColourCell,
     ShowRow,
     ShowRowAndColourCell
-}
-
-
-// not sure about this...
-export enum NotificationType {
-    CellUpdated,
-    CellEdited,
-    UserDataEdited,
-    FunctionExecuted
-}
-
-export enum CellChangeType {
-    Any,
-    Equals,
-    NotEquals,
-    GreaterThan,
-    LessThan,
-    NotBetween,
-    ValueChange,
-    PercentChange
-}
-
-
-export enum PopupType {
-    DisappearAutomatically,
-    ManualClose
 }
 
 export enum AuditLogTrigger {

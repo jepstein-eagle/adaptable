@@ -11,7 +11,7 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { PopupType, CellValidationMode } from '../../Core/Enums'
+import { CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
