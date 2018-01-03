@@ -743,6 +743,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyColumnFilters(): void {
+        //which call onRefresh to refresh live excel updates
         this.ReindexAndRepaint()
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {

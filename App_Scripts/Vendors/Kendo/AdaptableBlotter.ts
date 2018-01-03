@@ -677,6 +677,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.grid.dataSource.filter(myFilter);
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
+        this._onRefresh.Dispatch(this, this);
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {
     }

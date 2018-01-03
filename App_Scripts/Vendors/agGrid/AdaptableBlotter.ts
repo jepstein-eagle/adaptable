@@ -175,6 +175,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public applyColumnFilters() {
         this.gridOptions.api.onFilterChanged()
+        this._onRefresh.Dispatch(this, this);
     }
 
 
