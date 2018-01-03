@@ -54,7 +54,10 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
             <strong>Replace</strong>, " selected cells with the value (i.e. Bulk Update)", <br />, <br />,
             "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
-        let col = this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId)
+        let col: IColumn
+        if (this.props.Preview) {
+            col = this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId)
+        }
 
         let previewHeader: string = this.props.Preview != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
         let globalHasValidationPrevent = false
