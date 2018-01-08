@@ -33,7 +33,6 @@ else if (process.env.arg == "aggrid") {
     };
 }
 
-
 module.exports = {
     entry: conditionalEntry,
     output: {
@@ -56,6 +55,10 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
         }),
+        new webpack.DllReferencePlugin({
+            context: '.',
+            manifest: require('./ExtLibs/ABVendorsDist/abvendors-manifest.json')
+          }),
         //this makes sure we package it in the dist folder and make it available for the webpack dev server
         // new CopyWebpackPlugin([{ context: 'themes', from: '**/*', to: 'adaptable-blotter-themes' }]),
         // new CopyWebpackPlugin([{ from: 'stylesheets/adaptableblotter-style.css', to: '' }]),
