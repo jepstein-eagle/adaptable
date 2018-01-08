@@ -53,6 +53,7 @@
     "bootstrap": "^3.3.7",
     "buffer-shims": "^1.0.0",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.4",
     "css-to-string-loader": "^0.1.3",
     "file-loader": "^0.11.2",
@@ -75,10 +76,10 @@
     "build-themes": "node postcss-scopify.config.js",
     "build-dev": "webpack --config webpack.dev.js",
     "build-prod": "webpack --config webpack.prod.js -p",
-    "dev-kendo": "set arg=kendo&&webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
-    "dev-hypergrid": "set arg=hypergrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
-    "dev-aggrid": "set arg=aggrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
-    "dev-adaptablegrid": "set arg=adaptablegrid&&webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
+    "dev-kendo": "cross-env arg=kendo webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
+    "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
+    "dev-aggrid": "cross-env arg=aggrid webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
+    "dev-adaptablegrid": "cross-env arg=adaptablegrid webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
     "openfin": "node openfin-launcher.js"
   },
   "keywords": [
