@@ -33,4 +33,4 @@ module.exports = {
             name: '[name]_lib'
         })
     ]
-}
+};

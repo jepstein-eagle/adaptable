@@ -9,7 +9,7 @@ var conditionalEntry = {
     'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
     'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
     harness: "./Harness/DataGenerator.ts"
-}
+};
 if (process.env.arg == "kendo") {
     conditionalEntry = {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
@@ -90,4 +90,4 @@ module.exports = {
             }
         }
     }
-}
+};
