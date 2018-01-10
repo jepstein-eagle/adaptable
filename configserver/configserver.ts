@@ -1,38 +1,72 @@
-"use strict"
-var express = require('express')
-var bodyParser = require('body-parser')
-var fs = require('fs')
-var _ = require('lodash')
+import { AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
+import * as express from 'express'
+import * as BodyParser from 'body-parser'
+import * as fs from 'fs'
+import * as _ from 'lodash'
+import * as bunyan from 'bunyan'
 
-var ABConfigFolder = "./tmp"
-var ApplicationConfigFileName = ABConfigFolder + "Application.abjson"
+let log = bunyan.createLogger({ name: "AdaptableBlotterConfigServer", level: 'debug' })
 
-var app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+if (process.argv.length <= 2) {
+    log.error("Wrong number of arguments");
+    log.error("Usage: " + __filename + " --configfolder foldername");
+    log.error("ex: " + __filename + " --configfolder ./config");
+    process.exit(-1);
+}
+
+const arg: { configfolder: string } = (argList => {
+    let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
+    for (a = 0; a < argList.length; a++) {
+        thisOpt = argList[a].trim();
+        opt = thisOpt.replace(/^\-+/, '');
+        if (opt === thisOpt) {
+            // argument value
+            if (curOpt) { arg[curOpt] = opt; }
+            curOpt = null;
+        }
+        else {
+            // argument name
+            curOpt = opt;
+            arg[curOpt] = true;
+        }
+    }
+    return arg;
+})(process.argv);
+
+/** Configuration **/
+let ABConfigFolder = arg.configfolder;
+if (!ABConfigFolder.endsWith("/")) {
+    ABConfigFolder += "/"
+}
+let ApplicationConfigFileName = ABConfigFolder + "Application.abjson"
+let TeamSharingFolder = ABConfigFolder + "/TeamSharing"
+
+let app = express()
+app.use(BodyParser.urlencoded({ extended: false }))
+app.use(BodyParser.json())
 
 app.get('/adaptableblotter-config', function (req, res) {
-    var username = req.headers["ab_username"]
-    var adaptableblotter_id = req.headers["ab_id"]
+    let username = req.headers["ab_username"]
+    let adaptableblotter_id = req.headers["ab_id"]
     try {
         if (username) {
             let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
-            let ApplicationConfig
-            let UserConfig
+            let ApplicationConfig: AdaptableBlotterState
+            let UserConfig: AdaptableBlotterState
             if (fs.existsSync(ApplicationConfigFileName)) {
                 ApplicationConfig = JSON.parse(fs.readFileSync(ApplicationConfigFileName, { encoding: 'utf8' }))
             }
 
             if (fs.existsSync(filename)) {
                 UserConfig = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }))
-                console.log("Sending config for : " + username);
+                log.debug("Sending config for : " + username);
                 ForcePredefinedItems(ApplicationConfig)
                 let mergedStates = MergePredefinedWithUser(ApplicationConfig, UserConfig)
                 res.status(200).send(JSON.stringify(mergedStates))
             }
             else {
                 //nothing yet in the user config
-                console.log("No current config for : " + username);
+                log.debug("No current config for : " + username);
                 if (ApplicationConfig) {
                     res.status(200).send(JSON.stringify(ApplicationConfig))
                 }
@@ -42,13 +76,13 @@ app.get('/adaptableblotter-config', function (req, res) {
             }
         }
         else {
-            console.error("No current username for load : " + username);
+            log.error("UserName not provided for load");
             res.sendStatus(403)
         }
     }
     catch (error) {
         res.sendStatus(500);
-        console.error("Error Getting config for : " + username + "\n" + error);
+        log.error("Error Getting config for : " + username + "\n" + error);
     }
 })
 
@@ -62,26 +96,25 @@ app.put('/adaptableblotter-config', function (req, res) {
         fs.writeFile(filename, JSON.stringify(state, null, "\t"), { encoding: 'utf8' }, function (err) {
             if (err) {
                 res.sendStatus(500);
-                console.error("Error saving config for : " + username + "\n" + err);
+                log.error("Error saving config for : " + username + "\n" + err);
             }
             else {
-                console.log("Saved for : " + username);
+                log.debug("Config Saved for : " + username);
                 res.sendStatus(200)
             }
         })
     }
     else {
-        console.error("No current username for save : " + username);
+        log.error("No current username for save : " + username);
         res.sendStatus(403)
     }
-
 })
 
 app.listen(3000, function () {
-    console.log('Config Server listening on port 3000!')
+    log.info('Adaptable Blotter Config Server listening on port 3000!')
 })
 
-function FilterPredefinedItems(state) {
+function FilterPredefinedItems(state: AdaptableBlotterState) {
     // we iterating substate here
     for (let substateName in state) {
         if (state.hasOwnProperty(substateName)) {
@@ -101,7 +134,7 @@ function FilterPredefinedItems(state) {
 }
 
 //We force the IsPredefined of the predefinedState to be true
-function ForcePredefinedItems(state) {
+function ForcePredefinedItems(state: AdaptableBlotterState) {
     // we iterating substate here
     for (let substateName in state) {
         if (state.hasOwnProperty(substateName)) {
