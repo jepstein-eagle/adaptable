@@ -2,19 +2,19 @@ import * as Redux from 'redux';
 import { PopupState, IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup } from './Interface/IState';
 import { IUIError, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Core/Interface/IStrategy';
 
-const POPUP_SHOW = 'POPUP_SHOW';
-const POPUP_HIDE = 'POPUP_HIDE';
-const POPUP_HIDE_ERROR = 'POPUP_HIDE_ERROR';
-const POPUP_HIDE_WARNING = 'POPUP_HIDE_WARNING';
-const POPUP_HIDE_PROMPT = 'POPUP_HIDE_PROMPT';
+export const POPUP_SHOW = 'POPUP_SHOW';
+export const POPUP_HIDE = 'POPUP_HIDE';
+export const POPUP_HIDE_ERROR = 'POPUP_HIDE_ERROR';
+export const POPUP_HIDE_WARNING = 'POPUP_HIDE_WARNING';
+export const POPUP_HIDE_PROMPT = 'POPUP_HIDE_PROMPT';
 export const POPUP_CONFIRM_PROMPT = 'POPUP_CONFIRM_PROMPT';
 export const POPUP_CONFIRM_CONFIRMATION = 'POPUP_CONFIRM_CONFIRMATION';
 export const POPUP_CANCEL_CONFIRMATION = 'POPUP_CANCEL_CONFIRMATION';
-const POPUP_SHOW_ERROR = 'POPUP_SHOW_ERROR';
-const POPUP_SHOW_WARNING = 'POPUP_SHOW_WARNING';
-const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
-const POPUP_CONFIRMATION = 'POPUP_CONFIRMATION';
-const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
+export const POPUP_SHOW_ERROR = 'POPUP_SHOW_ERROR';
+export const POPUP_SHOW_WARNING = 'POPUP_SHOW_WARNING';
+export const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
+export const POPUP_CONFIRMATION = 'POPUP_CONFIRMATION';
+export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 
 export interface PopupShowAction extends Redux.Action {
     ComponentClassName: string,

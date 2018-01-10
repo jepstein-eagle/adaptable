@@ -1,5 +1,7 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import * as PopupRedux from '../ActionsReducers/PopupRedux'
 
 interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
 
@@ -15,7 +17,7 @@ const checkStatus = (response: Response) => {
 };
 
 class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxStorageClientEngine {
-  constructor(private url: string, private userName: string, private blotterId: string) {
+  constructor(private url: string, private userName: string, private blotterId: string, private blotter: IAdaptableBlotter) {
 
   }
   load(): Promise<any> {
@@ -44,10 +46,14 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
       },
     };
 
-    return fetch(this.url, saveOptions).then(checkStatus);
+    return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
+      this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Cannot save config:" + error.message }))
+      return Promise.reject("Cannot save config:" + error.message)
+    });;
   }
 }
 
-export function createEngine(url: string, userName: string, blotterId: string): ReduxStorage.StorageEngine {
-  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId)
+//TODO: we shouldn't really pass the blotter instance here but I need this to be done quickly
+export function createEngine(url: string, userName: string, blotterId: string, blotter: IAdaptableBlotter): ReduxStorage.StorageEngine {
+  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId, blotter)
 }
