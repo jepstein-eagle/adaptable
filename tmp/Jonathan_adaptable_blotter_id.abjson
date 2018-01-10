@@ -1,8 +1,7 @@
 {
 	"SmartEdit": {
 		"SmartEditValue": "1",
-		"SmartEditOperation": 0,
-		"Preview": null
+		"SmartEditOperation": "Add"
 	},
 	"CustomSort": {
 		"CustomSorts": []
@@ -16,9 +15,7 @@
 		"PlusMinusConditions": []
 	},
 	"Export": {
-		"FileName": "Adaptable Blotter Export",
-		"AllPages": true,
-		"Filterable": true
+		"IPPDomainsPages": []
 	},
 	"FlashingCell": {
 		"FlashingColumns": []
@@ -29,21 +26,22 @@
 	"ConditionalStyle": {
 		"ConditionalStyleConditions": []
 	},
-	"PrintPreview": {},
 	"QuickSearch": {
+		"QuickSearchDefaultBackColour": "#FFFFCC",
+		"QuickSearchDefaultForeColour": "#000000",
 		"QuickSearchText": "",
-		"QuickSearchOperator": 9,
-		"QuickSearchDisplayType": 1,
-		"QuickSearchBackColor": "#FFFFCC"
+		"QuickSearchOperator": "Contains",
+		"QuickSearchDisplayType": "ColourCell",
+		"QuickSearchStyle": {
+			"BackColor": "#FFFFCC"
+		}
 	},
 	"AdvancedSearch": {
 		"AdvancedSearches": [],
 		"CurrentAdvancedSearchId": ""
 	},
-	"UserFilter": {
-		"UserFilters": []
-	},
-	"ColumnFilter": {
+	"Filter": {
+		"UserFilters": [],
 		"ColumnFilters": []
 	},
 	"Theme": {
@@ -87,23 +85,52 @@
 		]
 	},
 	"Dashboard": {
-		"DashboardControls": [
+		"DashboardStrategyControls": [
 			{
-				"Name": "Advanced Search",
-				"IsVisible": true,
-				"IsCollapsed": true
+				"Strategy": "Functions",
+				"IsVisible": true
 			},
 			{
-				"Name": "Quick Search",
+				"Strategy": "DashboardBookmarks",
 				"IsVisible": true,
-				"IsCollapsed": true
+				"ControlConfiguration": [
+					"Dashboard",
+					"Smart Edit",
+					"Plus/Minus",
+					"Conditional Style"
+				]
 			},
 			{
-				"Name": "Layout",
-				"IsVisible": true,
-				"IsCollapsed": true
+				"Strategy": "AdvancedSearch",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "QuickSearch",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "Layout",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "Filter",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "Export",
+				"IsVisible": true
 			}
 		],
-		"DashboardButtons": []
-	}
+		"DashboardZoom": 1
+	},
+	"CalculatedColumn": {
+		"CalculatedColumns": [],
+		"EditedCalculatedColumnInvalidErrorMsg": ""
+	},
+	"Range": {
+		"Ranges": [],
+		"CurrentRange": "",
+		"ErrorMsg": ""
+	},
+	"AdaptableStoreVersion": 0
 }
