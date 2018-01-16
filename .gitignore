@@ -253,3 +253,4 @@ ModelManifest.xml
 /typings/modules/**/*.*
 /dist/**/*.*
 /npm-debug.log.*
+/tmp/TeamSharing/**/*.*
