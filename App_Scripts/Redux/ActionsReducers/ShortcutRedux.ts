@@ -152,14 +152,14 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
             if (newShortcut.DataType == DataType.Number) {
-                var items: Array<IShortcut> = [].concat(state.NumericShortcuts);
+                let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
                 items.push(newShortcut);
                 return Object.assign({}, state, {
                     NumericShortcuts: items
                 });
             }
             else if (newShortcut.DataType == DataType.Date) {
-                var items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 items.push(newShortcut);
                 return Object.assign({}, state, {
                     DateShortcuts: items
@@ -187,7 +187,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
 
             }
             else if (deletedShortcut.DataType == DataType.Date) {
-                var items: Array<IShortcut> = [].concat(state.DateShortcuts);
+                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
                 let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
                 items.splice(index, 1);
 
