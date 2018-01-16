@@ -19,6 +19,7 @@ import { CellValidationConfig } from './CellValidation/CellValidationConfig'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
+import { TeamSharingAction } from './TeamSharing/TeamSharingAction'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { DashboardShortcutsToolbarControl } from './DashboardShortcuts/DashboardShortcutsToolbarControl'
 import { DashboardShortcutsToolbarControlConfig } from './DashboardShortcuts/DashboardShortcutsToolbarControlConfig'
@@ -49,7 +50,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   DashboardShortcutsToolbarControlConfig: DashboardShortcutsToolbarControlConfig,
   CalculatedColumnConfig: CalculatedColumnConfig,
   IPushPullLogin: IPushPullLogin,
-  IPushPullDomainPageSelector : IPushPullDomainPageSelector
+  IPushPullDomainPageSelector : IPushPullDomainPageSelector,
+  TeamSharingAction : TeamSharingAction
 }
 
 //here we put the dashboard control for each strategy

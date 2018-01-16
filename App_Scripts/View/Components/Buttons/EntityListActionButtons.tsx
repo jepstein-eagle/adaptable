@@ -32,7 +32,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     public static defaultProps: EntityListActionButtonsProps = {
         showEdit: true,
         showDelete: true,
-        showShare: true,
+        showShare: false,
         overrideDisableEdit: false,
         overrideDisableDelete: false,
         overrideDisableShare: false,
@@ -60,7 +60,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                 <ButtonShare onClick={() => this.props.shareClick()}
                     overrideDisableButton={this.props.overrideDisableShare}
                     ConfigEntity={this.props.ConfigEntity}
-                    overrideTooltip="Share With Team - disabled in this demo"
+                    overrideTooltip={this.props.overrideTooltipShare}
                     DisplayMode="Glyph" />}
         </ButtonToolbar>;
     }

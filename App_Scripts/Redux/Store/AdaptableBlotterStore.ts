@@ -31,6 +31,7 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as RangeRedux from '../ActionsReducers/RangeRedux'
+import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
@@ -46,6 +47,9 @@ import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
 import { IPPDomain } from '../ActionsReducers/Interface/IState';
+import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
+import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
+import { PopupShowError } from '../ActionsReducers/PopupRedux';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -69,7 +73,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     Range: RangeRedux.RangeReducer,
-    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer
+    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+    TeamSharing: TeamSharingRedux.TeamSharingReducer
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -93,6 +98,9 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
     return rootReducer(state, action)
 }
 
+const configServerUrl = "/adaptableblotter-config"
+const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
+
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
@@ -105,7 +113,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let engineReduxStorage: ReduxStorage.StorageEngine
 
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+            engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
             engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
@@ -117,7 +125,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -183,6 +191,76 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case TeamSharingRedux.TEAMSHARING_SHARE: {
+                    let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
+                    let returnAction = next(action);
+                    let xhr = new XMLHttpRequest();
+                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onload = (ev: ProgressEvent) => {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status != 200) {
+                                console.error("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error Sharing item: " + xhr.statusText }))
+                            }
+                            else {
+                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Shared Successfully" }))
+                            }
+                        }
+                    }
+                    //we make the request async
+                    xhr.open("POST", configServerTeamSharingUrl, true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    let obj: ISharedEntity = {
+                        entity: actionTyped.Entity,
+                        user: adaptableBlotter.BlotterOptions.userName,
+                        blotter_id: adaptableBlotter.BlotterOptions.blotterId,
+                        strategy: actionTyped.Strategy,
+                        timestamp: new Date()
+                    }
+                    xhr.send(JSON.stringify(obj));
+                    return returnAction;
+                }
+                case TeamSharingRedux.TEAMSHARING_GET: {
+                    let returnAction = next(action);
+                    let xhr = new XMLHttpRequest();
+                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing get error :" + ev.message)
+                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing get timeout")
+                    xhr.onload = (ev: ProgressEvent) => {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status != 200) {
+                                console.error("TeamSharing get error : " + xhr.statusText);
+                            }
+                            else {
+                                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
+                                    if (key == "timestamp") {
+                                        return new Date(value);
+                                    }
+                                    return value
+                                })))
+                            }
+                        }
+                    }
+                    //we make the request async
+                    xhr.open("GET", configServerTeamSharingUrl, true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.send();
+                    return returnAction;
+                }
+                case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
+                    let returnAction = next(action);
+                    let actionTyped = <TeamSharingRedux.TeamSharingImportItemAction>action
+                    switch (actionTyped.Strategy) {
+                        case StrategyIds.CellValidationStrategyId:
+                            middlewareAPI.dispatch(CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity as ICellValidationRule))
+                            middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item imported" }))
+                            break;
+                        default:
+                            console.error("Unknown item type", actionTyped.Entity)
+                            middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
+                    }
+                    return returnAction;
+                }
                 case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
                     let returnAction = next(action);
                     middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())

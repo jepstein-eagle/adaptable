@@ -7,7 +7,7 @@ import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
 import { IRange } from '../../../Core/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/Interface/IStrategy'
-import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
+import { IColumn, IEntitlement, IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Core/Interface/ICalendarStrategy';
 import { IConditionalStyleCondition, IStyle } from '../../../Core/Interface/IConditionalStyleStrategy';
@@ -18,6 +18,7 @@ import { ICellValidationRule } from '../../../Core/Interface/ICellValidationStra
 import { ILayout } from '../../../Core/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Core/Interface/IDashboardStrategy';
 import * as Redux from 'redux'
+import { ISharedEntity } from '../../../Core/Interface/ITeamSharingStrategy';
 
 
 export interface PlusMinusState {
@@ -47,6 +48,7 @@ export interface PopupState {
     ActionConfigurationPopup: IActionConfigurationPopup
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
+    InfoPopup: IInfoPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
 }
@@ -66,6 +68,11 @@ export interface IErrorPopup {
 export interface IWarningPopup {
     ShowWarningPopup: boolean;
     WarningMsg: string;
+}
+
+export interface IInfoPopup {
+    ShowInfoPopup: boolean;
+    InfoMsg: string;
 }
 
 export interface IConfirmationPopup {
@@ -187,4 +194,9 @@ export interface CalculatedColumnState {
 
 export interface UIControlConfigState {
     PredefinedColorChoices: string[];
+}
+
+export interface TeamSharingState {
+    Activated : boolean
+    SharedEntities: ISharedEntity[]
 }

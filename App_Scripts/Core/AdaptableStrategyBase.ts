@@ -30,12 +30,15 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    protected abstract InitState() : void
+    protected abstract InitState(): void
 
     public menuItemConfig: IMenuItem;
 
     public getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
+        if (this.menuItemConfig) {
+            return [this.menuItemConfig];
+        }
+        return []
     }
 
     protected addColumnMenuItems(columnId: string): void {
@@ -49,13 +52,13 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         ComponentName: string,
         MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
         GlyphIcon: string,
-        PopupParams?:string): MenuItemShowPopup {
+        PopupParams?: string): MenuItemShowPopup {
         return new MenuItemShowPopup(Label,
             this.Id,
             ComponentName,
             MenuType,
             GlyphIcon,
-            this.getStrategyEntitlement(), 
+            this.getStrategyEntitlement(),
             PopupParams);
     }
 

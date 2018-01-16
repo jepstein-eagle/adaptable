@@ -1,5 +1,6 @@
 import * as AdaptableBlotterStates from '../../ActionsReducers/Interface/IState';
 import * as Redux from 'redux';
+import { AdaptableBlotter } from '../../../Vendors/Hypergrid/AdaptableBlotter';
 
 export interface AdaptableBlotterState {
     Popup: AdaptableBlotterStates.PopupState;
@@ -24,6 +25,7 @@ export interface AdaptableBlotterState {
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     Range: AdaptableBlotterStates.RangeState;
     UIControlConfig: AdaptableBlotterStates.UIControlConfigState;
+    TeamSharing: AdaptableBlotterStates.TeamSharingState;
 }
 
 export interface IAdaptableBlotterStore {
