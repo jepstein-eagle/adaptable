@@ -27,6 +27,10 @@ export interface IUIWarning {
     WarningMsg: string;
 }
 
+export interface IUIInfo {
+    InfoMsg: string;
+}
+
 export interface IUIConfirmation {
     ConfirmationTitle: string;
     ConfirmationMsg: string;

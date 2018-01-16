@@ -20,6 +20,7 @@ import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
 import * as StrategyIds from '../Core/StrategyIds'
+import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -31,6 +32,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClosePopup: () => PopupRedux.PopupHideAction;
     onCloseErrorPopup: () => PopupRedux.PopupHideErrorAction;
     onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
+    onCloseInfoPopup: () => PopupRedux.PopupHideInfoAction;
     onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
     onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
     onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
@@ -52,6 +54,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 <AdaptableBlotterPopupWarning Msg={this.props.PopupState.WarningPopup.WarningMsg}
                     onClose={this.props.onCloseWarningPopup}
                     ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
+
+                <AdaptableBlotterPopupInfo Msg={this.props.PopupState.InfoPopup.InfoMsg}
+                    onClose={this.props.onCloseInfoPopup}
+                    ShowPopup={this.props.PopupState.InfoPopup.ShowInfoPopup} />
 
                 <AdaptableBlotterPopupPrompt
                     Msg={this.props.PopupState.PromptPopup.PromptMsg}
@@ -99,6 +105,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClosePopup: () => dispatch(PopupRedux.PopupHide()),
         onCloseErrorPopup: () => dispatch(PopupRedux.PopupHideError()),
         onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
+        onCloseInfoPopup: () => dispatch(PopupRedux.PopupHideInfo()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
