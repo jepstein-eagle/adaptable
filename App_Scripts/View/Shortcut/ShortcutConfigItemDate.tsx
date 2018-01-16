@@ -14,6 +14,8 @@ export interface ShortcutConfigItemDateProps extends React.ClassAttributes<Short
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
     AvailableKeys: Array<string>
+    onShare: () => void;
+    TeamSharingActivated: boolean
 }
 
 export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDateProps, {}> {
@@ -50,6 +52,8 @@ export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDa
                 <Col md={3} >
                     <EntityListActionButtons
                         showEdit={false}
+                        showShare={this.props.TeamSharingActivated}
+                        shareClick={() => this.props.onShare()}
                         ConfigEntity={this.props.Shortcut}
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         EntityName="Shortcut">

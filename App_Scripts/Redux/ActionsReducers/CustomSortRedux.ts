@@ -1,5 +1,5 @@
-import {CustomSortState} from './Interface/IState';
-import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import { CustomSortState } from './Interface/IState';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import * as Redux from 'redux'
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';
@@ -38,15 +38,16 @@ const initialCustomSortState: CustomSortState = {
 
 export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomSortState = initialCustomSortState, action: Redux.Action): CustomSortState => {
     switch (action.type) {
-        case CUSTOMSORT_ADD:
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
+        case CUSTOMSORT_ADD: {
+            let items: Array<ICustomSort> = [].concat(state.CustomSorts);
 
             items.push((<CustomSortAddAction>action).CustomSort);
             return Object.assign({}, state, {
                 CustomSorts: items
             });
+        }
         case CUSTOMSORT_EDIT: {
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
+            let items: Array<ICustomSort> = [].concat(state.CustomSorts);
             let index = items.findIndex(x => x.ColumnId == (<CustomSortAddAction>action).CustomSort.ColumnId)
             items[index] = (<CustomSortAddAction>action).CustomSort;
 
@@ -54,14 +55,15 @@ export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomS
                 CustomSorts: items
             });
         }
-        case CUSTOMSORT_DELETE:
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
+        case CUSTOMSORT_DELETE: {
+            let items: Array<ICustomSort> = [].concat(state.CustomSorts);
             let index = items.findIndex(x => x.ColumnId == (<CustomSortDeleteAction>action).CustomSort.ColumnId)
             items.splice(index, 1);
 
             return Object.assign({}, state, {
                 CustomSorts: items
             });
+        }
         default:
             return state
     }

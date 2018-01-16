@@ -1,4 +1,4 @@
-import { ExportDestination } from '../../Core/Enums';
+import { DataType, ExportDestination } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -36,10 +36,10 @@ import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
-import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
+import { IShortcutStrategy, IShortcut } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
 import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
-import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
+import { IPlusMinusStrategy, IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
@@ -50,6 +50,11 @@ import { IPPDomain } from '../ActionsReducers/Interface/IState';
 import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
 import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { PopupShowError } from '../ActionsReducers/PopupRedux';
+import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
+import { IUserFilter } from '../../Core/Interface/IExpression';
+import { FilterStrategyId } from '../../Core/StrategyIds';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -250,14 +255,73 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
                     let returnAction = next(action);
                     let actionTyped = <TeamSharingRedux.TeamSharingImportItemAction>action
+                    let importAction: Redux.Action
                     switch (actionTyped.Strategy) {
                         case StrategyIds.CellValidationStrategyId:
-                            middlewareAPI.dispatch(CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity as ICellValidationRule))
-                            middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item imported" }))
+                            importAction = CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity as ICellValidationRule)
                             break;
-                        default:
-                            console.error("Unknown item type", actionTyped.Entity)
-                            middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
+                        case StrategyIds.CalculatedColumnStrategyId: {
+                            let calcCol = actionTyped.Entity as ICalculatedColumn
+                            let idx = middlewareAPI.getState().CalculatedColumn.CalculatedColumns.findIndex(x => x.ColumnId == calcCol.ColumnId)
+                            if (idx > -1) {
+                                importAction = CalculatedColumnRedux.CalculatedColumnEdit(idx, calcCol)
+                            }
+                            else {
+                                importAction = CalculatedColumnRedux.CalculatedColumnAdd(calcCol)
+                            }
+                            break;
+                        }
+                        case StrategyIds.ConditionalStyleStrategyId:
+                            importAction = ConditionalStyleRedux.ConditionalStyleAddUpdate(-1, actionTyped.Entity as IConditionalStyleCondition)
+                            break;
+                        case StrategyIds.CustomSortStrategyId: {
+                            let customSort = actionTyped.Entity as ICustomSort
+                            if (middlewareAPI.getState().CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
+                                importAction = CustomSortRedux.CustomSortEdit(customSort)
+                            } else {
+                                importAction = CustomSortRedux.CustomSortAdd(customSort)
+                            }
+                            break;
+                        }
+                        case StrategyIds.PlusMinusStrategyId: {
+                            let plusMinus = actionTyped.Entity as IPlusMinusCondition
+                            importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus)
+                            break;
+                        }
+                        case StrategyIds.ShortcutStrategyId: {
+                            let shortcut = actionTyped.Entity as IShortcut
+                            let shortcuts: IShortcut[]
+                            if (shortcut.DataType == DataType.Number) {
+                                shortcuts = middlewareAPI.getState().Shortcut.NumericShortcuts
+                            }
+                            else if (shortcut.DataType == DataType.Date) {
+                                shortcuts = middlewareAPI.getState().Shortcut.DateShortcuts
+                            }
+                            if (shortcuts) {
+                                if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
+                                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut))
+                                }
+                                importAction = ShortcutRedux.ShortcutAdd(shortcut)
+                            }
+                            break;
+                        }
+                        case StrategyIds.FilterStrategyId: {
+                            let filter = actionTyped.Entity as IUserFilter
+                            //For now not too worry about that but I think we'll need to check ofr filter that have same name
+                            //currently the reducer checks for UID
+                            // if (middlewareAPI.getState().Filter.UserFilters.find(x => x.FriendlyName == filter.FriendlyName)) {
+                                importAction = FilterRedux.UserFilterAddUpdate(filter)
+                            // } 
+                            break;
+                        }
+                    }
+                    if (importAction) {
+                        middlewareAPI.dispatch(importAction)
+                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Successfully Imported" }))
+                    }
+                    else {
+                        console.error("Unknown item type", actionTyped.Entity)
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
                     }
                     return returnAction;
                 }

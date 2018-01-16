@@ -5,8 +5,10 @@ import { Provider, connect } from 'react-redux';
 import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox, Tabs, Tab, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItemNumber } from './ShortcutConfigItemNumber'
@@ -26,6 +28,7 @@ interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComp
     onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
     NumericShortcuts: Array<IShortcut>,
     DateShortcuts: Array<IShortcut>,
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface ShortcutConfigInternalState {
@@ -54,6 +57,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             let availableNumericKeys = keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
             return <ShortcutConfigItemNumber Shortcut={shortcut} key={"Numeric" + shortcut.ShortcutKey}
                 AvailableKeys={availableNumericKeys}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                onShare={() => this.props.onShare(shortcut)}
                 onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}
@@ -65,6 +70,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             let availableDateKeys = keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
             return <ShortcutConfigItemDate Shortcut={shortcut} key={"Date" + shortcut.ShortcutKey}
                 AvailableKeys={availableDateKeys}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                onShare={() => this.props.onShare(shortcut)}
                 onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeResult={(shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult)}>
@@ -75,9 +82,9 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             overrideTooltip="Create New Shortcut"
             DisplayMode="Glyph+Text" />
 
-            // work out which tab to show
-            // for now logic is: show numeric if both exist; if one exists, show that one
-            let defaultActiveKey: Number = (this.props.NumericShortcuts.length >0)? 1: 2;
+        // work out which tab to show
+        // for now logic is: show numeric if both exist; if one exists, show that one
+        let defaultActiveKey: Number = (this.props.NumericShortcuts.length > 0) ? 1 : 2;
 
         return <PanelWithButton headerText="Shortcuts"
             button={newButton}
@@ -102,26 +109,26 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                         </ListGroup>
                     </Tab>
                 </Tabs>
-  }
+            }
             {this.state.EditedShortcut ?
                 <AdaptableWizard Steps={
-                [
-                    <ShortcutTypeWizard />,
-                    <ShortcutSettingsWizard DateKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
-                        keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
-                        : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
-                        NumericKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
-                            keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
-                            : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
+                    [
+                        <ShortcutTypeWizard />,
+                        <ShortcutSettingsWizard DateKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                            keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.DateShortcuts.findIndex(y => y.ShortcutKey == x) == -1)}
+                            NumericKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                                keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
+                                : keys.filter(x => this.props.NumericShortcuts.findIndex(y => y.ShortcutKey == x) == -1)} />,
 
-                ]}
-                Data={this.state.EditedShortcut}
-                StepStartIndex={this.state.WizardStartIndex}
-                onHide={() => this.closeWizard()}
-                onFinish={() => this.WizardFinish()} ></AdaptableWizard>
-            : null
-          
- }
+                    ]}
+                    Data={this.state.EditedShortcut}
+                    StepStartIndex={this.state.WizardStartIndex}
+                    onHide={() => this.closeWizard()}
+                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+                : null
+
+            }
         </PanelWithButton>
     }
 
@@ -158,6 +165,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
         onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewShortcutAction)),
         onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ShortcutStrategyId))
     };
 }
 

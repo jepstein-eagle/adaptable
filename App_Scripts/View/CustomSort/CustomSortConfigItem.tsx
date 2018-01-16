@@ -9,6 +9,8 @@ export interface CustomSortConfigItemProps extends React.ClassAttributes<CustomS
     CustomSort: ICustomSort
     ColumnLabel: string
     onEdit: (CustomSort: ICustomSort) => void;
+    onShare: () => void;
+    TeamSharingActivated: boolean
     onDeleteConfirm: Redux.Action;
 }
 
@@ -26,6 +28,8 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
                 <Col xs={3}>
                     <EntityListActionButtons
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
+                        showShare={this.props.TeamSharingActivated}
+                        shareClick={() => this.props.onShare()}
                         editClick={() => this.props.onEdit(this.props.CustomSort)}
                         overrideDisableEdit={this.props.ColumnLabel.includes(Helper.MissingColumnMagicString)}
                         ConfigEntity={this.props.CustomSort}

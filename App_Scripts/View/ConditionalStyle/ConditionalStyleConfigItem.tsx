@@ -17,9 +17,11 @@ import { IUserFilter } from '../../Core/Interface/IExpression';
 export interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
     Columns: IColumn[];
+    TeamSharingActivated: boolean
     UserFilters: IUserFilter[]
     onDeleteConfirm: Redux.Action;
     onEdit: (ConditionalStyleCondition: IConditionalStyleCondition) => void;
+    onShare: () => void
 }
 
 export class ConditionalStyleConfigItem extends React.Component<ConditionalStyleConfigItemProps, {}> {
@@ -60,6 +62,8 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
                 <Col md={3} >
                     <EntityListActionButtons
                         editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
+                        showShare={this.props.TeamSharingActivated}
+                        shareClick={() => this.props.onShare()}
                         ConfigEntity={this.props.ConditionalStyleCondition}
                         overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
                         ConfirmDeleteAction={this.props.onDeleteConfirm}

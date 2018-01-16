@@ -14,6 +14,8 @@ export interface ShortcutConfigItemNumberProps extends React.ClassAttributes<Sho
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
+    onShare: () => void;
+    TeamSharingActivated: boolean
     AvailableKeys: Array<string>
 }
 
@@ -65,6 +67,8 @@ export class ShortcutConfigItemNumber extends React.Component<ShortcutConfigItem
                 <Col md={3} >
                     <EntityListActionButtons
                         showEdit={false}
+                        showShare={this.props.TeamSharingActivated}
+                        shareClick={() => this.props.onShare()}
                         ConfigEntity={this.props.Shortcut}
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         EntityName="Shortcut">
