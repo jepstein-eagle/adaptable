@@ -9,7 +9,7 @@ import { ButtonBase, ButtonProps } from './ButtonBase'
 
 export class ButtonShare extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Edit"
+        return <ButtonBase ToolTipAndText="Share"
             bsStyle='warning'
             bsSize={this.props.size}
             ConfigEntity={this.props.ConfigEntity}
