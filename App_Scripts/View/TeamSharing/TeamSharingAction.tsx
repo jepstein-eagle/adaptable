@@ -2,7 +2,7 @@ import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well, Glyphicon } from 'react-bootstrap';
+import { Button, Form, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -31,7 +31,7 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
         let infoBody: any[] = ["Team Sharing"]
 
         let cellInfo: [string, number][] = [["Type", 2], ["User", 2], ["Timestamp", 2], ["Entity", 4], ["", 2]];
-        let sharedItems = this.props.Entities.map((x, index) => {
+        let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
@@ -48,7 +48,10 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                         {"Wesh"}
                     </Col>
                     <Col xs={2}>
-                        <Button onClick={() => this.props.onImportItem(x.entity, x.strategy)}><Glyphicon glyph="import" /></Button>
+                        <OverlayTrigger overlay={<Tooltip id="tooltipButton" >Import</Tooltip >}>
+                            <Button onClick={() => this.props.onImportItem(x.entity, x.strategy)}><Glyphicon glyph="import" /></Button>
+                        </OverlayTrigger >
+
                     </Col>
                 </Row>
             </li>
