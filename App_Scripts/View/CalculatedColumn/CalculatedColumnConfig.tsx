@@ -64,7 +64,7 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
             return <li
                 className="list-group-item" key={calculatedColumn.ColumnId}>
-                <Row >
+                <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={3}>
                         {calculatedColumn.ColumnId}
                     </Col>

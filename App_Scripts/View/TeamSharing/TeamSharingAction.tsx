@@ -13,12 +13,23 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions, EnumExtensions } from '../../Core/Extensions'
 import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
+import * as StrategyIds from '../../Core/StrategyIds';
+import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
+import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { ConditionalStyleScope, FontWeight, FontStyle, DataType } from '../../Core/Enums';
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 
 interface TeamSharingActionProps extends IStrategyViewPopupProps<TeamSharingActionComponent> {
     Entities: Array<ISharedEntity>
+    Columns: Array<IColumn>
+    UserFilters: IUserFilter[]
     onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction
     onImportItem: (entity: IConfigEntity, strategy: string) => TeamSharingRedux.TeamSharingImportItemAction
 }
@@ -27,10 +38,11 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
     componentDidMount() {
         this.props.onGetSharedItems()
     }
+
     render() {
         let infoBody: any[] = ["Team Sharing"]
 
-        let cellInfo: [string, number][] = [["Type", 2], ["User", 2], ["Timestamp", 2], ["Entity", 4], ["", 2]];
+        let cellInfo: [string, number][] = [["Type", 2], ["Audit", 3], ["Entity", 6], ["", 1]];
         let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
@@ -38,20 +50,18 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                     <Col xs={2}>
                         {x.strategy}
                     </Col>
-                    <Col xs={2}>
-                        {x.user}
+                    <Col xs={3}>
+                        {x.user}{' @ '}{x.timestamp.toLocaleString()}
                     </Col>
-                    <Col xs={2}>
-                        {x.timestamp.toLocaleString()}
+                    <Col xs={6} style={{ fontSize: 'small' }}>
+                        <Panel bsStyle="primary" className="small-padding-panel">
+                            {this.getSharedItemDetails(x)}
+                        </Panel>
                     </Col>
-                    <Col xs={4}>
-                        {"Wesh"}
-                    </Col>
-                    <Col xs={2}>
+                    <Col xs={1}>
                         <OverlayTrigger overlay={<Tooltip id="tooltipButton" >Import</Tooltip >}>
                             <Button onClick={() => this.props.onImportItem(x.entity, x.strategy)}><Glyphicon glyph="import" /></Button>
                         </OverlayTrigger >
-
                     </Col>
                 </Row>
             </li>
@@ -67,11 +77,123 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
             </ListGroup>
         </PanelWithImage>
     }
+    getSharedItemDetails(sharedEntity: ISharedEntity) {
+        switch (sharedEntity.strategy) {
+            case StrategyIds.CustomSortStrategyId: {
+                let customSort = sharedEntity.entity as ICustomSort
+                let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>{column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString}</Col>
+                    <Col xs={8} >
+                        {customSort.CustomSortItems.join(', ')}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.CalculatedColumnStrategyId: {
+                let calcCol = sharedEntity.entity as ICalculatedColumn
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {calcCol.ColumnId}
+                    </Col>
+                    <Col xs={8}>
+                        {calcCol.GetValueFunc}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.CellValidationStrategyId: {
+                let cellVal = sharedEntity.entity as ICellValidationRule
+                let column = this.props.Columns.find(c => c.ColumnId == cellVal.ColumnId)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {column ? column.FriendlyName : cellVal.ColumnId + Helper.MissingColumnMagicString}
+                    </Col>
+                    <Col xs={4}>
+                        {cellVal.Description}
+                    </Col>
+                    <Col xs={4}>
+                        {(cellVal.HasExpression) ?
+                            ExpressionHelper.ConvertExpressionToString(cellVal.OtherExpression, this.props.Columns, this.props.UserFilters) :
+                            "No Expression"}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.ConditionalStyleStrategyId: {
+                let cs = sharedEntity.entity as IConditionalStyleCondition
+                let column = this.props.Columns.find(c => c.ColumnId == cs.ColumnId)
+                let backColorForStyle: string = cs.Style.BackColor != undefined ? cs.Style.BackColor : null;
+                let foreColorForStyle: string = cs.Style.ForeColor != undefined ? cs.Style.ForeColor : "black";
+                let fontWeightForStyle: any = cs.Style.FontWeight == FontWeight.Bold ? "bold" : "normal"
+                let fontStyleForStyle: any = cs.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
+                let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(cs.Style.FontSize);
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col md={4} >
+                        {cs.ConditionalStyleScope == ConditionalStyleScope.Column ?
+                            column ? column.FriendlyName : cs.ColumnId + Helper.MissingColumnMagicString :
+                            "Whole Row"
+                        }
+                    </Col>
+                    <Col md={3} >
+                        <div className={cs.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"} style={{
+                            textAlign: 'center', margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle
+                        }}>Style</div>
+                    </Col>
+                    <Col xs={5}>
+                        {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns, this.props.UserFilters)}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.PlusMinusStrategyId: {
+                let plusMinus = sharedEntity.entity as IPlusMinusCondition
+                let column = this.props.Columns.find(c => c.ColumnId == plusMinus.ColumnId)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {column ? column.FriendlyName : plusMinus.ColumnId + Helper.MissingColumnMagicString}
+                    </Col>
+                    <Col xs={3}>
+                        {plusMinus.DefaultNudge.toString()}
+                    </Col>
+                    <Col xs={5}>
+                        {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns, this.props.UserFilters)}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.ShortcutStrategyId: {
+                let shortcut = sharedEntity.entity as IShortcut
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col md={4} >
+                        {shortcut.DataType}
+                    </Col>
+                    <Col md={4} >
+                        {shortcut.ShortcutKey}
+                    </Col>
+                    <Col md={4}>
+                        {shortcut.ShortcutResult}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.FilterStrategyId: {
+                let filter = sharedEntity.entity as IUserFilter
+                let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns, this.props.UserFilters)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {filter.FriendlyName}
+                    </Col>
+                    <Col xs={8}>
+                        {expressionString}
+                    </Col>
+                </Row>
+            }
+            default:
+                return "NOT IMPLEMENTED"
+        }
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Entities: state.TeamSharing.SharedEntities
+        Entities: state.TeamSharing.SharedEntities,
+        Columns: state.Grid.Columns,
+        UserFilters: state.Filter.UserFilters
     };
 }
 
@@ -90,6 +212,9 @@ let divStyle: React.CSSProperties = {
     'maxHeight': '300px'
 }
 
+//make the screen a little bit more reactive instead of having a static width
 let panelStyle = {
-    width: '800px'
+    width: '80vw',
+    maxWidth: '1000px',
+    minWidth: '600px'
 }

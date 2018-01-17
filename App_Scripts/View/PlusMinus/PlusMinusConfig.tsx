@@ -68,7 +68,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             let column = this.props.Columns.find(y=>y.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={x.ColumnId + index}>
-                <Row >
+                <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={3}>
                         {column?column.FriendlyName:x.ColumnId+Helper.MissingColumnMagicString}
                     </Col>
