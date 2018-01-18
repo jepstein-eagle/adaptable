@@ -42,7 +42,7 @@ import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrateg
 import { IPlusMinusStrategy, IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
+import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
@@ -258,6 +258,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let returnAction = next(action);
                     let actionTyped = <TeamSharingRedux.TeamSharingImportItemAction>action
                     let importAction: Redux.Action
+                    let overwriteConfirmation = false
                     switch (actionTyped.Strategy) {
                         case StrategyIds.CellValidationStrategyId:
                             importAction = CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity as ICellValidationRule)
@@ -266,6 +267,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let calcCol = actionTyped.Entity as ICalculatedColumn
                             let idx = middlewareAPI.getState().CalculatedColumn.CalculatedColumns.findIndex(x => x.ColumnId == calcCol.ColumnId)
                             if (idx > -1) {
+                                overwriteConfirmation = true
                                 importAction = CalculatedColumnRedux.CalculatedColumnEdit(idx, calcCol)
                             }
                             else {
@@ -279,6 +281,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         case StrategyIds.CustomSortStrategyId: {
                             let customSort = actionTyped.Entity as ICustomSort
                             if (middlewareAPI.getState().CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
+                                overwriteConfirmation = true
                                 importAction = CustomSortRedux.CustomSortEdit(customSort)
                             } else {
                                 importAction = CustomSortRedux.CustomSortAdd(customSort)
@@ -311,7 +314,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let filter = actionTyped.Entity as IUserFilter
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            // if (middlewareAPI.getState().Filter.UserFilters.find(x => x.FriendlyName == filter.FriendlyName)) {
+                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Uid == filter.Uid)) {
+                                overwriteConfirmation = true
+                            }
                             importAction = FilterRedux.UserFilterAddUpdate(filter)
                             // } 
                             break;
@@ -320,12 +325,16 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let search = actionTyped.Entity as IAdvancedSearch
                             //For now not too worry about that but I think we'll need to check ofr search that have same name
                             //currently the reducer checks for UID
+                            if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Uid == search.Uid)) {
+                                overwriteConfirmation = true
+                            }
                             importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(search)
                             break;
                         }
                         case StrategyIds.LayoutStrategyId: {
                             let layout = actionTyped.Entity as ILayout
                             if (middlewareAPI.getState().Layout.AvailableLayouts.find(x => x.Name == layout.Name)) {
+                                overwriteConfirmation = true
                                 importAction = LayoutRedux.SaveLayout(layout.Columns, layout.Name)
                             } else {
                                 importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
@@ -333,7 +342,19 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             break;
                         }
                     }
-                    if (importAction) {
+                    if (overwriteConfirmation) {
+                        let confirmation: IUIConfirmation = {
+                            CancelText: "Cancel Import",
+                            ConfirmationTitle: "Overwrite Config",
+                            ConfirmationMsg: "This item will overwrite one of your config. Do you want to continue?",
+                            ConfirmationText: "Import",
+                            CancelAction: null,
+                            ConfirmAction: importAction,
+                            ShowCommentBox: false
+                        }
+                        middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation))
+                    }
+                    else if (importAction) {
                         middlewareAPI.dispatch(importAction)
                         middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Successfully Imported" }))
                     }
