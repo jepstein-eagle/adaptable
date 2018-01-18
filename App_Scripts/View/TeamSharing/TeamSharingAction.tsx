@@ -50,7 +50,7 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
-                        {x.strategy}
+                        <Glyphicon glyph={this.getGhyphicon(x.strategy)} />{' '}{x.strategy}
                     </Col>
                     <Col xs={3}>
                         {x.user}{' @ '}{x.timestamp.toLocaleString()}
@@ -79,6 +79,29 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
             </ListGroup>
         </PanelWithImage>
     }
+    getGhyphicon(strategyID: string) {
+        switch (strategyID) {
+            case StrategyIds.AdvancedSearchStrategyId:
+                return "search"
+            case StrategyIds.CalculatedColumnStrategyId:
+                return "th-list"
+            case StrategyIds.CellValidationStrategyId:
+                return "flag"
+            case StrategyIds.ConditionalStyleStrategyId:
+                return "tint"
+            case StrategyIds.CustomSortStrategyId:
+                return "sort-by-attributes"
+            case StrategyIds.FilterStrategyId:
+                return "filter"
+            case StrategyIds.LayoutStrategyId:
+                return "th"
+            case StrategyIds.PlusMinusStrategyId:
+                return "plus-sign"
+            case StrategyIds.ShortcutStrategyId:
+                return "road"
+        }
+    }
+
     getSharedItemDetails(sharedEntity: ISharedEntity) {
         switch (sharedEntity.strategy) {
             case StrategyIds.CustomSortStrategyId: {
@@ -240,6 +263,6 @@ let divStyle: React.CSSProperties = {
 //make the screen a little bit more reactive instead of having a static width
 let panelStyle = {
     width: '80vw',
-    maxWidth: '1000px',
+    maxWidth: '1100px',
     minWidth: '600px'
 }
