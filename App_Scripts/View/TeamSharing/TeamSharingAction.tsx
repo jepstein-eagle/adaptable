@@ -25,6 +25,8 @@ import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalSty
 import { ConditionalStyleScope, FontWeight, FontStyle, DataType } from '../../Core/Enums';
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
+import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 
 interface TeamSharingActionProps extends IStrategyViewPopupProps<TeamSharingActionComponent> {
     Entities: Array<ISharedEntity>
@@ -180,6 +182,29 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                     </Col>
                     <Col xs={8}>
                         {expressionString}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.AdvancedSearchStrategyId: {
+                let search = sharedEntity.entity as IAdvancedSearch
+                let expressionString = ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns, this.props.UserFilters)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {search.Name}
+                    </Col>
+                    <Col xs={8}>
+                        {expressionString}
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.LayoutStrategyId: {
+                let layout = sharedEntity.entity as ILayout
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {layout.Name}
+                    </Col>
+                    <Col xs={8}>
+                        {layout.Columns.join(', ')}
                     </Col>
                 </Row>
             }

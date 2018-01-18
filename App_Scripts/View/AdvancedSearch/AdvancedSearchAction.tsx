@@ -7,10 +7,11 @@ import { Typeahead } from 'react-bootstrap-typeahead'
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
@@ -30,6 +31,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { SortOrder } from '../../Core/Enums';
+import { ButtonShare } from "../Components/Buttons/ButtonShare";
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -37,6 +39,7 @@ interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSear
     CurrentAdvancedSearchUid: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction,
     UserFilters: IUserFilter[]
 }
 
@@ -135,6 +138,12 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(selectedAdvancedSearch)}
                                     ConfirmationMsg={"Are you sure you want to delete '" + selectedAdvancedSearchName + "'?"}
                                     ConfirmationTitle={"Delete Advanced Search"} />
+                                {' '}
+                                {this.props.TeamSharingActivated && <ButtonShare onClick={() => this.props.onShare(selectedAdvancedSearch)}
+                                    overrideTooltip="Share Search"
+                                    overrideDisableButton={selectedAdvancedSearch == null}
+                                    ConfigEntity={selectedAdvancedSearch}
+                                    DisplayMode="Glyph+Text" />}
                             </Col>
                         </FormGroup>
                     </AdaptableBlotterForm>
@@ -260,6 +269,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
     };
 }
 

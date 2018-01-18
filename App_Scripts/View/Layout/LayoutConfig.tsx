@@ -3,19 +3,22 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { Helper } from '../../Core/Helper';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
+import { ButtonShare } from "../Components/Buttons/ButtonShare";
 
 interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponent> {
     Layouts: ILayout[],
@@ -23,6 +26,7 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction,
 }
 
 interface LayoutConfigState {
@@ -64,13 +68,13 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                             <Col xs={2} >
                                 <ControlLabel >Current</ControlLabel>
                             </Col>
-                            <Col xs={7}>
+                            <Col xs={5}>
                                 <FormControl componentClass="select" placeholder="select" value={this.props.CurrentLayout}
                                     onChange={(x) => this.onLayoutSelectionChanged(x)} >
                                     {optionLayouts}
                                 </FormControl>
                             </Col>
-                            <Col xs={3}>
+                            <Col xs={5}>
                                 <ButtonDelete
                                     overrideTooltip="Delete Layout"
                                     overrideDisableButton={this.props.CurrentLayout == "Default"}
@@ -79,6 +83,12 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                                     ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
                                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                                     ConfirmationTitle={"Delete Layout"} />
+                                    {' '}
+                                {this.props.TeamSharingActivated && <ButtonShare onClick={() => this.props.onShare(layoutEntity)}
+                                    overrideTooltip="Share Layout"
+                                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                                    ConfigEntity={layoutEntity}
+                                    DisplayMode="Glyph+Text" />}
                             </Col>
                         </FormGroup>
                     </AdaptableBlotterForm>
@@ -144,6 +154,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };
 }
 

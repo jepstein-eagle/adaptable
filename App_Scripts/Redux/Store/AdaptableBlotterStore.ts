@@ -55,6 +55,8 @@ import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalSty
 import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { FilterStrategyId } from '../../Core/StrategyIds';
+import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -310,8 +312,24 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
                             // if (middlewareAPI.getState().Filter.UserFilters.find(x => x.FriendlyName == filter.FriendlyName)) {
-                                importAction = FilterRedux.UserFilterAddUpdate(filter)
+                            importAction = FilterRedux.UserFilterAddUpdate(filter)
                             // } 
+                            break;
+                        }
+                        case StrategyIds.AdvancedSearchStrategyId: {
+                            let search = actionTyped.Entity as IAdvancedSearch
+                            //For now not too worry about that but I think we'll need to check ofr search that have same name
+                            //currently the reducer checks for UID
+                            importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(search)
+                            break;
+                        }
+                        case StrategyIds.LayoutStrategyId: {
+                            let layout = actionTyped.Entity as ILayout
+                            if (middlewareAPI.getState().Layout.AvailableLayouts.find(x => x.Name == layout.Name)) {
+                                importAction = LayoutRedux.SaveLayout(layout.Columns, layout.Name)
+                            } else {
+                                importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
+                            }
                             break;
                         }
                     }
