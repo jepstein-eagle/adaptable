@@ -1,16 +1,18 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType, ExportDestination } from '../../../Core/Enums'
-import { InputAction } from '../../../Core/Interface/IStrategy'
+import { InputAction, IContextMenu, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup } from '../../../Core/Interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Core/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
-import { IRange } from '../../../Core/Interface/IExportStrategy'
+import { IRange, ILiveRange, IPPDomain } from '../../../Core/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/Interface/IStrategy'
 import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Core/Interface/ICalendarStrategy';
-import { IConditionalStyleCondition, IStyle } from '../../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../../Core/Interface/IConditionalStyleStrategy';
+import { IFormatColumn } from '../../../Core/Interface/IFormatColumnStrategy';
+import { IStyle } from '../../../Core/Interface/IStyle';
 import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
 import { IColumnFilter } from '../../../Core/Interface/IFilterStrategy';
 import { IUserFilter } from '../../../Core/Interface/IExpression';
@@ -34,57 +36,12 @@ export interface MenuState {
     ContextMenu: IContextMenu
 }
 
-export interface IContextMenu {
-    BuildContextMenu: boolean
-    IsVisible: boolean
-    PositionX: number
-    PositionY: number
-    ColumnId: string
-    Items: IMenuItem[]
-}
-
 export interface PopupState {
     ActionConfigurationPopup: IActionConfigurationPopup
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
-}
-
-export interface IActionConfigurationPopup {
-    ShowPopup: boolean;
-    ComponentClassName: string;
-    IsReadOnly: boolean
-    Params: string
-}
-
-export interface IErrorPopup {
-    ShowErrorPopup: boolean;
-    ErrorMsg: string;
-}
-
-export interface IWarningPopup {
-    ShowWarningPopup: boolean;
-    WarningMsg: string;
-}
-
-export interface IConfirmationPopup {
-    ShowConfirmationPopup: boolean;
-    ConfirmationTitle: string;
-    ConfirmationMsg: string;
-    ConfirmationText: string;
-    CancelText: string;
-    ConfirmAction: Redux.Action;
-    CancelAction: Redux.Action;
-    ShowCommentBox: boolean,
-    ConfirmationComment:string;
-}
-
-export interface IPromptPopup {
-    ShowPromptPopup: boolean;
-    PromptTitle: string;
-    PromptMsg: string;
-    ConfirmAction: InputAction;
 }
 
 export interface SmartEditState {
@@ -102,31 +59,20 @@ export interface EntitlementsState {
 }
 
 export interface ShortcutState {
-    NumericShortcuts: Array<IShortcut>;
-    DateShortcuts: Array<IShortcut>;
+    Shortcuts: Array<IShortcut>;
 }
 
 export interface RangeState {
     CurrentRange: string;
-    CurrentLiveRanges : ILiveRange[];
+    CurrentLiveRanges: ILiveRange[];
     Ranges: Array<IRange>;
-    ErrorMsg : string;
-}
-
-export interface ILiveRange {
-    WorkbookName: string,
-    Range: string,
-    ExportDestination : ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    ErrorMsg: string;
 }
 
 export interface ExportState {
     IPPDomainsPages: IPPDomain[]
 }
 
-export interface IPPDomain{
-    Name : string
-    Pages : string[]
-}
 
 export interface FlashingCellState {
     FlashingColumns: Array<IFlashingColumn>
@@ -160,7 +106,6 @@ export interface FilterState {
     ColumnFilters: Array<IColumnFilter>
 }
 
-
 export interface ThemeState {
     CurrentTheme: string;
     AvailableThemes: Array<string>
@@ -187,4 +132,8 @@ export interface CalculatedColumnState {
 
 export interface UIControlConfigState {
     PredefinedColorChoices: string[];
+}
+
+export interface FormatColumnState {
+    FormatColumns: Array<IFormatColumn>;
 }

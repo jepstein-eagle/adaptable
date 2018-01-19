@@ -20,7 +20,7 @@ import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -100,7 +100,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         // this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
-        //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))

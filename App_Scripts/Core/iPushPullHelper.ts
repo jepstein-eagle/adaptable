@@ -1,7 +1,8 @@
 import { IEvent } from './Interface/IEvent';
 import { EventDispatcher } from './EventDispatcher';
-import { IPPDomain } from '../Redux/ActionsReducers/Interface/IState';
 import { IPPStyle } from './Interface/IAdaptableBlotter';
+import { IPPDomain } from "./Interface/IExportStrategy";
+
 
 export module iPushPullHelper {
     export enum ServiceStatus {

@@ -16,12 +16,11 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IRange } from "../../Core/Interface/IExportStrategy";
+import { IRange, ILiveRange } from "../../Core/Interface/IExportStrategy";
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -35,14 +34,13 @@ import { RangeColumnsWizard } from './Range/RangeColumnsWizard'
 import { RangeNameWizard } from './Range/RangeNameWizard'
 import { RangeExpressionWizard } from './Range/RangeExpressionWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
     Ranges: IRange[],
     LiveRanges: ILiveRange[];
     CurrentRange: string,
-    onExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
+    onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction;
     onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => RangeRedux.RangeStopLiveAction;
     UserFilters: IUserFilter[]
@@ -83,7 +81,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                 IsLast={index == this.props.Ranges.length - 1}
                 UserFilters={this.props.UserFilters}
                 LiveRanges={this.props.LiveRanges}
-                onExport={(exportDestination) => this.onExportRange(range.Name, exportDestination)}
+                onExport={(exportDestination) => this.onApplyExport(range.Name, exportDestination)}
                 onRangeStopLive={(exportDestination) => this.props.onRangeStopLive(range.Name, exportDestination)}
                 onEdit={() => this.onEditRange(index, range)}
                 onDeleteConfirm={RangeRedux.RangeDelete(index)} />
@@ -112,7 +110,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                             UserFilters={this.props.UserFilters}
                             SelectedColumnId={null}
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-                        <RangeNameWizard />,
+                        <RangeNameWizard Ranges={this.props.Ranges}/>,
                     ]}
                         Data={this.state.EditedRange}
                         StepStartIndex={this.state.WizardStartIndex}
@@ -145,8 +143,8 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
         this.setState({ EditedRange: clonedRangeToEdit, WizardStartIndex: 0, EditedIndexRange: index })
     }
 
-    onExportRange(range: string, exportDestination: ExportDestination) {
-        this.props.onExport(range, exportDestination);
+    onApplyExport(range: string, exportDestination: ExportDestination) {
+        this.props.onApplyExport(range, exportDestination);
     }
 }
 
@@ -162,7 +160,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(value, exportDestination)),
+        onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(value, exportDestination)),
         onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
     };

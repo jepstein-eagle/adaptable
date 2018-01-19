@@ -1,4 +1,4 @@
-import {IAdaptableBlotter} from './IAdaptableBlotter';
+import {IAdaptableBlotter, IColumn} from './IAdaptableBlotter';
 import * as React from "react";
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';

@@ -11,3 +11,5 @@ export const SetNewColumnListOrder = (VisibleColumnList: Array<IColumn>): SetNew
     type: SET_NEW_COLUMN_LIST_ORDER,
     VisibleColumnList
 })
+
+// No reducer required as it all takes place in the main store

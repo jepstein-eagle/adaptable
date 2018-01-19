@@ -12,13 +12,13 @@ import { Helper } from '../../Core/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
-import { IPPDomain, ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
+import { IPPDomain, ILiveRange } from "../../Core/Interface/IExportStrategy";
 import { StringExtensions } from "../../Core/Extensions";
 import { ExportDestination } from "../../Core/Enums";
 
 interface IPushPullDomainPageSelectorProps extends IStrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]
-    onExport: (value: string, folder: string, page: string) => ExportRedux.ExportAction;
+    onApplyExport: (value: string, folder: string, page: string) => ExportRedux.ExportApplyAction;
     onCancel: () => PopupRedux.PopupHideAction
     ErrorMsg: string
     LiveRanges: ILiveRange[];
@@ -66,7 +66,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
             <Button style={buttonRightStyle} onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
             <Button disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
                 style={buttonRightStyle} bsStyle="primary"
-                onClick={() => { this.props.onExport(this.props.PopupParams, this.state.SelectedFolder, this.state.SelectedPage) }}>
+                onClick={() => { this.props.onApplyExport(this.props.PopupParams, this.state.SelectedFolder, this.state.SelectedPage) }}>
                 <Glyphicon glyph="user" /> Select</Button>
         </PanelWithButton>
     }
@@ -92,7 +92,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.Export(value, ExportDestination.iPushPull, folder, page)),
+        onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ApplyExport(value, ExportDestination.iPushPull, folder, page)),
         onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(RangeRedux.RangeSetErrorMsg("")) }
     };
 }
@@ -100,7 +100,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 export let IPushPullDomainPageSelector = connect(mapStateToProps, mapDispatchToProps)(IPushPullDomainPageSelectorComponent);
 
 var buttonRightStyle = {
-    float: 'right'
+    float: 'right',
+    marginLeft: '5px'
 };
 
 

@@ -40,11 +40,11 @@ export enum LeafExpressionOperator {
     IsFalse = "IsFalse"
 }
 
-export enum MenuType {
-    ConfigurationPopup = "ConfigurationPopup",
-    ActionPopup = "ActionPopup",
-    ReduxAction = "ReduxAction"
-}
+//export enum MenuType {
+//    ConfigurationPopup = "ConfigurationPopup",
+//    ActionPopup = "ActionPopup",
+//    ReduxAction = "ReduxAction"
+//}
 
 export enum PopoverType {
     Info = "Info",
@@ -72,9 +72,19 @@ export enum ConditionalStyleScope {
     Row = "Row"
 }
 
-export enum RangeScope {
-    AllColumns = "AllColumns",
-    SelectedColumns = "SelectedColumns"
+export enum RangeColumnScope {
+    AllColumns,
+    VisibleColumns,
+    SelectedColumns,
+    BespokeColumns
+}
+
+
+export enum RangeRowScope {
+    AllRows,
+    VisibleRows,
+    SelectedRows,
+    ExpressionRows
 }
 
 export enum ExportDestination {
@@ -104,8 +114,8 @@ export enum AuditLogTrigger {
 }
 
 export enum CellValidationMode {
-    Warning = "Warning",
-    Prevent = "Prevent"
+   ShowWarning="ShowWarning",
+   PreventEdit="PreventEdit"
 }
 
 export enum SelectionMode {

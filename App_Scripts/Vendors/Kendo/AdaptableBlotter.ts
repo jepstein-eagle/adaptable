@@ -20,7 +20,7 @@ import { StyleService } from '../../Core/Services/StyleService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -761,7 +761,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

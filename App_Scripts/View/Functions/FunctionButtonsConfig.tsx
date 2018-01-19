@@ -10,12 +10,12 @@ import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interf
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 
-interface DashboardShortcutsControlConfigComponentProps extends IStrategyViewPopupProps<DashboardShortcutsToolbarControlConfigComponent> {
+interface FunctionButtonsConfigComponentProps extends IStrategyViewPopupProps<FunctionButtonsConfigComponent> {
     DashboardShortcutsDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean,
     MenuState: MenuState,
@@ -23,20 +23,20 @@ interface DashboardShortcutsControlConfigComponentProps extends IStrategyViewPop
     onDashboardControlConfigChange: (strategyId: string, newConfig: any) => DashboardRedux.DashboardSetConfigurationItemAction
 }
 
-class DashboardShortcutsToolbarControlConfigComponent extends React.Component<DashboardShortcutsControlConfigComponentProps, {}> {
+class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConfigComponentProps, {}> {
     render() {
         let config: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
-        return <PanelWithImage header="Dashboard Bookmarks Configuration" bsStyle="primary" glyphicon="bookmark">
+        return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon="bookmark">
             <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => config.indexOf(x.Label) == -1).map(x=>x.Label)}
                 SelectedValues={config}
-                HeaderAvailable="Available Bookmarks"
-                HeaderSelected="Selected Bookmarks"
+                HeaderAvailable="Available Function Buttons"
+                HeaderSelected="Visible Function Buttons"
                 onChange={(SelectedValues) => this.ListChange(SelectedValues)}></DualListBoxEditor>
         </PanelWithImage>
     }
 
     ListChange(SelectedValues: string[]){
-        this.props.onDashboardControlConfigChange(StrategyIds.DashboardShortcutsStrategyId, SelectedValues)
+        this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, SelectedValues)
     }
 
     onClick(item: React.FormEvent<any>, bookmark: string) {
@@ -53,13 +53,13 @@ class DashboardShortcutsToolbarControlConfigComponent extends React.Component<Da
             let index = arrayConfig.indexOf(bookmark)
             arrayConfig.splice(index, 1)
         }
-        this.props.onDashboardControlConfigChange(StrategyIds.DashboardShortcutsStrategyId, arrayConfig)
+        this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, arrayConfig)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.DashboardShortcutsStrategyId),
+        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.FunctionsStrategyId),
         MenuState: state.Menu,
         EntitlementsState: state.Entitlements
     };
@@ -71,7 +71,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let DashboardShortcutsToolbarControlConfig = connect(mapStateToProps, mapDispatchToProps)(DashboardShortcutsToolbarControlConfigComponent);
+export let FunctionButtonsConfig = connect(mapStateToProps, mapDispatchToProps)(FunctionButtonsConfigComponent);
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',

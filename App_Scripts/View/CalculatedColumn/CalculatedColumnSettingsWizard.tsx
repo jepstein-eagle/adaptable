@@ -9,6 +9,7 @@ import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
 
+
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
     Columns: IColumn[]
 }

@@ -8,10 +8,10 @@ import { EntityListActionButtons } from '../../Components/Buttons/EntityListActi
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../../Core/Interface/IExpression';
-import { RangeScope, ExportDestination } from '../../../Core/Enums';
+import { RangeColumnScope, ExportDestination } from '../../../Core/Enums';
 import { RangeHelper } from '../../../Core/Services/RangeHelper';
 import { OpenfinHelper } from '../../../Core/OpenfinHelper';
-import { ILiveRange } from '../../../Redux/ActionsReducers/Interface/IState';
+import { ILiveRange } from '../../../Core/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../../Core/iPushPullHelper';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {

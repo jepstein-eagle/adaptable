@@ -2,6 +2,7 @@ import { IStrategyActionReturn, IStrategy } from './IStrategy';
 import { Expression } from '../Expression/Expression';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Enums';
 import { IRangeExpression } from '../Interface/IExpression';
+import { IStyle } from '../Interface/IStyle';
 import { IConfigEntity } from './IAdaptableBlotter'
 
 export interface IConditionalStyleStrategy extends IStrategy {
@@ -14,13 +15,6 @@ export interface IConditionalStyleCondition extends IConfigEntity {
     Style: IStyle
 }
 
-export interface IStyle {
-    BackColor?: string
-    ForeColor?: string
-    FontWeight?: FontWeight
-    FontStyle?: FontStyle
-    FontSize?: FontSize
-}
 
 
 

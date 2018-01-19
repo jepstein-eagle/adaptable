@@ -11,24 +11,23 @@ export interface AdvancedSearchAddUpdateAction extends Redux.Action {
     AdvancedSearch: IAdvancedSearch
 }
 
+export interface AdvancedSearchDeleteAction extends Redux.Action {
+    AdvancedSearch: IAdvancedSearch
+}
+
+export interface AdvancedSearchSelectAction extends Redux.Action {
+    SelectedSearchUid: string
+}
 
 export const AdvancedSearchAddUpdate = (AdvancedSearch: IAdvancedSearch): AdvancedSearchAddUpdateAction => ({
     type: ADVANCED_SEARCH_ADD_UPDATE,
     AdvancedSearch
 })
 
-export interface AdvancedSearchDeleteAction extends Redux.Action {
-    AdvancedSearch: IAdvancedSearch
-}
-
 export const AdvancedSearchDelete = (AdvancedSearch: IAdvancedSearch): AdvancedSearchDeleteAction => ({
     type: ADVANCED_SEARCH_DELETE,
     AdvancedSearch
 })
-
-export interface AdvancedSearchSelectAction extends Redux.Action {
-    SelectedSearchUid: string
-}
 
 export const AdvancedSearchSelect = (SelectedSearchUid: string): AdvancedSearchSelectAction => ({
     type: ADVANCED_SEARCH_SELECT,

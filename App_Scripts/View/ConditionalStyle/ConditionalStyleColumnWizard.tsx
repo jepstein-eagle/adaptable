@@ -45,15 +45,16 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
                 </Col>
                 <Col xs={12} style={radioMarginStyle}>
                     <AdaptableBlotterForm inline>
-                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Single Column </Radio>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Column(s) </Radio>
                         {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} style={radioMarginStyle}>
                     {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
-                        <ColumnSelector SelectedColumnId={this.state.ColumnId}
+                        <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                             ColumnList={this.props.Columns}
-                            onColumnChange={colum => this.onColumnSelectedChanged(colum)}></ColumnSelector>
+                            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                            SelectionMode={SelectionMode.Single} />
                     }
                 </Col>
         </Panel>
@@ -61,8 +62,8 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
 
 
-    private onColumnSelectedChanged(column: IColumn) {
-        this.setState({ ColumnId: column ? column.ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(columns: IColumn[]) {
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onScopeSelectChanged(event: React.FormEvent<any>) {

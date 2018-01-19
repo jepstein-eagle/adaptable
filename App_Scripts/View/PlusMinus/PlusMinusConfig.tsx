@@ -9,8 +9,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
-import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
+import { PlusMinusWizard } from './PlusMinusWizard'
 import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -36,15 +35,17 @@ interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigCo
 interface PlusMinusConfigState {
     EditedPlusMinusCondition: IPlusMinusCondition
     EditedIndexColumnNudgeValue: number
+    WizardStartIndex: number
 }
 
 
 class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, PlusMinusConfigState> {
     constructor() {
         super();
-        this.state = { EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 }
+        this.state = { EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 }
 
     }
+
 
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -52,28 +53,30 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let plusMinus = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
                 plusMinus.ColumnId = arrayParams[1]
-                this.setState({ EditedPlusMinusCondition: plusMinus, EditedIndexColumnNudgeValue: -1 });
+                this.setState({ EditedPlusMinusCondition: plusMinus, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 1 });
             }
         }
     }
+
+
     render() {
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />, "Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
 
-        let cellInfo: [string, number][] = [["Column", 3], ["Nudge", 2], ["Row Condition", 4], ["", 3]];
-        
+        let cellInfo: [string, number][] = [["Column", 3], ["Nudge Value", 2], ["Row Condition", 4], ["", 3]];
+
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
-            let column = this.props.Columns.find(y=>y.ColumnId == x.ColumnId)
+            let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={x.ColumnId + index}>
                 <Row >
                     <Col xs={3}>
-                        {column?column.FriendlyName:x.ColumnId+Helper.MissingColumnMagicString}
+                        {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
                     </Col>
                     <Col xs={2}>
                         <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
                     </Col>
                     <Col xs={4}>
-                        {ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)}
+                        {this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters))}
                     </Col>
                     <Col xs={3}>
                         <EntityListActionButtons
@@ -89,7 +92,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         })
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
-            overrideTooltip="Create Column Nudge Value"
+            overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText="Plus / Minus" bsStyle="primary" style={panelStyle}
@@ -116,35 +119,41 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     </ListGroup>
                 </div>}
             {this.state.EditedPlusMinusCondition != null &&
-                <AdaptableWizard Steps={
-                    [<PlusMinusSettingsWizard
-                        Columns={this.props.Columns} />,
-                    <PlusMinusExpressionWizard
-                        ColumnList={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SelectedColumnId={null}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-                    Data={this.state.EditedPlusMinusCondition}
-                    StepStartIndex={0}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
+
+                <PlusMinusWizard
+                    EditedPlusMinusCondition={this.state.EditedPlusMinusCondition}
+                    PlusMinusConditions={this.props.PlusMinusConditions}
+                    Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    SelectedColumnId={null}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
+            }
         </PanelWithButton>
     }
 
+    // wrappng this so that any becomes [Default Column Nudge Value]
+    private wrapExpressionDescription(expressionDescription: string): string {
+        return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
+    }
+
     createColumnNudgeValue() {
-        this.setState({ EditedPlusMinusCondition: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
-        this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index });
+        this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index, WizardStartIndex: 1 });
     }
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 });
     }
     WizardFinish() {
         this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexColumnNudgeValue, this.state.EditedPlusMinusCondition);
-        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1 });
+        this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 });
     }
 
     // private onColumnSelectChange(index: number, column: IColumn) {

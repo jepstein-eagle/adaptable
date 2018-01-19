@@ -27,14 +27,15 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
         let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <Panel header="Select a Column" bsStyle="primary">
-            <ColumnSelector SelectedColumnId={this.state.ColumnId}
+            <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
-                onColumnChange={colum => this.onColumnSelectedChanged(colum)}></ColumnSelector>
+                onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                SelectionMode={SelectionMode.Single} />
         </Panel>
     }
 
-    private onColumnSelectedChanged(column: IColumn) {
-        this.setState({ ColumnId: column ? column.ColumnId : "" } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(columns: IColumn[]) {
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

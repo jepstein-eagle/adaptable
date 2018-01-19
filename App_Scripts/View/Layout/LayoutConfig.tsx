@@ -26,13 +26,17 @@ interface LayoutConfigProps extends IStrategyViewPopupProps<LayoutConfigComponen
 }
 
 interface LayoutConfigState {
-    NewLayoutName: string
+    NewLayoutName: string,
+    ErrorMessage: string
 }
 
 class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutConfigState> {
     constructor() {
         super();
-        this.state = { NewLayoutName: "" }
+        this.state = {
+            NewLayoutName: "",
+            ErrorMessage: null
+        }
     }
 
     render() {
@@ -54,6 +58,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
         })
 
         let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
+        let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return (
             <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th" infoBody={infoBody}>
@@ -98,11 +103,16 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
                                 <ControlLabel >Name</ControlLabel>
                             </Col>
                             <Col xs={7}>
-                                <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                                <FormGroup controlId="formInlineName" validationState={validationState}>
+                                    <FormControl style={{ width: "Auto" }} type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                                    <FormControl.Feedback />
+                                    <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
+                                </FormGroup>
+
                             </Col>
                             <Col xs={3}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName)}
+                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName) || StringExtensions.IsNotNullOrEmpty(this.state.ErrorMessage)}
                                     DisplayMode="Glyph+Text" />
                             </Col>
                         </Row>
@@ -120,15 +130,18 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
 
     private onSaveLayoutNameChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ NewLayoutName: e.value });
+        this.setState({
+            NewLayoutName: e.value,
+            ErrorMessage: this.props.Layouts.findIndex(x => x.Name == e.value) > -1 ? "A Layout already exists with that name" : null
+        });
     }
 
     private onSaveLayoutClicked() {
-      let layoutName: string = this.state.NewLayoutName;
+        let layoutName: string = this.state.NewLayoutName;
         this.setState({ NewLayoutName: "" });
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), layoutName);
-       this.setState({ NewLayoutName: "" });
-     }
+        this.setState({ NewLayoutName: "" });
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

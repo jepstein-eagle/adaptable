@@ -62,7 +62,7 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     public Next(): void {
         this.props.Data.DataType = this.state.DataType;
     }
-    public Back(): void { }
+    public Back(): void { /* no implementation */ }
     public StepName = "Shortcut Data Type"
 }
 

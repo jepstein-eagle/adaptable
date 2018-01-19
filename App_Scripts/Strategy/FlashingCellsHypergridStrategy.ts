@@ -1,13 +1,11 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { MenuType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 
 export class FlashingCellsHypergridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {

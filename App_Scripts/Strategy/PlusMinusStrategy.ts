@@ -4,9 +4,9 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem, ICellInfo, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
-import { DataType, MenuType, CellValidationMode } from '../Core/Enums'
+import { DataType, CellValidationMode } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
@@ -18,8 +18,8 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
-        super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus", 'PlusMinusConfig', MenuType.ConfigurationPopup, "plus-sign")
+        super(StrategyConstants.PlusMinusStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus", 'PlusMinusConfig', "plus-sign")
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
@@ -35,7 +35,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                     "Create Plus/Minus Nudge Rule",
                     "PlusMinusConfig",
-                    MenuType.ConfigurationPopup,
                     "plus-sign",
                     "New|" + columnId)))
         }
@@ -100,7 +99,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);
 
                         if (validationRules.length > 0) {
-                            if (validationRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                            if (validationRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
                                 failedPreventEdits.push(validationRules[0]);
                             } else {
                                 failedWarningEdits.push(validationRules[0]);
@@ -173,8 +172,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
         if (successfulValues.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                "ApplyPlusMinus",
+            this.AuditFunctionAction("ApplyPlusMinus",
                 "KeyPressed:" + keyEventString,
                 successfulValues)
             this.blotter.setValueBatch(successfulValues);

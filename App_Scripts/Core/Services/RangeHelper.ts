@@ -3,7 +3,7 @@ import { Expression } from '../Expression/Expression'
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { IRangeExpression } from '../Interface/IExpression';
 import { IRange } from '../Interface/IExportStrategy';
-import { RangeScope } from '../Enums'
+import { RangeColumnScope, RangeRowScope } from '../Enums'
 import { IAdaptableBlotter, IColumn, ISelectedCells } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -20,19 +20,17 @@ export module RangeHelper {
     }
 
     export function GetRangeColumnsDescription(range: IRange, cols: IColumn[]): string {
-        if (IsSystemRange(range)) {
-            if (range.Name == ALL_DATA_RANGE) {
+        switch (range.RangeColumnScope) {
+            case RangeColumnScope.AllColumns:
                 return "All Columns";
-            } else if (range.Name == VISIBLE_DATA_RANGE) {
+            case RangeColumnScope.VisibleColumns:
                 return "Visible Columns";
-            } else if (range.Name == SELECTED_CELLS_RANGE) {
+            case RangeColumnScope.SelectedColumns:
                 return "Selected Columns";
-            }
+            case RangeColumnScope.BespokeColumns:
+                return range.Columns.map(c =>
+                    cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
         }
-
-        return (range.RangeScope == RangeScope.AllColumns) ? "All Columns" :
-            range.Columns.map(c =>
-                cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
     }
 
     export function GetRangeExpressionDescription(range: IRange, cols: IColumn[], userFilters: IUserFilter[]): string {
@@ -48,21 +46,88 @@ export module RangeHelper {
         return ExpressionHelper.ConvertExpressionToString(range.Expression, cols, userFilters)
     }
 
-    export function ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange, rangeColumns: IColumn[]): IStrategyActionReturn<any[]> {
-        if (IsSystemRange(range)) {
-            return buildSystemRange(range, blotter);
+    export function     ConvertRangeToArray(blotter: IAdaptableBlotter, range: IRange): IStrategyActionReturn<any[]> {
+        let rangeColumns: IColumn[] = [];
+        let gridColumns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+
+        // first get the cols depending on the Column Scope
+        switch (range.RangeColumnScope) {
+            case RangeColumnScope.AllColumns:
+                rangeColumns = gridColumns;
+                break;
+            case RangeColumnScope.VisibleColumns:
+                rangeColumns = gridColumns.filter(c => c.Visible);
+                break;
+            case RangeColumnScope.SelectedColumns:
+                let selectedCells: ISelectedCells = blotter.getSelectedCells();
+
+                if (selectedCells.Selection.size == 0) {
+                    // some way of saying we cannot export anything
+                    return { ActionReturn: dataToExport, Error: { ErrorMsg: "No cells are selected" } };
+                }
+
+                // first get column names - just look at first entry as colnames will be same for each
+                let firstRow: any = selectedCells.Selection.values().next().value
+                for (var columnValuePair of firstRow) {
+                    rangeColumns.push(gridColumns.find(c => c.ColumnId == columnValuePair.columnID));
+                }
+                break;
+            case RangeColumnScope.BespokeColumns:
+                rangeColumns = range.Columns.map(c => gridColumns.find(col => col.ColumnId == c));
+                break;
         }
 
+        // populate the first row
         var dataToExport: any[] = [];
         dataToExport[0] = rangeColumns.map(c => c.FriendlyName);
-        let expressionToCheck: Expression = range.Expression;
 
-        blotter.forAllRecordsDo((row) => {
-            if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, blotter)) {
-                let newRow = getRowValues(row, rangeColumns, blotter);
-                dataToExport.push(newRow);
-            }
-        })
+        // now populate the rest of the rows
+        switch (range.RangeRowScope) {
+            case RangeRowScope.AllRows:
+                blotter.forAllRecordsDo((row) => {
+                    let newRow = getRowValues(row, rangeColumns, blotter);
+                    dataToExport.push(newRow);
+                })
+                break;
+
+            case RangeRowScope.VisibleRows:
+                blotter.forAllVisibleRecordsDo((row) => {
+                    let newRow = getRowValues(row, rangeColumns, blotter);
+                    dataToExport.push(newRow);
+                })
+                break;
+
+            case RangeRowScope.ExpressionRows:
+                let expressionToCheck: Expression = range.Expression;
+
+                blotter.forAllRecordsDo((row) => {
+                    if (ExpressionHelper.checkForExpressionFromRecord(expressionToCheck, row, rangeColumns, blotter)) {
+                        let newRow = getRowValues(row, rangeColumns, blotter);
+                        dataToExport.push(newRow);
+                    }
+                })
+                break;
+
+            case RangeRowScope.SelectedRows:
+                let selectedCells: ISelectedCells = blotter.getSelectedCells();
+                let colNames: string[] = rangeColumns.map(c => c.FriendlyName);
+                for (var keyValuePair of selectedCells.Selection) {
+                    let values: any[] = []
+                    if (keyValuePair[1].length != colNames.length) {
+                        return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
+                    }
+                    for (var cvPair of keyValuePair[1]) {
+                        if (!colNames.find(x => x == rangeColumns.find(c => c.ColumnId == cvPair.columnID).FriendlyName)) {
+                            return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
+                        }
+                        //we want the displayValue now
+                        values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnID));
+
+                    }
+                    dataToExport.push(values);
+                }
+                break;
+        }
         return { ActionReturn: dataToExport };
     }
 
@@ -74,60 +139,6 @@ export module RangeHelper {
         return newRow;
     }
 
-    function buildSystemRange(range: IRange, blotter: IAdaptableBlotter): IStrategyActionReturn<any[]> {
-        var dataToExport: any[] = [];
-        if (range.Name == ALL_DATA_RANGE) {
-            let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            dataToExport[0] = cols.map(c => c.FriendlyName);
-            blotter.forAllRecordsDo((row) => {
-                let newRow = getRowValues(row, cols, blotter);
-                dataToExport.push(newRow);
-            })
-        } else if (range.Name == VISIBLE_DATA_RANGE) {
-            let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
-            dataToExport[0] = cols.map(c => c.FriendlyName);
-            blotter.forAllVisibleRecordsDo((row) => {
-                let newRow = getRowValues(row, cols, blotter);
-                dataToExport.push(newRow);
-            })
-        } else if (range.Name == SELECTED_CELLS_RANGE) {
-            let selectedCells: ISelectedCells = blotter.getSelectedCells();
-            let cols: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-
-            if (selectedCells.Selection.size == 0) {
-                // some way of saying we cannot export anything
-                return { ActionReturn: dataToExport, Error: { ErrorMsg: "No cells are selected" } };
-            }
-
-            // first get column names - just look at first entry as colnames will be same for each
-            let colNames: string[] = []
-            let helpme: any = selectedCells.Selection.values().next().value
-            for (var columnValuePair of helpme) {
-                colNames.push(cols.find(c => c.ColumnId == columnValuePair.columnID).FriendlyName);
-            }
-            dataToExport[0] = colNames;
-
-
-            for (var keyValuePair of selectedCells.Selection) {
-                let values: any[] = []
-                if (keyValuePair[1].length != colNames.length) {
-                    return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
-                }
-                for (var cvPair of keyValuePair[1]) {
-                    if (!colNames.find(x => x == cols.find(c => c.ColumnId == cvPair.columnID).FriendlyName)) {
-                        return { ActionReturn: [], Error: { ErrorMsg: "Ranges of selected cells should have the same set of columns" } };
-                    }
-                    // values.push(cvPair.value);
-                    //we want the displayValue now
-                    values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnID));
-
-                }
-                dataToExport.push(values);
-            }
-        }
-        return { ActionReturn: dataToExport };
-    }
-
 
     export function CreateSystemRanges(): Array<IRange> {
 
@@ -135,7 +146,8 @@ export module RangeHelper {
 
         _systemRanges.push({
             Name: ALL_DATA_RANGE,
-            RangeScope: RangeScope.AllColumns,
+            RangeColumnScope: RangeColumnScope.AllColumns,
+            RangeRowScope: RangeRowScope.AllRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: true
@@ -143,7 +155,8 @@ export module RangeHelper {
 
         _systemRanges.push({
             Name: VISIBLE_DATA_RANGE,
-            RangeScope: RangeScope.AllColumns,
+            RangeColumnScope: RangeColumnScope.VisibleColumns,
+            RangeRowScope: RangeRowScope.VisibleRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: true
@@ -151,7 +164,8 @@ export module RangeHelper {
 
         _systemRanges.push({
             Name: SELECTED_CELLS_RANGE,
-            RangeScope: RangeScope.SelectedColumns,
+            RangeColumnScope: RangeColumnScope.SelectedColumns,
+            RangeRowScope: RangeRowScope.SelectedRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: true

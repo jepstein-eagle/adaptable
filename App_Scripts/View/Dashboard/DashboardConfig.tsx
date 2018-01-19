@@ -12,7 +12,7 @@ import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopu
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
 import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
 import { Helper } from '../../Core/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -53,9 +53,9 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
             let visibleButton = x.IsVisible ?
                 <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
-            if (x.Strategy == StrategyIds.FunctionsStrategyId) {
+            if (x.Strategy == StrategyConstants.FunctionsStrategyId) {
                 //we want to prevent people from hiding the Functions dropdown
-                visibleButton = null
+          //      visibleButton = null
             }
             let configScreen = AdaptableDashboardConfigurationViewFactory.get(x.Strategy)
             let isConfigurationButtonDisabled = !AdaptableDashboardConfigurationViewFactory.has(x.Strategy)

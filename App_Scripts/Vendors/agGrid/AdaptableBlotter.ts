@@ -18,7 +18,7 @@ import { AuditService } from '../../Core/Services/AuditService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -110,7 +110,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
-        //this.Strategies.set(StrategyIds.PrintPreviewStrategyId, new PrintPreviewStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
@@ -534,9 +533,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell") {
+    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
         if (localCellClassRules) {
+            if (type == "FormatColumn") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-FormatColumn-")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
             if (type == "ConditionalStyle") {
                 for (let prop in localCellClassRules) {
                     if (prop.includes("Ab-ConditionalStyle-")) {
@@ -544,6 +550,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
             }
+
+
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
@@ -724,7 +732,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (failedRules.length > 0) {
                     let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                     // first see if its an error = should only be one item in array if so
-                    if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                    if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                         let error: IUIError = {
                             ErrorMsg: errorMessage

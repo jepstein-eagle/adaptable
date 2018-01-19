@@ -52,8 +52,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                         {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
                     </Col>
                     <Col xs={12} style={divStyle}>
-                        <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Only allow edits where the new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Only edits that match the rule defined in the dropdown below are valid."]} popoverType={PopoverType.Info} />
+                        <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
+                        {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 
@@ -150,7 +150,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     private getTextForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
         switch (leafExpressionOperator) {
             case LeafExpressionOperator.None:
-                return "No Changes Allowed"
+                return "Any Edit"
             case LeafExpressionOperator.Unknown:
                 return "Select Rule Operator"
             case LeafExpressionOperator.Equals:

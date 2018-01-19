@@ -1,8 +1,6 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import * as Redux from "redux";
-import { Button, ListGroupItemProps, Modal, Glyphicon } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './Interface/IAdaptableWizard'
+import { Button, Modal, Glyphicon } from 'react-bootstrap';
+import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -19,11 +17,15 @@ export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWiz
 }
 
 class DummyActiveStep implements AdaptableWizardStep {
+    public StepName = ""
     public canNext(): boolean { return false; }
     public canBack(): boolean { return false; }
-    public Next(): void { }
-    public Back(): void { }
-    public StepName = ""
+    public Next(): void { 
+        // no implementation for this 
+    }
+    public Back(): void { 
+        // no implementation for this
+    }
 }
 
 //Remark : the component doesnt handle the change of props once displayed... It's easy to do but not sure it's needed
@@ -43,14 +45,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart, ForceFinish: false }
     }
-    //So we inject everything needed for the Wizard
-    private cloneWizardStep(step: JSX.Element): JSX.Element {
-        return React.cloneElement(step, {
-            ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
-            Data: this.props.Data,
-            UpdateGoBackState: (finish: boolean = false) => this.ForceUpdateGoBackState(finish)
-        })
-    }
+    
     render() {
         return (
             <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style">
@@ -112,6 +107,15 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 this.props.onHide();
             }
         }
+    }
+
+    //So we inject everything needed for the Wizard
+    private cloneWizardStep(step: JSX.Element): JSX.Element {
+        return React.cloneElement(step, {
+            ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
+            Data: this.props.Data,
+            UpdateGoBackState: (finish: boolean = false) => this.ForceUpdateGoBackState(finish)
+        })
     }
 }
 

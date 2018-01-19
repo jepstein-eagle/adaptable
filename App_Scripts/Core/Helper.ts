@@ -174,5 +174,12 @@ export module Helper {
         }
         console.warn("Copy not available on this computer.");
     }
+
+    export function ReturnItemCount(items: any[], itemName: string): string {
+        if (items.length == 0) {
+            return "No " + itemName + "s"
+        }
+        return (items.length == 1) ? "1 " + itemName : items.length + " " + itemName + "s"
+    }
 }
 

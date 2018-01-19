@@ -1,9 +1,9 @@
 export interface AdaptableWizardStep {
+    StepName: string
     canNext(): boolean
     canBack(): boolean
     Next(): void
     Back(): void
-    StepName: string
 }
 
 export interface AdaptableWizardStepProps<T> {

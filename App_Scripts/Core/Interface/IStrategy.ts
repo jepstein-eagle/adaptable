@@ -1,4 +1,3 @@
-import { MenuType } from '../Enums';
 import { IColumn } from '../Interface/IAdaptableBlotter'
 import { IEntitlement } from '../Interface/IAdaptableBlotter'
 import * as Redux from 'redux';
@@ -15,8 +14,16 @@ export interface IMenuItem {
     StrategyId: string;
     Action: Redux.Action;
     IsEnabled: boolean;
-    MenuType: MenuType;
     GlyphIcon: string
+}
+
+export interface IContextMenu {
+    BuildContextMenu: boolean
+    IsVisible: boolean
+    PositionX: number
+    PositionY: number
+    ColumnId: string
+    Items: IMenuItem[]
 }
 
 export interface IUIError {
@@ -59,4 +66,40 @@ export interface ICellInfo {
     Id: any,
     ColumnId: string,
     Value: any
+}
+
+export interface IActionConfigurationPopup {
+    ShowPopup: boolean;
+    ComponentClassName: string;
+    IsReadOnly: boolean
+    Params: string
+}
+
+export interface IErrorPopup {
+    ShowErrorPopup: boolean;
+    ErrorMsg: string;
+}
+
+export interface IWarningPopup {
+    ShowWarningPopup: boolean;
+    WarningMsg: string;
+}
+
+export interface IConfirmationPopup {
+    ShowConfirmationPopup: boolean;
+    ConfirmationTitle: string;
+    ConfirmationMsg: string;
+    ConfirmationText: string;
+    CancelText: string;
+    ConfirmAction: Redux.Action;
+    CancelAction: Redux.Action;
+    ShowCommentBox: boolean,
+    ConfirmationComment:string;
+}
+
+export interface IPromptPopup {
+    ShowPromptPopup: boolean;
+    PromptTitle: string;
+    PromptMsg: string;
+    ConfirmAction: InputAction;
 }

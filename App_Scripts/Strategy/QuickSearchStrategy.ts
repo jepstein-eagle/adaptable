@@ -1,10 +1,11 @@
 import { IQuickSearchStrategy } from '../Core/Interface/IQuickSearchStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType, LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
+import { LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { Helper } from '../Core/Helper'
@@ -14,23 +15,28 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     protected quickSearchState: QuickSearchState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Quick Search", 'QuickSearchConfig', MenuType.ConfigurationPopup, "eye-open");
+        super(StrategyConstants.QuickSearchStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Quick Search", ScreenPopups.QuickSearchConfigPopup, "eye-open");
     }
 
     protected InitState() {
         if (this.quickSearchState != this.GetQuickSearchState()) {
             this.quickSearchState = this.GetQuickSearchState();
 
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                "ApplyQuickSearch",
+            this.AuditFunctionAction("ApplyQuickSearch",
                 "QuickSearch params has changed",
                 this.quickSearchState)
 
             this.blotter.applyColumnFilters();
+
+            this.postSearch();
         }
     }
     protected GetQuickSearchState(): QuickSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+    }
+
+    protected postSearch() {
+        // required only for ag-Grid to inherit - a better way possible?
     }
 }

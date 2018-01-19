@@ -1,5 +1,5 @@
-import {CustomSortState} from './Interface/IState';
-import {ICustomSort} from '../../Core/Interface/ICustomSortStrategy';
+import { CustomSortState } from './Interface/IState';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
 import * as Redux from 'redux'
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';
@@ -37,30 +37,29 @@ const initialCustomSortState: CustomSortState = {
 }
 
 export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomSortState = initialCustomSortState, action: Redux.Action): CustomSortState => {
+    let customSorts: ICustomSort[]
+
     switch (action.type) {
         case CUSTOMSORT_ADD:
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
-
-            items.push((<CustomSortAddAction>action).CustomSort);
+            customSorts = [].concat(state.CustomSorts);
+            customSorts.push((<CustomSortAddAction>action).CustomSort);
             return Object.assign({}, state, {
-                CustomSorts: items
+                CustomSorts: customSorts
             });
         case CUSTOMSORT_EDIT: {
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
-            let index = items.findIndex(x => x.ColumnId == (<CustomSortAddAction>action).CustomSort.ColumnId)
-            items[index] = (<CustomSortAddAction>action).CustomSort;
-
+            customSorts = [].concat(state.CustomSorts);
+            let index = customSorts.findIndex(x => x.ColumnId == (<CustomSortAddAction>action).CustomSort.ColumnId)
+            customSorts[index] = (<CustomSortAddAction>action).CustomSort;
             return Object.assign({}, state, {
-                CustomSorts: items
+                CustomSorts: customSorts
             });
         }
         case CUSTOMSORT_DELETE:
-            var items: Array<ICustomSort> = [].concat(state.CustomSorts);
-            let index = items.findIndex(x => x.ColumnId == (<CustomSortDeleteAction>action).CustomSort.ColumnId)
-            items.splice(index, 1);
-
+            customSorts = [].concat(state.CustomSorts);
+            let index = customSorts.findIndex(x => x.ColumnId == (<CustomSortDeleteAction>action).CustomSort.ColumnId)
+            customSorts.splice(index, 1);
             return Object.assign({}, state, {
-                CustomSorts: items
+                CustomSorts: customSorts
             });
         default:
             return state

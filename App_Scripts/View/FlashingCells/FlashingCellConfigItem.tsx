@@ -8,6 +8,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
 import { ColorPicker } from '../ColorPicker';
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
 
 export interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
@@ -37,33 +38,26 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
         if (!ObjectFactory.GetFlashingCellDurations().find(x => x == this.props.FlashingColumn.FlashingCellDuration)) {
             durations.push(<option key={this.props.FlashingColumn.FlashingCellDuration} value={this.props.FlashingColumn.FlashingCellDuration}>{this.getFriendlyFlashingDuration(this.props.FlashingColumn.FlashingCellDuration)}</option>)
         }
-        return <li
-            className="list-group-item"
-            onClick={() => { }}>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col md={1} >
-                    <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
-                </Col>
-                <Col md={4} >
-                    {column.FriendlyName}
-                </Col>
-                <Col md={3} >
-                    {
-                        <FormControl disabled={isDisabled} componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
-                            {durations}
-                        </FormControl>
-                    }
-                </Col>
-                <Col md={2} >
-                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
-                </Col>
-                <Col md={2} >
-                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
-                </Col>
-            </Row>
-        </li>
-    }
 
+        let myCols: IColItem[] = []
+        myCols.push({
+            size: 1, content: <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(this.props.FlashingColumn)} checked={this.props.FlashingColumn.IsLive}></Checkbox>
+
+        });
+        myCols.push({ size: 4, content: column.FriendlyName });
+        myCols.push({
+            size: 3, content: <FormControl disabled={isDisabled} componentClass="select" value={this.props.FlashingColumn.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
+                {durations}
+            </FormControl>
+        });
+        myCols.push({ size: 2, content: <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} /> });
+        myCols.push({
+            size: 2, content: <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+        });
+
+        return <ConfigEntityRow
+            items={myCols} />
+    }
 
     onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;

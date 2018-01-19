@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Form, Dropdown, DropdownButton, Panel, FormControl, MenuItem, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { IRange } from '../../Core/Interface/IExportStrategy'
@@ -22,15 +22,16 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as ScreenPopups from '../../Core/ScreenPopups'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
 import { OpenfinHelper } from '../../Core/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
-import { ILiveRange } from "../../Redux/ActionsReducers/Interface/IState";
+import { ILiveRange } from "../../Core/Interface/IExportStrategy";
 
-interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<ExportToolbarControlComponent> {
-    onExportRange: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportAction;
+interface ExportToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
+    onApplyExport: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onSelectRange: (range: string) => RangeRedux.RangeSelectAction;
     onNewRange: () => PopupRedux.PopupShowAction;
     onEditRange: () => PopupRedux.PopupShowAction;
@@ -39,10 +40,7 @@ interface ExportToolbarControlComponentProps extends IStrategyViewPopupProps<Exp
     Ranges: IRange[];
     CurrentRange: string;
     LiveRanges: ILiveRange[];
-    RangeDashboardControl: IDashboardStrategyControlConfiguration
-    IsReadOnly: boolean
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
-}
+ }
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
     componentWillReceiveProps(nextProps: ExportToolbarControlComponentProps, nextContext: any) {
@@ -64,14 +62,14 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             return <option value={x.Name} key={index}>{x.Name}</option>
         })
 
-        let csvMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
-        let clipboardMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
+        let csvMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentRangeId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
+        let clipboardMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentRangeId, ExportDestination.Clipboard)} key={"clipboard"}> {"Clipboard"}</MenuItem>
         let openfinExcelMenuItem
         if (this.props.LiveRanges.find(x => x.Range == currentRangeId && x.ExportDestination == ExportDestination.OpenfinExcel)) {
             openfinExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Stop Live Openfin Excel"}</MenuItem>
         }
         else {
-            openfinExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
+            openfinExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentRangeId, ExportDestination.OpenfinExcel)} key={"OpenfinExcel"}> {"Start Live Openfin Excel"}</MenuItem>
         }
 
         let iPushPullExcelMenuItem
@@ -79,7 +77,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onRangeStopLive(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
         }
         else {
-            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onExportRange(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
+            iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentRangeId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
         }
 
 
@@ -96,7 +94,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 />
                 {' '}
                 {currentRangeId != "select" &&
-                    <DropdownButton bsStyle="default" title="Export To" id="exportDropdown" disabled={currentRangeId == "select"} >
+                    <DropdownButton bsStyle="default" title="Export" id="exportDropdown" disabled={currentRangeId == "select"} >
                         {csvMenuItem}
                         {clipboardMenuItem}
                         {
@@ -127,7 +125,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Export" glyphicon="export" onHideControl={(confirmation) => this.hideControl(confirmation)}>
+        return <PanelDashboard headerText="Export" glyphicon="export" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -135,10 +133,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
     onSelectedRangeChanged(selected: IRange[]) {
         this.props.onSelectRange(selected.length > 0 ? selected[0].Name : "");
     }
-    hideControl(confirmation: IUIConfirmation) {
-        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.RangeDashboardControl.Strategy, false);
-        this.props.onConfirmWarning(confirmation)
-    }
+ 
 
 }
 
@@ -148,18 +143,19 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Ranges: state.Range.Ranges,
         Columns: state.Grid.Columns,
         LiveRanges: state.Range.CurrentLiveRanges,
-        RangeDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ExportStrategyId)
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.ExportStrategyId),
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onExportRange: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.Export(range, exportDestination)),
+        onApplyExport: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(range, exportDestination)),
         onSelectRange: (range: string) => dispatch(RangeRedux.RangeSelect(range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
         onNewRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "New")),
         onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit")),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
+        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportActionPopup))
     };
 }
 

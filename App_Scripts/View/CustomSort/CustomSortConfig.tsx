@@ -14,10 +14,12 @@ import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortConfigItem } from './CustomSortConfigItem'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
+import { CustomSortWizard } from './CustomSortWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
+
 
 interface CustomSortConfigProps extends IStrategyViewPopupProps<CustomSortConfigComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -31,6 +33,7 @@ interface CustomSortConfigInternalState {
     WizardStartIndex: number
 }
 
+
 class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, CustomSortConfigInternalState> {
     constructor() {
         super();
@@ -43,11 +46,11 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let newCustomSort = ObjectFactory.CreateEmptyCustomSort()
                 newCustomSort.ColumnId = arrayParams[1]
-                this.onEditCustomSort(newCustomSort)
+                this.onEdit(newCustomSort)
             }
             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
-                let editCustomSort = this.props.CustomSorts.find(x=>x.ColumnId == arrayParams[1])
-                this.onEditCustomSort(editCustomSort)
+                let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == arrayParams[1])
+                this.onEdit(editCustomSort)
             }
         }
     }
@@ -58,16 +61,16 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             "A Custom Sort can contain as many column values as required; any values not contained in the Custom Sort will be sorted alphabetically ", <strong>after</strong>, " the sort order has been applied."]
 
 
-  let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
+        let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
-                onEdit={(customSort) => this.onEditCustomSort(customSort)}
+                onEdit={(customSort) => this.onEdit(customSort)}
                 onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-                ColumnLabel={column?column.FriendlyName:customSort.ColumnId+Helper.MissingColumnMagicString}></CustomSortConfigItem>
+                ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString}></CustomSortConfigItem>
         });
 
         let cellInfo: [string, number][] = [["Column", 3], ["Sort Order", 6], ["", 3]];
-        let newButton = <ButtonNew onClick={() => this.CreateCustomSort()}
+        let newButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create Custom Sort"
             DisplayMode="Glyph+Text" />
 
@@ -82,14 +85,15 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 {customSorts}
             </ListGroup>
             {this.state.EditedCustomSort &&
-                <AdaptableWizard Steps={
-                    [<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
-                <CustomSortValuesWizard Columns={this.props.Columns} 
-                getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-                    Data={this.state.EditedCustomSort}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+                <CustomSortWizard
+                    EditedCustomSort={this.state.EditedCustomSort}
+                    CustomSorts={this.props.CustomSorts}
+                    Columns={this.props.Columns}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
             }
         </PanelWithButton>
     }
@@ -111,12 +115,12 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         this.setState({ EditedCustomSort: null, WizardStartIndex: 0 });
     }
 
-    private onEditCustomSort(customSort: ICustomSort) {
+    onEdit(customSort: ICustomSort) {
         //so we dont mutate original object
         this.setState({ EditedCustomSort: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
 
-    CreateCustomSort() {
+    onNew() {
         this.setState({ EditedCustomSort: ObjectFactory.CreateEmptyCustomSort(), WizardStartIndex: 0 });
     }
 }

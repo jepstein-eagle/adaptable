@@ -2,7 +2,6 @@ import { IAdaptableBlotter, IColumn, IEntitlement } from './Interface/IAdaptable
 import { IStrategy, IMenuItem } from './Interface/IStrategy';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
-import { MenuType } from '../Core/Enums'
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { MenuState } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -30,7 +29,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    protected abstract InitState() : void
+    protected  InitState(): void{
+       // base class implementation which is empty
+    }
 
     public menuItemConfig: IMenuItem;
 
@@ -39,6 +40,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     }
 
     protected addColumnMenuItems(columnId: string): void {
+        // base class implementation which is empty
     }
 
     getStrategyEntitlement(): IEntitlement {
@@ -47,16 +49,21 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
     createMenuItemShowPopup(Label: string,
         ComponentName: string,
-        MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
         GlyphIcon: string,
-        PopupParams?:string): MenuItemShowPopup {
+        PopupParams?: string): MenuItemShowPopup {
         return new MenuItemShowPopup(Label,
             this.Id,
             ComponentName,
-            MenuType,
             GlyphIcon,
-            this.getStrategyEntitlement(), 
+            this.getStrategyEntitlement(),
             PopupParams);
+    }
+
+    protected AuditFunctionAction(action: string, info: string, data?: any) {
+        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+            action,
+            info,
+            data)
     }
 
 }

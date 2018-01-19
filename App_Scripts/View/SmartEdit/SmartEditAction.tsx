@@ -14,7 +14,6 @@ import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrateg
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
-import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
@@ -66,8 +65,8 @@ class SmartEditActionComponent extends React.Component<SmartEditActionProps, {}>
         if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.Prevent).length > 0
-                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.Warning).length > 0
+                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.PreventEdit).length > 0
+                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.ShowWarning).length > 0
                 globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
                 globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
                 if (!hasValidationErrors || localHasValidationWarning) {

@@ -18,7 +18,7 @@ import { AuditService } from '../../Core/Services/AuditService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -31,6 +31,8 @@ import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleHypergridStrategy } from '../../Strategy/ConditionalStyleHypergridStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
+import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy'
+import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { FilterStrategy } from '../../Strategy/FilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
@@ -52,7 +54,7 @@ import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
-import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IStyle } from '../../Core/Interface/IStyle';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
@@ -135,6 +137,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
+        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -409,6 +413,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             }
                         }
                     }
+                     /* falls through */
                     default:
                         break;
                 }
@@ -655,6 +660,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (style.conditionalStyleColumn) {
             cellStyleHypergrid.conditionalStyleColumn = style.conditionalStyleColumn
         }
+
+        if (style.formatColumnStyle) {
+            cellStyleHypergrid.formatColumnStyle = style.formatColumnStyle
+        }
+
     }
 
     public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
@@ -692,7 +702,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return rowIndex
     }
 
-    public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+    public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'| 'formatColumn'): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
             cellStyleHypergridColumns = new Map()
@@ -718,9 +728,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (style == 'QuickSearch') {
             cellStyleHypergrid.quickSearchStyle = undefined
         }
+
+        if (style == 'formatColumn') {
+            cellStyleHypergrid.formatColumnStyle = undefined
+        }
     }
 
-    public removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'): void {
+    public removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'| 'formatColumn'): void {
         this.cellStyleHypergridMap.forEach((cellStyleHypergridColumns) => {
             cellStyleHypergridColumns.forEach((cellStyleHypergrid) => {
                 if (style == 'flash') {
@@ -737,6 +751,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 if (style == 'QuickSearch') {
                     cellStyleHypergrid.quickSearchStyle = undefined
+                }
+                if (style == 'formatColumn') {
+                    cellStyleHypergrid.formatColumnStyle = undefined
                 }
             })
         })
@@ -920,7 +937,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (failedRules.length > 0) {
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.Prevent) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
@@ -1006,9 +1023,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let conditionalStyleColumn = cellStyleHypergrid.conditionalStyleColumn;
                         let conditionalStyleRow = cellStyleHypergrid.conditionalStyleRow;
                         let quickSearchStyle = cellStyleHypergrid.quickSearchStyle;
+                        let formatStyle = cellStyleHypergrid.formatColumnStyle;
+
                         //Lowest priority first then every step will override the properties it needs to override.
                         //probably not needed to optimise as we just assign properties.......
-                        if (conditionalStyleRow) {
+                        if (formatStyle) {
+                            if (formatStyle.BackColor) {
+                                config.backgroundColor = formatStyle.BackColor;
+                            }
+                            if (formatStyle.ForeColor) {
+                                config.color = formatStyle.ForeColor;
+                            }
+                            if (formatStyle.FontStyle
+                                || formatStyle.FontWeight
+                                || formatStyle.ForeColor
+                                || formatStyle.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, formatStyle);
+                            }
+                        }
+                         if (conditionalStyleRow) {
                             if (conditionalStyleRow.BackColor) {
                                 config.backgroundColor = conditionalStyleRow.BackColor;
                             }
@@ -1087,5 +1120,6 @@ export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle,
     conditionalStyleRow?: IStyle,
     flashBackColor?: string,
-    quickSearchStyle?: IStyle
+    quickSearchStyle?: IStyle,
+    formatColumnStyle?: IStyle
 }

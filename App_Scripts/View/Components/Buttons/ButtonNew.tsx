@@ -1,10 +1,4 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../../../Core/Helper'
-import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { IUIError } from '../../../Core/Interface/IStrategy';
-import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 
 export class ButtonNew extends React.Component<ButtonProps, {}> {

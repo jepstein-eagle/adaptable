@@ -38,7 +38,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
             ShortcutAction: this.props.Data.ShortcutAction,
             IsDynamic: this.props.Data.IsDynamic
         }
-     }
+    }
 
     onClickShortcutAction(shortcutAction: ShortcutAction) {
         this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -126,18 +126,18 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                     <span>
                         <FormGroup controlId="formInlineDateType">
                             <AdaptableBlotterForm inline>
-                               
+
                                 <Col xs={3}>
                                     <ControlLabel>Date Type:</ControlLabel>
                                 </Col>
                                 <Col xs={5} style={radioMarginStyle}>
                                     <Radio inline value="custom" checked={this.state.IsDynamic == false} onChange={(e) => this.onDynamicSelectChanged(e)}>Custom</Radio>
-                                     <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
-                                       {' '}<AdaptablePopover headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.",<br/>,<br/>,<b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').",<br/>,<br/>,"Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
-                            </Col>
-                             </AdaptableBlotterForm>
+                                    <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
+                                    {' '}<AdaptablePopover headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
+                                </Col>
+                            </AdaptableBlotterForm>
 
-                            
+
                         </FormGroup>
 
                         {this.state.IsDynamic == true ?
@@ -202,10 +202,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.setState({ ShortcutResult: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-     private onDynamicSelectChanged(event: React.FormEvent<any>) {
+    private onDynamicSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-            this.setState({ IsDynamic: (e.value == "dynamic") } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
-     }
+        this.setState({ IsDynamic: (e.value == "dynamic") } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
 
     public canNext(): boolean {
         if (this.state.IsDynamic && this.state.ShortcutResult == "select") {
@@ -224,7 +224,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.props.Data.ShortcutKey = this.state.ShortcutKey;
         this.props.Data.IsDynamic = this.state.IsDynamic;
     }
-    public Back(): void { }
+    public Back(): void { /* no implementation required   */ }
     public StepName = "Shortcut Settings"
 }
 

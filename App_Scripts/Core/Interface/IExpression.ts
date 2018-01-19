@@ -18,4 +18,5 @@ export interface IUserFilter extends IConfigEntity {
     DataType: DataType;
     IsExpressionSatisfied?: (valueToCheck: any, blotter: IAdaptableBlotter) => boolean;
     Expression: Expression;
+    ColumnId?: string
 }

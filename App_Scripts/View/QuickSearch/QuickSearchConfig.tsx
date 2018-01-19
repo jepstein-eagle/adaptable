@@ -18,7 +18,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IStyle } from '../../Core/Interface/IStyle';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {

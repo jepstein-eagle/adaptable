@@ -9,7 +9,7 @@ import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, F
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
-import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue , SelectionMode} from '../../Core/Enums'
 import { Helper } from '../../Core/Helper'
 import { StringExtensions } from '../../Core/Extensions'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -141,9 +141,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             }
                         </Col>
                         <Col xs={6}>
-                            <ColumnSelector SelectedColumnId={this.props.SelectedColumnId} disabled={columnDropdownDisabled}
+                            <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]} 
+                            disabled={columnDropdownDisabled}
                                 ColumnList={this.props.ColumnsList}
-                                onColumnChange={colum => this.onColumnSelectChange(colum)}></ColumnSelector>
+                                onColumnChange={columns => this.onColumnSelectChange(columns)}
+                                SelectionMode={SelectionMode.Single} />
                         </Col>
                     </FormGroup>
                 }
@@ -256,8 +258,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.setState({ SelectedUserFilterExpresions: selectedUserFilterExpressionUids } as ExpressionBuilderConditionSelectorState)
     }
 
-    private onColumnSelectChange(column: IColumn) {
-        this.props.onSelectedColumnChange(column ? column.ColumnId : "")
+    private onColumnSelectChange(columns: IColumn[]) {
+        this.props.onSelectedColumnChange(columns.length > 0 ? columns[0].ColumnId : "")
     }
 
 

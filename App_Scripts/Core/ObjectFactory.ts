@@ -2,17 +2,19 @@ import { Helper } from './Helper';
 import { ExpressionHelper } from './Expression/ExpressionHelper';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from './Interface/ICellValidationStrategy';
-import { IConditionalStyleCondition, IStyle } from './Interface/IConditionalStyleStrategy';
-import { CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize, RangeScope } from '../Core/Enums';
+import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
+import { RangeColumnScope, RangeRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn } from './Interface/IFlashingCellsStrategy'
 import { IShortcut } from './Interface/IShortcutStrategy';
 import { ICustomSort } from './Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
+import { IFormatColumn } from './Interface/IFormatColumnStrategy';
 import { Expression } from './Expression/Expression'
 import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
 import { IRange } from './Interface/IExportStrategy';
+import { IStyle } from '../Core/Interface/IStyle';
 
 export module ObjectFactory {
 
@@ -45,7 +47,7 @@ export module ObjectFactory {
 
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
-            CellValidationMode: CellValidationMode.Prevent,
+            CellValidationMode: CellValidationMode.PreventEdit,
             ColumnId: "",
             RangeExpression: {
                 Operator: LeafExpressionOperator.None,
@@ -75,7 +77,8 @@ export module ObjectFactory {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
             Columns: [],
-            RangeScope: RangeScope.AllColumns,
+            RangeColumnScope: RangeColumnScope.AllColumns,
+            RangeRowScope: RangeRowScope.ExpressionRows,
             IsPredefined: false
         };
     }
@@ -122,6 +125,14 @@ export module ObjectFactory {
             Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
             ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: ExpressionHelper.CreateEmptyExpression(),
+            IsPredefined: false
+        }
+    }
+
+    export function CreateEmptyFormatColumn(): IFormatColumn {
+        return {
+            ColumnId: "",
+            Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
             IsPredefined: false
         }
     }

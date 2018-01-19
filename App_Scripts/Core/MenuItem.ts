@@ -1,5 +1,4 @@
 import { IMenuItem } from './Interface/IStrategy';
-import { MenuType } from './Enums';
 import { PopupShow } from '../Redux/ActionsReducers/PopupRedux'
 import * as Redux from 'redux';
 import { IEntitlement } from './Interface/IAdaptableBlotter';
@@ -15,14 +14,13 @@ export class MenuReduxActionItem implements IMenuItem {
     }
 
     public IsEnabled: boolean;
-    public MenuType: MenuType.ReduxAction
+   // public MenuType: MenuType.ReduxAction
 }
 
 export class MenuItemShowPopup implements IMenuItem {
     constructor(public Label: string,
         public StrategyId: string,
         private ComponentName: string,
-        public MenuType: MenuType.ActionPopup | MenuType.ConfigurationPopup,
         public GlyphIcon: string,
         private Entitlment: IEntitlement,
         private PopupParams?: string) {

@@ -1,5 +1,6 @@
 import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyleCondition, IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import {  IStyle } from '../../Core/Interface/IStyle';
 import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
@@ -31,11 +32,11 @@ export const ConditionalStyleDelete = (Index: number,conditionalStyleCondition: 
     conditionalStyleCondition
 })
 
-const initialCalendarState: ConditionalStyleState = {
+const initialConditionalStyleState: ConditionalStyleState = {
     ConditionalStyleConditions: []
 }
 
-export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialCalendarState, action: Redux.Action): ConditionalStyleState => {
+export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialConditionalStyleState, action: Redux.Action): ConditionalStyleState => {
     let conditions: IConditionalStyleCondition[]
 
     switch (action.type) {

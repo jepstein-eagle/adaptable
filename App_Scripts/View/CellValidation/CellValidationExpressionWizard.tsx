@@ -29,6 +29,6 @@ export class CellValidationExpressionWizard extends ExpressionBuilderPage implem
     public Next(): void {
         this.props2.Data.OtherExpression = this.state.Expression
     }
-    public Back(): void { }
+
     public StepName = "Cell Validation: Create Query"
 }

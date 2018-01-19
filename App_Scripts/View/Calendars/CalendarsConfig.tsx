@@ -38,7 +38,6 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
         let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />,
             "These are used primarily when calculating Working Days."]
 
-
         let acllCalendarCellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
             return <CalendarsConfigItem
@@ -59,7 +58,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
         let displayedCalendarModalBody = this.state.DisplayedCalendar == null ? null :
             this.state.DisplayedCalendar.CalendarYears.map((calendarYear: ICalendarYear) => {
                 let sortedCalendarEntries = Helper.sortArrayWithProperty(SortOrder.Ascending, calendarYear.CalendarEntries, "HolidayDate");
-  let calendarEntryItems = sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
+                let calendarEntryItems = sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
                     return <CalendarEntryItem
                         CalendarEntry={calendarEntry}
                         key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
@@ -67,7 +66,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                 });
 
                 let yearButton = <Button onClick={() => this.onClickCalendarYear(calendarYear.YearName)}>
-                    <Glyphicon glyph={this.state.DisplayedYear == calendarYear.YearName ? "chevron-up" : "chevron-down"}/>
+                    <Glyphicon glyph={this.state.DisplayedYear == calendarYear.YearName ? "chevron-up" : "chevron-down"} />
                 </Button>
 
                 return <div key={calendarYear.YearName.toString()}>

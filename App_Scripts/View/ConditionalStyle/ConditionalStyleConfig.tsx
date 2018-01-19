@@ -11,9 +11,7 @@ import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums'
 import { ConditionalStyleConfigItem } from './ConditionalStyleConfigItem'
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
-import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
-import { ConditionalStyleColumnWizard } from './ConditionalStyleColumnWizard'
-import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
+import { ConditionalStyleWizard } from './ConditionalStyleWizard'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -23,15 +21,15 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
-    ConditionalStyleConditions: Array<IConditionalStyleCondition>,
+    ConditionalStyles: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     UserFilters: IUserFilter[],
     PredefinedColorChoices: string[],
-    onAddEditConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
+    onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 }
 
 interface ConditionalStyleConfigState {
-    EditedConditionalStyleCondition: IConditionalStyleCondition
+    EditedConditionalStyle: IConditionalStyleCondition
     EditedIndexConditionalStyleCondition: number
     WizardStartIndex: number
 }
@@ -40,7 +38,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     constructor() {
         super();
-        this.state = { EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 }
+        this.state = { EditedConditionalStyle: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 }
     }
 
     componentDidMount() {
@@ -50,7 +48,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
                 _editedConditionalStyle.ColumnId = arrayParams[1]
                 _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column
-                this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 1 });
+                this.setState({ EditedConditionalStyle: _editedConditionalStyle, WizardStartIndex: 1 });
             }
         }
     }
@@ -62,7 +60,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         let cellInfo: [string, number][] = [["Where Applied", 3], ["Style", 2], ["Description", 4], ["", 3]];
 
-        let conditionalStyleConditions = this.props.ConditionalStyleConditions.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
+        let conditionalStyleConditions = this.props.ConditionalStyles.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
                 key={"CS" + index}
@@ -81,7 +79,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             button={newButton}
             bsStyle="primary" style={panelStyle} glyphicon={"tint"} infoBody={infoBody}>
 
-            {this.props.ConditionalStyleConditions.length == 0 ?
+            {this.props.ConditionalStyles.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
@@ -90,49 +88,45 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 {conditionalStyleConditions}
             </ListGroup>
 
-            {this.state.EditedConditionalStyleCondition != null &&
-                <AdaptableWizard Steps={
-                    [
-                        <ConditionalStyleColumnWizard Columns={this.props.Columns} />,
-                        <ConditionalStyleSettingsWizard PredefinedColorChoices={this.props.PredefinedColorChoices} />,
-                        <ConditionalStyleExpressionWizard
-                            ColumnList={this.props.Columns}
-                            UserFilters={this.props.UserFilters}
-                            SelectedColumnId={null}
-                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-                    ]}
-                    Data={this.state.EditedConditionalStyleCondition}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>}
-
+            {this.state.EditedConditionalStyle != null &&
+                <ConditionalStyleWizard
+                    EditedConditionalStyleCondition={this.state.EditedConditionalStyle}
+                    PredefinedColorChoices={this.props.PredefinedColorChoices}
+                    Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
+            }
         </PanelWithButton>
     }
 
     onAdd() {
         let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
-        this.setState({ EditedConditionalStyleCondition: _editedConditionalStyle, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
+        this.setState({ EditedConditionalStyle: _editedConditionalStyle, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 
     onEdit(index: number, condition: IConditionalStyleCondition) {
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConditionalStyleCondition: clonedObject, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: index });
+        this.setState({ EditedConditionalStyle: clonedObject, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: index });
     }
 
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
+        this.setState({ EditedConditionalStyle: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 
     WizardFinish() {
-        this.props.onAddEditConditionalStyle(this.state.EditedIndexConditionalStyleCondition, this.state.EditedConditionalStyleCondition);
-        this.setState({ EditedConditionalStyleCondition: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
+        this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConditionalStyleCondition, this.state.EditedConditionalStyle);
+        this.setState({ EditedConditionalStyle: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ConditionalStyleConditions: state.ConditionalStyle.ConditionalStyleConditions,
+        ConditionalStyles: state.ConditionalStyle.ConditionalStyleConditions,
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
@@ -141,7 +135,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
+        onAddUpdateConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
     };
 }
 

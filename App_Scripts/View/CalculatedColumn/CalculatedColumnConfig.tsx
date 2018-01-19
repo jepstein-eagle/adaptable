@@ -18,7 +18,10 @@ import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrateg
 import { EntityListActionButtons } from "../Components/Buttons/EntityListActionButtons";
 import { CalculatedColumnSettingsWizard } from "./CalculatedColumnSettingsWizard";
 import { CalculatedColumnExpressionWizard } from "./CalculatedColumnExpressionWizard";
+import { CalculatedColumnWizard } from "./CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
+import { CalculatedColumnConfigItem } from './CalculatedColumnConfigItem'
+
 
 interface CalculatedColumnConfigProps extends IStrategyViewPopupProps<CalculatedColumnConfigComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -59,25 +62,11 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
-            return <li
-                className="list-group-item" key={calculatedColumn.ColumnId}>
-                <Row >
-                    <Col xs={3}>
-                        {calculatedColumn.ColumnId}
-                    </Col>
-                    <Col xs={6}>
-                        {calculatedColumn.GetValueFunc}
-                    </Col>
-                    <Col xs={3}>
-                        <EntityListActionButtons
-                            ConfirmDeleteAction={CalculatedColumnRedux.CalculatedColumnDelete(index)}
-                            editClick={() => this.onEdit(index, calculatedColumn)}
-                            ConfigEntity={calculatedColumn}
-                            EntityName="Calculated Column">
-                        </EntityListActionButtons>
-                    </Col>
-                </Row>
-            </li>
+
+            return <CalculatedColumnConfigItem CalculatedColumn={calculatedColumn} key={calculatedColumn.ColumnId}
+                onEdit={(calculatedColumn) => this.onEdit(index, calculatedColumn)}
+                onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)} />
+
         });
 
         let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
@@ -98,14 +87,16 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
             {this.state.EditedCalculatedColumn &&
 
-                <AdaptableWizard Steps={[<CalculatedColumnSettingsWizard Columns={this.props.Columns} />,
-                <CalculatedColumnExpressionWizard
+                <CalculatedColumnWizard 
+                EditedCalculatedColumn={this.state.EditedCalculatedColumn}
+                Columns={this.props.Columns}
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
-                    IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)} />]}
-                    Data={this.state.EditedCalculatedColumn}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
+                    IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)} 
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                    />
+                    
             }
         </PanelWithButton>
     }

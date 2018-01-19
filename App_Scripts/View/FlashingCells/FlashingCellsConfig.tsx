@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'

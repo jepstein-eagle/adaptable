@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import * as StrategyIds from '../../Core/StrategyIds'
 import { Provider, connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Panel, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
@@ -147,7 +146,7 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
                                     UserFilters={this.props.UserFilters}
                                     SelectedColumnId={this.state.SelectedColumnId}
                                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-                                <AdvancedSearchSettingsWizard />
+                                <AdvancedSearchSettingsWizard AdvancedSearches={this.props.AdvancedSearches}/>
                             ]}
                             Data={this.state.EditedAdvancedSearch}
                             StepStartIndex={0}

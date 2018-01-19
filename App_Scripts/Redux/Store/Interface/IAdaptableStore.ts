@@ -24,6 +24,7 @@ export interface AdaptableBlotterState {
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     Range: AdaptableBlotterStates.RangeState;
     UIControlConfig: AdaptableBlotterStates.UIControlConfigState;
+    FormatColumn: AdaptableBlotterStates.FormatColumnState;
 }
 
 export interface IAdaptableBlotterStore {

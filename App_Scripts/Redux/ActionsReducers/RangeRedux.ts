@@ -1,6 +1,6 @@
 import { ExportDestination } from '../../Core/Enums';
-import { RangeState, ILiveRange } from './Interface/IState';
-import { IRange } from '../../Core/Interface/IExportStrategy';
+import { RangeState } from './Interface/IState';
+import { IRange, ILiveRange, IPPDomain } from '../../Core/Interface/IExportStrategy'
 import { ICellInfo } from '../../Core/Interface/IStrategy';
 import * as Redux from 'redux'
 import { Helper } from '../../Core/Helper';

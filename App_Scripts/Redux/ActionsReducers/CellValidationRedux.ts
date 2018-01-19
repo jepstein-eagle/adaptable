@@ -12,20 +12,14 @@ export interface CellValidationAddUpdateAction extends Redux.Action {
     CellValidationRule: ICellValidationRule
 }
 
-export interface CellValidationChangeModeAction extends Redux.Action {
-    Index: number,
-    CellValidationMode: CellValidationMode
-}
-
 export interface CellValidationDeleteAction extends Redux.Action {
     Index: number,
 }
 
-export const CellValidationChangeMode = (Index: number, CellValidationMode: CellValidationMode): CellValidationChangeModeAction => ({
-    type: CELL_VALIDATION_CHANGE_MODE,
-    Index,
-    CellValidationMode
-})
+export interface CellValidationChangeModeAction extends Redux.Action {
+    Index: number,
+    CellValidationMode: CellValidationMode
+}
 
 export const CellValidationAddUpdate = (Index: number, CellValidationRule: ICellValidationRule): CellValidationAddUpdateAction => ({
     type: CELL_VALIDATION_ADD_UPDATE,
@@ -38,6 +32,11 @@ export const CellValidationDelete = (Index: number): CellValidationDeleteAction 
     Index,
 })
 
+export const CellValidationChangeMode = (Index: number, CellValidationMode: CellValidationMode): CellValidationChangeModeAction => ({
+    type: CELL_VALIDATION_CHANGE_MODE,
+    Index,
+    CellValidationMode
+})
 
 const initialCellValidationState: CellValidationState = {
     CellValidations: []

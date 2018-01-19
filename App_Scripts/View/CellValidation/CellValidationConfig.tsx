@@ -6,20 +6,15 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import * as StrategyIds from '../../Core/StrategyIds'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { CellValidationMode } from '../../Core/Enums'
+import {  CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { CellValidationActionWizard } from './CellValidationActionWizard'
-import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard'
-import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'
-import { CellValidationRulesWizard } from './CellValidationRulesWizard'
-import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
+import { CellValidationWizard } from './CellValidationWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
@@ -61,12 +56,12 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
-        let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
-            return <option key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
-        })
+            let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
+                            return <option key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
+                         })
 
 
-        let cellInfo: [string, number][] = [["Column", 2], ["Validation Rule", 3], ["Expression", 2], ["Action", 2], ["", 3]];
+        let cellInfo: [string, number][] = [["Column", 2], ["Disallowed Edit", 3], ["Expression", 2], ["If Rule Broken", 2], ["", 3]];
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
@@ -89,8 +84,9 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                         </span>
                     </Col>
                     <Col xs={2}>
-                        <FormControl componentClass="select" placeholder="select" value={x.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
-                                {CellValidationModeTypes}
+                        <FormControl style={expressionFontSizeStyle} componentClass="select" placeholder="select" value={x.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
+
+                            {CellValidationModeTypes}
                         </FormControl>
 
                     </Col>
@@ -131,20 +127,16 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             }
 
             {this.state.EditedCellValidation != null &&
-                <AdaptableWizard Steps={[
-                    <CellValidationSelectColumnWizard Columns={this.props.Columns} />,
-                    <CellValidationActionWizard Columns={this.props.Columns} />,
-                    <CellValidationRulesWizard Columns={this.props.Columns} />,
-                    <CellValidationSelectQueryWizard Columns={this.props.Columns} />,
-                    <CellValidationExpressionWizard ColumnList={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SelectedColumnId={null}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-                ]}
-                    Data={this.state.EditedCellValidation}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.finishWizard()} ></AdaptableWizard>}
+                <CellValidationWizard
+                    EditedCellValidation={this.state.EditedCellValidation}
+                    Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
+            }
 
         </PanelWithButton>
     }
@@ -168,7 +160,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
-    finishWizard() {
+    WizardFinish() {
         this.props.onAddEditCellValidation(this.state.EditedIndexCellValidation, this.state.EditedCellValidation);
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }

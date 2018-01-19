@@ -26,18 +26,18 @@ import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as FilterRedux from '../ActionsReducers/FilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
+import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as RangeRedux from '../ActionsReducers/RangeRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
-import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
-import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
+import { IExportStrategy , IPPDomain} from '../../Core/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
@@ -45,7 +45,6 @@ import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
-import { IPPDomain } from '../ActionsReducers/Interface/IState';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -69,7 +68,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     Range: RangeRedux.RangeReducer,
-    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer
+    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+    FormatColumn: FormatColumnRedux.FormatColumnReducer
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -227,7 +227,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+                    let index = calculatedColumnState.CalculatedColumns.findIndex(x => x.ColumnId == actionTyped.CalculatedColumn.ColumnId)
+                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[index].ColumnId)
                     let returnAction = next(action);
                     adaptableBlotter.createCalculatedColumn(actionTyped.CalculatedColumn)
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
@@ -349,9 +350,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     return next(action);
                 }
 
-                case ExportRedux.EXPORT: {
+                case ExportRedux.EXPORT_APPLY: {
                     let exportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
-                    let actionTyped = <ExportRedux.ExportAction>action;
+                    let actionTyped = <ExportRedux.ExportApplyAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
                         middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Range))
                     }

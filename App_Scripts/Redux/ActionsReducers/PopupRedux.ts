@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
-import { PopupState, IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup } from './Interface/IState';
-import { IUIError, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Core/Interface/IStrategy';
+import { PopupState } from './Interface/IState';
+import { IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup, IUIError, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Core/Interface/IStrategy';
 
 export const POPUP_SHOW = 'POPUP_SHOW';
 export const POPUP_HIDE = 'POPUP_HIDE';
@@ -133,7 +133,7 @@ const initialPopupState: PopupState = {
         CancelAction: null,
         ConfirmAction: null,
         ShowCommentBox: false,
-        ConfirmationComment : null
+        ConfirmationComment: null
     },
     PromptPopup: {
         ShowPromptPopup: false,
@@ -184,7 +184,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
                 ConfirmAction: null,
                 CancelAction: null,
                 ShowCommentBox: false,
-                ConfirmationComment : actionTyped.comment
+                ConfirmationComment: actionTyped.comment
             }
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }

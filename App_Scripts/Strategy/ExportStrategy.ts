@@ -1,11 +1,11 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
 import { IExportStrategy, IRange } from '../Core/Interface/IExportStrategy'
-import { MenuType, RangeScope, ExportDestination } from '../Core/Enums';
+import {  RangeColumnScope, ExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helper';
 import { RangeHelper } from '../Core/Services/RangeHelper';
@@ -24,8 +24,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ExportStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', MenuType.ActionPopup, "export");
+        super(StrategyConstants.ExportStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', "export");
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
             this.RangeState.CurrentLiveRanges.forEach(cle => {
@@ -229,20 +229,21 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private ConvertRangetoArray(rangeName: string): any[] {
         let rangeToConvert: IRange = this.getRange(rangeName);
         let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
-        let actionReturnObj = RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert, rangeCols);
+        let actionReturnObj = RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert);
         if (actionReturnObj.Error) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(actionReturnObj.Error))
             return null
         }
         return actionReturnObj.ActionReturn
     }
-
+    
     private getColsForRange(range: IRange): IColumn[] {
         let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        return (range.RangeScope == RangeScope.AllColumns) ?
+        return (range.RangeColumnScope == RangeColumnScope.AllColumns) ?
             allCols :
             range.Columns.map(c => allCols.find(col => col.ColumnId == c));
     }
+
 
     private getRange(rangeName: string): IRange {
         return this.RangeState.Ranges.find(r => r.Name == rangeName);

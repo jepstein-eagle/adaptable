@@ -1,11 +1,10 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Core/Interface/ISmartEditStrategy'
-import { MenuType } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
@@ -13,19 +12,16 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Smart Edit", 'SmartEditAction', MenuType.ActionPopup, "pencil");
+        super(StrategyConstants.SmartEditStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Smart Edit", 'SmartEditAction', "pencil");
     }
-
-    protected InitState() {
-    }
-
+    
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
         let newValues: ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.Prevent).length == 0) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.PreventEdit).length == 0) {
                     newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
                 }
             }
@@ -36,8 +32,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             })
         }
 
-        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-            "ApplySmartEdit",
+        this.AuditFunctionAction(    "ApplySmartEdit",
             "",
             { SmartEditValue: this.GetSmartEditState().SmartEditValue, SmartEditOperation: this.GetSmartEditState().SmartEditOperation, NewValues: newValues })
 

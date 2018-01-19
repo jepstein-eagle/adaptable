@@ -1,20 +1,21 @@
-import { ExportState, IPPDomain } from './Interface/IState';
+import { ExportState } from './Interface/IState';
+import { IRange, ILiveRange, IPPDomain } from '../../Core/Interface/IExportStrategy'
 import { ExportDestination } from '../../Core/Enums';
 import * as Redux from 'redux'
 
-export const EXPORT = 'EXPORT';
+export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';
 export const SET_DOMAIN_PAGES = 'SET_DOMAIN_PAGES';
 
-export interface ExportAction extends Redux.Action {
+export interface ExportApplyAction extends Redux.Action {
     Range: string;
     ExportDestination: ExportDestination
     Folder?: string
     Page?: string
 }
 
-export const Export = (Range: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportAction => ({
-    type: EXPORT,
+export const ApplyExport = (Range: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportApplyAction => ({
+    type: EXPORT_APPLY,
     Range,
     ExportDestination,
     Folder,
@@ -49,7 +50,7 @@ const initialExportState: ExportState = {
 
 export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = initialExportState, action: Redux.Action): ExportState => {
     switch (action.type) {
-        case EXPORT:
+        case EXPORT_APPLY:
             return state
         case SET_DOMAIN_PAGES: {
             let actionTyped = (<SetDomainPagesAction>action)

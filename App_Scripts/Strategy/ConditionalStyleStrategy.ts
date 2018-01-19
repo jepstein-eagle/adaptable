@@ -2,18 +2,17 @@ import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState
 import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { MenuType } from '../Core/Enums';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ConditionalStyleStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Conditional Style", 'ConditionalStyleConfig', MenuType.ConfigurationPopup, "tint");
+        super(StrategyConstants.ConditionalStyleStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Conditional Style", 'ConditionalStyleConfig', "tint");
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
     }
@@ -31,7 +30,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create Conditional Style",
                 "ConditionalStyleConfig",
-                MenuType.ConfigurationPopup,
                 "tint",
                 "New|" + columnId)))
     }

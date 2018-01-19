@@ -3,7 +3,6 @@ import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState
 import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
@@ -12,7 +11,6 @@ import { IConditionalStyleCondition } from '../Core/Interface/IConditionalStyleS
 import { Expression } from '../Core/Expression/Expression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
-import { MenuType } from '../Core/Enums';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 

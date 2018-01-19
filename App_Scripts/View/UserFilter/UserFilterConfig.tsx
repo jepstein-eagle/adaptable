@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -15,8 +15,7 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
-import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
-import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
+import { UserFilterWizard } from './UserFilterWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -30,19 +29,22 @@ interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfig
 
 interface UserFilterConfigState {
     EditedUserFilter: IUserFilter
+    WizardStartIndex: number
 }
 
 class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, UserFilterConfigState> {
 
     constructor() {
         super();
-        this.state = { EditedUserFilter: null }
+        this.state = { EditedUserFilter: null, WizardStartIndex: 0 }
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
-                this.onCreateUserFilter()
+                let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
+                userFilter.ColumnId = arrayParams[1]
+                this.onEditUserFilter(userFilter)
             }
         }
     }
@@ -54,7 +56,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let selectedColumnId: string = "";
         if (this.state.EditedUserFilter != null) {
-            let editedColumn: string = UserFilterHelper.GetColumnIdForUserFilter(this.state.EditedUserFilter);
+            let editedColumn: string = this.state.EditedUserFilter.ColumnId;
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
             }
@@ -66,17 +68,17 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             }
         }
 
-        let cellInfo: [string, number][] = [["Name", 4], ["Description", 5], ["", 3]];
+        let cellInfo: [string, number][] = [["Name", 3], ["Description", 6], ["", 3]];
 
-        let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter( f)).map((x) => {
+        let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((x) => {
             let expressionString = ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)
             return <li
                 className="list-group-item" key={x.Uid}>
                 <Row >
-                    <Col xs={4}>
+                    <Col xs={3}>
                         {x.FriendlyName}
                     </Col>
-                    <Col xs={5}>
+                    <Col xs={6}>
                         {expressionString}
                     </Col>
                     <Col xs={3}>
@@ -113,41 +115,37 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             }
 
             {this.state.EditedUserFilter != null &&
-                <AdaptableWizard Steps={[
-                    <UserFilterExpressionWizard
-                        UserFilters={this.props.UserFilters}
-                        ColumnList={this.props.Columns}
-                        ExpressionMode={ExpressionMode.SingleColumn}
-                        SelectedColumnId={selectedColumnId}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-                    <UserFilterSettingsWizard
-                        UserFilters={this.props.UserFilters}
-                        Columns={this.props.Columns} />,
-                ]}
-                    Data={this.state.EditedUserFilter}
-                    StepStartIndex={0}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.finishWizard()} ></AdaptableWizard>}
+                <UserFilterWizard
+                    EditedUserFilter={this.state.EditedUserFilter}
+                    Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    SelectedColumnId={selectedColumnId}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
+            }
         </PanelWithButton>
     }
 
     onCreateUserFilter() {
-        this.setState({ EditedUserFilter: ObjectFactory.CreateEmptyUserFilter() });
+        this.setState({ EditedUserFilter: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
     }
 
     onEditUserFilter(userFilter: IUserFilter) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedUserFilter: Helper.cloneObject(userFilter) });
+        this.setState({ EditedUserFilter: Helper.cloneObject(userFilter), WizardStartIndex: 1 });
     }
 
     closeWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedUserFilter: null, });
+        this.setState({ EditedUserFilter: null, WizardStartIndex: 0 });
     }
 
-    finishWizard() {
+    WizardFinish() {
         this.props.onAddUpdateUserFilter(this.state.EditedUserFilter);
-        this.setState({ EditedUserFilter: null });
+        this.setState({ EditedUserFilter: null, WizardStartIndex: 0 });
     }
 
 }

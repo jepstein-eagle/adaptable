@@ -8,6 +8,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
+import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { StringExtensions } from '../../Core/Extensions'
 import { IUIConfirmation } from '../../Core/Interface/IStrategy';
 import { Helper } from '../../Core/Helper';
@@ -18,20 +19,17 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as ScreenPopups from '../../Core/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 
-interface AdvancedSearchToolbarControlComponentProps extends React.ClassAttributes<AdvancedSearchToolbarControlComponent> {
+interface AdvancedSearchToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchUid: string;
     AdvancedSearches: IAdvancedSearch[];
     onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
-    AdvancedSearchDashboardControl: IDashboardStrategyControlConfiguration
-    IsReadOnly: boolean,
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
-
-}
+ }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
     componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
@@ -81,7 +79,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText="Advanced Search" glyphicon="search" onHideControl={(confirmation) => this.hideControl(confirmation)}>
+        return <PanelDashboard headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName} glyphicon={StrategyConstants.AdvancedSearchGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -90,23 +88,16 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Uid : "");
     }
 
-    hideControl(confirmation: IUIConfirmation) {
-        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.AdvancedSearchDashboardControl.Strategy, false);
-        this.props.onConfirmWarning(confirmation)
-    }
 
-    // onSelectedSearchChanged(event: React.FormEvent<any>) {
-    //     let e = event.target as HTMLInputElement;
-    //     let advancedSearchId = (e.value == "select") ? "" : e.value;
-    //     this.props.onSelectAdvancedSearch(advancedSearchId);
-    // }
+   
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.AdvancedSearchStrategyId),
+         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.AdvancedSearchStrategyId),
     };
 }
 
@@ -115,7 +106,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "Edit")),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
+        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchActionPopup))
     };
 }
 

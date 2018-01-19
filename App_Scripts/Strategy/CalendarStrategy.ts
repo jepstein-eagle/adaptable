@@ -1,19 +1,15 @@
 import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../Core/Interface/ICalendarStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { MenuType } from '../Core/Enums';
 
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CalendarStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Calendars", 'CalendarsConfig', MenuType.ConfigurationPopup, "calendar");
-    }
-    
-    protected InitState() {
+        super(StrategyConstants.CalendarStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Calendars", 'CalendarsConfig', "calendar");
     }
    
 }

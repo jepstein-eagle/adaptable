@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../../../Core/Helper'
-import { PanelProps, Panel, Glyphicon, Button } from 'react-bootstrap';
+import { PanelProps, Panel, Glyphicon, Button, Label } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
 import { IUIConfirmation } from "../../../Core/Interface/IStrategy";
 
 export interface PanelDashboardProps extends PanelProps {
     headerText: string
     glyphicon: string
-    onHideControl: (confirmation: IUIConfirmation) => void
+    onClose: () => void
+    onConfigure: () => void
+    panelStyle?: string
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -16,17 +18,24 @@ export interface PanelDashboardProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     render() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: "Hide Dashboard Element",
-            ConfirmationMsg: "Do you want to hide the element from your Dashboard?",
-            ConfirmationText: "Hide",
-            CancelAction: null,
-            ConfirmAction: null,
-            ShowCommentBox: false
-        }
-        let header = <span><Glyphicon glyph={this.props.glyphicon} />{' '}{this.props.headerText}{' '} <Button bsSize='xs' bsStyle="primary" style={{ float: "right", marginLeft: "10px" }} onClick={() => this.props.onHideControl(confirmation)}><Glyphicon glyph={'eye-close'} /></Button> </span>
-        return <Panel className="small-padding-panel panel-header-dashboard" header={header} bsStyle="primary" style={this.props.style}>
+        let panelStyle: string = (this.props.panelStyle) ? this.props.panelStyle : "primary"
+
+
+        let header = <span>
+            <Label bsStyle={panelStyle} style={{ verticalAlign: "middle", margin: "0px", padding: "0px" }} >
+                <Glyphicon glyph={this.props.glyphicon} />
+                {' '}
+                {this.props.headerText}
+            </Label>
+            {' '}
+            <Button bsSize='xs' bsStyle={panelStyle} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onClose()}>
+                <Glyphicon glyph={'remove'} />
+            </Button>
+            <Button bsSize='xs' bsStyle={panelStyle} style={{ float: "right", marginLeft: "10px", marginRight: "0px" }} onClick={() => this.props.onConfigure()}>
+                <Glyphicon glyph={'wrench'} />
+            </Button>
+        </span>
+        return <Panel className="small-padding-panel panel-header-dashboard" header={header} bsStyle={panelStyle} style={this.props.style}>
             <AdaptableBlotterForm inline>
                 {this.props.children}
             </AdaptableBlotterForm>

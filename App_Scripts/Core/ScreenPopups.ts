@@ -1,0 +1,11 @@
+export const AdvancedSearchActionPopup :string = "AdvancedSearchAction"
+export const QuickSearchConfigPopup :string = "QuickSearchConfig"
+export const FunctionButtonsConfigPopup :string = "FunctionButtonsConfig"
+export const LayoutConfigPopup :string = "LayoutConfig"
+export const UserFilterConfigPopup :string = "UserFilterConfig"
+export const FormatColumnConfigPopup :string = "FormatColumnConfig"
+export const ExportActionPopup :string = "ExportAction"
+export const CalculatedColumnConfigPopup :string = "CalculatedColumnConfig"
+export const ColumnChooserActionPopup :string = "ColumnChooserAction"
+export const ColumnInfoActionPopup :string = "ColumnInfoAction"
+

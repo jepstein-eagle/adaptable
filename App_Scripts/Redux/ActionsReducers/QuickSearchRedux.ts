@@ -1,6 +1,6 @@
 import { QuickSearchState } from './Interface/IState';
 import { LeafExpressionOperator, QuickSearchDisplayType, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
-import { IStyle } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IStyle } from '../../Core/Interface/IStyle';
 import * as Redux from 'redux'
 
 export const QUICK_SEARCH_RUN = 'QUICK_SEARCH_RUN';

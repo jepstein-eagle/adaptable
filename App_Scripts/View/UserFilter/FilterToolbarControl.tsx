@@ -6,7 +6,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Form, Panel, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -16,18 +16,21 @@ import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as ScreenPopups from '../../Core/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
 import { IUIConfirmation } from "../../Core/Interface/IStrategy";
+import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IUserFilter } from '../../Core/Interface/IExpression';
 
-interface FilterToolbarControlComponentProps extends IStrategyViewPopupProps<FilterToolbarControlComponent> {
+
+interface FilterToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<FilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
-    FilterDashboardControl: IDashboardStrategyControlConfiguration,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
-    Columns: IColumn[]
-    onConfirmWarning: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
+    Columns: IColumn[],
+    UserFilters: IUserFilter[]
 }
 class FilterToolbarControlComponent extends React.Component<FilterToolbarControlComponentProps, {}> {
 
@@ -39,21 +42,22 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
 
-        let columnFilterNames: string = "";
+        let infoBody: any[] = []
         this.props.ColumnFilters.forEach(x => {
             let column: IColumn = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
             if (column) {
-                columnFilterNames = columnFilterNames + column.FriendlyName + ", "
+                let expression: string = ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, this.props.UserFilters)
+                infoBody.push(<b> {column.FriendlyName} </b>)
+                infoBody.push(expression, <br/>)    
             }
         })
-        columnFilterNames = StringExtensions.RemoveTrailingComma(columnFilterNames);
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 {collapsedText}
                 {' '}
-                {StringExtensions.IsNotNullOrEmpty(columnFilterNames) &&
-                    <AdaptablePopover headerText="" bodyText={[columnFilterNames]} popoverType={PopoverType.Info} />
+                {infoBody.length > 0 &&
+                    <AdaptablePopover headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
@@ -63,28 +67,29 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Filters" glyphicon="filter" onHideControl={(confirmation) => this.hideControl(confirmation)}>
+        return <PanelDashboard headerText="Filters" glyphicon="filter" onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
-    hideControl(confirmation: IUIConfirmation) {
-        confirmation.ConfirmAction = DashboardRedux.ChangeVisibilityDashboardControl(this.props.FilterDashboardControl.Strategy, false);
-        this.props.onConfirmWarning(confirmation)
-    }
+
+
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FilterDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FilterStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.FilterStrategyId),
+        UserFilters: state.Filter.UserFilters,
+        Columns: state.Grid.Columns,
         ColumnFilters: state.Filter.ColumnFilters,
-        Columns: state.Grid.Columns
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
-        onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
+        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.UserFilterConfigPopup))
     };
 }
 

@@ -1,9 +1,8 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Form, Col, Panel } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { Expression } from '../../Core/Expression/Expression';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
@@ -14,25 +13,31 @@ export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<
     Columns: Array<IColumn>
 }
 export interface UserFilterSettingsWizardState {
-    FilterName: string
+    FilterName: string,
+    ErrorMessage: string
 }
 
 export class UserFilterSettingsWizard extends React.Component<UserFilterSettingsWizardProps, UserFilterSettingsWizardState> implements AdaptableWizardStep {
     constructor(props: UserFilterSettingsWizardProps) {
         super(props)
         this.state = {
-            FilterName: this.props.Data.FriendlyName,
+            FilterName: this.props.Data.FriendlyName, ErrorMessage: null
         }
     }
     render() {
+        let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return <Panel header="Filter Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="filterName">
                     <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
                     <Col xs={9}>
-                        <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
-                            onChange={(e) => this.onFilterNameChange(e)} />
+                        <FormGroup controlId="formInlineName" validationState={validationState}>
+                            <FormControl style={{ width: "Auto" }} value={this.state.FilterName} type="string" placeholder="Enter filter name"
+                                onChange={(e) => this.onFilterNameChange(e)} />
+                            <FormControl.Feedback />
+                            <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
+                        </FormGroup>
                     </Col>
                 </FormGroup>
 
@@ -44,11 +49,15 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
 
     onFilterNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ FilterName: e.value } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({
+            FilterName: e.value,
+            ErrorMessage: this.props.UserFilters.findIndex(x => x.FriendlyName == e.value && x.ColumnId==this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
+
+        } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
-        return StringExtensions.IsNotEmpty(this.state.FilterName);
+        return StringExtensions.IsNotEmpty(this.state.FilterName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
 
 
@@ -59,6 +68,6 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         this.props.Data.DataType = UserFilterHelper.GetDataTypeForUserFilter(this.props.Data, this.props.Columns)
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }
-    public Back(): void { }
+    public Back(): void { /* no implementation */ }
     public StepName = "User Filter Settings"
 }

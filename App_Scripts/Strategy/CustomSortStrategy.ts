@@ -1,17 +1,16 @@
 import { ICustomSort } from '../Core/Interface/ICustomSortStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem } from '../Core/Interface/IStrategy';
-import { MenuType } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CustomSortStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Custom Sort", 'CustomSortConfig', MenuType.ConfigurationPopup, "sort-by-attributes");
+        super(StrategyConstants.CustomSortStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup("Custom Sort", 'CustomSortConfig', "sort-by-attributes");
     }
 
     protected InitState() {
@@ -29,7 +28,6 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 label + "Custom Sort",
                 "CustomSortConfig",
-                MenuType.ConfigurationPopup,
                 "sort-by-attributes",
                 popupParam + columnId)))
     }
@@ -37,8 +35,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     removeCustomSorts() {
         if (this.CustomSorts) {
             this.CustomSorts.forEach(customSort => {
-                this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-                    "RemoveCustomSort",
+                this.AuditFunctionAction("RemoveCustomSort",
                     "ColumnId:" + customSort.ColumnId,
                     customSort)
                 this.blotter.removeCustomSort(customSort.ColumnId)
@@ -48,7 +45,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
 
     applyCustomSorts() {
         this.CustomSorts.forEach(customSort => {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+            this.AuditFunctionAction(
                 "SetCustomSort",
                 "ColumnId:" + customSort.ColumnId,
                 customSort)
