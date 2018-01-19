@@ -7,7 +7,7 @@ import { IShortcut } from '../../../Core/Interface/IShortcutStrategy'
 import { IRange, ILiveRange, IPPDomain } from '../../../Core/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Core/Interface/IFlashingCellsStrategy'
 import { IMenuItem } from '../../../Core/Interface/IStrategy'
-import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
+import { IColumn, IEntitlement, IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Core/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Core/Interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Core/Interface/IConditionalStyleStrategy';
@@ -20,6 +20,7 @@ import { ICellValidationRule } from '../../../Core/Interface/ICellValidationStra
 import { ILayout } from '../../../Core/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Core/Interface/IDashboardStrategy';
 import * as Redux from 'redux'
+import { ISharedEntity } from '../../../Core/Interface/ITeamSharingStrategy';
 
 
 export interface PlusMinusState {
@@ -40,10 +41,55 @@ export interface PopupState {
     ActionConfigurationPopup: IActionConfigurationPopup
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
+    InfoPopup: IInfoPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
 }
 
+<<<<<<< HEAD
+=======
+export interface IActionConfigurationPopup {
+    ShowPopup: boolean;
+    ComponentClassName: string;
+    IsReadOnly: boolean
+    Params: string
+}
+
+export interface IErrorPopup {
+    ShowErrorPopup: boolean;
+    ErrorMsg: string;
+}
+
+export interface IWarningPopup {
+    ShowWarningPopup: boolean;
+    WarningMsg: string;
+}
+
+export interface IInfoPopup {
+    ShowInfoPopup: boolean;
+    InfoMsg: string;
+}
+
+export interface IConfirmationPopup {
+    ShowConfirmationPopup: boolean;
+    ConfirmationTitle: string;
+    ConfirmationMsg: string;
+    ConfirmationText: string;
+    CancelText: string;
+    ConfirmAction: Redux.Action;
+    CancelAction: Redux.Action;
+    ShowCommentBox: boolean,
+    ConfirmationComment:string;
+}
+
+export interface IPromptPopup {
+    ShowPromptPopup: boolean;
+    PromptTitle: string;
+    PromptMsg: string;
+    ConfirmAction: InputAction;
+}
+
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 export interface SmartEditState {
     SmartEditValue: string
     SmartEditOperation: SmartEditOperation
@@ -134,6 +180,12 @@ export interface UIControlConfigState {
     PredefinedColorChoices: string[];
 }
 
+<<<<<<< HEAD
 export interface FormatColumnState {
     FormatColumns: Array<IFormatColumn>;
+=======
+export interface TeamSharingState {
+    Activated : boolean
+    SharedEntities: ISharedEntity[]
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 }

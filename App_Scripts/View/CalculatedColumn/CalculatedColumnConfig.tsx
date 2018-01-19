@@ -5,8 +5,10 @@ import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
@@ -30,6 +32,7 @@ interface CalculatedColumnConfigProps extends IStrategyViewPopupProps<Calculated
     Columns: IColumn[]
     EditedCalculatedColumnInvalidErrorMsg: string
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface CalculatedColumnConfigInternalState {
@@ -62,11 +65,35 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
+<<<<<<< HEAD
 
             return <CalculatedColumnConfigItem CalculatedColumn={calculatedColumn} key={calculatedColumn.ColumnId}
                 onEdit={(calculatedColumn) => this.onEdit(index, calculatedColumn)}
                 onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)} />
 
+=======
+            return <li
+                className="list-group-item" key={calculatedColumn.ColumnId}>
+                <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={3}>
+                        {calculatedColumn.ColumnId}
+                    </Col>
+                    <Col xs={6}>
+                        {calculatedColumn.GetValueFunc}
+                    </Col>
+                    <Col xs={3}>
+                        <EntityListActionButtons
+                            ConfirmDeleteAction={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+                            showShare={this.props.TeamSharingActivated}
+                            editClick={() => this.onEdit(index, calculatedColumn)}
+                            shareClick={() => this.props.onShare(calculatedColumn)}
+                            ConfigEntity={calculatedColumn}
+                            EntityName="Calculated Column">
+                        </EntityListActionButtons>
+                    </Col>
+                </Row>
+            </li>
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
         });
 
         let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
@@ -138,7 +165,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
         onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
-        IsExpressionValid: (expression: string) => dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression))
+        IsExpressionValid: (expression: string) => dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CalculatedColumnStrategyId))
     };
 }
 

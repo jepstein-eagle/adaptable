@@ -2,8 +2,17 @@ import { AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAda
 import * as express from 'express'
 import * as BodyParser from 'body-parser'
 import * as fs from 'fs'
+import * as path from 'path'
 import * as _ from 'lodash'
 import * as bunyan from 'bunyan'
+
+/**********
+ * Enhancements:
+ * Ideally all filesystem access should be async....... 
+ * Load up App config only one time at startup
+ * use Path everywhere instead of building manually paths
+ * create app config if doesnt exist
+ */
 
 let log = bunyan.createLogger({ name: "AdaptableBlotterConfigServer", level: 'debug' })
 
@@ -39,8 +48,10 @@ if (!ABConfigFolder.endsWith("/")) {
     ABConfigFolder += "/"
 }
 let ApplicationConfigFileName = ABConfigFolder + "Application.abjson"
-let TeamSharingFolder = ABConfigFolder + "/TeamSharing"
-
+let TeamSharingFolder = ABConfigFolder + "TeamSharing/"
+if (!fs.existsSync(TeamSharingFolder)) {
+    fs.mkdirSync(TeamSharingFolder);
+}
 let app = express()
 app.use(BodyParser.urlencoded({ extended: false }))
 app.use(BodyParser.json())
@@ -109,6 +120,36 @@ app.put('/adaptableblotter-config', function (req, res) {
         res.sendStatus(403)
     }
 })
+
+app.post('/adaptableblotter-teamsharing', function (req, res) {
+    let filename = TeamSharingFolder + '_' + Math.random().toString(36).substr(2, 9) + ".abjson"
+    let sharedItem = req.body
+    fs.writeFile(filename, JSON.stringify(sharedItem, null, "\t"), { encoding: 'utf8' }, function (err) {
+        if (err) {
+            res.sendStatus(500);
+            log.error("Error saving shared item" + "\n" + err);
+        }
+        else {
+            log.debug("Shared item Saved : " + filename);
+            res.sendStatus(200)
+        }
+    })
+})
+
+app.get('/adaptableblotter-teamsharing', function (req, res) {
+    var files = getFiles(TeamSharingFolder)
+    let entities = []
+    for (let file of files) {
+        entities.push(JSON.parse(fs.readFileSync(path.join(TeamSharingFolder, file), { encoding: 'utf8' })))
+    }
+    res.status(200).send(JSON.stringify(entities))
+})
+
+function getFiles(srcpath) {
+    return fs.readdirSync(srcpath).filter(function (file) {
+        return fs.statSync(path.join(srcpath, file)).isFile();
+    });
+}
 
 app.listen(3000, function () {
     log.info('Adaptable Blotter Config Server listening on port 3000!')

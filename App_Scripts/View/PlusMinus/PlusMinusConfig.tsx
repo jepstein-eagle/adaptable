@@ -4,8 +4,10 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, ListGroup, Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
@@ -30,6 +32,7 @@ interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigCo
     onSetDefaultNudgeValue: (value: number) => PlusMinusRedux.PlusMinusSetDefaultNudgeAction
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditConditionAction
     onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface PlusMinusConfigState {
@@ -68,7 +71,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={x.ColumnId + index}>
-                <Row >
+                <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={3}>
                         {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
                     </Col>
@@ -82,6 +85,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                         <EntityListActionButtons
                             ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                             overrideDisableEdit={!column}
+                            showShare={this.props.TeamSharingActivated}
+                            shareClick={() => this.props.onShare(x)}
                             editClick={() => this.onEdit(index, x)}
                             ConfigEntity={x}
                             EntityName="Plus Minus rule">
@@ -186,7 +191,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSetDefaultNudgeValue: (value: number) => dispatch(PlusMinusRedux.PlusMinusSetDefaultNudge(value)),
         onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => dispatch(PlusMinusRedux.PlusMinusEditCondition(Index, ColumnDefaultNudge)),
-        onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge))
+        onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
     };
 }
 

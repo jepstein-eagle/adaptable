@@ -1,4 +1,4 @@
-import { ExportDestination } from '../../Core/Enums';
+import { DataType, ExportDestination } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -32,19 +32,41 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as RangeRedux from '../ActionsReducers/RangeRedux'
+import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/StrategyConstants'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
+<<<<<<< HEAD
 import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy , IPPDomain} from '../../Core/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
+=======
+import { IShortcutStrategy, IShortcut } from '../../Core/Interface/IShortcutStrategy'
+import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
+import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
+import { IPlusMinusStrategy, IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy'
+import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
+<<<<<<< HEAD
+=======
+import { IPPDomain } from '../ActionsReducers/Interface/IState';
+import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
+import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
+import { PopupShowError } from '../ActionsReducers/PopupRedux';
+import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
+import { IUserFilter } from '../../Core/Interface/IExpression';
+import { FilterStrategyId } from '../../Core/StrategyIds';
+import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -69,7 +91,11 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     Range: RangeRedux.RangeReducer,
     UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+<<<<<<< HEAD
     FormatColumn: FormatColumnRedux.FormatColumnReducer
+=======
+    TeamSharing: TeamSharingRedux.TeamSharingReducer
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -93,6 +119,9 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
     return rootReducer(state, action)
 }
 
+const configServerUrl = "/adaptableblotter-config"
+const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
+
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
@@ -105,7 +134,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let engineReduxStorage: ReduxStorage.StorageEngine
 
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = createEngineRemote("/adaptableblotter-config", blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+            engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
             engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
@@ -117,7 +146,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -183,6 +212,172 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
+                case TeamSharingRedux.TEAMSHARING_SHARE: {
+                    let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
+                    let returnAction = next(action);
+                    let xhr = new XMLHttpRequest();
+                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onload = (ev: ProgressEvent) => {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status != 200) {
+                                console.error("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error Sharing item: " + xhr.statusText }))
+                            }
+                            else {
+                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Shared Successfully" }))
+                            }
+                        }
+                    }
+                    //we make the request async
+                    xhr.open("POST", configServerTeamSharingUrl, true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    let obj: ISharedEntity = {
+                        entity: actionTyped.Entity,
+                        user: adaptableBlotter.BlotterOptions.userName,
+                        blotter_id: adaptableBlotter.BlotterOptions.blotterId,
+                        strategy: actionTyped.Strategy,
+                        timestamp: new Date()
+                    }
+                    xhr.send(JSON.stringify(obj));
+                    return returnAction;
+                }
+                case TeamSharingRedux.TEAMSHARING_GET: {
+                    let returnAction = next(action);
+                    let xhr = new XMLHttpRequest();
+                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing get error :" + ev.message)
+                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing get timeout")
+                    xhr.onload = (ev: ProgressEvent) => {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status != 200) {
+                                console.error("TeamSharing get error : " + xhr.statusText);
+                            }
+                            else {
+                                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
+                                    if (key == "timestamp") {
+                                        return new Date(value);
+                                    }
+                                    return value
+                                })))
+                            }
+                        }
+                    }
+                    //we make the request async
+                    xhr.open("GET", configServerTeamSharingUrl, true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.send();
+                    return returnAction;
+                }
+                case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
+                    let returnAction = next(action);
+                    let actionTyped = <TeamSharingRedux.TeamSharingImportItemAction>action
+                    let importAction: Redux.Action
+                    let overwriteConfirmation = false
+                    switch (actionTyped.Strategy) {
+                        case StrategyIds.CellValidationStrategyId:
+                            importAction = CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity as ICellValidationRule)
+                            break;
+                        case StrategyIds.CalculatedColumnStrategyId: {
+                            let calcCol = actionTyped.Entity as ICalculatedColumn
+                            let idx = middlewareAPI.getState().CalculatedColumn.CalculatedColumns.findIndex(x => x.ColumnId == calcCol.ColumnId)
+                            if (idx > -1) {
+                                overwriteConfirmation = true
+                                importAction = CalculatedColumnRedux.CalculatedColumnEdit(idx, calcCol)
+                            }
+                            else {
+                                importAction = CalculatedColumnRedux.CalculatedColumnAdd(calcCol)
+                            }
+                            break;
+                        }
+                        case StrategyIds.ConditionalStyleStrategyId:
+                            importAction = ConditionalStyleRedux.ConditionalStyleAddUpdate(-1, actionTyped.Entity as IConditionalStyleCondition)
+                            break;
+                        case StrategyIds.CustomSortStrategyId: {
+                            let customSort = actionTyped.Entity as ICustomSort
+                            if (middlewareAPI.getState().CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
+                                overwriteConfirmation = true
+                                importAction = CustomSortRedux.CustomSortEdit(customSort)
+                            } else {
+                                importAction = CustomSortRedux.CustomSortAdd(customSort)
+                            }
+                            break;
+                        }
+                        case StrategyIds.PlusMinusStrategyId: {
+                            let plusMinus = actionTyped.Entity as IPlusMinusCondition
+                            importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus)
+                            break;
+                        }
+                        case StrategyIds.ShortcutStrategyId: {
+                            let shortcut = actionTyped.Entity as IShortcut
+                            let shortcuts: IShortcut[]
+                            if (shortcut.DataType == DataType.Number) {
+                                shortcuts = middlewareAPI.getState().Shortcut.NumericShortcuts
+                            }
+                            else if (shortcut.DataType == DataType.Date) {
+                                shortcuts = middlewareAPI.getState().Shortcut.DateShortcuts
+                            }
+                            if (shortcuts) {
+                                if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
+                                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut))
+                                }
+                                importAction = ShortcutRedux.ShortcutAdd(shortcut)
+                            }
+                            break;
+                        }
+                        case StrategyIds.FilterStrategyId: {
+                            let filter = actionTyped.Entity as IUserFilter
+                            //For now not too worry about that but I think we'll need to check ofr filter that have same name
+                            //currently the reducer checks for UID
+                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Uid == filter.Uid)) {
+                                overwriteConfirmation = true
+                            }
+                            importAction = FilterRedux.UserFilterAddUpdate(filter)
+                            // } 
+                            break;
+                        }
+                        case StrategyIds.AdvancedSearchStrategyId: {
+                            let search = actionTyped.Entity as IAdvancedSearch
+                            //For now not too worry about that but I think we'll need to check ofr search that have same name
+                            //currently the reducer checks for UID
+                            if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Uid == search.Uid)) {
+                                overwriteConfirmation = true
+                            }
+                            importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(search)
+                            break;
+                        }
+                        case StrategyIds.LayoutStrategyId: {
+                            let layout = actionTyped.Entity as ILayout
+                            if (middlewareAPI.getState().Layout.AvailableLayouts.find(x => x.Name == layout.Name)) {
+                                overwriteConfirmation = true
+                                importAction = LayoutRedux.SaveLayout(layout.Columns, layout.Name)
+                            } else {
+                                importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
+                            }
+                            break;
+                        }
+                    }
+                    if (overwriteConfirmation) {
+                        let confirmation: IUIConfirmation = {
+                            CancelText: "Cancel Import",
+                            ConfirmationTitle: "Overwrite Config",
+                            ConfirmationMsg: "This item will overwrite one of your config. Do you want to continue?",
+                            ConfirmationText: "Import",
+                            CancelAction: null,
+                            ConfirmAction: importAction,
+                            ShowCommentBox: false
+                        }
+                        middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation))
+                    }
+                    else if (importAction) {
+                        middlewareAPI.dispatch(importAction)
+                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Successfully Imported" }))
+                    }
+                    else {
+                        console.error("Unknown item type", actionTyped.Entity)
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
+                    }
+                    return returnAction;
+                }
                 case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
                     let returnAction = next(action);
                     middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())

@@ -5,8 +5,14 @@ import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
+<<<<<<< HEAD
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+=======
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import * as StrategyIds from '../../Core/StrategyIds'
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -27,6 +33,7 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     UserFilters: IUserFilter[]
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface CellValidationConfigState {
@@ -93,7 +100,9 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     <Col xs={3}>
                         <EntityListActionButtons
                             ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
+                            showShare={this.props.TeamSharingActivated}
                             editClick={() => this.onEdit(index, x)}
+                            shareClick={() => this.props.onShare(x)}
                             overrideDisableEdit={!column}
                             ConfigEntity={x}
                             EntityName="Cell Validation">
@@ -186,7 +195,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode))
+        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
     };
 }
 

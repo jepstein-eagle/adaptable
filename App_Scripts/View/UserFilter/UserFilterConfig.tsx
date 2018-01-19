@@ -4,9 +4,14 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+<<<<<<< HEAD
 import * as StrategyConstants from '../../Core/StrategyConstants'
+=======
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyIds from '../../Core/StrategyIds'
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/Interface/IExpression';
@@ -25,6 +30,7 @@ interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfig
     UserFilters: IUserFilter[]
     Columns: IColumn[],
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface UserFilterConfigState {
@@ -84,6 +90,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     <Col xs={3}>
                         <EntityListActionButtons
                             ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
+                            showShare={this.props.TeamSharingActivated}
+                            shareClick={() => this.props.onShare(x)}
                             overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
                             editClick={() => this.onEditUserFilter(x)}
                             ConfigEntity={x}
@@ -159,7 +167,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter))
+        onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FilterStrategyId))
     };
 }
 

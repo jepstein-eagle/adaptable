@@ -10,12 +10,15 @@ export interface CustomSortConfigItemProps extends React.ClassAttributes<CustomS
     CustomSort: ICustomSort
     ColumnLabel: string
     onEdit: (CustomSort: ICustomSort) => void;
+    onShare: () => void;
+    TeamSharingActivated: boolean
     onDeleteConfirm: Redux.Action;
 }
 
 
 export class CustomSortConfigItem extends React.Component<CustomSortConfigItemProps, {}> {
     render(): any {
+<<<<<<< HEAD
         let myCols: IColItem[] = []
         myCols.push({ size: 3, content: this.props.ColumnLabel });
         myCols.push({ size: 6, content: this.props.CustomSort.CustomSortItems.join(', ') });
@@ -31,6 +34,29 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
         return <ConfigEntityRow
             items={myCols}
             />
+=======
+        return <li
+            className="list-group-item"
+            onClick={() => { } }>
+            <Row style={{ display: "flex", alignItems: "center" }}>
+                <Col xs={3}>{this.props.ColumnLabel}</Col>
+                <Col xs={6} >
+                    {this.props.CustomSort.CustomSortItems.join(', ')}
+                </Col>
+                <Col xs={3}>
+                    <EntityListActionButtons
+                        ConfirmDeleteAction={this.props.onDeleteConfirm}
+                        showShare={this.props.TeamSharingActivated}
+                        shareClick={() => this.props.onShare()}
+                        editClick={() => this.props.onEdit(this.props.CustomSort)}
+                        overrideDisableEdit={this.props.ColumnLabel.includes(Helper.MissingColumnMagicString)}
+                        ConfigEntity={this.props.CustomSort}
+                        EntityName="Custom Sort">
+                    </EntityListActionButtons>
+                </Col>
+            </Row>
+        </li>
+>>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
     }
 
 }

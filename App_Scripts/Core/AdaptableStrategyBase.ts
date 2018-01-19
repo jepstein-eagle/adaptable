@@ -29,14 +29,15 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    protected  InitState(): void{
-       // base class implementation which is empty
-    }
+    protected abstract InitState(): void
 
     public menuItemConfig: IMenuItem;
 
     public getMenuItems(): IMenuItem[] {
-        return [this.menuItemConfig];
+        if (this.menuItemConfig) {
+            return [this.menuItemConfig];
+        }
+        return []
     }
 
     protected addColumnMenuItems(columnId: string): void {
