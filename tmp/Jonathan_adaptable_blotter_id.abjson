@@ -4,15 +4,77 @@
 		"SmartEditOperation": "Add"
 	},
 	"CustomSort": {
-		"CustomSorts": []
+		"CustomSorts": [
+			{
+				"ColumnId": "counterparty",
+				"CustomSortItems": [
+					"BNP",
+					"Barcap",
+					"Bank of America",
+					"Credit Suisse",
+					"Deutsche Bank",
+					"Goldman Sachs",
+					"JP Morgan",
+					"Lloyds TSB",
+					"Morgan Stanley",
+					"MUFJ",
+					"Nomura",
+					"Rabobank",
+					"RBS",
+					"Societe Generale"
+				],
+				"IsPredefined": false
+			}
+		]
 	},
 	"Shortcut": {
-		"NumericShortcuts": [],
-		"DateShortcuts": []
+		"NumericShortcuts": [
+			{
+				"ShortcutKey": "B",
+				"ShortcutResult": "5",
+				"DataType": "Number",
+				"ShortcutAction": "Multiply",
+				"IsPredefined": false,
+				"IsDynamic": false
+			}
+		],
+		"DateShortcuts": [
+			{
+				"ShortcutKey": "B",
+				"ShortcutResult": "2018-01-18",
+				"DataType": "Date",
+				"ShortcutAction": "Multiply",
+				"IsPredefined": false,
+				"IsDynamic": false
+			}
+		]
 	},
 	"PlusMinus": {
 		"DefaultNudge": 1,
-		"PlusMinusConditions": []
+		"PlusMinusConditions": [
+			{
+				"ColumnId": "notional",
+				"DefaultNudge": 1,
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			},
+			{
+				"ColumnId": "notional",
+				"DefaultNudge": 1,
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
 	},
 	"Export": {
 		"IPPDomainsPages": []
@@ -24,7 +86,60 @@
 		"CurrentCalendar": "United States"
 	},
 	"ConditionalStyle": {
-		"ConditionalStyleConditions": []
+		"ConditionalStyleConditions": [
+			{
+				"ColumnId": "",
+				"Style": {
+					"BackColor": "#008000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "country",
+							"ColumnValues": [
+								"Belgium",
+								"Egypt"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			},
+			{
+				"ColumnId": "",
+				"Style": {
+					"BackColor": "#008000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "country",
+							"ColumnValues": [
+								"Belgium",
+								"Egypt"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
 	},
 	"QuickSearch": {
 		"QuickSearchDefaultBackColour": "#FFFFCC",
@@ -37,18 +152,143 @@
 		}
 	},
 	"AdvancedSearch": {
-		"AdvancedSearches": [],
+		"AdvancedSearches": [
+			{
+				"Uid": "ebd1bfac-b5de-4a40-ac07-37f1514aec86",
+				"Name": "TestJo",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "counterparty",
+							"ColumnValues": [
+								"Credit Suisse",
+								"Deutsche Bank",
+								"Goldman Sachs"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		],
 		"CurrentAdvancedSearchId": ""
 	},
 	"Filter": {
-		"UserFilters": [],
-		"ColumnFilters": []
+		"UserFilters": [
+			{
+				"Uid": "428e7f6e-eb1f-44c8-b769-a0478397620f",
+				"FriendlyName": "test",
+				"Description": "([Counterparty] In (BNP, Deutsche Bank))",
+				"DataType": "String",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "counterparty",
+							"ColumnValues": [
+								"BNP",
+								"Deutsche Bank"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		],
+		"ColumnFilters": [
+			{
+				"ColumnId": "counterparty",
+				"Filter": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [
+						{
+							"ColumnName": "counterparty",
+							"UserFilterUids": [
+								"428e7f6e-eb1f-44c8-b769-a0478397620f"
+							]
+						}
+					],
+					"RangeExpressions": []
+				}
+			}
+		]
 	},
 	"Theme": {
 		"CurrentTheme": "Default"
 	},
 	"CellValidation": {
-		"CellValidations": []
+		"CellValidations": [
+			{
+				"CellValidationMode": "Warning",
+				"ColumnId": "counterparty",
+				"RangeExpression": {
+					"Operator": "None",
+					"Operand1": "",
+					"Operand2": ""
+				},
+				"HasExpression": true,
+				"OtherExpression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "counterparty",
+							"ColumnValues": [
+								"Credit Suisse",
+								"Lloyds TSB",
+								"Goldman Sachs",
+								"Deutsche Bank"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"Description": "No Changes Allowed",
+				"IsPredefined": false
+			},
+			{
+				"CellValidationMode": "Warning",
+				"ColumnId": "counterparty",
+				"RangeExpression": {
+					"Operator": "None",
+					"Operand1": "",
+					"Operand2": ""
+				},
+				"HasExpression": false,
+				"OtherExpression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"Description": "No Changes Allowed",
+				"IsPredefined": false
+			},
+			{
+				"CellValidationMode": "Warning",
+				"ColumnId": "counterparty",
+				"RangeExpression": {
+					"Operator": "None",
+					"Operand1": "",
+					"Operand2": ""
+				},
+				"HasExpression": false,
+				"OtherExpression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"Description": "No Changes Allowed",
+				"IsPredefined": false
+			}
+		]
 	},
 	"Layout": {
 		"CurrentLayout": "Default",
@@ -80,6 +320,35 @@
 					"lastUpdatedBy"
 				],
 				"Name": "Default",
+				"IsPredefined": false
+			},
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"currency",
+					"country",
+					"changeOnYear",
+					"price",
+					"bid",
+					"ask",
+					"bidOfferSpread",
+					"isLive",
+					"moodysRating",
+					"fitchRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"bloombergAsk",
+					"bloombergBid",
+					"percentChange",
+					"bookingGuid",
+					"lastUpdated",
+					"lastUpdatedBy"
+				],
+				"Name": "POPO",
 				"IsPredefined": false
 			}
 		]
@@ -124,8 +393,19 @@
 		"DashboardZoom": 1
 	},
 	"CalculatedColumn": {
-		"CalculatedColumns": [],
-		"EditedCalculatedColumnInvalidErrorMsg": ""
+		"CalculatedColumns": [
+			{
+				"ColumnId": "Toto",
+				"GetValueFunc": "6",
+				"IsPredefined": false
+			},
+			{
+				"ColumnId": "fefeswgfsew",
+				"GetValueFunc": "71",
+				"IsPredefined": false
+			}
+		],
+		"EditedCalculatedColumnInvalidErrorMsg": null
 	},
 	"Range": {
 		"Ranges": [],

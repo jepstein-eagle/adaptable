@@ -101,8 +101,8 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
         userName: "Jonathan",
-        enableAuditLog: true,
-        enableRemoteConfigServer: false,
+        enableAuditLog: false,
+        enableRemoteConfigServer: true,
         predefinedConfigUrl: "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
