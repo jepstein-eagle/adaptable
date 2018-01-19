@@ -74,7 +74,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             let expressionString = ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)
             return <li
                 className="list-group-item" key={x.Uid}>
-                <Row >
+                <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
                         {x.FriendlyName}
                     </Col>

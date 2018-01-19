@@ -74,7 +74,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <li
                 className="list-group-item" key={index}>
-                <Row >
+                <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
                         <span style={expressionFontSizeStyle}>
                             {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
