@@ -16,7 +16,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions'
 import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyIds from '../../Core/StrategyIds';
+import * as StrategyIds from '../../Core/StrategyConstants';
 import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
 import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';

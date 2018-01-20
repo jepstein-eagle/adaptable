@@ -5,12 +5,8 @@ import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
-<<<<<<< HEAD
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-=======
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import * as StrategyIds from '../../Core/StrategyIds'
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
+import * as StrategyIds from '../../Core/StrategyConstants'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helper';

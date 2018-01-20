@@ -7,7 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -53,11 +53,7 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             }
             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
                 let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == arrayParams[1])
-<<<<<<< HEAD
                 this.onEdit(editCustomSort)
-=======
-                this.onEditCustomSort(editCustomSort)
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
             }
         }
     }
@@ -71,13 +67,9 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             return <CustomSortConfigItem CustomSort={customSort} key={customSort.ColumnId}
-<<<<<<< HEAD
                 onEdit={(customSort) => this.onEdit(customSort)}
-=======
-                onEdit={(customSort) => this.onEditCustomSort(customSort)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onShare={() => this.props.onShare(customSort)}
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
                 onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
                 ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString}></CustomSortConfigItem>
         });
@@ -98,7 +90,6 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                 {customSorts}
             </ListGroup>
             {this.state.EditedCustomSort &&
-<<<<<<< HEAD
                 <CustomSortWizard
                     EditedCustomSort={this.state.EditedCustomSort}
                     CustomSorts={this.props.CustomSorts}
@@ -108,16 +99,6 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                     closeWizard={() => this.closeWizard()}
                     WizardFinish={() => this.WizardFinish()}
                 />
-=======
-                <AdaptableWizard Steps={
-                    [<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
-                    <CustomSortValuesWizard Columns={this.props.Columns}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-                    Data={this.state.EditedCustomSort}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
             }
         </PanelWithButton>
     }

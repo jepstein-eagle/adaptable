@@ -15,7 +15,8 @@ export interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutC
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
-    AvailableKeys: Array<string>
+    AvailableKeys: Array<string>;
+    onShare: () => void;
 }
 
 export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps, {}> {
@@ -73,6 +74,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
             size: 3, content:
                 <EntityListActionButtons
                     showEdit={false}
+                    shareClick={() => this.props.onShare()}
                     ConfigEntity={this.props.Shortcut}
                     ConfirmDeleteAction={this.props.onDeleteConfirm}
                     EntityName="Shortcut">

@@ -21,6 +21,7 @@ export class CalculatedColumnConfigItem extends React.Component<CalculatedColumn
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.CalculatedColumn)}
+           // shareClick={() => this.props.onShare()}
             ConfigEntity={this.props.CalculatedColumn}
             EntityName="Calculated Column">
         </EntityListActionButtons>

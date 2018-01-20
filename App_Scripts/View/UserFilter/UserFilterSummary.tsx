@@ -15,10 +15,13 @@ import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 
 export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilterSummaryComponent> {
     onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, StrategySummaryInternalState> {
@@ -53,6 +56,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         ConfigEnity={item}
                         EntityName={StrategyConstants.FilterStrategyFriendlyName}
                         onEdit={() => this.onEdit(index, item)}
+                        onShare={() => this.props.onShare(item)}
                         onDelete={FilterRedux.UserFilterDelete(item)}
                     />
                 strategySummaries.push(detailRow);
@@ -106,7 +110,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(UserFilter)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 

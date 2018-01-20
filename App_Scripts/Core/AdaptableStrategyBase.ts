@@ -29,7 +29,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    protected abstract InitState(): void
+    protected  InitState(): void{
+        // stff - check this works
+    }
 
     public menuItemConfig: IMenuItem;
 

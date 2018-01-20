@@ -13,7 +13,7 @@ import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { ExportDestination, PopoverType, SortOrder } from '../../Core/Enums'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn , IConfigEntity} from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions';
@@ -34,6 +34,8 @@ import { RangeColumnsWizard } from './Range/RangeColumnsWizard'
 import { RangeNameWizard } from './Range/RangeNameWizard'
 import { RangeExpressionWizard } from './Range/RangeExpressionWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as StrategyConstants from '../../Core/StrategyConstants'
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
@@ -45,6 +47,7 @@ interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponen
     onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => RangeRedux.RangeStopLiveAction;
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface RangeConfigInternalState {
@@ -81,6 +84,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                 IsLast={index == this.props.Ranges.length - 1}
                 UserFilters={this.props.UserFilters}
                 LiveRanges={this.props.LiveRanges}
+                onShare={() => this.props.onShare(range)}
                 onExport={(exportDestination) => this.onApplyExport(range.Name, exportDestination)}
                 onRangeStopLive={(exportDestination) => this.props.onRangeStopLive(range.Name, exportDestination)}
                 onEdit={() => this.onEditRange(index, range)}
@@ -163,6 +167,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(value, exportDestination)),
         onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId))
     };
 }
 

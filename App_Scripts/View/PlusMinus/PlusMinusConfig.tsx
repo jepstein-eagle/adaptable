@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, Bu
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';

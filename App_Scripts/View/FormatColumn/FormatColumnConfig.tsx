@@ -5,7 +5,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums'
@@ -20,6 +20,7 @@ import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
 import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 
 interface FormatColumnConfigProps extends IStrategyViewPopupProps<FormatColumnConfigComponent> {
@@ -28,6 +29,7 @@ interface FormatColumnConfigProps extends IStrategyViewPopupProps<FormatColumnCo
     PredefinedColorChoices: string[],
     onAddFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface FormatColumnConfigState {
@@ -69,6 +71,7 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
                 key={"CS" + index}
                 Columns={this.props.Columns}
                 onEdit={(formatColumn) => this.onEdit(formatColumn)}
+                onShare={() => this.props.onShare(formatColumn)}
                 onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)} >
             </FormatColumnConfigItem>
         });
@@ -141,6 +144,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
         onEditFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit( formatColumn)),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
     };
 }
 

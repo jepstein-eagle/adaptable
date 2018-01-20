@@ -16,19 +16,21 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyConstants from '../../Core/StrategyConstants'
 import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, ConditionalStyleScope } from '../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
+import { IRawValueDisplayValuePair , IConfigEntity} from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 
 export interface ConditionalStyleSummaryProps extends IStrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyleCondition[]
     PredefinedColorChoices: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, StrategySummaryInternalState> {
@@ -64,7 +66,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         ConfigEnity={item}
                         EntityName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
                         onEdit={() => this.onEdit(index, item)}
-                        onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
+                        onShare={() => this.props.onShare(item)}
+                onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -122,7 +125,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId))
     };
 }
 

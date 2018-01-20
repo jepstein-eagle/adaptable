@@ -33,7 +33,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         let styleVisualItem = <StyleVisualItem Style={this.props.ConditionalStyleCondition.Style} />
         let column = this.props.Columns.find(x => x.ColumnId == this.props.ConditionalStyleCondition.ColumnId)
 
-<<<<<<< HEAD
         let myCols: IColItem[] = []
         myCols.push({
             size: 3, content:
@@ -49,6 +48,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         });
         let buttons: any = <EntityListActionButtons
             editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
+            shareClick={() => this.props.onShare()}
             ConfigEntity={this.props.ConditionalStyleCondition}
             overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -56,27 +56,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         myCols.push({ size: 3, content: buttons });
 
         return <ConfigEntityRow items={myCols} />
-=======
-                <Col xs={4}>
-                    <span style={expressionFontSizeStyle}>
-                        {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
-                    </span>
-                </Col>
-
-                <Col md={3} >
-                    <EntityListActionButtons
-                        editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
-                        showShare={this.props.TeamSharingActivated}
-                        shareClick={() => this.props.onShare()}
-                        ConfigEntity={this.props.ConditionalStyleCondition}
-                        overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}
-                        EntityName="Conditional Style">
-                    </EntityListActionButtons>
-                </Col>
-            </Row>
-        </li >
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
     }
 }
 

@@ -1,4 +1,4 @@
-import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
+/*import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -75,3 +75,4 @@ export class ShortcutConfigItemDate extends React.Component<ShortcutConfigItemDa
     }
 }
 
+*/

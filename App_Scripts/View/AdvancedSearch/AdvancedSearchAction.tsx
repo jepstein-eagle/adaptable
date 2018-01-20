@@ -31,6 +31,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { SortOrder } from '../../Core/Enums';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
+import * as StrategyConstants from '../../Core/StrategyConstants'
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -268,7 +269,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId))
     };
 }
 

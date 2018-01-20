@@ -1,5 +1,5 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType, ExportDestination } from '../../../Core/Enums'
-import { InputAction, IContextMenu, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup } from '../../../Core/Interface/IStrategy'
+import { InputAction, IContextMenu, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IStrategy'
 import { ISmartEditPreview } from '../../../Core/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Core/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Core/Interface/ICalculatedColumnStrategy'
@@ -46,50 +46,6 @@ export interface PopupState {
     PromptPopup: IPromptPopup
 }
 
-<<<<<<< HEAD
-=======
-export interface IActionConfigurationPopup {
-    ShowPopup: boolean;
-    ComponentClassName: string;
-    IsReadOnly: boolean
-    Params: string
-}
-
-export interface IErrorPopup {
-    ShowErrorPopup: boolean;
-    ErrorMsg: string;
-}
-
-export interface IWarningPopup {
-    ShowWarningPopup: boolean;
-    WarningMsg: string;
-}
-
-export interface IInfoPopup {
-    ShowInfoPopup: boolean;
-    InfoMsg: string;
-}
-
-export interface IConfirmationPopup {
-    ShowConfirmationPopup: boolean;
-    ConfirmationTitle: string;
-    ConfirmationMsg: string;
-    ConfirmationText: string;
-    CancelText: string;
-    ConfirmAction: Redux.Action;
-    CancelAction: Redux.Action;
-    ShowCommentBox: boolean,
-    ConfirmationComment:string;
-}
-
-export interface IPromptPopup {
-    ShowPromptPopup: boolean;
-    PromptTitle: string;
-    PromptMsg: string;
-    ConfirmAction: InputAction;
-}
-
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 export interface SmartEditState {
     SmartEditValue: string
     SmartEditOperation: SmartEditOperation
@@ -180,12 +136,11 @@ export interface UIControlConfigState {
     PredefinedColorChoices: string[];
 }
 
-<<<<<<< HEAD
-export interface FormatColumnState {
-    FormatColumns: Array<IFormatColumn>;
-=======
 export interface TeamSharingState {
     Activated : boolean
     SharedEntities: ISharedEntity[]
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
+}
+
+export interface FormatColumnState {
+    FormatColumns: Array<IFormatColumn>
 }

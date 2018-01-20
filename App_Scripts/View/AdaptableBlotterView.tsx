@@ -19,12 +19,8 @@ import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotte
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
-<<<<<<< HEAD
-import * as StrategyConstants from '../Core/StrategyConstants'
-=======
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyIds from '../Core/StrategyConstants'
 import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;

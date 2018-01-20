@@ -37,36 +37,25 @@ import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/StrategyConstants'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
-<<<<<<< HEAD
 import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
 import { IExportStrategy , IPPDomain} from '../../Core/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
-=======
-import { IShortcutStrategy, IShortcut } from '../../Core/Interface/IShortcutStrategy'
-import { IExportStrategy } from '../../Core/Interface/IExportStrategy'
-import { IPrintPreviewStrategy } from '../../Core/Interface/IPrintPreviewStrategy'
-import { IPlusMinusStrategy, IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
+import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy'
+import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
+import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy'
+import { IShortcut } from '../../Core/Interface/IShortcutStrategy'
+import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy'
+import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy'
+import { ILayout } from '../../Core/Interface/ILayoutStrategy'
+import { IUserFilter } from '../../Core/Interface/IExpression'
+import { ICellValidationStrategy, ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy'
+import { ITeamSharingStrategy, ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helper";
 import { iPushPullHelper } from "../../Core/iPushPullHelper";
-<<<<<<< HEAD
-=======
-import { IPPDomain } from '../ActionsReducers/Interface/IState';
-import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
-import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
-import { PopupShowError } from '../ActionsReducers/PopupRedux';
-import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
-import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
-import { IUserFilter } from '../../Core/Interface/IExpression';
-import { FilterStrategyId } from '../../Core/StrategyIds';
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
-import { ILayout } from '../../Core/Interface/ILayoutStrategy';
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -91,11 +80,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     Range: RangeRedux.RangeReducer,
     UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
-<<<<<<< HEAD
+    TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer
-=======
-    TeamSharing: TeamSharingRedux.TeamSharingReducer
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -310,12 +296,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         case StrategyIds.ShortcutStrategyId: {
                             let shortcut = actionTyped.Entity as IShortcut
                             let shortcuts: IShortcut[]
-                            if (shortcut.DataType == DataType.Number) {
-                                shortcuts = middlewareAPI.getState().Shortcut.NumericShortcuts
-                            }
-                            else if (shortcut.DataType == DataType.Date) {
-                                shortcuts = middlewareAPI.getState().Shortcut.DateShortcuts
-                            }
+                                shortcuts = middlewareAPI.getState().Shortcut.Shortcuts
                             if (shortcuts) {
                                 if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
                                     middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut))

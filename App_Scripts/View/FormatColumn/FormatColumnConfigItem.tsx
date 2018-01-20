@@ -22,6 +22,7 @@ export interface FormatColumnConfigItemProps extends React.ClassAttributes<Forma
     Columns: IColumn[];
     onDeleteConfirm: Redux.Action;
     onEdit: (FormatColumn: IFormatColumn) => void;
+    onShare: () => void;
 }
 
 export class FormatColumnConfigItem extends React.Component<FormatColumnConfigItemProps, {}> {
@@ -35,6 +36,7 @@ export class FormatColumnConfigItem extends React.Component<FormatColumnConfigIt
         myCols.push({ size: 6, content: <StyleVisualItem Style={this.props.FormatColumn.Style} /> });
         let buttons: any = <EntityListActionButtons
             editClick={() => this.props.onEdit(this.props.FormatColumn)}
+            shareClick={() => this.props.onShare()}
             ConfigEntity={this.props.FormatColumn}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyConstants.FormatColumnStrategyFriendlyName} />

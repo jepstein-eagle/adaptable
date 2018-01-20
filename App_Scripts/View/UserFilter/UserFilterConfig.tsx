@@ -4,12 +4,8 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
-<<<<<<< HEAD
-import * as StrategyConstants from '../../Core/StrategyConstants'
-=======
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';

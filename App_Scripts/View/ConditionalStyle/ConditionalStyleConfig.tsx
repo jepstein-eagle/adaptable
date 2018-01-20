@@ -8,7 +8,7 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums'
 import { ConditionalStyleConfigItem } from './ConditionalStyleConfigItem'
@@ -27,12 +27,8 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
     Columns: IColumn[],
     UserFilters: IUserFilter[],
     PredefinedColorChoices: string[],
-<<<<<<< HEAD
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
-=======
-    onAddEditConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 }
 
 interface ConditionalStyleConfigState {
@@ -144,13 +140,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-<<<<<<< HEAD
         onAddUpdateConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
-=======
-        onAddEditConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ConditionalStyleStrategyId))
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
-    };
+  };
 }
 
 export let ConditionalStyleConfig = connect(mapStateToProps, mapDispatchToProps)(ConditionalStyleConfigComponent);

@@ -16,15 +16,17 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyConstants from '../../Core/StrategyConstants'
 import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
+import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 export interface CellValidationSummaryProps extends IStrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]
     onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, StrategySummaryInternalState> {
@@ -58,6 +60,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         ConfigEnity={item}
                         EntityName={StrategyConstants.CellValidationStrategyFriendlyName}
                         onEdit={() => this.onEdit(index, item)}
+                        onShare={() => this.props.onShare(item)}
                         onDelete={CellValidationRedux.CellValidationDelete(index)}
                     />
                 strategySummaries.push(detailRow);
@@ -112,7 +115,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 

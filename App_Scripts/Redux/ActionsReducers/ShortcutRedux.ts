@@ -123,30 +123,12 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
         }
         case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
-<<<<<<< HEAD
             shortcuts = [].concat(state.Shortcuts)
             shortcuts.push(newShortcut);
             return Object.assign({}, state, {
                 Shortcuts: shortcuts
             });
         }
-=======
-            if (newShortcut.DataType == DataType.Number) {
-                let items: Array<IShortcut> = [].concat(state.NumericShortcuts);
-                items.push(newShortcut);
-                return Object.assign({}, state, {
-                    NumericShortcuts: items
-                });
-            }
-            else if (newShortcut.DataType == DataType.Date) {
-                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
-                items.push(newShortcut);
-                return Object.assign({}, state, {
-                    DateShortcuts: items
-                });
-            }
-        }    
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
 
         case SHORTCUT_DELETE: {
             let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
@@ -165,19 +147,6 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
                 Shortcuts: shortcuts
             });
 
-<<<<<<< HEAD
-=======
-            }
-            else if (deletedShortcut.DataType == DataType.Date) {
-                let items: Array<IShortcut> = [].concat(state.DateShortcuts);
-                let index = items.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
-                items.splice(index, 1);
-
-                return Object.assign({}, state, {
-                    DateShortcuts: items
-                });
-            }
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
         }
         default:
             return state

@@ -23,7 +23,8 @@ export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigI
     onExport: (exportDestination: ExportDestination) => void;
     onRangeStopLive: (exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => void,
     onDeleteConfirm: Redux.Action;
-    Columns: Array<IColumn>
+    Columns: Array<IColumn>;
+    onShare: () => void;
 }
 
 export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
@@ -49,7 +50,10 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
 
         return <li
             className="list-group-item"
-            onClick={() => { }}>
+            onClick={() => { 
+// stuff here -nee to change
+
+            }}>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={2}><span style={expressionFontSizeStyle}>
                     {this.props.Range.Name}
@@ -88,6 +92,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
                     <EntityListActionButtons
                         ConfirmDeleteAction={this.props.onDeleteConfirm}
                         editClick={() => this.props.onEdit()}
+                        shareClick={() => this.props.onShare()}
                         ConfigEntity={this.props.Range}
                         EntityName="Range">
                     </EntityListActionButtons>

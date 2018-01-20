@@ -15,6 +15,7 @@ export interface StrategyDetailRowProps extends React.ClassAttributes<StrategyDe
     ConfigEnity: IConfigEntity
     EntityName: string
     onEdit: () => void
+    onShare: () => void
     onDelete: Redux.Action
     showBold?: boolean
 }
@@ -33,6 +34,7 @@ export class StrategyDetailRow extends React.Component<StrategyDetailRowProps, {
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDelete}
             editClick={() => this.props.onEdit()}
+            shareClick={() => this.props.onShare()}
             overrideDisableEdit={false}
             ConfigEntity={this.props.ConfigEnity}
             EntityName={this.props.EntityName} />

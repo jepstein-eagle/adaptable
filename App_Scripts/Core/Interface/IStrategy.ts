@@ -89,6 +89,11 @@ export interface IWarningPopup {
     WarningMsg: string;
 }
 
+export interface IInfoPopup {
+    ShowInfoPopup: boolean;
+    InfoMsg: string;
+}
+
 export interface IConfirmationPopup {
     ShowConfirmationPopup: boolean;
     ConfirmationTitle: string;

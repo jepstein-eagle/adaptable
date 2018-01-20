@@ -13,12 +13,15 @@ import * as StrategyConstants from '../../Core/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 
 export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, StrategySummaryInternalState> {
@@ -50,6 +53,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 ConfigEnity={customSort}
                 EntityName={StrategyConstants.CustomSortStrategyFriendlyName}
                 onEdit={() => this.onEdit(customSort)}
+                onShare={() => this.props.onShare(customSort)}
                 onDelete={CustomSortRedux.CustomSortDelete(customSort)}
                 showBold={true}
                 />
@@ -111,7 +115,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId))
  
     };
 }

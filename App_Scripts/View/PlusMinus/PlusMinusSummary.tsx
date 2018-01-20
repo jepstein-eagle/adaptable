@@ -21,10 +21,13 @@ import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusConditions: IPlusMinusCondition[]
     onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, StrategySummaryInternalState> {
@@ -59,6 +62,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         ConfigEnity={item}
                         EntityName={StrategyConstants.PlusMinusStrategyFriendlyName}
                         onEdit={() => this.onEdit(index, item)}
+                        onShare={() => this.props.onShare(item)}
                         onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                     />
                 strategySummaries.push(detailRow);
@@ -122,7 +126,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
     };
 }
 

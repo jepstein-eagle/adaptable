@@ -22,6 +22,7 @@ import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { FormatColumnReducer } from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 
 export interface FormatColumnSummaryProps extends IStrategySummaryProps<FormatColumnSummaryComponent> {
@@ -29,6 +30,7 @@ export interface FormatColumnSummaryProps extends IStrategySummaryProps<FormatCo
     PredefinedColorChoices: string[]
     onAddFormatColumn: ( FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: ( FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, StrategySummaryInternalState> {
@@ -61,6 +63,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 ConfigEnity={formatColumn}
                 EntityName={StrategyConstants.FormatColumnStrategyFriendlyName}
                 onEdit={() => this.onEdit(formatColumn)}
+                onShare={() => this.props.onShare(formatColumn)}
                 onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
                 showBold={true}
             />
@@ -115,8 +118,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
         onEditFormatColumn: ( FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
-    };
+        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
+   };
 }
 
 export let FormatColumnSummary = connect(mapStateToProps, mapDispatchToProps)(FormatColumnSummaryComponent);

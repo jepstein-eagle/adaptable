@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { Provider, connect } from 'react-redux';
 import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

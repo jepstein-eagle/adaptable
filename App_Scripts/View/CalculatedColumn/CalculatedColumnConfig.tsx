@@ -6,7 +6,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/StrategyConstants'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -65,35 +65,12 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
-<<<<<<< HEAD
 
             return <CalculatedColumnConfigItem CalculatedColumn={calculatedColumn} key={calculatedColumn.ColumnId}
                 onEdit={(calculatedColumn) => this.onEdit(index, calculatedColumn)}
-                onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)} />
+                onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+                 />
 
-=======
-            return <li
-                className="list-group-item" key={calculatedColumn.ColumnId}>
-                <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}>
-                        {calculatedColumn.ColumnId}
-                    </Col>
-                    <Col xs={6}>
-                        {calculatedColumn.GetValueFunc}
-                    </Col>
-                    <Col xs={3}>
-                        <EntityListActionButtons
-                            ConfirmDeleteAction={CalculatedColumnRedux.CalculatedColumnDelete(index)}
-                            showShare={this.props.TeamSharingActivated}
-                            editClick={() => this.onEdit(index, calculatedColumn)}
-                            shareClick={() => this.props.onShare(calculatedColumn)}
-                            ConfigEntity={calculatedColumn}
-                            EntityName="Calculated Column">
-                        </EntityListActionButtons>
-                    </Col>
-                </Row>
-            </li>
->>>>>>> d8124607be5295d24aac33c46b01b2409145eb0c
         });
 
         let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
