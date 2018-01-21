@@ -28,7 +28,24 @@
 		]
 	},
 	"Shortcut": {
-		"Shortcuts": []
+		"Shortcuts": [
+			{
+				"ShortcutKey": "O",
+				"ShortcutResult": "1000000",
+				"DataType": "Number",
+				"ShortcutAction": "Add",
+				"IsPredefined": false,
+				"IsDynamic": false
+			},
+			{
+				"ShortcutKey": "W",
+				"ShortcutResult": "Previous Work Day",
+				"DataType": "Date",
+				"ShortcutAction": "Multiply",
+				"IsPredefined": false,
+				"IsDynamic": true
+			}
+		]
 	},
 	"PlusMinus": {
 		"DefaultNudge": 1,
@@ -68,32 +85,6 @@
 	},
 	"ConditionalStyle": {
 		"ConditionalStyleConditions": [
-			{
-				"ColumnId": "",
-				"Style": {
-					"BackColor": "#008000",
-					"ForeColor": null,
-					"FontWeight": "Normal",
-					"FontStyle": "Normal",
-					"FontSize": null
-				},
-				"ConditionalStyleScope": "Row",
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [
-						{
-							"ColumnName": "country",
-							"ColumnValues": [
-								"Belgium",
-								"Egypt"
-							]
-						}
-					],
-					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			},
 			{
 				"ColumnId": "",
 				"Style": {
@@ -205,52 +196,6 @@
 	},
 	"CellValidation": {
 		"CellValidations": [
-			{
-				"CellValidationMode": "Warning",
-				"ColumnId": "counterparty",
-				"RangeExpression": {
-					"Operator": "None",
-					"Operand1": "",
-					"Operand2": ""
-				},
-				"HasExpression": true,
-				"OtherExpression": {
-					"ColumnDisplayValuesExpressions": [
-						{
-							"ColumnName": "counterparty",
-							"ColumnValues": [
-								"Credit Suisse",
-								"Lloyds TSB",
-								"Goldman Sachs",
-								"Deutsche Bank"
-							]
-						}
-					],
-					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
-					"RangeExpressions": []
-				},
-				"Description": "No Changes Allowed",
-				"IsPredefined": false
-			},
-			{
-				"CellValidationMode": "Warning",
-				"ColumnId": "counterparty",
-				"RangeExpression": {
-					"Operator": "None",
-					"Operand1": "",
-					"Operand2": ""
-				},
-				"HasExpression": false,
-				"OtherExpression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
-					"RangeExpressions": []
-				},
-				"Description": "No Changes Allowed",
-				"IsPredefined": false
-			},
 			{
 				"CellValidationMode": "Warning",
 				"ColumnId": "counterparty",

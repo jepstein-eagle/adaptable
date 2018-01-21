@@ -18,6 +18,8 @@ export interface StrategyDetailRowProps extends React.ClassAttributes<StrategyDe
     onShare: () => void
     onDelete: Redux.Action
     showBold?: boolean
+    showShare?: boolean
+    
 }
 
 export class StrategyDetailRow extends React.Component<StrategyDetailRowProps, {}> {
@@ -35,6 +37,7 @@ export class StrategyDetailRow extends React.Component<StrategyDetailRowProps, {
             ConfirmDeleteAction={this.props.onDelete}
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
+            showShare={this.props.showShare}
             overrideDisableEdit={false}
             ConfigEntity={this.props.ConfigEnity}
             EntityName={this.props.EntityName} />

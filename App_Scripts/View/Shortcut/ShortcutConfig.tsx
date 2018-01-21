@@ -55,6 +55,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             return <ShortcutConfigItem Shortcut={shortcut} key={"ns" + index}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
+                TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
                 onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
                 onChangeOperation={(shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation)}

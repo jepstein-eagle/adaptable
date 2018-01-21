@@ -52,7 +52,7 @@ class ColumnInfoActionComponent extends React.Component<ColumnInfoActionProps, C
         let infoBody: any[] = ["Shows info about columns."]
         let cellInfo: [string, number][] = [["Function", 3], ["Summary", 6], ["", 3]];
 
-        let customSortSummary = <CustomSortSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
+        let customSortSummary = <CustomSortSummary TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn}  getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let conditionalStyleSummary = <ConditionalStyleSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let cellValidationSummary = <CellValidationSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let userFilterSummary = <UserFilterSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />

@@ -21,7 +21,7 @@ export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSort
     CustomSorts: ICustomSort[]
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    
 }
 
 export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, StrategySummaryInternalState> {
@@ -54,6 +54,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 EntityName={StrategyConstants.CustomSortStrategyFriendlyName}
                 onEdit={() => this.onEdit(customSort)}
                 onShare={() => this.props.onShare(customSort)}
+                showShare={this.props.TeamSharingActivated}
                 onDelete={CustomSortRedux.CustomSortDelete(customSort)}
                 showBold={true}
                 />

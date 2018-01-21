@@ -49,6 +49,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         let buttons: any = <EntityListActionButtons
             editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
             shareClick={() => this.props.onShare()}
+            showShare={this.props.TeamSharingActivated}
             ConfigEntity={this.props.ConditionalStyleCondition}
             overrideDisableEdit={(!column && this.props.ConditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}

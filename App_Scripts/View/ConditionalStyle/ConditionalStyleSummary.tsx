@@ -16,7 +16,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyConstants from '../../Core/StrategyConstants'
 import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, ConditionalStyleScope } from '../../Core/Enums'
-import { IRawValueDisplayValuePair , IConfigEntity} from '../../Core/Interface/IAdaptableBlotter';
+import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
@@ -30,7 +30,7 @@ export interface ConditionalStyleSummaryProps extends IStrategySummaryProps<Cond
     ConditionalStyles: IConditionalStyleCondition[]
     PredefinedColorChoices: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, StrategySummaryInternalState> {
@@ -67,7 +67,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         EntityName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
-                onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
+                        onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -99,7 +99,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
     }
 
-   onEdit(index: number, ConditionalStyle: IConditionalStyleCondition) {
+    onEdit(index: number, ConditionalStyle: IConditionalStyleCondition) {
         this.setState({ EditedItem: Helper.cloneObject(ConditionalStyle), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
@@ -109,8 +109,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
     }
 
     WizardFinish() {
-        this.props.onAddUpdateConditionalStyle(this.state.EditedItemIndex, this.state.EditedItem as IConditionalStyleCondition );
-         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.props.onAddUpdateConditionalStyle(this.state.EditedItemIndex, this.state.EditedItem as IConditionalStyleCondition);
+        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
