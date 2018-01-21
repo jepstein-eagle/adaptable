@@ -41,10 +41,10 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
         }
         let iPushPullExcelMenuItem
         if (this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull)) {
-            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Live iPushPull Excel"}</MenuItem>
+            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Sync with iPushPull"}</MenuItem>
         }
         else {
-            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Live iPushPull Excel"}</MenuItem>
+            iPushPullExcelMenuItem = <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
         let hasLive = this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 

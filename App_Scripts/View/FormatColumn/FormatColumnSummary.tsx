@@ -103,8 +103,13 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
     }
 
     WizardFinish() {
-        this.props.onAddFormatColumn( this.state.EditedItem as IFormatColumn, );
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+       let formatColumn:IFormatColumn = this.state.EditedItem as IFormatColumn
+        if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
+            this.props.onEditFormatColumn(formatColumn)
+        } else {
+            this.props.onAddFormatColumn(formatColumn)
+        }
+          this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
 }

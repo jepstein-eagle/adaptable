@@ -25,6 +25,8 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { DataType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions'
+import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
     DefaultNudgeValue: number,
@@ -71,32 +73,29 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
         let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
-            return <li
-                className="list-group-item" key={x.ColumnId + index}>
-                <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}>
-                        {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
-                    </Col>
-                    <Col xs={2}>
-                        <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
-                    </Col>
-                    <Col xs={4}>
-                        {this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters))}
-                    </Col>
-                    <Col xs={3}>
-                        <EntityListActionButtons
-                            ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
-                            overrideDisableEdit={!column}
-                            showShare={this.props.TeamSharingActivated}
-                            shareClick={() => this.props.onShare(x)}
-                            editClick={() => this.onEdit(index, x)}
-                            ConfigEntity={x}
-                            EntityName="Plus Minus rule">
-                        </EntityListActionButtons>
-                    </Col>
-                </Row>
-            </li>
-        })
+
+            let myCols: IColItem[] = []
+            myCols.push({
+                size: 3, content: column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString
+            });
+            myCols.push({
+                size: 2, content: <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
+            });
+            myCols.push({
+                size: 4, content: this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters))
+            });
+            let buttons: any = <EntityListActionButtons
+                ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
+                overrideDisableEdit={!column}
+                showShare={this.props.TeamSharingActivated}
+                shareClick={() => this.props.onShare(x)}
+                editClick={() => this.onEdit(index, x)}
+                ConfigEntity={x}
+                EntityName="Plus Minus rule" />
+            myCols.push({ size: 3, content: buttons });
+
+            return <ConfigEntityRow items={myCols} />
+      })
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"

@@ -176,20 +176,20 @@ var lightTheme = {
 var darkTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: '#ffffff',
-    backgroundColor: '#232b2b',
-    altbackground: '#232b2b',
+    backgroundColor: '#333333',
+    altbackground: '#333333',
     foregroundSelectionColor: '#ffffff',
     backgroundSelectionColor: 'rgba(61, 119, 254, 0.5)',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: '#ffffff',
-    columnHeaderBackgroundColor: '#232b2b',
+    columnHeaderBackgroundColor: '#333333',
     columnHeaderForegroundSelectionColor: '#ffffff',
     columnHeaderBackgroundSelectionColor: '#3D77FE',
 
     rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     rowHeaderColor: '#ffffff',
-    rowHeaderBackgroundColor: '#232b2b',
+    rowHeaderBackgroundColor: '#333333',
     rowHeaderForegroundSelectionColor: '#ffffff',
     rowHeaderBackgroundSelectionColor: '#3D77FE',
 

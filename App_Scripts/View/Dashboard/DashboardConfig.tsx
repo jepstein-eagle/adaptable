@@ -11,13 +11,14 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
-//import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { Helper } from '../../Core/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
     DashboardControls: Array<IDashboardStrategyControlConfiguration>;
@@ -58,19 +59,20 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                 //we want to prevent people from hiding the Functions dropdown
                 //      visibleButton = null
             }
-            //  let configScreen = AdaptableDashboardConfigurationViewFactory.get(x.Strategy)
-            //  let isConfigurationButtonDisabled = !AdaptableDashboardConfigurationViewFactory.has(x.Strategy)
 
-            return <li key={"DashboardControl" + i}
-                className="list-group-item">
-                <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
-                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</Col>
-                    <Col xs={2}>{visibleButton}</Col>
-                    <Col xs={6} style={previewStyle}>{dashboardElememt}
-                    </Col>
-                </Row>
-            </li>
+            let myCols: IColItem[] = []
+            myCols.push({
+                size: 3, content:
+                    <span> <Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
+                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</span>
+            });
+            myCols.push({
+                size: 2, content: visibleButton
+            });
+            myCols.push({
+                size: 6, content: <span style={previewStyle}>{dashboardElememt}</span>
+            });
+            return <ConfigEntityRow items={myCols} />
         })
 
         let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Preview", 6]];
@@ -83,7 +85,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                     <FormControl value={this.state.EditedZoomFactor.toString()} type="number" min="0.5" step="0.05" max="1" placeholder="Enter a Number" onChange={(e) => this.onSetFactorChange(e)} />
                 </AdaptableBlotterForm>
                 {' '}
-                <div><br/></div>
+                <div><br /></div>
                 <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}
