@@ -28,26 +28,7 @@
 		]
 	},
 	"Shortcut": {
-		"NumericShortcuts": [
-			{
-				"ShortcutKey": "B",
-				"ShortcutResult": "5",
-				"DataType": "Number",
-				"ShortcutAction": "Multiply",
-				"IsPredefined": false,
-				"IsDynamic": false
-			}
-		],
-		"DateShortcuts": [
-			{
-				"ShortcutKey": "B",
-				"ShortcutResult": "2018-01-18",
-				"DataType": "Date",
-				"ShortcutAction": "Multiply",
-				"IsPredefined": false,
-				"IsDynamic": false
-			}
-		]
+		"Shortcuts": []
 	},
 	"PlusMinus": {
 		"DefaultNudge": 1,
@@ -357,10 +338,6 @@
 		"DashboardStrategyControls": [
 			{
 				"Strategy": "Functions",
-				"IsVisible": true
-			},
-			{
-				"Strategy": "DashboardBookmarks",
 				"IsVisible": true,
 				"ControlConfiguration": [
 					"Dashboard",
@@ -371,15 +348,15 @@
 			},
 			{
 				"Strategy": "AdvancedSearch",
-				"IsVisible": true
+				"IsVisible": false
 			},
 			{
 				"Strategy": "QuickSearch",
-				"IsVisible": true
+				"IsVisible": false
 			},
 			{
 				"Strategy": "Layout",
-				"IsVisible": true
+				"IsVisible": false
 			},
 			{
 				"Strategy": "Filter",
@@ -411,6 +388,9 @@
 		"Ranges": [],
 		"CurrentRange": "",
 		"ErrorMsg": ""
+	},
+	"FormatColumn": {
+		"FormatColumns": []
 	},
 	"AdaptableStoreVersion": 0
 }

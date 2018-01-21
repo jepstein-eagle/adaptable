@@ -26,7 +26,7 @@ interface FunctionButtonsConfigComponentProps extends IStrategyViewPopupProps<Fu
 class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConfigComponentProps, {}> {
     render() {
         let config: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
-        return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon="bookmark">
+        return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon="home">
             <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => config.indexOf(x.Label) == -1).map(x=>x.Label)}
                 SelectedValues={config}
                 HeaderAvailable="Available Function Buttons"
@@ -39,7 +39,7 @@ class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConf
         this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, SelectedValues)
     }
 
-    onClick(item: React.FormEvent<any>, bookmark: string) {
+    onClick(item: React.FormEvent<any>, controlName: string) {
         let e = item.target as HTMLInputElement;
         let originalConf = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
         if (!originalConf) {
@@ -47,10 +47,10 @@ class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConf
         }
         let arrayConfig: Array<string> = [].concat(originalConf)
         if (e.checked) {
-            arrayConfig.push(bookmark)
+            arrayConfig.push(controlName)
         }
         else {
-            let index = arrayConfig.indexOf(bookmark)
+            let index = arrayConfig.indexOf(controlName)
             arrayConfig.splice(index, 1)
         }
         this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, arrayConfig)
