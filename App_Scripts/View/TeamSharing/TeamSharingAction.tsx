@@ -16,7 +16,9 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions'
 import { ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyIds from '../../Core/StrategyConstants';
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
 import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -27,6 +29,7 @@ import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
 import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { StrategyHeader } from '../Components/StrategyHeader';
 
 interface TeamSharingActionProps extends IStrategyViewPopupProps<TeamSharingActionComponent> {
     Entities: Array<ISharedEntity>
@@ -50,7 +53,7 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
-                        <Glyphicon glyph={this.getGhyphicon(x.strategy)} />{' '}{x.strategy}
+                      <StrategyHeader StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
                         {x.user}{' @ '}{x.timestamp.toLocaleString()}
@@ -68,8 +71,8 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                 </Row>
             </li>
         })
-        return <PanelWithImage header="Team Sharing" style={panelStyle} infoBody={infoBody}
-            bsStyle="primary" glyphicon={"share"}>
+        return <PanelWithImage header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
+            bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
             {this.props.Entities.length == 0 ?
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -79,29 +82,7 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
             </ListGroup>
         </PanelWithImage>
     }
-    getGhyphicon(strategyID: string) {
-        switch (strategyID) {
-            case StrategyIds.AdvancedSearchStrategyId:
-                return "search"
-            case StrategyIds.CalculatedColumnStrategyId:
-                return "th-list"
-            case StrategyIds.CellValidationStrategyId:
-                return "flag"
-            case StrategyIds.ConditionalStyleStrategyId:
-                return "tint"
-            case StrategyIds.CustomSortStrategyId:
-                return "sort-by-attributes"
-            case StrategyIds.FilterStrategyId:
-                return "filter"
-            case StrategyIds.LayoutStrategyId:
-                return "th"
-            case StrategyIds.PlusMinusStrategyId:
-                return "plus-sign"
-            case StrategyIds.ShortcutStrategyId:
-                return "road"
-        }
-    }
-
+    
     getSharedItemDetails(sharedEntity: ISharedEntity) {
         switch (sharedEntity.strategy) {
             case StrategyIds.CustomSortStrategyId: {

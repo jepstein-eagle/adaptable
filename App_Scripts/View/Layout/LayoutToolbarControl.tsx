@@ -18,7 +18,7 @@ import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 
 interface LayoutToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -109,7 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
         Columns: state.Grid.Columns,
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.LayoutStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.LayoutStrategyId),
     };
 }
 

@@ -19,7 +19,9 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 
@@ -80,9 +82,9 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
             overrideTooltip="Create Format Column"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Format Column"
+        return <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
             button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={StrategyConstants.FormatColumnGlyph} infoBody={infoBody}>
+            bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
             {this.props.FormatColumns.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new column format.</Well>
@@ -144,7 +146,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
         onEditFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit( formatColumn)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
     };
 }
 

@@ -31,7 +31,9 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { SortOrder } from '../../Core/Enums';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 interface AdvancedSearchActionProps extends IStrategyViewPopupProps<AdvancedSearchActionComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -103,9 +105,9 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
             DisplayMode="Glyph+Text" />
         return (
             <div >
-                <PanelWithButton bsStyle="primary" headerText="Advanced Search"
+                <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName}
                     infoBody={infoBody}
-                    button={newSearchButton} glyphicon={"search"}>
+                    button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph}>
                     {/* The main Search selection form */}
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineName">
@@ -269,7 +271,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
     };
 }
 

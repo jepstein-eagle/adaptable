@@ -1,7 +1,9 @@
 import { IQuickSearchStrategy } from '../Core/Interface/IQuickSearchStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
@@ -15,8 +17,8 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     protected quickSearchState: QuickSearchState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Quick Search", ScreenPopups.QuickSearchConfigPopup, "eye-open");
+        super(StrategyIds.QuickSearchStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.QuickSearchStrategyName, ScreenPopups.QuickSearchConfigPopup, StrategyGlyphs.QuickSearchGlyph);
     }
 
     protected InitState() {

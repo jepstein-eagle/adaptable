@@ -1,7 +1,10 @@
 import { IShortcut, IShortcutStrategy } from '../Core/Interface/IShortcutStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
@@ -21,8 +24,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     private Shortcuts: IShortcut[]
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.ShortcutStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Shortcut", 'ShortcutConfig', "road");
+        super(StrategyIds.ShortcutStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutConfig, StrategyGlyphs.ShortcutGlyph);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 

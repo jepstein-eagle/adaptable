@@ -4,7 +4,9 @@ import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { Provider, connect } from 'react-redux';
 import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -65,7 +67,7 @@ class LayoutConfigComponent extends React.Component<LayoutConfigProps, LayoutCon
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return (
-            <PanelWithImage header="Layout" bsStyle="primary" glyphicon="th" infoBody={infoBody}>
+            <PanelWithImage header={StrategyNames.LayoutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.LayoutGlyph} infoBody={infoBody}>
 
                 <Panel header="Load Layout" bsStyle="info">
                     <AdaptableBlotterForm horizontal>

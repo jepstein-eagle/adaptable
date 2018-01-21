@@ -1,6 +1,9 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
@@ -12,8 +15,8 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.SmartEditStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Smart Edit", 'SmartEditAction', "pencil");
+        super(StrategyIds.SmartEditStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditAction, StrategyGlyphs.SmartEditGlyph);
     }
     
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {

@@ -1,7 +1,9 @@
 import { IFilterStrategy, IColumnFilter } from '../Core/Interface/IFilterStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -15,8 +17,8 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     private filters: FilterState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.FilterStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyConstants.FilterStrategyFriendlyName, ScreenPopups.UserFilterConfigPopup, StrategyConstants.FilterGlyph);
+        super(StrategyIds.FilterStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FilterStrategyName, ScreenPopups.UserFilterConfigPopup, StrategyGlyphs.FilterGlyph);
     }
 
     protected addColumnMenuItems(columnId: string): void {
@@ -24,7 +26,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create User Filter",
                 ScreenPopups.UserFilterConfigPopup,
-                StrategyConstants.FilterGlyph,
+                StrategyGlyphs.FilterGlyph,
                 "New|" + columnId)))
     }
 

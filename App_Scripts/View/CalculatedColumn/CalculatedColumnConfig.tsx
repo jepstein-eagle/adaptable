@@ -6,7 +6,9 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -78,8 +80,8 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
             overrideTooltip="Create Calculated Column"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Calculated Column" style={panelStyle} infoBody={infoBody}
-            button={newButton} bsStyle="primary" glyphicon={"th-list"}>
+        return <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={panelStyle} infoBody={infoBody}
+            button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
             {this.props.CalculatedColumns.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new Calculated Column.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

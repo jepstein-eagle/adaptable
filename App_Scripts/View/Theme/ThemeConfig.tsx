@@ -8,6 +8,9 @@ import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 
 interface ThemeConfigProps extends IStrategyViewPopupProps<ThemeConfigComponent> {
@@ -24,7 +27,7 @@ class ThemeConfigComponent extends React.Component<ThemeConfigProps, {}> {
             return <option value={x} key={x}>{x}</option>
         })
         return (
-            <PanelWithButton headerText="Theme Picker" bsStyle="primary" glyphicon="leaf" infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyNames.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ThemeGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="themepicker">
                         <Col xs={2} >

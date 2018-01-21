@@ -18,7 +18,7 @@ import { AuditService } from '../../Core/Services/AuditService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -175,6 +175,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public InitAuditService() {
+        // do somethign?
     }
 
     private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
@@ -518,6 +519,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectCells(cells: ICellInfo[]): void {
+        // do something?
     }
 
     public getColumnIndex(columnName: string): number {

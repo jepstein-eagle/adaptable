@@ -9,7 +9,7 @@ import { IRangeExpression } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Expression/ExpressionHelper'
 import { Helper } from '../Helper'
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
-import * as StrategyConstants from '../StrategyConstants'
+import * as StrategyIds from '../StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 
 /*
@@ -139,7 +139,7 @@ export class AuditService implements IAuditService {
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.CellValidationMode == CellValidationMode.PreventEdit) {
-                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                                 "CheckCellChanging",
                                 "Failed",
                                 { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent })
@@ -157,7 +157,7 @@ export class AuditService implements IAuditService {
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.CellValidationMode == CellValidationMode.PreventEdit) {
-                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                             "CheckCellChanging",
                             "Failed",
                             { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent })
@@ -170,13 +170,13 @@ export class AuditService implements IAuditService {
             }
         }
         if (failedWarningRules.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                 "CheckCellChanging",
                 "Warning",
                 { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent })
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                 "CheckCellChanging",
                 "Ok",
                 { DataChangingEvent: dataChangedEvent })

@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
@@ -63,12 +63,12 @@ export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        { Strategy: StrategyConstants.FunctionsStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
-        { Strategy: StrategyConstants.AdvancedSearchStrategyId, IsVisible: true },
-        { Strategy: StrategyConstants.QuickSearchStrategyId, IsVisible: true },
-        { Strategy: StrategyConstants.LayoutStrategyId, IsVisible: true },
-        { Strategy: StrategyConstants.FilterStrategyId, IsVisible: true },
-        { Strategy: StrategyConstants.ExportStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
+        { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.FilterStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.ExportStrategyId, IsVisible: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ],
     DashboardZoom : 1

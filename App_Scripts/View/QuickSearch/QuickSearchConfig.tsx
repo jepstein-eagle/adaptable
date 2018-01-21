@@ -20,6 +20,10 @@ import { StringExtensions } from '../../Core/Extensions';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
     QuickSearchDefaultBackColour: string;
@@ -116,7 +120,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
         return (
             <span >
-                <PanelWithImage header="Quick Search" bsStyle="primary" glyphicon="eye-open" infoBody={infoBody}>
+                <PanelWithImage header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
                     <AdaptableBlotterForm inline>
                         <Panel header={"Search For"} bsStyle="info" >
                             <AdaptableBlotterFormControlTextClear

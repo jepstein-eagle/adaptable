@@ -16,7 +16,7 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { IUIConfirmation } from "../../Core/Interface/IStrategy";
 
@@ -74,7 +74,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.QuickSearchStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.QuickSearchStrategyId),
     };
 }
 

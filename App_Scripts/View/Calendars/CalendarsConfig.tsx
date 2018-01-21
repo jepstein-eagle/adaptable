@@ -15,6 +15,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Core/Helper';
 import { SortOrder } from '../../Core/Enums';
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 interface CalendarsConfigProps extends IStrategyViewPopupProps<CalendarsConfigComponent> {
     CurrentCalendar: string
@@ -86,7 +89,7 @@ class CalendarsConfigComponent extends React.Component<CalendarsConfigProps, Cal
                 </div>
             });
 
-        return <PanelWithImage header={"Calendars"} bsStyle="primary" glyphicon="calendar" infoBody={infoBody}>
+        return <PanelWithImage header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
 
             <PanelWithRow CellInfo={acllCalendarCellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>

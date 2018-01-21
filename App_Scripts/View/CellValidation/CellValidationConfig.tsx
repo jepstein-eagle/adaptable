@@ -6,13 +6,15 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import {  CellValidationMode } from '../../Core/Enums'
+import { CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
@@ -22,6 +24,7 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { CellValidationConfigItem } from './CellValidationConfigItem';
 
 interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
     CellValidations: ICellValidationRule[];
@@ -59,61 +62,33 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
-            let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
-                            return <option key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
-                         })
-
 
         let cellInfo: [string, number][] = [["Column", 2], ["Disallowed Edit", 3], ["Expression", 2], ["If Rule Broken", 2], ["", 3]];
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
-            return <li
-                className="list-group-item" key={index}>
-                <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={2}>
-                        <span style={expressionFontSizeStyle}>
-                            {column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString}
-                        </span>
-                    </Col>
-                    <Col xs={3}>
-                        <span style={expressionFontSizeStyle}>
-                            {x.Description}
-                        </span>
-                    </Col>
-                    <Col xs={2}>
-                        <span style={expressionFontSizeStyle}>
-                            {this.setExpressionDescription(x)}
-                        </span>
-                    </Col>
-                    <Col xs={2}>
-                        <FormControl style={expressionFontSizeStyle} componentClass="select" placeholder="select" value={x.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(index, x)} >
+            return <CellValidationConfigItem
+                CellValidation={x}
+                Column={column}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                Index={index}
+                onEdit={(index, x) => this.onEdit(index, x)}
+                onShare={() => this.props.onShare(x)}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                onDeleteConfirm={CellValidationRedux.CellValidationDelete(index)}
+                onChangeCellValidationMode={(index, x) => this.onCellValidationModeChanged(index, x)}
+            >
+            </CellValidationConfigItem>
 
-                            {CellValidationModeTypes}
-                        </FormControl>
-
-                    </Col>
-                    <Col xs={3}>
-                        <EntityListActionButtons
-                            ConfirmDeleteAction={CellValidationRedux.CellValidationDelete(index)}
-                            showShare={this.props.TeamSharingActivated}
-                            editClick={() => this.onEdit(index, x)}
-                            shareClick={() => this.props.onShare(x)}
-                            overrideDisableEdit={!column}
-                            ConfigEntity={x}
-                            EntityName="Cell Validation">
-                        </EntityListActionButtons>
-                    </Col>
-                </Row>
-            </li>
         })
         let newButton = <ButtonNew onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Cell Validation" bsStyle="primary" style={panelStyle}
+        return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={panelStyle}
             button={newButton}
-            glyphicon={"flag"}
+            glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
                 <div>
@@ -155,9 +130,9 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index, WizardStartIndex: 1 });
     }
 
-    private onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onChangeCellValidationMode(index, e.value as CellValidationMode);
+    onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
+       // need to do something!
+       this.props.onChangeCellValidationMode(index, cellValidationMode);
     }
 
     closeWizard() {
@@ -170,11 +145,7 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
-    setExpressionDescription(CellValidation: ICellValidationRule): string {
-        return (CellValidation.HasExpression) ?
-            ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
-            "No Expression";
-    }
+
 
 
 }

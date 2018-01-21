@@ -18,7 +18,7 @@ import { AuditService } from '../../Core/Services/AuditService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -432,6 +432,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectCells(cells: ICellInfo[]): void {
+        // todo?
     }
 
     public getColumnIndex(columnName: string): number {

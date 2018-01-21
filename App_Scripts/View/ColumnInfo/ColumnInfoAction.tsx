@@ -7,7 +7,9 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { StringExtensions } from '../../Core/Extensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
@@ -62,11 +64,11 @@ class ColumnInfoActionComponent extends React.Component<ColumnInfoActionProps, C
         let calculatedColumnSummary = <CalculatedColumnSummary SummarisedColumn={this.state.SelectedColumn} />
 
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
-        let headerText = "Column Info" //+ (this.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
+        let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
         if (this.state.SelectedColumn) {
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
         }
-        return <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyConstants.ColumnInfoGlyph} infoBody={infoBody}>
+        return <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
             {this.state.ShowSelector &&
                 <ColumnSelector SelectedColumnIds={[selectedColumnId]}

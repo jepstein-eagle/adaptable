@@ -16,7 +16,7 @@ import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
@@ -78,7 +78,7 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.FilterStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FilterStrategyId),
         UserFilters: state.Filter.UserFilters,
         Columns: state.Grid.Columns,
         ColumnFilters: state.Filter.ColumnFilters,

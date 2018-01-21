@@ -7,7 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { Helper } from '../../Core/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
@@ -40,7 +40,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                myCols.push({ size: 3, content: <b>{StrategyConstants.CalculatedColumnStrategyFriendlyName}</b> });
+                myCols.push({ size: 3, content: <b>{StrategyNames.CalculatedColumnStrategyName}</b> });
                 myCols.push({ size: 6, content: item.GetValueFunc });
                 myCols.push({ size: 3, content: <ButtonEdit onClick={() => this.onEdit(index, item)} DisplayMode="Glyph" /> });
             }

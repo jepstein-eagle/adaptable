@@ -19,7 +19,9 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyNames from '../../Core/StrategyNames'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 
@@ -79,7 +81,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName} glyphicon={StrategyConstants.AdvancedSearchGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -94,10 +96,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.AdvancedSearchStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
          CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.AdvancedSearchStrategyId),
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
     };
 }
 

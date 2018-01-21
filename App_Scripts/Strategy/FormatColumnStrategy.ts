@@ -1,6 +1,8 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
@@ -12,8 +14,8 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
     protected FormatColumnState: FormatColumnState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.FormatColumnStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyConstants.FormatColumnStrategyFriendlyName, ScreenPopups.FormatColumnConfigPopup, StrategyConstants.FormatColumnGlyph);
+        super(StrategyIds.FormatColumnStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnConfigPopup, StrategyGlyphs.FormatColumnGlyph);
     }
     
     protected addColumnMenuItems(columnId: string): void {
@@ -25,7 +27,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 label + "Column Format",
                 ScreenPopups.FormatColumnConfigPopup,
-                 StrategyConstants.FormatColumnGlyph,
+                 StrategyGlyphs.FormatColumnGlyph,
                 popupParam + columnId)))
     }
 

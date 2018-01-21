@@ -14,6 +14,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 interface FlashingCellsConfigProps extends IStrategyViewPopupProps<FlashingCellsConfigComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -73,7 +76,7 @@ class FlashingCellsConfigComponent extends React.Component<FlashingCellsConfigPr
             </FormGroup>
         </AdaptableBlotterForm>;
 
-        return <PanelWithImage header={"Flashing Cells"} bsStyle="primary" style={panelStyle} glyphicon="flash" infoBody={infoBody}>
+        return <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
             {setAllOption}
             <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             <ListGroup style={divStyle}>

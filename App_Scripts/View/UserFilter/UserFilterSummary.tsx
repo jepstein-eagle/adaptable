@@ -8,7 +8,8 @@ import { Helper } from '../../Core/Helper';
 import { UserFilterWizard } from '../UserFilter/UserFilterWizard'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
@@ -37,11 +38,11 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
         // title row
         let titleRow = <StrategySummaryRow
-            key={StrategyConstants.FilterStrategyFriendlyName}
-            StrategyName={StrategyConstants.FilterStrategyFriendlyName}
-            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.FilterStrategyFriendlyName)}
+            key={StrategyNames.FilterStrategyName}
+            StrategyId={StrategyIds.FilterStrategyId}
+            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.FilterStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyConstants.FilterStrategyFriendlyName}
+            NewButtonTooltip={StrategyNames.FilterStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -54,7 +55,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         Item1={item.FriendlyName}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.FilterStrategyFriendlyName}
+                        EntityName={StrategyNames.FilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={FilterRedux.UserFilterDelete(item)}
@@ -111,7 +112,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(UserFilter)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FilterStrategyId))
     };
 }
 

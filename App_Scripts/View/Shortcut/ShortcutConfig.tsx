@@ -6,7 +6,9 @@ import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox, Well 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
@@ -67,9 +69,9 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
             overrideTooltip="Create New Shortcut"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Shortcuts"
+        return <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
             button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={"road"}
+            bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ShortcutGlyph}
             infoBody={infoBody}>
 
             {this.props.Shortcuts.length == 0 ?

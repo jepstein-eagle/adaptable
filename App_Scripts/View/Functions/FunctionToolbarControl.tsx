@@ -11,7 +11,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { IMenuItem, IUIConfirmation } from '../../Core/Interface/IStrategy'
 
@@ -70,7 +70,7 @@ class FunctionToolbarControlComponent extends React.Component<FunctionControlCom
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.FunctionsStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FunctionsStrategyId),
         MenuState: state.Menu,
         EntitlementsState: state.Entitlements
     };

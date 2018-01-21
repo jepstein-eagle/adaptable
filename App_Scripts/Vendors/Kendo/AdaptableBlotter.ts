@@ -20,7 +20,7 @@ import { StyleService } from '../../Core/Services/StyleService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -680,9 +680,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {
+        // todo
     }
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
-
+// todo
     }
     public getFirstRecord(): any {
         return null;

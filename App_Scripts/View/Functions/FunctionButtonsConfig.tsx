@@ -10,7 +10,7 @@ import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interf
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helper';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { IMenuItem } from '../../Core/Interface/IStrategy'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
@@ -36,7 +36,7 @@ class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConf
     }
 
     ListChange(SelectedValues: string[]){
-        this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, SelectedValues)
+        this.props.onDashboardControlConfigChange(StrategyIds.FunctionsStrategyId, SelectedValues)
     }
 
     onClick(item: React.FormEvent<any>, controlName: string) {
@@ -53,13 +53,13 @@ class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConf
             let index = arrayConfig.indexOf(controlName)
             arrayConfig.splice(index, 1)
         }
-        this.props.onDashboardControlConfigChange(StrategyConstants.FunctionsStrategyId, arrayConfig)
+        this.props.onDashboardControlConfigChange(StrategyIds.FunctionsStrategyId, arrayConfig)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.FunctionsStrategyId),
+        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FunctionsStrategyId),
         MenuState: state.Menu,
         EntitlementsState: state.Entitlements
     };

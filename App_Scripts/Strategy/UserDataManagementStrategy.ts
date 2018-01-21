@@ -2,7 +2,7 @@ import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
 import { IUserDataManagementStrategy } from '../Core/Interface/IUserDataManagementStrategy';
 import { MenuReduxActionItem } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
@@ -11,7 +11,7 @@ const cleanUserData: string = "CleanUserData"
 
 export class UserDataManagementStrategy extends AdaptableStrategyBase implements IUserDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.UserDataManagementStrategyId, blotter)
+        super(StrategyIds.UserDataManagementStrategyId, blotter)
         this.menuItemConfig = new MenuReduxActionItem("Clean User Data", this.Id, ResetUserData(), "user");
     }
    

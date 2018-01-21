@@ -13,7 +13,8 @@ import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
@@ -42,9 +43,9 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
         // title row
         let titleRow = <StrategySummaryRow
-            key={StrategyConstants.PlusMinusStrategyFriendlyName}
-            StrategyName={StrategyConstants.PlusMinusStrategyFriendlyName}
-            StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
+            key={StrategyNames.PlusMinusStrategyName}
+            StrategyId={StrategyIds.PlusMinusStrategyId}
+             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
             NewButtonTooltip={"Plus / Minus Rule"}
         />
@@ -60,7 +61,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         Item1={"Nudge Value: " + item.DefaultNudge}
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.PlusMinusStrategyFriendlyName}
+                        EntityName={StrategyNames.PlusMinusStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}
@@ -127,7 +128,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
     };
 }
 

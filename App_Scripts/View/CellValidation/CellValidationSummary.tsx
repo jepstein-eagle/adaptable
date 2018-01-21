@@ -13,7 +13,8 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
@@ -41,11 +42,11 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
         // title row
         let titleRow = <StrategySummaryRow
-            key={StrategyConstants.CellValidationStrategyFriendlyName}
-            StrategyName={StrategyConstants.CellValidationStrategyFriendlyName}
-            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.CellValidationStrategyFriendlyName)}
+            key={StrategyNames.CellValidationStrategyName}
+            StrategyId={StrategyIds.CellValidationStrategyId}
+             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyConstants.CellValidationStrategyFriendlyName}
+            NewButtonTooltip={StrategyNames.CellValidationStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -58,7 +59,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.CellValidationMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.CellValidationStrategyFriendlyName}
+                        EntityName={StrategyNames.CellValidationStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={CellValidationRedux.CellValidationDelete(index)}
@@ -116,7 +117,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
     };
 }
 

@@ -22,7 +22,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Services/RangeHelper";
@@ -143,7 +143,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Ranges: state.Range.Ranges,
         Columns: state.Grid.Columns,
         LiveRanges: state.Range.CurrentLiveRanges,
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyConstants.ExportStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ExportStrategyId),
     };
 }
 

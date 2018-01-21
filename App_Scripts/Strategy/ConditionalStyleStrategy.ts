@@ -2,7 +2,10 @@ import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState
 import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -11,8 +14,8 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.ConditionalStyleStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Conditional Style", 'ConditionalStyleConfig', "tint");
+        super(StrategyIds.ConditionalStyleStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStyleConfig, StrategyGlyphs.ConditionalStyleGlyph);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
     }
@@ -28,9 +31,9 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     protected addColumnMenuItems(columnId: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
-                "Create Conditional Style",
-                "ConditionalStyleConfig",
-                "tint",
+                "Create " + StrategyNames.ConditionalStyleStrategyName,
+                ScreenPopups.ConditionalStyleConfig,
+                StrategyGlyphs.ConditionalStyleGlyph,
                 "New|" + columnId)))
     }
 

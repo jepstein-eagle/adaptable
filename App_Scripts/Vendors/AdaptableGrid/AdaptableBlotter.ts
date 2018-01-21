@@ -20,7 +20,7 @@ import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -123,6 +123,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public InitAuditService() {
+        // todo?
     }
 
     private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
@@ -319,6 +320,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectCells(cells: ICellInfo[]): void {
+        // todo
     }
 
     public getColumnIndex(columnId: string): number {
@@ -334,11 +336,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
-
+// todo
     }
 
     public removeCustomSort(columnId: string): void {
-
+// todo
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -480,9 +482,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
-
+// todo
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {
+        // todo
     }
 
     public getFirstRecord(): any {

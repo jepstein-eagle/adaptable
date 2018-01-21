@@ -9,10 +9,12 @@ import { CustomSortWizard } from '../CustomSort/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import { StrategyHeader } from '../Components/StrategyHeader'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
@@ -39,19 +41,19 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         if (noCustomSort) {
             // title row
             customSortRow = <StrategySummaryRow
-                key={StrategyConstants.CustomSortStrategyFriendlyName}
-                StrategyName={StrategyConstants.CustomSortStrategyFriendlyName}
+                key={StrategyNames.CustomSortStrategyName}
+                StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort set"}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
+                NewButtonTooltip={StrategyNames.CustomSortStrategyName}
             />
         } else {
             customSortRow = <StrategyDetailRow
-            key={StrategyConstants.CustomSortStrategyFriendlyName}
-                Item1={StrategyConstants.CustomSortStrategyFriendlyName}
+            key={StrategyNames.CustomSortStrategyName}
+                Item1={<StrategyHeader StrategyId={StrategyIds.CustomSortStrategyId}/>}
                 Item2={customSort.CustomSortItems.join(', ')}
                 ConfigEnity={customSort}
-                EntityName={StrategyConstants.CustomSortStrategyFriendlyName}
+                EntityName={StrategyNames.CustomSortStrategyName}
                 onEdit={() => this.onEdit(customSort)}
                 onShare={() => this.props.onShare(customSort)}
                 showShare={this.props.TeamSharingActivated}
@@ -117,7 +119,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CustomSortStrategyId))
  
     };
 }

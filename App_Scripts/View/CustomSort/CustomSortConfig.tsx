@@ -7,7 +7,9 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helper';
@@ -79,8 +81,8 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
             overrideTooltip="Create Custom Sort"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Custom Sort" style={panelStyle} infoBody={infoBody}
-            button={newButton} bsStyle="primary" glyphicon={"sort-by-attributes"}>
+        return <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} style={panelStyle} infoBody={infoBody}
+            button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
             {this.props.CustomSorts.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
                 : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />

@@ -26,7 +26,7 @@ import { IPushPullLogin } from './Export/IPushPullLogin'
 import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
 import { FunctionButtonsConfig } from './Functions/FunctionButtonsConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
 import { CalculatedColumnConfig } from "./CalculatedColumn/CalculatedColumnConfig";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
@@ -60,18 +60,18 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
 //[StrategyConstants.FunctionsStrategyId, FunctionsToolbarControl],
-  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
-  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
-  [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
-  [StrategyConstants.FilterStrategyId, FilterToolbarControl],
-  [StrategyConstants.FunctionsStrategyId, FunctionToolbarControl],
-  [StrategyConstants.ExportStrategyId, ExportToolbarControl]
+  [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
+  [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
+  [StrategyIds.FilterStrategyId, FilterToolbarControl],
+  [StrategyIds.FunctionsStrategyId, FunctionToolbarControl],
+  [StrategyIds.ExportStrategyId, ExportToolbarControl]
 ]);
 
 //here we put the configuration screen of the dashboard control if it exists
 //the component needs to be registered in the global view factory as well with the same key/name
 export const AdaptableDashboardConfigurationViewFactory = new Map<string, string>([
-  [StrategyConstants.FunctionsStrategyId, "FunctionButtonsConfig"]
+  [StrategyIds.FunctionsStrategyId, "FunctionButtonsConfig"]
 ]);
 
 export interface IAdaptableViewFactory {

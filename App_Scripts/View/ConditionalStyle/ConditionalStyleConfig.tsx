@@ -8,7 +8,9 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums'
 import { ConditionalStyleConfigItem } from './ConditionalStyleConfigItem'
@@ -67,7 +69,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             return <ConditionalStyleConfigItem
                 ConditionalStyleCondition={conditionalStyleCondition}
                 key={"CS" + index}
-                onShare={()=> this.props.onShare(conditionalStyleCondition)}
+                onShare={() => this.props.onShare(conditionalStyleCondition)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
@@ -80,9 +82,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Conditional Style"
-            button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={"tint"} infoBody={infoBody}>
+        return <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
             {this.props.ConditionalStyles.length == 0 ?
                 <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
@@ -142,7 +142,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateConditionalStyle: (index: number, conditionalStyleCondition: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyleCondition)),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ConditionalStyleStrategyId))
-  };
+    };
 }
 
 export let ConditionalStyleConfig = connect(mapStateToProps, mapDispatchToProps)(ConditionalStyleConfigComponent);

@@ -13,7 +13,7 @@ import { EnumExtensions } from '../../Core/Extensions';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ColorPicker } from '../ColorPicker';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
 
@@ -39,7 +39,7 @@ export class FormatColumnConfigItem extends React.Component<FormatColumnConfigIt
             shareClick={() => this.props.onShare()}
             ConfigEntity={this.props.FormatColumn}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyConstants.FormatColumnStrategyFriendlyName} />
+            EntityName={StrategyNames.FormatColumnStrategyName} />
         myCols.push({ size: 3, content: buttons });
 
         return <ConfigEntityRow

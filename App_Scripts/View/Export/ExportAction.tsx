@@ -35,7 +35,9 @@ import { RangeNameWizard } from './Range/RangeNameWizard'
 import { RangeExpressionWizard } from './Range/RangeExpressionWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
@@ -98,7 +100,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
 
         return (
-            <PanelWithButton headerText="Export" bsStyle="primary" glyphicon="export" infoBody={infoBody} button={newButton} style={panelStyle}>
+            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
                 {this.props.Ranges.length == 0 ?
                     <Well bsSize="small">Click 'New' to create a new Range.  A range is named group of columns and Unique values..</Well>
                     : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -167,7 +169,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(value, exportDestination)),
         onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
     };
 }
 

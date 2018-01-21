@@ -13,7 +13,8 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, ConditionalStyleScope } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
@@ -47,11 +48,11 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         let existingItemCount: any = (existingItems) ? existingItems.length : "No";
         // title row
         let titleRow = <StrategySummaryRow
-            key={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-            StrategyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyConstants.ConditionalStyleStrategyFriendlyName)}
+            key={StrategyNames.ConditionalStyleStrategyName}
+            StrategyId={StrategyIds.ConditionalStyleStrategyId}
+             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+            NewButtonTooltip={StrategyNames.ConditionalStyleStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -64,7 +65,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+                        EntityName={StrategyNames.ConditionalStyleStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
@@ -126,7 +127,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ConditionalStyleStrategyId))
     };
 }
 

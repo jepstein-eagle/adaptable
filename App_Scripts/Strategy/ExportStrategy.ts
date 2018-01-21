@@ -1,6 +1,9 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem } from '../Core/Interface/IStrategy'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
@@ -24,8 +27,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.ExportStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Export", 'ExportAction', "export");
+        super(StrategyIds.ExportStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportActionPopup, StrategyGlyphs.ExportGlyph);
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
             this.RangeState.CurrentLiveRanges.forEach(cle => {

@@ -8,6 +8,9 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 
 interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {
@@ -21,7 +24,7 @@ class ColumnChooserActionComponent extends React.Component<ColumnChooserActionPr
         "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",<br/>,<br/>,
         "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
 
-        return <PanelWithImage header="Column Chooser" bsStyle="primary" glyphicon="list-alt" infoBody={infoBody}>
+        return <PanelWithImage header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
             <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible)}
                 SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
                 HeaderAvailable="Hidden Columns"

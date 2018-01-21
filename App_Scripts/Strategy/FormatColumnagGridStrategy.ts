@@ -3,7 +3,6 @@ import { IFormatColumnStrategy, IFormatColumn } from '../Core/Interface/IFormatC
 import { FormatColumnStrategy } from './FormatColumnStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/StrategyConstants'
 import { IMenuItem } from '../Core/Interface/IStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';

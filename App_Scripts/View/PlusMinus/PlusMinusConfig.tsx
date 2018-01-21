@@ -5,7 +5,9 @@ import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, Bu
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyConstants'
+import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
@@ -100,8 +102,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText="Plus / Minus" bsStyle="primary" style={panelStyle}
-            button={newButton} glyphicon={"plus-sign"}
+        return <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" style={panelStyle}
+            button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
             infoBody={infoBody}>
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formInlineName">

@@ -4,7 +4,10 @@ import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../Core/StrategyConstants'
+import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyNames from '../Core/StrategyNames'
+import * as StrategyGlyphs from '../Core/StrategyGlyphs'
+import * as ScreenPopups from '../Core/ScreenPopups'
 import { IMenuItem, ICellInfo, IUIError, IUIConfirmation } from '../Core/Interface/IStrategy';
 import { DataType, CellValidationMode } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper'
@@ -18,8 +21,8 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
-        super(StrategyConstants.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup("Plus/Minus", 'PlusMinusConfig', "plus-sign")
+        super(StrategyIds.PlusMinusStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusConfig, StrategyGlyphs.PlusMinusGlyph)
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
@@ -34,8 +37,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                     "Create Plus/Minus Nudge Rule",
-                    "PlusMinusConfig",
-                    "plus-sign",
+                    ScreenPopups.PlusMinusConfig,
+                    StrategyGlyphs.PlusMinusGlyph,
                     "New|" + columnId)))
         }
     }

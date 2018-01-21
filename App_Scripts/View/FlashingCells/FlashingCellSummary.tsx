@@ -7,7 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { Helper } from '../../Core/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/StrategyConstants'
+import * as StrategyNames from '../../Core/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
@@ -29,7 +29,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
             : <Button onClick={() => this.onFlashingSelectedChanged(flashingColumn)} bsStyle="success" bsSize="small">Flashing On</Button>
 
         let myCols: IColItem[] = []
-        myCols.push({ size: 3, content: <b>{StrategyConstants.FlashingCellsStrategyFriendlyName}</b> });
+        myCols.push({ size: 3, content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
         myCols.push({ size: 5, content: showFlashingButton });
         myCols.push({ size: 3, content: null });
         return <ConfigEntityRow items={myCols} />
