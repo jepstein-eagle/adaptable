@@ -11,7 +11,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
-import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
+//import { AdaptableDashboardConfigurationViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
@@ -45,8 +45,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
 
         let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
             let dashboardControl = AdaptableDashboardViewFactory.get(x.Strategy);
-            if(!dashboardControl)
-            {
+            if (!dashboardControl) {
                 console.error("Unknown Dashboard control <" + x.Strategy + "> from the user config", x)
                 return null
             }
@@ -57,12 +56,10 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
             if (x.Strategy == StrategyIds.FunctionsStrategyId) {
                 //we want to prevent people from hiding the Functions dropdown
-          //      visibleButton = null
+                //      visibleButton = null
             }
-            let configScreen = AdaptableDashboardConfigurationViewFactory.get(x.Strategy)
-            let isConfigurationButtonDisabled = !AdaptableDashboardConfigurationViewFactory.has(x.Strategy)
-            let configurationButton = <Button disabled={isConfigurationButtonDisabled}
-                onClick={() => this.onShowConfiguration(configScreen)}><Glyphicon glyph="wrench" /></Button>
+            //  let configScreen = AdaptableDashboardConfigurationViewFactory.get(x.Strategy)
+            //  let isConfigurationButtonDisabled = !AdaptableDashboardConfigurationViewFactory.has(x.Strategy)
 
             return <li key={"DashboardControl" + i}
                 className="list-group-item">
@@ -70,23 +67,23 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
                     <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</Col>
                     <Col xs={2}>{visibleButton}</Col>
-                    <Col xs={1}>{configurationButton}</Col>
                     <Col xs={6} style={previewStyle}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
         })
 
-        let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Config", 1], ["Preview", 6]];
+        let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Preview", 6]];
 
         return (
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} style={panelStyle}>
-                <AdaptableBlotterForm inline>
+                <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
                     {' '}
                     <FormControl value={this.state.EditedZoomFactor.toString()} type="number" min="0.5" step="0.05" max="1" placeholder="Enter a Number" onChange={(e) => this.onSetFactorChange(e)} />
                 </AdaptableBlotterForm>
                 {' '}
+                <div><br/></div>
                 <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
                 <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}

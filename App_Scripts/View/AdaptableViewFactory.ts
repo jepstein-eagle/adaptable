@@ -70,9 +70,9 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
 
 //here we put the configuration screen of the dashboard control if it exists
 //the component needs to be registered in the global view factory as well with the same key/name
-export const AdaptableDashboardConfigurationViewFactory = new Map<string, string>([
-  [StrategyIds.FunctionsStrategyId, "FunctionButtonsConfig"]
-]);
+//export const AdaptableDashboardConfigurationViewFactory = new Map<string, string>([
+ // [StrategyIds.FunctionsStrategyId, "FunctionButtonsConfig"]
+//]);
 
 export interface IAdaptableViewFactory {
   [key: string]: any;
