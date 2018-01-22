@@ -5,7 +5,7 @@ import { FlashingCellState, QuickSearchState, ConditionalStyleState, FormatColum
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions';
 import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
-import {  IStyle } from '../../Core/Interface/IStyle';
+
 
 //Somehow all this fucking CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
@@ -34,24 +34,28 @@ export class StyleService {
 
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
             || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-            || this.QuickSearchState != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch) {
+            || this.QuickSearchState != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
+            || this.FormatColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-           
-            this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
             this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn
-
+            this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
             this.clearCSSRules()
-            
-            this.FormatColumnState.FormatColumns.forEach((element, index) => {
-                this.addCSSRule(".Ab-FormatColumn-" + this.FormatColumnState.FormatColumns.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+           
+            this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
+                this.addCSSRule(".Ab-FormatColumn-" + this.FormatColumnState.FormatColumns.indexOf(formatColumn), 
+                'background-color: ' + formatColumn.Style.BackColor + ' !important;color: ' + formatColumn.Style.ForeColor + ' !important;font-weight: ' + formatColumn.Style.FontWeight + ' !important;font-style: ' + formatColumn.Style.FontStyle + ' !important;' + (formatColumn.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) + ' !important') : ''))
             });
 
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyleConditions.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
-                this.addCSSRule(".Ab-ConditionalStyle-" + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + FontWeight[element.Style.FontWeight] + ' !important;font-style: ' + FontStyle[element.Style.FontStyle] + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+                this.addCSSRule(".Ab-ConditionalStyle-" + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+            });
+            this.ConditionalStyleState.ConditionalStyleConditions.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column).forEach((element, index) => {
+                this.addCSSRule(".Ab-ConditionalStyle-" + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
 
+          
             // quick search
             this.addCSSRule(".Ab-QuickSearch" , 'background-color: ' + this.QuickSearchState.QuickSearchStyle.BackColor + ' !important;color: ' + this.QuickSearchState.QuickSearchStyle.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.QuickSearchStyle.FontWeight + ' !important;font-style: ' + this.QuickSearchState.QuickSearchStyle.FontStyle + ' !important;' + (this.QuickSearchState.QuickSearchStyle.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.QuickSearchStyle.FontSize) + ' !important') : ''))
             

@@ -25,7 +25,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
        
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
-                label + "Column Format",
+                label + StrategyNames.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnConfigPopup,
                  StrategyGlyphs.FormatColumnGlyph,
                 popupParam + columnId)))

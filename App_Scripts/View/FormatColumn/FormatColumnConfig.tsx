@@ -63,7 +63,7 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
 
     render() {
 
-        let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide."]
+        let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b> ," formatted as set and is not dependent on a rule being met."]
 
         let cellInfo: [string, number][] = [["Column", 3], ["Style", 5], ["", 4]];
 

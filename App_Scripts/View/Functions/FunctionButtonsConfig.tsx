@@ -25,7 +25,10 @@ interface FunctionButtonsConfigComponentProps extends IStrategyViewPopupProps<Fu
 
 class FunctionButtonsConfigComponent extends React.Component<FunctionButtonsConfigComponentProps, {}> {
     render() {
-        let config: string[] = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+        let config: string[] = [];
+        if(this.props.DashboardShortcutsDashboardControl.ControlConfiguration!=null){
+            config = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+        }
         return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon="home">
             <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => config.indexOf(x.Label) == -1).map(x=>x.Label)}
                 SelectedValues={config}

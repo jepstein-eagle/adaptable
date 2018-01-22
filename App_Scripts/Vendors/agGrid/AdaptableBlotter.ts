@@ -35,6 +35,9 @@ import { FilterStrategy } from '../../Strategy/FilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
+import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
+import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStrategy'
+import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
@@ -44,7 +47,7 @@ import { Helper } from '../../Core/Helper';
 import { StringExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
+import { IPPStyle, IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
 import { Expression } from '../../Core/Expression/Expression';
 import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
@@ -66,6 +69,7 @@ import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrateg
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
 import { Color } from '../../Core/color';
+import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -97,24 +101,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
-        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
+        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
+        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
@@ -534,6 +542,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    /*
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
         if (localCellClassRules) {
@@ -544,7 +553,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
             }
-            if (type == "ConditionalStyle") {
+           else if (type == "ConditionalStyle") {
                 for (let prop in localCellClassRules) {
                     if (prop.includes("Ab-ConditionalStyle-")) {
                         delete localCellClassRules[prop]
@@ -553,6 +562,53 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
 
+            //Is initialized in setColumnIntoStore
+            else if (type == "QuickSearch") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-QuickSearch")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            //Is initialized in Flash
+            else if (type == "FlashingCell") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-FlashUp")) {
+                        delete localCellClassRules[prop]
+                    }
+                    if (prop.includes("Ab-FlashDown")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            for (let prop in cellClassRules) {
+                localCellClassRules[prop] = cellClassRules[prop]
+            }
+        }
+        else {
+            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+        }
+    }
+    */
+
+    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
+        let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
+        if (localCellClassRules) {
+           
+            if (type == "FormatColumn") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-FormatColumn-")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
+            else if (type == "ConditionalStyle") {
+                for (let prop in localCellClassRules) {
+                    if (prop.includes("Ab-ConditionalStyle-")) {
+                        delete localCellClassRules[prop]
+                    }
+                }
+            }
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
@@ -674,11 +730,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 headerFontSize: headerColStyle.fontSize,
                 headerFontStyle: headerColStyle.fontStyle,
                 headerFontWeight: headerColStyle.fontWeight,
-                height: Number(headerColStyle.height.replace("px","")),
+                height: Number(headerColStyle.height.replace("px", "")),
                 Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let headerColumn: HTMLElement = document.querySelector(".ag-header-cell[col-id='" + col.ColumnId + "']") as HTMLElement
-                    let headerColumnStyle = window.getComputedStyle(headerColumn||headerFirstCol, null)
-                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+                    let headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
                 })
             },
             Row: {
@@ -689,11 +745,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 fontSize: firstRowStyle.fontSize,
                 fontStyle: firstRowStyle.fontStyle,
                 fontWeight: firstRowStyle.fontWeight,
-                height: Number(firstRowStyle.height.replace("px","")),
+                height: Number(firstRowStyle.height.replace("px", "")),
                 Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let cellElement: HTMLElement = document.querySelector(".ag-cell[col-id='" + col.ColumnId + "']") as HTMLElement
-                    let headerColumnStyle = window.getComputedStyle(cellElement||firstRow, null)
-                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
+                    let headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
                 })
             },
 
@@ -908,3 +964,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 }
+
+
+
+
+
+

@@ -118,27 +118,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
+        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
+        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
+        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
-        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
-        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
 
         this.filterContainer = this.container.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -414,7 +414,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             }
                         }
                     }
-                     /* falls through */
+                    /* falls through */
                     default:
                         break;
                 }
@@ -704,7 +704,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return rowIndex
     }
 
-    public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'| 'formatColumn'): void {
+    public removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
             cellStyleHypergridColumns = new Map()
@@ -736,7 +736,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch'| 'formatColumn'): void {
+    public removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void {
         this.cellStyleHypergridMap.forEach((cellStyleHypergridColumns) => {
             cellStyleHypergridColumns.forEach((cellStyleHypergrid) => {
                 if (style == 'flash') {
@@ -1043,7 +1043,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 config.font = this.buildFontCSSShorthand(config.font, formatStyle);
                             }
                         }
-                         if (conditionalStyleRow) {
+                        if (conditionalStyleRow) {
                             if (conditionalStyleRow.BackColor) {
                                 config.backgroundColor = conditionalStyleRow.BackColor;
                             }
