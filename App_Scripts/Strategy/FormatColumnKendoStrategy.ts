@@ -12,36 +12,33 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as StyleConstants from '../Core/StyleConstants'
+import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 
 export class FormatColumnKendoStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
-     constructor(blotter: IAdaptableBlotter) {
+    constructor(blotter: IAdaptableBlotter) {
         super(blotter)
     }
 
     protected InitStyles(): void {
-     //   this.blotter.removeAllCellStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
-     ///   this.blotter.removeAllRowStylesWithRegex(new RegExp("^" + this.ConsitionalStylePrefix));
-
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let theBlotter = this.blotter as AdaptableBlotter
+        let columns = theBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 8990 && this.FormatColumnState.FormatColumns.length > 0) {
+        if (columns.length > 0 && this.FormatColumnState.FormatColumns.length > 0) {
 
-          let indices: any[]=  this.FormatColumnState.FormatColumns.map((fc) => {
-               columns.findIndex(c=>c.ColumnId==fc.ColumnId)
-            })
+            this.FormatColumnState.FormatColumns.forEach((fc) => {
+                let columnIndex: number = columns.findIndex(c => c.ColumnId == fc.ColumnId)
+
+                if (columnIndex > 0) {
 
 
-            this.blotter.forAllRecordsDo((row: any) => {
-                let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
-           
-                indices.forEach((mt)=> {
-            //        this.blotter.addCellStyle(primaryKey, mt, this.ConsitionalStylePrefix + mt)
-                  
-                })
+                    theBlotter.forAllRecordsDo((row: any) => {
+                        let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
+                        theBlotter.addCellStyle(primaryKey, columnIndex, StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(fc))
 
+                    })
+                }
             })
         }
     }
 }
-
 

@@ -39,6 +39,8 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { FormatColumnKendoStrategy } from '../../Strategy/FormatColumnKendoStrategy'
+import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -91,28 +93,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
-        //we build the list of strategies
-        //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, true))
+        
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+       // this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy(this))
+        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnKendoStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
 
 
         this.contextMenuContainer = this.container.ownerDocument.createElement("div")
