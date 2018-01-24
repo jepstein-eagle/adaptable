@@ -18,10 +18,16 @@ export class StyleVisualItem extends React.Component<StyleVisualItemProps, {}> {
         let fontStyleForStyle: any = this.props.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
         let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(this.props.Style.FontSize);
 
-        return <div className={this.props.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"} style={{
-            textAlign: 'center', margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle
-        }}>Style</div>
-
+        return <div className={this.props.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"}
+            style={{
+                textAlign: 'center',
+                margin: '2px',
+                padding: '3px',
+                background: backColorForStyle,
+                color: foreColorForStyle,
+                fontWeight: fontWeightForStyle,
+                fontStyle: fontStyleForStyle,
+                fontSize: fontSizeForStyle
+            }}>Style</div>
     }
-
 }

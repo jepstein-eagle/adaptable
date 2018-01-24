@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import {  Col, Row, Panel } from 'react-bootstrap';
-import {  ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
+import { Col, Row, Panel } from 'react-bootstrap';
+import { ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
+import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;
@@ -11,13 +12,9 @@ export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEn
 export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {}> {
 
     render(): any {
-        return <li
-            className="list-group-item"
-            onClick={() => { } }>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col md={6} >{this.props.CalendarEntry.HolidayName}</Col>
-                <Col md={6} >{new Date(this.props.CalendarEntry.HolidayDate).toDateString()}</Col>
-            </Row>
-        </li>
+        let myCols: IColItem[] = []
+        myCols.push({ size: 6, content: this.props.CalendarEntry.HolidayName });
+        myCols.push({ size: 6, content: new Date(this.props.CalendarEntry.HolidayDate).toDateString() });
+        return <ConfigEntityRow items={myCols} />
     }
 }

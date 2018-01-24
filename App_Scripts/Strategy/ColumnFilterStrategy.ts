@@ -1,4 +1,4 @@
-import { IFilterStrategy, IColumnFilter } from '../Core/Interface/IFilterStrategy';
+import { IColumnFilterStrategy, IColumnFilter } from '../Core/Interface/IColumnFilterStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
@@ -10,26 +10,16 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../Core/Interface/IExpression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
-import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
-export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
-    private filters: FilterState
+export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
+    private filters: ColumnFilterState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.FilterStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FilterStrategyName, ScreenPopups.UserFilterConfigPopup, StrategyGlyphs.FilterGlyph);
+        super(StrategyIds.ColumnFilterStrategyId, blotter)
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnFilterStrategyName, ScreenPopups.ColumnFilterConfig, StrategyGlyphs.ColumnFilterGlyph);
     }
-
-    protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
-                "Create User Filter",
-                ScreenPopups.UserFilterConfigPopup,
-                StrategyGlyphs.FilterGlyph,
-                "New|" + columnId)))
-    }
-
 
     protected InitState() {
         if (this.filters != this.GetFilterState()) {
@@ -41,9 +31,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
         }
     }
 
-    private GetFilterState(): FilterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter;
+    private GetFilterState(): ColumnFilterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
     }
 }
-
-

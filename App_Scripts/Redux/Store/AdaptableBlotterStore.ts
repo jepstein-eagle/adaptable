@@ -24,7 +24,8 @@ import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
-import * as FilterRedux from '../ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
+import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
@@ -71,7 +72,8 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-    Filter: FilterRedux.FilterReducer,
+    UserFilter: UserFilterRedux.UserFilterReducer,
+    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
@@ -98,7 +100,7 @@ export const InitState = (): ResetUserDataAction => ({
 })
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
-        //This trigger the persist of the state with fuck all as well
+        //This trigger the persist of the state with nothing
         state = undefined
     }
 
@@ -305,14 +307,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             }
                             break;
                         }
-                        case StrategyIds.FilterStrategyId: {
+                        case StrategyIds.UserFilterStrategyId: {
                             let filter = actionTyped.Entity as IUserFilter
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Uid == filter.Uid)) {
+                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Uid == filter.Uid)) {
                                 overwriteConfirmation = true
                             }
-                            importAction = FilterRedux.UserFilterAddUpdate(filter)
+                            importAction = UserFilterRedux.UserFilterAddUpdate(filter)
                             // } 
                             break;
                         }
@@ -410,7 +412,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
-                case FilterRedux.HIDE_FILTER_FORM: {
+                case ColumnFilterRedux.HIDE_FILTER_FORM: {
                     adaptableBlotter.hideFilterForm()
                     return next(action);
                 }
@@ -606,7 +608,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         adaptableBlotter.setColumnIntoStore();
-                        //12/09/17 : thank fuck it's not needed anymore as I changed the init process... That was dirty
+                        //12/09/17 : fortunately it's not needed anymore as I changed the init process... That was dirty
                         // //We force clone of the state so strategies get reinitialized with the new column.
                         // //it's not ideal and will probably need optimization
                         // middlewareAPI.dispatch(CloneState())

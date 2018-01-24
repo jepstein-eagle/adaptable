@@ -15,8 +15,7 @@ import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutConfigItem } from './ShortcutConfigItem'
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { ShortcutTypeWizard } from './ShortcutTypeWizard'
-import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
+import { ShortcutWizard } from './ShortcutWizard'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -29,7 +28,7 @@ interface ShortcutConfigProps extends IStrategyViewPopupProps<ShortcutConfigComp
     onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
 
     Shortcuts: Array<IShortcut>,
-   onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
 interface ShortcutConfigInternalState {
@@ -53,7 +52,7 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
         let cellInfo: [string, number][] = [["Type", 2], ["Key", 2], ["Action", 3], ["Value", 2], ["", 3]];
 
         // we now show all shortcuts in one list without the tab (too confusing)
-           let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
+        let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutConfigItem Shortcut={shortcut} key={"ns" + index}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
@@ -85,22 +84,19 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                 </div>
             }
 
-            {this.state.EditedShortcut ?
-                <AdaptableWizard Steps={
-                    [
-                        <ShortcutTypeWizard />,
-                        <ShortcutSettingsWizard DateKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
-                            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
-                            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
-                            NumericKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
-                                keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
-                                : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)} />,
-                    ]}
-                    Data={this.state.EditedShortcut}
-                    StepStartIndex={this.state.WizardStartIndex}
-                    onHide={() => this.closeWizard()}
-                    onFinish={() => this.WizardFinish()} ></AdaptableWizard>
-                : null
+            {this.state.EditedShortcut != null &&
+                <ShortcutWizard
+                    EditedShortcut={this.state.EditedShortcut}
+                    DateKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                        keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
+                        : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
+                    NumericKeysAvailable={this.state.EditedShortcut.ShortcutKey ?
+                        keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
+                        : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
+                    WizardStartIndex={this.state.WizardStartIndex}
+                    closeWizard={() => this.closeWizard()}
+                    WizardFinish={() => this.WizardFinish()}
+                />
             }
         </PanelWithButton>
     }

@@ -45,7 +45,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
             let activeShortcut: IShortcut
-            var valueToReplace: any;
+            let valueToReplace: any;
             switch (columnDataType) {
                 case DataType.Number: {
                     activeShortcut = this.Shortcuts.filter(s=>s.DataType==DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
@@ -156,7 +156,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             ConfirmationTitle: "Cell Validation Failed",
             ConfirmationMsg: warningMessage,
             ConfirmationText: "Bypass Rule",
-            //We cancel the edit before applying the shortcut so if cancel then there is fuck all to do
+            //We cancel the edit before applying the shortcut so if cancel then there is nothing to do
             CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
             ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue),
             ShowCommentBox: true

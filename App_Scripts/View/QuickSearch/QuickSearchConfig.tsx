@@ -26,8 +26,8 @@ import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 
 interface QuickSearchConfigProps extends IStrategyViewPopupProps<QuickSearchConfigComponent> {
-    QuickSearchDefaultBackColour: string;
-    QuickSearchDefaultForeColour: string;
+    QuickSearchDefaultBackColor: string;
+    QuickSearchDefaultForeColor: string;
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
@@ -72,23 +72,23 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.props.onSetSearchDisplayType(e.value as QuickSearchDisplayType);
     }
 
-    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
+    private onUseBackColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.BackColor = (e.checked) ? this.props.QuickSearchDefaultBackColour : null;
+        style.BackColor = (e.checked) ? this.props.QuickSearchDefaultBackColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
 
-    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
+    private onUseForeColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.ForeColor = (e.checked) ? this.props.QuickSearchDefaultForeColour : null;
+        style.ForeColor = (e.checked) ? this.props.QuickSearchDefaultForeColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
 
-    private onBackColourSelectChange(event: React.FormEvent<ColorPicker>) {
+    private onBackColorSelectChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
         style.BackColor = e.value;
@@ -96,7 +96,7 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
         this.props.onSetStyle(style);
     }
 
-    private onForeColourSelectChange(event: React.FormEvent<any>) {
+    private onForeColorSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
         style.ForeColor = e.value;
@@ -170,11 +170,11 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                     <ControlLabel>Set Back Colour:</ControlLabel>
                                 </Col>
                                 <Col xs={1}>
-                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColourCheckChange(e)}></Checkbox>
+                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}></Checkbox>
                                 </Col>
                                 <Col xs={7}>
                                     {this.props.QuickSearchStyle.BackColor != null &&
-                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                                     }
                                 </Col>
                             </FormGroup>
@@ -183,11 +183,11 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
                                     <ControlLabel>Set Fore Colour:</ControlLabel>
                                 </Col>
                                 <Col xs={1}>
-                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColourCheckChange(e)}></Checkbox>
+                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}></Checkbox>
                                 </Col>
                                 <Col xs={7}>
                                     {this.props.QuickSearchStyle.ForeColor != null &&
-                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                     }
                                 </Col>
                             </FormGroup>
@@ -201,11 +201,11 @@ class QuickSearchConfigComponent extends React.Component<QuickSearchConfigProps,
 
     private getTextForQuickSearchDisplayType(quickSearchDisplayType: QuickSearchDisplayType): string {
         switch (quickSearchDisplayType) {
-            case QuickSearchDisplayType.ColourCell:
+            case QuickSearchDisplayType.HighlightCell:
                 return "Highlight Cells Only"
             case QuickSearchDisplayType.ShowRow:
                 return "Show Matching Rows Only"
-            case QuickSearchDisplayType.ShowRowAndColourCell:
+            case QuickSearchDisplayType.ShowRowAndHighlightCell:
                 return "Highlight Cells & Show Matching Rows"
         }
     }
@@ -219,8 +219,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
         QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
-        QuickSearchDefaultBackColour: state.QuickSearch.QuickSearchDefaultBackColour,
-        QuickSearchDefaultForeColour: state.QuickSearch.QuickSearchDefaultForeColour,
+        QuickSearchDefaultBackColor: state.QuickSearch.QuickSearchDefaultBackColor,
+        QuickSearchDefaultForeColor: state.QuickSearch.QuickSearchDefaultForeColor,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }

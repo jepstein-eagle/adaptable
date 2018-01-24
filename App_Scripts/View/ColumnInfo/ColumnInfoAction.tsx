@@ -15,6 +15,7 @@ import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
 import { CellValidationSummary } from '../CellValidation/CellValidationSummary'
 import { UserFilterSummary } from '../UserFilter/UserFilterSummary'
+import { ColumnFilterSummary } from '../ColumnFilter/ColumnFilterSummary'
 import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary'
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
@@ -51,13 +52,14 @@ class ColumnInfoActionComponent extends React.Component<ColumnInfoActionProps, C
     }
 
     render() {
-        let infoBody: any[] = ["Shows info about columns."]
+        let infoBody: any[] = ["Displays information about a column in the grid - which entities it has attached."]
         let cellInfo: [string, number][] = [["Function", 3], ["Summary", 6], ["", 3]];
 
         let customSortSummary = <CustomSortSummary TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn}  getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let conditionalStyleSummary = <ConditionalStyleSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let cellValidationSummary = <CellValidationSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let userFilterSummary = <UserFilterSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
+        let columnFilterSummary = <ColumnFilterSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let plusMinusSummary = <PlusMinusSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let formatColumnSummary = <FormatColumnSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
         let flashingCellSummary = <FlashingCellSummary SummarisedColumn={this.state.SelectedColumn} />
@@ -85,6 +87,7 @@ class ColumnInfoActionComponent extends React.Component<ColumnInfoActionProps, C
                         {conditionalStyleSummary}
                         {cellValidationSummary}
                         {userFilterSummary}
+                        {columnFilterSummary}
                         {plusMinusSummary}
                         {formatColumnSummary}
                         {this.state.SelectedColumn.DataType == DataType.Number &&

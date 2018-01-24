@@ -53,7 +53,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
             formatColumnRow = <StrategySummaryRow
                 key={StrategyNames.FormatColumnStrategyName}
                StrategyId={StrategyIds.FormatColumnStrategyId}
-                 StrategySummary={"No Format Column set"}
+                 StrategySummary={"No Format Column Set"}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyNames.FormatColumnStrategyName}
             />

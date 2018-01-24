@@ -7,8 +7,8 @@ export const QUICK_SEARCH_RUN = 'QUICK_SEARCH_RUN';
 export const QUICK_SEARCH_SET_OPERATOR = 'QUICK_SEARCH_SET_OPERATOR';
 export const QUICK_SEARCH_SET_DISPLAY = 'QUICK_SEARCH_SET_DISPLAY';
 export const QUICK_SEARCH_SET_STYLE = 'QUICK_SEARCH_SET_STYLE';
-export const QUICK_SEARCH_DEFAULT_BACK_COLOUR = '#FFFFCC';
-export const QUICK_SEARCH_DEFAULT_FORE_COLOUR = '#000000';
+export const QUICK_SEARCH_DEFAULT_BACK_COLOR = '#FFFFCC';
+export const QUICK_SEARCH_DEFAULT_FORE_COLOR = '#000000';
 
 
 export interface QuickSearchRunAction extends Redux.Action {
@@ -51,14 +51,15 @@ export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction =>
 })
 
 const initialQuickSearchState: QuickSearchState = {
-    QuickSearchDefaultBackColour: QUICK_SEARCH_DEFAULT_BACK_COLOUR,
-    QuickSearchDefaultForeColour: QUICK_SEARCH_DEFAULT_FORE_COLOUR,
+    QuickSearchDefaultBackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR,
+    QuickSearchDefaultForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
     QuickSearchText: "",
     QuickSearchOperator: LeafExpressionOperator.Contains,
-    QuickSearchDisplayType: QuickSearchDisplayType.ColourCell,
+    QuickSearchDisplayType: QuickSearchDisplayType.HighlightCell,
     QuickSearchStyle:
     {
-        BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOUR, // only property we are going to set 
+        BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR, 
+        ForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR
     }
 }
 

@@ -17,8 +17,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
-    protected FLASH_UP_STYLE: string = "Ab-FlashUp"
-    protected FLASH_DOWN_STYLE: string = "Ab-FlashDown"
+   
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)

@@ -12,6 +12,7 @@ import { Expression } from '../Core/Expression/Expression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
+import * as StyleConstants from '../Core/StyleConstants'
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -57,12 +58,12 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                 let cellClassRules: any = {};
                 this.ConditionalStyleState.ConditionalStyleConditions.forEach((cs, index) => {
                     if (cs.ConditionalStyleScope == ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
-                        cellClassRules["Ab-ConditionalStyle-" + index] = function (params: any) {
+                        cellClassRules[StyleConstants.CONDITIONAL_STYLE_STYLE + index] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     }
                     else if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        cellClassRules["Ab-ConditionalStyle-" + index] = function (params: any) {
+                        cellClassRules[StyleConstants.CONDITIONAL_STYLE_STYLE + index] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     }

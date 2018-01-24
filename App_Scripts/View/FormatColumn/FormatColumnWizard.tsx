@@ -3,7 +3,6 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';

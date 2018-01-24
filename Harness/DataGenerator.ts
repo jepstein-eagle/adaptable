@@ -2,10 +2,9 @@
 export class DataGenerator {
 
     getTrades(): ITrade[] {
-        var trades: ITrade[] = [];
-        for (var i = 1; i < 100; i++) {
-            var trade = this.createTrade(i);
-            trades.push(trade);
+        let trades: ITrade[] = [];
+        for (let i = 1; i < 100; i++) {
+            trades.push(this.createTrade(i));
         }
         return trades;
     }
@@ -22,7 +21,7 @@ export class DataGenerator {
             let columnName = this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
             let newValue = initialNewValue + numberToAdd;
-            //for now I decide to use dataItem.set but we'll need to see how the fuck people are 
+            //for now I decide to use dataItem.set but we'll need to see how people are 
             //managing ticking data since the grid doesn't allow partial refresh... so if we keep calling sync on 
             //every tick the grid becomes unusable since we loose editing, cell selection etc......
             //also if people call sync then we don't have the "change" event
@@ -88,13 +87,13 @@ export class DataGenerator {
     }
 
     createTrade(i: number): ITrade {
-        var price = this.getMeaningfulDouble();
-        var bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
-        var ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-        var bid = this.roundTo4Dp(price - bidOfferSpread / 2);
-        var tradeDate = this.generateRandomDateAndTime(-1000, 1000);
-        var moodyRating = this.getRandomItem(this.getMoodysRatings())
-        var trade =
+        let price = this.getMeaningfulDouble();
+        let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
+        let ask = this.roundTo4Dp(price + bidOfferSpread / 2);
+        let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+        let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+        let moodyRating = this.getRandomItem(this.getMoodysRatings())
+        let trade =
             {
                 "tradeId": i,
                 "notional": this.getRandomItem(this.getNotionals()),
@@ -142,13 +141,13 @@ export class DataGenerator {
 
     //jo: just a poor attempt to create GUID in JS.... what a stupid language
     protected generateUuid(): string {
-        var d = new Date().getTime();
+        let d = new Date().getTime();
         if (window.performance && typeof window.performance.now === "function") {
             d += performance.now(); //use high-precision timer if available
         }
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+        let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
             c => {
-                var r = (d + Math.random() * 16) % 16 | 0;
+                let r = (d + Math.random() * 16) % 16 | 0;
                 d = Math.floor(d / 16);
                 return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
             });
@@ -164,7 +163,7 @@ export class DataGenerator {
 
 
     protected generateRandomBool(): boolean {
-        var amount = this.generateRandomInt(0, 1);
+        let amount = this.generateRandomInt(0, 1);
         return amount === 0;
     }
 
@@ -175,8 +174,8 @@ export class DataGenerator {
 
 
     protected generateRandomNullableDouble(): number {
-        var myValue = this.generateRandomDouble();
-        var randomInt = this.generateRandomInt(1, 10);
+        let myValue = this.generateRandomDouble();
+        let randomInt = this.generateRandomInt(1, 10);
         if (randomInt > 7) {
             myValue = null;
         }
@@ -189,7 +188,7 @@ export class DataGenerator {
     }
 
     protected generateRandomNullableString(myString: string): string {
-        var randomInt = this.generateRandomInt(1, 10);
+        let randomInt = this.generateRandomInt(1, 10);
         if (randomInt > 7) {
             myString = null;
         }
@@ -217,9 +216,9 @@ export class DataGenerator {
     }
 
     protected generateRandomDateAndTime(minDays: number, maxDays: number): Date {
-        var currentDate = new Date(); // Fix it
-        var start = this.addDays(currentDate, minDays);
-        var end = this.addDays(currentDate, maxDays);
+        let currentDate = new Date(); // Fix it
+        let start = this.addDays(currentDate, minDays);
+        let end = this.addDays(currentDate, maxDays);
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     }
 
@@ -228,13 +227,13 @@ export class DataGenerator {
     }
 
     protected generateRandomDate(minDays: number, maxDays: number): Date {
-        var date = this.generateRandomDateAndTime(minDays, maxDays);
+        let date = this.generateRandomDateAndTime(minDays, maxDays);
         return new Date(date.getFullYear(), date.getMonth(), date.getDate());
         //return toDateTimeString(date);
     }
 
     protected toDateTimeString(date: Date) {
-        var options = {
+        let options = {
             weekday: "long",
             year: "numeric",
             month: "short",
@@ -246,12 +245,12 @@ export class DataGenerator {
     }
 
     protected generateCounterparty(): string {
-        var counterparties = this.getCounterparties();
+        let counterparties = this.getCounterparties();
         return counterparties[this.generateRandomInt(0, counterparties.length - 1)];
     }
 
     protected generateCurrency(): string {
-        var currencies = this.getCurrencies();
+        let currencies = this.getCurrencies();
         return currencies[this.generateRandomInt(0, currencies.length - 1)];
     }
 
@@ -265,7 +264,7 @@ export class DataGenerator {
     }
 
     protected getNotionals(): number[] {
-        var notionals = [
+        let notionals = [
             1000000,
             2000000,
             5000000,
@@ -275,7 +274,7 @@ export class DataGenerator {
         return notionals;
     }
     protected getBidOfferSpreads(): number[] {
-        var counterparties = [
+        let bidOfferSpreads = [
             0.1,
             0.15,
             0.2,
@@ -285,10 +284,10 @@ export class DataGenerator {
             0.4,
             0.5
         ];
-        return counterparties;
+        return bidOfferSpreads;
     }
     protected getCounterparties(): string[] {
-        var counterparties = [
+        let counterparties = [
             "Goldman Sachs",
             "Societe Generale",
             "Bank of America",
@@ -308,7 +307,7 @@ export class DataGenerator {
     }
 
     protected getCurrencies(): string[] {
-        var currencies = [
+        let currencies = [
             "EUR",
             "USD",
             "GBP",
@@ -321,7 +320,7 @@ export class DataGenerator {
     }
 
     protected getCountries(): string[] {
-        var countries = [
+        let countries = [
             "Argentina",
             "Australia",
             "Belgium",
@@ -350,7 +349,7 @@ export class DataGenerator {
     }
 
     protected getMoodysRatings(): string[] {
-        var moodysRatings = [
+        let moodysRatings = [
             "Aaa",
             "Aa1",
             "Aa2",
@@ -429,7 +428,7 @@ export class DataGenerator {
     }
 
     protected getNames(): string[] {
-        var names: string[] = [
+        let names: string[] = [
             "Stacee Dreiling",
             "Cecil Staab",
             "Sheba Dowdy",

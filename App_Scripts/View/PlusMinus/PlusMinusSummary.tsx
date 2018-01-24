@@ -120,7 +120,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 

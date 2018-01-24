@@ -7,6 +7,8 @@ import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlas
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
+import { DataType } from '../Core/Enums'
+import * as StyleConstants from '../Core/StyleConstants'
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -28,7 +30,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
 
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c=>c.DataType==DataType.Number);
             let theBlotter = this.blotter as AdaptableBlotter
             let flashings = this.currentFlashing
             let currentFlashing = this.currentFlashing
@@ -38,7 +40,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                 let index = this.FlashingCellState.FlashingColumns.indexOf(fc)
                 let cellClassRules: any = {};
                 if (fc) {
-                    cellClassRules[this.FLASH_UP_STYLE + index] = function (params: any) {
+                    cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
                         let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
                         if (params.value > auditLogValue) {
@@ -55,7 +57,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                         }
                         return false
                     }
-                    cellClassRules[this.FLASH_DOWN_STYLE + index] = function (params: any) {
+                    cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
                         let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
                         if (params.value < auditLogValue) {

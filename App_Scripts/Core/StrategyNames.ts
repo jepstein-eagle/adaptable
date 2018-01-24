@@ -10,7 +10,8 @@ export const ConditionalStyleStrategyName: string = "Conditional Style"
 export const CustomSortStrategyName: string = "Custom Sort"
 export const DashboardStrategyName: string = "Dashboard"
 export const ExportStrategyName: string = "Export"
-export const FilterStrategyName: string = "User Filter"
+export const UserFilterStrategyName: string = "User Filter"
+export const ColumnFilterStrategyName: string = "Column Filter"
 export const FlashingCellsStrategyName: string = "Flashing Cells"
 export const FormatColumnStrategyName: string = "Format Column"
 export const LayoutStrategyName: string = "Layout"
@@ -29,23 +30,25 @@ export function getNameForStrategy(strategyID: string) {
             return AdvancedSearchStrategyName
         case StrategyIds.CalculatedColumnStrategyId:
             return CalculatedColumnStrategyName
-            case StrategyIds.CalendarStrategyId:
+        case StrategyIds.CalendarStrategyId:
             return CalendarStrategyName
         case StrategyIds.CellValidationStrategyId:
             return CellValidationStrategyName
-            case StrategyIds.ColumnChooserStrategyId:
+        case StrategyIds.ColumnChooserStrategyId:
             return ColumnChooserStrategyName
-            case StrategyIds.ColumnInfoStrategyId:
+        case StrategyIds.ColumnInfoStrategyId:
             return ColumnInfoStrategyName
         case StrategyIds.ConditionalStyleStrategyId:
             return ConditionalStyleStrategyName
         case StrategyIds.CustomSortStrategyId:
             return CustomSortStrategyName
-            case StrategyIds.ExportStrategyId:
+        case StrategyIds.ExportStrategyId:
             return ExportStrategyName
-        case StrategyIds.FilterStrategyId:
-            return FilterStrategyName
-            case StrategyIds.FlashingCellsStrategyId:
+        case StrategyIds.UserFilterStrategyId:
+            return UserFilterStrategyName
+        case StrategyIds.ColumnFilterStrategyId:
+            return ColumnFilterStrategyName
+        case StrategyIds.FlashingCellsStrategyId:
             return FlashingCellsStrategyName
         case StrategyIds.FormatColumnStrategyId:
             return FormatColumnStrategyName
@@ -53,15 +56,15 @@ export function getNameForStrategy(strategyID: string) {
             return LayoutStrategyName
         case StrategyIds.PlusMinusStrategyId:
             return PlusMinusStrategyName
-            case StrategyIds.QuickSearchStrategyId:
+        case StrategyIds.QuickSearchStrategyId:
             return QuickSearchStrategyName
         case StrategyIds.ShortcutStrategyId:
             return ShortcutStrategyName
-            case StrategyIds.SmartEditStrategyId:
+        case StrategyIds.SmartEditStrategyId:
             return SmartEditStrategyName
-            case StrategyIds.TeamSharingStrategyId:
+        case StrategyIds.TeamSharingStrategyId:
             return TeamSharingStrategyName
-            case StrategyIds.ThemeStrategyId:
+        case StrategyIds.ThemeStrategyId:
             return ThemeStrategyName
     }
 }

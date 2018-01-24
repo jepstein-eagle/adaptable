@@ -109,7 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         CellValidations: state.CellValidation.CellValidations,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 

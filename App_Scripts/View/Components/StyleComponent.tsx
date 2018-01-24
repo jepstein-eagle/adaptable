@@ -48,21 +48,21 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="colorBackStyle">
                         <Col xs={4} >
-                            <Checkbox inline value="existing" checked={this.state.myStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColourCheckChange(e)}>Set Back Colour</Checkbox>
+                            <Checkbox inline value="existing" checked={this.state.myStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}>Set Back Colour</Checkbox>
                         </Col>
                         <Col xs={8}>
                             {this.state.myStyle.BackColor != null &&
-                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColourSelectChange(x)} />
+                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                             }
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="colorForeStyle">
                         <Col xs={4} >
-                            <Checkbox inline value="existing" checked={this.state.myStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColourCheckChange(e)}>Set Fore Colour</Checkbox>
+                            <Checkbox inline value="existing" checked={this.state.myStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}>Set Fore Colour</Checkbox>
                         </Col>
                         <Col xs={8}>
                             {this.state.myStyle.ForeColor != null &&
-                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColourSelectChange(x)} />
+                                <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                             }
                         </Col>
 
@@ -109,13 +109,13 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
         </Panel >
     }
 
-    private onUseBackColourCheckChange(event: React.FormEvent<any>) {
+    private onUseBackColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.state.myStyle.BackColor = (e.checked) ? "#ffffff" : null;
         this.props.UpdateStyle(this.state.myStyle);
     }
 
-    private onUseForeColourCheckChange(event: React.FormEvent<any>) {
+    private onUseForeColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.state.myStyle.ForeColor = (e.checked) ? "#000000" : null;
         this.props.UpdateStyle(this.state.myStyle);
@@ -127,13 +127,13 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
         this.props.UpdateStyle(this.state.myStyle);
     }
 
-    private onBackColourSelectChange(event: React.FormEvent<ColorPicker>) {
+    private onBackColorSelectChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
         this.state.myStyle.BackColor = e.value;
         this.props.UpdateStyle(this.state.myStyle);
     }
 
-    private onForeColourSelectChange(event: React.FormEvent<any>) {
+    private onForeColorSelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.state.myStyle.ForeColor = e.value;
         this.props.UpdateStyle(this.state.myStyle);

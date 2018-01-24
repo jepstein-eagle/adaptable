@@ -8,10 +8,10 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { IColumnFilter } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
 import { Helper } from '../../Core/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -25,14 +25,14 @@ import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
-interface FilterToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<FilterToolbarControlComponent> {
+interface ColumnFilterToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
     UserFilters: IUserFilter[]
 }
-class FilterToolbarControlComponent extends React.Component<FilterToolbarControlComponentProps, {}> {
+class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
 
     render(): any {
 
@@ -61,7 +61,7 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
-                    overrideTooltip="Clear Filters"
+                    overrideTooltip="Clear Column Filters"
                     DisplayMode="Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
@@ -78,10 +78,10 @@ class FilterToolbarControlComponent extends React.Component<FilterToolbarControl
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FilterStrategyId),
-        UserFilters: state.Filter.UserFilters,
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ColumnFilterStrategyId),
+        UserFilters: state.UserFilter.UserFilters,
         Columns: state.Grid.Columns,
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 
@@ -89,8 +89,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.UserFilterConfigPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ColumnFilterConfig))
     };
 }
 
-export let FilterToolbarControl = connect(mapStateToProps, mapDispatchToProps)(FilterToolbarControlComponent);
+export let ColumnFilterToolbarControl = connect(mapStateToProps, mapDispatchToProps)(ColumnFilterToolbarControlComponent);

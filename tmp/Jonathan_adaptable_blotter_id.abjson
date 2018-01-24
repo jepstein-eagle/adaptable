@@ -114,8 +114,8 @@
 		]
 	},
 	"QuickSearch": {
-		"QuickSearchDefaultBackColour": "#FFFFCC",
-		"QuickSearchDefaultForeColour": "#000000",
+		"QuickSearchDefaultBackColor": "#FFFFCC",
+		"QuickSearchDefaultForeColor": "#000000",
 		"QuickSearchText": "",
 		"QuickSearchOperator": "Contains",
 		"QuickSearchDisplayType": "ColourCell",

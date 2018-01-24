@@ -160,7 +160,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentRange: state.Range.CurrentRange,
         LiveRanges: state.Range.CurrentLiveRanges,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 

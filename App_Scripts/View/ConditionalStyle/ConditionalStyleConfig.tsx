@@ -133,7 +133,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyleConditions,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }

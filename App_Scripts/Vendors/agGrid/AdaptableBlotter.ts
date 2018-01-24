@@ -19,6 +19,7 @@ import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StyleConstants from '../../Core/StyleConstants'
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -31,7 +32,8 @@ import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleagGridStrategy } from '../../Strategy/ConditionalStyleagGridStrategy'
 import { QuickSearchStrategyagGrid } from '../../Strategy/QuickSearchStrategyagGrid'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
-import { FilterStrategy } from '../../Strategy/FilterStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
@@ -39,7 +41,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStrategy'
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -70,6 +72,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
 import { Color } from '../../Core/color';
 import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy';
+import { StyleComponent } from '../../View/Components/StyleComponent';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -111,7 +114,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
@@ -215,8 +219,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
                     let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
                     if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
-                        && (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell)) {
+                        && (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
+                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell)) {
                         let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                         let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
                         let rowId = blotter.getPrimaryKeyValueFromRecord(params.node);
@@ -305,10 +309,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        var selected = this.gridOptions.api.getRangeSelections();
+        let selected = this.gridOptions.api.getRangeSelections();
         //we iterate for each ranges
         selected.forEach((rangeSelection, index) => {
             for (let column of rangeSelection.columns) {
@@ -542,69 +546,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    /*
-    public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
-        let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
-        if (localCellClassRules) {
-            if (type == "FormatColumn") {
-                for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-FormatColumn-")) {
-                        delete localCellClassRules[prop]
-                    }
-                }
-            }
-           else if (type == "ConditionalStyle") {
-                for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-ConditionalStyle-")) {
-                        delete localCellClassRules[prop]
-                    }
-                }
-            }
-
-
-            //Is initialized in setColumnIntoStore
-            else if (type == "QuickSearch") {
-                for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-QuickSearch")) {
-                        delete localCellClassRules[prop]
-                    }
-                }
-            }
-            //Is initialized in Flash
-            else if (type == "FlashingCell") {
-                for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-FlashUp")) {
-                        delete localCellClassRules[prop]
-                    }
-                    if (prop.includes("Ab-FlashDown")) {
-                        delete localCellClassRules[prop]
-                    }
-                }
-            }
-            for (let prop in cellClassRules) {
-                localCellClassRules[prop] = cellClassRules[prop]
-            }
-        }
-        else {
-            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
-        }
-    }
-    */
-
+   
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
         if (localCellClassRules) {
            
             if (type == "FormatColumn") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-FormatColumn-")) {
+                    if (prop.includes(StyleConstants.FORMAT_COLUMN_STYLE)) {
                         delete localCellClassRules[prop]
                     }
                 }
             }
             else if (type == "ConditionalStyle") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-ConditionalStyle-")) {
+                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -612,7 +568,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-QuickSearch")) {
+                    if (prop.includes(StyleConstants.QUICK_SEARCH_STYLE)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -620,10 +576,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //Is initialized in Flash
             else if (type == "FlashingCell") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes("Ab-FlashUp")) {
+                    if (prop.includes(StyleConstants.FLASH_UP_STYLE)) {
                         delete localCellClassRules[prop]
                     }
-                    if (prop.includes("Ab-FlashDown")) {
+                    if (prop.includes(StyleConstants.FLASH_DOWN_STYLE)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -857,10 +813,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent;
         gridOptions.isExternalFilterPresent = () => {
-            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0;
+            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0;
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
-                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
+                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters) {
                     if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
                         this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
                     }
@@ -885,7 +841,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {
                     if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
@@ -898,7 +854,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let recordReturnValue = false;
             let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
             if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-                && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.ColourCell) {
+                && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.HighlightCell) {
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                 for (let column of columns.filter(c => c.Visible)) {
                     let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
@@ -934,7 +890,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //but you can also clsoe the menu from filter and clicking outside the menu....
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId(), 0, 0));
-            var colMenuItems: (string | MenuItemDef)[];
+            let colMenuItems: (string | MenuItemDef)[];
             //if there was an initial implementation we init the list of menu items with this one, otherwise we take
             //the default items
             if (originalgetMainMenuItems) {

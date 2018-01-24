@@ -101,9 +101,9 @@ export enum SortOrder {
 }
 
 export enum QuickSearchDisplayType {
-    ColourCell = "ColourCell",
+    HighlightCell = "HighlightCell",
     ShowRow = "ShowRow",
-    ShowRowAndColourCell = "ShowRowAndColourCell"
+    ShowRowAndHighlightCell = "ShowRowAndHighlightCell"
 }
 
 export enum AuditLogTrigger {

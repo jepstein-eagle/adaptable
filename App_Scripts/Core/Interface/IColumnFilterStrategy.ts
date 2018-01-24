@@ -5,7 +5,7 @@ import { IAdaptableBlotter, IColumn } from './IAdaptableBlotter';
 import { DistinctCriteriaPairValue } from '../Enums'
 
 
-export interface IFilterStrategy extends IStrategy{
+export interface IColumnFilterStrategy extends IStrategy{
 }
 
 

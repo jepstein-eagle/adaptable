@@ -6,7 +6,7 @@ import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySumm
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helper';
 import { UserFilterWizard } from '../UserFilter/UserFilterWizard'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -21,7 +21,7 @@ import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/I
 
 
 export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilterSummaryComponent> {
-    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -38,11 +38,11 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
         // title row
         let titleRow = <StrategySummaryRow
-            key={StrategyNames.FilterStrategyName}
-            StrategyId={StrategyIds.FilterStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.FilterStrategyName)}
+            key={StrategyNames.UserFilterStrategyName}
+            StrategyId={StrategyIds.UserFilterStrategyId}
+            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.UserFilterStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyNames.FilterStrategyName}
+            NewButtonTooltip={StrategyNames.UserFilterStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -55,10 +55,10 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         Item1={item.FriendlyName}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
-                        EntityName={StrategyNames.FilterStrategyName}
+                        EntityName={StrategyNames.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
-                        onDelete={FilterRedux.UserFilterDelete(item)}
+                        onDelete={UserFilterRedux.UserFilterDelete(item)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -104,15 +104,15 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(UserFilter)),
+        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(UserFilter)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FilterStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }
 

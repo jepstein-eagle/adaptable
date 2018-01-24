@@ -14,7 +14,7 @@ import { IConditionalStyleCondition } from '../../../Core/Interface/IConditional
 import { IFormatColumn } from '../../../Core/Interface/IFormatColumnStrategy';
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
-import { IColumnFilter } from '../../../Core/Interface/IFilterStrategy';
+import { IColumnFilter } from '../../../Core/Interface/IColumnFilterStrategy';
 import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { ICellValidationRule } from '../../../Core/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Core/Interface/ILayoutStrategy';
@@ -90,8 +90,8 @@ export interface ConditionalStyleState {
 }
 
 export interface QuickSearchState {
-    QuickSearchDefaultBackColour: string
-    QuickSearchDefaultForeColour: string
+    QuickSearchDefaultBackColor: string
+    QuickSearchDefaultForeColor: string
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
@@ -103,9 +103,12 @@ export interface AdvancedSearchState {
     CurrentAdvancedSearchId: string
 }
 
-export interface FilterState {
+export interface ColumnFilterState {
+     ColumnFilters: Array<IColumnFilter>
+}
+
+export interface UserFilterState {
     UserFilters: Array<IUserFilter>;
-    ColumnFilters: Array<IColumnFilter>
 }
 
 export interface ThemeState {

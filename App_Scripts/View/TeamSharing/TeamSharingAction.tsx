@@ -177,7 +177,7 @@ class TeamSharingActionComponent extends React.Component<TeamSharingActionProps,
                     </Col>
                 </Row>
             }
-            case StrategyIds.FilterStrategyId: {
+            case StrategyIds.UserFilterStrategyId: {
                 let filter = sharedEntity.entity as IUserFilter
                 let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns, this.props.UserFilters)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
@@ -222,7 +222,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Entities: state.TeamSharing.SharedEntities,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 

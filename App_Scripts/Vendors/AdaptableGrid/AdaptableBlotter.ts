@@ -33,12 +33,13 @@ import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
-import { FilterStrategy } from '../../Strategy/FilterStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -101,7 +102,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         // this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
@@ -232,7 +234,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cellInfo;
     }
 
-    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
         let cells: any = this.grid.getSelectedCells();
@@ -399,16 +401,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllCellStylesWithRegex(regex: RegExp): void {
-        // this.blotter.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
-
-
+       //
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
-        // this.getAllRowIds().forEach(r => {
-        //     this.removeRowStyle(r, "Ab-ConditionalStyle-0")
-        // })
-
+       //
     }
 
 

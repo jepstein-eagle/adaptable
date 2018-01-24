@@ -118,7 +118,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         ConditionalStyles: state.ConditionalStyle.ConditionalStyleConditions,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }

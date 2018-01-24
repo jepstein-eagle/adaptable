@@ -183,7 +183,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         DefaultNudgeValue: state.PlusMinus.DefaultNudge,
         PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 

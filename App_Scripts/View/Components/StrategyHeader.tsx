@@ -17,9 +17,9 @@ export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeade
 export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
     render(): any {
         return <div>
-        <Glyphicon glyph={StrategyGlyphs.getGhyphiconForStrategy(this.props.StrategyId)} />{' '}
-        {StrategyNames.getNameForStrategy(this.props.StrategyId)}
-    </div>
+            <Glyphicon glyph={StrategyGlyphs.getGhyphiconForStrategy(this.props.StrategyId)} />{' '}
+            {StrategyNames.getNameForStrategy(this.props.StrategyId)}
+        </div>
 
     }
 

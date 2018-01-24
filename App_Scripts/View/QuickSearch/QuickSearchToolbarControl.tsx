@@ -63,8 +63,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         </PanelDashboard>
     }
 
-    onUpdateQuickSearchText(quckSearchText: string) {
-        this.setState({ EditedQuickSearchText: quckSearchText })
+    onUpdateQuickSearchText(searchText: string) {
+        this.setState({ EditedQuickSearchText: searchText })
         this.debouncedRunQuickSearch();
     }
 

@@ -11,10 +11,10 @@ import { Expression } from '../Core/Expression/Expression';
 import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import * as StyleConstants from '../Core/StyleConstants'
 
 export class FormatColumnKendoStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
-    private ConsitionalStylePrefix = "Ab-FormatColumn-"
-    constructor(blotter: IAdaptableBlotter) {
+     constructor(blotter: IAdaptableBlotter) {
         super(blotter)
     }
 

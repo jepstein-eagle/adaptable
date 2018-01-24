@@ -6,7 +6,7 @@ import { ButtonNew } from './Buttons/ButtonNew';
 import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as StrategyNames from '../../Core/StrategyNames'
-import {StrategyHeader} from './StrategyHeader'
+import { StrategyHeader } from './StrategyHeader'
 
 export interface StrategySummaryRowProps extends React.ClassAttributes<StrategySummaryRow> {
     key: string
@@ -17,11 +17,12 @@ export interface StrategySummaryRowProps extends React.ClassAttributes<StrategyS
 }
 
 export class StrategySummaryRow extends React.Component<StrategySummaryRowProps, {}> {
+
     render(): any {
         let myCols: IColItem[] = []
-        myCols.push({ size: 3, content: <b>{ <StrategyHeader StrategyId={this.props.StrategyId}/>}</b> })
+        myCols.push({ size: 3, content: <b>{<StrategyHeader StrategyId={this.props.StrategyId} />}</b> })
         myCols.push({ size: 6, content: this.props.StrategySummary });
-        myCols.push({ size: 3, content: <ButtonNew onClick={() => this.props.onNew()} overrideTooltip={"Create " + this.props.NewButtonTooltip} DisplayMode="Glyph" /> });
+         myCols.push({ size: 3, content: <ButtonNew onClick={() => this.props.onNew()} overrideTooltip={"Create " + this.props.NewButtonTooltip} DisplayMode="Glyph" /> })
         return <ConfigEntityRow items={myCols} />
     }
 }

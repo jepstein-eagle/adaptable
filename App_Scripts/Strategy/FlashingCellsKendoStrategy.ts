@@ -7,6 +7,7 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
+import * as StyleConstants from '../Core/StyleConstants'
 
 export class FlashingCellsKendoStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -19,7 +20,7 @@ export class FlashingCellsKendoStrategy extends FlashingCellsStrategy implements
         var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
         var newValueNumber: Number = Number(dataChangedEvent.NewValue);
 
-        var cellStyle: string = (oldvalueNumber > newValueNumber) ? this.FLASH_DOWN_STYLE : this.FLASH_UP_STYLE
+        var cellStyle: string = (oldvalueNumber > newValueNumber) ? StyleConstants.FLASH_DOWN_STYLE : StyleConstants.FLASH_UP_STYLE
         let columnIndex = this.blotter.getColumnIndex(dataChangedEvent.ColumnId);
         //Jo : we know that this function is wrong as it's not cumulative
         theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, cellStyle + index, flashingColumn.FlashingCellDuration)

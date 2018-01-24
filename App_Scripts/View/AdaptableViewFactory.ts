@@ -10,7 +10,7 @@ import { CalendarsConfig } from './Calendars/CalendarsConfig'
 import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
 import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
-import { FilterToolbarControl } from './UserFilter/FilterToolbarControl'
+import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
 //import { FunctionsToolbarControl } from './Functions/FunctionsToolbarControl'
 import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
@@ -26,6 +26,7 @@ import { IPushPullLogin } from './Export/IPushPullLogin'
 import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
 import { FunctionButtonsConfig } from './Functions/FunctionButtonsConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
+import { ColumnFilterConfig } from './ColumnFilter/ColumnFilterConfig'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
 import { CalculatedColumnConfig } from "./CalculatedColumn/CalculatedColumnConfig";
@@ -54,7 +55,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalculatedColumnConfig: CalculatedColumnConfig,
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector : IPushPullDomainPageSelector,
-  TeamSharingAction : TeamSharingAction
+  TeamSharingAction : TeamSharingAction,
+  ColumnFilterConfig: ColumnFilterConfig
 }
 
 //here we put the dashboard control for each strategy
@@ -63,7 +65,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
-  [StrategyIds.FilterStrategyId, FilterToolbarControl],
+  [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyIds.FunctionsStrategyId, FunctionToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl]
 ]);

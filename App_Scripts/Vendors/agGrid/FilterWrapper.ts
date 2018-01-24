@@ -2,7 +2,7 @@ import { IFilterComp, IDoesFilterPassParams, IFilterParams } from "ag-grid"
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { FilterFormReact } from '../../View/FilterForm';
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from '../../Vendors/agGrid/AdaptableBlotter'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 
@@ -17,7 +17,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         }
         isFilterActive() {
             //make the small filter icon to appear when there is a filter
-            return blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
+            return blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
         }
 
         doesFilterPass(params: IDoesFilterPassParams): boolean {
@@ -26,10 +26,10 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         }
 
         getModel(): any {
-
+//
         }
         setModel(model: any): void {
-
+//
         }
         getGui(): HTMLElement {
             return this.filterContainer

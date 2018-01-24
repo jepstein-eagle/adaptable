@@ -11,7 +11,8 @@ export const ConditionalStyleGlyph: string = "tint"
 export const CustomSortGlyph: string = "sort-by-attributes"
 export const DashboardGlyph: string = "dashboard"
 export const ExportGlyph: string = "export"
-export const FilterGlyph: string = "filter"
+export const ColumnFilterGlyph: string = "filter"
+export const UserFilterGlyph: string = "user"
 export const FormatColumnGlyph: string = "picture"
 export const FlashingCellGlyph: string = "flash"
 export const LayoutGlyph: string = "th"
@@ -30,12 +31,12 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return CalculatedColumnGlyph
         case StrategyIds.CellValidationStrategyId:
             return CellValidationGlyph
+        case StrategyIds.ColumnFilterStrategyId:
+            return ColumnFilterGlyph
         case StrategyIds.ConditionalStyleStrategyId:
             return ConditionalStyleGlyph
         case StrategyIds.CustomSortStrategyId:
             return CustomSortGlyph
-        case StrategyIds.FilterStrategyId:
-            return FilterGlyph
         case StrategyIds.FormatColumnStrategyId:
             return FormatColumnGlyph
         case StrategyIds.LayoutStrategyId:
@@ -44,5 +45,8 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return PlusMinusGlyph
         case StrategyIds.ShortcutStrategyId:
             return ShortcutGlyph
+        case StrategyIds.UserFilterStrategyId:
+            return UserFilterGlyph;
+
     }
 }

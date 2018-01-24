@@ -20,8 +20,6 @@ export module ExpressionHelper {
         )
     }
 
-
-
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, userFilters: IUserFilter[]): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
@@ -120,7 +118,7 @@ export module ExpressionHelper {
                     let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids);
                     for (let userFilter of filteredUserFilters) {
                         // System userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
-                        if (UserFilterHelper.IsSystemUserFilter( userFilter)) {
+                        if (UserFilterHelper.IsSystemUserFilter(userFilter)) {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);
                         } else {
@@ -222,7 +220,7 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-    function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
+     function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
@@ -318,7 +316,7 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
         );
     }
@@ -329,7 +327,7 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
         );
     }
@@ -338,5 +336,5 @@ export module ExpressionHelper {
         return new Expression([], [], [], [])
     }
 
-  
+
 } 

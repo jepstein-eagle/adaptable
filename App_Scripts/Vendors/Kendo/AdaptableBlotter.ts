@@ -33,7 +33,8 @@ import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleKendoStrategy } from '../../Strategy/ConditionalStyleKendoStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
-import { FilterStrategy } from '../../Strategy/FilterStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
@@ -44,7 +45,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helper';
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper'
@@ -105,7 +106,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
@@ -283,7 +285,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return $(".k-edit-cell .k-input").not(".k-formatted-value");
     }
 
-    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
 
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
@@ -614,7 +616,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
                 //we then assess filters
-                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, record, columns, this)) {
@@ -636,8 +638,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 {
                                     if (stringValueLowerCase.includes(quickSearchLowerCase)) {
                                         //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
+                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
                                             quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
                                         }
                                         //if we need to display only the rows that matched the quicksearch and no coloring then we can return
@@ -652,8 +654,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 {
                                     if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
                                         //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell
-                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndColourCell) {
+                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
+                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
                                             quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
                                         }
                                         //if we need to display only the rows that matched the quicksearch and no coloring then we can return
@@ -667,7 +669,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         }
                     }
                     //if we color only then we just return true....
-                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ColourCell) {
+                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell) {
                         return true;
                     }
                     return recordReturnValue;
@@ -809,7 +811,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
         grid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
-            // Why the fuck they don't have the concept of columnReordering and columnReordered is beyond my understanding
+            // Why Kendo don't have the concept of columnReordering and columnReordered is beyond my understanding
             // http://www.telerik.com/forums/column-reorder-event-delay
             setTimeout(() => this.setColumnIntoStore(), 5);
         });

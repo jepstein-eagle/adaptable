@@ -33,13 +33,14 @@ import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy'
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
-import { FilterStrategy } from '../../Strategy/FilterStrategy'
+import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
+import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
 import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -128,7 +129,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FilterStrategyId, new FilterStrategy(this))
+        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
@@ -325,7 +327,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns fuck all
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
         var selected: Array<any> = this.grid.selectionModel.getSelections();
@@ -910,7 +912,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y });
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse;
                 let iconPadding = this.grid.properties.iconPadding;
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
                 let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
                     let filterContext: IColumnFilterContext = {
@@ -1006,7 +1008,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     originalGetCellReturn = originGetCell.call(grid.behavior.dataModel, config, declaredRendererName)
                 }
                 if (config.isHeaderRow && !config.isHandleColumn) {
-                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
+                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
                 if (config.isDataRow) {

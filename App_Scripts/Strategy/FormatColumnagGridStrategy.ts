@@ -13,6 +13,7 @@ import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
 import { Helper } from '../Core/Helper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import { FormatColumnConfigPopup } from '../Core/ScreenPopups';
+import * as StyleConstants from '../Core/StyleConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
@@ -31,7 +32,7 @@ export class FormatColumnagGridStrategy extends FormatColumnStrategy implements 
                 let cellClassRules: any = {};
                 this.FormatColumnState.FormatColumns.forEach((fc, index) => {
                     if (fc.ColumnId == column.ColumnId) {
-                        cellClassRules["Ab-FormatColumn-" + index] = function (params: any) {
+                        cellClassRules[StyleConstants.FORMAT_COLUMN_STYLE + index] = function (params: any) {
                             return true;
                         }
                      }

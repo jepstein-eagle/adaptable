@@ -53,6 +53,7 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
         this.props.Data.ColumnId = this.state.ColumnId;
     }
 
-    public Back(): void { }
+    public Back(): void { //
+    }
     public StepName = "User Filter Column "
 }

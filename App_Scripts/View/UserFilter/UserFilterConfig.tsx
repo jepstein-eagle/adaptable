@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
@@ -23,6 +23,7 @@ import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
@@ -76,28 +77,24 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((x) => {
             let expressionString = ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)
-            return <li
-                className="list-group-item" key={x.Uid}>
-                <Row >
-                    <Col xs={3}>
-                        {x.FriendlyName}
-                    </Col>
-                    <Col xs={6}>
-                        {expressionString}
-                    </Col>
-                    <Col xs={3}>
-                        <EntityListActionButtons
-                            ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
-                            showShare={this.props.TeamSharingActivated}
-                            shareClick={() => this.props.onShare(x)}
-                            overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
-                            editClick={() => this.onEditUserFilter(x)}
-                            ConfigEntity={x}
-                            EntityName="User Filter">
-                        </EntityListActionButtons>
-                    </Col>
-                </Row>
-            </li>
+            let myCols: IColItem[] = []
+            myCols.push({
+                size: 3, content: x.FriendlyName
+            });
+            myCols.push({
+                size: 6, content: expressionString
+            });
+            let buttons: any = <EntityListActionButtons
+                ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
+                showShare={this.props.TeamSharingActivated}
+                shareClick={() => this.props.onShare(x)}
+                overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
+                editClick={() => this.onEditUserFilter(x)}
+                ConfigEntity={x}
+                EntityName="User Filter" />
+            myCols.push({ size: 3, content: buttons });
+
+            return <ConfigEntityRow items={myCols} />
         })
 
         let newButton = <ButtonNew onClick={() => this.onCreateUserFilter()}
@@ -105,7 +102,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
-            button={newButton} glyphicon={StrategyGlyphs.FilterGlyph}>
+            button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
             {UserFilterItems.length > 0 &&
                 <div>
                     <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
@@ -158,7 +155,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
         Columns: state.Grid.Columns,
     };
 }
@@ -166,7 +163,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FilterStrategyId))
+        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }
 

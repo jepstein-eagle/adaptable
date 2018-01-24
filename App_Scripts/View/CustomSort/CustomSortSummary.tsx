@@ -22,8 +22,7 @@ import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/I
 export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
-    onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
-    
+    onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction   
 }
 
 export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, StrategySummaryInternalState> {
@@ -43,7 +42,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             customSortRow = <StrategySummaryRow
                 key={StrategyNames.CustomSortStrategyName}
                 StrategyId={StrategyIds.CustomSortStrategyId}
-                StrategySummary={"No Custom Sort set"}
+                StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyNames.CustomSortStrategyName}
             />

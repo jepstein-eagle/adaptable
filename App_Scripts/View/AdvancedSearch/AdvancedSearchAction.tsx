@@ -263,7 +263,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters
+        UserFilters: state.UserFilter.UserFilters
     };
 }
 
