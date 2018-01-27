@@ -17,7 +17,6 @@ export module UserFilterHelper {
     export const NEXT_WORKING_DAY_USER_FILTER = 'NextWorkingDay'
     export const PREVIOUS_WORKING_DAY_USER_FILTER = 'PreviousWorkingDay'
     export const THIS_YEAR_USER_FILTER = 'ThisYear'
-
     // Numeric
     export const POSITIVE_USER_FILTER = 'Positive'
     export const NEGATIVE_USER_FILTER = 'Negative'

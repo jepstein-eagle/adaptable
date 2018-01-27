@@ -4,6 +4,7 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
+import {  IValidationService} from '../Services/Interface/IValidationService'
 import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { Expression } from '../../Core/Expression/Expression';
@@ -17,6 +18,7 @@ export interface IAdaptableBlotter {
     // Services
     CalendarService: ICalendarService
     AuditService: IAuditService
+    ValidationService: IValidationService
     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     InitAuditService(): void

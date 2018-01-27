@@ -1,7 +1,6 @@
 import { IEvent } from '../../Interface/IEvent'
 import { ICellValidationRule } from '../../Interface/ICellValidationStrategy';
 
-
 export interface IDataChangingEvent {
     NewValue: any;
     ColumnId: string;
@@ -23,11 +22,9 @@ export interface IDataChangedInfo {
     Timestamp: number
 }
 
-
 export interface IAuditService {
     CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, record: any): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
-    CheckCellChanging(dataChangingEvent: IDataChangingEvent): ICellValidationRule[]
     Init(initialData : any) : void
     getExistingDataValue(dataChangingEvent: IDataChangingEvent): any
 }

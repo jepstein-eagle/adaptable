@@ -68,7 +68,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <CellValidationConfigItem
-                CellValidation={x}
+            key={index}    
+            CellValidation={x}
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}

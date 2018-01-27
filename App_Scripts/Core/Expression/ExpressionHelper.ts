@@ -1,10 +1,13 @@
 import { Expression } from './Expression'
 import { UserFilterHelper } from '../Services/UserFilterHelper'
-import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
+import { IRangeExpression, IRangeEvaluation, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helper';
+import { StringExtensions } from '../../Core/Extensions';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { IDataChangedEvent, IDataChangingEvent } from '../Services/Interface/IAuditService';
+import { initialiseAgGridWithAngular1 } from 'ag-grid/dist/lib/components/agGridNg1';
 
 
 export module ExpressionHelper {
@@ -135,73 +138,12 @@ export module ExpressionHelper {
             if (!isColumnSatisfied) {
                 let columnRanges = Expression.RangeExpressions.find(x => x.ColumnName == columnId)
                 if (columnRanges) {
-                    let columnValue = getColumnValue(columnRanges.ColumnName)
                     let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnName)
+
                     for (let range of columnRanges.Ranges) {
-                        let operand1: any
-                        let operand2: any
-                        switch (column.DataType) {
-                            case DataType.Date:
-                                operand1 = Date.parse(range.Operand1)
-                                if (range.Operand2 != "") {
-                                    operand2 = Date.parse(range.Operand2)
-                                }
-                                columnValue = columnValue.setHours(0, 0, 0, 0)
-                                break
-                            case DataType.Number:
-                                operand1 = Number(range.Operand1)
-                                if (range.Operand2 != "") {
-                                    operand2 = Number(range.Operand2)
-                                }
-                                break
-                            case DataType.Boolean:
-                            case DataType.Object:
-                            case DataType.String:
-                                operand1 = range.Operand1.toLowerCase();
-                                operand2 = range.Operand2.toLowerCase();
-                                columnValue = columnValue.toLowerCase();
-                                break;
-                        }
-                        switch (range.Operator) {
-                            case LeafExpressionOperator.GreaterThan:
-                                isColumnSatisfied = columnValue > operand1;
-                                break
-                            case LeafExpressionOperator.LessThan:
-                                isColumnSatisfied = columnValue < operand1;
-                                break
-                            case LeafExpressionOperator.Equals:
-                                isColumnSatisfied = columnValue == operand1;
-                                break
-                            case LeafExpressionOperator.NotEquals:
-                                isColumnSatisfied = columnValue != operand1;
-                                break
-                            case LeafExpressionOperator.GreaterThanOrEqual:
-                                isColumnSatisfied = columnValue >= operand1;
-                                break
-                            case LeafExpressionOperator.LessThanOrEqual:
-                                isColumnSatisfied = columnValue <= operand1;
-                                break
-                            case LeafExpressionOperator.Contains:
-                                isColumnSatisfied = columnValue.indexOf(operand1) >= 0;
-                                break
-                            case LeafExpressionOperator.StartsWith:
-                                isColumnSatisfied = columnValue.startsWith(operand1);
-                                break
-                            case LeafExpressionOperator.EndsWith:
-                                isColumnSatisfied = columnValue.endsWith(operand1);
-                                break
-                            case LeafExpressionOperator.Between:
-                                isColumnSatisfied = columnValue >= operand1
-                                    && columnValue <= operand2;
-                                break
-                            case LeafExpressionOperator.Regex:
-                                let regex = new RegExp(operand1)
-                                isColumnSatisfied = regex.test(columnValue);
-                                break
-                            default:
-                                isColumnSatisfied = false;
-                                break
-                        }
+                        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnName), column)
+
+                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, range.Operator, null);
                         if (isColumnSatisfied) {
                             break;
                         }
@@ -220,7 +162,7 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-     function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
+    function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
@@ -336,5 +278,87 @@ export module ExpressionHelper {
         return new Expression([], [], [], [])
     }
 
+
+    export function GetRangeEvaluation(rangeExpression: IRangeExpression, initialValue: any, column: IColumn): IRangeEvaluation {
+        let rangeEvaluation: IRangeEvaluation = {
+            operand1: rangeExpression.Operand1,
+            operand2: rangeExpression.Operand2,
+            newValue: initialValue
+        }
+        switch (column.DataType) {
+            case DataType.Date:
+                rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1)
+                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
+                    rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
+                }
+                rangeEvaluation.newValue = initialValue.setHours(0, 0, 0, 0)
+                break
+            case DataType.Number:
+                rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
+                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
+                    rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
+                }
+                rangeEvaluation.newValue = initialValue;
+                break
+            case DataType.Boolean:
+                rangeEvaluation.newValue = initialValue;
+                break;
+            case DataType.Object:
+            case DataType.String:
+                rangeEvaluation.operand1 = rangeExpression.Operand1.toLowerCase();
+                rangeEvaluation.operand2 = rangeExpression.Operand2.toLowerCase();
+                rangeEvaluation.newValue = initialValue.toLowerCase();
+                break;
+        }
+        return rangeEvaluation;
+    }
+
+    export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation, leafOperator: LeafExpressionOperator, existingValue: any): boolean {
+
+        switch (leafOperator) {
+            case LeafExpressionOperator.Equals:
+                return rangeEvaluation.newValue == rangeEvaluation.operand1;
+            case LeafExpressionOperator.NotEquals:
+                return rangeEvaluation.newValue != rangeEvaluation.operand1;
+            case LeafExpressionOperator.GreaterThan:
+                return rangeEvaluation.newValue > rangeEvaluation.operand1;
+            case LeafExpressionOperator.LessThan:
+                return rangeEvaluation.newValue < rangeEvaluation.operand1;
+            case LeafExpressionOperator.GreaterThanOrEqual:
+                return rangeEvaluation.newValue >= rangeEvaluation.operand1;
+            case LeafExpressionOperator.LessThanOrEqual:
+                return rangeEvaluation.newValue <= rangeEvaluation.operand1;
+            case LeafExpressionOperator.PercentChange:
+                let oldPercentValue: any = existingValue;
+                let percentChange: number = Math.abs(100 - Math.abs(rangeEvaluation.newValue * 100 / oldPercentValue))
+                return percentChange < Number(rangeEvaluation.operand1);
+            case LeafExpressionOperator.ValueChange:
+                let oldChangeValue: any = existingValue;
+                let changeInValue: number = Math.abs(rangeEvaluation.newValue - oldChangeValue);
+                return changeInValue < Number(rangeEvaluation.operand1);
+            case LeafExpressionOperator.Between:
+                return (rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+            case LeafExpressionOperator.NotBetween:
+                return !(rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+            case LeafExpressionOperator.IsPositive:
+                return (rangeEvaluation.newValue > 0);
+            case LeafExpressionOperator.IsNegative:
+                return (rangeEvaluation.newValue < 0);
+            case LeafExpressionOperator.IsTrue:
+                return (rangeEvaluation.newValue == true);
+            case LeafExpressionOperator.IsFalse:
+                return (rangeEvaluation.newValue == false);
+            case LeafExpressionOperator.Contains:
+                return rangeEvaluation.newValue.indexOf(rangeEvaluation.operand1) >= 0;
+            case LeafExpressionOperator.StartsWith:
+                return rangeEvaluation.newValue.startsWith(rangeEvaluation.operand1);
+            case LeafExpressionOperator.EndsWith:
+                return rangeEvaluation.newValue.endsWith(rangeEvaluation.operand1);
+            case LeafExpressionOperator.Regex:
+                let regex = new RegExp(rangeEvaluation.operand1)
+                return regex.test(rangeEvaluation.newValue);
+        }
+        return false;
+    }
 
 } 

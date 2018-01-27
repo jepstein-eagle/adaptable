@@ -134,7 +134,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     Record: null
                 }
 
-                let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);
+                let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
                 previewResults.push({ Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules })
                 columnId = columnValuePair.columnID;

@@ -86,7 +86,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     Record: null
                 }
 
-                let validationRules: ICellValidationRule[] = this.blotter.AuditService.CheckCellChanging(dataChangedEvent);
+                let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
                 let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.PreventEdit;
                 let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.ShowWarning;
 

@@ -15,6 +15,7 @@ import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../.
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import {  IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { ThemeService } from '../../Core/Services/ThemeService'
@@ -71,6 +72,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
+    public ValidationService: IValidationService
 
     public StyleService: StyleService
     public ThemeService: ThemeService
@@ -765,7 +767,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
                 }
             }
-            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {

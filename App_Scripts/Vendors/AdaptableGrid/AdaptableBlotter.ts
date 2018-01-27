@@ -15,7 +15,9 @@ import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../.
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
+import { ValidationService } from '../../Core/Services/ValidationService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
@@ -64,6 +66,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
+    public ValidationService: IValidationService
     public StyleService: StyleService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -80,6 +83,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
+        this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
@@ -338,11 +342,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
-// todo
+        // todo
     }
 
     public removeCustomSort(columnId: string): void {
-// todo
+        // todo
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
@@ -401,11 +405,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllCellStylesWithRegex(regex: RegExp): void {
-       //
+        //
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
-       //
+        //
     }
 
 
@@ -469,7 +473,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //     })
 
     // }
-    
+
     public applyColumnFilters(): void {
         return null
     }
@@ -479,7 +483,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
-// todo
+        // todo
     }
     public deleteCalculatedColumn(calculatedColumnID: string) {
         // todo
@@ -496,8 +500,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRecordFromRowId(rowId: string): any {
         return null
     }
-        //TEMPORARY : JO
-        public getIPPStyle() : any {
-            return null
-        }
+    //TEMPORARY : JO
+    public getIPPStyle(): any {
+        return null
+    }
 }

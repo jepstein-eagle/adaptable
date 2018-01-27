@@ -20,3 +20,9 @@ export interface IUserFilter extends IConfigEntity {
     Expression: Expression;
     ColumnId?: string
 }
+
+export interface IRangeEvaluation {
+     operand1: any;
+     operand2: any;
+     newValue: any;
+}

@@ -14,7 +14,9 @@ import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../.
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import {  IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
+import { ValidationService } from '../../Core/Services/ValidationService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -90,6 +92,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
+    public ValidationService: IValidationService
     public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -109,6 +112,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
+        this.ValidationService = new ValidationService(this);
         this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
@@ -937,7 +941,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let dataChangedEvent: IDataChangingEvent;
             let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
-            let failedRules: ICellValidationRule[] = this.AuditService.CheckCellChanging(dataChangedEvent);
+            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
