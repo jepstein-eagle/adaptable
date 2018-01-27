@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import * as ExportRedux from '../../../Redux/ActionsReducers/ExportRedux'
 import { Helper } from '../../../Core/Helper';
-import { Button, Col, Row, ButtonGroup, Panel, Dropdown, Glyphicon, OverlayTrigger, Tooltip, MenuItem } from 'react-bootstrap';
+import { Button, Col, Row, ButtonGroup, Panel, Dropdown, DropdownButton, Glyphicon, OverlayTrigger, Tooltip, MenuItem } from 'react-bootstrap';
 import { EntityListActionButtons } from '../../Components/Buttons/EntityListActionButtons';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { ExpressionHelper } from '../../../Core/Expression/ExpressionHelper';
@@ -13,6 +13,7 @@ import { RangeHelper } from '../../../Core/Services/RangeHelper';
 import { OpenfinHelper } from '../../../Core/OpenfinHelper';
 import { ILiveRange } from '../../../Core/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../../Core/iPushPullHelper';
+import { ConfigEntityRow, IColItem } from '../../Components/ConfigEntityRow';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
@@ -25,6 +26,7 @@ export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigI
     onDeleteConfirm: Redux.Action;
     Columns: Array<IColumn>;
     onShare: () => void;
+    isDropUp: boolean;
 }
 
 export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
@@ -48,57 +50,40 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
         }
         let hasLive = this.props.LiveRanges.find(x => x.Range == this.props.Range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
-        return <li
-            className="list-group-item"
-            onClick={() => { 
-// stuff here -nee to change
+        let myCols: IColItem[] = []
+        myCols.push({
+            size: 2, content: this.props.Range.Name
+        });
+        myCols.push({ size: 3, content: RangeHelper.GetRangeColumnsDescription(this.props.Range, this.props.Columns) });
+        myCols.push({ size: 3, content: RangeHelper.GetRangeExpressionDescription(this.props.Range, this.props.Columns, this.props.UserFilters) });
+        myCols.push({
+            size: 2, content:
+                   
+                           <DropdownButton dropup={this.props.isDropUp}
+                            bsSize={"small"}
+                            bsStyle={"default"}
+                            title={"Export"}
 
-            }}>
-            <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={2}><span style={expressionFontSizeStyle}>
-                    {this.props.Range.Name}
-                </span>
-                </Col>
-                <Col xs={3} >
-                    <span style={expressionFontSizeStyle}>
-                        {RangeHelper.GetRangeColumnsDescription(this.props.Range, this.props.Columns)}
-                    </span>
-                </Col>
-                <Col xs={3} >
-                    <span style={expressionFontSizeStyle}>
-                        {RangeHelper.GetRangeExpressionDescription(this.props.Range, this.props.Columns, this.props.UserFilters)}
-                    </span>
-                </Col>
-                <Col xs={1}>
-                    <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">{hasLive ? "Has a live export active." : "Export"}</Tooltip>}>
-                        <Dropdown id="dropdown-functions" dropup={this.props.IsLast}  >
-                            <Dropdown.Toggle bsStyle={hasLive ? "success" : "default"}>
-                                <Glyphicon glyph="export" />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu >
-                                {csvMenuItem}
-                                {clipboardMenuItem}
-                                {
-                                    OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
-                                }
-                                {
-                                    iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
-                                }
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </OverlayTrigger>
-                </Col>
-                <Col xs={3}>
-                    <EntityListActionButtons
-                        ConfirmDeleteAction={this.props.onDeleteConfirm}
-                        editClick={() => this.props.onEdit()}
-                        shareClick={() => this.props.onShare()}
-                        ConfigEntity={this.props.Range}
-                        EntityName="Range">
-                    </EntityListActionButtons>
-                </Col>
-            </Row>
-        </li>
+                            key={this.props.Range.Name}
+                            id={this.props.Range.Name}
+                        >
+                             {csvMenuItem}
+                             {clipboardMenuItem}
+                             {OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem}
+                             {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
+ 
+                        </DropdownButton>
+    
+        });
+        let buttons: any = <EntityListActionButtons
+            ConfirmDeleteAction={this.props.onDeleteConfirm}
+            editClick={() => this.props.onEdit()}
+            shareClick={() => this.props.onShare()}
+            ConfigEntity={this.props.Range}
+            EntityName="Range" />
+        myCols.push({ size: 2, content: buttons });
+
+        return <ConfigEntityRow items={myCols} />
     }
 }
 

@@ -38,6 +38,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import { ConfigEntityRow } from "../Components/ConfigEntityRow";
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
@@ -90,14 +91,15 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                 onExport={(exportDestination) => this.onApplyExport(range.Name, exportDestination)}
                 onRangeStopLive={(exportDestination) => this.props.onRangeStopLive(range.Name, exportDestination)}
                 onEdit={() => this.onEditRange(index, range)}
-                onDeleteConfirm={RangeRedux.RangeDelete(index)} />
+                onDeleteConfirm={RangeRedux.RangeDelete(index)}
+                isDropUp = {index>1} />
         });
 
         let cellInfo: [string, number][] = [["Range", 2], ["Columns", 3], ["Expression", 3], ["", 4]];
         let newButton = <ButtonNew onClick={() => this.onNewRange()}
             overrideTooltip="Create Range"
-            DisplayMode="Glyph+Text" />
-
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return (
             <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
@@ -108,6 +110,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
                 <ListGroup style={divStyle}>
                     {Ranges}
+                    {<ConfigEntityRow items={[]}/>}
                 </ListGroup>
                 {this.state.EditedRange &&
                     <AdaptableWizard Steps={[

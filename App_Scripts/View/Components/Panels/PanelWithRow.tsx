@@ -22,11 +22,11 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
         })
 
         let header = <AdaptableBlotterForm horizontal>
-            <Row style={{ display: "flex", alignItems: "center" }}>
+            <Row  style={{ display: "flex", alignItems: "center" }}>
                 {optionColumns}
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={header} className={className} style={panelWithRowStyle} bsStyle={this.props.bsStyle}>
+        return <Panel header={header} bsSize={"small"} className={className} style={panelWithRowStyle} bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;
     }
@@ -34,5 +34,6 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
 }
 
 let panelWithRowStyle = {
-    margin: '0px'
+    margin: '0px',
+    padding: '0px'
 }

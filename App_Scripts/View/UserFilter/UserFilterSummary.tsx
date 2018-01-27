@@ -83,7 +83,9 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     onNew() {
-        this.setState({ EditedItem: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0, EditedItemIndex: -1 });
+        let configEntity: IUserFilter = ObjectFactory.CreateEmptyUserFilter()
+        configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+            this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
     }
 
     onEdit(index: number, UserFilter: IUserFilter) {

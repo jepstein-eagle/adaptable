@@ -47,7 +47,3 @@ export class FormatColumnConfigItem extends React.Component<FormatColumnConfigIt
             />
     }
 }
-
-var expressionFontSizeStyle = {
-    fontSize: 'small'
-};

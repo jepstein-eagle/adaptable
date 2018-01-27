@@ -66,7 +66,8 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
 
         let newButton = <ButtonNew onClick={() => this.CreateShortcut()}
             overrideTooltip="Create New Shortcut"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
             button={newButton}

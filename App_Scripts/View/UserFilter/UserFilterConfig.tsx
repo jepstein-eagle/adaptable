@@ -82,7 +82,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                 size: 3, content: x.FriendlyName
             });
             myCols.push({
-                size: 6, content: expressionString
+                size: 6, content: expressionString 
             });
             let buttons: any = <EntityListActionButtons
                 ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
@@ -99,7 +99,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
 
         let newButton = <ButtonNew onClick={() => this.onCreateUserFilter()}
             overrideTooltip="Create User Filter"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text"
+            size={"small"} />
 
         return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>

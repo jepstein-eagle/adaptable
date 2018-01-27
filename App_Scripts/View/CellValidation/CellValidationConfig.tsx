@@ -84,7 +84,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
         })
         let newButton = <ButtonNew onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={panelStyle}
             button={newButton}
@@ -179,6 +180,3 @@ let panelStyle = {
     width: '800px'
 }
 
-var expressionFontSizeStyle = {
-    fontSize: 'small'
-};

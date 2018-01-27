@@ -79,7 +79,8 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
         let cellInfo: [string, number][] = [["Column", 3], ["Sort Order", 6], ["", 3]];
         let newButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create Custom Sort"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} style={panelStyle} infoBody={infoBody}
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>

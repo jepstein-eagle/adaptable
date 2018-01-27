@@ -53,7 +53,7 @@ class ColumnFilterConfigComponent extends React.Component<ColumnFilterConfigProp
             });
             myCols.push({
                 size: 7, content: ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
-            });
+              });
             let buttons: any = <ButtonClear onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
             DisplayMode="Glyph"
             overrideDisableButton={columnFilter == null} />

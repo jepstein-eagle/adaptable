@@ -80,7 +80,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         let newButton = <ButtonNew onClick={() => this.onAdd()}
             overrideTooltip="Create Conditional Style"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"} />
 
         return <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 

@@ -55,7 +55,8 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                     {buttonContent &&
                         <Button bsSize="small" bsStyle={buttonStyle} disabled={this.props.buttonDisabled} onClick={() => this.props.buttonClick()} style={{ float: 'right' }}>
                             {buttonContent}
-                        </Button>}
+                        </Button>
+                    }
                     {this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } })}
                 </Col>
             </Row>

@@ -80,7 +80,8 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
 
         let newButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create Format Column"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
             button={newButton}

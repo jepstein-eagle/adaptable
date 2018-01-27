@@ -46,7 +46,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     overrideDisableButton={this.props.overrideDisableEdit}
                     ConfigEntity={this.props.ConfigEntity}
                     overrideTooltip={this.props.overrideTooltipEdit}
-                    DisplayMode="Glyph" />}
+                    DisplayMode="Glyph"
+                    size="small" />}
             {this.props.showDelete &&
                 <ButtonDelete
                     overrideDisableButton={this.props.overrideDisableDelete}
@@ -55,13 +56,15 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     DisplayMode="Glyph"
                     ConfirmAction={this.props.ConfirmDeleteAction}
                     ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityName + "?"}
-                    ConfirmationTitle={"Delete " + this.props.EntityName } />}
+                    ConfirmationTitle={"Delete " + this.props.EntityName }
+                    size="small" />}
             {this.props.showShare &&
                 <ButtonShare onClick={() => this.props.shareClick()}
                     overrideDisableButton={this.props.overrideDisableShare}
                     ConfigEntity={this.props.ConfigEntity}
                     overrideTooltip={this.props.overrideTooltipShare}
-                    DisplayMode="Glyph" />}
+                    DisplayMode="Glyph" 
+                    size="small"/>}
         </ButtonToolbar>;
     }
 }

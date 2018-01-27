@@ -42,9 +42,7 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         });
         myCols.push({ size: 2, content: <StyleVisualItem Style={this.props.ConditionalStyleCondition.Style} /> });
         myCols.push({
-            size: 4, content: <span style={expressionFontSizeStyle}>
-                {ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)}
-            </span>
+            size: 4, content: ExpressionHelper.ConvertExpressionToString(this.props.ConditionalStyleCondition.Expression, this.props.Columns, this.props.UserFilters)
         });
         let buttons: any = <EntityListActionButtons
             editClick={() => this.props.onEdit(this.props.ConditionalStyleCondition)}
@@ -59,7 +57,3 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
         return <ConfigEntityRow items={myCols} />
     }
 }
-
-var expressionFontSizeStyle = {
-    fontSize: 'small'
-};

@@ -99,7 +99,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text"
+            size={"small"} />
 
         return <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" style={panelStyle}
             button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}

@@ -34,11 +34,11 @@ export class CellValidationConfigItem extends React.Component<CellValidationConf
 
         let myCols: IColItem[] = []
         myCols.push({ size: 2, content: this.props.Column ? this.props.Column.FriendlyName : this.props.CellValidation.ColumnId + Helper.MissingColumnMagicString });
-        myCols.push({ size: 3, content: <span style={expressionFontSizeStyle}>{this.props.CellValidation.Description}</span> });
-        myCols.push({ size: 2, content: <span style={expressionFontSizeStyle}>{this.setExpressionDescription(this.props.CellValidation)}</span> });
+        myCols.push({ size: 3, content: this.props.CellValidation.Description});
+        myCols.push({ size: 2, content: this.setExpressionDescription(this.props.CellValidation)});
         myCols.push({
-            size: 3, content:
-                <FormControl style={expressionFontSizeStyle} componentClass="select" placeholder="select" value={this.props.CellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
+            size: 2, content:
+                <FormControl  componentClass="select" placeholder="select" value={this.props.CellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
 
                     {CellValidationModeTypes}
                 </FormControl>
@@ -73,6 +73,3 @@ export class CellValidationConfigItem extends React.Component<CellValidationConf
     }
 }
 
-let expressionFontSizeStyle = {
-    fontSize: 'small'
-};

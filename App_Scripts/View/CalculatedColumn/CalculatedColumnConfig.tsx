@@ -78,7 +78,8 @@ class CalculatedColumnConfigComponent extends React.Component<CalculatedColumnCo
         let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
         let newButton = <ButtonNew onClick={() => { this.CreateCalculatedColumn() }}
             overrideTooltip="Create Calculated Column"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
 
         return <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={panelStyle} infoBody={infoBody}
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>

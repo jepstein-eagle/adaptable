@@ -98,11 +98,13 @@ class AdvancedSearchActionComponent extends React.Component<AdvancedSearchAction
 
         let newSearchButton = <ButtonNew onClick={() => this.onNewAdvancedSearch()}
             overrideTooltip="Create New Advanced Search"
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text" 
+            size={"small"}/>
         let editSearchButton = <ButtonEdit onClick={() => this.onEditAdvancedSearch()}
             overrideTooltip="Edit Search"
             ConfigEntity={selectedAdvancedSearch}
-            DisplayMode="Glyph+Text" />
+            DisplayMode="Glyph+Text"
+            size={"small"} />
         return (
             <div >
                 <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName}
