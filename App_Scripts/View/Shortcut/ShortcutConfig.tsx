@@ -95,18 +95,18 @@ class ShortcutConfigComponent extends React.Component<ShortcutConfigProps, Short
                         keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(this.state.EditedShortcut.ShortcutKey).sort()
                         : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </PanelWithButton>
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.setState({ EditedShortcut: null, WizardStartIndex: 0 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         if (this.state.EditedShortcut.DataType == DataType.Number) {
             this.props.onAddShortcut(this.state.EditedShortcut)
         }

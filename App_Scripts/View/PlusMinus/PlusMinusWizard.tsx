@@ -31,7 +31,7 @@ export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWiz
     SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
-    WizardFinish: () => void
+    onFinishWizard: () => void
 }
 
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
@@ -47,7 +47,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
             Data={this.props.EditedPlusMinusCondition}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.WizardFinish()} >
+            onFinish={() => this.props.onFinishWizard()} >
         </AdaptableWizard>
     }
 

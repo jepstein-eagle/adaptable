@@ -2,26 +2,31 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
+import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
+// import redux
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
-import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
+// import service
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
+import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
-import { ThemeService } from '../../Core/Services/ThemeService'
+//import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
+import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StyleConstants from '../../Core/StyleConstants'
+// import strategy
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -43,6 +48,11 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStrategy'
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
+import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
+import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
+import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+
+// import other items
 import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -52,11 +62,7 @@ import { StringExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IPPStyle, IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
-import { Expression } from '../../Core/Expression/Expression';
-import { FilterFormReact } from '../../View/FilterForm';
-import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ILayout } from '../../Core/Interface/ILayoutStrategy';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
@@ -68,13 +74,8 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 import { FilterWrapperFactory } from './FilterWrapper'
-import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
-import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
-import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/iPushPullHelper';
 import { Color } from '../../Core/color';
-import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy';
-import { StyleComponent } from '../../View/Components/StyleComponent';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -84,7 +85,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public ThemeService: ThemeService
+   // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
@@ -100,7 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.ThemeService = new ThemeService(this)
+     //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
@@ -130,7 +131,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-        
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
@@ -192,7 +192,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
     }
-
 
     public setColumnIntoStore() {
         let visibleColumns = this.gridOptions.columnApi.getAllGridColumns().filter(x => x.isVisible()).map((col, index) => {
@@ -550,11 +549,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-   
+
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
         if (localCellClassRules) {
-           
+
             if (type == "FormatColumn") {
                 for (let prop in localCellClassRules) {
                     if (prop.includes(StyleConstants.FORMAT_COLUMN_STYLE)) {

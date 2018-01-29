@@ -22,11 +22,11 @@ import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 
-interface ColumnFilterConfigProps extends IStrategyViewPopupProps<ColumnFilterConfigComponent> {
+interface ColumnFilterPopupProps extends IStrategyViewPopupProps<ColumnFilterPopupComponent> {
     Columns: IColumn[]
     UserFilters: IUserFilter[]
     ColumnFilters: IColumnFilter[]
@@ -34,7 +34,7 @@ interface ColumnFilterConfigProps extends IStrategyViewPopupProps<ColumnFilterCo
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-class ColumnFilterConfigComponent extends React.Component<ColumnFilterConfigProps, {}> {
+class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps, {}> {
 
     constructor() {
         super();
@@ -59,7 +59,7 @@ class ColumnFilterConfigComponent extends React.Component<ColumnFilterConfigProp
             overrideDisableButton={columnFilter == null} />
             myCols.push({ size: 2, content: buttons });
 
-            return <ConfigEntityRow items={myCols} key={index} />
+            return <ConfigEntityRowItem items={myCols} key={index} />
         })
 
         return <PanelWithButton headerText="Column Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
@@ -100,7 +100,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let ColumnFilterConfig = connect(mapStateToProps, mapDispatchToProps)(ColumnFilterConfigComponent);
+export let ColumnFilterPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnFilterPopupComponent);
 
 let listGroupStyle: React.CSSProperties = {
     overflowY: 'auto',

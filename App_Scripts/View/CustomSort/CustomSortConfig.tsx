@@ -99,19 +99,20 @@ class CustomSortConfigComponent extends React.Component<CustomSortConfigProps, C
                     Columns={this.props.Columns}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </PanelWithButton>
     }
     private wizardSteps: JSX.Element[]
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedCustomSort: null, WizardStartIndex: 0 });
     }
-    WizardFinish() {
+    
+    onFinishWizard() {
         if (this.props.CustomSorts.find(x => x.ColumnId == this.state.EditedCustomSort.ColumnId)) {
             this.props.onEditCustomSort(this.state.EditedCustomSort)
         }

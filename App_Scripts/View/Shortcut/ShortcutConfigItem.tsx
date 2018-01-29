@@ -7,7 +7,7 @@ import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface ShortcutConfigItemProps extends React.ClassAttributes<ShortcutConfigItem> {
     Shortcut: IShortcut
@@ -83,7 +83,7 @@ export class ShortcutConfigItem extends React.Component<ShortcutConfigItemProps,
                 </EntityListActionButtons>
         });
 
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem    items={myCols} />
 
     }
 

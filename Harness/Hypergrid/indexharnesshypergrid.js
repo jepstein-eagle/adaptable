@@ -100,7 +100,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
-        userName: "Jonathan",
+        userName: "harnessuser",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "predefinedConfig.json",

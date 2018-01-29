@@ -64,7 +64,7 @@ function InitBlotter() {
     var gridcontainer = document.getElementById('grid');
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
-        userName: "Jonathan",
+        userName: "harnessuser",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
         iPushPullConfig: {

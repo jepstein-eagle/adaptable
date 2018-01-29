@@ -18,7 +18,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnFilterStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnFilterStrategyName, ScreenPopups.ColumnFilterConfig, StrategyGlyphs.ColumnFilterGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyGlyphs.ColumnFilterGlyph);
     }
 
     protected InitState() {

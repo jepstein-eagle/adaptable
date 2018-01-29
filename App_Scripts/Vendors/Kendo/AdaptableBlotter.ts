@@ -18,7 +18,7 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import {  IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { StyleService } from '../../Core/Services/StyleService'
-import { ThemeService } from '../../Core/Services/ThemeService'
+//import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import * as StrategyIds from '../../Core/StrategyIds'
@@ -75,7 +75,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ValidationService: IValidationService
 
     public StyleService: StyleService
-    public ThemeService: ThemeService
+   // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
@@ -91,7 +91,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
-        this.ThemeService = new ThemeService(this);
+       // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 

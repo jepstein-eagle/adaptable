@@ -32,7 +32,7 @@ export interface ConditionalStyleWizardProps extends React.ClassAttributes<Condi
     PredefinedColorChoices: string[],
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
-    WizardFinish: () => void
+    onFinishWizard: () => void
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -52,7 +52,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             Data={this.props.EditedConditionalStyleCondition}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.WizardFinish()} ></AdaptableWizard>
+            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
     }
 }
 

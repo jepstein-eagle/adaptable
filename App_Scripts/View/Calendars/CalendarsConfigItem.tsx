@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ICalendar } from '../../Core/Interface/ICalendarStrategy';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface CalendarsConfigItemProps extends React.ClassAttributes<CalendarsConfigItem> {
     Calendar: ICalendar;
@@ -30,7 +30,7 @@ export class CalendarsConfigItem extends React.Component<CalendarsConfigItemProp
                     </OverlayTrigger>
                 </ButtonToolbar>
         });
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
     }
 }
 

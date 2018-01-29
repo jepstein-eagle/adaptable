@@ -1,13 +1,13 @@
 import * as React from "react";
 import { ListGroup, ListGroupItem, Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { SelectionMode } from '../../Core/Enums';
-import { StringExtensions } from '../../Core/Extensions';
-import { ColumnSelector } from '../ColumnSelector';
-import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
-import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { SelectionMode } from '../../../Core/Enums';
+import { StringExtensions } from '../../../Core/Extensions';
+import { ColumnSelector } from '../../ColumnSelector';
+import { ICalculatedColumn } from "../../../Core/Interface/ICalculatedColumnStrategy";
+import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
 
 export interface CalculatedColumnExpressionWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
     IsExpressionValid: (expression: string) => void

@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { StrategyHeader } from '../Components/StrategyHeader'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 
@@ -47,11 +47,11 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         myCols.push({ size: 6, content: description });
         myCols.push({
             size: 3, content:
-                <ButtonClear onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
+                <ButtonClear size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
                     DisplayMode="Glyph"
                     overrideDisableButton={columnFilter == null} />
         })
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

@@ -106,10 +106,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow("AdvancedSearchAction", false, "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchActionPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup))
     };
 }
 

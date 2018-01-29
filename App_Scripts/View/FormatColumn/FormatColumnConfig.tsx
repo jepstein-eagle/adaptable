@@ -103,8 +103,8 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
                 Columns={this.props.Columns.filter(x => !this.props.FormatColumns.find(y => y.ColumnId == x.ColumnId))} 
                 FormatColumns={this.props.FormatColumns}
                 WizardStartIndex={this.state.WizardStartIndex}
-                closeWizard={() => this.closeWizard()}
-                WizardFinish={() => this.WizardFinish()}
+                closeWizard={() => this.onCloseWizard()}
+                onFinishWizard={() => this.onFinishWizard()}
             />
             }
                
@@ -120,12 +120,12 @@ class FormatColumnConfigComponent extends React.Component<FormatColumnConfigProp
         this.setState({ EditedFormatColumn: clonedObject, WizardStartIndex: 1});
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedFormatColumn: null, WizardStartIndex: 0 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         if (this.props.FormatColumns.find(x => x.ColumnId == this.state.EditedFormatColumn.ColumnId)) {
             this.props.onEditFormatColumn(this.state.EditedFormatColumn)
         } else {

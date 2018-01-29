@@ -71,8 +71,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                     Columns={this.props.Columns}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -88,12 +88,12 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         this.setState({ EditedItem: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
 
-    closeWizard() {
+    onCloseWizard() {
            this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
 
         let customSort: ICustomSort = this.state.EditedItem as ICustomSort;
         if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {

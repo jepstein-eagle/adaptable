@@ -18,7 +18,7 @@ export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterW
     SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
-    WizardFinish: () => void
+    onFinishWizard: () => void
 }
 
 export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}> {
@@ -40,7 +40,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
             Data={this.props.EditedUserFilter}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.WizardFinish()} ></AdaptableWizard>
+            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
     }
 }
 

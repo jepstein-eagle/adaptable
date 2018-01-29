@@ -13,11 +13,11 @@ export interface IColItem {
     content: any;
 }
 
-export interface ConfigEntityRowProps extends React.ClassAttributes<ConfigEntityRow> {
+export interface ConfigEntityRowItemProps extends React.ClassAttributes<ConfigEntityRowItem> {
     items: IColItem[]
 }
 
-export class ConfigEntityRow extends React.Component<ConfigEntityRowProps, {}> {
+export class ConfigEntityRowItem extends React.Component<ConfigEntityRowItemProps, {}> {
     render(): any {
         let colItems = this.props.items.map((colItem: IColItem, index: number) => {
             return <Col key={index} xs={colItem.size}>

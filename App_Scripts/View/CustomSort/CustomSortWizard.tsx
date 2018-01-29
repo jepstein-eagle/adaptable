@@ -28,7 +28,7 @@ export interface CustomSortWizardProps extends React.ClassAttributes<CustomSortW
     WizardStartIndex: number
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
-    WizardFinish: () => void
+    onFinishWizard: () => void
 }
 
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
@@ -41,7 +41,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
             Data={this.props.EditedCustomSort}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.WizardFinish()} >
+            onFinish={() => this.props.onFinishWizard()} >
         </AdaptableWizard>
     }
 

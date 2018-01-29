@@ -13,11 +13,10 @@ import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { CalculatedColumnConfigItem } from './CalculatedColumnConfigItem'
-import { CalculatedColumnWizard } from './CalculatedColumnWizard'
+import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 
 
 export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {
@@ -47,7 +46,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
         })
 
         return <div>
-            {(myCols.length > 0) ? <ConfigEntityRow items={myCols} /> : null}
+            {(myCols.length > 0) ? <ConfigEntityRowItem items={myCols} /> : null}
 
             {this.state.EditedItem &&
                 <CalculatedColumnWizard
@@ -56,8 +55,8 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -67,12 +66,12 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
         this.setState({ EditedItem: Helper.cloneObject(calculatedColumn), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         //   this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onEdit(this.state.EditedItemIndex, this.state.EditedItem as ICalculatedColumn);
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }

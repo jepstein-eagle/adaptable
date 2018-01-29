@@ -13,7 +13,7 @@ import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface FlashingCellSummaryProps extends IStrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCellColumns: IFlashingColumn[]
@@ -32,7 +32,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         myCols.push({ size: 3, content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
         myCols.push({ size: 5, content: showFlashingButton });
         myCols.push({ size: 3, content: null });
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
     }
 
     onFlashingSelectedChanged(flashingColumn: IFlashingColumn) {

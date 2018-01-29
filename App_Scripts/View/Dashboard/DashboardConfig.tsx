@@ -17,7 +17,7 @@ import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { Helper } from '../../Core/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 
 interface DashboardConfigProps extends IStrategyViewPopupProps<DashboardConfigComponent> {
@@ -72,7 +72,7 @@ class DashboardConfigComponent extends React.Component<DashboardConfigProps, Das
             myCols.push({
                 size: 6, content: <span style={previewStyle}>{dashboardElememt}</span>
             });
-            return <ConfigEntityRow items={myCols} />
+            return <ConfigEntityRowItem key={i} items={myCols} />
         })
 
         let cellInfo: [string, number][] = [["Control", 3], ["Show/Hide", 2], ["Preview", 6]];

@@ -78,7 +78,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblottergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
-        userName: "Jonathan",
+        userName: "harnessuser",
         enableAuditLog: false,
         enableRemoteConfigServer: false
     });

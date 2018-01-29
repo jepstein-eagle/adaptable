@@ -15,7 +15,7 @@ import { ColorPicker } from '../ColorPicker';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import * as StrategyNames from '../../Core/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface FormatColumnConfigItemProps extends React.ClassAttributes<FormatColumnConfigItem> {
     FormatColumn: IFormatColumn;
@@ -42,7 +42,7 @@ export class FormatColumnConfigItem extends React.Component<FormatColumnConfigIt
             EntityName={StrategyNames.FormatColumnStrategyName} />
         myCols.push({ size: 3, content: buttons });
 
-        return <ConfigEntityRow
+        return <ConfigEntityRowItem
             items={myCols}
             />
     }

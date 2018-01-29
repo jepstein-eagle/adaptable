@@ -14,7 +14,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { ColorPicker } from '../ColorPicker';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface ConditionalStyleConfigItemProps extends React.ClassAttributes<ConditionalStyleConfigItem> {
     ConditionalStyleCondition: IConditionalStyleCondition;
@@ -54,6 +54,6 @@ export class ConditionalStyleConfigItem extends React.Component<ConditionalStyle
             EntityName="Conditional Style" />
         myCols.push({ size: 3, content: buttons });
 
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
     }
 }

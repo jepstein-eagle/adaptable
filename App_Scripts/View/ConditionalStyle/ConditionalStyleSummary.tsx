@@ -86,8 +86,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -104,12 +104,12 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         this.setState({ EditedItem: Helper.cloneObject(ConditionalStyle), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         //   this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddUpdateConditionalStyle(this.state.EditedItemIndex, this.state.EditedItem as IConditionalStyleCondition);
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }

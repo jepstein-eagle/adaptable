@@ -13,7 +13,7 @@ import { RangeHelper } from '../../../Core/Services/RangeHelper';
 import { OpenfinHelper } from '../../../Core/OpenfinHelper';
 import { ILiveRange } from '../../../Core/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../../Core/iPushPullHelper';
-import { ConfigEntityRow, IColItem } from '../../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../../Components/ConfigEntityRowItem';
 
 export interface RangeConfigItemProps extends React.ClassAttributes<RangeConfigItem> {
     Range: IRange
@@ -83,7 +83,7 @@ export class RangeConfigItem extends React.Component<RangeConfigItemProps, {}> {
             EntityName="Range" />
         myCols.push({ size: 2, content: buttons });
 
-        return <ConfigEntityRow items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
     }
 }
 

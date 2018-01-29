@@ -13,12 +13,12 @@ import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 
 
-interface ColumnChooserActionProps extends IStrategyViewPopupProps<ColumnChooserActionComponent> {
+interface ColumnChooserPopupProps extends IStrategyViewPopupProps<ColumnChooserPopupComponent> {
     Columns: Array<IColumn>
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
-class ColumnChooserActionComponent extends React.Component<ColumnChooserActionProps, {}> {
+class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
     render() {
         let infoBody:any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",<br/>,<br/>,
         "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",<br/>,<br/>,
@@ -55,4 +55,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let ColumnChooserAction = connect(mapStateToProps, mapDispatchToProps)(ColumnChooserActionComponent);
+export let ColumnChooserPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnChooserPopupComponent);

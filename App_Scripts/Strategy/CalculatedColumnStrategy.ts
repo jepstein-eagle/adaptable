@@ -14,7 +14,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalculatedColumnStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup(
-            StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnConfigPopup, StrategyGlyphs.CalculatedColumnGlyph);
+            StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph);
     }
 
     protected InitState() {
@@ -30,7 +30,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                     "Edit " + StrategyNames.CalculatedColumnStrategyName,
-                    ScreenPopups.CalculatedColumnConfigPopup,
+                    ScreenPopups.CalculatedColumnPopup,
                     StrategyGlyphs.CalculatedColumnGlyph,
                     "Edit|" + columnId)))
         }

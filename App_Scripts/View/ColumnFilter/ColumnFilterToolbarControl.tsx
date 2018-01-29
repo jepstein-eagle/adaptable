@@ -89,7 +89,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ColumnFilterConfig))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ColumnFilterPopup))
     };
 }
 

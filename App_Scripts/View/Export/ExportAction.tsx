@@ -38,7 +38,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import { ConfigEntityRow } from "../Components/ConfigEntityRow";
+import { ConfigEntityRowItem } from "../Components/ConfigEntityRowItem";
 
 
 interface ExportActionProps extends IStrategyViewPopupProps<ExportActionComponent> {
@@ -110,7 +110,7 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
                 <ListGroup style={divStyle}>
                     {Ranges}
-                    {<ConfigEntityRow items={[]}/>}
+                    {<ConfigEntityRowItem items={[]}/>}
                 </ListGroup>
                 {this.state.EditedRange &&
                     <AdaptableWizard Steps={[
@@ -123,8 +123,8 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
                     ]}
                         Data={this.state.EditedRange}
                         StepStartIndex={this.state.WizardStartIndex}
-                        onHide={() => this.closeWizard()}
-                        onFinish={() => this.WizardFinish()} >
+                        onHide={() => this.onCloseWizard()}
+                        onFinish={() => this.onFinishWizard()} >
                     </AdaptableWizard>
                 }
             </PanelWithButton>
@@ -134,11 +134,11 @@ class ExportActionComponent extends React.Component<ExportActionProps, RangeConf
 
     private wizardSteps: JSX.Element[]
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedRange: null, WizardStartIndex: 0, EditedIndexRange: -1 });
     }
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddUpdateRange(this.state.EditedIndexRange, this.state.EditedRange)
         this.setState({ EditedRange: null, WizardStartIndex: 0, EditedIndexRange: -1 });
     }

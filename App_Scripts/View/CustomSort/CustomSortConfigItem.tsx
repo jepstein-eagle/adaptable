@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { Helper } from '../../Core/Helper';
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface CustomSortConfigItemProps extends React.ClassAttributes<CustomSortConfigItem> {
     CustomSort: ICustomSort
@@ -32,11 +32,9 @@ export class CustomSortConfigItem extends React.Component<CustomSortConfigItemPr
         </EntityListActionButtons>
         myCols.push({ size: 3, content: buttons });
 
-        return <ConfigEntityRow
+        return <ConfigEntityRowItem
             items={myCols}
             />
     }
 
 }
-
-// need to do somethig with:  shareClick={() => this.props.onShare()}

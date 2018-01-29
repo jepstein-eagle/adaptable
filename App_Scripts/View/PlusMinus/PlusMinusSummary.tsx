@@ -82,8 +82,8 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -100,12 +100,12 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         this.setState({ EditedItem: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         //   this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
          this.props.onAddUpdatePlusMinus(this.state.EditedItemIndex, this.state.EditedItem as IPlusMinusCondition );
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }

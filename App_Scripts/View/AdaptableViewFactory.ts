@@ -2,7 +2,7 @@ import { CustomSortConfig } from './CustomSort/CustomSortConfig'
 import { SmartEditAction } from './SmartEdit/SmartEditAction'
 import { ShortcutConfig } from './Shortcut/ShortcutConfig'
 import { PlusMinusConfig } from './PlusMinus/PlusMinusConfig'
-import { ColumnChooserAction } from './ColumnChooser/ColumnChooserAction'
+import { ColumnChooserPopup } from './ColumnChooser/ColumnChooserPopup'
 import { ColumnInfoAction } from './ColumnInfo/ColumnInfoAction'
 import { ExportAction } from './Export/ExportAction'
 import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
@@ -12,12 +12,12 @@ import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
 //import { FunctionsToolbarControl } from './Functions/FunctionsToolbarControl'
-import { AdvancedSearchAction } from './AdvancedSearch/AdvancedSearchAction'
+import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
 import { UserFilterConfig } from './UserFilter/UserFilterConfig'
 import { FormatColumnConfig } from './FormatColumn/FormatColumnConfig'
 import { ThemeConfig } from './Theme/ThemeConfig'
-import { CellValidationConfig } from './CellValidation/CellValidationConfig'
+import { CellValidationPopup } from './CellValidation/CellValidationPopup'
 import { LayoutConfig } from './Layout/LayoutConfig'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
@@ -26,10 +26,10 @@ import { IPushPullLogin } from './Export/IPushPullLogin'
 import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
 import { FunctionButtonsConfig } from './Functions/FunctionButtonsConfig'
 import { DashboardConfig } from './Dashboard/DashboardConfig'
-import { ColumnFilterConfig } from './ColumnFilter/ColumnFilterConfig'
+import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
-import { CalculatedColumnConfig } from "./CalculatedColumn/CalculatedColumnConfig";
+import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -37,26 +37,26 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   SmartEditAction: SmartEditAction,
   ShortcutConfig: ShortcutConfig,
   PlusMinusConfig: PlusMinusConfig,
-  ColumnChooserAction: ColumnChooserAction,
+  ColumnChooserPopup: ColumnChooserPopup,
   ColumnInfoAction: ColumnInfoAction,
   ExportAction: ExportAction,
   FlashingCellsConfig: FlashingCellsConfig,
   CalendarsConfig: CalendarsConfig,
   ConditionalStyleConfig: ConditionalStyleConfig,
   QuickSearchConfig: QuickSearchConfig,
-  AdvancedSearchAction: AdvancedSearchAction,
+  AdvancedSearchPopup: AdvancedSearchPopup,
   UserFilterConfig: UserFilterConfig,
   FormatColumnConfig: FormatColumnConfig,
   ThemeConfig: ThemeConfig,
-  CellValidationConfig: CellValidationConfig,
+  CellValidationPopup: CellValidationPopup,
   LayoutConfig: LayoutConfig,
   DashboardConfig: DashboardConfig,
   FunctionButtonsConfig: FunctionButtonsConfig,
-  CalculatedColumnConfig: CalculatedColumnConfig,
+  CalculatedColumnPopup: CalculatedColumnPopup,
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector : IPushPullDomainPageSelector,
   TeamSharingAction : TeamSharingAction,
-  ColumnFilterConfig: ColumnFilterConfig
+  ColumnFilterPopup: ColumnFilterPopup
 }
 
 //here we put the dashboard control for each strategy

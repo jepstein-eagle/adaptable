@@ -18,15 +18,16 @@ import { CellValidationMode } from '../../Core/Enums'
 import { IStrategy } from '../../Core/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
-import { CellValidationWizard } from './CellValidationWizard'
+import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { CellValidationConfigItem } from './CellValidationConfigItem';
+import { EntityItemList } from '../Components/EntityItemList';
+import { CellValidationEntityRow } from './CellValidationEntityRow';
 
-interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidationConfigComponent> {
+interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
     Columns: Array<IColumn>,
     UserFilters: IUserFilter[]
@@ -35,13 +36,13 @@ interface CellValidationConfigProps extends IStrategyViewPopupProps<CellValidati
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-interface CellValidationConfigState {
+interface CellValidationPopupState {
     EditedCellValidation: ICellValidationRule
     EditedIndexCellValidation: number
     WizardStartIndex: number
 }
 
-class CellValidationConfigComponent extends React.Component<CellValidationConfigProps, CellValidationConfigState> {
+class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, CellValidationPopupState> {
     constructor() {
         super();
         this.state = { EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 }
@@ -67,38 +68,33 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
-            return <CellValidationConfigItem
-            key={index}    
-            CellValidation={x}
+            return <CellValidationEntityRow
+                key={index}
+                ConfigEntity={x}
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(index, x)}
+                onEdit={(index, x) => this.onEdit(index, x as ICellValidationRule)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={CellValidationRedux.CellValidationDelete(index)}
                 onChangeCellValidationMode={(index, x) => this.onCellValidationModeChanged(index, x)}
-            >
-            </CellValidationConfigItem>
-
+           />
+           
+           
         })
         let newButton = <ButtonNew onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
-            DisplayMode="Glyph+Text" 
-            size={"small"}/>
+            DisplayMode="Glyph+Text"
+            size={"small"} />
 
         return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={panelStyle}
             button={newButton}
             glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
-                <div>
-                    <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
-                    <ListGroup style={listGroupStyle}>
-                        {CellValidationItems}
-                    </ListGroup>
-                </div>
+                <EntityItemList cellInfo={cellInfo} items={CellValidationItems} />
             }
 
             {CellValidationItems.length == 0 &&
@@ -115,8 +111,8 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
 
@@ -133,23 +129,19 @@ class CellValidationConfigComponent extends React.Component<CellValidationConfig
     }
 
     onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
-       // need to do something!
-       this.props.onChangeCellValidationMode(index, cellValidationMode);
+        // need to do something!
+        this.props.onChangeCellValidationMode(index, cellValidationMode);
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddEditCellValidation(this.state.EditedIndexCellValidation, this.state.EditedCellValidation);
         this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
     }
-
-
-
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -169,13 +161,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let CellValidationConfig = connect(mapStateToProps, mapDispatchToProps)(CellValidationConfigComponent);
+export let CellValidationPopup = connect(mapStateToProps, mapDispatchToProps)(CellValidationPopupComponent);
 
-let listGroupStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    minHeight: '100px',
-    maxHeight: '300px'
-};
+
 
 let panelStyle = {
     width: '800px'

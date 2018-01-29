@@ -18,7 +18,7 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
-import { ThemeService } from '../../Core/Services/ThemeService'
+//import { // } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -68,7 +68,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public ValidationService: IValidationService
     public StyleService: StyleService
-    public ThemeService: ThemeService
+  //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
@@ -85,7 +85,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
-        this.ThemeService = new ThemeService(this)
+     //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
 

@@ -85,7 +85,7 @@ messages: {
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
             primaryKey: "tradeId",
-            userName: "Jonathan",
+            userName: "harnessuser",
             enableAuditLog: true,
             enableRemoteConfigServer: false,
             iPushPullConfig: {

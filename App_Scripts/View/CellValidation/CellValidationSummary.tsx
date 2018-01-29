@@ -8,7 +8,7 @@ import { Helper } from '../../Core/Helper';
 import { Col, Row } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { CellValidationWizard } from '../CellValidation/CellValidationWizard'
+import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -78,8 +78,8 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -95,12 +95,12 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         this.setState({ EditedItem: Helper.cloneObject(CellValidation), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         //   this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
        this.props.onAddUpdateCellValidation(this.state.EditedItemIndex, this.state.EditedItem as ICellValidationRule );
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }

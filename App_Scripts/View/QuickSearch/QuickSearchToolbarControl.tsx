@@ -17,6 +17,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { IUIConfirmation } from "../../Core/Interface/IStrategy";
 
@@ -58,7 +59,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph" />
             </div>
         </span>
-        return <PanelDashboard headerText="Quick Search" glyphicon="eye-open" onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard headerText="Quick Search" glyphicon={StrategyGlyphs.QuickSearchGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

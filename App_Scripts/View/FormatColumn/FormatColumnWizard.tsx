@@ -26,7 +26,7 @@ export interface FormatColumnWizardProps extends React.ClassAttributes<FormatCol
     PredefinedColorChoices: string[],
     WizardStartIndex: number,
     closeWizard: () => void
-    WizardFinish: () => void
+    onFinishWizard: () => void
 }
 
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
@@ -42,7 +42,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
             Data={this.props.EditedFormatColumn}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.WizardFinish()} ></AdaptableWizard>
+            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
     }
 }
 

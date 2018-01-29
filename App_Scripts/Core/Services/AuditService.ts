@@ -40,18 +40,8 @@ export class AuditService implements IAuditService {
 
     //slightly optimized version of the AddDataValuesToList so we don't check for data already present
     private InitAddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
-        this.checkListExists();
-
-        // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
-        let columnName = dataChangedEvent.ColumnId;
-        let myList = this._columnDataValueList.get(columnName);
-        //in case we created a new calculated column
-        if (!myList) {
-            myList = new Map()
-            this._columnDataValueList.set(columnName, myList)
-        }
-
-        let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+       let myList = this.getDataEventsForColumn(dataChangedEvent.ColumnId);
+let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
         myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
     }
 
@@ -65,16 +55,8 @@ export class AuditService implements IAuditService {
     }
 
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
-        this.checkListExists();
-
         // add it to the list if not exist for that row - at the moment there is not maximum and no streaming...
-        let columnName = dataChangedEvent.ColumnId;
-        let myList = this._columnDataValueList.get(columnName);
-        //in case we created a new calculated column
-        if (!myList) {
-            myList = new Map()
-            this._columnDataValueList.set(columnName, myList)
-        }
+        let myList = this.getDataEventsForColumn(dataChangedEvent.ColumnId);
 
         let localdatachangedInfo = myList.get(dataChangedEvent.IdentifierValue);
         if (localdatachangedInfo) {
@@ -90,14 +72,7 @@ export class AuditService implements IAuditService {
     }
 
     public getExistingDataValue(dataChangingEvent: IDataChangingEvent): any {
-        this.checkListExists();
-
-        let myList = this._columnDataValueList.get(dataChangingEvent.ColumnId);
-        //in case we created a new calculated column
-        if (!myList) {
-            myList = new Map()
-            this._columnDataValueList.set(dataChangingEvent.ColumnId, myList)
-        }
+        let myList = this.getDataEventsForColumn(dataChangingEvent.ColumnId);
         let localdatachangedInfo = myList.get(dataChangingEvent.IdentifierValue);
         if (localdatachangedInfo) {
             return localdatachangedInfo.NewValue;
@@ -105,13 +80,23 @@ export class AuditService implements IAuditService {
         return null
     }
 
-    private checkListExists(): void {
+    private getDataEventsForColumn(columnId: string): Map<any, IDataChangedInfo> {
+       
+       // first check the list exists
         if (this._columnDataValueList.size == 0) {
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             columns.forEach(c => {
                 this._columnDataValueList.set(c.ColumnId, new Map())
             })
         }
+        // get the item
+        let myList: Map<any, IDataChangedInfo> = this._columnDataValueList.get(columnId);
+        //in case we created a new calculated column
+        if (!myList) {
+            myList = new Map()
+            this._columnDataValueList.set(columnId, myList)
+        }
+        return myList;
     }
     private _onDataSourceChanged: EventDispatcher<IAuditService, IDataChangedEvent> = new EventDispatcher<IAuditService, IDataChangedEvent>();
 

@@ -25,7 +25,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { DataType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions'
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 
 interface PlusMinusConfigProps extends IStrategyViewPopupProps<PlusMinusConfigComponent> {
@@ -94,7 +94,7 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                 EntityName="Plus Minus rule" />
             myCols.push({ size: 3, content: buttons });
 
-            return <ConfigEntityRow items={myCols} />
+            return <ConfigEntityRowItem items={myCols} />
       })
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
@@ -135,8 +135,8 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
                     WizardStartIndex={this.state.WizardStartIndex}
                     SelectedColumnId={null}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </PanelWithButton>
@@ -154,11 +154,12 @@ class PlusMinusConfigComponent extends React.Component<PlusMinusConfigProps, Plu
         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
         this.setState({ EditedPlusMinusCondition: clonedObject, EditedIndexColumnNudgeValue: index, WizardStartIndex: 1 });
     }
-    closeWizard() {
+    
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 });
     }
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexColumnNudgeValue, this.state.EditedPlusMinusCondition);
         this.setState({ EditedPlusMinusCondition: null, EditedIndexColumnNudgeValue: -1, WizardStartIndex: 0 });
     }

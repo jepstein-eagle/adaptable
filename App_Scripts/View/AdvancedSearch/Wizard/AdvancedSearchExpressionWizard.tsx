@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../ExpressionBuilder/ExpressionBuilderPage'
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
-import { IUserFilter } from '../../Core/Interface/IExpression'
-import { DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { ExpressionBuilderPage, ExpressionBuilderPageState } from './../../ExpressionBuilder/ExpressionBuilderPage'
+import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
+import { IUserFilter } from '../../../Core/Interface/IExpression'
+import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 
 export interface AdvancedSearchExpressionWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     ColumnList: Array<IColumn>
@@ -26,7 +26,9 @@ export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implem
         this.props2.Data.Expression = this.state.Expression
     }
 
-    public Back(): void { }
+    public Back(): void {
+        // todo
+     }
 
     public StepName = "Advanced Search: Create Query"
 }

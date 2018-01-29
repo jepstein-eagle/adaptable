@@ -14,7 +14,7 @@ import { StrategySummaryRow } from '../View/Components/StrategySummaryRow';
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserActionPopup,  StrategyGlyphs.ColumnChooserGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup,  StrategyGlyphs.ColumnChooserGlyph);
     }
     
     protected addColumnMenuItems(columnId: string): void {

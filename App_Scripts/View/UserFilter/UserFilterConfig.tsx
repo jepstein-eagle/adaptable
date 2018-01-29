@@ -23,7 +23,7 @@ import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 interface UserFilterConfigProps extends IStrategyViewPopupProps<UserFilterConfigComponent> {
     UserFilters: IUserFilter[]
@@ -94,7 +94,7 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                 EntityName="User Filter" />
             myCols.push({ size: 3, content: buttons });
 
-            return <ConfigEntityRow items={myCols} />
+            return <ConfigEntityRowItem items={myCols} />
         })
 
         let newButton = <ButtonNew onClick={() => this.onCreateUserFilter()}
@@ -126,8 +126,8 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
                     WizardStartIndex={this.state.WizardStartIndex}
                     SelectedColumnId={selectedColumnId}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </PanelWithButton>
@@ -142,12 +142,12 @@ class UserFilterConfigComponent extends React.Component<UserFilterConfigProps, U
         this.setState({ EditedUserFilter: Helper.cloneObject(userFilter), WizardStartIndex: 1 });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedUserFilter: null, WizardStartIndex: 0 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddUpdateUserFilter(this.state.EditedUserFilter);
         this.setState({ EditedUserFilter: null, WizardStartIndex: 0 });
     }

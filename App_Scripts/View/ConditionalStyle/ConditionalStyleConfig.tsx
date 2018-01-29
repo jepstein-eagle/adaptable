@@ -23,6 +23,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
+import { EntityItemList } from '../Components/EntityItemList';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyleCondition>,
@@ -80,19 +81,18 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         let newButton = <ButtonNew onClick={() => this.onAdd()}
             overrideTooltip="Create Conditional Style"
-            DisplayMode="Glyph+Text" 
+            DisplayMode="Glyph+Text"
             size={"small"} />
 
         return <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
-            {this.props.ConditionalStyles.length == 0 ?
+            {this.props.ConditionalStyles.length == 0 &&
                 <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
-                : <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
             }
 
-            <ListGroup style={divStyle}>
-                {conditionalStyleConditions}
-            </ListGroup>
+            {conditionalStyleConditions.length > 0 &&
+                <EntityItemList cellInfo={cellInfo} items={conditionalStyleConditions} />
+            }
 
             {this.state.EditedConditionalStyle != null &&
                 <ConditionalStyleWizard
@@ -102,8 +102,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </PanelWithButton>
@@ -119,12 +119,12 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         this.setState({ EditedConditionalStyle: clonedObject, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedConditionalStyle: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConditionalStyleCondition, this.state.EditedConditionalStyle);
         this.setState({ EditedConditionalStyle: null, WizardStartIndex: 0, EditedIndexConditionalStyleCondition: -1 });
     }

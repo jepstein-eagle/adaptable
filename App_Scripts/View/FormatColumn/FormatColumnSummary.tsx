@@ -80,8 +80,8 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     FormatColumns={this.props.FormatColumns}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -97,12 +97,12 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         this.setState({ EditedItem: Helper.cloneObject(FormatColumn), WizardStartIndex: 1, EditedItemIndex: -1 });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
        let formatColumn:IFormatColumn = this.state.EditedItem as IFormatColumn
         if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
             this.props.onEditFormatColumn(formatColumn)

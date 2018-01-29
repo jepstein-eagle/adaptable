@@ -8,7 +8,7 @@ import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
 import { ColorPicker } from '../ColorPicker';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ConfigEntityRow, IColItem } from '../Components/ConfigEntityRow';
+import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface FlashingCellConfigItemProps extends React.ClassAttributes<FlashingCellConfigItem> {
     FlashingColumn: IFlashingColumn;
@@ -55,7 +55,7 @@ export class FlashingCellConfigItem extends React.Component<FlashingCellConfigIt
             size: 2, content: <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={this.props.FlashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
         });
 
-        return <ConfigEntityRow
+        return <ConfigEntityRowItem
             items={myCols} />
     }
 

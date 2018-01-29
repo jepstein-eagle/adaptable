@@ -75,8 +75,8 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.closeWizard()}
-                    WizardFinish={() => this.WizardFinish()}
+                    closeWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
                 />
             }
         </div>
@@ -92,12 +92,12 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         this.setState({ EditedItem: Helper.cloneObject(UserFilter), WizardStartIndex: 1, EditedItemIndex: index });
     }
 
-    closeWizard() {
+    onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }
 
-    WizardFinish() {
+    onFinishWizard() {
         this.props.onAddUpdateUserFilter(this.state.EditedItemIndex, this.state.EditedItem as IUserFilter, );
         this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
     }

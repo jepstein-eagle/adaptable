@@ -1,10 +1,10 @@
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Interface/IAdaptableWizard'
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
-import { StringExtensions } from '../../Core/Extensions';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
+import { StringExtensions } from '../../../Core/Extensions';
+import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]
@@ -64,6 +64,8 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     public Next(): void {
         this.props.Data.Name = this.state.AdvancedSearchName
     }
-    public Back(): void { }
+    public Back(): void {
+        // todo
+     }
     public StepName = "Advanced Search Settings"
 }
