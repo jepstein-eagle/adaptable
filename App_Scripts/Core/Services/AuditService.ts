@@ -6,9 +6,9 @@ import { EventDispatcher } from '../EventDispatcher'
 import {  DataType, CellValidationMode, LeafExpressionOperator, SortOrder } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IRangeExpression } from '../Interface/IExpression';
-import { ExpressionHelper } from '../Expression/ExpressionHelper'
-import { Helper } from '../Helper'
-import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
+import { ExpressionHelper } from '../Helpers/ExpressionHelper'
+import { Helper } from '../Helpers/Helper'
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as StrategyIds from '../StrategyIds'
 import { StringExtensions } from '../../Core/Extensions';
 

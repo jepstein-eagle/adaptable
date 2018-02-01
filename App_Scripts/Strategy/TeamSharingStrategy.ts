@@ -1,7 +1,7 @@
 import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
-import { ITeamSharingStrategy } from '../Core/Interface/ITeamSharingStrategy';
+import { ITeamSharingStrategy } from '../Strategy/Interface/ITeamSharingStrategy';
 import { MenuReduxActionItem } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
@@ -13,7 +13,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.TeamSharingStrategyId, blotter)
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.TeamSharingStrategyName, ScreenPopups.TeamSharingAction, StrategyGlyphs.TeamSharingGlyph);
+            this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyGlyphs.TeamSharingGlyph);
         }
     }
     protected InitState() {

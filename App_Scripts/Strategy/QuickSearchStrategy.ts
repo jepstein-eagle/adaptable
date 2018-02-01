@@ -1,16 +1,16 @@
-import { IQuickSearchStrategy } from '../Core/Interface/IQuickSearchStrategy';
+import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IMenuItem } from '../Strategy/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions'
 import { QuickSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { Helper } from '../Core/Helper'
+import { Helper } from '../Core/Helpers/Helper'
 
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
@@ -18,7 +18,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.QuickSearchStrategyName, ScreenPopups.QuickSearchConfigPopup, StrategyGlyphs.QuickSearchGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.QuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyGlyphs.QuickSearchGlyph);
     }
 
     protected InitState() {

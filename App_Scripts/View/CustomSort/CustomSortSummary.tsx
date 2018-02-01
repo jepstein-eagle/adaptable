@@ -1,11 +1,11 @@
-import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
+import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
-import { CustomSortWizard } from '../CustomSort/CustomSortWizard'
+import { Helper } from '../../Core/Helpers/Helper';
+import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -18,18 +18,17 @@ import { StrategyHeader } from '../Components/StrategyHeader'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
-
 export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction   
 }
 
-export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, StrategySummaryInternalState> {
+export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
     }
     render(): any {
         let customSort: ICustomSort = this.props.CustomSorts.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
@@ -64,9 +63,9 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         return <div>
             {customSortRow}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <CustomSortWizard
-                    EditedCustomSort={this.state.EditedItem as ICustomSort}
+                    EditedCustomSort={this.state.EditedConfigEntity as ICustomSort}
                     CustomSorts={this.props.CustomSorts}
                     Columns={this.props.Columns}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -81,28 +80,28 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
     onNew() {
         let configEntity: ICustomSort = ObjectFactory.CreateEmptyCustomSort()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedItem: configEntity, WizardStartIndex: 1 });
+        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1 });
     }
 
     onEdit(customSort: ICustomSort) {
-        this.setState({ EditedItem: Helper.cloneObject(customSort), WizardStartIndex: 1 });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
 
     onCloseWizard() {
            this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
     }
 
     onFinishWizard() {
 
-        let customSort: ICustomSort = this.state.EditedItem as ICustomSort;
+        let customSort: ICustomSort = this.state.EditedConfigEntity as ICustomSort;
         if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
             this.props.onEditCustomSort(customSort);
         }
         else {
             this.props.onAddCustomSort(customSort);
         }
-        this.setState({ EditedItem: null, WizardStartIndex: 0 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

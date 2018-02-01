@@ -1,9 +1,9 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
-import { IMenuItem } from '../Core/Interface/IStrategy'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
+import { IMenuItem } from '../Strategy/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
+import { Helper } from '../Core/Helpers/Helper'
 import { SortOrder, DistinctCriteriaPairValue } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import { StringExtensions } from '../Core/Extensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { ButtonClear } from './Components/Buttons/ButtonClear';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
-import { QuickSearchConfig } from "./QuickSearch/QuickSearchConfig";
+import { QuickSearchPopup } from "./QuickSearch/QuickSearchPopup";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

@@ -1,4 +1,4 @@
-import { ICellValidationRule } from '../../../Core/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
@@ -8,7 +8,7 @@ import * as CellValidationRedux from '../../../Redux/ActionsReducers/CellValidat
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../../Core/Helper';
+import { Helper } from '../../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../../Core/ObjectFactory';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CellValidationActionWizard } from './CellValidationActionWizard'

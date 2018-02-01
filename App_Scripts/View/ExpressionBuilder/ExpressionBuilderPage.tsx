@@ -3,8 +3,8 @@ import { ExpressionBuilderConditionSelector } from './ExpressionBuilderCondition
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
-import { Expression } from '../../Core/Expression/Expression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { Expression } from '../../Core/Expression';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IUserFilter } from '../../Core/Interface/IExpression'

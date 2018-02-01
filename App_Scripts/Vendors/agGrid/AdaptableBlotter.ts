@@ -26,7 +26,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StyleConstants from '../../Core/StyleConstants'
 // import strategy
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Core/Interface/IStrategy';
+import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Strategy/Interface/IStrategy';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -49,17 +49,17 @@ import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStr
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
-import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
-import { ILayout } from '../../Core/Interface/ILayoutStrategy';
+import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
+import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 
 // import other items
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IPPStyle, IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -74,7 +74,7 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 import { FilterWrapperFactory } from './FilterWrapper'
-import { iPushPullHelper } from '../../Core/iPushPullHelper';
+import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 
 export class AdaptableBlotter implements IAdaptableBlotter {

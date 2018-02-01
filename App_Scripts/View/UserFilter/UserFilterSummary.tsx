@@ -2,17 +2,17 @@ import { IUserFilter } from '../../Core/Interface/IExpression';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
-import { UserFilterWizard } from '../UserFilter/UserFilterWizard'
+import { Helper } from '../../Core/Helpers/Helper';
+import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -25,11 +25,11 @@ export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilter
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, StrategySummaryInternalState> {
+export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
     }
 
     render(): any {
@@ -67,9 +67,9 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         return <div>
             {strategySummaries}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <UserFilterWizard
-                    EditedUserFilter={this.state.EditedItem as IUserFilter}
+                    EditedUserFilter={this.state.EditedConfigEntity as IUserFilter}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
@@ -85,21 +85,21 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     onNew() {
         let configEntity: IUserFilter = ObjectFactory.CreateEmptyUserFilter()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-            this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
+            this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, UserFilter: IUserFilter) {
-        this.setState({ EditedItem: Helper.cloneObject(UserFilter), WizardStartIndex: 1, EditedItemIndex: index });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(UserFilter), WizardStartIndex: 1, EditedIndexConfigEntity: index });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateUserFilter(this.state.EditedItemIndex, this.state.EditedItem as IUserFilter, );
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.props.onAddUpdateUserFilter(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IUserFilter, );
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
 }

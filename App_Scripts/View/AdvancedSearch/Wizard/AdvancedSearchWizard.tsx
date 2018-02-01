@@ -1,4 +1,4 @@
-import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';

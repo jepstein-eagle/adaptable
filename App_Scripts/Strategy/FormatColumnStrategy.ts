@@ -1,12 +1,12 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
-import { IMenuItem } from '../Core/Interface/IStrategy'
+import { IMenuItem } from '../Strategy/Interface/IStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IFormatColumnStrategy } from '../Core/Interface/IFormatColumnStrategy'
+import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy'
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
@@ -15,7 +15,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
     protected FormatColumnState: FormatColumnState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FormatColumnStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnConfigPopup, StrategyGlyphs.FormatColumnGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
     }
     
     protected addColumnMenuItems(columnId: string): void {
@@ -26,7 +26,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 label + StrategyNames.FormatColumnStrategyName,
-                ScreenPopups.FormatColumnConfigPopup,
+                ScreenPopups.FormatColumnPopup,
                  StrategyGlyphs.FormatColumnGlyph,
                 popupParam + columnId)))
     }

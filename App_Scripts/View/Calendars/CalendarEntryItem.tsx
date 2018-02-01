@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Col, Row, Panel } from 'react-bootstrap';
-import { ICalendarEntry } from '../../Core/Interface/ICalendarStrategy';
+import { ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {

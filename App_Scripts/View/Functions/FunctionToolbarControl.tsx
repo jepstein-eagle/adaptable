@@ -8,12 +8,12 @@ import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStr
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helper';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helpers/Helper';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
-import { IMenuItem, IUIConfirmation } from '../../Core/Interface/IStrategy'
+import { IMenuItem, IUIConfirmation } from '../../Strategy/Interface/IStrategy'
 
 interface FunctionControlComponentProps extends IToolbarStrategyViewPopupProps<FunctionToolbarControlComponent> {
      MenuState: MenuState,
@@ -80,7 +80,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.FunctionButtonsConfigPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.FunctionButtonsPopupPopup))
     };
 }
 

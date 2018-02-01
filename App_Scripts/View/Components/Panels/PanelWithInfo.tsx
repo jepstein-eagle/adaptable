@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../../../Core/Helper'
+import { Helper } from '../../../Core/Helpers/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 import { AdaptablePopover } from './../../AdaptablePopover';

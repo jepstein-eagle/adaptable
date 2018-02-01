@@ -3,22 +3,23 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions';
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ILayout } from '../../Core/Interface/ILayoutStrategy'
+import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
+import { IUIPrompt, IUIConfirmation } from '../../Strategy/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 
 interface LayoutToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -54,22 +55,25 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <FormControl componentClass="select" placeholder="select"
                     value={this.props.CurrentLayout}
-                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
+                    onChange={(x) => this.onSelectionChanged(x)} >
                     {availableLayouts}
                 </FormControl>
                 {' '}
-                <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                    overrideTooltip="Save Changes to Current Layout"
+                <ButtonSave onClick={() => this.onSave()}
+                size={"small"} 
+                overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.onAddLayoutClicked()}
-                    overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
+                <ButtonNew onClick={() => this.onAdd()}
+                 size={"small"} 
+                 overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    overrideTooltip="Delete Layout"
+                  size={"small"} 
+                  overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph"
@@ -79,16 +83,16 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Layout" glyphicon="th" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon="th" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
 
-    private onSaveLayoutClicked() {
+    private onSave() {
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
     }
 
-    private onAddLayoutClicked() {
+    private onAdd() {
         let prompt: IUIPrompt = {
             PromptTitle: "Create New Layout",
             PromptMsg: "Please enter a layout name",
@@ -97,7 +101,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onShowPrompt(prompt)
     }
 
-    private onSelectedLayoutChanged(event: React.FormEvent<any>) {
+    private onSelectionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onLoadLayout(e.value);
     }
@@ -119,7 +123,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutConfigPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup))
     };
 }
 

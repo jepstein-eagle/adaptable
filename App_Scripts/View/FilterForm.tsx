@@ -7,13 +7,13 @@ import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './Components/Panels/PanelWithButton';
-import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Core/Interface/IColumnFilterStrategy';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../Core/Services/UserFilterHelper';
+import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Strategy/Interface/IColumnFilterStrategy';
+import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../Core/Helpers/UserFilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
-import { Expression } from '../Core/Expression/Expression'
+import { Expression } from '../Core/Expression'
 import { IUserFilter } from '../Core/Interface/IExpression'
-import { Helper } from '../Core/Helper'
+import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { IStrategyViewPopupProps } from '../Core/Interface/IStrategyView'
 import { ButtonClose } from './Components/Buttons/ButtonClose';

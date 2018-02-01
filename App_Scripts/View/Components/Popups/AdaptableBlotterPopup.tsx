@@ -3,7 +3,7 @@ import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { AdaptableViewFactory } from './../../AdaptableViewFactory';
-import { IStrategy } from '../../../Core/Interface/IStrategy';
+import { IStrategy } from '../../../Strategy/Interface/IStrategy';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView';
 

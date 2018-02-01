@@ -1,4 +1,4 @@
-import { ICalculatedColumn } from '../../../Core/Interface/ICalculatedColumnStrategy';
+import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';

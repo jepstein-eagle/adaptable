@@ -7,25 +7,25 @@ import { Panel, ListGroup, Well, HelpBlock, FormControl, ControlLabel, Form, For
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { Helper } from '../../Core/Helper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StringExtensions } from '../../Core/Extensions'
-import { IUIConfirmation } from '../../Core/Interface/IStrategy';
+import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -36,6 +36,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 
 interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -47,15 +48,12 @@ interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearc
     UserFilters: IUserFilter[]
 }
 
-interface AdvancedSearchPopupInternalState {
-    EditedAdvancedSearch: IAdvancedSearch
-    WizardStartIndex: number
-}
 
-class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, AdvancedSearchPopupInternalState> {
+
+class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityInternalState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
-        this.state = { EditedAdvancedSearch: null, WizardStartIndex: 0 };
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 };
     }
 
     componentDidMount() {
@@ -75,9 +73,17 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.", <br />, <br />,
             "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form."]
 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Live", Width: 1 },
+            { Caption: "Name", Width: 3 },
+            { Caption: "Query", Width: 5 },
+            { Caption: "", Width: 3 },
+        ]
+
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
             return <AdvancedSearchEntityRow
                 key={index}
+                EntityRowInfo={entityRowInfo}
                 IsCurrentAdvancedSearch={x.Uid == this.props.CurrentAdvancedSearchUid}
                 ConfigEntity={x}
                 Columns={this.props.Columns}
@@ -93,7 +99,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         })
 
-        let cellInfo: [string, number][] = [["Live", 1], ["Name", 3], ["Expression", 5], ["", 3]];
+
 
         let newSearchButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
@@ -104,7 +110,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={panelStyle}>
 
             {advancedSearchRows.length > 0 &&
-               <EntityItemList cellInfo={cellInfo} items={advancedSearchRows} />
+                <EntityItemList entityRowInfo={entityRowInfo} items={advancedSearchRows} />
             }
 
             {advancedSearchRows.length == 0 &&
@@ -113,9 +119,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                 </Well>
             }
 
-            {this.state.EditedAdvancedSearch != null &&
+            {this.state.EditedConfigEntity != null &&
                 <AdvancedSearchWizard
-                    EditedConfigEntity={this.state.EditedAdvancedSearch}
+                    EditedConfigEntity={this.state.EditedConfigEntity}
                     ConfigEntities={this.props.AdvancedSearches}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
@@ -150,22 +156,23 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onNew() {
-        this.setState({ EditedAdvancedSearch: ObjectFactory.CreateEmptyAdvancedSearch() } as AdvancedSearchPopupInternalState)
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 } as EditableConfigEntityInternalState)
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedAdvancedSearch: Helper.cloneObject(advancedSearch) } as AdvancedSearchPopupInternalState)
+        this.setState({ EditedConfigEntity: Helper.cloneObject(advancedSearch) } as EditableConfigEntityInternalState)
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedAdvancedSearch: null } as AdvancedSearchPopupInternalState)
+        this.setState({ EditedConfigEntity: null } as EditableConfigEntityInternalState)
     }
 
     onFinishWizard() {
-        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdvancedSearch);
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
         this.props.onAddUpdateAdvancedSearch(clonedObject);
+        this.props.onSelectAdvancedSearch(clonedObject.Uid);
     }
 }
 

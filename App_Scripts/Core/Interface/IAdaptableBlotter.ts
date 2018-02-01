@@ -1,13 +1,13 @@
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
-import { IMenuItem, IStrategy, ICellInfo } from './IStrategy'
+import { IMenuItem, IStrategy, ICellInfo } from '../../Strategy/Interface/IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import {  IValidationService} from '../Services/Interface/IValidationService'
-import { ICalculatedColumn } from '../Interface/ICalculatedColumnStrategy'
+import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
-import { Expression } from '../../Core/Expression/Expression';
+import { Expression } from '../../Core/Expression';
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 
 export interface IAdaptableBlotter {
@@ -143,6 +143,11 @@ export interface IAdaptableBlotterOptions {
 
 export interface IConfigEntity {
     IsPredefined: boolean
+}
+
+export interface IEntityRowInfo{
+    Caption: string,
+    Width: number
 }
 
 export interface IEntitlement {

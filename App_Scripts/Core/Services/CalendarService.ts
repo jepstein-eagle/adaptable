@@ -1,7 +1,7 @@
 
 import { ICalendarService } from './Interface/ICalendarService';
-import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../Interface/ICalendarStrategy';
-import * as CalendarStrat from '../Interface/ICalendarStrategy';
+import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
+import * as CalendarStrat from '../../Strategy/Interface/ICalendarStrategy';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
 // Similar service to the one in WPF version

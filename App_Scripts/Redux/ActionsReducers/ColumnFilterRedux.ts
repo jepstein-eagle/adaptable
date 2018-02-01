@@ -1,8 +1,8 @@
 import { ColumnFilterState } from './Interface/IState';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
-import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as Redux from 'redux'
 
 

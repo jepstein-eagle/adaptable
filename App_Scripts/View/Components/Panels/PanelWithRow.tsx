@@ -1,11 +1,16 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../../../Core/Helper'
+import { Helper } from '../../../Core/Helpers/Helper'
 import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
+import { IEntityRowInfo } from '../../../Core/Interface/IAdaptableBlotter';
+
+
+
 
 export interface PanelWithRowProps extends PanelProps {
-    CellInfo: [string, number][]
+   // CellInfo: [string, number][]
+   entityRowInfo: IEntityRowInfo[]
 }
 
 
@@ -17,8 +22,8 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
 
         let className = "panel-with-button"; // this will change...
 
-        let optionColumns = this.props.CellInfo.map(x => {
-            return <Col key={x[1] + x[0]} xs={x[1]}>{x[0]}</Col>
+        let optionColumns = this.props.entityRowInfo.map(x => {
+            return <Col key={x.Caption + x.Width} xs={x.Width}>{x.Caption}</Col>
         })
 
         let header = <AdaptableBlotterForm horizontal>

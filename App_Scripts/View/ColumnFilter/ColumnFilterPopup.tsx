@@ -9,12 +9,12 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../Core/Helper';
+import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helpers/Helper';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
@@ -23,7 +23,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
+import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 
 interface ColumnFilterPopupProps extends IStrategyViewPopupProps<ColumnFilterPopupComponent> {
@@ -44,8 +44,11 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     render() {
         let infoBody: any[] = ["Column Filters are Column Queries that can be named and re-used.", <br />, <br />]
 
-        let cellInfo: [string, number][] = [["Column", 3], ["Filter", 7], ["",2]];
-
+        let entityRowInfo:IEntityRowInfo [] =[
+            {Caption: "Column", Width: 3}, 
+            {Caption: "Filter", Width: 7}, 
+            {Caption: "", Width: 2}, 
+        ]
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
             let myCols: IColItem[] = []
             myCols.push({
@@ -66,7 +69,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             button={null} glyphicon={StrategyGlyphs.UserFilterGlyph}>
             {columnFilterItems.length > 0 &&
                 <div>
-                    <PanelWithRow CellInfo={cellInfo} bsStyle="info" />
+                    <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
                     <ListGroup style={listGroupStyle}>
                         {columnFilterItems}
                     </ListGroup>

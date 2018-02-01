@@ -7,15 +7,15 @@ import { StringExtensions } from '../../Core/Extensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { IRange } from '../../Core/Interface/IExportStrategy'
+import { IRange } from '../../Strategy/Interface/IExportStrategy'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IStrategy';
+import { IUIPrompt, IUIConfirmation } from '../../Strategy/Interface/IStrategy';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helper';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -23,12 +23,13 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
-import { RangeHelper } from "../../Core/Services/RangeHelper";
-import { OpenfinHelper } from '../../Core/OpenfinHelper';
-import { iPushPullHelper } from '../../Core/iPushPullHelper';
-import { ILiveRange } from "../../Core/Interface/IExportStrategy";
+import { RangeHelper } from "../../Core/Helpers/RangeHelper";
+import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
+import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
+import { ILiveRange } from "../../Strategy/Interface/IExportStrategy";
 
 interface ExportToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
     onApplyExport: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
@@ -107,16 +108,19 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 }
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditRange()}
-                    overrideTooltip="Edit Range"
+               size={"small"} 
+               overrideTooltip="Edit Range"
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.props.onNewRange()}
-                    overrideTooltip="Create New Range"
+                size={"small"} 
+                overrideTooltip="Create New Range"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    overrideTooltip="Delete Range"
+                 size={"small"} 
+                 overrideTooltip="Delete Range"
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph"
                     ConfirmAction={RangeRedux.RangeDelete(savedRangeIndex)}
@@ -125,7 +129,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText="Export" glyphicon="export" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -152,10 +156,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(range, exportDestination)),
         onSelectRange: (range: string) => dispatch(RangeRedux.RangeSelect(range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
-        onNewRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "New")),
-        onEditRange: () => dispatch(PopupRedux.PopupShow("ExportAction", false, "Edit")),
+        onNewRange: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "New")),
+        onEditRange: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "Edit")),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportActionPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup))
     };
 }
 

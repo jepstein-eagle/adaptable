@@ -1,8 +1,8 @@
 import { ShortcutState } from './Interface/IState';
-import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
-import { ICellInfo } from '../../Core/Interface/IStrategy';
+import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
+import { ICellInfo } from '../../Strategy/Interface/IStrategy';
 import { DataType, ShortcutAction } from '../../Core/Enums';
-import * as CalendarStrat from '../../Core/Interface/ICalendarStrategy';
+import * as CalendarStrat from '../../Strategy/Interface/ICalendarStrategy';
 import * as Redux from 'redux'
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';

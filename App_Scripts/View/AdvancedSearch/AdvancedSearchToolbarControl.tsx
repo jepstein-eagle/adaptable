@@ -3,17 +3,17 @@ import * as Redux from 'redux'
 import { Provider, connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Panel, Form, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, HelpBlock, Row } from 'react-bootstrap';
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { StringExtensions } from '../../Core/Extensions'
-import { IUIConfirmation } from '../../Core/Interface/IStrategy';
-import { Helper } from '../../Core/Helper';
+import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { Helper } from '../../Core/Helpers/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -31,7 +31,7 @@ interface AdvancedSearchToolbarControlComponentProps extends IToolbarStrategyVie
     onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
- }
+}
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
     componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
@@ -62,16 +62,19 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
+                    size={"small"}
                     overrideTooltip="Edit Current Advanced Search"
                     overrideDisableButton={currentAdvancedSearchId == "select"}
                     ConfigEntity={savedSearch}
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.props.onNewAdvancedSearch()}
+                    size={"small"}
                     overrideTooltip="Create New Advanced Search"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
+                    size={"small"}
                     overrideTooltip="Delete Advanced Search"
                     overrideDisableButton={currentAdvancedSearchId == "select"}
                     ConfigEntity={savedSearch}
@@ -81,7 +84,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -91,13 +94,13 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     }
 
 
-   
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
-         CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
+        CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
     };

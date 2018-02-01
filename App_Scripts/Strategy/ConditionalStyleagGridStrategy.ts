@@ -1,16 +1,16 @@
 import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
-import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
+import { IMenuItem } from '../Strategy/Interface/IStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IConditionalStyleCondition } from '../Core/Interface/IConditionalStyleStrategy';
-import { Expression } from '../Core/Expression/Expression';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { Helper } from '../Core/Helper';
+import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
+import { Expression } from '../Core/Expression';
+import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
+import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import * as StyleConstants from '../Core/StyleConstants'
 

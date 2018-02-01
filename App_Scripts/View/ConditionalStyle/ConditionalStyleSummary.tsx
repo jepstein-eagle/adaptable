@@ -1,14 +1,14 @@
-import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { Col, Row } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ConditionalStyleWizard } from '../ConditionalStyle/ConditionalStyleWizard'
+import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -19,7 +19,7 @@ import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue, ConditionalStyleScope } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
@@ -34,11 +34,11 @@ export interface ConditionalStyleSummaryProps extends IStrategySummaryProps<Cond
     
 }
 
-export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, StrategySummaryInternalState> {
+export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
 
     }
     render(): any {
@@ -78,9 +78,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         return <div>
             {strategySummaries}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <ConditionalStyleWizard
-                    EditedConditionalStyleCondition={this.state.EditedItem as IConditionalStyleCondition}
+                    EditedConditionalStyleCondition={this.state.EditedConfigEntity as IConditionalStyleCondition}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
@@ -97,21 +97,21 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         let configEntity: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
         configEntity.ConditionalStyleScope = ConditionalStyleScope.Column;
-        this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, ConditionalStyle: IConditionalStyleCondition) {
-        this.setState({ EditedItem: Helper.cloneObject(ConditionalStyle), WizardStartIndex: 1, EditedItemIndex: index });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(ConditionalStyle), WizardStartIndex: 1, EditedIndexConfigEntity: index });
     }
 
     onCloseWizard() {
         //   this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateConditionalStyle(this.state.EditedItemIndex, this.state.EditedItem as IConditionalStyleCondition);
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IConditionalStyleCondition);
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

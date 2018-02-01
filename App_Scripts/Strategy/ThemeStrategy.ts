@@ -1,9 +1,9 @@
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
-import { IThemeStrategy } from '../Core/Interface/IThemeStrategy'
+import { IThemeStrategy } from '../Strategy/Interface/IThemeStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { ThemesContent } from '../../themes/index'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
@@ -14,7 +14,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ThemeStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemeConfig, StrategyGlyphs.ThemeGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
 
 
         // Create the <style> tag

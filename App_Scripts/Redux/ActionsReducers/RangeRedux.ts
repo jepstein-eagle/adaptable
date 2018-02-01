@@ -1,10 +1,10 @@
 import { ExportDestination } from '../../Core/Enums';
 import { RangeState } from './Interface/IState';
-import { IRange, ILiveRange, IPPDomain } from '../../Core/Interface/IExportStrategy'
-import { ICellInfo } from '../../Core/Interface/IStrategy';
+import { IRange, ILiveRange, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
+import { ICellInfo } from '../../Strategy/Interface/IStrategy';
 import * as Redux from 'redux'
-import { Helper } from '../../Core/Helper';
-import { RangeHelper } from '../../Core/Services/RangeHelper';
+import { Helper } from '../../Core/Helpers/Helper';
+import { RangeHelper } from '../../Core/Helpers/RangeHelper';
 
 export const RANGE_SELECT = 'RANGE_SELECT';
 export const RANGE_ADD_UPDATE = 'RANGE_ADD_UPDATE';

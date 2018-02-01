@@ -1,10 +1,10 @@
 import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import {  IStyle } from '../../Core/Interface/IStyle';
-import { Expression } from '../../Core/Expression/Expression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { Expression } from '../../Core/Expression';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import * as Redux from 'redux'
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';

@@ -1,19 +1,19 @@
-import { Helper } from './Helper';
-import { ExpressionHelper } from './Expression/ExpressionHelper';
-import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
-import { ICellValidationRule } from './Interface/ICellValidationStrategy';
-import { IConditionalStyleCondition } from './Interface/IConditionalStyleStrategy';
+import { Helper } from './Helpers/Helper';
+import { ExpressionHelper } from './Helpers/ExpressionHelper';
+import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
+import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
+import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { RangeColumnScope, RangeRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Core/Enums';
 import { IUserFilter } from './Interface/IExpression';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingColumn } from './Interface/IFlashingCellsStrategy'
-import { IShortcut } from './Interface/IShortcutStrategy';
-import { ICustomSort } from './Interface/ICustomSortStrategy';
-import { IPlusMinusCondition } from './Interface/IPlusMinusStrategy';
-import { IFormatColumn } from './Interface/IFormatColumnStrategy';
-import { Expression } from './Expression/Expression'
-import { ICalculatedColumn } from "./Interface/ICalculatedColumnStrategy";
-import { IRange } from './Interface/IExportStrategy';
+import { IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IShortcut } from '../Strategy/Interface/IShortcutStrategy';
+import { ICustomSort } from '../Strategy/Interface/ICustomSortStrategy';
+import { IPlusMinusCondition } from '../Strategy/Interface/IPlusMinusStrategy';
+import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
+import { Expression } from './Expression'
+import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
+import { IRange } from '../Strategy/Interface/IExportStrategy';
 import { IStyle } from '../Core/Interface/IStyle';
 
 export module ObjectFactory {

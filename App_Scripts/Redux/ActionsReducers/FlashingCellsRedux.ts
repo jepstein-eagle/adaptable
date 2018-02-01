@@ -1,5 +1,5 @@
 import { FlashingCellState } from './Interface/IState';
-import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as Redux from 'redux'
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';

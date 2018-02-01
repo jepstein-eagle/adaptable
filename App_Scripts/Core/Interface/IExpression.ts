@@ -1,5 +1,5 @@
 import { LeafExpressionOperator, DataType } from '../Enums'
-import { Expression } from '../Expression/Expression'
+import { Expression } from '../Expression'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { IConfigEntity } from './IAdaptableBlotter'
 

@@ -3,12 +3,12 @@ import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { Expression } from '../../Core/Expression/Expression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { Expression } from '../../Core/Expression';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 

@@ -6,7 +6,7 @@ import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions';
 import { ColumnSelector } from '../../ColumnSelector';
-import { ICalculatedColumn } from "../../../Core/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
 
 export interface CalculatedColumnExpressionWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {

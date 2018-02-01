@@ -4,28 +4,29 @@ import { Provider, connect } from 'react-redux';
 import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { ICellValidationRule, ICellValidationStrategy } from '../../Core/Interface/ICellValidationStrategy';
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { CellValidationMode } from '../../Core/Enums'
-import { IStrategy } from '../../Core/Interface/IStrategy';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EntityItemList } from '../Components/EntityItemList';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 
 interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
@@ -36,16 +37,11 @@ interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidatio
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-interface CellValidationPopupState {
-    EditedCellValidation: ICellValidationRule
-    EditedIndexCellValidation: number
-    WizardStartIndex: number
-}
 
-class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, CellValidationPopupState> {
+class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 }
+        this.state = { EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 }
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -53,7 +49,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let cellValitdation = ObjectFactory.CreateEmptyCellValidation()
                 cellValitdation.ColumnId = arrayParams[1]
-                this.setState({ EditedCellValidation: cellValitdation, EditedIndexCellValidation: -1, WizardStartIndex: 1 });
+                this.setState({ EditedConfigEntity: cellValitdation, EditedIndexConfigEntity: -1, WizardStartIndex: 1 });
             }
         }
     }
@@ -63,13 +59,19 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
-
-        let cellInfo: [string, number][] = [["Column", 2], ["Disallowed Edit", 3], ["Expression", 2], ["If Rule Broken", 2], ["", 3]];
+        let entityRowInfo:IEntityRowInfo [] =[
+            {Caption: "Column", Width: 2}, 
+            {Caption: "Disallowed Edit", Width: 3}, 
+            {Caption: "Expression", Width: 2}, 
+            {Caption: "If Rule Broken", Width: 2}, 
+            {Caption: "", Width: 3}, 
+        ]
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <CellValidationEntityRow
                 key={index}
+                EntityRowInfo={entityRowInfo}
                 ConfigEntity={x}
                 Column={column}
                 Columns={this.props.Columns}
@@ -94,7 +96,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
-                <EntityItemList cellInfo={cellInfo} items={CellValidationItems} />
+                <EntityItemList entityRowInfo={entityRowInfo} items={CellValidationItems} />
             }
 
             {CellValidationItems.length == 0 &&
@@ -104,9 +106,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                 </Well>
             }
 
-            {this.state.EditedCellValidation != null &&
+            {this.state.EditedConfigEntity != null &&
                 <CellValidationWizard
-                    EditedCellValidation={this.state.EditedCellValidation}
+                    EditedCellValidation={this.state.EditedConfigEntity as ICellValidationRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -120,12 +122,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     }
 
     createCellValidation() {
-        this.setState({ EditedCellValidation: ObjectFactory.CreateEmptyCellValidation(), EditedIndexCellValidation: -1, WizardStartIndex: 0 });
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCellValidation(), EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
         //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedCellValidation: Helper.cloneObject(CellValidation), EditedIndexCellValidation: index, WizardStartIndex: 1 });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(CellValidation), EditedIndexConfigEntity: index, WizardStartIndex: 1 });
     }
 
     onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
@@ -135,12 +137,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
+        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
     }
 
     onFinishWizard() {
-        this.props.onAddEditCellValidation(this.state.EditedIndexCellValidation, this.state.EditedCellValidation);
-        this.setState({ EditedCellValidation: null, EditedIndexCellValidation: -1, WizardStartIndex: 0 });
+        this.props.onAddEditCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
+        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
     }
 }
 

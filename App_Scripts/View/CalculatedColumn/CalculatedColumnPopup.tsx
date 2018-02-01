@@ -10,20 +10,21 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../Core/Helper';
+import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions'
-import { ICalculatedColumn } from "../../Core/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { EntityListActionButtons } from "../Components/Buttons/EntityListActionButtons";
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 
 
 interface CalculatedColumnPopupProps extends IStrategyViewPopupProps<CalculatedColumnPopupComponent> {
@@ -36,16 +37,11 @@ interface CalculatedColumnPopupProps extends IStrategyViewPopupProps<CalculatedC
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-interface CalculatedColumnPopupInternalState {
-    EditedCalculatedColumn: ICalculatedColumn
-    WizardStartIndex: number
-    EditedIndexCalculatedColumn: number
-}
 
-class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, CalculatedColumnPopupInternalState> {
+class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedCalculatedColumn: null, WizardStartIndex: 0, EditedIndexCalculatedColumn: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
     }
 
     componentDidMount() {
@@ -63,22 +59,27 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     render() {
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Column Name", Width: 3 },
+            { Caption: "Column Expression", Width: 6 },
+            { Caption: "", Width: 3 },
+        ]
+
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
 
             return <CalculatedColumnEntityRow
                 Index={index}
+                EntityRowInfo={entityRowInfo}
                 onShare={() => this.props.onShare(calculatedColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 ConfigEntity={calculatedColumn} key={calculatedColumn.ColumnId}
                 onEdit={(index, calculatedColumn) => this.onEdit(index, calculatedColumn as ICalculatedColumn)}
                 onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)}
             />
-
         });
 
-        let cellInfo: [string, number][] = [["Column Name", 3], ["Column Expression", 6], ["", 3]];
         let newButton = <ButtonNew onClick={() => { this.onNew() }}
             overrideTooltip="Create Calculated Column"
             DisplayMode="Glyph+Text"
@@ -88,19 +89,18 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
             {this.props.CalculatedColumns.length > 0 &&
-                <EntityItemList cellInfo={cellInfo} items={calculatedColumns} />
+                <EntityItemList entityRowInfo={entityRowInfo} items={calculatedColumns} />
             }
 
             {this.props.CalculatedColumns.length == 0 &&
                 <Well bsSize="small">Click 'New' to create a new Calculated Column.</Well>
             }
 
-          
             {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-            {this.state.EditedCalculatedColumn &&
+            {this.state.EditedConfigEntity &&
 
                 <CalculatedColumnWizard
-                    EditedCalculatedColumn={this.state.EditedCalculatedColumn}
+                    EditedCalculatedColumn={this.state.EditedConfigEntity as ICalculatedColumn}
                     Columns={this.props.Columns}
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
@@ -112,33 +112,33 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             }
         </PanelWithButton>
     }
- 
+
     onNew() {
-        this.setState({ EditedCalculatedColumn: ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedIndexCalculatedColumn: -1 });
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, customColumn: ICalculatedColumn) {
         let clonedObject = Helper.cloneObject(customColumn);
-        this.setState({ EditedCalculatedColumn: clonedObject, WizardStartIndex: 1, EditedIndexCalculatedColumn: index });
+        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 1, EditedIndexConfigEntity: index });
     }
 
     onCloseWizard() {
-        this.setState({ EditedCalculatedColumn: null, WizardStartIndex: 0 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
         //reset error message
         this.props.IsExpressionValid("")
     }
 
     onFinishWizard() {
-        if (this.state.EditedIndexCalculatedColumn != -1) {
-            this.props.onEditCalculatedColumn(this.state.EditedIndexCalculatedColumn, this.state.EditedCalculatedColumn)
+        if (this.state.EditedIndexConfigEntity != -1) {
+            this.props.onEditCalculatedColumn(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICalculatedColumn)
         }
         else {
-            this.props.onAddCalculatedColumn(this.state.EditedCalculatedColumn)
+            this.props.onAddCalculatedColumn(this.state.EditedConfigEntity as ICalculatedColumn)
         }
-        this.setState({ EditedCalculatedColumn: null, WizardStartIndex: 0, EditedIndexCalculatedColumn: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
-   
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

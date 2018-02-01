@@ -1,8 +1,8 @@
 import { UserFilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { StringExtensions } from '../../Core/Extensions';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as Redux from 'redux'
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';

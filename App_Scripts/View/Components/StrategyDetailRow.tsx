@@ -5,8 +5,8 @@ import { Col, Row } from 'react-bootstrap';
 import { ButtonNew } from './Buttons/ButtonNew';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-
+import { SummaryRowItem } from '../Components/SummaryRowItem';
+    
 
 export interface StrategyDetailRowProps extends React.ClassAttributes<StrategyDetailRow> {
     key: string
@@ -25,25 +25,23 @@ export interface StrategyDetailRowProps extends React.ClassAttributes<StrategyDe
 export class StrategyDetailRow extends React.Component<StrategyDetailRowProps, {}> {
     render(): any {
 
-        let myCols: IColItem[] = []
+        let summaryItems: any[] = []
         this.props.showBold ?
-            myCols.push({ size: 3, content: <b>{this.props.Item1}</b> }) :
-            myCols.push({ size: 3, content: <i>{this.props.Item1}</i> })
+        summaryItems.push(<b>{this.props.Item1}</b> ) :
+        summaryItems.push(<i>{this.props.Item1}</i> )
 
-        myCols.push({
-            size: 6, content: <i>{this.props.Item2}</i>
-        });
-        let buttons: any = <EntityListActionButtons
+        summaryItems.push( <i>{this.props.Item2}</i>);
+        summaryItems.push(<EntityListActionButtons
             ConfirmDeleteAction={this.props.onDelete}
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
             showShare={this.props.showShare}
             overrideDisableEdit={false}
             ConfigEntity={this.props.ConfigEnity}
-            EntityName={this.props.EntityName} />
-        myCols.push({ size: 3, content: buttons });
+            EntityName={this.props.EntityName} />)
+         
 
-        return <ConfigEntityRowItem items={myCols} />
+        return <SummaryRowItem SummaryItems={summaryItems} />
     }
 
 }

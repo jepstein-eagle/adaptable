@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helper';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
@@ -67,8 +67,8 @@ const initialDashboardState: DashboardState = {
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.ColumnFilterStrategyId, IsVisible: true },
         { Strategy: StrategyIds.ExportStrategyId, IsVisible: true },
+        { Strategy: StrategyIds.ColumnFilterStrategyId, IsVisible: true },
         // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
     ],
     DashboardZoom : 1

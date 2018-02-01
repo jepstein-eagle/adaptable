@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../../../Core/Helper'
+import { Helper } from '../../../Core/Helpers/Helper'
 import { PanelProps, Panel, Glyphicon, Button, Label, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
-import { IUIConfirmation } from "../../../Core/Interface/IStrategy";
+import { IUIConfirmation } from "../../../Strategy/Interface/IStrategy";
 
 export interface PanelDashboardProps extends PanelProps {
     headerText: string

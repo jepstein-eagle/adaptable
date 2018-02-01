@@ -2,7 +2,7 @@ import {IAdaptableBlotter, IColumn} from './IAdaptableBlotter';
 import * as React from "react";
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import { IStrategy } from '../../Core/Interface/IStrategy';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface

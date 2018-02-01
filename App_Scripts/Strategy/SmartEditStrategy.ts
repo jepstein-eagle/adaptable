@@ -1,22 +1,22 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
-import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Core/Interface/IStrategy';
+import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Strategy/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Core/Interface/ISmartEditStrategy'
+import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditAction, StrategyGlyphs.SmartEditGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
     }
     
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {

@@ -1,23 +1,23 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
-import { IMenuItem } from '../Core/Interface/IStrategy'
+import { IMenuItem } from '../Strategy/Interface/IStrategy'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
-import { IExportStrategy, IRange } from '../Core/Interface/IExportStrategy'
+import { IExportStrategy, IRange } from '../Strategy/Interface/IExportStrategy'
 import {  RangeColumnScope, ExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../Core/Helper';
-import { RangeHelper } from '../Core/Services/RangeHelper';
-import { Expression } from '../Core/Expression/Expression'
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { OpenfinHelper } from '../Core/OpenfinHelper';
+import { Helper } from '../Core/Helpers/Helper';
+import { RangeHelper } from '../Core/Helpers/RangeHelper';
+import { Expression } from '../Core/Expression'
+import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
+import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { RangeState } from '../Redux/ActionsReducers/Interface/IState';
-import { iPushPullHelper } from '../Core/iPushPullHelper';
+import { iPushPullHelper } from '../Core/Helpers/iPushPullHelper';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
     private RangeState: RangeState
@@ -28,7 +28,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportActionPopup, StrategyGlyphs.ExportGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportPopup, StrategyGlyphs.ExportGlyph);
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
             this.RangeState.CurrentLiveRanges.forEach(cle => {

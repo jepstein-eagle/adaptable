@@ -1,5 +1,5 @@
 import { CustomSortState } from './Interface/IState';
-import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy';
+import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as Redux from 'redux'
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';

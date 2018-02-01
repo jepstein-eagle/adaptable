@@ -1,9 +1,9 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../Core/Extensions'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { IColumnFilter, IColumnFilterContext } from '../../Core/Interface/IColumnFilterStrategy';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase

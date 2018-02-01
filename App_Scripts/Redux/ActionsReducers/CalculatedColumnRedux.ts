@@ -1,5 +1,5 @@
 import { CalculatedColumnState } from './Interface/IState';
-import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy';
+import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as Redux from 'redux'
 
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';

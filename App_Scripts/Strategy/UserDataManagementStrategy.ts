@@ -1,10 +1,10 @@
 import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
-import { IUserDataManagementStrategy } from '../Core/Interface/IUserDataManagementStrategy';
+import { IUserDataManagementStrategy } from '../Strategy/Interface/IUserDataManagementStrategy';
 import { MenuReduxActionItem } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IMenuItem } from '../Strategy/Interface/IStrategy';
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 
 const cleanUserData: string = "CleanUserData"

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
+import { Helper } from '../Core/Helpers/Helper'
 import { StringExtensions } from '../Core/Extensions'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../Core/Interface/IAdaptableBlotter';

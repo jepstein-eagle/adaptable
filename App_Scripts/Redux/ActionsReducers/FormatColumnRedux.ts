@@ -1,5 +1,5 @@
 import { FormatColumnState } from './Interface/IState';
-import { IFormatColumn } from '../../Core/Interface/IFormatColumnStrategy';
+import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as Redux from 'redux'
 
 export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';

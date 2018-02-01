@@ -1,6 +1,6 @@
 import { AdvancedSearchState } from './Interface/IState';
 import { LeafExpressionOperator } from '../../Core/Enums';
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import * as Redux from 'redux'
 
 export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
@@ -54,7 +54,7 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
             } else {
                 advancedSearches.push(actionTypedAddUpdate.AdvancedSearch)
             }
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearchId: currentSearchId })
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches})//, CurrentAdvancedSearchId: currentSearchId })
 
         case ADVANCED_SEARCH_DELETE:
             let actionTypedDelete = (<AdvancedSearchDeleteAction>action)

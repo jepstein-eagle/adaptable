@@ -1,31 +1,30 @@
-import { CustomSortConfig } from './CustomSort/CustomSortConfig'
-import { SmartEditAction } from './SmartEdit/SmartEditAction'
-import { ShortcutConfig } from './Shortcut/ShortcutConfig'
-import { PlusMinusConfig } from './PlusMinus/PlusMinusConfig'
+import { CustomSortPopup } from './CustomSort/CustomSortPopup'
+import { SmartEditPopup } from './SmartEdit/SmartEditPopup'
+import { ShortcutPopup } from './Shortcut/ShortcutPopup'
+import { PlusMinusPopup } from './PlusMinus/PlusMinusPopup'
 import { ColumnChooserPopup } from './ColumnChooser/ColumnChooserPopup'
-import { ColumnInfoAction } from './ColumnInfo/ColumnInfoAction'
-import { ExportAction } from './Export/ExportAction'
-import { FlashingCellsConfig } from './FlashingCells/FlashingCellsConfig'
-import { CalendarsConfig } from './Calendars/CalendarsConfig'
-import { ConditionalStyleConfig } from './ConditionalStyle/ConditionalStyleConfig'
-import { QuickSearchConfig } from './QuickSearch/QuickSearchConfig'
+import { ColumnInfoPopup } from './ColumnInfo/ColumnInfoPopup'
+import { ExportPopup } from './Export/ExportPopup'
+import { FlashingCellsPopup } from './FlashingCells/FlashingCellsPopup'
+import { CalendarsPopup } from './Calendars/CalendarsPopup'
+import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup'
+import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
-//import { FunctionsToolbarControl } from './Functions/FunctionsToolbarControl'
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
-import { UserFilterConfig } from './UserFilter/UserFilterConfig'
-import { FormatColumnConfig } from './FormatColumn/FormatColumnConfig'
-import { ThemeConfig } from './Theme/ThemeConfig'
+import { UserFilterPopup } from './UserFilter/UserFilterPopup'
+import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup'
+import { ThemePopup } from './Theme/ThemePopup'
 import { CellValidationPopup } from './CellValidation/CellValidationPopup'
-import { LayoutConfig } from './Layout/LayoutConfig'
+import { LayoutPopup } from './Layout/LayoutPopup'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
-import { TeamSharingAction } from './TeamSharing/TeamSharingAction'
+import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
-import { FunctionButtonsConfig } from './Functions/FunctionButtonsConfig'
-import { DashboardConfig } from './Dashboard/DashboardConfig'
+import { FunctionButtonsPopup } from './Functions/FunctionButtonsPopup'
+import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as React from "react";
@@ -33,35 +32,34 @@ import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup"
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  CustomSortConfig: CustomSortConfig,
-  SmartEditAction: SmartEditAction,
-  ShortcutConfig: ShortcutConfig,
-  PlusMinusConfig: PlusMinusConfig,
+  CustomSortPopup: CustomSortPopup,
+  SmartEditPopup: SmartEditPopup,
+  ShortcutPopup: ShortcutPopup,
+  PlusMinusPopup: PlusMinusPopup,
   ColumnChooserPopup: ColumnChooserPopup,
-  ColumnInfoAction: ColumnInfoAction,
-  ExportAction: ExportAction,
-  FlashingCellsConfig: FlashingCellsConfig,
-  CalendarsConfig: CalendarsConfig,
-  ConditionalStyleConfig: ConditionalStyleConfig,
-  QuickSearchConfig: QuickSearchConfig,
+  ColumnInfoPopup: ColumnInfoPopup,
+  ExportPopup: ExportPopup,
+  FlashingCellsPopup: FlashingCellsPopup,
+  CalendarsPopup: CalendarsPopup,
+  ConditionalStylePopup: ConditionalStylePopup,
+  QuickSearchPopup: QuickSearchPopup,
   AdvancedSearchPopup: AdvancedSearchPopup,
-  UserFilterConfig: UserFilterConfig,
-  FormatColumnConfig: FormatColumnConfig,
-  ThemeConfig: ThemeConfig,
+  UserFilterPopup: UserFilterPopup,
+  FormatColumnPopup: FormatColumnPopup,
+  ThemePopup: ThemePopup,
   CellValidationPopup: CellValidationPopup,
-  LayoutConfig: LayoutConfig,
-  DashboardConfig: DashboardConfig,
-  FunctionButtonsConfig: FunctionButtonsConfig,
+  LayoutPopup: LayoutPopup,
+  DashboardPopup: DashboardPopup,
+  FunctionButtonsPopup: FunctionButtonsPopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector : IPushPullDomainPageSelector,
-  TeamSharingAction : TeamSharingAction,
+  TeamSharingPopup : TeamSharingPopup,
   ColumnFilterPopup: ColumnFilterPopup
 }
 
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
-//[StrategyConstants.FunctionsStrategyId, FunctionsToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
@@ -69,12 +67,6 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.FunctionsStrategyId, FunctionToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl]
 ]);
-
-//here we put the configuration screen of the dashboard control if it exists
-//the component needs to be registered in the global view factory as well with the same key/name
-//export const AdaptableDashboardConfigurationViewFactory = new Map<string, string>([
- // [StrategyIds.FunctionsStrategyId, "FunctionButtonsConfig"]
-//]);
 
 export interface IAdaptableViewFactory {
   [key: string]: any;

@@ -1,13 +1,13 @@
 import { MenuReduxActionItem } from '../Core/MenuItem'
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase'
+import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
 import { ObjectFactory } from '../Core/ObjectFactory'
-import { IMenuItem } from '../Core/Interface/IStrategy'
+import { IMenuItem } from '../Strategy/Interface/IStrategy'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn } from '../Core/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import {  DataType } from '../Core/Enums';
@@ -21,7 +21,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FlashingCellsStrategyName, ScreenPopups.FlashingCellsConfig, StrategyGlyphs.FlashingCellGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyGlyphs.FlashingCellGlyph);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         // TODO: test extension works
     }

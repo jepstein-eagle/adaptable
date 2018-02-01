@@ -1,15 +1,15 @@
 import { FormatColumnStrategy } from './FormatColumnStrategy';
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import { IFormatColumnStrategy } from '../Core/Interface/IFormatColumnStrategy';
+import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
+import { IMenuItem } from '../Strategy/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IFormatColumn } from '../Core/Interface/IFormatColumnStrategy';
-import { Expression } from '../Core/Expression/Expression';
-import { ExpressionHelper } from '../Core/Expression/ExpressionHelper';
-import { Helper } from '../Core/Helper';
+import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
+import { Expression } from '../Core/Expression';
+import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
+import { Helper } from '../Core/Helpers/Helper';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as StyleConstants from '../Core/StyleConstants'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';

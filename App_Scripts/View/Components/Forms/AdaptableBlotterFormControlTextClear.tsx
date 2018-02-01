@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../../../Core/Helper'
+import { Helper } from '../../../Core/Helpers/Helper'
 import { StringExtensions } from '../../../Core/Extensions'
 import { FormControl, FormControlProps, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import { IUIError } from '../../../Core/Interface/IStrategy';
+import { IUIError } from '../../../Strategy/Interface/IStrategy';
 import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 

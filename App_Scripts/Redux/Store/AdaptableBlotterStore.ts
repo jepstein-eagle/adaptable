@@ -37,26 +37,26 @@ import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy } from '../../Core/Interface/ISmartEditStrategy'
-import { IShortcutStrategy } from '../../Core/Interface/IShortcutStrategy'
-import { IExportStrategy , IPPDomain} from '../../Core/Interface/IExportStrategy'
-import { IPlusMinusStrategy } from '../../Core/Interface/IPlusMinusStrategy'
-import { IColumnChooserStrategy } from '../../Core/Interface/IColumnChooserStrategy'
-import { ICalculatedColumn } from '../../Core/Interface/ICalculatedColumnStrategy'
-import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy'
-import { IConditionalStyleCondition } from '../../Core/Interface/IConditionalStyleStrategy'
-import { IShortcut } from '../../Core/Interface/IShortcutStrategy'
-import { ICustomSort } from '../../Core/Interface/ICustomSortStrategy'
-import { IAdvancedSearch } from '../../Core/Interface/IAdvancedSearchStrategy'
-import { ILayout } from '../../Core/Interface/ILayoutStrategy'
+import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
+import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
+import { IExportStrategy , IPPDomain} from '../../Strategy/Interface/IExportStrategy'
+import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
+import { IColumnChooserStrategy } from '../../Strategy/Interface/IColumnChooserStrategy'
+import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
+import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
+import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy'
+import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
+import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
+import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import { IUserFilter } from '../../Core/Interface/IExpression'
-import { ICellValidationStrategy, ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy'
-import { ITeamSharingStrategy, ISharedEntity } from '../../Core/Interface/ITeamSharingStrategy'
+import { ICellValidationStrategy, ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
+import { ITeamSharingStrategy, ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Core/Interface/IStrategy';
+import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Strategy/Interface/IStrategy';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
-import { Helper } from "../../Core/Helper";
-import { iPushPullHelper } from "../../Core/iPushPullHelper";
+import { Helper } from "../../Core/Helpers/Helper";
+import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,

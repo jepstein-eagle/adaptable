@@ -1,13 +1,13 @@
 
-import { IFormatColumn } from '../../Core/Interface/IFormatColumnStrategy';
+import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { FormatColumnWizard } from '../FormatColumn/FormatColumnWizard'
+import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -18,7 +18,7 @@ import { StringExtensions } from '../../Core/Extensions'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { StrategyHeader } from '../Components/StrategyHeader'
@@ -35,11 +35,11 @@ export interface FormatColumnSummaryProps extends IStrategySummaryProps<FormatCo
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, StrategySummaryInternalState> {
+export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
     }
 
     render(): any {
@@ -73,9 +73,9 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         return <div>
             {formatColumnRow}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <FormatColumnWizard
-                    EditedFormatColumn={this.state.EditedItem as IFormatColumn}
+                    EditedFormatColumn={this.state.EditedConfigEntity as IFormatColumn}
                     Columns={this.props.Columns}
                     FormatColumns={this.props.FormatColumns}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
@@ -90,26 +90,26 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
     onNew() {
         let configEntity: IFormatColumn = ObjectFactory.CreateEmptyFormatColumn()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-         this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
+         this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(FormatColumn: IFormatColumn) {
-        this.setState({ EditedItem: Helper.cloneObject(FormatColumn), WizardStartIndex: 1, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(FormatColumn), WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onFinishWizard() {
-       let formatColumn:IFormatColumn = this.state.EditedItem as IFormatColumn
+       let formatColumn:IFormatColumn = this.state.EditedConfigEntity as IFormatColumn
         if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
             this.props.onEditFormatColumn(formatColumn)
         } else {
             this.props.onAddFormatColumn(formatColumn)
         }
-          this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+          this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
 }

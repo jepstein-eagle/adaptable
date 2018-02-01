@@ -6,11 +6,11 @@ import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { Well, ListGroupItem, ListGroup, Panel, Form, FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
-import { Expression } from '../../Core/Expression/Expression';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Services/UserFilterHelper';
+import { Expression } from '../../Core/Expression';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue , SelectionMode} from '../../Core/Enums'
-import { Helper } from '../../Core/Helper'
+import { Helper } from '../../Core/Helpers/Helper'
 import { StringExtensions } from '../../Core/Extensions'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';

@@ -1,7 +1,7 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { MergeState } from './AdaptableBlotterReduxMerger'
-import { Helper } from '../../Core/Helper'
+import { Helper } from '../../Core/Helpers/Helper'
 import { StringExtensions } from '../../Core/Extensions'
 
 const checkStatus = (response: Response) => {

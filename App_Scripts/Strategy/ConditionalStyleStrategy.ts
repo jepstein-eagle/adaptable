@@ -1,12 +1,12 @@
 import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
-import { IConditionalStyleStrategy } from '../Core/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
 import * as ScreenPopups from '../Core/ScreenPopups'
-import { IMenuItem } from '../Core/Interface/IStrategy';
+import { IMenuItem } from '../Strategy/Interface/IStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -15,7 +15,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStyleConfig, StrategyGlyphs.ConditionalStyleGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
     }
@@ -32,7 +32,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(
             MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
                 "Create " + StrategyNames.ConditionalStyleStrategyName,
-                ScreenPopups.ConditionalStyleConfig,
+                ScreenPopups.ConditionalStylePopup,
                 StrategyGlyphs.ConditionalStyleGlyph,
                 "New|" + columnId)))
     }

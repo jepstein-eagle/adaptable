@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../Core/Helper'
+import { Helper } from '../Core/Helpers/Helper'
 import { Form, Row, Col, FormGroup, InputGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
 import { SortOrder } from '../Core/Enums'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'

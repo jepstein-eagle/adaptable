@@ -1,17 +1,17 @@
-import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { Button, Col, Row, ButtonGroup, Panel, FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { CellValidationMode } from '../../Core/Enums'
 import * as StrategyNames from '../../Core/StrategyNames'
-import { SharedEntityExpressionRowProps } from '../Components/ConfigEntityRowProps';
+import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
@@ -37,11 +37,11 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         })
 
         let myCols: IColItem[] = []
-        myCols.push({ size: 2, content: this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + Helper.MissingColumnMagicString });
-        myCols.push({ size: 3, content: cellValidation.Description});
-        myCols.push({ size: 2, content: this.setExpressionDescription(cellValidation)});
+        myCols.push({ size: this.props.EntityRowInfo[0].Width, content: this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + Helper.MissingColumnMagicString });
+        myCols.push({ size: this.props.EntityRowInfo[1].Width, content: cellValidation.Description});
+        myCols.push({ size: this.props.EntityRowInfo[2].Width, content: this.setExpressionDescription(cellValidation)});
         myCols.push({
-            size: 2, content:
+            size: this.props.EntityRowInfo[3].Width, content:
                 <FormControl  componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
 
                     {CellValidationModeTypes}
@@ -56,7 +56,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             ConfigEntity={cellValidation}
             EntityName={StrategyNames.CellValidationStrategyName} />
 
-        myCols.push({ size: 3, content: buttons });
+        myCols.push({ size: this.props.EntityRowInfo[4].Width, content: buttons });
 
 
         return <ConfigEntityRowItem

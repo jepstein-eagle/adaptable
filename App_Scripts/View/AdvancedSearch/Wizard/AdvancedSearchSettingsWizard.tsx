@@ -2,7 +2,7 @@ import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IAdvancedSearch } from '../../../Core/Interface/IAdvancedSearchStrategy';
+import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../../Core/Extensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 

@@ -10,9 +10,9 @@ import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStr
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
-import { IColumnFilter } from '../../Core/Interface/IColumnFilterStrategy';
-import { Helper } from '../../Core/Helper';
+import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -20,8 +20,8 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
-import { IUIConfirmation } from "../../Core/Interface/IStrategy";
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { IUIConfirmation } from "../../Strategy/Interface/IStrategy";
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 
 
@@ -61,7 +61,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
-                    overrideTooltip="Clear Column Filters"
+                   size={"small"} 
+                   overrideTooltip="Clear Column Filters"
                     DisplayMode="Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>

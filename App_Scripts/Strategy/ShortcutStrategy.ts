@@ -1,6 +1,6 @@
-import { IShortcut, IShortcutStrategy } from '../Core/Interface/IShortcutStrategy';
+import { IShortcut, IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from '../Core/AdaptableStrategyBase';
+import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/StrategyIds'
 import * as StrategyNames from '../Core/StrategyNames'
 import * as StrategyGlyphs from '../Core/StrategyGlyphs'
@@ -8,14 +8,14 @@ import * as ScreenPopups from '../Core/ScreenPopups'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import { IMenuItem, IUIError, IUIConfirmation, ICellInfo } from '../Core/Interface/IStrategy';
-import { Helper } from '../Core/Helper';
+import { IMenuItem, IUIError, IUIConfirmation, ICellInfo } from '../Strategy/Interface/IStrategy';
+import { Helper } from '../Core/Helpers/Helper';
 import { DataType } from '../Core/Enums'
 import { ShortcutAction, CellValidationMode } from '../Core/Enums'
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Core/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
 
 
@@ -25,7 +25,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutConfig, StrategyGlyphs.ShortcutGlyph);
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyGlyphs.ShortcutGlyph);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 

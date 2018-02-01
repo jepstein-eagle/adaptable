@@ -1,14 +1,14 @@
-import { IPlusMinusCondition } from '../../Core/Interface/IPlusMinusStrategy';
+import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { Col, Row } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { PlusMinusWizard } from '../PlusMinus/PlusMinusWizard'
+import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -17,7 +17,7 @@ import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyIds from '../../Core/StrategyIds'
 import { StringExtensions } from '../../Core/Extensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Expression/ExpressionHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
@@ -31,11 +31,11 @@ export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSu
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, StrategySummaryInternalState> {
+export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
 
     }
     render(): any {
@@ -73,9 +73,9 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         return <div>
             {strategySummaries}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <PlusMinusWizard
-                    EditedPlusMinusCondition={this.state.EditedItem as IPlusMinusCondition}
+                    EditedPlusMinusCondition={this.state.EditedConfigEntity as IPlusMinusCondition}
                     PlusMinusConditions={this.props.PlusMinusConditions}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
@@ -93,21 +93,21 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     onNew() {
         let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition(120)
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, PlusMinus: IPlusMinusCondition) {
-        this.setState({ EditedItem: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedItemIndex: index });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedIndexConfigEntity: index });
     }
 
     onCloseWizard() {
         //   this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onFinishWizard() {
-         this.props.onAddUpdatePlusMinus(this.state.EditedItemIndex, this.state.EditedItem as IPlusMinusCondition );
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+         this.props.onAddUpdatePlusMinus(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition );
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
         // wrappng this so that any becomes [Default Column Nudge Value]

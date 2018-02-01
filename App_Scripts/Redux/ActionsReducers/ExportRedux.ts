@@ -1,5 +1,5 @@
 import { ExportState } from './Interface/IState';
-import { IRange, ILiveRange, IPPDomain } from '../../Core/Interface/IExportStrategy'
+import { IRange, ILiveRange, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { ExportDestination } from '../../Core/Enums';
 import * as Redux from 'redux'
 

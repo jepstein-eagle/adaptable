@@ -1,9 +1,9 @@
-import { IShortcut } from '../../Core/Interface/IShortcutStrategy';
+import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Col, Panel, Row, Checkbox, FormControl } from 'react-bootstrap';
-import { IFlashingColumn } from '../../Core/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { EnumExtensions } from '../../Core/Extensions';
 import { ColorPicker } from '../ColorPicker';

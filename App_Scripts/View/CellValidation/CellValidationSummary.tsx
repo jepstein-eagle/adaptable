@@ -1,10 +1,10 @@
-import { ICellValidationRule } from '../../Core/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { StrategySummaryInternalState } from '../../Core/Interface/IStrategySummary'
+import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { Provider, connect } from 'react-redux';
-import { Helper } from '../../Core/Helper';
+import { Helper } from '../../Core/Helpers/Helper';
 import { Col, Row } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -30,11 +30,11 @@ export interface CellValidationSummaryProps extends IStrategySummaryProps<CellVa
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, StrategySummaryInternalState> {
+export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
     }
     
     render(): any {
@@ -71,9 +71,9 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         return <div>
             {strategySummaries}
 
-            {this.state.EditedItem &&
+            {this.state.EditedConfigEntity &&
                 <CellValidationWizard
-                    EditedCellValidation={this.state.EditedItem as ICellValidationRule}
+                    EditedCellValidation={this.state.EditedConfigEntity as ICellValidationRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -88,21 +88,21 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     onNew() {
         let configEntity: ICellValidationRule = ObjectFactory.CreateEmptyCellValidation()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedItem: configEntity, WizardStartIndex: 1, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
-        this.setState({ EditedItem: Helper.cloneObject(CellValidation), WizardStartIndex: 1, EditedItemIndex: index });
+        this.setState({ EditedConfigEntity: Helper.cloneObject(CellValidation), WizardStartIndex: 1, EditedIndexConfigEntity: index });
     }
 
     onCloseWizard() {
         //   this.props.onClearPopupParams()
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 
     onFinishWizard() {
-       this.props.onAddUpdateCellValidation(this.state.EditedItemIndex, this.state.EditedItem as ICellValidationRule );
-        this.setState({ EditedItem: null, WizardStartIndex: 0, EditedItemIndex: -1 });
+       this.props.onAddUpdateCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule );
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
