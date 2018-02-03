@@ -24,7 +24,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 
 interface ColumnFilterPopupProps extends IStrategyViewPopupProps<ColumnFilterPopupComponent> {
     Columns: IColumn[]
@@ -44,25 +44,25 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     render() {
         let infoBody: any[] = ["Column Filters are Column Queries that can be named and re-used.", <br />, <br />]
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Column", Width: 3}, 
-            {Caption: "Filter", Width: 7}, 
-            {Caption: "", Width: 2}, 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Column", Width: 3 },
+            { Caption: "Filter", Width: 7 },
+            { Caption: "", Width: 2 },
         ]
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
-            let myCols: IColItem[] = []
-            myCols.push({
-                size: 3, content: this.props.Columns.find(c=>c.ColumnId == columnFilter.ColumnId).FriendlyName
-            });
-            myCols.push({
-                size: 7, content: ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
-              });
-            let buttons: any = <ButtonClear onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
-            DisplayMode="Glyph"
-            overrideDisableButton={columnFilter == null} />
-            myCols.push({ size: 2, content: buttons });
+            return <ColumnFilterEntityRow
+                key={index}
+                EntityRowInfo={entityRowInfo}
+                ConfigEntity={null}
+                ColumnFilter={columnFilter}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                Index={index}
+                onEdit={null}
+                onDeleteConfirm={null}
+                onClear={() => this.props.onDeleteFilter(columnFilter)}
+            />
 
-            return <ConfigEntityRowItem items={myCols} key={index} />
         })
 
         return <PanelWithButton headerText="Column Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}

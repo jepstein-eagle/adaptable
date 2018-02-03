@@ -3,13 +3,14 @@ import { IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
 import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
 
 
 export interface IColumnFilterStrategy extends IStrategy{
 }
 
 
-export interface IColumnFilter {
+export interface IColumnFilter  {
     ColumnId: string
     Filter: Expression
 }

@@ -8,6 +8,7 @@ import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditiona
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
+import * as StrategyNames from '../../Core/StrategyNames'
 import { ColorPicker } from '../ColorPicker';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
@@ -39,7 +40,7 @@ export class ConditionalStyleEntityRow  extends React.Component<SharedEntityExpr
             ConfigEntity={conditionalStyleCondition}
             overrideDisableEdit={(!column && conditionalStyleCondition.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName="Conditional Style" />
+            EntityName={StrategyNames.ConditionalStyleStrategyName} />
         myCols.push({ size: this.props.EntityRowInfo[3].Width, content: buttons });
 
         return <ConfigEntityRowItem items={myCols} />

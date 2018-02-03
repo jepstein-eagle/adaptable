@@ -16,21 +16,23 @@ export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEnt
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
     AvailableKeys: Array<string>;
-  }
+}
 
 export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {}> {
     render(): any {
-        
-        let shortcut : IShortcut = this.props.ConfigEntity as IShortcut;
-        
+
+        let shortcut: IShortcut = this.props.ConfigEntity as IShortcut;
+
         const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
 
         let myCols: IColItem[] = []
         myCols.push({
-            size: 2, content: shortcut.DataType == DataType.Date ? "Date" : "Numeric"
+            size: this.props.EntityRowInfo[0].Width,
+            content: shortcut.DataType == DataType.Date ? "Date" : "Numeric"
         });
         myCols.push({
-            size: 1, content:
+            size: this.props.EntityRowInfo[1].Width,
+            content:
                 <AdaptableBlotterForm inline key={shortcut.ShortcutKey}>
                     <FormGroup controlId={shortcut.ShortcutKey}>
                         <FormControl componentClass="select" value={shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
@@ -43,7 +45,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         });
 
         myCols.push({
-            size: 3, content:
+            size: this.props.EntityRowInfo[2].Width, content:
                 shortcut.DataType == DataType.Date ?
                     "Replace Cell"
                     :
@@ -60,7 +62,8 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         });
 
         myCols.push({
-            size: 3, content:
+            size: this.props.EntityRowInfo[3].Width,
+            content:
                 shortcut.IsDynamic ?
                     shortcut.ShortcutResult :
                     <FormControl
@@ -71,9 +74,9 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                     />
         });
 
-
         myCols.push({
-            size: 3, content:
+            size: this.props.EntityRowInfo[4].Width,
+            content:
                 <EntityListActionButtons
                     showEdit={false}
                     shareClick={() => this.props.onShare()}
@@ -84,7 +87,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 </EntityListActionButtons>
         });
 
-        return <ConfigEntityRowItem    items={myCols} />
+        return <ConfigEntityRowItem items={myCols} />
 
     }
 

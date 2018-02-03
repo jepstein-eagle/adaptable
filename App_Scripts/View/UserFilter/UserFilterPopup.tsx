@@ -21,6 +21,7 @@ import { ExpressionMode } from '../../Core/Enums'
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import { StringExtensions } from '../../Core/Extensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { UserFilterEntityRow } from './UserFilterEntityRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
@@ -46,12 +47,12 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
                 userFilter.ColumnId = arrayParams[1]
-                this.onEditUserFilter(userFilter)
+                this.onEdit(userFilter)
             }
         }
     }
     render() {
-        let infoBody: any[] = ["User Filters are Column Queries that can be named and re-used.", <br />, <br />,
+        let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
             "Once created, User Filters are available in the column's filter dropdown as if a single colum value.", <br />, <br />,
             "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
             "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
@@ -77,29 +78,21 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             {Caption: "", Width: 3}, 
         ]
 
-        let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((x) => {
-            let expressionString = ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters)
-            let myCols: IColItem[] = []
-            myCols.push({
-                size: 3, content: x.FriendlyName
-            });
-            myCols.push({
-                size: 6, content: expressionString 
-            });
-            let buttons: any = <EntityListActionButtons
-                ConfirmDeleteAction={FilterRedux.UserFilterDelete(x)}
-                showShare={this.props.TeamSharingActivated}
-                shareClick={() => this.props.onShare(x)}
-                overrideDisableEdit={expressionString.includes(Helper.MissingColumnMagicString)}
-                editClick={() => this.onEditUserFilter(x)}
-                ConfigEntity={x}
-                EntityName="User Filter" />
-            myCols.push({ size: 3, content: buttons });
-
-            return <ConfigEntityRowItem items={myCols} />
-        })
-
-        let newButton = <ButtonNew onClick={() => this.onCreateUserFilter()}
+        let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
+            return <UserFilterEntityRow
+            ConfigEntity={userFilter}
+            EntityRowInfo={entityRowInfo}
+            key={"CS" + index}
+            Index={index}
+            onShare={() => this.props.onShare(userFilter)}
+            TeamSharingActivated={this.props.TeamSharingActivated}
+            UserFilters={this.props.UserFilters}
+            Columns={this.props.Columns}
+            onEdit={(index, conditionalStyleCondition) => this.onEdit( userFilter as IUserFilter)}
+            onDeleteConfirm={FilterRedux.UserFilterDelete( userFilter)} />
+    });
+    
+        let newButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text"
             size={"small"} />
@@ -135,11 +128,11 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         </PanelWithButton>
     }
 
-    onCreateUserFilter() {
+    onNew() {
         this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
     }
 
-    onEditUserFilter(userFilter: IUserFilter) {
+    onEdit(userFilter: IUserFilter) {
         //we clone the condition as we do not want to mutate the redux state here....
         this.setState({ EditedConfigEntity: Helper.cloneObject(userFilter), WizardStartIndex: 1 });
     }

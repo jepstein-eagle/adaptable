@@ -80,7 +80,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Caption: "Range", Width: 2 },
             { Caption: "Columns", Width: 3 },
             { Caption: "Expression", Width: 3 },
-            { Caption: "", Width: 4 },
+            { Caption: "", Width: 2 },
+            { Caption: "", Width: 2 },
         ]
 
         let ranges = this.props.Ranges.map((range: IRange, index) => {

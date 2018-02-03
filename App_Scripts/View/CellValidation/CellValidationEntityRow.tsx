@@ -15,17 +15,8 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
-   // CellValidation: ICellValidationRule
     Column: IColumn
-    ///Columns: IColumn[]
-    //UserFilters: IUserFilter[]
-  //  Index: number
- //   onEdit: (index: number, CellValidation: ICellValidationRule) => void;
- //   onShare: () => void;
- //   TeamSharingActivated: boolean
- //   onDeleteConfirm: Redux.Action;
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => void
-
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {

@@ -27,6 +27,9 @@ import { DataType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { PlusMinusEntityRow } from './PlusMinusEntityRow'
+import { EntityItemList } from '../Components/EntityItemList';
+
 
 interface PlusMinusPopupProps extends IStrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -56,7 +59,6 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         }
     }
 
-
     render() {
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />, "Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
 
@@ -66,30 +68,22 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             { Caption: "Row Condition", Width: 4 },
             { Caption: "", Width: 3 },
         ]
-        let optionColumnsItems = this.props.PlusMinusConditions.map((x, index) => {
+        let plusMinusConditions = this.props.PlusMinusConditions.map((x, index) => {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
 
-            let myCols: IColItem[] = []
-            myCols.push({
-                size: 3, content: column ? column.FriendlyName : x.ColumnId + Helper.MissingColumnMagicString
-            });
-            myCols.push({
-                size: 2, content: <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.onColumnDefaultNudgeValueChange(index, e)} />
-            });
-            myCols.push({
-                size: 4, content: this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters))
-            });
-            let buttons: any = <EntityListActionButtons
-                ConfirmDeleteAction={PlusMinusRedux.PlusMinusDeleteCondition(index)}
-                overrideDisableEdit={!column}
-                showShare={this.props.TeamSharingActivated}
-                shareClick={() => this.props.onShare(x)}
-                editClick={() => this.onEdit(index, x)}
+            return <PlusMinusEntityRow
+                EntityRowInfo={entityRowInfo}
                 ConfigEntity={x}
-                EntityName="Plus Minus rule" />
-            myCols.push({ size: 3, content: buttons });
-
-            return <ConfigEntityRowItem items={myCols} />
+                key={x.ColumnId}
+                Index={index}
+                UserFilters={this.props.UserFilters}
+                Columns={this.props.Columns}
+                onEdit={(index, customSort) => this.onEdit(index, x as IPlusMinusCondition)}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                onShare={() => this.props.onShare(x)}
+                onDeleteConfirm={PlusMinusRedux.PlusMinusDeleteCondition(index)}
+                Column={column}
+                onColumnDefaultNudgeValueChange={(index, event) => this.onColumnDefaultNudgeValueChange(index, event)} />
         })
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
@@ -111,15 +105,15 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 </FormGroup>
             </AdaptableBlotterForm>
 
-            {optionColumnsItems.length == 0 ?
+
+            {plusMinusConditions.length > 0 &&
+                <EntityItemList entityRowInfo={entityRowInfo} items={plusMinusConditions} />
+            }
+
+            {plusMinusConditions.length == 0 &&
                 <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
-                :
-                <div>
-                    <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
-                    <ListGroup style={panelColumNudge}>
-                        {optionColumnsItems}
-                    </ListGroup>
-                </div>}
+            }
+
             {this.state.EditedConfigEntity != null &&
 
                 <PlusMinusWizard
@@ -137,10 +131,6 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         </PanelWithButton>
     }
 
-    // wrappng this so that any becomes [Default Column Nudge Value]
-    private wrapExpressionDescription(expressionDescription: string): string {
-        return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
-    }
 
     createColumnNudgeValue() {
         this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
@@ -158,11 +148,6 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition);
         this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
     }
-
-    // private onColumnSelectChange(index: number, column: IColumn) {
-    //     let e = event.target as HTMLInputElement;
-    //     this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: column ? column.ColumnId : "", DefaultNudge: this.props.PlusMinusConditions[index].DefaultNudge });
-    // }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
