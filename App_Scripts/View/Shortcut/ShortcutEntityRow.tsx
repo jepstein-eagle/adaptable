@@ -16,15 +16,14 @@ export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEnt
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
     onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
     AvailableKeys: Array<string>;
+    AvailableActions: Array<ShortcutAction>
 }
 
 export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {}> {
     render(): any {
 
         let shortcut: IShortcut = this.props.ConfigEntity as IShortcut;
-
-        const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
-
+      
         let myCols: IColItem[] = []
         myCols.push({
             size: this.props.EntityRowInfo[0].Width,
@@ -53,7 +52,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                         ShortcutAction[shortcut.ShortcutAction] :
                         <FormControl componentClass="select" value={shortcut.ShortcutAction} onChange={(x) => this.onActionChange(x)} >
                             {
-                                shortcutActionList.map((shortcutAction: ShortcutAction) => {
+                                this.props.AvailableActions.map((shortcutAction: ShortcutAction) => {
                                     return <option key={ShortcutAction[shortcutAction]} value={shortcutAction}>{ShortcutAction[shortcutAction]}</option>
                                 })
                             }

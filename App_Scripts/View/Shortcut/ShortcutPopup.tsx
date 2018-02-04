@@ -41,11 +41,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
     }
 
     render() {
-        let infoBody: any[] = ["Use shortcuts to replace frequently entered text with a single keystroke.", <br />, <br />,
-            "Numeric shortcuts update the existing cell value based on a calculation'.", <br />, <br />,
-            "Date shortcuts replace the contents of the cell with a new date value.", <br />, <br />,
-            "Check ", <i>Live</i>, " to turn on a shortcut.", <br />, <br />,
-            "Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
+        let infoBody: any[] = ["Use shortcuts to replace frequently entered text (in numeric or date columns) with a single keystroke.", <br />, <br />,
+            "Numeric shortcuts update the existing cell value based on a 'calculation'.", <br />, <br />,
+            "Date shortcuts replace the contents of the cell with a new date value."]
 
         let entityRowInfo: IEntityRowInfo[] = [
             { Caption: "Type", Width: 2 },
@@ -55,13 +53,15 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             { Caption: "", Width: 3 },
         ]
 
-        // we now show all shortcuts in one list without the tab (too confusing)
+        const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
+
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
                 ConfigEntity={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
                 EntityRowInfo={entityRowInfo}
+                AvailableActions={shortcutActionList}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
