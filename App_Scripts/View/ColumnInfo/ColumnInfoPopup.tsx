@@ -60,6 +60,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             { Caption: "Summary", Width: 7 },
             { Caption: "", Width: 2 },
         ]
+        let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
+      
         let summaries: any[] = [];
         summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
@@ -68,13 +70,12 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        if (this.state.SelectedColumn.DataType == DataType.Number) {
+        if (this.state.SelectedColumn && this.state.SelectedColumn.DataType == DataType.Number) {
             summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
         }
-        if (this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
+        if (this.state.SelectedColumn && this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
             summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
         }
-        let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
         let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
         if (this.state.SelectedColumn) {
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
