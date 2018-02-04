@@ -11,6 +11,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IMenuItem } from '../../Strategy/Interface/IStrategy'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
@@ -29,7 +30,7 @@ class FunctionButtonsPopupComponent extends React.Component<FunctionButtonsPopup
         if(this.props.DashboardShortcutsDashboardControl.ControlConfiguration!=null){
             config = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
         }
-        return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon="home">
+        return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
             <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => config.indexOf(x.Label) == -1).map(x=>x.Label)}
                 SelectedValues={config}
                 HeaderAvailable="Available Function Buttons"

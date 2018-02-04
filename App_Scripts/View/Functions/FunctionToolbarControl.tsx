@@ -12,6 +12,7 @@ import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as     StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { IMenuItem, IUIConfirmation } from '../../Strategy/Interface/IStrategy'
 
@@ -48,7 +49,7 @@ class FunctionToolbarControlComponent extends React.Component<FunctionControlCom
                 }
             })
         }
-        return <PanelDashboard headerText="Functions" glyphicon="home" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyIds.FunctionsStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {shortcuts}
             <Dropdown id="dropdown-functions">
                 <Dropdown.Toggle>
