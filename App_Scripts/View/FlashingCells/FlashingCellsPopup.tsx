@@ -8,7 +8,6 @@ import { IFlashingColumn, IFlashingCellsStrategy } from '../../Strategy/Interfac
 import { IColumn , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
-import { FlashingCellConfigItem } from './FlashingCellConfigItem'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
