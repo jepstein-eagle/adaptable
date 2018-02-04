@@ -70,8 +70,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
     render() {
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
-            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.", <br />, <br />,
-            "Advanced Searches can be cleared (turned off but not deleted), edited or deleted in this form."]
+            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
         let entityRowInfo: IEntityRowInfo[] = [
             { Caption: "Live", Width: 1 },
