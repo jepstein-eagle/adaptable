@@ -17,6 +17,8 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
@@ -68,7 +70,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             </div>
         </span>
 
-        return <PanelDashboard headerText="Filters" glyphicon="filter" onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

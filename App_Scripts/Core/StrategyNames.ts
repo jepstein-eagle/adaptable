@@ -10,7 +10,6 @@ export const ConditionalStyleStrategyName: string = "Conditional Style"
 export const CustomSortStrategyName: string = "Custom Sort"
 export const DashboardStrategyName: string = "Dashboard"
 export const ExportStrategyName: string = "Export"
-export const UserFilterStrategyName: string = "User Filter"
 export const ColumnFilterStrategyName: string = "Column Filter"
 export const FlashingCellsStrategyName: string = "Flashing Cells"
 export const FormatColumnStrategyName: string = "Format Column"
@@ -22,6 +21,7 @@ export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
 export const ThemeStrategyName: string = "Theme"
 export const UserDataManagementStrategyName: string = "User Data Management"
+export const UserFilterStrategyName: string = "User Filter"
 
 
 export function getNameForStrategy(strategyID: string) {

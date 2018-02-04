@@ -66,8 +66,9 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         })
 
-        return <PanelWithButton headerText={StrategyIds.ColumnFilterStrategyId} bsStyle="primary" style={panelStyle} infoBody={infoBody}
-            button={null} glyphicon={StrategyGlyphs.UserFilterGlyph}>
+        return <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
+            button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
+           
             {columnFilterItems.length > 0 &&
                <EntityItemList entityRowInfo={entityRowInfo} items={columnFilterItems} />
             }

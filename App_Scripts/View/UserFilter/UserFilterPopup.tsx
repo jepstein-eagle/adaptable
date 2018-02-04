@@ -99,7 +99,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
+        return <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
             {UserFilterItems.length > 0 &&
