@@ -89,9 +89,8 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             button={newButton}
             bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
-            {this.props.FormatColumns.length == 0 ?
+            {this.props.FormatColumns.length == 0 &&
                 <Well bsSize="small">Click 'New' to create a new column format.</Well>
-                : <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
             }
 
             {FormatColumns.length > 0 &&
