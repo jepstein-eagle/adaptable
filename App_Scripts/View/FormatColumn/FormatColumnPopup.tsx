@@ -23,6 +23,7 @@ import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityItemList } from '../Components/EntityItemList';
 
 
 interface FormatColumnPopupProps extends IStrategyViewPopupProps<FormatColumnPopupComponent> {
@@ -93,9 +94,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                 : <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
             }
 
-            <ListGroup style={divStyle}>
-                {FormatColumns}
-            </ListGroup>
+            {FormatColumns.length > 0 &&
+                <EntityItemList entityRowInfo={entityRowInfo} items={FormatColumns} />
+            }
 
             {this.state.EditedConfigEntity != null &&
                 <FormatColumnWizard

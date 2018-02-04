@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
+import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -26,6 +26,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityItemList } from '../Components/EntityItemList';
+
 
 interface UserFilterPopupProps extends IStrategyViewPopupProps<UserFilterPopupComponent> {
     UserFilters: IUserFilter[]
@@ -39,7 +41,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0 , EditedIndexConfigEntity:0}
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -59,7 +61,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         let selectedColumnId: string = "";
         if (this.state.EditedConfigEntity != null) {
-            let filter:IUserFilter = this.state.EditedConfigEntity as IUserFilter
+            let filter: IUserFilter = this.state.EditedConfigEntity as IUserFilter
             let editedColumn: string = filter.ColumnId;
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
@@ -72,26 +74,26 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             }
         }
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Name", Width: 3}, 
-            {Caption: "Description", Width: 6}, 
-            {Caption: "", Width: 3}, 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Name", Width: 3 },
+            { Caption: "Description", Width: 6 },
+            { Caption: "", Width: 3 },
         ]
 
         let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
             return <UserFilterEntityRow
-            ConfigEntity={userFilter}
-            EntityRowInfo={entityRowInfo}
-            key={"CS" + index}
-            Index={index}
-            onShare={() => this.props.onShare(userFilter)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            UserFilters={this.props.UserFilters}
-            Columns={this.props.Columns}
-            onEdit={(index, conditionalStyleCondition) => this.onEdit( userFilter as IUserFilter)}
-            onDeleteConfirm={FilterRedux.UserFilterDelete( userFilter)} />
-    });
-    
+                ConfigEntity={userFilter}
+                EntityRowInfo={entityRowInfo}
+                key={"CS" + index}
+                Index={index}
+                onShare={() => this.props.onShare(userFilter)}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                UserFilters={this.props.UserFilters}
+                Columns={this.props.Columns}
+                onEdit={(index, conditionalStyleCondition) => this.onEdit(userFilter as IUserFilter)}
+                onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)} />
+        });
+
         let newButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text"
@@ -99,13 +101,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         return <PanelWithButton headerText="User Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
+
             {UserFilterItems.length > 0 &&
-                <div>
-                    <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
-                    <ListGroup style={listGroupStyle}>
-                        {UserFilterItems}
-                    </ListGroup>
-                </div>
+                <EntityItemList entityRowInfo={entityRowInfo} items={UserFilterItems} />
             }
 
             {UserFilterItems.length == 0 &&

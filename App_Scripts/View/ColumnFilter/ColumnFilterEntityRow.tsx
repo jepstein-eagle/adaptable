@@ -28,6 +28,7 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
               });
             let buttons: any = <ButtonClear onClick={() => this.props.onClear(this.props.ColumnFilter)} overrideTooltip="Clear Column Filter"
             DisplayMode="Glyph"
+            size={"small"}
             overrideDisableButton={this.props.ColumnFilter == null} />
             myCols.push({ size: this.props.EntityRowInfo[2].Width, content: buttons });
 

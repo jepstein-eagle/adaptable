@@ -25,6 +25,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
+import { EntityItemList } from '../Components/EntityItemList';
 
 interface ColumnFilterPopupProps extends IStrategyViewPopupProps<ColumnFilterPopupComponent> {
     Columns: IColumn[]
@@ -65,22 +66,17 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         })
 
-        return <PanelWithButton headerText="Column Filters" bsStyle="primary" style={panelStyle} infoBody={infoBody}
+        return <PanelWithButton headerText={StrategyIds.ColumnFilterStrategyId} bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={null} glyphicon={StrategyGlyphs.UserFilterGlyph}>
             {columnFilterItems.length > 0 &&
-                <div>
-                    <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
-                    <ListGroup style={listGroupStyle}>
-                        {columnFilterItems}
-                    </ListGroup>
-                </div>
+               <EntityItemList entityRowInfo={entityRowInfo} items={columnFilterItems} />
             }
 
             {columnFilterItems.length == 0 &&
-                <Well bsSize="small">There are currently no column filters applied.</Well>
+                <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
             }
 
-        </PanelWithButton>
+    </PanelWithButton>
     }
 
     onCreateUserFilter() {
@@ -105,11 +101,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ColumnFilterPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnFilterPopupComponent);
 
-let listGroupStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    minHeight: '100px',
-    maxHeight: '300px'
-};
 
 let panelStyle = {
     width: '800px'

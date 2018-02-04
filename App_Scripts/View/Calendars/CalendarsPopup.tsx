@@ -85,7 +85,7 @@ let calenderEntryEntityRowInfo:IEntityRowInfo [] =[
                     <PanelWithButton bsStyle="info" headerText={calendarYear.YearName.toString()} button={yearButton}>
                         <Collapse in={this.state.DisplayedYear == calendarYear.YearName}>
                             <div>
-                                
+                          
                                 <PanelWithRow entityRowInfo={allCalenderEntityRowInfo} bsStyle="success" ></PanelWithRow>
                                 <ListGroup style={divStyle}>
                                     {calendarEntryItems}

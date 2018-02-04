@@ -27,6 +27,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
+import { EntityItemList } from '../Components/EntityItemList';
 
 
 interface ColumnInfoPopupProps extends IStrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -53,22 +54,26 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
     render() {
         let infoBody: any[] = ["Displays information about a column in the grid - which entities it has attached."]
-       
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Function", Width: 3}, 
-            {Caption: "Summary", Width: 7}, 
-            {Caption: "", Width: 2}, 
-        ]
-        let customSortSummary = <CustomSortSummary TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn}  getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let conditionalStyleSummary = <ConditionalStyleSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let cellValidationSummary = <CellValidationSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let userFilterSummary = <UserFilterSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let columnFilterSummary = <ColumnFilterSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let plusMinusSummary = <PlusMinusSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let formatColumnSummary = <FormatColumnSummary SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
-        let flashingCellSummary = <FlashingCellSummary SummarisedColumn={this.state.SelectedColumn} />
-        let calculatedColumnSummary = <CalculatedColumnSummary SummarisedColumn={this.state.SelectedColumn} />
 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Function", Width: 3 },
+            { Caption: "Summary", Width: 7 },
+            { Caption: "", Width: 2 },
+        ]
+        let summaries: any[] = [];
+        summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<CellValidationSummary key={StrategyIds.CellValidationStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<UserFilterSummary key={StrategyIds.UserFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        if (this.state.SelectedColumn.DataType == DataType.Number) {
+            summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+        }
+        if (this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
+            summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+        }
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
         let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
         if (this.state.SelectedColumn) {
@@ -85,24 +90,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
             {this.state.SelectedColumn &&
                 <div style={divMarginStyle}>
-                    <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
-                    <ListGroup style={divStyle}>
-                        {customSortSummary}
-                        {conditionalStyleSummary}
-                        {cellValidationSummary}
-                        {userFilterSummary}
-                        {columnFilterSummary}
-                        {plusMinusSummary}
-                        {formatColumnSummary}
-                        {this.state.SelectedColumn.DataType == DataType.Number &&
-                            flashingCellSummary
-                        }
-                        {this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1 &&
-                            calculatedColumnSummary
-                        }
-
-
-                    </ListGroup>
+                    <EntityItemList entityRowInfo={entityRowInfo} items={summaries} />
                 </div>
             }
         </PanelWithImage>

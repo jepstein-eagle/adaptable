@@ -10,7 +10,7 @@ import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
@@ -21,6 +21,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityItemList } from '../Components/EntityItemList';
 
 
 interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupComponent> {
@@ -36,7 +37,7 @@ interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupCompon
 class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0 , EditedIndexConfigEntity:0}
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
     }
 
     render() {
@@ -46,21 +47,21 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             "Check ", <i>Live</i>, " to turn on a shortcut.", <br />, <br />,
             "Click ", <i><b>New</b></i>, " to create a new shortcut (numeric and date columns only)."]
 
-         let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Type", Width: 2}, 
-            {Caption: "Key", Width: 1}, 
-            {Caption: "Action", Width: 3}, 
-            {Caption: "Value", Width: 3}, 
-            {Caption: "", Width: 3}, 
+        let entityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Type", Width: 2 },
+            { Caption: "Key", Width: 1 },
+            { Caption: "Action", Width: 3 },
+            { Caption: "Value", Width: 3 },
+            { Caption: "", Width: 3 },
         ]
 
         // we now show all shortcuts in one list without the tab (too confusing)
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
-            return <ShortcutEntityRow 
-            ConfigEntity={shortcut} key={"ns" + index}
-            Index ={index}
-            onEdit={null}
-            EntityRowInfo={entityRowInfo}
+            return <ShortcutEntityRow
+                ConfigEntity={shortcut} key={"ns" + index}
+                Index={index}
+                onEdit={null}
+                EntityRowInfo={entityRowInfo}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
@@ -73,25 +74,22 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let newButton = <ButtonNew onClick={() => this.CreateShortcut()}
             overrideTooltip="Create New Shortcut"
-            DisplayMode="Glyph+Text" 
-            size={"small"}/>
+            DisplayMode="Glyph+Text"
+            size={"small"} />
 
-            let shortcut :IShortcut = this.state.EditedConfigEntity as IShortcut
-           
+        let shortcut: IShortcut = this.state.EditedConfigEntity as IShortcut
+
         return <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
             button={newButton}
             bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ShortcutGlyph}
             infoBody={infoBody}>
 
-            {this.props.Shortcuts.length == 0 ?
+            {shortcuts.length > 0 &&
+                <EntityItemList entityRowInfo={entityRowInfo} items={shortcuts} />
+            }
+
+            {shortcuts.length == 0 &&
                 <Well bsSize="small">Click 'New' to add a new Shortcut.</Well>
-                :
-                <div>
-                    <PanelWithRow  entityRowInfo={entityRowInfo} bsStyle="info" />
-                    <ListGroup style={divStyle}>
-                        {shortcuts}
-                    </ListGroup>
-                </div>
             }
 
             {this.state.EditedConfigEntity != null &&
@@ -111,13 +109,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         </PanelWithButton>
     }
 
-      onCloseWizard() {
+    onCloseWizard() {
         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
     }
 
     onFinishWizard() {
-            this.props.onAddShortcut(this.state.EditedConfigEntity as IShortcut)
-         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        this.props.onAddShortcut(this.state.EditedConfigEntity as IShortcut)
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
     }
 
     CreateShortcut() {

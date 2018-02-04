@@ -9,6 +9,7 @@ import { IColumn , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter'
 import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellConfigItem } from './FlashingCellConfigItem'
+import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helpers/Helper'
@@ -17,6 +18,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyIds from '../../Core/StrategyIds'
 import * as StrategyNames from '../../Core/StrategyNames'
 import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import { EntityItemList } from '../Components/EntityItemList';
 
 interface FlashingCellsPopupProps extends IStrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -59,18 +61,26 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             }
         })
 
-        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn) => {
-            return <FlashingCellConfigItem
-                FlashingColumn={flashingColumn}
+        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn,index) => {
+            return <FlashingCellEntityRow
+                ConfigEntity={flashingColumn}
                 key={flashingColumn.ColumnName}
+                Index={index}
                 Columns={this.props.Columns}
+                UserFilters={null}
+                EntityRowInfo={entityRowInfo}
                 FlashingCellDurations={flashingCellDurations}
                 PredefinedColorChoices={this.props.PredefinedColorChoices}
                 onSelect={(flashingColumn) => this.props.onSelectColumn(flashingColumn)}
                 onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}
                 onChangeDownColorFlashingColumn={(flashingColumn, DownColor) => this.props.onChangeDownColorFlashingColumn(flashingColumn, DownColor)}
-                onChangeUpColorFlashingColumn={(flashingColumn, UpColor) => this.props.onChangeUpColorFlashingColumn(flashingColumn, UpColor)}>
-            </FlashingCellConfigItem>
+                onChangeUpColorFlashingColumn={(flashingColumn, UpColor) => this.props.onChangeUpColorFlashingColumn(flashingColumn, UpColor)}
+                TeamSharingActivated={false}
+                onShare={null}
+                onEdit={null}
+                onDeleteConfirm={null}
+                  >
+            </FlashingCellEntityRow>
         });
 
         let setAllOption = <AdaptableBlotterForm horizontal>
@@ -84,11 +94,8 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         return <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
             {setAllOption}
-            <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
-            <ListGroup style={divStyle}>
-                {allFlashingColumns}
-            </ListGroup>
-
+                <EntityItemList entityRowInfo={entityRowInfo} items={allFlashingColumns} />
+           
         </PanelWithImage>
     }
 }

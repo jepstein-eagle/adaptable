@@ -14,6 +14,8 @@ import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { FlashingCellGlyph } from "../../Core/StrategyGlyphs";
+import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
 
 export interface FlashingCellSummaryProps extends IStrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCellColumns: IFlashingColumn[]
@@ -36,13 +38,20 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
     }
 
     onFlashingSelectedChanged(flashingColumn: IFlashingColumn) {
-        this.props.onSelectFlashingColumn(flashingColumn)
+        let existingfc = this.props.FlashingCellColumns.find(e => e.ColumnName == this.props.SummarisedColumn.ColumnId)
+        if (!existingfc) {
+            let col: IColumn = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
+            existingfc = ObjectFactory.CreateDefaultFlashingColumn(col);
+            this.props.onSelectFlashingColumn(existingfc)
+        }
+        this.props.onSelectFlashingColumn(existingfc)
     }
 
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FlashingCellColumns: state.FlashingCell.FlashingColumns
+        FlashingCellColumns: state.FlashingCell.FlashingColumns,
+        Columns: state.Grid.Columns
     };
 }
 
