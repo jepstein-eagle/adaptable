@@ -6,11 +6,7 @@ export interface ICalendarStrategy extends IStrategy {
 
 export interface ICalendar {
     CalendarName: string;
-    CalendarYears: ICalendarYear[];
-}
-
-export interface ICalendarYear {
-    YearName: Number;
+     YearName: Number;
     CalendarEntries: ICalendarEntry[];
 }
 

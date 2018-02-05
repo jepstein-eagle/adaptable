@@ -1,14 +1,14 @@
-import { ICalendar, ICalendarYear, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
+import { ICalendar, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
+import { IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';
-import {  Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
-import { CalendarsPopupItem } from './CalendarsPopupItem'
+import { Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
+import { CalendarsEntryRow } from './CalendarsEntryRow'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -40,67 +40,41 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
         let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />,
             "These are used primarily when calculating Working Days."]
 
-        let acllCalendarCellInfo: [string, number][] = [["Current", 3], ["Calendar", 5], ["Details", 4]];
-        let allCalenderEntityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Current", Width: 3}, 
-            {Caption: "Calendar", Width: 5}, 
-            {Caption: "Details", Width: 4}, 
+        let allCalenderEntityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Current", Width: 3 },
+            { Caption: "Calendar", Width: 5 },
+            { Caption: "Details", Width: 4 },
         ]
-       
+
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
-            return <CalendarsPopupItem
+            return <CalendarsEntryRow
                 Calendar={calendar}
                 key={calendar.CalendarName}
                 onSelect={(calendar) => this.props.onSelectCalendar(calendar)}
                 onShowInformation={(calendar) => this.onShowInformation(calendar)}
                 CurrentCalendar={this.props.CurrentCalendar}>
-            </CalendarsPopupItem>
+            </CalendarsEntryRow>
         });
 
-
-
-    
-
-let calenderEntryEntityRowInfo:IEntityRowInfo [] =[
-    {Caption: "Holiday Name", Width: 6}, 
-    {Caption: "Date", Width: 6}, 
-]
+        let calenderEntryEntityRowInfo: IEntityRowInfo[] = [
+            { Caption: "Holiday Name", Width: 6 },
+            { Caption: "Date", Width: 6 },
+        ]
 
         let displayedCalendarModalBody = this.state.DisplayedCalendar == null ? null :
-            this.state.DisplayedCalendar.CalendarYears.map((calendarYear: ICalendarYear) => {
-                let sortedCalendarEntries = Helper.sortArrayWithProperty(SortOrder.Ascending, calendarYear.CalendarEntries, "HolidayDate");
-                let calendarEntryItems = sortedCalendarEntries.map((calendarEntry: ICalendarEntry) => {
-                    return <CalendarEntryItem
-                        CalendarEntry={calendarEntry}
-                        key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
-                    </CalendarEntryItem>
-                });
-
-                let yearButton = <Button onClick={() => this.onClickCalendarYear(calendarYear.YearName)}>
-                    <Glyphicon glyph={this.state.DisplayedYear == calendarYear.YearName ? "chevron-up" : "chevron-down"} />
-                </Button>
-
-                return <div key={calendarYear.YearName.toString()}>
-                    <PanelWithButton bsStyle="info" headerText={calendarYear.YearName.toString()} button={yearButton}>
-                        <Collapse in={this.state.DisplayedYear == calendarYear.YearName}>
-                            <div>
-                          
-                                <PanelWithRow entityRowInfo={allCalenderEntityRowInfo} bsStyle="success" ></PanelWithRow>
-                                <ListGroup style={divStyle}>
-                                    {calendarEntryItems}
-                                </ListGroup>
-
-                            </div>
-
-                        </Collapse>
-                    </PanelWithButton>
-                    <Row></Row>
-                </div>
+            this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry: ICalendarEntry) => {
+                return <CalendarEntryItem
+                    CalendarEntry={calendarEntry}
+                    key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
+                </CalendarEntryItem>
             });
+
+
+
 
         return <PanelWithImage header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
 
-            <PanelWithRow entityRowInfo={calenderEntryEntityRowInfo} bsStyle="info" />
+            <PanelWithRow entityRowInfo={allCalenderEntityRowInfo} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
             </ListGroup>
@@ -112,7 +86,8 @@ let calenderEntryEntityRowInfo:IEntityRowInfo [] =[
                         <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                        {displayedCalendarModalBody}
+                    <PanelWithRow entityRowInfo={calenderEntryEntityRowInfo} bsStyle="info" />
+                      {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button style={buttonFloatRightStyle} onClick={() => this.closeInformationModal()}>Close</Button>
