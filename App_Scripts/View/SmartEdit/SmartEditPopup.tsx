@@ -68,8 +68,8 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
             var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.PreventEdit).length > 0
-                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.ShowWarning).length > 0
+                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.StopEdit).length > 0
+                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.WarnUser).length > 0
                 globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
                 globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
                 if (!hasValidationErrors || localHasValidationWarning) {

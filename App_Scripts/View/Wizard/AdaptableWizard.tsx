@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Button, Modal, Glyphicon } from 'react-bootstrap';
+import { Button, Modal, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
+import { WizardLegend } from './WizardLegend'
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -8,6 +9,8 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
     onHide: Function;
     onFinish?: Function;
     StepStartIndex?: number
+    StepNames?: string[] // feels wrong, wrong, wrong
+    FriendlyName?: string
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -20,10 +23,10 @@ class DummyActiveStep implements AdaptableWizardStep {
     public StepName = ""
     public canNext(): boolean { return false; }
     public canBack(): boolean { return false; }
-    public Next(): void { 
+    public Next(): void {
         // no implementation for this 
     }
-    public Back(): void { 
+    public Back(): void {
         // no implementation for this
     }
 }
@@ -35,6 +38,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     //we need to init with a dummy one as Ref is a callback once the component is rendered. So once set we force Re render.... 
     //I have no idea so far how to do it differently
     private ActiveStep: AdaptableWizardStep = new DummyActiveStep();
+    public StepName: string
     constructor(props: AdaptableWizardProps) {
         super(props);
         let indexStart = 0
@@ -45,12 +49,14 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart, ForceFinish: false }
     }
-    
+
     render() {
-        return (
+            return (
             <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style">
                 <Modal.Header closeButton>
-                    <Modal.Title>Step {this.state.IndexState + 1 + " of " + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
+                    <Modal.Title>
+                        <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
+                        </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                     {this.state.ActiveState}
@@ -65,6 +71,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
     ForceUpdateGoBackState(forceFinish: boolean) {
         //to force back/next. We'll see if that needs to be optimised'
+        /*
+           <Modal.Title>Step {this.state.IndexState + 1 + " of " + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
+                
+           */
         this.forceUpdate();
         this.setState({ ForceFinish: forceFinish } as AdaptableWizardState)
     }

@@ -54,7 +54,7 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
     public Back(): void { 
         //todo
     }
-    public StepName = "Select Format Column"
+    public StepName = this.props.StepName
 }
 
 let divStyle: React.CSSProperties = {

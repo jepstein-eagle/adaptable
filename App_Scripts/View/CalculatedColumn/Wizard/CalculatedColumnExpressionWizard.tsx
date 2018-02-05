@@ -48,5 +48,5 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.GetValueFunc = this.state.GetValueFunc }
     public Back(): void { }
-    public StepName = "Calculated Column Expression"
+    public StepName = this.props.StepName
 }

@@ -85,7 +85,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-   // public ThemeService: ThemeService
+    // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
@@ -101,7 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-     //   this.ThemeService = new ThemeService(this)
+        //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
@@ -300,14 +300,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getActiveCell(): ICellInfo {
         let activeCell = this.gridOptions.api.getFocusedCell()
-        let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
-        //if the selected cell is from a group cell we don't return it
-        //that's a design choice as this is used only when editing and you cant edit those cells
-        if (!rowNode.group) {
-            return {
-                ColumnId: activeCell.column.getColId(),
-                Id: this.getPrimaryKeyValueFromRecord(rowNode),
-                Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+        if (activeCell) {
+            let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
+            //if the selected cell is from a group cell we don't return it
+            //that's a design choice as this is used only when editing and you cant edit those cells
+            if (!rowNode.group) {
+                return {
+                    ColumnId: activeCell.column.getColId(),
+                    Id: this.getPrimaryKeyValueFromRecord(rowNode),
+                    Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+                }
             }
         }
     }
@@ -748,7 +750,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (failedRules.length > 0) {
                     let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                     // first see if its an error = should only be one item in array if so
-                    if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
+                    if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                         let error: IUIError = {
                             ErrorMsg: errorMessage

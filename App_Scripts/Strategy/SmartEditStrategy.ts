@@ -24,7 +24,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         let newValues: ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.PreventEdit).length == 0) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.StopEdit).length == 0) {
                     newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
                 }
             }

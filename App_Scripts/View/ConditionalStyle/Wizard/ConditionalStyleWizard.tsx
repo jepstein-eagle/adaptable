@@ -22,6 +22,7 @@ import { ButtonNew } from '../../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../../Core/Extensions'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 
 export interface ConditionalStyleWizardProps extends React.ClassAttributes<ConditionalStyleWizard> {
@@ -38,16 +39,20 @@ export interface ConditionalStyleWizardProps extends React.ClassAttributes<Condi
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={
-            [
-                <ConditionalStyleColumnWizard Columns={this.props.Columns} />,
-                <ConditionalStyleSettingsWizard PredefinedColorChoices={this.props.PredefinedColorChoices} />,
+        let stepNames: string[] = ["Select Target", "Create Style", "Build Query"]
+        return <AdaptableWizard
+            FriendlyName={StrategyNames.ConditionalStyleStrategyName}
+            StepNames={stepNames}
+            Steps={[
+                <ConditionalStyleColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
                 <ConditionalStyleExpressionWizard
+                    StepName={stepNames[2]}
                     ColumnList={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={null}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                     />
+                />
             ]}
             Data={this.props.EditedConditionalStyleCondition}
             StepStartIndex={this.props.WizardStartIndex}

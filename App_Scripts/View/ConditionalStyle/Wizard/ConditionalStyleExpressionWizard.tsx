@@ -29,5 +29,5 @@ export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage impl
         this.props2.Data.Expression = this.state.Expression
     }
     public Back(): void { }
-    public StepName = "Conditional Style: Create Query"
+    public StepName = this.props.StepName
 }

@@ -30,5 +30,5 @@ export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implem
         // todo
      }
 
-    public StepName = "Advanced Search: Create Query"
+     public StepName = this.props.StepName
 }

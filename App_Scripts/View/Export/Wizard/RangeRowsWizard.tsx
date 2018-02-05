@@ -74,7 +74,7 @@ export class RangeRowsWizard extends React.Component<RangeRowsWizardProps, Range
         this.props.Data.RangeRowScope = this.state.RangeRowScope;
     }
     public Back(): void { }
-    public StepName = "Select Rows in Range"
+    public StepName = this.props.StepName
 }
 
 let divStyle: React.CSSProperties = {

@@ -15,6 +15,7 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(finish?: boolean): void
+    StepName?: string
 }
 
 // props for a basic wizard

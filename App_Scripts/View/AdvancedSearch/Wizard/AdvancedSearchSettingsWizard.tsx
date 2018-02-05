@@ -67,5 +67,5 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     public Back(): void {
         // todo
      }
-    public StepName = "Advanced Search Settings"
+     public StepName = this.props.StepName
 }

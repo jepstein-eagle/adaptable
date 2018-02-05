@@ -70,7 +70,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.props.Data.Style.FontSize = this.state.FontSize;
     }
     public Back(): void { }
-    public StepName = "Conditional Style Settings"
+    public StepName = this.props.StepName
 }
 
 

@@ -47,7 +47,7 @@ export module ObjectFactory {
 
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
-            CellValidationMode: CellValidationMode.PreventEdit,
+            CellValidationMode: CellValidationMode.StopEdit,
             ColumnId: "",
             RangeExpression: {
                 Operator: LeafExpressionOperator.None,

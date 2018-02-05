@@ -1,14 +1,17 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Helper } from '../Core/Helpers/Helper'
-import { SortOrder, DistinctCriteriaPairValue } from '../Core/Enums'
+import { SortOrder, DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
-import { ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
+import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { ButtonClear } from './Components/Buttons/ButtonClear';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { QuickSearchPopup } from "./QuickSearch/QuickSearchPopup";
+import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
+import { AdaptableBlotterForm } from './AdaptableBlotterForm'
+import { IRangeExpression } from '../Core/Interface/IExpression'
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -22,9 +25,12 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
 }
 
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
+    FilterFormMode: FilterFormMode
     UiSelectedColumnValues: Array<String>
     UiSelectedUserFilters: Array<String>
     FilterValue: string
+    LeafExpressionOperator: LeafExpressionOperator
+    IRangeExpression: IRangeExpression
 }
 
 export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, ListBoxFilterFormState> {
@@ -33,7 +39,10 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         this.state = {
             UiSelectedColumnValues: this.props.UiSelectedColumnValues,
             UiSelectedUserFilters: this.props.UiSelectedUserFilters,
-            FilterValue: ""
+            FilterValue: "",
+            LeafExpressionOperator: LeafExpressionOperator.Unknown,
+            FilterFormMode: FilterFormMode.Basic,
+            IRangeExpression: null
         };
     }
     componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
@@ -100,13 +109,42 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             value={this.state.FilterValue}
             OnTextChange={(x) => this.onUpdateFilterSearch(x)} />
 
+        let numericAndDateOption = <DropdownButton bsSize={"xsmall"} style={dropDownNumbDateStyle}
+            title={ExpressionHelper.OperatorToFriendlyString(this.state.LeafExpressionOperator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
+            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
+            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
+            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
+        </DropdownButton>
+
+        let test = <AdaptableBlotterForm key={'form'} inline>
+            <FormGroup controlId={"Range"}>
+                {numericAndDateOption}
+                <FormControl value={String(this.state.LeafExpressionOperator)} style={{ width: "50px" }} type="number" placeholder="Number" onChange={(e) => this.onOperand1Edit(e)} />
+
+            </FormGroup>
+        </AdaptableBlotterForm>
+
+        let optionTest = <div>
+            <Checkbox style={radioButtonStyle} onChange={(e) => this.onFilterFormModeChanged(e)} checked={this.state.FilterFormMode == FilterFormMode.Dynamic}>Use Advanced</Checkbox>
+
+        </div>
+
         return <div>
-            {header}
-            <ListGroup fill style={divStyle} >
-                {allElement}
-                {userFiltersItemsElements}
-                {columnValuesItemsElements}
-            </ListGroup>
+
+
+            {this.state.FilterFormMode == FilterFormMode.Dynamic &&
+                test
+            }
+            {this.state.FilterFormMode == FilterFormMode.Basic &&
+                <div>
+                    {header}
+                    <ListGroup fill style={divStyle} >
+                        {allElement}
+                        {userFiltersItemsElements}
+                        {columnValuesItemsElements}
+                    </ListGroup>
+                </div>
+            }
         </div>;
     }
 
@@ -173,7 +211,29 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
     onClickAllItem() {
         // just set it to nothing...
         let allArray: string[] = ["All"];
-        this.setState({ UiSelectedUserFilters: allArray, UiSelectedColumnValues: this.state.UiSelectedUserFilters, FilterValue: this.state.FilterValue } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
+        this.setState({ UiSelectedUserFilters: allArray, UiSelectedColumnValues: this.state.UiSelectedUserFilters, FilterValue: this.state.FilterValue, LeafExpressionOperator: LeafExpressionOperator.Unknown, FilterFormMode: FilterFormMode.Basic, IRangeExpression: null } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
+    }
+
+    private onLeafExpressionOperatorChange(x: LeafExpressionOperator) {
+        //  let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
+        //  let range = this.props.Ranges[index]
+        //  rangeCol[index] = Object.assign({}, range, { Operator: x })
+        this.setState({ LeafExpressionOperator: x } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
+
+    }
+
+    private onOperand1Edit(x: React.FormEvent<any>) {
+        //  let e = x.target as HTMLInputElement;
+        //  let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
+        //  let range = this.props.Ranges[index]
+        //  rangeCol[index] = Object.assign({}, range, { Operand1: e.value })
+        //  this.props.onRangesChange(rangeCol)
+    }
+
+    private onFilterFormModeChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let filterFormMode: FilterFormMode = (e.checked) ? FilterFormMode.Dynamic : FilterFormMode.Basic;
+        this.setState({ FilterFormMode: filterFormMode } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
     }
 }
 
@@ -197,4 +257,15 @@ let columnVItemStyle = {
     'fontSize': 'small',
     'padding': '5px',
     'margin': 0
+}
+
+let dropDownNumbDateStyle = {
+    'width': '92px'
+}
+
+let radioButtonStyle: React.CSSProperties = {
+    //'width': '87%',export 
+    'fontSize': 'small',
+    'padding': '0px',
+    'marginLeft': '2px'
 }

@@ -770,7 +770,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

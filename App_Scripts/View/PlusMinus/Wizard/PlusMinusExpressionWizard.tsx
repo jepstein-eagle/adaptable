@@ -26,5 +26,5 @@ export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements 
         this.props2.Data.Expression = this.state.Expression
     }
     public Back(): void { }
-    public StepName = "Plus/Minus: Create Query"
+    public StepName = this.props.StepName
 }

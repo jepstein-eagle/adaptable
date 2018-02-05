@@ -48,5 +48,5 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     }
 
     public Back(): void { }
-    public StepName = "Cell Validation Column "
+    public StepName = this.props.StepName
 }

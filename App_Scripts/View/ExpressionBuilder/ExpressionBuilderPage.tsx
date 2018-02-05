@@ -16,6 +16,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
+    StepName?: string
 }
 
 export interface ExpressionBuilderPageState {

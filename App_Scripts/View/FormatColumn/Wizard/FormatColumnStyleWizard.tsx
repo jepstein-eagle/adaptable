@@ -29,8 +29,7 @@ export interface FormatColumnStyleWizardState {
 
 export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWizardProps, FormatColumnStyleWizardState> implements AdaptableWizardStep {
 
-    public StepName = "Format Column Style"
-   
+    
     constructor(props: FormatColumnStyleWizardProps) {
         super(props)
         this.mapStyle(this.props.Data.Style)
@@ -74,6 +73,8 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
             FontSize: style.FontSize,
         }
     }
+
+    public StepName = this.props.StepName
 
 }
 

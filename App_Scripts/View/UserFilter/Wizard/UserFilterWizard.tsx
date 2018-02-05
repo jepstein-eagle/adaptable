@@ -1,13 +1,14 @@
 import { IUserFilter } from '../../../Core/Interface/IExpression';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { ExpressionMode} from '../../../Core/Enums'
+import { ExpressionMode } from '../../../Core/Enums'
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 
 export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterWizard> {
@@ -24,19 +25,26 @@ export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterW
 export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={
-            [
-               <UserFilterSelectColumnWizard Columns={this.props.Columns}  />,
-                <UserFilterExpressionWizard
-                    ColumnList={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    ExpressionMode={ExpressionMode.SingleColumn}
-                    SelectedColumnId={this.props.SelectedColumnId}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+    let    stepNames: string[]=["Select Column", "Build Query", "Settings"]
+           
+        return <AdaptableWizard
+        FriendlyName={StrategyNames.UserFilterStrategyName}
+        StepNames={stepNames}
+            Steps={
+                [
+                    <UserFilterSelectColumnWizard Columns={this.props.Columns} StepName={stepNames[0]} />,
+                    <UserFilterExpressionWizard
+                    StepName={stepNames[1]}
+                        ColumnList={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        ExpressionMode={ExpressionMode.SingleColumn}
+                        SelectedColumnId={this.props.SelectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                     <UserFilterSettingsWizard
+                    StepName={stepNames[2]}
                     UserFilters={this.props.UserFilters}
-                    Columns={this.props.Columns} />,
-              ]}
+                        Columns={this.props.Columns} />,
+                ]}
             Data={this.props.EditedUserFilter}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}

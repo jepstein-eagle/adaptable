@@ -23,6 +23,7 @@ import { StringExtensions } from '../../../Core/Extensions'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Core/Interface/IExpression'
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export interface CellValidationWizardProps extends React.ClassAttributes<CellValidationWizard> {
     EditedCellValidation: ICellValidationRule
@@ -37,16 +38,20 @@ export interface CellValidationWizardProps extends React.ClassAttributes<CellVal
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={[
-            <CellValidationSelectColumnWizard Columns={this.props.Columns} />,
-            <CellValidationActionWizard Columns={this.props.Columns} />,
-            <CellValidationRulesWizard Columns={this.props.Columns} />,
-            <CellValidationSelectQueryWizard Columns={this.props.Columns} />,
-            <CellValidationExpressionWizard ColumnList={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SelectedColumnId={null}
-                getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-        ]}
+        let stepNames: string[] = ["Select Column", "Choose Action", "Create Rules", "Add Query", "Build Query"]
+        return <AdaptableWizard
+            FriendlyName={StrategyNames.CellValidationStrategyName}
+            StepNames={stepNames}
+            Steps={[
+                <CellValidationSelectColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                <CellValidationActionWizard StepName={stepNames[1]} Columns={this.props.Columns} />,
+                <CellValidationRulesWizard StepName={stepNames[2]} Columns={this.props.Columns} />,
+                <CellValidationSelectQueryWizard StepName={stepNames[3]} Columns={this.props.Columns} />,
+                <CellValidationExpressionWizard StepName={stepNames[4]} ColumnList={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    SelectedColumnId={null}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+            ]}
             Data={this.props.EditedCellValidation}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}

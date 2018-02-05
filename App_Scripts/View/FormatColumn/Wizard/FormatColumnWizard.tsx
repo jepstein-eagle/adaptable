@@ -4,6 +4,7 @@ import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { FormatColumnColumnWizard } from './FormatColumnColumnWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export interface FormatColumnWizardProps extends React.ClassAttributes<FormatColumnWizard> {
     EditedFormatColumn: IFormatColumn
@@ -18,10 +19,14 @@ export interface FormatColumnWizardProps extends React.ClassAttributes<FormatCol
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={
+        let stepNames: string[] = ["Select Column", "Create Style"]
+        return <AdaptableWizard 
+        FriendlyName={StrategyNames.FormatColumnStrategyName}
+        StepNames={stepNames}
+        Steps={
             [
-                <FormatColumnColumnWizard Columns={this.props.Columns} />,
-                <FormatColumnStyleWizard PredefinedColorChoices={this.props.PredefinedColorChoices} />
+                <FormatColumnColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                <FormatColumnStyleWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />
             ]}
             Data={this.props.EditedFormatColumn}
             StepStartIndex={this.props.WizardStartIndex}

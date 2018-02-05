@@ -8,6 +8,7 @@ import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export interface CalculatedColumnWizardProps extends React.ClassAttributes<CalculatedColumnWizard> {
     EditedCalculatedColumn: ICalculatedColumn
@@ -22,9 +23,13 @@ export interface CalculatedColumnWizardProps extends React.ClassAttributes<Calcu
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={[
-            <CalculatedColumnSettingsWizard Columns={this.props.Columns} />,
-            <CalculatedColumnExpressionWizard
+        let stepNames: string[] = ["Create Column", "Write Expression"]
+        return <AdaptableWizard 
+        FriendlyName={StrategyNames.CalculatedColumnStrategyName}
+        StepNames={stepNames}
+      Steps={[
+            <CalculatedColumnSettingsWizard  StepName={stepNames[0]} Columns={this.props.Columns} />,
+            <CalculatedColumnExpressionWizard  StepName={stepNames[1]} 
                 GetErrorMessage={this.props.GetErrorMessage}
                 IsExpressionValid={this.props.IsExpressionValid} />,
         ]}

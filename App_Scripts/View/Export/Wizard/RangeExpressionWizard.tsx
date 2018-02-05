@@ -29,5 +29,5 @@ export class RangeExpressionWizard extends ExpressionBuilderPage implements Adap
     public Back(): void { 
         //todo
     }
-    public StepName = "Range: Create Query"
+    public StepName = this.props.StepName
 }

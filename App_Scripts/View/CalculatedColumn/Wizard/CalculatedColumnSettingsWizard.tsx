@@ -56,5 +56,5 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.ColumnName }
     public Back(): void { }
-    public StepName = "Name your Calculated Column"
+    public StepName = this.props.StepName
 }

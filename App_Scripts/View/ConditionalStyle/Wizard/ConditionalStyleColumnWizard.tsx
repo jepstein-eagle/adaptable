@@ -94,7 +94,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
     public Back(): void { // todo
     }
-    public StepName = "Conditional Style Scope"
+    public StepName = this.props.StepName
 }
 
 let divStyle: React.CSSProperties = {

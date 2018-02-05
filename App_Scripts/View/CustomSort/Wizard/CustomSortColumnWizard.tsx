@@ -37,5 +37,5 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
     public Back(): void { }
-    public StepName = "Choose Custom Sort Column"
+    public StepName = this.props.StepName
 }

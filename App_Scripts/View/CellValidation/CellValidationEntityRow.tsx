@@ -9,7 +9,7 @@ import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { CellValidationMode } from '../../Core/Enums'
+import { CellValidationMode, FontSize } from '../../Core/Enums'
 import * as StrategyNames from '../../Core/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 
@@ -24,7 +24,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
      let cellValidation:ICellValidationRule = this.props.ConfigEntity as ICellValidationRule;
      
         let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
-            return <option key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
+            return <option style={{fontSize:"5px"}} key={enumName} value={enumName}><div style={{fontSize:"small"}}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</div></option>
         })
 
         let myCols: IColItem[] = []

@@ -69,5 +69,5 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }
     public Back(): void { /* no implementation */ }
-    public StepName = "User Filter Settings"
+    public StepName = this.props.StepName
 }

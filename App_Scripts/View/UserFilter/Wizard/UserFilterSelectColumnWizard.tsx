@@ -55,5 +55,5 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     public Back(): void { //
     }
-    public StepName = "User Filter Column "
+    public StepName = this.props.StepName
 }

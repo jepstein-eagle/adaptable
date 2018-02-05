@@ -58,6 +58,6 @@ export class RangeBespokeColumnsWizard extends React.Component<RangeBespokeColum
         }
     }
     public Back(): void { }
-    public StepName = "Select Columns for Range"
+    public StepName = this.props.StepName
 }
 */

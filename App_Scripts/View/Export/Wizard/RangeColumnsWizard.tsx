@@ -99,7 +99,7 @@ export class RangeColumnsWizard extends React.Component<RangeColumnsWizardProps,
     public Back(): void { 
         //todo
     }
-    public StepName = "Select Columns in Range"
+    public StepName = this.props.StepName
 }
 
 let divStyle: React.CSSProperties = {

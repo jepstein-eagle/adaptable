@@ -10,6 +10,7 @@ import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView'
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export interface ShortcutWizardProps extends React.ClassAttributes<ShortcutWizard> {
     EditedShortcut: IShortcut
@@ -23,10 +24,15 @@ export interface ShortcutWizardProps extends React.ClassAttributes<ShortcutWizar
 export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={[
-            <ShortcutTypeWizard />,
-            <ShortcutSettingsWizard NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
-        ]}
+        let stepNames: string[] = ["Column Type", "Settings"]
+
+        return <AdaptableWizard
+            FriendlyName={StrategyNames.ShortcutStrategyName}
+            StepNames={stepNames}
+            Steps={[
+                <ShortcutTypeWizard StepName={stepNames[0]} />,
+                <ShortcutSettingsWizard StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
+            ]}
             Data={this.props.EditedShortcut}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}
@@ -34,4 +40,3 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     }
 
 }
-

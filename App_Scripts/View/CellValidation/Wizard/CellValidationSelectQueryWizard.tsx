@@ -68,7 +68,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
     }
 
     public Back(): void { }
-    public StepName = "Cell Validation Rule"
+    public StepName = this.props.StepName
 }
 
 

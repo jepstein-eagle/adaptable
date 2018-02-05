@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Col, Row, Checkbox, FormControl, Button } from 'react-bootstrap';
+import { Col, Row, FormControl, Button } from 'react-bootstrap';
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { Provider, connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';

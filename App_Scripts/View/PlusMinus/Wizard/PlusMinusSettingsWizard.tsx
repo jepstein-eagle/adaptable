@@ -77,5 +77,5 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
         this.props.Data.DefaultNudge = this.state.DefaultNudge
     }
     public Back(): void { }
-    public StepName = "Plus/Minus Settings"
+    public StepName = this.props.StepName
 }

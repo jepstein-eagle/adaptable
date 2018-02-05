@@ -52,7 +52,7 @@ export class RangeNameWizard extends React.Component<RangeNameWizardProps, Range
     public Back(): void { 
         //todo
     }
-    public StepName = "Choose Range Name"
+    public StepName = this.props.StepName
 }
 
 let divStyle: React.CSSProperties = {

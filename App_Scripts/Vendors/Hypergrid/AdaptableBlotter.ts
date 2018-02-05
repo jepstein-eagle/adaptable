@@ -945,7 +945,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (failedRules.length > 0) {
                 let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
+                if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

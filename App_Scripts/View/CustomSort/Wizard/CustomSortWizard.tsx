@@ -7,6 +7,7 @@ import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export interface CustomSortWizardProps extends React.ClassAttributes<CustomSortWizard> {
     EditedCustomSort: ICustomSort
@@ -21,9 +22,13 @@ export interface CustomSortWizardProps extends React.ClassAttributes<CustomSortW
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={
-            [<CustomSortColumnWizard Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
-            <CustomSortValuesWizard Columns={this.props.Columns}
+        let stepNames: string[] = ["Select Column", "Create Sort Order"]
+        return <AdaptableWizard 
+        FriendlyName={StrategyNames.CustomSortStrategyName}
+        StepNames={stepNames}
+      Steps={[
+            <CustomSortColumnWizard  StepName={stepNames[0]} Columns={this.props.Columns.filter(x => !this.props.CustomSorts.find(y => y.ColumnId == x.ColumnId))} />,
+            <CustomSortValuesWizard  StepName={stepNames[1]} Columns={this.props.Columns}
                 getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
             Data={this.props.EditedCustomSort}
             StepStartIndex={this.props.WizardStartIndex}

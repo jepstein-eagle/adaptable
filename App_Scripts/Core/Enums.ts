@@ -114,8 +114,8 @@ export enum AuditLogTrigger {
 }
 
 export enum CellValidationMode {
-   ShowWarning="ShowWarning",
-   PreventEdit="PreventEdit"
+   WarnUser="WarnUser",
+   StopEdit="StopEdit"
 }
 
 export enum SelectionMode {
@@ -145,5 +145,10 @@ export enum FontSize {
     Medium = "Medium",
     Large = "Large",
     XLarge = "XLarge"
+}
+
+export enum FilterFormMode {
+    Basic = "Basic",
+    Dynamic = "Dynamic"
 }
 

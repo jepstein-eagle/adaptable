@@ -61,8 +61,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
         let entityRowInfo:IEntityRowInfo [] =[
             {Caption: "Column", Width: 2}, 
-            {Caption: "Disallowed Edit", Width: 3}, 
-            {Caption: "Expression", Width: 2}, 
+            {Caption: "Disallowed Edit", Width: 2}, 
+            {Caption: "Expression", Width: 3}, 
             {Caption: "If Rule Broken", Width: 2}, 
             {Caption: "", Width: 3}, 
         ]

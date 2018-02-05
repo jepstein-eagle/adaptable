@@ -87,8 +87,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
-                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.PreventEdit;
-                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.ShowWarning;
+                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.StopEdit;
+                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.WarnUser;
 
                 this.AuditFunctionAction("HandleKeyDown",
                     "Key Pressed: " + keyEventString,

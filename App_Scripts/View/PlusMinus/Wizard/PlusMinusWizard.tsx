@@ -21,6 +21,8 @@ import { StringExtensions } from '../../../Core/Extensions'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Core/Interface/IExpression'
+import * as StrategyNames from '../../../Core/StrategyNames'
+
 
 export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWizard> {
     EditedPlusMinusCondition: IPlusMinusCondition
@@ -37,13 +39,17 @@ export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWiz
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
 
     render() {
-        return <AdaptableWizard Steps={
-            [<PlusMinusColumnWizard Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
-            <PlusMinusSettingsWizard  />,
-            <PlusMinusExpressionWizard ColumnList={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SelectedColumnId={this.props.SelectedColumnId}
-                getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
+        let stepNames: string[] = ["Select Column", "Settings", "Build Query"]
+        return <AdaptableWizard
+            FriendlyName={StrategyNames.PlusMinusStrategyName}
+            StepNames={stepNames}
+            Steps={
+                [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
+                <PlusMinusSettingsWizard StepName={stepNames[1]} />,
+                <PlusMinusExpressionWizard StepName={stepNames[2]} ColumnList={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    SelectedColumnId={this.props.SelectedColumnId}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
             Data={this.props.EditedPlusMinusCondition}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.closeWizard()}

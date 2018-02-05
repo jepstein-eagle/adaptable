@@ -5,17 +5,22 @@ import { RangeExpressionWizard } from './RangeExpressionWizard'
 import { RangeNameWizard } from './RangeNameWizard'
 import { IRange } from '../../../Strategy/Interface/IExportStrategy';
 import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
+import * as StrategyNames from '../../../Core/StrategyNames'
 
 export class RangeWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<RangeWizard>, {}> {
 
     render() {
-        return <AdaptableWizard Steps={[
-            <RangeColumnsWizard Columns={this.props.Columns} />,
-            <RangeExpressionWizard ColumnList={this.props.Columns}
+        let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name"]
+        return <AdaptableWizard 
+        FriendlyName={StrategyNames.ExportStrategyName}
+        StepNames={stepNames}
+      Steps={[
+            <RangeColumnsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+            <RangeExpressionWizard StepName={stepNames[1]} ColumnList={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 SelectedColumnId={null}
                 getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-            <RangeNameWizard Ranges={this.props.ConfigEntities as IRange[]} />,
+            <RangeNameWizard StepName={stepNames[2]} Ranges={this.props.ConfigEntities as IRange[]} />,
         ]}
             Data={this.props.EditedConfigEntity as IRange}
             StepStartIndex={this.props.WizardStartIndex}

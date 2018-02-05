@@ -102,7 +102,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
                         if (validationRules.length > 0) {
-                            if (validationRules[0].CellValidationMode == CellValidationMode.PreventEdit) {
+                            if (validationRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                                 failedPreventEdits.push(validationRules[0]);
                             } else {
                                 failedWarningEdits.push(validationRules[0]);
