@@ -1,4 +1,18 @@
+function ThemeChange(blotter, container) {
+
+    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
+        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
+        if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+             container.className = "ag-dark";
+         }
+        else {
+              container.className = "ag-blue";
+         }
+    }
+}
+var themeName = ""
 var adaptableblotter
+
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -72,4 +86,8 @@ function InitBlotter() {
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
     });
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
+
 }
+
