@@ -2,7 +2,6 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
 import { AuditLogTrigger } from '../Enums';
-import * as DeepDiff from 'deep-diff'
 // import * as SockJS from 'sockjs-client'
 
 export class AuditLogService {

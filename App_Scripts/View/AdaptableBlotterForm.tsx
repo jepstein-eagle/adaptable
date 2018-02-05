@@ -1,6 +1,4 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../Core/Helpers/Helper'
 import { Form, FormProps } from 'react-bootstrap';
 
 export interface AdaptableBlotterFormProps extends FormProps {

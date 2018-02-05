@@ -1,7 +1,6 @@
 import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { InputAction } from '../../Core/Interface/IMessage';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
@@ -9,17 +8,21 @@ const LAYOUT_ADD = 'LAYOUT_ADD';
 const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 
+export interface LayoutAddAction extends InputAction {
+    Columns: string[],
+}
+
 export interface LayoutSelectAction extends Redux.Action {
     LayoutName: string;
 }
 
-export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
-    type: LAYOUT_SELECT,
-    LayoutName
-})
-
-export interface LayoutAddAction extends InputAction {
+export interface LayoutSaveAction extends Redux.Action {
+    LayoutName: string,
     Columns: string[],
+}
+
+export interface LayoutDeleteAction extends Redux.Action {
+    LayoutName: string
 }
 
 export const LayoutAdd = (Columns: string[], InputText: string): LayoutAddAction => ({
@@ -28,22 +31,18 @@ export const LayoutAdd = (Columns: string[], InputText: string): LayoutAddAction
     InputText
 })
 
-export interface LayoutSaveAction extends Redux.Action {
-    LayoutName: string,
-    Columns: string[],
-}
+export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
+    type: LAYOUT_SELECT,
+    LayoutName
+})
 
-export const SaveLayout = (Columns: string[], LayoutName: string): LayoutSaveAction => ({
+export const LayoutSave = (Columns: string[], LayoutName: string): LayoutSaveAction => ({
     type: LAYOUT_SAVE,
     Columns,
     LayoutName
 })
 
-export interface DeleteLayoutAction extends Redux.Action {
-    LayoutName: string
-}
-
-export const DeleteLayout = (LayoutName: string): DeleteLayoutAction => ({
+export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
     type: LAYOUT_DELETE,
     LayoutName
 })
@@ -66,7 +65,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             layouts.push(layoutToAdd);
             return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
         case LAYOUT_DELETE:
-            let actionTypedDelete = (<DeleteLayoutAction>action)
+            let actionTypedDelete = (<LayoutDeleteAction>action)
             layouts = [].concat(state.AvailableLayouts)
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);

@@ -1,12 +1,9 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { Expression } from '../Expression'
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { IRangeExpression } from '../Interface/IExpression';
 import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import { RangeColumnScope, RangeRowScope } from '../Enums'
 import { IAdaptableBlotter, IColumn, ISelectedCells } from '../Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Extensions/StringExtensions'
-import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 
 export module RangeHelper {

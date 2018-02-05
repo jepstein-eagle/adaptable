@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, FormGroup, Panel, ControlLabel, FormControl, Row, Col, ButtonToolbar, ListGroup, Well } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  FormGroup, ControlLabel, FormControl, Col,  Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -10,22 +10,15 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { Expression } from '../../Core/Expression';
 import { Helper } from '../../Core/Helpers/Helper';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { DataType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
@@ -180,12 +173,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let PlusMinusPopup = connect(mapStateToProps, mapDispatchToProps)(PlusMinusPopupComponent);
-
-let panelColumNudge: React.CSSProperties = {
-    overflowY: 'auto',
-    minHeight: '100px',
-    maxHeight: '300px'
-};
 
 let panelStyle = {
     width: '800px'

@@ -1,10 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { IStyle } from '../../Core/Interface/IStyle';
-import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
-import { Col, Row, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 

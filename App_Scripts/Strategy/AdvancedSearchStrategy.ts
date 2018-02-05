@@ -1,15 +1,11 @@
-import { IAdvancedSearchStrategy, IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
-import { MenuItemShowPopup } from '../Core/MenuItem';
+import { IAdvancedSearchStrategy } from './Interface/IAdvancedSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
- import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import {  LeafExpressionOperator } from '../Core/Enums';
-import { ExpressionHelper, } from '../Core/Helpers/ExpressionHelper';
+ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
-import { Helper } from '../Core/Helpers/Helper';
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
 
 

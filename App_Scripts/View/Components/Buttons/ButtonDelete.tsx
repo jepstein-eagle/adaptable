@@ -1,12 +1,10 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Helper } from '../../../Core/Helpers/Helper'
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
-import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import { IUIConfirmation, IUIError } from '../../../Core/Interface/IMessage';
+import { IUIConfirmation } from '../../../Core/Interface/IMessage';
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction

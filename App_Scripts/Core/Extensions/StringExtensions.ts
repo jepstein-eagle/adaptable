@@ -1,5 +1,3 @@
-import { FontSize } from '../../Core/Enums'
-
 
 export module StringExtensions {
 

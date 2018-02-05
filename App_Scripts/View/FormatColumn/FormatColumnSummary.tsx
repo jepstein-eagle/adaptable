@@ -4,25 +4,19 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { StrategyHeader } from '../Components/StrategyHeader'
-import { FormatColumnReducer } from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 

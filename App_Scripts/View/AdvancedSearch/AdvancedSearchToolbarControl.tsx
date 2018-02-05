@@ -1,8 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
-import { Panel, Form, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, HelpBlock, Row } from 'react-bootstrap';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -11,11 +10,9 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -116,10 +113,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let AdvancedSearchToolbarControl = connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchToolbarControlComponent);
-
-
-var borderStyle = {
-    border: '2px'
-}
-
-

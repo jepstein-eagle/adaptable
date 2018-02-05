@@ -5,9 +5,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IMenuItem } from '../Core/Interface/IMenu';;
-import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 
-const cleanUserData: string = "CleanUserData"
 
 export class UserDataManagementStrategy extends AdaptableStrategyBase implements IUserDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {

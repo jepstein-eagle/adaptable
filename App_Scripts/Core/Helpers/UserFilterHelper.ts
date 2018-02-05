@@ -1,10 +1,8 @@
-import { Expression } from '../Expression'
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
-import { LeafExpressionOperator, DataType } from '../Enums'
+import { IUserFilter } from '../Interface/IExpression';
+import { DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
-import { ObjectFactory } from '../../Core/ObjectFactory';
 
 
 export module UserFilterHelper {

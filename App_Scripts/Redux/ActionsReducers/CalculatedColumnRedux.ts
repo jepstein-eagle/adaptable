@@ -24,6 +24,7 @@ export interface CalculatedColumnDeleteAction extends Redux.Action {
 export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
     Expression: string
 }
+
 export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
     ErrorMsg: string
 }
@@ -38,14 +39,17 @@ export const CalculatedColumnEdit = (Index: number, CalculatedColumn: ICalculate
     Index,
     CalculatedColumn
 })
+
 export const CalculatedColumnDelete = (Index: number): CalculatedColumnDeleteAction => ({
     type: CALCULATEDCOLUMN_DELETE,
     Index
 })
+
 export const CalculatedColumnIsExpressionValid = (Expression: string): CalculatedColumnIsExpressionValidAction => ({
     type: CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
     Expression
 })
+
 export const CalculatedColumnSetErrorMessage = (ErrorMsg: string): CalculatedColumnSetErrorMessageAction => ({
     type: CALCULATEDCOLUMN_SET_ERROR_MSG,
     ErrorMsg

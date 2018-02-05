@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
@@ -16,7 +16,7 @@ import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { StrategyHeader } from '../Components/StrategyHeader'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]

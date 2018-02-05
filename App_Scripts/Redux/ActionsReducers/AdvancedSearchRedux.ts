@@ -1,5 +1,4 @@
 import { AdvancedSearchState } from './Interface/IState';
-import { LeafExpressionOperator } from '../../Core/Enums';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import * as Redux from 'redux'
 

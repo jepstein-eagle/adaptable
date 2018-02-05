@@ -3,7 +3,7 @@ import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAda
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from '../../DualListBoxEditor'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
-import { DataType, DistinctCriteriaPairValue } from '../../../Core/Enums';
+import { DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {

@@ -1,17 +1,11 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Col, Row, FormControl, Button } from 'react-bootstrap';
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import * as FlashingCellRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { SummaryRowItem } from '../Components/SummaryRowItem';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';

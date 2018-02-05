@@ -1,10 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -13,13 +12,10 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
-import { EntityListActionButtons } from "../Components/Buttons/EntityListActionButtons";
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
@@ -160,11 +156,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let CalculatedColumnPopup = connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnPopupComponent);
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
 
 let panelStyle = {
     width: '800px'

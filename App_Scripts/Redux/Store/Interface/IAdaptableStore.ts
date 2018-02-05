@@ -1,6 +1,5 @@
 import * as AdaptableBlotterStates from '../../ActionsReducers/Interface/IState';
 import * as Redux from 'redux';
-import { AdaptableBlotter } from '../../../Vendors/Hypergrid/AdaptableBlotter';
 
 export interface AdaptableBlotterState {
     Popup: AdaptableBlotterStates.PopupState;

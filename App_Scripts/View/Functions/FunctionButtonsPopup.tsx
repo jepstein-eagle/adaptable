@@ -1,18 +1,13 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Navbar, Label, Dropdown, ListGroup, Glyphicon, MenuItem, Panel, FormGroup, Checkbox } from 'react-bootstrap';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IMenuItem } from '../../Core/Interface/IMenu'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 
@@ -77,7 +72,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FunctionButtonsPopup = connect(mapStateToProps, mapDispatchToProps)(FunctionButtonsPopupComponent);
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}

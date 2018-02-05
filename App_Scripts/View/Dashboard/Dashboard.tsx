@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import * as Redux from "redux";
-import { Row, Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory'

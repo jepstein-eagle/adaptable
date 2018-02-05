@@ -1,11 +1,9 @@
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
-import * as Redux from "redux";
 import { Helper } from '../../Core/Helpers/Helper';
-import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-    import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
     ColumnLabel: string

@@ -1,8 +1,5 @@
 import { ColumnFilterState } from './Interface/IState';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as Redux from 'redux'
 
 
@@ -68,9 +65,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (state: Col
         }
 
         case COLUMN_FILTER_CLEAR: {
-            let actionTypedClear = (<ColumnFilterClearAction>action)
-            columnFilters = []
-            return Object.assign({}, state, { ColumnFilters: columnFilters })
+           return Object.assign({}, state, { ColumnFilters: [] })
         }
        
         case COLUMN_FILTER_DELETE: {

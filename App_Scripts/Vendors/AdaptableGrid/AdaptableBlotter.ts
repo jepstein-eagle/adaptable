@@ -1,18 +1,13 @@
 ﻿/// <reference path="AdaptableBlotter.d.ts" />
 import '../../../stylesheets/adaptableblotter-style.css'
 
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import {  IStrategy } from '../../Strategy/Interface/IStrategy';
-import {  IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
@@ -33,9 +28,7 @@ import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStr
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
-import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
-import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
@@ -44,21 +37,11 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { Helper } from '../../Core/Helpers/Helper';
-import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
-import { Expression } from '../../Core/Expression';
-import { FilterFormReact } from '../../View/FilterForm';
-import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 

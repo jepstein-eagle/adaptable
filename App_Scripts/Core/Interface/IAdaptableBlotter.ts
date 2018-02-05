@@ -1,6 +1,5 @@
-import { DataType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
+import { DataType, DistinctCriteriaPairValue } from '../Enums'
 import {  IStrategy } from '../../Strategy/Interface/IStrategy'
-import { IMenuItem } from '../../Core/Interface/IMenu'
 import {  ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -9,7 +8,6 @@ import { IAuditService } from '../Services/Interface/IAuditService'
 import {  IValidationService} from '../Services/Interface/IValidationService'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
-import { Expression } from '../../Core/Expression';
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 
 export interface IAdaptableBlotter {

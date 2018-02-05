@@ -1,7 +1,5 @@
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'

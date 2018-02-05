@@ -1,8 +1,4 @@
-import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter'
 import * as Redux from 'redux';
-
-
-
 
 export interface IUIError {
     ErrorMsg: string;
@@ -26,7 +22,6 @@ export interface IUIConfirmation {
     ShowCommentBox: boolean;
 }
 
-
 export interface InputAction extends Redux.Action {
     InputText: string
 }
@@ -37,8 +32,6 @@ export interface IUIPrompt {
     PromptMsg: string;
     ConfirmAction: InputAction;
 }
-
-
 
 export interface IActionConfigurationPopup {
     ShowPopup: boolean;

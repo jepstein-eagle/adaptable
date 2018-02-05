@@ -1,6 +1,4 @@
-import {IAdaptableBlotter, IColumn, IConfigEntity} from './IAdaptableBlotter';
-import * as React from "react";
-import { IStrategy } from '../../Strategy/Interface/IStrategy';
+import {IColumn, IConfigEntity} from './IAdaptableBlotter';
 import { IStrategyViewPopupProps } from './IStrategyView';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'

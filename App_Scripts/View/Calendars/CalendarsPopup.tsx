@@ -1,13 +1,13 @@
 import { ICalendar, ICalendarYear, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
+import { IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
+import { ListGroup } from 'react-bootstrap';
+import {  Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
 import { CalendarsPopupItem } from './CalendarsPopupItem'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -15,7 +15,6 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Core/Helpers/Helper';
 import { SortOrder } from '../../Core/Enums';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 

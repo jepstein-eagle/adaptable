@@ -1,10 +1,8 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { Panel, InputGroup, Form, FormControl, ControlLabel, FormGroup, Col, Row, Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
+import { FormControl, ControlLabel,  Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';

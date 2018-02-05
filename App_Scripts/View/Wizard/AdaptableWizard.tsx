@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Modal, Glyphicon, Label } from 'react-bootstrap';
+import { Button, Modal, Glyphicon } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
 

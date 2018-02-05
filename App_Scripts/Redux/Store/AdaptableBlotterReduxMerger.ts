@@ -1,6 +1,3 @@
-import * as ReduxStorage from 'redux-storage'
-import * as fetch from 'isomorphic-fetch';
-import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import * as _ from 'lodash'
 
 function customizer(objValue: any, srcValue: any) {

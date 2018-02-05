@@ -1,18 +1,6 @@
-import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
-import { IFormatColumnStrategy, IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
+import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy';
 import { FormatColumnStrategy } from './FormatColumnStrategy';
-import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IMenuItem } from '../Core/Interface/IMenu';;
-import { ConditionalStyleScope } from '../Core/Enums';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { Expression } from '../Core/Expression';
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
-import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import { FormatColumnPopup } from '../Core/Constants/ScreenPopups';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {

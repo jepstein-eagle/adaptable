@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as Redux from "redux";
 import { Helper } from '../Core/Helpers/Helper'
-import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, Glyphicon, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
+import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup } from 'react-bootstrap';
 import { SortOrder } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 
@@ -634,11 +633,6 @@ var listGroupStyle: React.CSSProperties = {
     'maxHeight': '300px',
     'height': '300px',
     'marginBottom': '0'
-};
-
-var panelStyle = {
-    'maxHeight': '300px',
-    'height': '300px'
 };
 
 var colButtonStyle = {

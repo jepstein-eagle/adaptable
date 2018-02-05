@@ -1,29 +1,23 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
-import { Provider, connect } from 'react-redux';
+import {  connect } from 'react-redux';
 import * as _ from 'lodash'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Form, Panel, FormControl, InputGroup, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
 
 interface QuickSearchToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
-    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;
+    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
     onShowQuickSearchPopup: () => PopupRedux.PopupShowAction;
     QuickSearchText: string
 }
@@ -70,7 +64,6 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
         this.setState({ EditedQuickSearchText: searchText })
         this.debouncedRunQuickSearch();
     }
-
    
 }
 
@@ -83,7 +76,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(newQuickSearchText)),
+        onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
         onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShow(ScreenPopups.QuickSearchPopup)),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
         onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.QuickSearchPopup)),

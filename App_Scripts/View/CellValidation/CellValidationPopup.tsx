@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, FormControl, Col, Panel, ListGroup, Row, Well, HelpBlock } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -13,15 +13,9 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { CellValidationMode } from '../../Core/Enums'
-import { IStrategy } from '../../Strategy/Interface/IStrategy';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';

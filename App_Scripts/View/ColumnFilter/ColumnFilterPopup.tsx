@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, Well, Glyphicon } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -10,19 +10,8 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../Core/Helpers/Helper';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ExpressionMode } from '../../Core/Enums'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { EntityItemList } from '../Components/EntityItemList';

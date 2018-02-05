@@ -1,17 +1,9 @@
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
-import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
 import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IMenuItem } from '../Core/Interface/IMenu';;
 import { ConditionalStyleScope } from '../Core/Enums';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { Expression } from '../Core/Expression';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { Helper } from '../Core/Helpers/Helper';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 

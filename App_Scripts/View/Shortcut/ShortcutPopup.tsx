@@ -1,8 +1,8 @@
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { ControlLabel, Button, Form, Col, Panel, ListGroup, Row, Checkbox, Well } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -10,19 +10,16 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { ShortcutWizard } from './Wizard/ShortcutWizard'
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
-
 
 interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
@@ -153,11 +150,6 @@ let panelStyle: React.CSSProperties = {
     width: '800px'
 }
 
-
 const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
 

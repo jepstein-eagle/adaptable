@@ -1,9 +1,5 @@
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'

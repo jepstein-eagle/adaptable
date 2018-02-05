@@ -1,6 +1,5 @@
 import { PlusMinusState } from './Interface/IState';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
-import { Expression } from '../../Core/Expression';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import * as Redux from 'redux'
 

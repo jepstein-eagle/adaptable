@@ -1,10 +1,7 @@
 import { ConditionalStyleScope } from '../Enums';
-
-import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { FlashingCellState, QuickSearchState, ConditionalStyleState, FormatColumnState } from '../../Redux/ActionsReducers/Interface/IState';
-import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......

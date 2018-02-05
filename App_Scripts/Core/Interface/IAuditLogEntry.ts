@@ -1,4 +1,3 @@
-import { AuditLogTrigger } from '../Enums';
 
 export interface IAuditLogEntry {
     adaptableblotter_auditlog_trigger: string

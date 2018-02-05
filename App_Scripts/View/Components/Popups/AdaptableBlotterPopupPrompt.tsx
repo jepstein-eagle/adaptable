@@ -1,8 +1,6 @@
 import * as React from "react";
-import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
-import { IAdaptableBlotter, IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 
 
 export interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {

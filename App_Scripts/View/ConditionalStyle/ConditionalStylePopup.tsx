@@ -1,25 +1,22 @@
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
-import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums'
+import {  Well } from 'react-bootstrap';
+import { ConditionalStyleScope } from '../../Core/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
-import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
@@ -152,7 +149,3 @@ let panelStyle = {
     width: '800px'
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}

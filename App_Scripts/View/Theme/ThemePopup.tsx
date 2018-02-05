@@ -1,17 +1,14 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Panel, Form, FormControl, ControlLabel, Col, FormGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  FormControl, ControlLabel, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-
 
 interface ThemePopupProps extends IStrategyViewPopupProps<ThemePopupComponent> {
     AvailableThemes: Array<string>;

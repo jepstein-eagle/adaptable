@@ -1,7 +1,4 @@
-import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter'
 import * as Redux from 'redux';
-
-
 
 export interface IMenuItem {
     Label: string;

@@ -1,22 +1,17 @@
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
@@ -25,7 +20,7 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, FontWeight, FontStyle, DataType } from '../../Core/Enums';
+import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';

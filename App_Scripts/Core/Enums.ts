@@ -1,6 +1,5 @@
 
 // General Enums
-// should really rename this DataType
 export enum DataType {
     String = "String",
     Number = "Number",

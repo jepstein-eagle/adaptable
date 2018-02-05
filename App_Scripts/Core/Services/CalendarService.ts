@@ -1,7 +1,5 @@
 
 import { ICalendarService } from './Interface/ICalendarService';
-import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
-import * as CalendarStrat from '../../Strategy/Interface/ICalendarStrategy';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as CalendarConstants from '../Constants/CalendarConstants';
 

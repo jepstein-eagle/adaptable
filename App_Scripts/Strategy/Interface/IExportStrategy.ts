@@ -1,5 +1,5 @@
 import {IStrategy} from './IStrategy';
-import { IConfigEntity, IColumn } from '../../Core/Interface/IAdaptableBlotter'
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
 import { RangeColumnScope, RangeRowScope, ExportDestination } from '../../Core/Enums';
 

@@ -1,12 +1,10 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, ButtonToolbar, OverlayTrigger, Tooltip, Glyphicon, Modal } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup,  Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
@@ -224,6 +222,3 @@ var divStyle: React.CSSProperties = {
     maxHeight: '400px'
 };
 
-let buttonFloatRightStyle = {
-    float: 'right'
-};

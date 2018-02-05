@@ -1,10 +1,8 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
+import { FontWeight, FontStyle } from '../../Core/Enums';
 
 export interface StyleVisualItemProps extends React.ClassAttributes<StyleVisualItem> {
     Style: IStyle

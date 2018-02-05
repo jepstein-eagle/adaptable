@@ -1,13 +1,8 @@
 import { IRange } from '../../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { ListGroup, ListGroupItem, Panel, FormControl, FormGroup, HelpBlock } from 'react-bootstrap';
+import {  Panel, FormControl, FormGroup, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-//import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { SelectionMode } from '../../../Core/Enums';
-import { SingleListBox } from '../../SingleListBox'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ColumnSelector } from '../../ColumnSelector';
 
 export interface RangeNameWizardProps extends AdaptableWizardStepProps<IRange> {
     Ranges: IRange[]
@@ -53,10 +48,4 @@ export class RangeNameWizard extends React.Component<RangeNameWizardProps, Range
         //todo
     }
     public StepName = this.props.StepName
-}
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '335px',
-    'marginBottom': '0'
 }

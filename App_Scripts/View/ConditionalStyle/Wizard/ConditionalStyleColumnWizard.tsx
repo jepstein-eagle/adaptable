@@ -1,13 +1,9 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
+import { Radio,  Col, Panel} from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../../Core/Enums';
-import { Expression } from '../../../Core/Expression';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { ColorPicker } from '../../ColorPicker';
-import { Helper } from '../../../Core/Helpers/Helper'
+import { ConditionalStyleScope, SelectionMode, PopoverType } from '../../../Core/Enums';
 import { ColumnSelector } from '../../ColumnSelector';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
@@ -34,7 +30,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
     render(): any {
 
-        let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
+       // let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
                 <Col xs={12} style={radioMarginStyle}>
@@ -97,21 +93,8 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
     public StepName = this.props.StepName
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '300px',
-    'marginBottom': '0',
-    'marginLeft': '0px'
-}
-
-
 let radioMarginStyle = {
     margin: '5px'
-}
-
-
-let noMarginStyle = {
-    margin: '0px'
 }
 
 let helpButtonStyle = {

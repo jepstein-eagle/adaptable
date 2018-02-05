@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Redux from "redux";
 import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { PopoverType } from '../Core/Enums';

@@ -1,12 +1,5 @@
 import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
-import { MenuItemShowPopup } from '../Core/MenuItem';
-import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IMenuItem } from '../Core/Interface/IMenu';;
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
-import {  LeafExpressionOperator, QuickSearchDisplayType, SortOrder } from '../Core/Enums';
-import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { QuickSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { Helper } from '../Core/Helpers/Helper'
 import { QuickSearchStrategy } from './QuickSearchStrategy';
 
 

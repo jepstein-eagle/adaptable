@@ -1,8 +1,3 @@
-import { IAdaptableBlotter } from './IAdaptableBlotter';
-import * as React from "react";
-import { DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'

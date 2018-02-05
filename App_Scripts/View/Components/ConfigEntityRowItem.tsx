@@ -1,12 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { IStyle } from '../../Core/Interface/IStyle';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
-import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
-import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
+import { Col, Row } from 'react-bootstrap';
 
 export interface IColItem {
     size: number;

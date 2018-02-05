@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Col, Panel } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from '../../ColumnSelector';
-import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 
 
@@ -27,7 +26,7 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     render(): any {
 
-        let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
+       // let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <Panel header="Select a Column" bsStyle="primary">
             <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}

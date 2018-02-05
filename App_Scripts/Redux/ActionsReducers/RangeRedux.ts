@@ -1,9 +1,7 @@
 import { ExportDestination } from '../../Core/Enums';
 import { RangeState } from './Interface/IState';
-import { IRange, ILiveRange, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IRange, ILiveRange } from '../../Strategy/Interface/IExportStrategy'
 import * as Redux from 'redux'
-import { Helper } from '../../Core/Helpers/Helper';
 import { RangeHelper } from '../../Core/Helpers/RangeHelper';
 
 export const RANGE_SELECT = 'RANGE_SELECT';

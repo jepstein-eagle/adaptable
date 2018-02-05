@@ -1,8 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
-import { Col, Row } from 'react-bootstrap';
-import { ButtonNew } from './Buttons/ButtonNew';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { SummaryRowItem } from '../Components/SummaryRowItem';

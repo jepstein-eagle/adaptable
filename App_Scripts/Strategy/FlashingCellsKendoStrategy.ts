@@ -1,11 +1,6 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
-import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import { IMenuItem } from '../Core/Interface/IMenu';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 

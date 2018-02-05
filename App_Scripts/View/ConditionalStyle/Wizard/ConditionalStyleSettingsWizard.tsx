@@ -1,17 +1,8 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem, Checkbox, Radio, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { IStyle } from '../../../Core/Interface/IStyle';
-import { ConditionalStyleScope, FontWeight, FontStyle, FontSize, PopoverType } from '../../../Core/Enums';
-import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
-import { Expression } from '../../../Core/Expression';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { ColorPicker } from '../../ColorPicker';
-import { Helper } from '../../../Core/Helpers/Helper'
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
-import { AdaptablePopover } from '../../AdaptablePopover';
+import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 
 

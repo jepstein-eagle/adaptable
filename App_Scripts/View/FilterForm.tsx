@@ -2,12 +2,11 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './Components/Panels/PanelWithButton';
-import { IColumnFilter, IColumnFilterContext, IColumnFilterItem } from '../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilter, IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Helpers/UserFilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';

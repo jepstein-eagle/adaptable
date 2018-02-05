@@ -1,8 +1,6 @@
 import { UserFilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as Redux from 'redux'
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
@@ -12,11 +10,9 @@ export interface UserFilterAddUpdateAction extends Redux.Action {
     UserFilter: IUserFilter
 }
 
-
 export interface UserFilterDeleteAction extends Redux.Action {
     UserFilter: IUserFilter
 }
-
 
 export const UserFilterAddUpdate = (UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
     type: USER_FILTER_ADD_UPDATE,
@@ -28,17 +24,15 @@ export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteActio
     UserFilter
 })
 
-
-
 const initialFilterState:
     UserFilterState = {
         UserFilters: UserFilterHelper.CreateSystemUserFilters()
-      }
+    }
 
 export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFilterState = initialFilterState, action: Redux.Action): UserFilterState => {
     let index: number;
     let UserFilters: IUserFilter[]
- 
+
     switch (action.type) {
 
         case USER_FILTER_ADD_UPDATE: {
@@ -61,7 +55,6 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
             return Object.assign({}, state, { UserFilters: UserFilters })
         }
 
-        
         default:
             return state
     }

@@ -1,19 +1,15 @@
-import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IMenuItem } from '../Core/Interface/IMenu';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as RangeRedux from '../Redux/ActionsReducers/RangeRedux'
 import { IExportStrategy, IRange } from '../Strategy/Interface/IExportStrategy'
-import {  RangeColumnScope, ExportDestination } from '../Core/Enums';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import {  ExportDestination } from '../Core/Enums';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { RangeHelper } from '../Core/Helpers/RangeHelper';
-import { Expression } from '../Core/Expression'
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { RangeState } from '../Redux/ActionsReducers/Interface/IState';
@@ -231,7 +227,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     // Converts a range into an array of array - first array is the column names and subsequent arrays are the values
     private ConvertRangetoArray(rangeName: string): any[] {
         let rangeToConvert: IRange = this.getRange(rangeName);
-        let rangeCols: IColumn[] = this.getColsForRange(rangeToConvert);
         let actionReturnObj = RangeHelper.ConvertRangeToArray(this.blotter, rangeToConvert);
         if (actionReturnObj.Error) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(actionReturnObj.Error))
@@ -240,13 +235,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         return actionReturnObj.ActionReturn
     }
     
+    /*
     private getColsForRange(range: IRange): IColumn[] {
         let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         return (range.RangeColumnScope == RangeColumnScope.AllColumns) ?
             allCols :
             range.Columns.map(c => allCols.find(col => col.ColumnId == c));
     }
-
+*/
 
     private getRange(rangeName: string): IRange {
         return this.RangeState.Ranges.find(r => r.Name == rangeName);

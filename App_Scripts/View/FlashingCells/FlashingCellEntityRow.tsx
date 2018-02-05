@@ -1,13 +1,9 @@
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../../Core/Helpers/Helper';
-import { Button, Col, Row, ButtonGroup, Panel, Checkbox, FormControl } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
+import {  Checkbox, FormControl } from 'react-bootstrap';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
-import { ObjectFactory } from '../../Core/ObjectFactory';
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
     FlashingCellDurations: any[]

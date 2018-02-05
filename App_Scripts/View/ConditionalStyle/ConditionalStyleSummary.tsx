@@ -3,24 +3,18 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import { Col, Row } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { DistinctCriteriaPairValue, ConditionalStyleScope } from '../../Core/Enums'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { ConditionalStyleScope } from '../../Core/Enums'
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
@@ -44,8 +38,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
     render(): any {
         let strategySummaries: any = []
 
-        let existingItems = this.props.ConditionalStyles.filter(cs => cs.ColumnId == this.props.SummarisedColumn.ColumnId && cs.ConditionalStyleScope == ConditionalStyleScope.Column)
-        let existingItemCount: any = (existingItems) ? existingItems.length : "No";
         // title row
         let titleRow = <StrategySummaryRow
             key={StrategyNames.ConditionalStyleStrategyName}

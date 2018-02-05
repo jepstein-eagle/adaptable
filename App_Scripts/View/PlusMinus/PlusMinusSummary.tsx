@@ -3,27 +3,20 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import { Col, Row } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression'
-import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusConditions: IPlusMinusCondition[]

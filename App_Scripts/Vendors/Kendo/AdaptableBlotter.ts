@@ -1,14 +1,11 @@
 ﻿import '../../../stylesheets/adaptableblotter-style.css'
 
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import { FilterFormReact } from '../../View/FilterForm';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import {  IStrategy } from '../../Strategy/Interface/IStrategy';
@@ -48,14 +45,11 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { Helper } from '../../Core/Helpers/Helper';
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -64,7 +58,6 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-import { Expression } from '../../Core/Expression';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 

@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Redux from "redux";
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -7,7 +6,6 @@ import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import {  IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;

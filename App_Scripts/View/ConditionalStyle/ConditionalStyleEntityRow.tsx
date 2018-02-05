@@ -1,15 +1,11 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, Button, Form, Col, Panel, Row, FormControl, HelpBlock, Checkbox, Label } from 'react-bootstrap';
-import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../../Core/Enums';
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import { ColorPicker } from '../ColorPicker';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
@@ -19,7 +15,7 @@ export class ConditionalStyleEntityRow  extends React.Component<SharedEntityExpr
     render(): any {
         let conditionalStyleCondition: IConditionalStyleCondition = this.props.ConfigEntity as IConditionalStyleCondition;
 
-        let isDisabled = conditionalStyleCondition.IsPredefined
+       // let isDisabled = conditionalStyleCondition.IsPredefined
         let column = this.props.Columns.find(x => x.ColumnId == conditionalStyleCondition.ColumnId)
 
         let myCols: IColItem[] = []

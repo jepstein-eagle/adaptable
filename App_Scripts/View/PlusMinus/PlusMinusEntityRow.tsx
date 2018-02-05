@@ -1,14 +1,9 @@
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl, Label, HelpBlock } from 'react-bootstrap';
-import { DataType } from '../../Core/Enums'
+import {  FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn  } from '../../Core/Interface/IAdaptableBlotter';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';

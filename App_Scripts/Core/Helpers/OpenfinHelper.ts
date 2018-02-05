@@ -1,7 +1,6 @@
 import { IEvent } from './../Interface/IEvent';
 import { EventDispatcher } from './../EventDispatcher';
 import { ExcelWorkbook } from './../Interface/OpenfinLiveExcel/ExcelWorkbook';
-import { ExcelWorksheet } from './../Interface/OpenfinLiveExcel/ExcelWorksheet';
 export module OpenfinHelper {
     declare var fin: any;
     declare var chrome: any;

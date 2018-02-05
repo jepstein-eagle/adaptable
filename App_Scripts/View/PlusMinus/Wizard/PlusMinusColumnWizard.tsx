@@ -1,11 +1,9 @@
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import {  Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../../Core/Enums';
-import { SingleListBox } from '../../SingleListBox'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../ColumnSelector';
 

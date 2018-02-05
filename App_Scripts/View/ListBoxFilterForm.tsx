@@ -1,14 +1,9 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../Core/Helpers/Helper'
-import { SortOrder, DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
-import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
-import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
+import { DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
+import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl,  ListGroup,  ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
-import { ButtonClear } from './Components/Buttons/ButtonClear';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
-import { QuickSearchPopup } from "./QuickSearch/QuickSearchPopup";
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRangeExpression } from '../Core/Interface/IExpression'

@@ -3,23 +3,17 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import { Col, Row } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IUserFilter } from '../../Core/Interface/IExpression'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'

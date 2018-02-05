@@ -1,12 +1,7 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../../../Core/Helpers/Helper'
-import { PanelProps, Panel, Form, Row, Col, Button } from 'react-bootstrap';
+import { PanelProps, Panel, Row, Col } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 import { IEntityRowInfo } from '../../../Core/Interface/IAdaptableBlotter';
-
-
-
 
 export interface PanelWithRowProps extends PanelProps {
    // CellInfo: [string, number][]

@@ -1,10 +1,9 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, ListGroup, Row, ButtonGroup, Jumbotron, ListGroupItem } from 'react-bootstrap';
+import {  Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
-import { LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../../Core/Enums';
-import { Helper } from '../../../Core/Helpers/Helper'
+import {  SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from '../../ColumnSelector';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
@@ -57,23 +56,8 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
     public StepName = this.props.StepName
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '300px',
-    'marginBottom': '0',
-    'marginLeft': '0px'
-}
 
 
 let radioMarginStyle = {
     margin: '5px'
-}
-
-
-let noMarginStyle = {
-    margin: '0px'
-}
-
-let helpButtonStyle = {
-    'marginLeft': '3px'
 }

@@ -1,5 +1,5 @@
 import { SmartEditState } from './Interface/IState';
-import { ISmartEditStrategy, ISmartEditPreview } from '../../Strategy/Interface/ISmartEditStrategy';
+import { ISmartEditPreview } from '../../Strategy/Interface/ISmartEditStrategy';
 import { SmartEditOperation } from '../../Core/Enums';
 import * as Redux from 'redux'
 

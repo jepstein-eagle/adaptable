@@ -1,10 +1,8 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as _ from 'lodash'
-import { Provider, connect } from 'react-redux';
-import { Radio, FormControl, ControlLabel, Panel, Form, FormGroup, Button, OverlayTrigger, Tooltip, Row, Col, Checkbox, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import {  connect } from 'react-redux';
+import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { LeafExpressionOperator, QuickSearchDisplayType, PopoverType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
@@ -12,18 +10,13 @@ import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-
 
 interface QuickSearchPopupProps extends IStrategyViewPopupProps<QuickSearchPopupComponent> {
     QuickSearchDefaultBackColor: string;
@@ -33,7 +26,7 @@ interface QuickSearchPopupProps extends IStrategyViewPopupProps<QuickSearchPopup
     QuickSearchDisplayType: QuickSearchDisplayType;
     QuickSearchStyle: IStyle,
     PredefinedColorChoices: string[],
-    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction,
+    onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
     onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
@@ -227,7 +220,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchRun(quickSearchText)),
+        onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),

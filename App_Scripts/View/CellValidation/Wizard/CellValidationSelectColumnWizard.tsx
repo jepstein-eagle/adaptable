@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Col, Panel } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
@@ -23,8 +23,6 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     }
 
     render(): any {
-
-        let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
         return <Panel header="Select a Column" bsStyle="primary">
             <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}

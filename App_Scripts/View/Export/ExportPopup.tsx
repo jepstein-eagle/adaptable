@@ -1,34 +1,18 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Typeahead } from 'react-bootstrap-typeahead'
-import { FormControl, Panel, Form, FormGroup, ListGroup, MenuItem, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip, DropdownButton } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Well } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
-import { ExportDestination, PopoverType, SortOrder } from '../../Core/Enums'
+import { ExportDestination} from '../../Core/Enums'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { IUIConfirmation } from '../../Core/Interface/IMessage';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
-import { ButtonSave } from '../Components/Buttons/ButtonSave';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { RangeHelper } from "../../Core/Helpers/RangeHelper";
 import { Helper } from '../../Core/Helpers/Helper';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { RangeEntityRow } from './RangeEntityRow'
 import { RangeWizard } from './Wizard/RangeWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -36,7 +20,6 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { ConfigEntityRowItem } from "../Components/ConfigEntityRowItem";
 import { EntityItemList } from '../Components/EntityItemList';
 import { encode } from "punycode";
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
@@ -134,8 +117,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         );
     }
-
-    private wizardSteps: JSX.Element[]
 
     onCloseWizard() {
         this.props.onClearPopupParams()

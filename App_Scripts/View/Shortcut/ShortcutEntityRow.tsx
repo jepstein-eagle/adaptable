@@ -1,8 +1,6 @@
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, FormGroup, Button, Form, Col, Panel, Row, Checkbox, FormControl, Label, HelpBlock } from 'react-bootstrap';
+import {  FormGroup, FormControl } from 'react-bootstrap';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';

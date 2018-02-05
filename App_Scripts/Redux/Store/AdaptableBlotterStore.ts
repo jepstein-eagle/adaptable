@@ -1,4 +1,4 @@
-import { DataType, ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -41,7 +41,6 @@ import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
 import { IExportStrategy , IPPDomain} from '../../Strategy/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { IColumnChooserStrategy } from '../../Strategy/Interface/IColumnChooserStrategy'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy'
@@ -50,13 +49,11 @@ import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import { IUserFilter } from '../../Core/Interface/IExpression'
-import { ICellValidationStrategy, ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
-import { ITeamSharingStrategy, ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
+import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
+import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, IUIError,  InputAction } from '../../Core/Interface/IMessage';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
-import { Helper } from "../../Core/Helpers/Helper";
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -333,7 +330,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let layout = actionTyped.Entity as ILayout
                             if (middlewareAPI.getState().Layout.AvailableLayouts.find(x => x.Name == layout.Name)) {
                                 overwriteConfirmation = true
-                                importAction = LayoutRedux.SaveLayout(layout.Columns, layout.Name)
+                                importAction = LayoutRedux.LayoutSave(layout.Columns, layout.Name)
                             } else {
                                 importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
                             }
@@ -600,7 +597,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     }
                     else {
                         //update default layout with latest columns
-                        middlewareAPI.dispatch(LayoutRedux.SaveLayout(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout

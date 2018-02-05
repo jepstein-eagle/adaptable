@@ -1,8 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { connect } from 'react-redux';
+import { FormControl } from 'react-bootstrap';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -11,8 +10,7 @@ import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IMessage';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { IUIPrompt } from '../../Core/Interface/IMessage';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -77,7 +75,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph"
-                    ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                    ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                     ConfirmationTitle={"Delete Layout"} />
             </div>
@@ -120,7 +118,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.SaveLayout(columns, layoutName)),
+        onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.LayoutSave(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
         onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup))

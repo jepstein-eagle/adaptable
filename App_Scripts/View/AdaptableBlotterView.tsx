@@ -1,14 +1,7 @@
-﻿import { MenuItemShowPopup, MenuReduxActionItem } from '../Core/MenuItem';
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+﻿import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { Modal, Button, Glyphicon, Navbar, NavItem, Nav, Dropdown, FormControl, Form, Col, Row, ControlLabel } from 'react-bootstrap';
-import * as AdaptableBlotterStore from '../Redux/Store/AdaptableBlotterStore'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { EventDispatcher } from '../Core/EventDispatcher'
-import { IEvent } from '../Core/Interface/IEvent';
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
 import { PopupState, MenuState, DashboardState, EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -18,8 +11,6 @@ import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlott
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
-import { AdaptableDashboardViewFactory } from './AdaptableViewFactory';
-import * as StrategyIds from '../Core/Constants/StrategyIds'
 import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {

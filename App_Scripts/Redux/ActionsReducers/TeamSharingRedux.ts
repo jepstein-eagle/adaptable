@@ -4,13 +4,25 @@ import * as Redux from 'redux'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
-export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';
 export const TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
+export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 
 export interface TeamSharingShareAction extends Redux.Action {
     Entity: IConfigEntity
     Strategy: string
+}
+
+export interface TeamSharingSetAction extends Redux.Action {
+    Entities: ISharedEntity[]
+}
+
+export interface TeamSharingImportItemAction extends Redux.Action {
+    Entity: IConfigEntity,
+    Strategy: string
+}
+
+export interface TeamSharingGet extends Redux.Action {
 }
 
 export const TeamSharingShare = (Entity: IConfigEntity, Strategy: string): TeamSharingShareAction => ({
@@ -19,28 +31,16 @@ export const TeamSharingShare = (Entity: IConfigEntity, Strategy: string): TeamS
     Strategy
 })
 
-export interface TeamSharingSetAction extends Redux.Action {
-    Entities: ISharedEntity[]
-}
-
 export const TeamSharingSet = (Entities: ISharedEntity[]): TeamSharingSetAction => ({
     type: TEAMSHARING_SET,
     Entities
 })
-
-export interface TeamSharingImportItemAction extends Redux.Action {
-    Entity: IConfigEntity,
-    Strategy: string
-}
 
 export const TeamSharingImportItem = (Entity: IConfigEntity, Strategy: string): TeamSharingImportItemAction => ({
     type: TEAMSHARING_IMPORT_ITEM,
     Entity,
     Strategy
 })
-
-export interface TeamSharingGet extends Redux.Action {
-}
 
 export const TeamSharingGet = (): TeamSharingGet => ({
     type: TEAMSHARING_GET

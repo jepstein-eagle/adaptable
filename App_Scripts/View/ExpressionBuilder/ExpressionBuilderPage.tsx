@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import { ListGroupItem, ListGroup, Panel, Grid, Row, Col } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../Wizard/Interface/IAdaptableWizard'
+import { Grid, Row, Col } from 'react-bootstrap';
+import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'

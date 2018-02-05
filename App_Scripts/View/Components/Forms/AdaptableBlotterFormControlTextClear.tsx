@@ -1,11 +1,6 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { Helper } from '../../../Core/Helpers/Helper'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { FormControl, FormControlProps, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import { IUIError } from '../../../Core/Interface/IMessage';
-import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 
 export interface AdaptableBlotterFormControlTextClearProps extends FormControlProps {
     OnTextChange: (textValue: string) => void

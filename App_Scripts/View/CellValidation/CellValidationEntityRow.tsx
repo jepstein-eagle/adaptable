@@ -1,16 +1,14 @@
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
-import * as Redux from "redux";
 import { Helper } from '../../Core/Helpers/Helper';
-import { Button, Col, Row, ButtonGroup, Panel, FormControl } from 'react-bootstrap';
+import {  FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression';
-import { CellValidationMode, FontSize } from '../../Core/Enums'
+import { CellValidationMode } from '../../Core/Enums'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 

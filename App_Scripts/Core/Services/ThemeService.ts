@@ -1,12 +1,7 @@
 
-import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { ThemesContent } from '../../../themes/index'
-import { ThemeState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export class ThemeService {
-    private ThemeState: ThemeState
-    private style: HTMLStyleElement
-    constructor(private blotter: IAdaptableBlotter) {
+    constructor() {
         // Create the <style> tag
    //     this.style = document.createElement("style");
         // WebKit hack :(

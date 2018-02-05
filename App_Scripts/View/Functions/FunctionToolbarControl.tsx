@@ -1,20 +1,17 @@
 ﻿import * as React from "react";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Navbar, Dropdown, Glyphicon, MenuItem, Panel, FormGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helpers/Helper';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as     StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IUIConfirmation } from '../../Core/Interface/IMessage'
 import { IMenuItem } from '../../Core/Interface/IMenu'
 
 interface FunctionControlComponentProps extends IToolbarStrategyViewPopupProps<FunctionToolbarControlComponent> {

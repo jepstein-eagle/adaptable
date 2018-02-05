@@ -1,4 +1,3 @@
-import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -7,12 +6,10 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
 import {   IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
-import { IMenuItem } from '../Core/Interface/IMenu'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
-
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {

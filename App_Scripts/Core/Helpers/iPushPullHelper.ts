@@ -1,5 +1,3 @@
-import { IEvent } from './../Interface/IEvent';
-import { EventDispatcher } from './../EventDispatcher';
 import { IPPStyle } from './../Interface/IAdaptableBlotter';
 import { IPPDomain } from "../../Strategy/Interface/IExportStrategy";
 

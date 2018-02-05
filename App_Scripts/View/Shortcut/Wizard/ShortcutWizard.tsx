@@ -1,12 +1,5 @@
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
-import * as ShortcutRedux from '../../../Redux/ActionsReducers/ShortcutRedux'
-import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView'
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'

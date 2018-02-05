@@ -1,14 +1,11 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, Popover } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
-import { DataType, SortOrder, PopoverType, SelectionMode } from '../../../Core/Enums';
+import { PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { Helper } from '../../../Core/Helpers/Helper'
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
-import { ColumnSelector } from '../../ColumnSelector'
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
   }

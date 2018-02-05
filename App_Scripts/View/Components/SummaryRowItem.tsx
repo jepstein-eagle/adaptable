@@ -1,9 +1,5 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { IStyle } from '../../Core/Interface/IStyle';
-import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
 export interface SummaryRowItemProps extends React.ClassAttributes<SummaryRowItem> {

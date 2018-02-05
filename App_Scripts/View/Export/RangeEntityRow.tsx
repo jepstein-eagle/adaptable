@@ -1,14 +1,8 @@
 import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { Helper } from '../../Core/Helpers/Helper';
-import { Button, Col, Row, ButtonGroup, Panel, Dropdown, DropdownButton, Glyphicon, OverlayTrigger, Tooltip, MenuItem } from 'react-bootstrap';
+import { DropdownButton,  MenuItem } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression';
-import { RangeColumnScope, ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Core/Enums';
 import { RangeHelper } from '../../Core/Helpers/RangeHelper';
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { ILiveRange } from '../../Strategy/Interface/IExportStrategy';
@@ -37,7 +31,7 @@ export class RangeEntityRow extends React.Component<RangeEntityRowProps, {}> {
             <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Sync with iPushPull"}</MenuItem>
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
-        let hasLive = this.props.LiveRanges.find(x => x.Range == range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
+       // let hasLive = this.props.LiveRanges.find(x => x.Range == range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         let myCols: IColItem[] = []
         myCols.push({
@@ -73,8 +67,3 @@ export class RangeEntityRow extends React.Component<RangeEntityRowProps, {}> {
         return <ConfigEntityRowItem items={myCols} />
     }
 }
-
-
-var expressionFontSizeStyle = {
-    fontSize: 'small'
-};

@@ -1,11 +1,7 @@
-import { IAdaptableBlotter, IColumn, IEntitlement } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IEntitlement } from '../Core/Interface/IAdaptableBlotter';
 import { IStrategy, } from '../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
-import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
-import { CalendarService } from '../Core/Services/CalendarService'
 import { MenuItemShowPopup } from '../Core/MenuItem';
-import { MenuState } from '../Redux/ActionsReducers/Interface/IState';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean

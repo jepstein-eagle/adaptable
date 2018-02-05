@@ -1,14 +1,12 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { Provider, connect } from 'react-redux';
-import { FormControl, Panel, Form, FormGroup, Button, ControlLabel, Checkbox, Row, Col, Well, HelpBlock, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock} from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -16,7 +14,6 @@ import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
@@ -87,7 +84,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                                     overrideDisableButton={this.props.CurrentLayout == "Default"}
                                     ConfigEntity={layoutEntity}
                                     DisplayMode="Glyph+Text"
-                                    ConfirmAction={LayoutRedux.DeleteLayout(this.props.CurrentLayout)}
+                                    ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
                                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                                     ConfirmationTitle={"Delete Layout"} />
                                     {' '}

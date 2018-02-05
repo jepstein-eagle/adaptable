@@ -1,13 +1,10 @@
 ﻿import { CalculatedColumnStrategy } from '../../Strategy/CalculatedColumnStrategy';
 import '../../../stylesheets/adaptableblotter-style.css'
-import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../../Strategy/Interface/IStrategy';
@@ -45,28 +42,23 @@ import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
-import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { Helper } from '../../Core/Helpers/Helper';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, FontSize, FontStyle, FontWeight } from '../../Core/Enums'
+import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode} from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions, IPPStyle } from '../../Core/Interface/IAdaptableBlotter'
-import { Expression } from '../../Core/Expression';
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../../View/FilterForm';
-import { IDataChangingEvent, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
+import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 
 //icon to indicate toggle state
@@ -946,7 +938,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
-                let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+               // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);

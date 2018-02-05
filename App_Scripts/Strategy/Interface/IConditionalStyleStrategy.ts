@@ -1,6 +1,6 @@
 import {  IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
-import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../../Core/Enums';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
 

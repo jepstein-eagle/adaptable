@@ -1,7 +1,5 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -14,7 +12,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
     render(): any {
         let userFilter: IUserFilter = this.props.ConfigEntity as IUserFilter;
 
-        let isDisabled = userFilter.IsPredefined
+       // let isDisabled = userFilter.IsPredefined
 
         let myCols: IColItem[] = []
 

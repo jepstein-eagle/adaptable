@@ -1,5 +1,4 @@
-import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColumnExpressionService";
 import * as math from 'mathjs'
 

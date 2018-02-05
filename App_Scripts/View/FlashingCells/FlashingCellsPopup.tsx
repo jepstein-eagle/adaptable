@@ -1,20 +1,18 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IFlashingColumn, IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
+import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IColumn , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
-import { FormGroup, Form, Col, Panel, Row, Checkbox, ListGroup } from 'react-bootstrap';
+import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helpers/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
@@ -123,10 +121,6 @@ let panelStyle = {
     width: '800px'
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
 
 let topCheckBoxStyle = {
     'margin': '7px'

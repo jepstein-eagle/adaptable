@@ -1,5 +1,4 @@
-import { ICalendarStrategy, ICalendar, ICalendarEntry } from './Interface/ICalendarStrategy';
-import { MenuItemShowPopup } from '../Core/MenuItem';
+import { ICalendarStrategy } from './Interface/ICalendarStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

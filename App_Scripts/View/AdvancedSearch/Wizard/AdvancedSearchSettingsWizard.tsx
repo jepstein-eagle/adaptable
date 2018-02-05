@@ -1,6 +1,5 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Button, Form, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';

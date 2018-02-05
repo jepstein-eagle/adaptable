@@ -1,15 +1,13 @@
 import { IRange } from '../../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { ListGroup, ListGroupItem, Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
+import {  Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { DualListBoxEditor } from './../../DualListBoxEditor'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ColumnSelector } from '../../ColumnSelector';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { RangeColumnScope, SelectionMode, PopoverType } from '../../../Core/Enums';
+import { RangeColumnScope, PopoverType } from '../../../Core/Enums';
 
 export interface RangeColumnsWizardProps extends AdaptableWizardStepProps<IRange> {
     Columns: Array<IColumn>
@@ -102,11 +100,6 @@ export class RangeColumnsWizard extends React.Component<RangeColumnsWizardProps,
     public StepName = this.props.StepName
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '335px',
-    'marginBottom': '0'
-}
 
 let radioMarginStyle = {
     margin: '5px'

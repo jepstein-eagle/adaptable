@@ -1,18 +1,10 @@
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
-
 import * as React from "react";
-import { Radio, Panel, Form, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
+import { Radio, Panel,  Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { DataType, PopoverType, ShortcutAction } from '../../../Core/Enums';
-import {  StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
+import { DataType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
-import { AdaptablePopover } from '../../AdaptablePopover';
-import * as CalendarStrat from '../../../Strategy/Interface/ICalendarStrategy';
-
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }

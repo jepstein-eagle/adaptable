@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
-import { ListGroupItem, ListGroup, Panel, Button, Form, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';

@@ -1,4 +1,3 @@
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 // import { DataSourceBase } from './DataSourceBase'
 import * as DataSourceBase from 'fin-hypergrid-data-source-base'
 

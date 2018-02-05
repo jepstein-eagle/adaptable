@@ -1,14 +1,11 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { ListGroup, ListGroupItem, HelpBlock } from 'react-bootstrap';
-import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, FormControl, FormGroup, Collapse, Glyphicon } from 'react-bootstrap';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { HelpBlock } from 'react-bootstrap';
+import { ControlLabel, Button, FormControl, FormGroup, Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { Helper } from '../../Core/Helpers/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'

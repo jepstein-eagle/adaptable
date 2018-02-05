@@ -1,11 +1,9 @@
 import * as React from "react";
-import { Radio, FormGroup, FormControl, Button, Form, Row, Col, Panel, Well, Checkbox, HelpBlock } from 'react-bootstrap';
+import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { IRangeExpression } from '../../../Core/Interface/IExpression';
-import { DataType, CellValidationMode, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { PopoverType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 
@@ -69,10 +67,5 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
 
     public Back(): void { }
     public StepName = this.props.StepName
-}
-
-
-let divStyle = {
-    margin: '10px'
 }
 

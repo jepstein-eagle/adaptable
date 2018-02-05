@@ -1,7 +1,5 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';

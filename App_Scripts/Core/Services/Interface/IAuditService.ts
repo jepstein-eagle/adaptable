@@ -1,5 +1,4 @@
 import { IEvent } from '../../Interface/IEvent'
-import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 
 export interface IDataChangingEvent {
     NewValue: any;

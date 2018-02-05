@@ -1,36 +1,20 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Typeahead } from 'react-bootstrap-typeahead'
-import { Panel, ListGroup, Well, HelpBlock, FormControl, ControlLabel, Form, FormGroup, Button, OverlayTrigger, Row, Col, Tooltip } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  Well, HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { PanelWithInfo } from '../Components/Panels/PanelWithInfo';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
-import { AdaptableWizard } from './..//Wizard/AdaptableWizard'
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilderPreview'
-import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { SortOrder } from '../../Core/Enums';
-import { ButtonShare } from "../Components/Buttons/ButtonShare";
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'

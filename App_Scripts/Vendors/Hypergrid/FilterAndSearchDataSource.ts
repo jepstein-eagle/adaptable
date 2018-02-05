@@ -3,7 +3,7 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase

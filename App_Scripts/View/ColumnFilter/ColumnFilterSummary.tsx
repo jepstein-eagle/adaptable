@@ -1,22 +1,15 @@
-import { IUserFilter } from '../../Core/Interface/IExpression';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
-import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { SummaryRowItem } from '../Components/SummaryRowItem';
 import { StrategyHeader } from '../Components/StrategyHeader'

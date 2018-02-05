@@ -1,7 +1,6 @@
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../../../Core/Helpers/Helper';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'

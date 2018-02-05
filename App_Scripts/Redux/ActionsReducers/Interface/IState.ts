@@ -1,5 +1,5 @@
-import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType, ExportDestination } from '../../../Core/Enums'
-import { InputAction, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
+import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
@@ -7,7 +7,7 @@ import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
 import { IRange, ILiveRange, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { IColumn, IEntitlement, IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter'
+import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
@@ -19,7 +19,6 @@ import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Strategy/Interface/IDashboardStrategy';
-import * as Redux from 'redux'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 
 

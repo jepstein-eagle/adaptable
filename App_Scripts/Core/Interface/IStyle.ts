@@ -1,4 +1,4 @@
-import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../Enums';
+import { FontWeight, FontStyle, FontSize } from '../Enums';
 
 export interface IStyle {
     BackColor?: string

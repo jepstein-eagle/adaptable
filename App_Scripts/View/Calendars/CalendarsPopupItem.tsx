@@ -1,8 +1,5 @@
-import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { ButtonToolbar, ControlLabel, Button, Form, Col, Panel, Row, Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ButtonToolbar, Button,  Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ICalendar } from '../../Strategy/Interface/ICalendarStrategy';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 

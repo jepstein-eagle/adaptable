@@ -1,11 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { DualListBoxEditor } from './../DualListBoxEditor'
+import { IColumn, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -20,10 +18,6 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary'
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary'
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ICustomSort } from "../../Strategy/Interface/ICustomSortStrategy";
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { Helper } from '../../Core/Helpers/Helper';
 import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
@@ -61,7 +55,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             { Caption: "", Width: 2 },
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
-      
+
+        let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
+
         let summaries: any[] = [];
         summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
@@ -70,16 +66,17 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        if (this.state.SelectedColumn && this.state.SelectedColumn.DataType == DataType.Number) {
-            summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
-        }
-        if (this.state.SelectedColumn && this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
-            summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
-        }
-        let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
+
         if (this.state.SelectedColumn) {
+            if (this.state.SelectedColumn.DataType == DataType.Number) {
+                summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+            }
+            if (this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
+                summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+            }
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
         }
+
         return <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
             {this.state.ShowSelector &&
@@ -119,10 +116,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ColumnInfoPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnInfoPopupComponent);
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
 
 let panelStyle = {
     width: '800px'

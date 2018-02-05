@@ -1,8 +1,8 @@
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
-import { Button, Form, Col, Panel, ListGroup, Row, Well } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import {  Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -14,11 +14,9 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CustomSortEntityRow } from './CustomSortEntityRow'
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
@@ -107,7 +105,6 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             }
         </PanelWithButton>
     }
-    private wizardSteps: JSX.Element[]
 
     onCloseWizard() {
         this.props.onClearPopupParams()
