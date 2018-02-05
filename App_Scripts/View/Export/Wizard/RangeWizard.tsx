@@ -5,7 +5,7 @@ import { RangeExpressionWizard } from './RangeExpressionWizard'
 import { RangeNameWizard } from './RangeNameWizard'
 import { IRange } from '../../../Strategy/Interface/IExportStrategy';
 import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export class RangeWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<RangeWizard>, {}> {
 

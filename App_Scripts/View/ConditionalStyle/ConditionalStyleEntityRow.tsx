@@ -8,7 +8,7 @@ import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditiona
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ColorPicker } from '../ColorPicker';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';

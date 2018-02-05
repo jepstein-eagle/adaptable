@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import * as ReactDataMenu from 'react-data-menu';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IContextMenu } from '../Strategy/Interface/IStrategy';
+import { IContextMenu } from '../Core/Interface/IMenu';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ContextMenuCustomRenderer } from './ContextMenuCustomRenderer'
 

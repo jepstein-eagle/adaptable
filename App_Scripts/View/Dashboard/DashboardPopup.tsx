@@ -11,9 +11,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Helper } from '../../Core/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

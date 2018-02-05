@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
-import { InputAction } from '../../Strategy/Interface/IStrategy';
+import { InputAction } from '../../Core/Interface/IMessage';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 const LAYOUT_ADD = 'LAYOUT_ADD';

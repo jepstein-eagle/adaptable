@@ -1,12 +1,13 @@
 import { MenuItemShowPopup } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyIds from '../Core/StrategyIds'
-import * as StrategyNames from '../Core/StrategyNames'
-import * as StrategyGlyphs from '../Core/StrategyGlyphs'
-import * as ScreenPopups from '../Core/ScreenPopups'
+import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyNames from '../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
+import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
-import { IMenuItem, ICellInfo, IStrategyActionReturn } from '../Strategy/Interface/IStrategy';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import {   IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
+import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
+import { IMenuItem } from '../Core/Interface/IMenu'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';

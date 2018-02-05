@@ -7,7 +7,7 @@ import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export interface CustomSortWizardProps extends React.ClassAttributes<CustomSortWizard> {
     EditedCustomSort: ICustomSort

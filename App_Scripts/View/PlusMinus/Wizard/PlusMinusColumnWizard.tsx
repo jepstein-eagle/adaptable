@@ -6,7 +6,7 @@ import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../../Core/Enums';
 import { SingleListBox } from '../../SingleListBox'
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../ColumnSelector';
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {

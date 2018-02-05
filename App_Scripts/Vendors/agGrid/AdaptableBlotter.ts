@@ -23,10 +23,13 @@ import { ValidationService } from '../../Core/Services/ValidationService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StyleConstants from '../../Core/StyleConstants'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StyleConstants from '../../Core/Constants/StyleConstants'
 // import strategy
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Strategy/Interface/IStrategy';
+import {  IStrategy } from '../../Strategy/Interface/IStrategy';
+import { IMenuItem } from '../../Core/Interface/IMenu';
+import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -58,7 +61,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Int
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IPPStyle, IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';

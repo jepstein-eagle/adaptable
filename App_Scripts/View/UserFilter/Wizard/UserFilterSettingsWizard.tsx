@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { IUserFilter } from '../../../Core/Interface/IExpression';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {

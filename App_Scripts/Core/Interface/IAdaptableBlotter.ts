@@ -1,5 +1,7 @@
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, DistinctCriteriaPairValue } from '../Enums'
-import { IMenuItem, IStrategy, ICellInfo } from '../../Strategy/Interface/IStrategy'
+import {  IStrategy } from '../../Strategy/Interface/IStrategy'
+import { IMenuItem } from '../../Core/Interface/IMenu'
+import {  ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -153,4 +155,11 @@ export interface IEntityRowInfo{
 export interface IEntitlement {
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
+}
+
+
+export interface ICellInfo {
+    Id: any,
+    ColumnId: string,
+    Value: any
 }

@@ -2,7 +2,7 @@
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -11,16 +11,16 @@ import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt, IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as ScreenPopups from '../../Core/ScreenPopups'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 
 interface LayoutToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
@@ -66,7 +66,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.onAdd()}
+                <ButtonNew onClick={() => this.onNew()}
                  size={"small"} 
                  overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
                     DisplayMode="Glyph" />
@@ -92,7 +92,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
     }
 
-    private onAdd() {
+    private onNew() {
         let prompt: IUIPrompt = {
             PromptTitle: "Create New Layout",
             PromptMsg: "Please enter a layout name",

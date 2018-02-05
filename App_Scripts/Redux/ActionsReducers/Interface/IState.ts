@@ -1,12 +1,12 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType, ExportDestination } from '../../../Core/Enums'
-import { InputAction, IContextMenu, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Strategy/Interface/IStrategy'
+import { InputAction, IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
 import { IRange, ILiveRange, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Strategy/Interface/IFlashingCellsStrategy'
-import { IMenuItem } from '../../../Strategy/Interface/IStrategy'
+import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { IColumn, IEntitlement, IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';

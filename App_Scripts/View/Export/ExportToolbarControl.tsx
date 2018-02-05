@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { Form, Dropdown, DropdownButton, Panel, FormControl, MenuItem, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, Label, Row } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -12,7 +12,7 @@ import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt, IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { IUIPrompt, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -22,9 +22,9 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as ScreenPopups from '../../Core/ScreenPopups'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { RangeHelper } from "../../Core/Helpers/RangeHelper";
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';

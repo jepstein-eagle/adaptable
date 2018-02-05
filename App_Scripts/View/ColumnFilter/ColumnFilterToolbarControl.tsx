@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Form, Panel, FormControl, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
@@ -16,13 +16,13 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import * as ScreenPopups from '../../Core/ScreenPopups'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
-import { IUIConfirmation } from "../../Strategy/Interface/IStrategy";
+import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 

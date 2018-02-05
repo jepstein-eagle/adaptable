@@ -1,14 +1,16 @@
 import { IShortcut, IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyIds from '../Core/StrategyIds'
-import * as StrategyNames from '../Core/StrategyNames'
-import * as StrategyGlyphs from '../Core/StrategyGlyphs'
-import * as ScreenPopups from '../Core/ScreenPopups'
+import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyNames from '../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
+import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import { IMenuItem, IUIError, IUIConfirmation, ICellInfo } from '../Strategy/Interface/IStrategy';
+import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
+import { IMenuItem } from '../Core/Interface/IMenu';
+import {  ICellInfo } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { DataType } from '../Core/Enums'
 import { ShortcutAction, CellValidationMode } from '../Core/Enums'

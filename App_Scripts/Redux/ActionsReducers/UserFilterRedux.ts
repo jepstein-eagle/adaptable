@@ -1,7 +1,7 @@
 import { UserFilterState } from './Interface/IState';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as Redux from 'redux'
 

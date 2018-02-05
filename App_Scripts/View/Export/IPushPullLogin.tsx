@@ -12,7 +12,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
-import { StringExtensions } from "../../Core/Extensions";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 interface IPushPullLoginProps extends IStrategyViewPopupProps<IPushPullLoginComponent> {
     onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;

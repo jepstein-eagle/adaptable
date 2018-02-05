@@ -1,6 +1,6 @@
 import { ShortcutState } from './Interface/IState';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
-import { ICellInfo } from '../../Strategy/Interface/IStrategy';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType, ShortcutAction } from '../../Core/Enums';
 import * as CalendarStrat from '../../Strategy/Interface/ICalendarStrategy';
 import * as Redux from 'redux'

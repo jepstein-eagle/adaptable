@@ -5,9 +5,9 @@ import { Button, Form, Panel, ControlLabel, Row, Col, ButtonToolbar, ListGroup, 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -18,7 +18,7 @@ import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExpressionMode } from '../../Core/Enums'
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -68,20 +68,16 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         return <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
-           
+
             {columnFilterItems.length > 0 &&
-               <EntityItemList entityRowInfo={entityRowInfo} items={columnFilterItems} />
+                <EntityItemList entityRowInfo={entityRowInfo} items={columnFilterItems} />
             }
 
             {columnFilterItems.length == 0 &&
                 <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
             }
 
-    </PanelWithButton>
-    }
-
-    onCreateUserFilter() {
-        this.setState({ EditedUserFilter: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
+        </PanelWithButton>
     }
 }
 

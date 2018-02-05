@@ -9,7 +9,7 @@ import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { ColorPicker } from '../../ColorPicker';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ColumnSelector } from '../../ColumnSelector';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 

@@ -3,7 +3,6 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { EnumExtensions } from '../../Core/Extensions';
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 

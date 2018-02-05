@@ -7,9 +7,9 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -20,7 +20,7 @@ import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 

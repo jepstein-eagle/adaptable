@@ -10,7 +10,7 @@ import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView'
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export interface ShortcutWizardProps extends React.ClassAttributes<ShortcutWizard> {
     EditedShortcut: IShortcut

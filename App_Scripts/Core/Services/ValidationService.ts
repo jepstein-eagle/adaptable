@@ -10,9 +10,9 @@ import { IRangeExpression, IRangeEvaluation } from '../Interface/IExpression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
 import { Helper } from '../Helpers/Helper'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import * as StrategyIds from '../StrategyIds'
-import { StringExtensions } from '../../Core/Extensions';
-import { CellValidationGlyph } from '../StrategyGlyphs';
+import * as StrategyIds from '../Constants/StrategyIds'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { CellValidationGlyph } from '../Constants/StrategyGlyphs';
 
 
 export class ValidationService implements IValidationService {

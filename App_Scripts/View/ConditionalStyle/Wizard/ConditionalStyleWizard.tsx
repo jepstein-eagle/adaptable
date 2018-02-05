@@ -19,10 +19,10 @@ import { ObjectFactory } from '../../../Core/ObjectFactory';
 import { PanelWithRow } from '../../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../../Core/Interface/IExpression'
 import { ButtonNew } from '../../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../../Core/Extensions'
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 
 export interface ConditionalStyleWizardProps extends React.ClassAttributes<ConditionalStyleWizard> {

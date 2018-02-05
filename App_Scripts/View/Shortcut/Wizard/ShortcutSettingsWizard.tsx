@@ -5,10 +5,12 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { DataType, PopoverType, ShortcutAction } from '../../../Core/Enums';
-import { StringExtensions, EnumExtensions } from '../../../Core/Extensions';
+import {  EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarStrat from '../../../Strategy/Interface/ICalendarStrategy';
+import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
 
 
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -149,11 +151,11 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <AdaptableBlotterForm inline >
                                         <FormControl componentClass="select" placeholder="select" value={currentDynamicResult} onChange={(x) => this.onDynamicResultChanged(x)} >
                                             <option value="select" key="select">Select Dynamic Date</option>
-                                            <option value={CalendarStrat.TODAY_MAGICSTRING} key={CalendarStrat.TODAY_MAGICSTRING}>Today</option>
-                                            <option value={CalendarStrat.YESTERDAY_MAGICSTRING} key={CalendarStrat.YESTERDAY_MAGICSTRING}>Yesterday</option>
-                                            <option value={CalendarStrat.TOMORROW_MAGICSTRING} key={CalendarStrat.TOMORROW_MAGICSTRING}>Tomorrow</option>
-                                            <option value={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous Work Day</option>
-                                            <option value={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING} key={CalendarStrat.NEXT_WORK_DAY_MAGICSTRING}>Next Work Day</option>
+                                            <option value={CalendarConstants.TODAY_MAGICSTRING} key={CalendarConstants.TODAY_MAGICSTRING}>Today</option>
+                                            <option value={CalendarConstants.YESTERDAY_MAGICSTRING} key={CalendarConstants.YESTERDAY_MAGICSTRING}>Yesterday</option>
+                                            <option value={CalendarConstants.TOMORROW_MAGICSTRING} key={CalendarConstants.TOMORROW_MAGICSTRING}>Tomorrow</option>
+                                            <option value={CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous Work Day</option>
+                                            <option value={CalendarConstants.NEXT_WORK_DAY_MAGICSTRING} key={CalendarConstants.NEXT_WORK_DAY_MAGICSTRING}>Next Work Day</option>
                                         </FormControl>
 
                                         {' '}<AdaptablePopover headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />

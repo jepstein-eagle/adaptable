@@ -13,12 +13,13 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions, EnumExtensions } from '../../Core/Extensions'
+import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';

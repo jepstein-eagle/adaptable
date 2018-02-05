@@ -11,7 +11,10 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Strategy/Interface/IStrategy';
+import {  IStrategy } from '../../Strategy/Interface/IStrategy';
+import {  IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IMenuItem } from '../../Core/Interface/IMenu';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
@@ -21,7 +24,7 @@ import { StyleService } from '../../Core/Services/StyleService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -53,7 +56,7 @@ import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { QuickSearchState, LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'

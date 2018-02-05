@@ -35,7 +35,7 @@ import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as RangeRedux from '../ActionsReducers/RangeRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
@@ -53,7 +53,8 @@ import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ICellValidationStrategy, ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
 import { ITeamSharingStrategy, ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, IUIError, ICellInfo, InputAction } from '../../Strategy/Interface/IStrategy';
+import { IUIConfirmation, IUIError,  InputAction } from '../../Core/Interface/IMessage';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { Helper } from "../../Core/Helpers/Helper";
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";

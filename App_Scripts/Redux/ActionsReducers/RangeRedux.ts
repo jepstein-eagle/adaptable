@@ -1,7 +1,7 @@
 import { ExportDestination } from '../../Core/Enums';
 import { RangeState } from './Interface/IState';
 import { IRange, ILiveRange, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
-import { ICellInfo } from '../../Strategy/Interface/IStrategy';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import * as Redux from 'redux'
 import { Helper } from '../../Core/Helpers/Helper';
 import { RangeHelper } from '../../Core/Helpers/RangeHelper';

@@ -1,4 +1,4 @@
-import { IMenuItem } from '../Strategy/Interface/IStrategy';
+import { IMenuItem } from '../Core/Interface/IMenu';
 import { PopupShow } from '../Redux/ActionsReducers/PopupRedux'
 import * as Redux from 'redux';
 import { IEntitlement } from './Interface/IAdaptableBlotter';

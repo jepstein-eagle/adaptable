@@ -10,17 +10,20 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-import { IMenuItem, IStrategy, IUIError, IUIConfirmation, ICellInfo } from '../../Strategy/Interface/IStrategy';
+import { IStrategy, } from '../../Strategy/Interface/IStrategy';
+import { IMenuItem, } from '../../Core/Interface/IMenu';
+import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
-import {  IValidationService } from '../../Core/Services/Interface/IValidationService'
+import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -47,7 +50,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Int
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
-import { EnumExtensions } from '../../Core/Extensions';
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, FontSize, FontStyle, FontWeight } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IRawValueDisplayValuePair, IAdaptableBlotterOptions, IPPStyle } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
@@ -93,7 +96,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-  //  public ThemeService: ThemeService
+    //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
@@ -113,7 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-       // this.ThemeService = new ThemeService(this)
+        // this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);

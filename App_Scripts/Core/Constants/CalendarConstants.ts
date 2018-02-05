@@ -1,0 +1,5 @@
+export const TODAY_MAGICSTRING = "Today"
+export const YESTERDAY_MAGICSTRING = "Yesterday"
+export const TOMORROW_MAGICSTRING = "Tomorrow"
+export const PREVIOUS_WORK_DAY_MAGICSTRING = "Previous Work Day"
+export const NEXT_WORK_DAY_MAGICSTRING = "Next Work Day"

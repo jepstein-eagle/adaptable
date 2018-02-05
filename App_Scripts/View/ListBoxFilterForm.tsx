@@ -4,7 +4,7 @@ import { Helper } from '../Core/Helpers/Helper'
 import { SortOrder, DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl, Row, Glyphicon, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, FormGroup, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../Core/Extensions';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { ButtonClear } from './Components/Buttons/ButtonClear';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';

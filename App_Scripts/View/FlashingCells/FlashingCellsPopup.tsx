@@ -14,9 +14,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helpers/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 
 interface FlashingCellsPopupProps extends IStrategyViewPopupProps<FlashingCellsPopupComponent> {

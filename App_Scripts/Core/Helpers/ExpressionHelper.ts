@@ -4,7 +4,7 @@ import { IRangeExpression, IRangeEvaluation, IUserFilter } from '../Interface/IE
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { IDataChangedEvent, IDataChangingEvent } from '../Services/Interface/IAuditService';
 import { initialiseAgGridWithAngular1 } from 'ag-grid/dist/lib/components/agGridNg1';

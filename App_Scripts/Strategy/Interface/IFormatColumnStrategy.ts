@@ -1,4 +1,4 @@
-import { IStrategyActionReturn, IStrategy } from './IStrategy';
+import {  IStrategy } from './IStrategy';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
 

@@ -8,9 +8,9 @@ import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 
 
 interface ThemePopupProps extends IStrategyViewPopupProps<ThemePopupComponent> {

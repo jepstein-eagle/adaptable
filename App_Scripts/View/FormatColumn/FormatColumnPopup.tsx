@@ -17,10 +17,10 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';

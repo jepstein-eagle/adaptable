@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../Wizard/Inter
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize, PopoverType } from '../../Core/Enums';
-import { EnumExtensions } from '../../Core/Extensions';
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ColorPicker } from '../ColorPicker';

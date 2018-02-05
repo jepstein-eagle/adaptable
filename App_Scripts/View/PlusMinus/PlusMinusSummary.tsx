@@ -13,9 +13,9 @@ import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyIds from '../../Core/StrategyIds'
-import { StringExtensions } from '../../Core/Extensions'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression'

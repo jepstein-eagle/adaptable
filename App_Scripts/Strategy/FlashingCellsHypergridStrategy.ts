@@ -1,7 +1,7 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import { IMenuItem } from '../Strategy/Interface/IStrategy'
+import { IMenuItem } from '../Core/Interface/IMenu';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'

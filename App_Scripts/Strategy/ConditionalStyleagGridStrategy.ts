@@ -3,7 +3,7 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { MenuItemShowPopup } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IMenuItem } from '../Strategy/Interface/IStrategy';
+import { IMenuItem } from '../Core/Interface/IMenu';;
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -12,7 +12,7 @@ import { Expression } from '../Core/Expression';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import * as StyleConstants from '../Core/StyleConstants'
+import * as StyleConstants from '../Core/Constants/StyleConstants'
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

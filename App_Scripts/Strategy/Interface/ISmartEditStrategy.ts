@@ -1,4 +1,5 @@
-import { IStrategyActionReturn, IStrategy } from './IStrategy';
+import {  IStrategy } from './IStrategy';
+import { IStrategyActionReturn } from './IStrategyActionReturn';
 import { SmartEditOperation } from '../../Core/Enums';
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
 

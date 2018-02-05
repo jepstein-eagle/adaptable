@@ -9,8 +9,7 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
-import { StringExtensions } from '../../Core/Extensions'
-import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
@@ -19,10 +18,10 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as ScreenPopups from '../../Core/ScreenPopups'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 
 interface AdvancedSearchToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

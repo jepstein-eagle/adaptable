@@ -7,7 +7,7 @@ import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

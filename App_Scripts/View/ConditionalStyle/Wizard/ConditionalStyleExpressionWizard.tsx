@@ -7,7 +7,7 @@ import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditi
 import { Expression } from '../../../Core/Expression';
 import { IUserFilter } from '../../../Core/Interface/IExpression'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
 export interface ConditionalStyleExpressionWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
     ColumnList: Array<IColumn>

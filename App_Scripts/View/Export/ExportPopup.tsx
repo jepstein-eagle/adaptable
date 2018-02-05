@@ -16,9 +16,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
@@ -33,9 +33,9 @@ import { RangeEntityRow } from './RangeEntityRow'
 import { RangeWizard } from './Wizard/RangeWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { ConfigEntityRowItem } from "../Components/ConfigEntityRowItem";
 import { EntityItemList } from '../Components/EntityItemList';
 import { encode } from "punycode";

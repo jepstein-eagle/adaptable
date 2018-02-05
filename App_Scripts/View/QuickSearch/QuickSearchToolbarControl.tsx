@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { Form, Panel, FormControl, InputGroup, ControlLabel, Label, Button, OverlayTrigger, Tooltip, Glyphicon, FormGroup, Row } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
@@ -16,11 +16,11 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import * as ScreenPopups from '../../Core/ScreenPopups'
-import { IUIConfirmation } from "../../Strategy/Interface/IStrategy";
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import { IUIConfirmation } from "../../Core/Interface/IMessage";
 
 interface QuickSearchToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchRunAction;

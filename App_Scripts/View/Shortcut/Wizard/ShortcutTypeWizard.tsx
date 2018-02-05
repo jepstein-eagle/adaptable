@@ -7,7 +7,8 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { DataType, PopoverType, ShortcutAction } from '../../../Core/Enums';
-import { StringExtensions, EnumExtensions } from '../../../Core/Extensions';
+import {  StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarStrat from '../../../Strategy/Interface/ICalendarStrategy';

@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '.././../Wizard/In
 import { AdaptableWizard } from '.././../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../ColumnSelector';
 import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";

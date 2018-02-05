@@ -12,9 +12,9 @@ import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedu
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyIds from '../../Core/StrategyIds'
-import { StringExtensions } from '../../Core/Extensions'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

@@ -24,17 +24,16 @@ import { ExpressionBuilderPreview } from '../ExpressionBuilder/ExpressionBuilder
 import { PopupState } from '../../Redux/ActionsReducers/Interface/IState'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IUserFilter } from '../../Core/Interface/IExpression'
-import { StringExtensions } from '../../Core/Extensions'
-import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { SortOrder } from '../../Core/Enums';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 

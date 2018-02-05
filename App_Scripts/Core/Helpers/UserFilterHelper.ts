@@ -3,7 +3,7 @@ import { ExpressionHelper } from '../Helpers/ExpressionHelper'
 import { IRangeExpression, IUserFilter } from '../Interface/IExpression';
 import { LeafExpressionOperator, DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Extensions'
+import { StringExtensions } from '../Extensions/StringExtensions'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 
 

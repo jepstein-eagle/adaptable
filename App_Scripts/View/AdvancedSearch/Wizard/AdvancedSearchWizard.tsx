@@ -6,7 +6,7 @@ import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
 import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export class AdvancedSearchWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
 

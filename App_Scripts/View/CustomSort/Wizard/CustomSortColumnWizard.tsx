@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { SelectionMode } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../ColumnSelector';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {

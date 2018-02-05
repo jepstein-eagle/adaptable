@@ -13,7 +13,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { IPPDomain, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
-import { StringExtensions } from "../../Core/Extensions";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExportDestination } from "../../Core/Enums";
 
 interface IPushPullDomainPageSelectorProps extends IStrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {

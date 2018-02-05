@@ -3,11 +3,10 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { EnumExtensions } from '../../Core/Extensions';
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { Col, Row, Glyphicon } from 'react-bootstrap';
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {

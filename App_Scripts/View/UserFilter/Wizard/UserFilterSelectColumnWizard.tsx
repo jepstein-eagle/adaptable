@@ -3,7 +3,7 @@ import { Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Core/Interface/IExpression';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from '../../ColumnSelector';
 import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';

@@ -1,14 +1,14 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import { IMenuItem } from '../Strategy/Interface/IStrategy'
+import { IMenuItem } from '../Core/Interface/IMenu';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import { DataType } from '../Core/Enums'
-import * as StyleConstants from '../Core/StyleConstants'
+import * as StyleConstants from '../Core/Constants/StyleConstants'
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {

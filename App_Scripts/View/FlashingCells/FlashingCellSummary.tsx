@@ -7,14 +7,14 @@ import { Provider, connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategySummaryRow } from '../Components/StrategySummaryRow'
 import { StrategyDetailRow } from '../Components/StrategyDetailRow'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-import { FlashingCellGlyph } from "../../Core/StrategyGlyphs";
+import { FlashingCellGlyph } from "../../Core/Constants/StrategyGlyphs";
 import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
 
 export interface FlashingCellSummaryProps extends IStrategySummaryProps<FlashingCellSummaryComponent> {

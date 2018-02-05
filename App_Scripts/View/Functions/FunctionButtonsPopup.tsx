@@ -10,9 +10,9 @@ import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interf
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
-import { IMenuItem } from '../../Strategy/Interface/IStrategy'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import { IMenuItem } from '../../Core/Interface/IMenu'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 

@@ -6,9 +6,9 @@ import { FormControl, Panel, Form, FormGroup, DropdownButton, Button, Table, Men
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
@@ -17,9 +17,9 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import { IUIConfirmation } from '../../Strategy/Interface/IStrategy';
+import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 interface SmartEditPopupProps extends IStrategyViewPopupProps<SmartEditPopupComponent> {

@@ -1,7 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
-import { ICellInfo } from '../../Strategy/Interface/IStrategy'
+import { IColumn, ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 
 export const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
 export const HIDE_COLUMN = 'HIDE_COLUMN';

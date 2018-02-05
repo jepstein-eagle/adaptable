@@ -6,11 +6,12 @@ import { Button, Col, Row, ButtonGroup, Panel, FormControl } from 'react-bootstr
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
-import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { CellValidationMode, FontSize } from '../../Core/Enums'
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 
 

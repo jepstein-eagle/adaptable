@@ -16,7 +16,7 @@
 // import { IDashboardStrategyControlConfiguration } from '../../Core/Interface/IDashboardStrategy';
 // import { Helper } from '../../Core/Helper';
 // import { AdaptablePopover } from '../AdaptablePopover';
-// import * as StrategyIds from '../../Core/StrategyIds'
+// import * as StrategyIds from '../../Core/Constants/StrategyIds'
 
 
 // interface SmartEditToolbarControlComponentProps extends IStrategyViewPopupProps<SmartEditToolbarControlComponent> {

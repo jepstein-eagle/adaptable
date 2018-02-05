@@ -1,4 +1,4 @@
-import { IStrategyActionReturn, IStrategy } from './IStrategy';
+import {  IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { IStyle } from '../../Core/Interface/IStyle';

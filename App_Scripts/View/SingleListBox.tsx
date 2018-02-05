@@ -4,7 +4,7 @@ import { Helper } from '../Core/Helpers/Helper'
 import { SortOrder, SelectionMode } from '../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, Row, ListGroup, Col, Button, ListGroupItemProps, Panel, Grid, ButtonGroup, ListGroupProps, Form, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../Core/Extensions';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>

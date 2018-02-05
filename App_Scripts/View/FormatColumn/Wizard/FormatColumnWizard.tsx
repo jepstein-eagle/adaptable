@@ -4,7 +4,7 @@ import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { FormatColumnColumnWizard } from './FormatColumnColumnWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export interface FormatColumnWizardProps extends React.ClassAttributes<FormatColumnWizard> {
     EditedFormatColumn: IFormatColumn

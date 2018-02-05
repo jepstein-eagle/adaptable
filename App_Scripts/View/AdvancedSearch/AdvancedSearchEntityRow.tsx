@@ -6,7 +6,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import {  IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {

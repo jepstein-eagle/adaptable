@@ -11,7 +11,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { DataType, ExpressionMode, SortOrder, DistinctCriteriaPairValue , SelectionMode} from '../../Core/Enums'
 import { Helper } from '../../Core/Helpers/Helper'
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ColumnSelector } from '../ColumnSelector';

@@ -26,7 +26,7 @@ import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
 import { FunctionButtonsPopup } from './Functions/FunctionButtonsPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
-import * as StrategyIds from '../Core/StrategyIds'
+import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as React from "react";
 import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';

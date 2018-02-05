@@ -13,9 +13,9 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import { StringExtensions } from '../../Core/Extensions'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IRawValueDisplayValuePair, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

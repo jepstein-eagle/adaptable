@@ -8,7 +8,7 @@ import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 export interface CalculatedColumnWizardProps extends React.ClassAttributes<CalculatedColumnWizard> {
     EditedCalculatedColumn: ICalculatedColumn

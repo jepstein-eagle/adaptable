@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
-import { IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup, IUIError, IInfoPopup, IUIInfo, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Strategy/Interface/IStrategy';
+import { IErrorPopup, IWarningPopup, IConfirmationPopup, IActionConfigurationPopup, IPromptPopup, IUIError, IInfoPopup, IUIInfo, IUIWarning, IUIConfirmation, IUIPrompt, InputAction } from '../../Core/Interface/IMessage';
 
 export const POPUP_SHOW = 'POPUP_SHOW';
 export const POPUP_HIDE = 'POPUP_HIDE';

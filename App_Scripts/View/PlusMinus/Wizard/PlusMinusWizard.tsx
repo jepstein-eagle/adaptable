@@ -17,11 +17,11 @@ import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
 import { PanelWithRow } from '../../Components/Panels/PanelWithRow';
 import { ButtonNew } from '../../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../../Core/Extensions'
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Core/Interface/IExpression'
-import * as StrategyNames from '../../../Core/StrategyNames'
+import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
 
 export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWizard> {

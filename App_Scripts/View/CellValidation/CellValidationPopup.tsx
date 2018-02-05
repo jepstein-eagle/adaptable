@@ -6,9 +6,9 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -19,7 +19,8 @@ import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableWizard } from './../Wizard/AdaptableWizard'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
-import { StringExtensions, EnumExtensions } from '../../Core/Extensions';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ObjectFactory } from '../../Core/ObjectFactory';

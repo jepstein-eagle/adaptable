@@ -3,6 +3,7 @@ import { ICalendarService } from './Interface/ICalendarService';
 import { ICalendarStrategy, ICalendar, ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
 import * as CalendarStrat from '../../Strategy/Interface/ICalendarStrategy';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import * as CalendarConstants from '../Constants/CalendarConstants';
 
 // Similar service to the one in WPF version
 // This service is responsible for reading the calendars and for making them available and also for doing data calculations
@@ -23,21 +24,21 @@ export class CalendarService implements ICalendarService {
         // eventually we should use some kind of enum? or class that holds this
         var dynamicDate: Date;
 
-        if (dynamicDateName == CalendarStrat.TODAY_MAGICSTRING) {
+        if (dynamicDateName == CalendarConstants.TODAY_MAGICSTRING) {
             dynamicDate = new Date();
         }
-        else if (dynamicDateName == CalendarStrat.YESTERDAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.YESTERDAY_MAGICSTRING) {
             dynamicDate = new Date()
             dynamicDate.setDate(dynamicDate.getDate() - 1);
         }
-        else if (dynamicDateName == CalendarStrat.TOMORROW_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.TOMORROW_MAGICSTRING) {
             dynamicDate = new Date()
             dynamicDate.setDate(dynamicDate.getDate() + 1);
         }
-        else if (dynamicDateName == CalendarStrat.PREVIOUS_WORK_DAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING) {
             dynamicDate = this.GetPreviousWorkingDay(1);
         }
-        else if (dynamicDateName == CalendarStrat.NEXT_WORK_DAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.NEXT_WORK_DAY_MAGICSTRING) {
             dynamicDate = this.GetNextWorkingDay(1);
         }
         return dynamicDate;

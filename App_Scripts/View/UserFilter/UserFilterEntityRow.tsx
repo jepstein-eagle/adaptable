@@ -5,7 +5,7 @@ import { Provider, connect } from 'react-redux';
 import { IUserFilter } from '../../Core/Interface/IExpression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 

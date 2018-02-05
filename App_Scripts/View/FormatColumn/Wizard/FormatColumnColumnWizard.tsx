@@ -6,7 +6,7 @@ import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy
 import { LeafExpressionOperator, SortOrder, SelectionMode, PopoverType } from '../../../Core/Enums';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ColumnSelector } from '../../ColumnSelector';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
 export interface FormatColumnColumnWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     Columns: Array<IColumn>

@@ -9,11 +9,11 @@ import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedu
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { EnumExtensions } from '../../Core/Extensions';
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ColorPicker } from '../ColorPicker';
 import { IUserFilter } from '../../Core/Interface/IExpression';
-import * as StrategyNames from '../../Core/StrategyNames'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';

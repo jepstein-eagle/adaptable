@@ -2,7 +2,7 @@ import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { MergeState } from './AdaptableBlotterReduxMerger'
 import { Helper } from '../../Core/Helpers/Helper'
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 
 const checkStatus = (response: Response) => {
     const error = new Error(response.statusText);

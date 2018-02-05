@@ -1,4 +1,4 @@
-import {IStrategyActionReturn,IStrategy} from './IStrategy';
+import {IStrategy} from './IStrategy';
 import { IConfigEntity, IColumn } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
 import { RangeColumnScope, RangeRowScope, ExportDestination } from '../../Core/Enums';

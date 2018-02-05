@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';

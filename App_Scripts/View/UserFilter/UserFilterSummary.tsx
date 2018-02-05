@@ -8,8 +8,8 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyIds from '../../Core/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';

@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { Helper } from '../../../Core/Helpers/Helper'
 import { PanelProps, Panel, Glyphicon, Button, Label, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
-import { IUIConfirmation } from "../../../Strategy/Interface/IStrategy";
+import { IUIConfirmation } from "../../../Core/Interface/IMessage";
 
 export interface PanelDashboardProps extends PanelProps {
     headerText: string

@@ -8,9 +8,9 @@ import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyIds from '../../Core/StrategyIds'
-import * as StrategyNames from '../../Core/StrategyNames'
-import * as StrategyGlyphs from '../../Core/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Button, Form, Col, Panel, Row, Well } from 'react-bootstrap';
 import { ConditionalStyleScope, FontWeight, FontStyle, FontSize } from '../../Core/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
@@ -22,7 +22,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { IUserFilter } from '../../Core/Interface/IExpression'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions'
+import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 

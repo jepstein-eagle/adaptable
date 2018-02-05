@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { IRangeExpression } from '../../../Core/Interface/IExpression';
 import { DataType, CellValidationMode, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 

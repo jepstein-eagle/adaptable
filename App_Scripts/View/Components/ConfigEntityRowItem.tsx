@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { EnumExtensions } from '../../Core/Extensions';
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { FontWeight, FontStyle, FontSize } from '../../Core/Enums';
 import { Button, Col, Row, ButtonGroup, Panel } from 'react-bootstrap';
 import { IColumn } from "../../Core/Interface/IAdaptableBlotter";

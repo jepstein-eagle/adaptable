@@ -1,5 +1,6 @@
 import { IAdaptableBlotter, IColumn, IEntitlement } from '../Core/Interface/IAdaptableBlotter';
-import { IStrategy, IMenuItem } from '../Strategy/Interface/IStrategy';
+import { IStrategy, } from '../Strategy/Interface/IStrategy';
+import { IMenuItem } from '../Core/Interface/IMenu';
 import { ICalendarService } from '../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../Core/Services/CalendarService'
 import { MenuItemShowPopup } from '../Core/MenuItem';
@@ -29,7 +30,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    protected  InitState(): void{
+    protected InitState(): void {
         // stff - check this works
     }
 
