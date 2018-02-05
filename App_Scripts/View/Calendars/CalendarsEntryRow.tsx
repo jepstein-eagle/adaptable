@@ -3,14 +3,14 @@ import { ButtonToolbar, Button,  Checkbox, OverlayTrigger, Tooltip, Glyphicon } 
 import { ICalendar } from '../../Strategy/Interface/ICalendarStrategy';
 import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
 
-export interface CalendarsPopupItemProps extends React.ClassAttributes<CalendarsPopupItem> {
+export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
     Calendar: ICalendar;
     CurrentCalendar: string;
     onSelect: (calendar: ICalendar) => void;
     onShowInformation: (calendar: ICalendar) => void;
 }
 
-export class CalendarsPopupItem extends React.Component<CalendarsPopupItemProps, {}> {
+export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {}> {
 
     render(): any {
         let myCols: IColItem[] = []

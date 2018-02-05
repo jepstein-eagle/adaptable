@@ -79,7 +79,7 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
         userName: "harnessuser",
-        enableAuditLog: false,
+        enableAuditLog: true,
         enableRemoteConfigServer: false,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
