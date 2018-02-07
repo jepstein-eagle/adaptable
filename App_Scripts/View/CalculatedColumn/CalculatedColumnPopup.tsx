@@ -9,7 +9,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -21,6 +21,7 @@ import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface CalculatedColumnPopupProps extends IStrategyViewPopupProps<CalculatedColumnPopupComponent> {
@@ -55,10 +56,10 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     render() {
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Column Name", Width: 3 },
-            { Caption: "Column Expression", Width: 6 },
-            { Caption: "", Width: 3 },
+        let colItems: IColItem[] = [
+            { Content: "Column Name", Size: 3 },
+            { Content: "Column Expression", Size: 6 },
+            { Content: "", Size: 3 },
         ]
 
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
@@ -67,7 +68,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
 
             return <CalculatedColumnEntityRow
                 Index={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 onShare={() => this.props.onShare(calculatedColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 ConfigEntity={calculatedColumn} key={calculatedColumn.ColumnId}
@@ -85,7 +86,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
             {this.props.CalculatedColumns.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={calculatedColumns} />
+                <EntityItemList ColItems={colItems} items={calculatedColumns} />
             }
 
             {this.props.CalculatedColumns.length == 0 &&

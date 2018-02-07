@@ -148,11 +148,11 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <AdaptableBlotterForm inline >
                                         <FormControl componentClass="select" placeholder="select" value={currentDynamicResult} onChange={(x) => this.onDynamicResultChanged(x)} >
                                             <option value="select" key="select">Select Dynamic Date</option>
-                                            <option value={CalendarConstants.TODAY_MAGICSTRING} key={CalendarConstants.TODAY_MAGICSTRING}>Today</option>
-                                            <option value={CalendarConstants.YESTERDAY_MAGICSTRING} key={CalendarConstants.YESTERDAY_MAGICSTRING}>Yesterday</option>
-                                            <option value={CalendarConstants.TOMORROW_MAGICSTRING} key={CalendarConstants.TOMORROW_MAGICSTRING}>Tomorrow</option>
-                                            <option value={CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING} key={CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING}>Previous Work Day</option>
-                                            <option value={CalendarConstants.NEXT_WORK_DAY_MAGICSTRING} key={CalendarConstants.NEXT_WORK_DAY_MAGICSTRING}>Next Work Day</option>
+                                            <option value={CalendarConstants.TODAY} key={CalendarConstants.TODAY}>Today</option>
+                                            <option value={CalendarConstants.YESTERDAY} key={CalendarConstants.YESTERDAY}>Yesterday</option>
+                                            <option value={CalendarConstants.TOMORROW} key={CalendarConstants.TOMORROW}>Tomorrow</option>
+                                            <option value={CalendarConstants.PREVIOUS_WORK_DAY} key={CalendarConstants.PREVIOUS_WORK_DAY}>Previous Work Day</option>
+                                            <option value={CalendarConstants.NEXT_WORK_DAY} key={CalendarConstants.NEXT_WORK_DAY}>Next Work Day</option>
                                         </FormControl>
 
                                         {' '}<AdaptablePopover headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />

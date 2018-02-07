@@ -8,8 +8,8 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { ExportDestination} from '../../Core/Enums'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -23,6 +23,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { encode } from "punycode";
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface ExportPopupProps extends IStrategyViewPopupProps<ExportPopupComponent> {
     Ranges: IRange[],
@@ -59,19 +60,19 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br />, <br />]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Range", Width: 2 },
-            { Caption: "Columns", Width: 3 },
-            { Caption: "Expression", Width: 3 },
-            { Caption: "", Width: 2 },
-            { Caption: "", Width: 2 },
+        let colItems: IColItem[] = [
+            { Content: "Range", Size: 2 },
+            { Content: "Columns", Size: 3 },
+            { Content: "Expression", Size: 3 },
+            { Content: "", Size: 2 },
+            { Content: "", Size: 2 },
         ]
 
         let ranges = this.props.Ranges.map((range: IRange, index) => {
             return <RangeEntityRow
                 ConfigEntity={range}
                 key={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 Index={index}
                 Columns={this.props.Columns}
                 IsLast={index == this.props.Ranges.length - 1}
@@ -95,7 +96,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
 
                 {ranges.length > 0 &&
-                    <EntityItemList entityRowInfo={entityRowInfo} items={ranges} />
+                    <EntityItemList ColItems={colItems} items={ranges} />
                 }
 
                 {ranges.length == 0 &&
@@ -153,7 +154,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(value, exportDestination)),
+        onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))

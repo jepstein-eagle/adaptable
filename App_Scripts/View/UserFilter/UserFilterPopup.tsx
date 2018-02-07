@@ -9,9 +9,9 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
@@ -21,6 +21,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface UserFilterPopupProps extends IStrategyViewPopupProps<UserFilterPopupComponent> {
@@ -68,16 +69,16 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             }
         }
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Name", Width: 3 },
-            { Caption: "Description", Width: 6 },
-            { Caption: "", Width: 3 },
+        let colItems: IColItem[] = [
+            { Content: "Name", Size: 3 },
+            { Content: "Description", Size: 6 },
+            { Content: "", Size: 3 },
         ]
 
         let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
             return <UserFilterEntityRow
                 ConfigEntity={userFilter}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 key={"CS" + index}
                 Index={index}
                 onShare={() => this.props.onShare(userFilter)}
@@ -97,7 +98,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
             {UserFilterItems.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={UserFilterItems} />
+                <EntityItemList ColItems={colItems} items={UserFilterItems} />
             }
 
             {UserFilterItems.length == 0 &&

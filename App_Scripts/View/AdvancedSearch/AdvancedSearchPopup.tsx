@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import {  Well, HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -13,13 +13,14 @@ import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -55,17 +56,17 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Live", Width: 1 },
-            { Caption: "Name", Width: 3 },
-            { Caption: "Query", Width: 5 },
-            { Caption: "", Width: 3 },
+        let colItems: IColItem[] = [
+            { Content: "Live", Size: 1 },
+            { Content: "Name", Size: 3 },
+            { Content: "Query", Size: 5 },
+            { Content: "", Size: 3 },
         ]
 
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
             return <AdvancedSearchEntityRow
                 key={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 IsCurrentAdvancedSearch={x.Uid == this.props.CurrentAdvancedSearchUid}
                 ConfigEntity={x}
                 Columns={this.props.Columns}
@@ -92,7 +93,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={panelStyle}>
 
             {advancedSearchRows.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={advancedSearchRows} />
+                <EntityItemList ColItems={colItems} items={advancedSearchRows} />
             }
 
             {advancedSearchRows.length == 0 &&

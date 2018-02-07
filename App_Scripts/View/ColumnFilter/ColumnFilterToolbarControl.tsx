@@ -18,7 +18,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
 interface ColumnFilterToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,

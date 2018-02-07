@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -17,11 +17,12 @@ import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyleCondition>,
@@ -57,16 +58,16 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Where Applied", Width: 3 },
-            { Caption: "Style", Width: 2 },
-            { Caption: "Description", Width: 4 },
-            { Caption: "", Width: 3 },
+            let colItems: IColItem[] = [
+            { Content: "Where Applied", Size: 3 },
+            { Content: "Style", Size: 2 },
+            { Content: "Description", Size: 4 },
+            { Content: "", Size: 3 },
         ]
         let conditionalStyleConditions = this.props.ConditionalStyles.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
             return <ConditionalStyleEntityRow
                 ConfigEntity={conditionalStyleCondition}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 key={"CS" + index}
                 Index={index}
                 onShare={() => this.props.onShare(conditionalStyleCondition)}
@@ -89,7 +90,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             }
 
             {conditionalStyleConditions.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={conditionalStyleConditions} />
+                <EntityItemList ColItems={colItems} items={conditionalStyleConditions} />
             }
 
             {this.state.EditedConfigEntity != null &&

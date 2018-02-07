@@ -84,8 +84,8 @@ export class ValidationService implements IValidationService {
         if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.None) {
             return true;
         }
-        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.RangeExpression, dataChangedEvent.NewValue, columns.find(c => c.ColumnId == dataChangedEvent.ColumnId))
-        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, cellValidationRule.RangeExpression.Operator, this.blotter.AuditService.getExistingDataValue(dataChangedEvent))
+        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.RangeExpression, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent),columns.find(c => c.ColumnId == dataChangedEvent.ColumnId))
+        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation)
     }
 
     private GetCellValidationState(): CellValidationState {

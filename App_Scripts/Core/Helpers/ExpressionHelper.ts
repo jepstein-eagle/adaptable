@@ -1,11 +1,13 @@
 import { Expression } from '../Expression'
 import { UserFilterHelper } from '../Helpers/UserFilterHelper'
-import { IRangeExpression, IRangeEvaluation, IUserFilter } from '../Interface/IExpression';
+import { IRangeExpression, IRangeEvaluation } from '../Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 
 
 export module ExpressionHelper {
@@ -35,7 +37,7 @@ export module ExpressionHelper {
                 columnFriendlyName = column.FriendlyName
             }
             else {
-                columnFriendlyName = columnId + Helper.MissingColumnMagicString
+                columnFriendlyName = columnId + GeneralConstants.MISSING_COLUMN
                 console.warn("Could not find column id:" + columnId)
             }
             let columnToString = ""
@@ -139,9 +141,9 @@ export module ExpressionHelper {
                     let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnName)
 
                     for (let range of columnRanges.Ranges) {
-                        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnName), column)
+                        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnName), null, column)
 
-                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, range.Operator, null);
+                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
                         if (isColumnSatisfied) {
                             break;
                         }
@@ -277,11 +279,13 @@ export module ExpressionHelper {
     }
 
 
-    export function GetRangeEvaluation(rangeExpression: IRangeExpression, initialValue: any, column: IColumn): IRangeEvaluation {
+    export function GetRangeEvaluation(rangeExpression: IRangeExpression, newValue: any, initialValue: any, column: IColumn): IRangeEvaluation {
         let rangeEvaluation: IRangeEvaluation = {
             operand1: rangeExpression.Operand1,
             operand2: rangeExpression.Operand2,
-            newValue: initialValue
+            newValue: newValue,
+            operator: rangeExpression.Operator,
+            initialValue: initialValue
         }
         switch (column.DataType) {
             case DataType.Date:
@@ -296,24 +300,24 @@ export module ExpressionHelper {
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
                     rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
                 }
-                rangeEvaluation.newValue = initialValue;
+                rangeEvaluation.newValue = newValue;
                 break
             case DataType.Boolean:
-                rangeEvaluation.newValue = initialValue;
+                rangeEvaluation.newValue = newValue;
                 break;
             case DataType.Object:
             case DataType.String:
                 rangeEvaluation.operand1 = rangeExpression.Operand1.toLowerCase();
                 rangeEvaluation.operand2 = rangeExpression.Operand2.toLowerCase();
-                rangeEvaluation.newValue = initialValue.toLowerCase();
+                rangeEvaluation.newValue = newValue.toLowerCase();
                 break;
         }
         return rangeEvaluation;
     }
 
-    export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation, leafOperator: LeafExpressionOperator, existingValue: any): boolean {
+    export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation): boolean {
 
-        switch (leafOperator) {
+        switch (rangeEvaluation.operator) {
             case LeafExpressionOperator.Equals:
                 return rangeEvaluation.newValue == rangeEvaluation.operand1;
             case LeafExpressionOperator.NotEquals:
@@ -327,11 +331,11 @@ export module ExpressionHelper {
             case LeafExpressionOperator.LessThanOrEqual:
                 return rangeEvaluation.newValue <= rangeEvaluation.operand1;
             case LeafExpressionOperator.PercentChange:
-                let oldPercentValue: any = existingValue;
+                let oldPercentValue: any = rangeEvaluation.initialValue;
                 let percentChange: number = Math.abs(100 - Math.abs(rangeEvaluation.newValue * 100 / oldPercentValue))
                 return percentChange < Number(rangeEvaluation.operand1);
             case LeafExpressionOperator.ValueChange:
-                let oldChangeValue: any = existingValue;
+                let oldChangeValue: any = rangeEvaluation.initialValue;
                 let changeInValue: number = Math.abs(rangeEvaluation.newValue - oldChangeValue);
                 return changeInValue < Number(rangeEvaluation.operand1);
             case LeafExpressionOperator.Between:

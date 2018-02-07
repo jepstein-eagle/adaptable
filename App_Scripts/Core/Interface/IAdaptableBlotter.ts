@@ -145,9 +145,9 @@ export interface IConfigEntity {
     IsPredefined: boolean
 }
 
-export interface IEntityRowInfo{
-    Caption: string,
-    Width: number
+export interface IColItem {
+    Size: number;
+    Content: any;
 }
 
 export interface IEntitlement {

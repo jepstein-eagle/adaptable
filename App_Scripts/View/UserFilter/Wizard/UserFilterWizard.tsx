@@ -1,4 +1,4 @@
-import { IUserFilter } from '../../../Core/Interface/IExpression';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'; 
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { ExpressionMode } from '../../../Core/Enums'

@@ -22,8 +22,8 @@ import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
-import { FunctionToolbarControl } from './Functions/FunctionToolbarControl'
-import { FunctionButtonsPopup } from './Functions/FunctionButtonsPopup'
+import { HomeToolbarControl } from './Home/HomeToolbarControl'
+import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
@@ -50,7 +50,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationPopup: CellValidationPopup,
   LayoutPopup: LayoutPopup,
   DashboardPopup: DashboardPopup,
-  FunctionButtonsPopup: FunctionButtonsPopup,
+  HomeButtonsPopup: HomeButtonsPopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector : IPushPullDomainPageSelector,
@@ -64,7 +64,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
-  [StrategyIds.FunctionsStrategyId, FunctionToolbarControl],
+  [StrategyIds.HomeStrategyId, HomeToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl]
 ]);
 

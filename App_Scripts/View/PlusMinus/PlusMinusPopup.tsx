@@ -9,12 +9,12 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -22,6 +22,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface PlusMinusPopupProps extends IStrategyViewPopupProps<PlusMinusPopupComponent> {
@@ -55,19 +56,19 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
     render() {
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />, "Plus Minus Rules can be set for", <ul><li>The Whole Blotter</li><li>A Single Column</li><li>A Column dependent on other values in the row (created using the expression wizard)</li></ul>]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Column", Width: 3 },
-            { Caption: "Nudge Value", Width: 2 },
-            { Caption: "Row Condition", Width: 4 },
-            { Caption: "", Width: 3 },
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 3 },
+            { Content: "Nudge Value", Size: 2 },
+            { Content: "Row Condition", Size: 4 },
+            { Content: "", Size: 3 },
         ]
         let plusMinusConditions = this.props.PlusMinusConditions.map((x, index) => {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
 
             return <PlusMinusEntityRow
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 ConfigEntity={x}
-                key={x.ColumnId}
+                key={index}
                 Index={index}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
@@ -100,7 +101,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
 
             {plusMinusConditions.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={plusMinusConditions} />
+                <EntityItemList ColItems={colItems} items={plusMinusConditions} />
             }
 
             {plusMinusConditions.length == 0 &&

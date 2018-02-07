@@ -1,15 +1,16 @@
 import * as React from "react";
-import { IRangeExpression, IUserFilter } from '../../Core/Interface/IExpression'
+import { IRangeExpression } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
-import { Well,  FormGroup, ControlLabel,  Row, Col } from 'react-bootstrap';
+import { Well, FormGroup, ControlLabel, Row, Col } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
-import { DataType, ExpressionMode, DistinctCriteriaPairValue , SelectionMode} from '../../Core/Enums'
+import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode } from '../../Core/Enums'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -55,8 +56,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 SelectedUserFilterExpresions: [],
                 SelectedColumnRanges: [],
                 IsFirstTime: StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)
-                && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
-                && (this.state ? this.state.IsFirstTime : true)
+                    && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
+                    && (this.state ? this.state.IsFirstTime : true)
             };
         }
         else {
@@ -97,18 +98,18 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
                 IsFirstTime: StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)
-                && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
-                && (this.state ? this.state.IsFirstTime : true)
+                    && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
+                    && (this.state ? this.state.IsFirstTime : true)
             };
         }
     }
 
     render() {
         let column = (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId)
-        let selectedColumnDataType: DataType = column?column.DataType:null
+        let selectedColumnDataType: DataType = column ? column.DataType : null
         let selectedColumn: IColumn = column;
-    
-        let availableExpressionIds: string[] = column?this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn)):[];
+
+        let availableExpressionIds: string[] = column ? this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn)) : [];
 
         let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
         let addConditionButtonDisabled: boolean = !this.state.IsFirstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
@@ -140,8 +141,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             }
                         </Col>
                         <Col xs={6}>
-                            <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]} 
-                            disabled={columnDropdownDisabled}
+                            <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]}
+                                disabled={columnDropdownDisabled}
                                 ColumnList={this.props.ColumnsList}
                                 onColumnChange={columns => this.onColumnSelectChange(columns)}
                                 SelectionMode={SelectionMode.Single} />

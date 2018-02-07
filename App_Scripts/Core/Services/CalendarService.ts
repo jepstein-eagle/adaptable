@@ -22,21 +22,21 @@ export class CalendarService implements ICalendarService {
         // eventually we should use some kind of enum? or class that holds this
         var dynamicDate: Date;
 
-        if (dynamicDateName == CalendarConstants.TODAY_MAGICSTRING) {
+        if (dynamicDateName == CalendarConstants.TODAY) {
             dynamicDate = new Date();
         }
-        else if (dynamicDateName == CalendarConstants.YESTERDAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.YESTERDAY) {
             dynamicDate = new Date()
             dynamicDate.setDate(dynamicDate.getDate() - 1);
         }
-        else if (dynamicDateName == CalendarConstants.TOMORROW_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.TOMORROW) {
             dynamicDate = new Date()
             dynamicDate.setDate(dynamicDate.getDate() + 1);
         }
-        else if (dynamicDateName == CalendarConstants.PREVIOUS_WORK_DAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.PREVIOUS_WORK_DAY) {
             dynamicDate = this.GetPreviousWorkingDay(1);
         }
-        else if (dynamicDateName == CalendarConstants.NEXT_WORK_DAY_MAGICSTRING) {
+        else if (dynamicDateName == CalendarConstants.NEXT_WORK_DAY) {
             dynamicDate = this.GetNextWorkingDay(1);
         }
         return dynamicDate;

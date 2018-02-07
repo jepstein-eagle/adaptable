@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;
@@ -9,9 +10,10 @@ export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEn
 export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {}> {
 
     render(): any {
-        let myCols: IColItem[] = []
-        myCols.push({ size: 6, content: this.props.CalendarEntry.HolidayName });
-        myCols.push({ size: 6, content: new Date(this.props.CalendarEntry.HolidayDate).toDateString() });
-        return <ConfigEntityRowItem items={myCols} />
+       
+       let colItems: IColItem[] = []
+        colItems.push({ Size: 6, Content: this.props.CalendarEntry.HolidayName });
+        colItems.push({ Size: 6, Content: new Date(this.props.CalendarEntry.HolidayDate).toDateString() });
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 }

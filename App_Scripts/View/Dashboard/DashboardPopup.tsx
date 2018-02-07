@@ -15,8 +15,8 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Helper } from '../../Core/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
-import {  IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface DashboardPopupProps extends IStrategyViewPopupProps<DashboardPopupComponent> {
@@ -54,30 +54,30 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             let visibleButton = x.IsVisible ?
                 <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
-            if (x.Strategy == StrategyIds.FunctionsStrategyId) {
+            if (x.Strategy == StrategyIds.HomeStrategyId) {
                 //we want to prevent people from hiding the Functions dropdown
                 //      visibleButton = null
             }
 
-            let myCols: IColItem[] = []
-            myCols.push({
-                size: 3, content:
+            let colItems: IColItem[] = []
+            colItems.push({
+                Size: 3, Content:
                     <span> <Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</span>
             });
-            myCols.push({
-                size: 2, content: visibleButton
+            colItems.push({
+                Size: 2, Content: visibleButton
             });
-            myCols.push({
-                size: 6, content: <span style={previewStyle}>{dashboardElememt}</span>
+            colItems.push({
+                Size: 6, Content: <span style={previewStyle}>{dashboardElememt}</span>
             });
-            return <ConfigEntityRowItem key={i} items={myCols} />
+            return <ConfigEntityRowItem key={i} ColItems={colItems} />
         })
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Control", Width: 3}, 
-            {Caption: "Show/Hide", Width: 2}, 
-            {Caption: "Preview", Width: 7}, 
+        let colItems: IColItem[] = [
+            {Content: "Control", Size: 3}, 
+            {Content: "Show/Hide", Size: 2}, 
+            {Content: "Preview", Size: 7}, 
         ]
         return (
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} style={panelStyle}>
@@ -88,19 +88,13 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 </AdaptableBlotterForm>
                 {' '}
                 <div><br /></div>
-                <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
+                <PanelWithRow ColItems={colItems} bsStyle="info" />
                 <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}
                     onDragLeave={(event) => this.DragLeave(event)}>
                     {radioDashboardControls}
                 </ListGroup>
-                <AdaptableBlotterPopup showModal={this.state.CurrentDashboardPopup != ""}
-                    ComponentClassName={this.state.CurrentDashboardPopup}
-                    onHide={() => this.onCloseConfigPopup()}
-                    IsReadOnly={false}
-                    AdaptableBlotter={null}
-                    onClearPopupParams={() => null}
-                    PopupParams={null} />
+               
             </PanelWithImage>
         );
     }
@@ -119,14 +113,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         }
     }
 
-
-    onCloseConfigPopup() {
-        this.setState({ CurrentDashboardPopup: "" })
-    }
-    onShowConfiguration(controlName: string) {
-        this.setState({ CurrentDashboardPopup: controlName })
-    }
-    onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
+      onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
         this.props.onChangeControlVisibility(dashboardControl.Strategy, visible);
     }
 

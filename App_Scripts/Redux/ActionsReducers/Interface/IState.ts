@@ -15,7 +15,7 @@ import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IColumnFilter } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { IUserFilter } from '../../../Core/Interface/IExpression';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Strategy/Interface/IDashboardStrategy';

@@ -19,6 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSummaryComponent> {
+    DefaultNudgeValue: number,
     PlusMinusConditions: IPlusMinusCondition[]
     onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
@@ -84,7 +85,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
 
     onNew() {
-        let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition(120)
+        let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
         this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
@@ -112,6 +113,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
+        DefaultNudgeValue: state.PlusMinus.DefaultNudge,
         PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
         UserFilters: state.UserFilter.UserFilters,
     };

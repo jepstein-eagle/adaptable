@@ -14,7 +14,16 @@ export interface ExportApplyAction extends Redux.Action {
     Page?: string
 }
 
-export const ApplyExport = (Range: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportApplyAction => ({
+export interface IPPLoginAction extends Redux.Action {
+    Login: string;
+    Password: string;
+}
+
+export interface SetDomainPagesAction extends Redux.Action {
+    IPPDomainsPages: IPPDomain[];
+}
+
+export const ExportApply = (Range: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportApplyAction => ({
     type: EXPORT_APPLY,
     Range,
     ExportDestination,
@@ -22,27 +31,16 @@ export const ApplyExport = (Range: string, ExportDestination: ExportDestination,
     Page
 })
 
-export interface SetDomainPagesAction extends Redux.Action {
-    IPPDomainsPages: IPPDomain[];
-}
-
-export const SetDomainPages = (IPPDomainsPages: IPPDomain[]): SetDomainPagesAction => ({
-    type: SET_DOMAIN_PAGES,
-    IPPDomainsPages
-})
-
-
-export interface IPPLoginAction extends Redux.Action {
-    Login: string;
-    Password: string;
-}
-
 export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
     type: IPP_LOGIN,
     Login,
     Password
 })
 
+export const SetDomainPages = (IPPDomainsPages: IPPDomain[]): SetDomainPagesAction => ({
+    type: SET_DOMAIN_PAGES,
+    IPPDomainsPages
+})
 
 const initialExportState: ExportState = {
     IPPDomainsPages: []

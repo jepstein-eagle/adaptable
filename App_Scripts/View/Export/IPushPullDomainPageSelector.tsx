@@ -89,7 +89,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ApplyExport(value, ExportDestination.iPushPull, folder, page)),
+        onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
         onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(RangeRedux.RangeSetErrorMsg("")) }
     };
 }

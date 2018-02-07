@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  Well, HelpBlock } from 'react-bootstrap';
+import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
@@ -16,12 +16,13 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationMode } from '../../Core/Enums'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EntityItemList } from '../Components/EntityItemList';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
@@ -54,19 +55,19 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Column", Width: 2}, 
-            {Caption: "Disallowed Edit", Width: 2}, 
-            {Caption: "Expression", Width: 3}, 
-            {Caption: "If Rule Broken", Width: 2}, 
-            {Caption: "", Width: 3}, 
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 2 },
+            { Content: "Disallowed Edit", Size: 2 },
+            { Content: "Expression", Size: 3 },
+            { Content: "If Rule Broken", Size: 2 },
+            { Content: "", Size: 3 },
         ]
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <CellValidationEntityRow
                 key={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 ConfigEntity={x}
                 Column={column}
                 Columns={this.props.Columns}
@@ -77,9 +78,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={CellValidationRedux.CellValidationDelete(index)}
                 onChangeCellValidationMode={(index, x) => this.onCellValidationModeChanged(index, x)}
-           />
-           
-           
+            />
+
+
         })
         let newButton = <ButtonNew onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
@@ -91,7 +92,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={CellValidationItems} />
+                <EntityItemList ColItems={colItems} items={CellValidationItems} />
             }
 
             {CellValidationItems.length == 0 &&

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup } from 'react-bootstrap';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
 
 export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {

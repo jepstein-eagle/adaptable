@@ -1,14 +1,15 @@
 import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { DropdownButton,  MenuItem } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../Core/Enums';
 import { RangeHelper } from '../../Core/Helpers/RangeHelper';
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { ILiveRange } from '../../Strategy/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface RangeEntityRowProps extends SharedEntityExpressionRowProps<RangeEntityRow> {
     IsLast: boolean
@@ -31,39 +32,33 @@ export class RangeEntityRow extends React.Component<RangeEntityRowProps, {}> {
             <MenuItem onClick={() => this.props.onRangeStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Sync with iPushPull"}</MenuItem>
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
-       // let hasLive = this.props.LiveRanges.find(x => x.Range == range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
+        // let hasLive = this.props.LiveRanges.find(x => x.Range == range.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
-        let myCols: IColItem[] = []
-        myCols.push({
-            size: this.props.EntityRowInfo[0].Width, content: range.Name
-        });
-        myCols.push({ size: this.props.EntityRowInfo[1].Width, content: RangeHelper.GetRangeColumnsDescription(range, this.props.Columns) });
-        myCols.push({ size:this.props.EntityRowInfo[2].Width, content: RangeHelper.GetRangeExpressionDescription(range, this.props.Columns, this.props.UserFilters) });
-        myCols.push({
-            size: this.props.EntityRowInfo[3].Width, content:
+        let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-                <DropdownButton dropup={this.props.isDropUp}
-                    bsSize={"small"}
-                    bsStyle={"default"}
-                    title={"Export"}
-                    key={range.Name}
-                    id={range.Name}                >
-                    {csvMenuItem}
-                    {clipboardMenuItem}
-                    {OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem}
-                    {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
+        colItems[0].Content = range.Name
+        colItems[1].Content = RangeHelper.GetRangeColumnsDescription(range, this.props.Columns)
+        colItems[2].Content = RangeHelper.GetRangeExpressionDescription(range, this.props.Columns, this.props.UserFilters)
+        colItems[3].Content = <DropdownButton dropup={this.props.isDropUp}
+            bsSize={"small"}
+            bsStyle={"default"}
+            title={"Export"}
+            key={range.Name}
+            id={range.Name}                >
+            {csvMenuItem}
+            {clipboardMenuItem}
+            {OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem}
+            {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
+        </DropdownButton>
 
-                </DropdownButton>
-
-        });
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, range)}
             shareClick={() => this.props.onShare()}
             ConfigEntity={range}
             EntityName="Range" />
-        myCols.push({ size: this.props.EntityRowInfo[4].Width, content: buttons });
+        colItems[4].Content = buttons
 
-        return <ConfigEntityRowItem items={myCols} />
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 }

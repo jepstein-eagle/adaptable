@@ -1,6 +1,6 @@
 export const AdvancedSearchPopup :string = "AdvancedSearchPopup"
 export const QuickSearchPopup :string = "QuickSearchPopup"
-export const FunctionButtonsPopupPopup :string = "FunctionButtonsPopup"
+export const HomeButtonsPopup :string = "HomeButtonsPopup"
 export const LayoutPopup :string = "LayoutPopup"
 export const UserFilterPopupPopup :string = "UserFilterPopup"
 export const FormatColumnPopup :string = "FormatColumnPopup"

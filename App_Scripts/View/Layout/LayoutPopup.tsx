@@ -44,10 +44,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
 
     render() {
         let infoBody: any[] = ["Use layouts to create and manage multiple named, sets of ordered columns", <br />, <br />, "To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)", <br />, <br />, "To create a new layout, enter a name in the 'Save As New Layout' textbox."]
-
+        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
+        
         let optionLayouts = this.props.Layouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
-                let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
                 if (Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
                     return <option value={x.Name} key={index}>{x.Name}</option>
                 }
@@ -60,7 +60,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
             }
         })
 
-        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return (

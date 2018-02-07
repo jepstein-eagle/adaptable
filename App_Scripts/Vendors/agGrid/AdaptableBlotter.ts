@@ -217,7 +217,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
 
         let allColumns = visibleColumns.concat(hiddenColumns)
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(allColumns));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
         let blotter = this
         for (let col of allColumns) {
             this.setCellClassRules({
@@ -777,7 +777,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             ConfirmationMsg: warningMessage,
                             ConfirmationText: "Bypass Rule",
                             CancelAction: null,
-                            ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node)),
+                            ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node)),
                             ShowCommentBox: true
                         };
                         this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));

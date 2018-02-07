@@ -2,34 +2,34 @@ import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
 import { IColumn, ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 
-export const SET_GRIDCOLUMNS = 'SET_GRIDCOLUMNS';
-export const HIDE_COLUMN = 'HIDE_COLUMN';
-export const SET_GRIDVALUE_LIKE_EDIT = 'SET_GRIDVALUE_LIKE_EDIT';
+export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
+export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
+export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 
-export interface SetColumnsAction extends Redux.Action {
+export interface GridSetColumnsAction extends Redux.Action {
     Columns: IColumn[];
 }
-export interface HideColumnAction extends Redux.Action {
+export interface GridHideColumnAction extends Redux.Action {
     ColumnId: string;
 }
 
-export interface SetValueAction extends Redux.Action {
+export interface GridSetValueLikeEditAction extends Redux.Action {
     CellInfo: ICellInfo,
     OldValue: any,
  
 }
-export const SetColumns = (Columns: IColumn[]): SetColumnsAction => ({
-    type: SET_GRIDCOLUMNS,
+export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
+    type: GRID_SET_COLUMNS,
     Columns
 })
 
-export const HideColumn = (ColumnId: string): HideColumnAction => ({
-    type: HIDE_COLUMN,
+export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
+    type: GRID_HIDE_COLUMN,
     ColumnId
 })
 
-export const SetValueLikeEdit = (CellInfo: ICellInfo, OldValue: any): SetValueAction => ({
-    type: SET_GRIDVALUE_LIKE_EDIT,
+export const GridSetValueLikeEdit = (CellInfo: ICellInfo, OldValue: any): GridSetValueLikeEditAction => ({
+    type: GRID_SET_VALUE_LIKE_EDIT,
    CellInfo,
     OldValue,
    
@@ -42,8 +42,8 @@ const initialGridState: GridState = {
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
     switch (action.type) {
-        case SET_GRIDCOLUMNS:
-            return { Columns: [].concat((<SetColumnsAction>action).Columns) }
+        case GRID_SET_COLUMNS:
+            return { Columns: [].concat((<GridSetColumnsAction>action).Columns) }
         default:
             return state
     }

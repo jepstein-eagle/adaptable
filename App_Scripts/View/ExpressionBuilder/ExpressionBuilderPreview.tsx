@@ -9,14 +9,15 @@ import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
 // https://github.com/react-bootstrap/react-bootstrap/issues/1445
 // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
+// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
 
 export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression
@@ -48,7 +49,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // since html cannot render a button within a button.
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-                    // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like shit
+                    // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
                     return <ListGroupItem key={y} >
                         <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                             <AdaptableBlotterForm inline>
@@ -144,7 +145,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 })
             }
             let column = this.props.ColumnsList.find(x => x.ColumnId == columnId)
-            let columnFriendlyName = column ? column.FriendlyName : columnId + Helper.MissingColumnMagicString
+            let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
             
             return <div key={columnId + "div"} className={this.props.ReadOnlyMode?"adaptable_blotter_readonly":""}>
                 <Button block style={panelHeaderStyle}

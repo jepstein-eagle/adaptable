@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -20,6 +20,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface FormatColumnPopupProps extends IStrategyViewPopupProps<FormatColumnPopupComponent> {
@@ -57,15 +58,15 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 
         let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b>, " formatted as set and is not dependent on a rule being met."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Column", Width: 3 },
-            { Caption: "Style", Width: 5 },
-            { Caption: "", Width: 4 },
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 3 },
+            { Content: "Style", Size: 5 },
+            { Content: "", Size: 4 },
         ]
         let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
             return <FormatColumnEntityRow
                 key={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 ConfigEntity={formatColumn}
                 Columns={this.props.Columns}
                 UserFilters={null}
@@ -90,7 +91,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             }
 
             {FormatColumns.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={FormatColumns} />
+                <EntityItemList ColItems={colItems} items={FormatColumns} />
             }
 
             {this.state.EditedConfigEntity != null &&

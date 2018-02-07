@@ -207,7 +207,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: isVisible ? index : -1
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(columns));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(columns));
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
@@ -790,7 +790,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.SetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId]),
+                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (e.model as any)[dataChangedEvent.ColumnId]),
                         ShowCommentBox: true
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));

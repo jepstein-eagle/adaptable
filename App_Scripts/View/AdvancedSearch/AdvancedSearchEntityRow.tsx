@@ -2,10 +2,11 @@ import * as React from "react";
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;
@@ -13,14 +14,14 @@ export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends S
 }
 
 export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>, {}> {
-   
+
     render(): any {
         let advancedSearch: IAdvancedSearch = this.props.ConfigEntity as IAdvancedSearch;
 
-        let myCols: IColItem[] = []
-        myCols.push({ size: this.props.EntityRowInfo[0].Width, content: <Radio style={{padding: "0px", margin: "0px"}} onChange={() => this.props.onSelect(advancedSearch)} checked={this.props.IsCurrentAdvancedSearch} /> });
-        myCols.push({ size: this.props.EntityRowInfo[1].Width, content: advancedSearch.Name });
-        myCols.push({ size: this.props.EntityRowInfo[2].Width, content: ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns, this.props.UserFilters) });
+        let colItems: IColItem[] = [].concat(this.props.ColItems);
+
+        colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(advancedSearch)} checked={this.props.IsCurrentAdvancedSearch} />
+        colItems[1].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns, this.props.UserFilters)
 
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -31,11 +32,9 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
             ConfigEntity={advancedSearch}
             EntityName={StrategyNames.AdvancedSearchStrategyName} />
 
-        myCols.push({ size: this.props.EntityRowInfo[3].Width, content: buttons });
+        colItems[1].Content = buttons;
 
-        return <ConfigEntityRowItem
-            items={myCols}
-        />
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 }
 

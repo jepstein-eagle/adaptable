@@ -48,7 +48,7 @@ import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
-import { IUserFilter } from '../../Core/Interface/IExpression'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
@@ -137,7 +137,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
-            [MenuRedux.SET_MENUITEMS, GridRedux.SET_GRIDCOLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
+            [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
             PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION, PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ERROR, PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_HIDE_WARNING, PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ERROR, PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_SHOW_WARNING]);
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
@@ -430,8 +430,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect("Default"))
                     return returnAction;
                 }
-                case GridRedux.SET_GRIDVALUE_LIKE_EDIT: {
-                    let actionTyped = <GridRedux.SetValueAction>action
+                case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
+                    let actionTyped = <GridRedux.GridSetValueLikeEditAction>action
                     //We set the value in the grid
                     adaptableBlotter.setValue(actionTyped.CellInfo)
                     //We AuditLog the Edit
@@ -439,8 +439,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
-                case GridRedux.HIDE_COLUMN: {
-                    let actionTyped = <GridRedux.HideColumnAction>action
+                case GridRedux.GRID_HIDE_COLUMN: {
+                    let actionTyped = <GridRedux.GridHideColumnAction>action
                     let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
                     let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId)
                     columnList.splice(columnIndex, 1)

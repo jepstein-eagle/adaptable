@@ -19,6 +19,8 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 interface LayoutToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
@@ -60,7 +62,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 <ButtonSave onClick={() => this.onSave()}
                 size={"small"} 
                 overrideTooltip="Save Changes to Current Layout"
-                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                    overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
@@ -72,7 +74,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 <ButtonDelete
                   size={"small"} 
                   overrideTooltip="Delete Layout"
-                    overrideDisableButton={this.props.CurrentLayout == "Default"}
+                    overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph"
                     ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
@@ -81,7 +83,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon="th" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

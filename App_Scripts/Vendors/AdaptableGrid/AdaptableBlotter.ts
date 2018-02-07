@@ -158,7 +158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: -1
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.SetColumnsAction>(GridRedux.SetColumns(activeColumns.concat(hiddenColumns)));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     public hideFilterForm() {

@@ -20,7 +20,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
             MenuRedux.AddItemColumnContextMenu(new MenuReduxActionItem(
                 "Hide Column",
                 this.Id,
-                GridRedux.HideColumn(columnId),
+                GridRedux.GridHideColumn(columnId),
                 StrategyGlyphs.ColumnChooserGlyph)))
     }
 

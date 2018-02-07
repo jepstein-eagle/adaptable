@@ -1,6 +1,6 @@
 import { IConfigEntity } from "../../../Core/Interface/IAdaptableBlotter";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../../Core/Interface/IExpression'
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 

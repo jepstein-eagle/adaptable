@@ -11,7 +11,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 
-interface FunctionButtonsPopupComponentProps extends IStrategyViewPopupProps<FunctionButtonsPopupComponent> {
+interface HomeButtonsPopupComponentProps extends IStrategyViewPopupProps<HomeButtonsPopupComponent> {
     DashboardShortcutsDashboardControl: IDashboardStrategyControlConfiguration
     IsReadOnly: boolean,
     MenuState: MenuState,
@@ -19,7 +19,7 @@ interface FunctionButtonsPopupComponentProps extends IStrategyViewPopupProps<Fun
     onDashboardControlConfigChange: (strategyId: string, newConfig: any) => DashboardRedux.DashboardSetConfigurationItemAction
 }
 
-class FunctionButtonsPopupComponent extends React.Component<FunctionButtonsPopupComponentProps, {}> {
+class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponentProps, {}> {
     render() {
         let config: string[] = [];
         if(this.props.DashboardShortcutsDashboardControl.ControlConfiguration!=null){
@@ -35,7 +35,7 @@ class FunctionButtonsPopupComponent extends React.Component<FunctionButtonsPopup
     }
 
     ListChange(SelectedValues: string[]){
-        this.props.onDashboardControlConfigChange(StrategyIds.FunctionsStrategyId, SelectedValues)
+        this.props.onDashboardControlConfigChange(StrategyIds.HomeStrategyId, SelectedValues)
     }
 
     onClick(item: React.FormEvent<any>, controlName: string) {
@@ -52,13 +52,13 @@ class FunctionButtonsPopupComponent extends React.Component<FunctionButtonsPopup
             let index = arrayConfig.indexOf(controlName)
             arrayConfig.splice(index, 1)
         }
-        this.props.onDashboardControlConfigChange(StrategyIds.FunctionsStrategyId, arrayConfig)
+        this.props.onDashboardControlConfigChange(StrategyIds.HomeStrategyId, arrayConfig)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FunctionsStrategyId),
+        DashboardShortcutsDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.HomeStrategyId),
         MenuState: state.Menu,
         EntitlementsState: state.Entitlements
     };
@@ -70,5 +70,5 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let FunctionButtonsPopup = connect(mapStateToProps, mapDispatchToProps)(FunctionButtonsPopupComponent);
+export let HomeButtonsPopup = connect(mapStateToProps, mapDispatchToProps)(HomeButtonsPopupComponent);
 

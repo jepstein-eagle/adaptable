@@ -16,14 +16,14 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 
-interface FunctionControlComponentProps extends IToolbarStrategyViewPopupProps<FunctionToolbarControlComponent> {
+interface HomeToolbarComponentProps extends IToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
     EntitlementsState: EntitlementsState,
     Columns: IColumn[]
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
-class FunctionToolbarControlComponent extends React.Component<FunctionControlComponentProps, {}> {
+class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
 
     render() {
 
@@ -62,7 +62,7 @@ class FunctionToolbarControlComponent extends React.Component<FunctionControlCom
                 }
             })
         }
-        return <PanelDashboard headerText={StrategyIds.FunctionsStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
            <Dropdown id="dropdown-cols"  >
                 <Dropdown.Toggle noCaret>
                     <Glyphicon glyph={"list"} />
@@ -104,7 +104,7 @@ class FunctionToolbarControlComponent extends React.Component<FunctionControlCom
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.FunctionsStrategyId),
+        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.HomeStrategyId),
         MenuState: state.Menu,
         EntitlementsState: state.Entitlements,
         Columns: state.Grid.Columns
@@ -115,12 +115,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.FunctionButtonsPopupPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList))
     };
 }
 
-export let FunctionToolbarControl = connect(mapStateToProps, mapDispatchToProps)(FunctionToolbarControlComponent);
+export let HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);
 
 let divStyle: React.CSSProperties = {
     'marginLeft': '5px',

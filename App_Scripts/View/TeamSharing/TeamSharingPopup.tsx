@@ -6,7 +6,7 @@ import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, To
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -18,7 +18,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
@@ -26,6 +26,9 @@ import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { StrategyHeader } from '../Components/StrategyHeader';
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+
 
 interface TeamSharingPopupProps extends IStrategyViewPopupProps<TeamSharingPopupComponent> {
     Entities: Array<ISharedEntity>
@@ -43,11 +46,11 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
     render() {
         let infoBody: any[] = ["Team Sharing"]
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Type", Width: 2}, 
-            {Caption: "Audit", Width: 3}, 
-            {Caption: "Entity", Width: 6}, 
-            {Caption: "", Width: 3}, 
+        let colItems: IColItem[] = [
+            {Content: "Type", Size: 2}, 
+            {Content: "Audit", Size: 3}, 
+            {Content: "Entity", Size: 6}, 
+            {Content: "", Size: 3}, 
         ]
          let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
             return <li
@@ -76,7 +79,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
             {this.props.Entities.length == 0 ?
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
-                : <PanelWithRow entityRowInfo={entityRowInfo} bsStyle="info" />
+                : <PanelWithRow ColItems={colItems} bsStyle="info" />
             }
             <ListGroup style={divStyle}>
                 {sharedItems}
@@ -90,7 +93,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 let customSort = sharedEntity.entity as ICustomSort
                 let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
                 return <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={4}>{column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString}</Col>
+                    <Col xs={4}>{column ? column.FriendlyName : customSort.ColumnId + GeneralConstants.MISSING_COLUMN}</Col>
                     <Col xs={8} >
                         {customSort.CustomSortItems.join(', ')}
                     </Col>
@@ -112,7 +115,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 let column = this.props.Columns.find(c => c.ColumnId == cellVal.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
-                        {column ? column.FriendlyName : cellVal.ColumnId + Helper.MissingColumnMagicString}
+                        {column ? column.FriendlyName : cellVal.ColumnId + GeneralConstants.MISSING_COLUMN}
                     </Col>
                     <Col xs={4}>
                         {cellVal.Description}
@@ -135,7 +138,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
                         {cs.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                            column ? column.FriendlyName : cs.ColumnId + Helper.MissingColumnMagicString :
+                            column ? column.FriendlyName : cs.ColumnId + GeneralConstants.MISSING_COLUMN :
                             "Whole Row"
                         }
                     </Col>
@@ -154,7 +157,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 let column = this.props.Columns.find(c => c.ColumnId == plusMinus.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
-                        {column ? column.FriendlyName : plusMinus.ColumnId + Helper.MissingColumnMagicString}
+                        {column ? column.FriendlyName : plusMinus.ColumnId + GeneralConstants.MISSING_COLUMN}
                     </Col>
                     <Col xs={3}>
                         {plusMinus.DefaultNudge.toString()}

@@ -22,7 +22,7 @@ export interface TeamSharingImportItemAction extends Redux.Action {
     Strategy: string
 }
 
-export interface TeamSharingGet extends Redux.Action {
+export interface TeamSharingGetAction extends Redux.Action {
 }
 
 export const TeamSharingShare = (Entity: IConfigEntity, Strategy: string): TeamSharingShareAction => ({
@@ -42,7 +42,7 @@ export const TeamSharingImportItem = (Entity: IConfigEntity, Strategy: string): 
     Strategy
 })
 
-export const TeamSharingGet = (): TeamSharingGet => ({
+export const TeamSharingGet = (): TeamSharingGetAction => ({
     type: TEAMSHARING_GET
 })
 

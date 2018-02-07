@@ -2,7 +2,7 @@ import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAda
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { IUserFilter } from '../../../Core/Interface/IExpression'
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 
 export interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

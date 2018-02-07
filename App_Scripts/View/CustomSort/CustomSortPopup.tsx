@@ -2,7 +2,7 @@ import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  Well } from 'react-bootstrap';
+import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -11,7 +11,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { CustomSortEntityRow } from './CustomSortEntityRow'
@@ -21,6 +21,8 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface CustomSortPopupProps extends IStrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -33,7 +35,7 @@ interface CustomSortPopupProps extends IStrategyViewPopupProps<CustomSortPopupCo
 class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity:0 }
+        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
     }
 
     componentDidMount() {
@@ -56,16 +58,16 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             "Use the Wizard to specify and order the column values in the Sort.", <br />, <br />,
             "A Custom Sort can contain as many column values as required; any values not contained in the Custom Sort will be sorted alphabetically ", <strong>after</strong>, " the sort order has been applied."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Column", Width: 3 },
-            { Caption: "Sort Order", Width: 6 },
-            { Caption: "", Width: 3 },
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 3 },
+            { Content: "Sort Order", Size: 6 },
+            { Content: "", Size: 3 },
         ]
 
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort, index) => {
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             return <CustomSortEntityRow
-            EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 ConfigEntity={customSort}
                 key={customSort.ColumnId}
                 Index={index}
@@ -73,7 +75,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onShare={() => this.props.onShare(customSort)}
                 onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-                ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + Helper.MissingColumnMagicString} />
+                ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + GeneralConstants.MISSING_COLUMN} />
         });
 
         let newButton = <ButtonNew onClick={() => this.onNew()}
@@ -85,7 +87,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
             {customSorts.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={customSorts} />
+                <EntityItemList ColItems={colItems} items={customSorts} />
             }
 
             {customSorts.length == 0 &&
@@ -112,7 +114,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
     }
 
     onFinishWizard() {
-       let customSort:ICustomSort = this.state.EditedConfigEntity as ICustomSort;
+        let customSort: ICustomSort = this.state.EditedConfigEntity as ICustomSort;
         if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
             this.props.onEditCustomSort(customSort)
         }

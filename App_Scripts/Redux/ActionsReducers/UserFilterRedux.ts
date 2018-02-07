@@ -1,5 +1,5 @@
 import { UserFilterState } from './Interface/IState';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import * as Redux from 'redux'
 

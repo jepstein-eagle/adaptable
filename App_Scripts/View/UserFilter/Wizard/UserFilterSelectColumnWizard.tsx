@@ -2,7 +2,7 @@ import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Interface/IExpression';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from '../../ColumnSelector';

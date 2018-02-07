@@ -15,45 +15,28 @@ export interface RangeSelectAction extends Redux.Action {
     SelectedRange: string;
 }
 
+export interface RangeAddUpdateAction extends Redux.Action {
+    Index: number,
+    Range: IRange
+}
+
+export interface RangeDeleteAction extends Redux.Action {
+    Index: number
+}
+
 export interface RangeStartLiveAction extends Redux.Action {
     Range: string;
     ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
     WorkbookName: string
 }
 
-export const RangeStartLive = (Range: string, WorkbookName: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStartLiveAction => ({
-    type: RANGE_START_LIVE,
-    Range,
-    ExportDestination,
-    WorkbookName
-})
-
-export interface RangeSetErrorMsgAction extends Redux.Action {
-    ErrorMsg: string
-}
-
-export const RangeSetErrorMsg = (ErrorMsg: string): RangeSetErrorMsgAction => ({
-    type: RANGE_SET_ERROR_MSG,
-    ErrorMsg
-})
-
 export interface RangeStopLiveAction extends Redux.Action {
     Range: string;
     ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 }
 
-export const RangeStopLive = (Range: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStopLiveAction => ({
-    type: RANGE_STOP_LIVE,
-    Range,
-    ExportDestination
-})
-
-export interface RangeAddUpdateAction extends Redux.Action {
-    Index: number,
-    Range: IRange
-}
-export interface RangeDeleteAction extends Redux.Action {
-    Index: number
+export interface RangeSetErrorMsgAction extends Redux.Action {
+    ErrorMsg: string
 }
 
 export const RangeSelect = (SelectedRange: string): RangeSelectAction => ({
@@ -70,6 +53,24 @@ export const RangeAddUpdate = (Index: number, Range: IRange): RangeAddUpdateActi
 export const RangeDelete = (Index: number): RangeDeleteAction => ({
     type: RANGE_DELETE,
     Index
+})
+
+export const RangeStartLive = (Range: string, WorkbookName: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStartLiveAction => ({
+    type: RANGE_START_LIVE,
+    Range,
+    ExportDestination,
+    WorkbookName
+})
+
+export const RangeStopLive = (Range: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull): RangeStopLiveAction => ({
+    type: RANGE_STOP_LIVE,
+    Range,
+    ExportDestination
+})
+
+export const RangeSetErrorMsg = (ErrorMsg: string): RangeSetErrorMsgAction => ({
+    type: RANGE_SET_ERROR_MSG,
+    ErrorMsg
 })
 
 const initialRangeState: RangeState = {

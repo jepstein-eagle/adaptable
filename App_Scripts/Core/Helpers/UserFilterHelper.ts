@@ -1,5 +1,5 @@
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { IUserFilter } from '../Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { DataType } from '../Enums'
 import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'

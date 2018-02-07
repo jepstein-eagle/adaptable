@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
-import { IColumn , IEntityRowInfo} from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
@@ -16,6 +16,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface FlashingCellsPopupProps extends IStrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -39,12 +40,12 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
 
-        let entityRowInfo:IEntityRowInfo [] =[
-            {Caption: "Live", Width: 1}, 
-            {Caption: "Column", Width:4}, 
-            {Caption: "Flash Duration", Width: 3}, 
-            {Caption: "Up Colour", Width: 2}, 
-            {Caption: "Down Colour", Width: 2}, 
+        let colItems: IColItem[] = [
+            { Content: "Live", Size: 1 },
+            {Content: "Column", Size:4}, 
+            {Content: "Flash Duration", Size: 3}, 
+            {Content: "Up Colour", Size: 2}, 
+            {Content: "Down Colour", Size: 2}, 
         ]
 
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
@@ -65,7 +66,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
                 Index={index}
                 Columns={this.props.Columns}
                 UserFilters={null}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 FlashingCellDurations={flashingCellDurations}
                 PredefinedColorChoices={this.props.PredefinedColorChoices}
                 onSelect={(flashingColumn) => this.props.onSelectColumn(flashingColumn)}
@@ -91,7 +92,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         return <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
             {setAllOption}
-                <EntityItemList entityRowInfo={entityRowInfo} items={allFlashingColumns} />
+                <EntityItemList ColItems={colItems} items={allFlashingColumns} />
            
         </PanelWithImage>
     }

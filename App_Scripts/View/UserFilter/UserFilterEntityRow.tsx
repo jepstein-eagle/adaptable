@@ -1,11 +1,12 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
 
@@ -14,17 +15,11 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
 
        // let isDisabled = userFilter.IsPredefined
 
-        let myCols: IColItem[] = []
+       let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-        myCols.push({
-            size: this.props.EntityRowInfo[0].Width,
-            content: userFilter.FriendlyName
-        });
-        myCols.push({
-            size: this.props.EntityRowInfo[1].Width,
-            content: ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns, this.props.UserFilters)
-        });
-        let buttons: any = <EntityListActionButtons
+       colItems[0].Content= userFilter.FriendlyName
+       colItems[1].Content= ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns, this.props.UserFilters)
+       colItems[2].Content= <EntityListActionButtons
             editClick={() => this.props.onEdit(this.props.Index, userFilter)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
@@ -32,8 +27,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             overrideDisableEdit={false}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyNames.UserFilterStrategyName} />
-        myCols.push({ size: this.props.EntityRowInfo[2].Width, content: buttons });
-
-        return <ConfigEntityRowItem items={myCols} />
+      
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 }

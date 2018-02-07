@@ -4,8 +4,7 @@ import { ExpressionHelper } from '../Helpers/ExpressionHelper'
 import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import { RangeColumnScope, RangeRowScope } from '../Enums'
 import { IAdaptableBlotter, IColumn, ISelectedCells } from '../Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../Core/Interface/IExpression';
-
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 export module RangeHelper {
 
     export const ALL_DATA_RANGE = 'All Data'

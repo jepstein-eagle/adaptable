@@ -63,7 +63,7 @@ export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        { Strategy: StrategyIds.FunctionsStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
+        { Strategy: StrategyIds.HomeStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },

@@ -11,7 +11,7 @@ import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Helpers/UserFilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
 import { Expression } from '../Core/Expression'
-import { IUserFilter } from '../Core/Interface/IExpression'
+import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { IStrategyViewPopupProps } from '../Core/Interface/IStrategyView'

@@ -9,8 +9,9 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 export interface FlashingCellSummaryProps extends IStrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCellColumns: IFlashingColumn[]
@@ -25,11 +26,11 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
             <Button onClick={() => this.onFlashingSelectedChanged(flashingColumn)} bsStyle="info" bsSize="small">Flashing Off</Button>
             : <Button onClick={() => this.onFlashingSelectedChanged(flashingColumn)} bsStyle="success" bsSize="small">Flashing On</Button>
 
-        let myCols: IColItem[] = []
-        myCols.push({ size: 3, content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
-        myCols.push({ size: 5, content: showFlashingButton });
-        myCols.push({ size: 3, content: null });
-        return <ConfigEntityRowItem items={myCols} />
+        let colItems: IColItem[] = []
+        colItems.push({ Size: 3, Content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
+        colItems.push({ Size: 5, Content: showFlashingButton });
+        colItems.push({ Size: 3, Content: null });
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 
     onFlashingSelectedChanged(flashingColumn: IFlashingColumn) {

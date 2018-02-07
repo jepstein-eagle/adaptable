@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';
 import { Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
 import { CalendarsEntryRow } from './CalendarsEntryRow'
@@ -40,10 +40,10 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
         let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />,
             "These are used primarily when calculating Working Days."]
 
-        let allCalenderEntityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Current", Width: 3 },
-            { Caption: "Calendar", Width: 5 },
-            { Caption: "Details", Width: 4 },
+        let allCalenderColItems: IColItem[] = [
+            { Content: "Current", Size: 3 },
+            { Content: "Calendar", Size: 5 },
+            { Content: "Details", Size: 4 },
         ]
 
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
@@ -56,9 +56,9 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
             </CalendarsEntryRow>
         });
 
-        let calenderEntryEntityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Holiday Name", Width: 6 },
-            { Caption: "Date", Width: 6 },
+        let calenderEntryColItems: IColItem[] = [
+            { Content: "Holiday Name", Size: 6 },
+            { Content: "Date", Size: 6 },
         ]
 
         let displayedCalendarModalBody = this.state.DisplayedCalendar == null ? null :
@@ -74,7 +74,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
         return <PanelWithImage header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
 
-            <PanelWithRow entityRowInfo={allCalenderEntityRowInfo} bsStyle="info" />
+            <PanelWithRow ColItems={allCalenderColItems} bsStyle="info" />
             <ListGroup style={divStyle}>
                 {allCalendars}
             </ListGroup>
@@ -86,7 +86,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
                         <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                    <PanelWithRow entityRowInfo={calenderEntryEntityRowInfo} bsStyle="info" />
+                    <PanelWithRow ColItems={calenderEntryColItems} bsStyle="info" />
                       {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>

@@ -10,7 +10,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
@@ -20,6 +20,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
@@ -42,12 +43,12 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             "Numeric shortcuts update the existing cell value based on a 'calculation'.", <br />, <br />,
             "Date shortcuts replace the contents of the cell with a new date value."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Type", Width: 2 },
-            { Caption: "Key", Width: 1 },
-            { Caption: "Action", Width: 3 },
-            { Caption: "Value", Width: 3 },
-            { Caption: "", Width: 3 },
+            let colItems: IColItem[] = [
+            { Content: "Type", Size: 2 },
+            { Content: "Key", Size: 1 },
+            { Content: "Action", Size: 3 },
+            { Content: "Value", Size: 3 },
+            { Content: "", Size: 3 },
         ]
 
         const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
@@ -57,7 +58,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                 ConfigEntity={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 AvailableActions={shortcutActionList}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
@@ -82,7 +83,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             infoBody={infoBody}>
 
             {shortcuts.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={shortcuts} />
+                <EntityItemList ColItems={colItems} items={shortcuts} />
             }
 
             {shortcuts.length == 0 &&

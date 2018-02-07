@@ -1,16 +1,18 @@
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
-import {  FormControl } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem, IColItem } from '../Components/ConfigEntityRowItem';
+import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions';
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { CellValidationMode } from '../../Core/Enums'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
@@ -20,24 +22,22 @@ export interface CellValidationEntityRowProps extends SharedEntityExpressionRowP
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
     render(): any {
-     let cellValidation:ICellValidationRule = this.props.ConfigEntity as ICellValidationRule;
-     
+        let cellValidation: ICellValidationRule = this.props.ConfigEntity as ICellValidationRule;
+
         let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
-            return <option style={{fontSize:"5px"}} key={enumName} value={enumName}><div style={{fontSize:"small"}}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</div></option>
+            return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}><div style={{ fontSize: "small" }}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</div></option>
         })
 
-        let myCols: IColItem[] = []
-        myCols.push({ size: this.props.EntityRowInfo[0].Width, content: this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + Helper.MissingColumnMagicString });
-        myCols.push({ size: this.props.EntityRowInfo[1].Width, content: cellValidation.Description});
-        myCols.push({ size: this.props.EntityRowInfo[2].Width, content: this.setExpressionDescription(cellValidation)});
-        myCols.push({
-            size: this.props.EntityRowInfo[3].Width, content:
-                <FormControl  componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
+        let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-                    {CellValidationModeTypes}
-                </FormControl>
-        });
-        let buttons: any = <EntityListActionButtons
+        colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + GeneralConstants.MISSING_COLUMN
+        colItems[1].Content = cellValidation.Description
+        colItems[2].Content = this.setExpressionDescription(cellValidation)
+        colItems[3].Content =
+            <FormControl componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
+                {CellValidationModeTypes}
+            </FormControl>
+        colItems[4].Content = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
             editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
@@ -46,12 +46,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             ConfigEntity={cellValidation}
             EntityName={StrategyNames.CellValidationStrategyName} />
 
-        myCols.push({ size: this.props.EntityRowInfo[4].Width, content: buttons });
 
-
-        return <ConfigEntityRowItem
-            items={myCols}
-        />
+        return <ConfigEntityRowItem ColItems={colItems} />
     }
 
     setExpressionDescription(CellValidation: ICellValidationRule): string {

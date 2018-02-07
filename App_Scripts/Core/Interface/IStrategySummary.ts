@@ -1,6 +1,6 @@
 import {IColumn, IConfigEntity} from './IAdaptableBlotter';
 import { IStrategyViewPopupProps } from './IStrategyView';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 
 

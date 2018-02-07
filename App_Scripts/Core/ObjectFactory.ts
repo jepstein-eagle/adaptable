@@ -4,7 +4,7 @@ import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { RangeColumnScope, RangeRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
-import { IUserFilter } from './Interface/IExpression';
+import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IShortcut } from '../Strategy/Interface/IShortcutStrategy';

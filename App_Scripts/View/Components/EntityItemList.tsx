@@ -1,12 +1,12 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';
 
 
 export interface EntityItemListProps extends React.ClassAttributes<EntityItemList> {
-  entityRowInfo:   IEntityRowInfo[]
+    ColItems:   IColItem[]
     items: any[]
     styleName?: string
 }
@@ -16,7 +16,7 @@ export class EntityItemList extends React.Component<EntityItemListProps, {}> {
 
         let bsStyle: string = (this.props.styleName )? this.props.styleName: "info"
         return <div>
-            <PanelWithRow entityRowInfo={this.props.entityRowInfo} bsStyle={bsStyle} />
+            <PanelWithRow ColItems={this.props.ColItems} bsStyle={bsStyle} />
             <ListGroup style={listGroupStyle}>
                 {this.props.items}
             </ListGroup>

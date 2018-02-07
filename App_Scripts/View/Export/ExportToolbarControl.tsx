@@ -148,7 +148,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onApplyExport: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ApplyExport(range, exportDestination)),
+        onApplyExport: (range: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(range, exportDestination)),
         onSelectRange: (range: string) => dispatch(RangeRedux.RangeSelect(range)),
         onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
         onNewRange: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "New")),

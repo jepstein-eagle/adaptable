@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -22,6 +22,7 @@ import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { EntityItemList } from '../Components/EntityItemList';
+import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface ColumnInfoPopupProps extends IStrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -49,10 +50,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     render() {
         let infoBody: any[] = ["Displays information about a column in the grid - which entities it has attached."]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Function", Width: 3 },
-            { Caption: "Summary", Width: 7 },
-            { Caption: "", Width: 2 },
+        let colItems: IColItem[] = [
+            { Content: "Function", Size: 3 },
+            { Content: "Summary", Size: 7 },
+            { Content: "", Size: 2 },
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
 
@@ -88,7 +89,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
             {this.state.SelectedColumn &&
                 <div style={divMarginStyle}>
-                    <EntityItemList entityRowInfo={entityRowInfo} items={summaries} />
+                    <EntityItemList ColItems={colItems} items={summaries} />
                 </div>
             }
         </PanelWithImage>

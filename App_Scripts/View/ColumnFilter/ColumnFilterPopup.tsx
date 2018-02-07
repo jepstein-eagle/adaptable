@@ -9,8 +9,8 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-import { IColumn, IConfigEntity, IEntityRowInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../Core/Interface/IExpression';
+import { IColumn, IConfigEntity, IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
@@ -34,15 +34,15 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     render() {
         let infoBody: any[] = ["Column Filters are Column Queries that can be named and re-used.", <br />, <br />]
 
-        let entityRowInfo: IEntityRowInfo[] = [
-            { Caption: "Column", Width: 3 },
-            { Caption: "Filter", Width: 7 },
-            { Caption: "", Width: 2 },
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 3 },
+            { Content: "Filter", Size: 7 },
+            { Content: "", Size: 2 },
         ]
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
             return <ColumnFilterEntityRow
                 key={index}
-                EntityRowInfo={entityRowInfo}
+                ColItems={colItems}
                 ConfigEntity={null}
                 ColumnFilter={columnFilter}
                 Columns={this.props.Columns}
@@ -59,7 +59,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
             {columnFilterItems.length > 0 &&
-                <EntityItemList entityRowInfo={entityRowInfo} items={columnFilterItems} />
+                <EntityItemList ColItems={colItems} items={columnFilterItems} />
             }
 
             {columnFilterItems.length == 0 &&
