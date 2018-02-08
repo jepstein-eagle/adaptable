@@ -2,7 +2,7 @@ import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditiona
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
@@ -29,7 +29,7 @@ export interface ConditionalStyleSummaryProps extends IStrategySummaryProps<Cond
 
 }
 
-export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, EditableConfigEntityInternalState> {
+export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
@@ -100,14 +100,11 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
     }
 
     onCloseWizard() {
-        //   this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 
     onFinishWizard() {
         this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IConditionalStyleCondition);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -121,7 +118,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ConditionalStyleStrategyId))
     };
 }

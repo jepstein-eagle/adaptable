@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -30,7 +30,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
-interface TeamSharingPopupProps extends IStrategyViewPopupProps<TeamSharingPopupComponent> {
+interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
     Entities: Array<ISharedEntity>
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]

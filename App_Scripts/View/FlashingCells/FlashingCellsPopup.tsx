@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -18,7 +18,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
-interface FlashingCellsPopupProps extends IStrategyViewPopupProps<FlashingCellsPopupComponent> {
+interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingColumns: Array<IFlashingColumn>,
     Columns: IColumn[],
     PredefinedColorChoices: string[],

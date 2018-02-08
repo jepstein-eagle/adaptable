@@ -2,7 +2,7 @@ import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
@@ -26,7 +26,7 @@ export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSu
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, EditableConfigEntityInternalState> {
+export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
@@ -98,14 +98,12 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     }
 
     onCloseWizard() {
-        //   this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 
     onFinishWizard() {
          this.props.onAddUpdatePlusMinus(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition );
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+         this.state = UIHelper.EmptyConfigState() ;
+          }
 
         // wrappng this so that any becomes [Default Column Nudge Value]
         private wrapExpressionDescription(expressionDescription: string): string {

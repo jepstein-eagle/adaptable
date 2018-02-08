@@ -2,14 +2,14 @@
 import { connect } from 'react-redux';
 import * as Redux from "redux";
 import { Navbar, Nav } from 'react-bootstrap';
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 
 
 
-interface DashboardComponentProps extends IStrategyViewPopupProps<DashboardComponent> {
+interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState
     onClick: (action: Redux.Action) => Redux.Action

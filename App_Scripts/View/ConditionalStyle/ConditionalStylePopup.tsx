@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -21,12 +21,12 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 
-interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
+interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyleCondition>,
     Columns: IColumn[],
     UserFilters: IUserFilter[],
@@ -36,7 +36,7 @@ interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<Conditiona
 }
 
 
-class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleConfigProps, EditableConfigEntityInternalState> {
+class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleConfigProps, EditableConfigEntityState> {
 
     constructor() {
         super();

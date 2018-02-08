@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  Well, HelpBlock } from 'react-bootstrap';
+import { Well, HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -12,18 +12,18 @@ import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
-interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearchPopupComponent> {
+interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
     Columns: IColumn[];
     CurrentAdvancedSearchUid: string;
@@ -35,10 +35,10 @@ interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearc
 
 
 
-class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityInternalState> {
+class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     componentDidMount() {
@@ -137,24 +137,23 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onNew() {
-        let x: any = this.state;
-   //     this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 } as EditableConfigEntityInternalState)
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 })
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
-        //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedConfigEntity: Helper.cloneObject(advancedSearch) } as EditableConfigEntityInternalState)
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
+        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 0, EditedIndexConfigEntity: 0 })
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     onFinishWizard() {
         let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
-        this.state = UIHelper.EmptyConfigState() ;
-         this.props.onAddUpdateAdvancedSearch(clonedObject);
+        this.state = UIHelper.EmptyConfigState();
+        this.props.onAddUpdateAdvancedSearch(clonedObject);
         this.props.onSelectAdvancedSearch(clonedObject.Uid);
     }
 }

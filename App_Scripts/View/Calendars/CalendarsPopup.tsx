@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';
 import { Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
@@ -18,7 +18,7 @@ import { SortOrder } from '../../Core/Enums';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 
-interface CalendarsPopupProps extends IStrategyViewPopupProps<CalendarsPopupComponent> {
+interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
     CurrentCalendar: string
     AvailableCalendars: ICalendar[]
     onSelectCalendar: (selectedCalendar: ICalendar) => CalendarsRedux.CalendarSelectAction,

@@ -10,7 +10,7 @@ import { SummaryRowItem } from '../Components/SummaryRowItem';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { UIHelper } from '../UIHelper';
 
 export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {
@@ -21,21 +21,21 @@ export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<Calc
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
 }
 
-export class CalculatedColumnSummaryComponent extends React.Component<CalculatedColumnSummaryProps, EditableConfigEntityInternalState> {
-   
+export class CalculatedColumnSummaryComponent extends React.Component<CalculatedColumnSummaryProps, EditableConfigEntityState> {
+
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
-      }
-    
+        this.state = UIHelper.EmptyConfigState();
+    }
+
     render(): any {
         let summaryItems: any[] = []
 
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                summaryItems.push(<b>{StrategyNames.CalculatedColumnStrategyName}</b> );
-                summaryItems.push(item.GetValueFunc );
-                summaryItems.push(<ButtonEdit onClick={() => this.onEdit(index, item)} DisplayMode="Glyph" /> );
+                summaryItems.push(<b>{StrategyNames.CalculatedColumnStrategyName}</b>);
+                summaryItems.push(item.GetValueFunc);
+                summaryItems.push(<ButtonEdit onClick={() => this.onEdit(index, item)} DisplayMode="Glyph" />);
             }
         })
 
@@ -61,15 +61,16 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     onCloseWizard() {
-        this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
-         }
+         this.state = UIHelper.EmptyConfigState();
+    }
 
     onFinishWizard() {
-        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);  
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);
         this.props.onEdit(this.state.EditedIndexConfigEntity, calculatedColumn);
-        this.state = UIHelper.EmptyConfigState() ;   }
+        this.state = UIHelper.EmptyConfigState();
+    }
 }
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
@@ -84,4 +85,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let  CalculatedColumnSummary = connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnSummaryComponent);
+export let CalculatedColumnSummary = connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnSummaryComponent);

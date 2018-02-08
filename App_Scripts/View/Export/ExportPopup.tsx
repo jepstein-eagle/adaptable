@@ -7,7 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { ExportDestination} from '../../Core/Enums'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
@@ -22,11 +22,11 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { encode } from "punycode";
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
-interface ExportPopupProps extends IStrategyViewPopupProps<ExportPopupComponent> {
+interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Ranges: IRange[],
     LiveRanges: ILiveRange[];
     CurrentRange: string,
@@ -38,7 +38,7 @@ interface ExportPopupProps extends IStrategyViewPopupProps<ExportPopupComponent>
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityInternalState> {
+class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
 
     constructor() {
         super();

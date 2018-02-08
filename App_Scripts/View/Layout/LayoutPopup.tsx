@@ -8,7 +8,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { connect } from 'react-redux';
 import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock} from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
@@ -19,7 +19,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
 
-interface LayoutPopupProps extends IStrategyViewPopupProps<LayoutPopupComponent> {
+interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[],
     CurrentLayout: string,
     Columns: IColumn[]

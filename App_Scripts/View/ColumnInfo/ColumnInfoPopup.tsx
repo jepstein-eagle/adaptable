@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -26,7 +26,7 @@ import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 
 
-interface ColumnInfoPopupProps extends IStrategyViewPopupProps<ColumnInfoPopupComponent> {
+interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
     Columns: Array<IColumn>
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]

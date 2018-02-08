@@ -2,7 +2,7 @@ import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
@@ -25,7 +25,7 @@ export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSort
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction   
 }
 
-export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, EditableConfigEntityInternalState> {
+export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
@@ -91,9 +91,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
     }
 
     onCloseWizard() {
-           this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 
     onFinishWizard() {
 
@@ -104,8 +102,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         else {
             this.props.onAddCustomSort(customSort);
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;   }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -119,7 +116,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CustomSortStrategyId))
  
     };

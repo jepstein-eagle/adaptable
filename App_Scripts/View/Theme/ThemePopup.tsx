@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import {  FormControl, ControlLabel, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 
-interface ThemePopupProps extends IStrategyViewPopupProps<ThemePopupComponent> {
+interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
     AvailableThemes: Array<string>;
     CurrentTheme: string;
     SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;

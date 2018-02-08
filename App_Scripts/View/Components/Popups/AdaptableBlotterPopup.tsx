@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { AdaptableViewFactory } from './../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IStrategyViewPopupProps } from '../SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -21,7 +21,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     if (this.props.ComponentClassName) {
       var bodyElement: any = AdaptableViewFactory[this.props.ComponentClassName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
-      let commonProps: IStrategyViewPopupProps<this> = {
+      let commonProps: StrategyViewPopupProps<this> = {
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),

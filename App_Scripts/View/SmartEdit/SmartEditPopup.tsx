@@ -9,7 +9,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Strategy/Interface/ISmartEditStrategy'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -20,7 +20,7 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
-interface SmartEditPopupProps extends IStrategyViewPopupProps<SmartEditPopupComponent> {
+interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
     SmartEditOperation: SmartEditOperation;
     Preview: ISmartEditPreview;

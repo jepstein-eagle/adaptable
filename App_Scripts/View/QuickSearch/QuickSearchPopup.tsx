@@ -8,7 +8,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -18,7 +18,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/Adapta
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 
-interface QuickSearchPopupProps extends IStrategyViewPopupProps<QuickSearchPopupComponent> {
+interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
     QuickSearchDefaultBackColor: string;
     QuickSearchDefaultForeColor: string;
     QuickSearchText: string;

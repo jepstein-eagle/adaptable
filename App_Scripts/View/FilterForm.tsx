@@ -14,11 +14,11 @@ import { Expression } from '../Core/Expression'
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
-import { IStrategyViewPopupProps } from './Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
 
 
-interface FilterFormProps extends IStrategyViewPopupProps<FilterFormComponent> {
+interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
     ColumnFilterState: ColumnFilterState;
     UserFilterState: UserFilterState;

@@ -9,7 +9,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
@@ -18,13 +18,13 @@ import { ShortcutWizard } from './Wizard/ShortcutWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
 
-interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupComponent> {
+interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
     onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => ShortcutRedux.ShortcutChangeKeyAction
     onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => ShortcutRedux.ShortcutChangeOperationAction
@@ -34,7 +34,7 @@ interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupCompon
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityInternalState> {
+class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityState> {
     constructor() {
         super();
         this.state = UIHelper.EmptyConfigState() ;

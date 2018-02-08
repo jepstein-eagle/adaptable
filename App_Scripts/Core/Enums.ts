@@ -152,8 +152,3 @@ export enum FilterFormMode {
     Dynamic = "Dynamic"
 }
 
-export enum PopupMode{
-    Normal = "Normal",
-    Summary = "Summary"
-}
-

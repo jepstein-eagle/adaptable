@@ -2,7 +2,7 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
@@ -25,11 +25,11 @@ export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilter
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityInternalState> {
+export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;  
+        this.state = UIHelper.EmptyConfigState();
     }
 
     render(): any {
@@ -87,7 +87,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     onNew() {
         let configEntity: IUserFilter = ObjectFactory.CreateEmptyUserFilter()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-            this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
     onEdit(index: number, UserFilter: IUserFilter) {
@@ -96,12 +96,13 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateUserFilter(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IUserFilter, );
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        let userFilter = this.state.EditedConfigEntity as IUserFilter
+        this.props.onAddUpdateUserFilter(this.state.EditedIndexConfigEntity, userFilter );
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
 }
@@ -115,7 +116,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(UserFilter)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

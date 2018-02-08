@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import {  Button } from 'react-bootstrap';
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -18,7 +18,7 @@ export interface FlashingCellSummaryProps extends IStrategySummaryProps<Flashing
     onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellRedux.FlashingCellSelectAction,
 }
 
-export class FlashingCellSummaryComponent extends React.Component<FlashingCellSummaryProps, EditableConfigEntityInternalState> {
+export class FlashingCellSummaryComponent extends React.Component<FlashingCellSummaryProps, EditableConfigEntityState> {
     render(): any {
         let flashingColumn: IFlashingColumn = this.props.FlashingCellColumns.find(fc => fc.ColumnName == this.props.SummarisedColumn.ColumnId);
 

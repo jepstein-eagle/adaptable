@@ -8,7 +8,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
@@ -19,12 +19,12 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { UserFilterEntityRow } from './UserFilterEntityRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
-interface UserFilterPopupProps extends IStrategyViewPopupProps<UserFilterPopupComponent> {
+interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     UserFilters: IUserFilter[]
     Columns: IColumn[],
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
@@ -32,7 +32,7 @@ interface UserFilterPopupProps extends IStrategyViewPopupProps<UserFilterPopupCo
 }
 
 
-class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, EditableConfigEntityInternalState> {
+class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, EditableConfigEntityState> {
 
     constructor() {
         super();

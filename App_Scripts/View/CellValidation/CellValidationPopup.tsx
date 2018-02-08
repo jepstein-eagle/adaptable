@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -21,12 +21,12 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EntityItemList } from '../Components/EntityItemList';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
 
-interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidationPopupComponent> {
+interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
     Columns: Array<IColumn>,
     UserFilters: IUserFilter[]
@@ -36,7 +36,7 @@ interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidatio
 }
 
 
-class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityInternalState> {
+class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityState> {
     constructor() {
         super();
         this.state = UIHelper.EmptyConfigState();
@@ -124,12 +124,10 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
-        //we clone the condition as we do not want to mutate the redux state here....
         this.setState({ EditedConfigEntity: Helper.cloneObject(CellValidation), EditedIndexConfigEntity: index, WizardStartIndex: 1 });
     }
 
     onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
-        // need to do something!
         this.props.onChangeCellValidationMode(index, cellValidationMode);
     }
 

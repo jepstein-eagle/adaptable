@@ -2,7 +2,7 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
@@ -25,13 +25,13 @@ export interface CellValidationSummaryProps extends IStrategySummaryProps<CellVa
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, EditableConfigEntityInternalState> {
+export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;  
+        this.state = UIHelper.EmptyConfigState();
     }
-    
+
     render(): any {
         let strategySummaries: any = []
 
@@ -40,7 +40,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             key={StrategyNames.CellValidationStrategyName}
             IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.CellValidationStrategyId}
-             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.CellValidationStrategyName}
         />
@@ -93,13 +93,12 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     }
 
     onCloseWizard() {
-        //   this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
-       this.props.onAddUpdateCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule );
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.props.onAddUpdateCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
+        this.state = UIHelper.EmptyConfigState() ;
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -113,7 +112,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
     };
 }

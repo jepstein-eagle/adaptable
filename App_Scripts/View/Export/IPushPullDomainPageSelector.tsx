@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap';
 import { Button, Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -13,7 +13,7 @@ import { IPPDomain, ILiveRange } from "../../Strategy/Interface/IExportStrategy"
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExportDestination } from "../../Core/Enums";
 
-interface IPushPullDomainPageSelectorProps extends IStrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
+interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]
     onApplyExport: (value: string, folder: string, page: string) => ExportRedux.ExportApplyAction;
     onCancel: () => PopupRedux.PopupHideAction

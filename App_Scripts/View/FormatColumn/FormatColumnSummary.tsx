@@ -3,7 +3,7 @@ import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -28,10 +28,9 @@ export interface FormatColumnSummaryProps extends IStrategySummaryProps<FormatCo
     onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
-
 }
 
-export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, EditableConfigEntityInternalState> {
+export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
@@ -92,13 +91,10 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
     }
 
     onEdit(FormatColumn: IFormatColumn) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(FormatColumn), WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 
     onCloseWizard() {
-        this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        this.state = UIHelper.EmptyConfigState() ;  }
 
     onFinishWizard() {
         let formatColumn: IFormatColumn = this.state.EditedConfigEntity as IFormatColumn
@@ -123,8 +119,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
         onEditFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-        onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
     };
 }
 
