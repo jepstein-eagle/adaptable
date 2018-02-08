@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -23,11 +23,13 @@ import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 
 
 interface ColumnInfoPopupProps extends IStrategyViewPopupProps<ColumnInfoPopupComponent> {
     Columns: Array<IColumn>
     CalculatedColumns: Array<ICalculatedColumn>
+    FunctionEntitlements: IEntitlement[]
 }
 
 export interface ColumnInfoState {
@@ -59,6 +61,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
         let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
 
+
+    
+        // Need to do this through a factory and take into account Entitlements!
         let summaries: any[] = [];
         summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
@@ -66,7 +71,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         summaries.push(<UserFilterSummary key={StrategyIds.UserFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
 
         if (this.state.SelectedColumn) {
             if (this.state.SelectedColumn.DataType == DataType.Number) {
@@ -99,13 +104,19 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
     }
 
+    private isStrategyReadOnly(strategyID: string): boolean {
+        let entittlment: IEntitlement = this.props.FunctionEntitlements.find(x => x.FunctionName == strategyID)
+      return true;//  return (entittlment) ? entittlment.AccessLevel == "ReadOnly" : false
+    }
+
 }
 
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        CalculatedColumns: state.CalculatedColumn.CalculatedColumns
+        CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
+        FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }
 

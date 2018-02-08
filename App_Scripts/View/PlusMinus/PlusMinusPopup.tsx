@@ -8,7 +8,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
@@ -23,7 +23,7 @@ import { EditableConfigEntityInternalState } from '../Components/SharedProps/Edi
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
-
+import { UIHelper } from '../UIHelper';
 
 interface PlusMinusPopupProps extends IStrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -39,7 +39,7 @@ interface PlusMinusPopupProps extends IStrategyViewPopupProps<PlusMinusPopupComp
 class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -136,11 +136,13 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
+    
     onFinishWizard() {
-        this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition);
-        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        let plusMinus = this.state.EditedConfigEntity as IPlusMinusCondition
+         this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexConfigEntity, plusMinus);
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';

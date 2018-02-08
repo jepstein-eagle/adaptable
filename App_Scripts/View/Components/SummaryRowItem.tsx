@@ -5,7 +5,7 @@ import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
 export interface SummaryRowItemProps extends React.ClassAttributes<SummaryRowItem> {
-    SummaryItems: any[] // will always be 3 items and we know here it will be 3, 7, 2
+    SummaryItems: any[] // will always be 3 items and we specify here it will be 3, 7, 2
 }
 
 export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {

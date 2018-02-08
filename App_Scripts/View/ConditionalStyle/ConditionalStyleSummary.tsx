@@ -1,7 +1,7 @@
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -16,33 +16,35 @@ import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { UIHelper } from '../UIHelper';
 
 
 export interface ConditionalStyleSummaryProps extends IStrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyleCondition[]
     PredefinedColorChoices: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyleCondition) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
-    
+
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState();
 
     }
     render(): any {
         let strategySummaries: any = []
 
         // title row
-        let titleRow = <StrategySummaryRow
+        let titleRow = <StrategyHeader
             key={StrategyNames.ConditionalStyleStrategyName}
+            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.ConditionalStyleStrategyId}
-             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.ConditionalStyleStrategyName}
         />
@@ -52,8 +54,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         this.props.ConditionalStyles.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column) {
                 let detailRow =
-                    <StrategyDetailRow
+                    <StrategyDetail
                         key={"CS" + index}
+                        IsReadOnly={this.props.IsReadOnly}
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}

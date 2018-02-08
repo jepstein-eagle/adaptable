@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { FormControl, ControlLabel,  Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';

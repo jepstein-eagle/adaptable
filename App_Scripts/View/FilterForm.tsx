@@ -14,7 +14,7 @@ import { Expression } from '../Core/Expression'
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
-import { IStrategyViewPopupProps } from '../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from './Components/SharedProps/IStrategyView'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
 
 

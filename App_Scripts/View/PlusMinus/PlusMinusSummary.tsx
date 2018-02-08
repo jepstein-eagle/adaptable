@@ -1,7 +1,7 @@
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -13,10 +13,11 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSummaryComponent> {
     DefaultNudgeValue: number,
@@ -29,15 +30,16 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
-
+        this.state = UIHelper.EmptyConfigState() ;  
+  
     }
     render(): any {
         let strategySummaries: any = []
 
         // title row
-        let titleRow = <StrategySummaryRow
+        let titleRow = <StrategyHeader
             key={StrategyNames.PlusMinusStrategyName}
+            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.PlusMinusStrategyId}
              StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
@@ -50,8 +52,9 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         this.props.PlusMinusConditions.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
-                    <StrategyDetailRow
+                    <StrategyDetail
                         key={"PM" + index}
+                        IsReadOnly={this.props.IsReadOnly}
                         Item1={"Nudge Value: " + item.DefaultNudge}
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}

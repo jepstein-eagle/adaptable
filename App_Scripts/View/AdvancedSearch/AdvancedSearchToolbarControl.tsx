@@ -7,7 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';

@@ -84,6 +84,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                 let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotContains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.NotContains)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.StartsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Regex)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Regex)}</MenuItem>

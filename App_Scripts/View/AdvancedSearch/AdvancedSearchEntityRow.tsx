@@ -21,7 +21,8 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(advancedSearch)} checked={this.props.IsCurrentAdvancedSearch} />
-        colItems[1].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns, this.props.UserFilters)
+        colItems[1].Content = advancedSearch.Name;
+        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns, this.props.UserFilters)
 
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -32,7 +33,7 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
             ConfigEntity={advancedSearch}
             EntityName={StrategyNames.AdvancedSearchStrategyName} />
 
-        colItems[1].Content = buttons;
+        colItems[3].Content = buttons;
 
         return <ConfigEntityRowItem ColItems={colItems} />
     }

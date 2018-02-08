@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { AdaptableViewFactory } from './../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IStrategyViewPopupProps } from '../../../Core/Interface/IStrategyView';
+import { IStrategyViewPopupProps } from '../SharedProps/IStrategyView'
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;

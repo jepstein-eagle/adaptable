@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -23,6 +23,8 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
+import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 
 interface ConditionalStyleConfigProps extends IStrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyleCondition>,
@@ -38,7 +40,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -119,12 +121,13 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IConditionalStyleCondition);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        let conditionalStyle: IConditionalStyleCondition = this.state.EditedConfigEntity as IConditionalStyleCondition;
+        this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, conditionalStyle);
+        this.state = UIHelper.EmptyConfigState() ;
     }
 }
 

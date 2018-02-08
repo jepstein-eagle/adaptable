@@ -8,7 +8,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'

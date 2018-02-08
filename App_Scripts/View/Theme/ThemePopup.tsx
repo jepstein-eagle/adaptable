@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {  FormControl, ControlLabel, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'

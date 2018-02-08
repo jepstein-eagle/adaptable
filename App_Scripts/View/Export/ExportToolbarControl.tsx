@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import {  DropdownButton,  MenuItem } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { IRange } from '../../Strategy/Interface/IExportStrategy'
@@ -105,6 +105,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 <ButtonEdit onClick={() => this.props.onEditRange()}
                size={"small"} 
                overrideTooltip="Edit Range"
+               overrideDisableButton={savedRange==null || savedRange.IsPredefined}
                     ConfigEntity={savedRange}
                     DisplayMode="Glyph" />
                 {' '}
@@ -116,7 +117,8 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 <ButtonDelete
                  size={"small"} 
                  overrideTooltip="Delete Range"
-                    ConfigEntity={savedRange}
+                 overrideDisableButton={savedRange==null || savedRange.IsPredefined}
+                 ConfigEntity={savedRange}
                     DisplayMode="Glyph"
                     ConfirmAction={RangeRedux.RangeDelete(savedRangeIndex)}
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedRange ? "" : savedRange.Name + "'?"}

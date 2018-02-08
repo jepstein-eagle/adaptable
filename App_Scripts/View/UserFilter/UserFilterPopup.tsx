@@ -8,7 +8,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
@@ -22,7 +22,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
-
+import { UIHelper } from '../UIHelper';
 
 interface UserFilterPopupProps extends IStrategyViewPopupProps<UserFilterPopupComponent> {
     UserFilters: IUserFilter[]
@@ -36,7 +36,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -132,12 +132,13 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateUserFilter(this.state.EditedConfigEntity as IUserFilter);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        let userFilter = this.state.EditedConfigEntity as IUserFilter
+       this.props.onAddUpdateUserFilter(userFilter);
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
 }

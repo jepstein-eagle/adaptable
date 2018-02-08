@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -11,7 +11,7 @@ import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedCo
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-
+import { UIHelper } from '../UIHelper';
 
 export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -25,8 +25,8 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
    
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
-    }
+        this.state = UIHelper.EmptyConfigState() ;
+      }
     
     render(): any {
         let summaryItems: any[] = []
@@ -61,14 +61,14 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     onCloseWizard() {
-        //   this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        this.props.onClearPopupParams()
+        this.state = UIHelper.EmptyConfigState() ;
+         }
 
     onFinishWizard() {
-        this.props.onEdit(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICalculatedColumn);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
-    }
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);  
+        this.props.onEdit(this.state.EditedIndexConfigEntity, calculatedColumn);
+        this.state = UIHelper.EmptyConfigState() ;   }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

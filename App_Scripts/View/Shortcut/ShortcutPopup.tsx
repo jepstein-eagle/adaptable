@@ -9,7 +9,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { ShortcutAction } from '../../Core/Enums'
@@ -21,6 +21,8 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { EntityItemList } from '../Components/EntityItemList';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
+
 
 interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
@@ -35,7 +37,7 @@ interface ShortcutPopupProps extends IStrategyViewPopupProps<ShortcutPopupCompon
 class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     render() {
@@ -108,12 +110,14 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        this.props.onClearPopupParams()
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
-        this.props.onAddShortcut(this.state.EditedConfigEntity as IShortcut)
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        let shortcut = this.state.EditedConfigEntity as IShortcut
+       this.props.onAddShortcut(shortcut)
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     CreateShortcut() {

@@ -9,7 +9,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Strategy/Interface/ISmartEditStrategy'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';

@@ -121,7 +121,6 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-
     private getColumnDataTypeFromState(): DataType {
         return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
     }
@@ -139,7 +138,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case DataType.Boolean:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
             case DataType.String:
-                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals];
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex];
             case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case DataType.Number:
@@ -185,7 +184,16 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                 return "Is True "
             case LeafExpressionOperator.IsFalse:
                 return "Is False "
-        }
+            case LeafExpressionOperator.Contains:
+                return "Contains "
+            case LeafExpressionOperator.NotContains:
+                return "Not Contains "
+            case LeafExpressionOperator.StartsWith:
+                return "Starts With "
+            case LeafExpressionOperator.Regex:
+                return "Matches Expression "
+
+          }
     }
 
     createCellValidationDescription(CellValidation: ICellValidationRule): string {

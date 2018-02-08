@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import * as Redux from "redux";
 import { Navbar, Nav } from 'react-bootstrap';
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'

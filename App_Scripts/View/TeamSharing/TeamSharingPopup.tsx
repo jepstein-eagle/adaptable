@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -25,7 +25,7 @@ import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
-import { StrategyHeader } from '../Components/StrategyHeader';
+import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
@@ -57,7 +57,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
-                      <StrategyHeader StrategyId={x.strategy} />
+                      <StrategyProfile StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
                         {x.user}{' @ '}{x.timestamp.toLocaleString()}

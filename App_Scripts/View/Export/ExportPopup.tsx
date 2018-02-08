@@ -7,7 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { ExportDestination} from '../../Core/Enums'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
@@ -24,6 +24,7 @@ import { EntityItemList } from '../Components/EntityItemList';
 import { encode } from "punycode";
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 interface ExportPopupProps extends IStrategyViewPopupProps<ExportPopupComponent> {
     Ranges: IRange[],
@@ -37,12 +38,11 @@ interface ExportPopupProps extends IStrategyViewPopupProps<ExportPopupComponent>
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }
 
-
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityInternalState> {
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -115,17 +115,18 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         onFinishWizard={() => this.onFinishWizard()} />
                 }
             </PanelWithButton>
-
         );
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
+
     onFinishWizard() {
-        this.props.onAddUpdateRange(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IRange)
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        let range: IRange = this.state.EditedConfigEntity as IRange;
+        this.props.onAddUpdateRange(this.state.EditedIndexConfigEntity, range)
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onNew() {

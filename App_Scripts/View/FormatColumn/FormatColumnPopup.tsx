@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'

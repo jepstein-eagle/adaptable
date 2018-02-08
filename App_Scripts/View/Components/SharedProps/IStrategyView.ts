@@ -1,7 +1,7 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
 export interface IStrategyViewPopupProps<View> extends React.ClassAttributes<View> {

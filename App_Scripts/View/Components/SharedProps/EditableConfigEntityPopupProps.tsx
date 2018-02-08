@@ -1,4 +1,6 @@
-import { IConfigEntity} from '../../../Core/Interface/IAdaptableBlotter';
+import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import { PopupMode } from '../../../Core/Enums'
+
 /// <reference path="../../typings/.d.ts" />
 
 export interface EditableConfigEntityInternalState {
@@ -6,3 +8,4 @@ export interface EditableConfigEntityInternalState {
     WizardStartIndex: number
     EditedIndexConfigEntity: number
 }
+

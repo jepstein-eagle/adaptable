@@ -67,6 +67,7 @@ function InitBlotter() {
         columnDefs: getSchema(trades),
         rowData: trades,
         enableSorting: true,
+        enableGrouping: true,
         enableRangeSelection: true,
         enableFilter: true
     };

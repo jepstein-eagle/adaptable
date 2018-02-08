@@ -4,7 +4,7 @@ import {  connect } from 'react-redux';
 import * as _ from 'lodash'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';

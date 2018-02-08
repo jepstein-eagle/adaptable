@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -12,8 +12,9 @@ import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedu
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { SummaryRowItem } from '../Components/SummaryRowItem';
-import { StrategyHeader } from '../Components/StrategyHeader'
+import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { UIHelper } from '../UIHelper';
 
 
 export interface ColumnFilterSummaryProps extends IStrategySummaryProps<ColumnFilterSummaryComponent> {
@@ -26,7 +27,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;  
     }
 
     render(): any {
@@ -35,7 +36,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
 
         let summaryItems: any[] = []
-        summaryItems.push(<b>{<StrategyHeader StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
+        summaryItems.push(<b>{<StrategyProfile StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
         summaryItems.push(description);
         summaryItems.push(
             <ButtonClear size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"

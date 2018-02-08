@@ -13,7 +13,7 @@ export class ConfigEntityRowItem extends React.Component<ConfigEntityRowItemProp
     render(): any {
         let colItems = this.props.ColItems.map((colItem: IColItem, index: number) => {
             return <Col key={index} xs={colItem.Size}>
-            <span style={expressionFontSizeStyle}>
+            <span style={smallFontSizeStyle}>
                 {colItem.Content}
                 </span>
             </Col>
@@ -33,6 +33,6 @@ export class ConfigEntityRowItem extends React.Component<ConfigEntityRowItemProp
     }
 
 }
-var expressionFontSizeStyle = {
+var smallFontSizeStyle = {
     fontSize: 'small'
 };

@@ -12,7 +12,7 @@ import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -21,6 +21,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -37,7 +38,7 @@ interface AdvancedSearchPopupProps extends IStrategyViewPopupProps<AdvancedSearc
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityInternalState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 };
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -79,10 +80,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                 onSelect={() => this.props.onSelectAdvancedSearch(x.Uid)}
             >
             </AdvancedSearchEntityRow>
-
         })
-
-
 
         let newSearchButton = <ButtonNew onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
@@ -139,7 +137,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 } as EditableConfigEntityInternalState)
+        let x: any = this.state;
+   //     this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 } as EditableConfigEntityInternalState)
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
@@ -149,12 +148,13 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null } as EditableConfigEntityInternalState)
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
         let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
-        this.props.onAddUpdateAdvancedSearch(clonedObject);
+        this.state = UIHelper.EmptyConfigState() ;
+         this.props.onAddUpdateAdvancedSearch(clonedObject);
         this.props.onSelectAdvancedSearch(clonedObject.Uid);
     }
 }

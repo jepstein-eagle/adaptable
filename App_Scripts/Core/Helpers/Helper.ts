@@ -180,5 +180,6 @@ export module Helper {
         }
         return (items.length == 1) ? "1 " + itemName : items.length + " " + itemName + "s"
     }
+
 }
 

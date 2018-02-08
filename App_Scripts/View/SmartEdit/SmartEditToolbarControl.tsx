@@ -4,8 +4,8 @@
 // import { Form, Panel, FormControl, ControlLabel, Button, OverlayTrigger, Tooltip, FormGroup, Glyphicon, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 // import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 // import { StringExtensions } from '../../Core/Extensions';
-// import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
-// import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
+// import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
+//import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 // import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 // import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Core/Interface/ISmartEditStrategy'
 // import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'

@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox } from 'react-bootstrap';
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';

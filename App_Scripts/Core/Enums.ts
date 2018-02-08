@@ -25,6 +25,7 @@ export enum LeafExpressionOperator {
     Between = "Between",
     //String
     Contains = "Contains",
+    NotContains = "NotContains",
     StartsWith = "StartsWith",
     EndsWith = "EndsWith",
     Regex = "Regex",
@@ -149,5 +150,10 @@ export enum FontSize {
 export enum FilterFormMode {
     Basic = "Basic",
     Dynamic = "Dynamic"
+}
+
+export enum PopupMode{
+    Normal = "Normal",
+    Summary = "Summary"
 }
 

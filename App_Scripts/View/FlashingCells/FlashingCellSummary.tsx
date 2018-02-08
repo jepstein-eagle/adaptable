@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import {  Button } from 'react-bootstrap';
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';

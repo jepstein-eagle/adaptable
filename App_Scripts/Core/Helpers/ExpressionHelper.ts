@@ -193,6 +193,8 @@ export module ExpressionHelper {
                 return "Between"
             case LeafExpressionOperator.Contains:
                 return "Contains"
+            case LeafExpressionOperator.NotContains:
+                return "Not Contains"
             case LeafExpressionOperator.StartsWith:
                 return "Starts With"
             case LeafExpressionOperator.EndsWith:
@@ -352,6 +354,8 @@ export module ExpressionHelper {
                 return (rangeEvaluation.newValue == false);
             case LeafExpressionOperator.Contains:
                 return rangeEvaluation.newValue.indexOf(rangeEvaluation.operand1) >= 0;
+            case LeafExpressionOperator.NotContains:
+                return rangeEvaluation.newValue.indexOf(rangeEvaluation.operand1) < 0;
             case LeafExpressionOperator.StartsWith:
                 return rangeEvaluation.newValue.startsWith(rangeEvaluation.operand1);
             case LeafExpressionOperator.EndsWith:

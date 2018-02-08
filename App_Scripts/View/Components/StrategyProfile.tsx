@@ -4,12 +4,13 @@ import { Glyphicon } from 'react-bootstrap';
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 
+// Simple compnent which just shows the Icon and Name for any strategy
 
-export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
+export interface StrategyProfileProps extends React.ClassAttributes<StrategyProfile> {
     StrategyId: string
 }
 
-export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
+export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
     render(): any {
         return <div>
             <Glyphicon glyph={StrategyGlyphs.getGhyphiconForStrategy(this.props.StrategyId)} />{' '}

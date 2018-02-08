@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { FormControl } from 'react-bootstrap';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { IToolbarStrategyViewPopupProps } from '../../Core/Interface/IToolbarStrategyView'
+import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'

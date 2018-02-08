@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -23,6 +23,8 @@ import { EntityItemList } from '../Components/EntityItemList';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
+
 
 interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
@@ -37,7 +39,7 @@ interface CellValidationPopupProps extends IStrategyViewPopupProps<CellValidatio
 class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 }
+        this.state = UIHelper.EmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -133,12 +135,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState();
     }
 
     onFinishWizard() {
         this.props.onAddEditCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
-        this.setState({ EditedConfigEntity: null, EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState();
     }
 }
 

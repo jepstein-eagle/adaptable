@@ -1,7 +1,7 @@
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -12,11 +12,12 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 
 export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilterSummaryComponent> {
@@ -28,7 +29,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;  
     }
 
     render(): any {
@@ -36,8 +37,9 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         let strategySummaries: any = []
 
         // title row
-        let titleRow = <StrategySummaryRow
+        let titleRow = <StrategyHeader
             key={StrategyNames.UserFilterStrategyName}
+            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.UserFilterStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.UserFilterStrategyName)}
             onNew={() => this.onNew()}
@@ -49,8 +51,9 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         this.props.UserFilters.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
-                    <StrategyDetailRow
+                    <StrategyDetail
                         key={"UF" + index}
+                        IsReadOnly={this.props.IsReadOnly}
                         Item1={item.FriendlyName}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}

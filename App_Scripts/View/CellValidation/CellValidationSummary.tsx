@@ -1,7 +1,7 @@
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -14,9 +14,10 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { UIHelper } from '../UIHelper';
 
 export interface CellValidationSummaryProps extends IStrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]
@@ -28,15 +29,16 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;  
     }
     
     render(): any {
         let strategySummaries: any = []
 
         // title row
-        let titleRow = <StrategySummaryRow
+        let titleRow = <StrategyHeader
             key={StrategyNames.CellValidationStrategyName}
+            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.CellValidationStrategyId}
              StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
@@ -48,8 +50,9 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         this.props.CellValidations.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
-                    <StrategyDetailRow
+                    <StrategyDetail
                         key={"CV" + index}
+                        IsReadOnly={this.props.IsReadOnly}
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.CellValidationMode)}
                         Item2={item.Description}
                         ConfigEnity={item}

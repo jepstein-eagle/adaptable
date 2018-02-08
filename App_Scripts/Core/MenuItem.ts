@@ -13,7 +13,7 @@ export class MenuReduxActionItem implements IMenuItem {
     }
 
     public IsEnabled: boolean;
-   // public MenuType: MenuType.ReduxAction
+    // public MenuType: MenuType.ReduxAction
 }
 
 export class MenuItemShowPopup implements IMenuItem {
@@ -21,12 +21,12 @@ export class MenuItemShowPopup implements IMenuItem {
         public StrategyId: string,
         private ComponentName: string,
         public GlyphIcon: string,
-        private Entitlment: IEntitlement,
+        private Entitlement: IEntitlement,
         private PopupParams?: string) {
         this.IsEnabled = true;
         this.Action = PopupRedux.PopupShow(
             ComponentName,
-            Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false,
+            Entitlement ? Entitlement.AccessLevel == "ReadOnly" : false,
             this.PopupParams)
     }
 

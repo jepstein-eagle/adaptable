@@ -8,7 +8,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -22,7 +22,7 @@ import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
-
+import { UIHelper } from '../UIHelper';
 
 interface CalculatedColumnPopupProps extends IStrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -38,7 +38,7 @@ interface CalculatedColumnPopupProps extends IStrategyViewPopupProps<CalculatedC
 class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -120,19 +120,20 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
-        //reset error message
+        this.props.onClearPopupParams()
+        this.state = UIHelper.EmptyConfigState() ;
         this.props.IsExpressionValid("")
     }
 
     onFinishWizard() {
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);  
         if (this.state.EditedIndexConfigEntity != -1) {
-            this.props.onEditCalculatedColumn(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICalculatedColumn)
+            this.props.onEditCalculatedColumn(this.state.EditedIndexConfigEntity, calculatedColumn)
         }
         else {
-            this.props.onAddCalculatedColumn(this.state.EditedConfigEntity as ICalculatedColumn)
+            this.props.onAddCalculatedColumn(calculatedColumn)
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
 

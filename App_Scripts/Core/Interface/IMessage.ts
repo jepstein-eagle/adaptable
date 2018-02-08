@@ -33,7 +33,7 @@ export interface IUIPrompt {
     ConfirmAction: InputAction;
 }
 
-export interface IActionConfigurationPopup {
+export interface IScreenPopup {
     ShowPopup: boolean;
     ComponentClassName: string;
     IsReadOnly: boolean

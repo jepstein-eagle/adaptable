@@ -1,7 +1,7 @@
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../../Core/Interface/IStrategySummary'
+import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -12,11 +12,12 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { StrategySummaryRow } from '../Components/StrategySummaryRow'
-import { StrategyDetailRow } from '../Components/StrategyDetailRow'
-import { StrategyHeader } from '../Components/StrategyHeader'
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
+import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 export interface CustomSortSummaryProps extends IStrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -28,8 +29,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 }
-    }
+        this.state = UIHelper.EmptyConfigState() ;  
+     }
     render(): any {
         let customSort: ICustomSort = this.props.CustomSorts.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noCustomSort: boolean = customSort == null;
@@ -38,17 +39,19 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
         if (noCustomSort) {
             // title row
-            customSortRow = <StrategySummaryRow
+            customSortRow = <StrategyHeader
                 key={StrategyNames.CustomSortStrategyName}
+                IsReadOnly={this.props.IsReadOnly}
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyNames.CustomSortStrategyName}
             />
         } else {
-            customSortRow = <StrategyDetailRow
+            customSortRow = <StrategyDetail
             key={StrategyNames.CustomSortStrategyName}
-                Item1={<StrategyHeader StrategyId={StrategyIds.CustomSortStrategyId}/>}
+            IsReadOnly={this.props.IsReadOnly}
+            Item1={<StrategyProfile StrategyId={StrategyIds.CustomSortStrategyId}/>}
                 Item2={customSort.CustomSortItems.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyNames.CustomSortStrategyName}

@@ -10,7 +10,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IStrategyViewPopupProps } from '../../Core/Interface/IStrategyView'
+import { IStrategyViewPopupProps } from '../Components/SharedProps/IStrategyView'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -23,6 +23,7 @@ import { EntityItemList } from '../Components/EntityItemList';
 import { EditableConfigEntityInternalState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { UIHelper } from '../UIHelper';
 
 interface CustomSortPopupProps extends IStrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -35,7 +36,7 @@ interface CustomSortPopupProps extends IStrategyViewPopupProps<CustomSortPopupCo
 class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, EditableConfigEntityInternalState> {
     constructor() {
         super();
-        this.state = { EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: 0 }
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     componentDidMount() {
@@ -110,7 +111,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onFinishWizard() {
@@ -121,7 +122,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         else {
             this.props.onAddCustomSort(customSort)
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0 });
+        this.state = UIHelper.EmptyConfigState() ;
     }
 
     onEdit(customSort: ICustomSort) {

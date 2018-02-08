@@ -1,5 +1,5 @@
 import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
-import { IActionConfigurationPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
@@ -37,7 +37,7 @@ export interface MenuState {
 }
 
 export interface PopupState {
-    ActionConfigurationPopup: IActionConfigurationPopup
+    ActionConfigurationPopup: IScreenPopup
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
     InfoPopup: IInfoPopup
