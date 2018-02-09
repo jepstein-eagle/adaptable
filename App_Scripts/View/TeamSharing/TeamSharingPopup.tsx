@@ -216,6 +216,12 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
+            case StrategyIds.FormatColumnStrategyId: {
+                return "NEED TO DO FORMAT COLUMN"
+            }
+            case StrategyIds.ColumnFilterStrategyId: {
+                return "NEED TO DO  COLUMN FILTER"
+            }
             default:
                 return "NOT IMPLEMENTED"
         }

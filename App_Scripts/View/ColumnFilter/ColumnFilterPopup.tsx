@@ -14,7 +14,7 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     Columns: IColumn[]
@@ -59,7 +59,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
             {columnFilterItems.length > 0 &&
-                <EntityItemList ColItems={colItems} items={columnFilterItems} />
+                <EntityCollectionView ColItems={colItems} items={columnFilterItems} />
             }
 
             {columnFilterItems.length == 0 &&

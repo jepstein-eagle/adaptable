@@ -1,4 +1,4 @@
-import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityPopupProps'
+import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
 
 
 export module UIHelper {

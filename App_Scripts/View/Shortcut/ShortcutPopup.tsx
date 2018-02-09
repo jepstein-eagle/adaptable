@@ -18,8 +18,8 @@ import { ShortcutWizard } from './Wizard/ShortcutWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -85,7 +85,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             infoBody={infoBody}>
 
             {shortcuts.length > 0 &&
-                <EntityItemList ColItems={colItems} items={shortcuts} />
+                <EntityCollectionView ColItems={colItems} items={shortcuts} />
             }
 
             {shortcuts.length == 0 &&

@@ -21,7 +21,7 @@ import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSum
 import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 
@@ -59,26 +59,23 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
 
-        let headerText = StrategyNames.ColumnInfoStrategyName;  //+ (s.state.SelectedColumn) ?  this.state.SelectedColumn.FriendlyName : "";
+        let headerText = StrategyNames.ColumnInfoStrategyName; 
 
-
-    
-        // Need to do this through a factory and take into account Entitlements!
-        let summaries: any[] = [];
-        summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<CellValidationSummary key={StrategyIds.CellValidationStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<UserFilterSummary key={StrategyIds.UserFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+       let summaries: any[] = [];
+        summaries.push(<CustomSortSummary key={StrategyIds.CustomSortStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.ConditionalStyleStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<CellValidationSummary key={StrategyIds.CellValidationStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.CellValidationStrategyId)} SummarisedColumn={this.state.SelectedColumn}  TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<UserFilterSummary key={StrategyIds.UserFilterStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.UserFilterStrategyId)} SummarisedColumn={this.state.SelectedColumn}  TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.ColumnFilterStrategyId)} SummarisedColumn={this.state.SelectedColumn}  TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId)} SummarisedColumn={this.state.SelectedColumn}  TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+        summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn}  TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
 
         if (this.state.SelectedColumn) {
             if (this.state.SelectedColumn.DataType == DataType.Number) {
-                summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+                summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} />)
             }
             if (this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
-                summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />)
+                summaries.push(<CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} />)
             }
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
         }
@@ -94,7 +91,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
             {this.state.SelectedColumn &&
                 <div style={divMarginStyle}>
-                    <EntityItemList ColItems={colItems} items={summaries} />
+                    <EntityCollectionView ColItems={colItems} items={summaries} />
                 </div>
             }
         </PanelWithImage>
@@ -106,11 +103,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
     private isStrategyReadOnly(strategyID: string): boolean {
         let entittlment: IEntitlement = this.props.FunctionEntitlements.find(x => x.FunctionName == strategyID)
-      return true;//  return (entittlment) ? entittlment.AccessLevel == "ReadOnly" : false
+        return (entittlment) ? entittlment.AccessLevel == "ReadOnly" : false
     }
 
 }
-
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -127,7 +123,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ColumnInfoPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnInfoPopupComponent);
-
 
 let panelStyle = {
     width: '800px'

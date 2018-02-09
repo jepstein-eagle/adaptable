@@ -1,11 +1,13 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { ConfigEntityRowItem } from '../../Components/ConfigEntityRowItem';
+import { IColItem } from '../../../Core/Interface/IAdaptableBlotter';
 
+// Very simple wrapper around a ConfigEntityRowItem which knows that it will always receive items and will always want
+// to make them size of 3, 7, 2 respectively.
 
 export interface SummaryRowItemProps extends React.ClassAttributes<SummaryRowItem> {
-    SummaryItems: any[] // will always be 3 items and we specify here it will be 3, 7, 2
+    SummaryItems: any[]  
 }
 
 export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {

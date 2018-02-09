@@ -18,8 +18,8 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -91,7 +91,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={panelStyle}>
 
             {advancedSearchRows.length > 0 &&
-                <EntityItemList ColItems={colItems} items={advancedSearchRows} />
+                <EntityCollectionView ColItems={colItems} items={advancedSearchRows} />
             }
 
             {advancedSearchRows.length == 0 &&

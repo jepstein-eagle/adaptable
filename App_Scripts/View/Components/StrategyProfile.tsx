@@ -18,5 +18,4 @@ export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
         </div>
 
     }
-
 }

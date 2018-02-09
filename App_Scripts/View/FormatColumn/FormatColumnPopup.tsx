@@ -18,8 +18,8 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 
@@ -91,7 +91,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             }
 
             {FormatColumns.length > 0 &&
-                <EntityItemList ColItems={colItems} items={FormatColumns} />
+                <EntityCollectionView ColItems={colItems} items={FormatColumns} />
             }
 
             {this.state.EditedConfigEntity != null &&
@@ -105,7 +105,6 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }
-
         </PanelWithButton>
     }
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import {  Button } from 'react-bootstrap';
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'

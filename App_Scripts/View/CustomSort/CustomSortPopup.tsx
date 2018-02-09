@@ -19,8 +19,8 @@ import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
@@ -88,7 +88,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
             {customSorts.length > 0 &&
-                <EntityItemList ColItems={colItems} items={customSorts} />
+                <EntityCollectionView ColItems={colItems} items={customSorts} />
             }
 
             {customSorts.length == 0 &&

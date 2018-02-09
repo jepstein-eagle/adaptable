@@ -2,7 +2,7 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { CellValidationWizard } from './Wizard/CellValidationWizard'

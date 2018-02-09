@@ -12,8 +12,7 @@ export class MenuReduxActionItem implements IMenuItem {
         this.IsEnabled = true;
     }
 
-    public IsEnabled: boolean;
-    // public MenuType: MenuType.ReduxAction
+    public IsEnabled: boolean; 
 }
 
 export class MenuItemShowPopup implements IMenuItem {

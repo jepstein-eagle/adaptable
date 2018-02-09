@@ -20,8 +20,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
@@ -92,7 +92,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             }
 
             {conditionalStyleConditions.length > 0 &&
-                <EntityItemList ColItems={colItems} items={conditionalStyleConditions} />
+                <EntityCollectionView ColItems={colItems} items={conditionalStyleConditions} />
             }
 
             {this.state.EditedConfigEntity != null &&

@@ -1,1 +1,81 @@
-{}
+{
+		"SmartEdit": 
+		{
+		"SmartEditValue": "100",
+		"SmartEditOperation": "Replace"
+	},
+	"Calendars": {
+		"CurrentCalendar": "Germany"
+	},
+	"CustomSort": {
+		"CustomSorts": [
+			{
+				"ColumnId": "counterparty",
+				"CustomSortItems": [
+					"BNP",
+					"Barcap",
+					"Bank of America",
+					"Credit Suisse",
+					"Deutsche Bank",
+					"Goldman Sachs",
+					"JP Morgan",
+					"Lloyds TSB",
+					"Morgan Stanley",
+					"MUFJ",
+					"Nomura",
+					"Rabobank",
+					"RBS",
+					"Societe Generale"
+				],
+				"IsPredefined": false
+			}
+		]
+	},
+	"Shortcut": {
+		"Shortcuts": [
+			{
+				"ShortcutKey": "O",
+				"ShortcutResult": "1000000",
+				"DataType": "Number",
+				"ShortcutAction": "Add",
+				"IsPredefined": false,
+				"IsDynamic": false
+			},
+			{
+				"ShortcutKey": "W",
+				"ShortcutResult": "Previous Work Day",
+				"DataType": "Date",
+				"ShortcutAction": "Multiply",
+				"IsPredefined": true,
+				"IsDynamic": true
+			}
+		]
+	},
+	"PlusMinus": {
+		"DefaultNudge": 1000,
+		"PlusMinusConditions": [
+			{
+				"ColumnId": "notional",
+				"DefaultNudge": 1,
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			},
+			{
+				"ColumnId": "notional",
+				"DefaultNudge": 1,
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
+	}
+}

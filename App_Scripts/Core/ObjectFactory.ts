@@ -17,7 +17,6 @@ import { IRange } from '../Strategy/Interface/IExportStrategy';
 export module ObjectFactory {
 
 
-
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
@@ -134,9 +133,5 @@ export module ObjectFactory {
             IsPredefined: false
         }
     }
-
-
-
-
 
 }

@@ -15,7 +15,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { EntityItemList } from '../Components/EntityItemList';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
@@ -92,7 +92,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         return <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
             {setAllOption}
-                <EntityItemList ColItems={colItems} items={allFlashingColumns} />
+                <EntityCollectionView ColItems={colItems} items={allFlashingColumns} />
            
         </PanelWithImage>
     }

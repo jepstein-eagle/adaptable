@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -11,7 +11,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { SummaryRowItem } from '../Components/SummaryRowItem';
+import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';

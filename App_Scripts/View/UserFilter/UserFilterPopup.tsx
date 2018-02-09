@@ -19,8 +19,8 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { UserFilterEntityRow } from './UserFilterEntityRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -36,7 +36,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -98,7 +98,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
             {UserFilterItems.length > 0 &&
-                <EntityItemList ColItems={colItems} items={UserFilterItems} />
+                <EntityCollectionView ColItems={colItems} items={UserFilterItems} />
             }
 
             {UserFilterItems.length == 0 &&
@@ -126,19 +126,19 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
     }
 
     onEdit(userFilter: IUserFilter) {
-        //we clone the condition as we do not want to mutate the redux state here....
-        this.setState({ EditedConfigEntity: Helper.cloneObject(userFilter), WizardStartIndex: 1 });
+        let clonedObject: IUserFilter = Helper.cloneObject(userFilter);
+        this.setState({ EditedConfigEntity: Helper.cloneObject(clonedObject), WizardStartIndex: 1 });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     onFinishWizard() {
         let userFilter = this.state.EditedConfigEntity as IUserFilter
-       this.props.onAddUpdateUserFilter(userFilter);
-        this.state = UIHelper.EmptyConfigState() ;
+        this.props.onAddUpdateUserFilter(userFilter);
+        this.state = UIHelper.EmptyConfigState();
     }
 
 }

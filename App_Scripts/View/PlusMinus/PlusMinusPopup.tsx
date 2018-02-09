@@ -19,9 +19,9 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
-import { EntityItemList } from '../Components/EntityItemList';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -101,7 +101,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
 
             {plusMinusConditions.length > 0 &&
-                <EntityItemList ColItems={colItems} items={plusMinusConditions} />
+                <EntityCollectionView ColItems={colItems} items={plusMinusConditions} />
             }
 
             {plusMinusConditions.length == 0 &&

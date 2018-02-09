@@ -1,7 +1,10 @@
 {
 	"SmartEdit": {
-		"SmartEditValue": "1",
+		"SmartEditValue": "450",
 		"SmartEditOperation": "Add"
+	},
+	"Quicksearch": {
+		"QuickSearchText": "ga ga "
 	},
 	"CustomSort": {
 		"CustomSorts": [
@@ -48,7 +51,7 @@
 		]
 	},
 	"PlusMinus": {
-		"DefaultNudge": 1,
+		"DefaultNudge": 1000,
 		"PlusMinusConditions": [
 			{
 				"ColumnId": "notional",

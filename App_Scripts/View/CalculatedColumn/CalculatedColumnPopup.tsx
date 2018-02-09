@@ -19,8 +19,8 @@ import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStr
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
-import { EntityItemList } from '../Components/EntityItemList';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -86,7 +86,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
             {this.props.CalculatedColumns.length > 0 &&
-                <EntityItemList ColItems={colItems} items={calculatedColumns} />
+                <EntityCollectionView ColItems={colItems} items={calculatedColumns} />
             }
 
             {this.props.CalculatedColumns.length == 0 &&

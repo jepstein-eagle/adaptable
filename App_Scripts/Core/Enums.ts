@@ -40,12 +40,6 @@ export enum LeafExpressionOperator {
     IsFalse = "IsFalse"
 }
 
-//export enum MenuType {
-//    ConfigurationPopup = "ConfigurationPopup",
-//    ActionPopup = "ActionPopup",
-//    ReduxAction = "ReduxAction"
-//}
-
 export enum PopoverType {
     Info = "Info",
     Warning = "Warning",

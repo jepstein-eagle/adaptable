@@ -6,11 +6,11 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import { SummaryRowItem } from '../Components/SummaryRowItem';
+import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 
 export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {

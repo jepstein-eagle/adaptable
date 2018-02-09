@@ -19,9 +19,9 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EntityItemList } from '../Components/EntityItemList';
+import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
@@ -94,7 +94,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
             {CellValidationItems.length > 0 &&
-                <EntityItemList ColItems={colItems} items={CellValidationItems} />
+                <EntityCollectionView ColItems={colItems} items={CellValidationItems} />
             }
 
             {CellValidationItems.length == 0 &&

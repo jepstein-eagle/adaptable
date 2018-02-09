@@ -1,9 +1,8 @@
-
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityPopupProps';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -90,8 +89,10 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
     }
 
-    onEdit(FormatColumn: IFormatColumn) {
-        this.state = UIHelper.EmptyConfigState() ;  }
+    onEdit(formatColumn: IFormatColumn) {
+        let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
+        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 1 });
+     }
 
     onCloseWizard() {
         this.state = UIHelper.EmptyConfigState() ;  }
@@ -103,7 +104,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         } else {
             this.props.onAddFormatColumn(formatColumn)
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.state = UIHelper.EmptyConfigState() ;  
     }
 
 }
