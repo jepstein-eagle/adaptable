@@ -1,7 +1,7 @@
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
-export interface PlusMinusSummaryProps extends IStrategySummaryProps<PlusMinusSummaryComponent> {
+export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     DefaultNudgeValue: number,
     PlusMinusConditions: IPlusMinusCondition[]
     onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction

@@ -21,7 +21,7 @@ import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { UIHelper } from '../UIHelper';
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {

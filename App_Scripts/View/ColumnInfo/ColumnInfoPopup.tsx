@@ -22,7 +22,7 @@ import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
@@ -128,7 +128,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
+        if (columns.length > 0 && this.state.SelectedColumn == columns[0]) {
+            return;
+        }
+          this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
     }
 
     private isStrategyVisible(strategyID: string): boolean {

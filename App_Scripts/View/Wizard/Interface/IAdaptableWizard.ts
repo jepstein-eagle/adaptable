@@ -2,7 +2,7 @@ import { IConfigEntity } from "../../../Core/Interface/IAdaptableBlotter";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import { IRawValueDisplayValuePair } from "../../Interfaces";
 
 export interface AdaptableWizardStep {
     StepName: string
@@ -16,6 +16,18 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
+}
+
+// props for an Expression Wizard Page
+export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
+    Columns: Array<IColumn>
+    UserFilters: IUserFilter[],
+    WizardStartIndex: number
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    closeWizard: () => void
+    onFinishWizard: () => void
+    SelectedColumnId: string // do we need this??
+ //   ColumnList: Array<IColumn>
 }
 
 // props for a basic wizard

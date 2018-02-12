@@ -1,7 +1,7 @@
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -21,7 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 
 
-export interface FormatColumnSummaryProps extends IStrategySummaryProps<FormatColumnSummaryComponent> {
+export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
     FormatColumns: IFormatColumn[]
     PredefinedColorChoices: string[]
     onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction

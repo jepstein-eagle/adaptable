@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps, Panel, Row, Col } from 'react-bootstrap';
 import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
-import { IColItem } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../../Interfaces";
 
 export interface PanelWithRowProps extends PanelProps {
    // CellInfo: [string, number][]

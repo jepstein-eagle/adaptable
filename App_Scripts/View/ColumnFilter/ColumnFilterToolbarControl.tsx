@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
+import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
@@ -20,7 +20,7 @@ import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
-interface ColumnFilterToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
+interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],

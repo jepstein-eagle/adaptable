@@ -4,7 +4,7 @@ import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as TeamSharingRedux from '../../../Redux/ActionsReducers/TeamSharingRedux'
 
 
-export interface IStrategySummaryProps<View> extends StrategyViewPopupProps<View> {
+export interface StrategySummaryProps<View> extends StrategyViewPopupProps<View> {
     IsReadOnly: boolean,
     Columns: IColumn[]
     UserFilters: IUserFilter[]

@@ -1,19 +1,14 @@
-import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
-export interface CellValidationExpressionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    ColumnList: Array<IColumn>
-    UserFilters: IUserFilter[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    SelectedColumnId: string
-}
 
 export class CellValidationExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: CellValidationExpressionWizardProps) {
+    constructor(private props2: ExpressionWizardProps<ICellValidationRule>) {
         super(props2)
         this.state = {
             Expression: props2.Data.OtherExpression,

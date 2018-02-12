@@ -37,7 +37,10 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as UserFilterSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        if (columns.length > 0 && this.state.ColumnId == columns[0].ColumnId) {
+            return;
+        }
+          this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as UserFilterSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

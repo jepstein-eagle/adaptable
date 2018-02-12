@@ -46,7 +46,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
-import {IPPStyle, IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IRawValueDisplayValuePair,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
+import {IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -60,6 +60,8 @@ import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStr
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
+import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
+import { IRawValueDisplayValuePair } from '../../View/Interfaces';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

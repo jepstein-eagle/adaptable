@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -14,7 +14,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 
-export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {
+export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
     onEdit: (index: number, calculatedColumn: ICalculatedColumn) => void;
     onDeleteConfirm: Redux.Action;

@@ -3,7 +3,7 @@ import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 
 

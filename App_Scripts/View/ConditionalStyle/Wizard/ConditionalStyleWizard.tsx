@@ -7,8 +7,8 @@ import { ConditionalStyleColumnWizard } from './ConditionalStyleColumnWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
 
 export interface ConditionalStyleWizardProps extends React.ClassAttributes<ConditionalStyleWizard> {
@@ -34,7 +34,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                 <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
                 <ConditionalStyleExpressionWizard
                     StepName={stepNames[2]}
-                    ColumnList={this.props.Columns}
+                    Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={null}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}

@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { Col, Row } from 'react-bootstrap';
 
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 
 
 export interface ConfigEntityRowItemProps extends React.ClassAttributes<ConfigEntityRowItem> {

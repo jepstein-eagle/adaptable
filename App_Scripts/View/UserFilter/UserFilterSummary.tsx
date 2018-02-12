@@ -1,7 +1,7 @@
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -20,7 +20,7 @@ import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
 
 
-export interface UserFilterSummaryProps extends IStrategySummaryProps<UserFilterSummaryComponent> {
+export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
     onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
 }

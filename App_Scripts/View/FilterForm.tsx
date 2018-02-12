@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn, IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { PanelWithButton } from './Components/Panels/PanelWithButton';
 import { IColumnFilter, IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
@@ -16,6 +16,7 @@ import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
+import { IRawValueDisplayValuePair } from "./Interfaces";
 
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

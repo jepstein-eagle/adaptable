@@ -23,7 +23,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { UIHelper } from '../UIHelper';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {

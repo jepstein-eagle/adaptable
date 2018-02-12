@@ -6,9 +6,9 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
 
 export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWizard> {
@@ -33,7 +33,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
             Steps={
                 [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
                 <PlusMinusSettingsWizard StepName={stepNames[1]} />,
-                <PlusMinusExpressionWizard StepName={stepNames[2]} ColumnList={this.props.Columns}
+                <PlusMinusExpressionWizard StepName={stepNames[2]} Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={this.props.SelectedColumnId}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}

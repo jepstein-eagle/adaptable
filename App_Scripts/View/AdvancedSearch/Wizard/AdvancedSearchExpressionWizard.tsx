@@ -1,19 +1,13 @@
-import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-
-export interface AdvancedSearchExpressionWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
-    ColumnList: Array<IColumn>
-    UserFilters: IUserFilter[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    SelectedColumnId: string
-}
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(public props2: AdvancedSearchExpressionWizardProps) {
+    constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

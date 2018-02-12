@@ -33,6 +33,9 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
+        if (columns.length > 0 && this.state.ColumnId == columns[0].ColumnId) {
+            return;
+        }
         this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as CellValidationSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 

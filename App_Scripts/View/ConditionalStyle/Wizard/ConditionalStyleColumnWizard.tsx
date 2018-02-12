@@ -59,7 +59,10 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+        if (columns.length > 0 && this.state.ColumnId == columns[0].ColumnId) {
+            return;
+        }
+             this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onScopeSelectChanged(event: React.FormEvent<any>) {

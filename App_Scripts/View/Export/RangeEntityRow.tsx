@@ -9,7 +9,7 @@ import { ILiveRange } from '../../Strategy/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 export interface RangeEntityRowProps extends SharedEntityExpressionRowProps<RangeEntityRow> {

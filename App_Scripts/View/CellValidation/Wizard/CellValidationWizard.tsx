@@ -8,9 +8,9 @@ import { CellValidationExpressionWizard } from './CellValidationExpressionWizard
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
 export interface CellValidationWizardProps extends React.ClassAttributes<CellValidationWizard> {
     EditedCellValidation: ICellValidationRule
@@ -34,7 +34,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
                 <CellValidationActionWizard StepName={stepNames[1]} Columns={this.props.Columns} />,
                 <CellValidationRulesWizard StepName={stepNames[2]} Columns={this.props.Columns} />,
                 <CellValidationSelectQueryWizard StepName={stepNames[3]} Columns={this.props.Columns} />,
-                <CellValidationExpressionWizard StepName={stepNames[4]} ColumnList={this.props.Columns}
+                <CellValidationExpressionWizard StepName={stepNames[4]} Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={null}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,

@@ -15,7 +15,7 @@ export class AdvancedSearchWizard extends React.Component<IConfigEntityExpressio
             StepNames={stepNames}
             Steps={[
                 <AdvancedSearchExpressionWizard
-                    ColumnList={this.props.Columns}
+                    Columns={this.props.Columns}
                     StepName={stepNames[0]}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={null}

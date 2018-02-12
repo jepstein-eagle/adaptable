@@ -20,7 +20,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { UIHelper } from '../UIHelper';
 
 

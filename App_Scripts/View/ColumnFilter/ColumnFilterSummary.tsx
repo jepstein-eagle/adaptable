@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -17,7 +17,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 
 
-export interface ColumnFilterSummaryProps extends IStrategySummaryProps<ColumnFilterSummaryComponent> {
+export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
     onDeleteFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction,
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction

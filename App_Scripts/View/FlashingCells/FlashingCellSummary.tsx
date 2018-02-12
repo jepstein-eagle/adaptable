@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
-import {  Button } from 'react-bootstrap';
-import { IStrategySummaryProps } from '../Components/SharedProps/IStrategySummary'
+import { Button } from 'react-bootstrap';
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -11,9 +11,9 @@ import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 
-export interface FlashingCellSummaryProps extends IStrategySummaryProps<FlashingCellSummaryComponent> {
+export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCellColumns: IFlashingColumn[]
     onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellRedux.FlashingCellSelectAction,
 }

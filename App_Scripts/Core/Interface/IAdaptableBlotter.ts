@@ -7,8 +7,10 @@ import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import {  IValidationService} from '../Services/Interface/IValidationService'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
+import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
+import { IRawValueDisplayValuePair } from '../../View/Interfaces';
 
 export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -77,29 +79,7 @@ export interface IAdaptableBlotter {
     getIPPStyle(): IPPStyle
 }
 
-export interface IPPStyle {
-    Header: {
-        headerColor: string,
-        headerBackColor: string,
-        headerFontFamily: string,
-        headerFontStyle: string,
-        headerFontSize: string,
-        headerFontWeight: string,
-        height: number,
-        Columns: { columnFriendlyName: string, width: number, textAlign: string }[]
-    },
-    Row: {
-        color: string,
-        backColor: string,
-        altBackColor: string,
-        fontFamily: string,
-        fontStyle: string,
-        fontSize: string,
-        fontWeight: string,
-        height: number
-        Columns: { columnFriendlyName: string, width: number, textAlign: string }[]
-    }
-}
+
 
 export interface ISelectedCells {
     //map of UUID with their associated values/columns
@@ -115,12 +95,6 @@ export interface IColumn {
     DataType: DataType
     Visible: boolean,
     Index: number
-}
-
-//make sure property names match DistinctCriteriaPairValue
-export interface IRawValueDisplayValuePair {
-    RawValue: any,
-    DisplayValue: string
 }
 
 export interface IAdaptableBlotterOptions {
@@ -145,10 +119,7 @@ export interface IConfigEntity {
     IsPredefined: boolean
 }
 
-export interface IColItem {
-    Size: number;
-    Content: any;
-}
+
 
 export interface IEntitlement {//extends IConfigEntity{
     FunctionName: string;

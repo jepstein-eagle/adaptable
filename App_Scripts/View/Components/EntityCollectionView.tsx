@@ -1,8 +1,8 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
 import { ListGroup } from 'react-bootstrap';
+import { IColItem } from "../Interfaces";
 
 
 export interface EntityCollectionViewProps extends React.ClassAttributes<EntityCollectionView> {

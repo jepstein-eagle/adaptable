@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
-import { IColumn, IRawValueDisplayValuePair } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { Expression } from '../../Core/Expression';
@@ -8,9 +8,10 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
+import { IRawValueDisplayValuePair } from "../Interfaces";
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-    ColumnList: Array<IColumn>
+    Columns: Array<IColumn>
     UserFilters: Array<IUserFilter>
     SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
@@ -31,7 +32,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         return <Grid>
             <Row>
                 <Col xs={9}>
-                    <ExpressionBuilderConditionSelector ColumnsList={this.props.ColumnList}
+                    <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         Expression={this.state.Expression}
                         ExpressionMode={ (this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
@@ -46,7 +47,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         UserFilters={this.props.UserFilters}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                         SelectedColumnId={this.state.SelectedColumnId}
-                        ColumnsList={this.props.ColumnList}
+                        ColumnsList={this.props.Columns}
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
                         DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
                         DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
@@ -109,6 +110,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     }
     public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
     public Next(): void { /*this.props.Data.CustomSortItems = this.state.SelectedValues*/ }
-    public Back(): void { }
+    public Back(): void { 
+        // todo
+    }
     public StepName = "Build Expression"
 }

@@ -6,7 +6,7 @@ import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox } from 'react-bootstrap';
-import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
+import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
@@ -19,7 +19,7 @@ import { IColumn, IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper'
 
 
-interface HomeToolbarComponentProps extends IToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
+interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
     EntitlementsState: EntitlementsState,
     Columns: IColumn[]

@@ -30,7 +30,10 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ SelectedColumnId: columns.length> 0 ? columns[0].ColumnId    : "" }, () => this.props.UpdateGoBackState())
+        if (columns.length > 0 && this.state.SelectedColumnId == columns[0].ColumnId) {
+            return;
+        }
+          this.setState({ SelectedColumnId: columns.length> 0 ? columns[0].ColumnId    : "" }, () => this.props.UpdateGoBackState())
     }
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)); }
     public canBack(): boolean { return true; }

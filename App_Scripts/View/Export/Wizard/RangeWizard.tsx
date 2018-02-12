@@ -16,7 +16,7 @@ export class RangeWizard extends React.Component<IConfigEntityExpressionAdaptabl
         StepNames={stepNames}
       Steps={[
             <RangeColumnsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-            <RangeExpressionWizard StepName={stepNames[1]} ColumnList={this.props.Columns}
+            <RangeExpressionWizard StepName={stepNames[1]} Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 SelectedColumnId={null}
                 getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,

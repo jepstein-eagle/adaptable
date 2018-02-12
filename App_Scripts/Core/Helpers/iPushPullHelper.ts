@@ -1,5 +1,4 @@
-import { IPPStyle } from './../Interface/IAdaptableBlotter';
-import { IPPDomain } from "../../Strategy/Interface/IExportStrategy";
+import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
 
 
 export module iPushPullHelper {

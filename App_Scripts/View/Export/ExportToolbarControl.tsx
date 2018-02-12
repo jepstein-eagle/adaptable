@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import {  DropdownButton,  MenuItem } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IToolbarStrategyViewPopupProps } from '../Components/SharedProps/IToolbarStrategyView'
+import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { IRange } from '../../Strategy/Interface/IExportStrategy'
@@ -26,7 +26,7 @@ import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveRange } from "../../Strategy/Interface/IExportStrategy";
 
-interface ExportToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
+interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
     onApplyExport: (range: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onSelectRange: (range: string) => RangeRedux.RangeSelectAction;
     onNewRange: () => PopupRedux.PopupShowAction;

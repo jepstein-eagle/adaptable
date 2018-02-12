@@ -26,7 +26,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x))
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
-        let placeHolder : string = (this.props.SelectionMode== SelectionMode.Single)? "Select a column": "Select columns"
+        let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
 
         return <Typeahead ref="typeahead" emptyLabel={"No Column found with that search"}
             placeholder={placeHolder}
@@ -42,9 +42,10 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     }
 
     onColumnChange(selected: IColumn[]) {
-        if (selected.length != this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length) {
-            this.props.onColumnChange(selected)
+        if (selected.length == 0 && this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0) {
+            return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
+        this.props.onColumnChange(selected)
     }
 
 }

@@ -29,7 +29,7 @@ import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrateg
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 
 

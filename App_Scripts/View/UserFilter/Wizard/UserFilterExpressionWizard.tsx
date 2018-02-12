@@ -1,18 +1,14 @@
-import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
-export interface UserFilterExpressionWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    ColumnList: Array<IColumn>
-    UserFilters: IUserFilter[]
-    SelectedColumnId: string
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-}
+
 
 export class UserFilterExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: UserFilterExpressionWizardProps) {
+    constructor(private props2: ExpressionWizardProps<IUserFilter>) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

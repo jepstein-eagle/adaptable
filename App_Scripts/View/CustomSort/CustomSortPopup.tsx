@@ -22,7 +22,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { IColItem } from "../Interfaces";
 import { UIHelper } from '../UIHelper';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {

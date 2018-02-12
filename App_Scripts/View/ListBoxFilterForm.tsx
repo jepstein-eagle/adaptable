@@ -2,11 +2,11 @@ import * as React from "react";
 import { DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
 import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl,  ListGroup,  ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { IRawValueDisplayValuePair } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRangeExpression } from '../Core/Interface/IExpression'
+import { IRawValueDisplayValuePair } from "./Interfaces";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { IColumn, IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from '../../DualListBoxEditor'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
+import { IRawValueDisplayValuePair } from "../../Interfaces";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>

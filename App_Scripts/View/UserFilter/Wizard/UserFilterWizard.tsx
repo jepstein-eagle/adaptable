@@ -7,8 +7,8 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../../Core/Interface/IAdaptableBlotter';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IRawValueDisplayValuePair } from '../../Interfaces';
 
 
 export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterWizard> {
@@ -35,7 +35,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                     <UserFilterSelectColumnWizard Columns={this.props.Columns} StepName={stepNames[0]} />,
                     <UserFilterExpressionWizard
                     StepName={stepNames[1]}
-                        ColumnList={this.props.Columns}
+                    Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         ExpressionMode={ExpressionMode.SingleColumn}
                         SelectedColumnId={this.props.SelectedColumnId}
