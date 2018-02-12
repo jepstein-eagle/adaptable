@@ -38,7 +38,7 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
         case USER_FILTER_ADD_UPDATE: {
             let actionTypedAddUpdate = (<UserFilterAddUpdateAction>action)
             UserFilters = [].concat(state.UserFilters)
-            index = UserFilters.findIndex(i => i.Uid == actionTypedAddUpdate.UserFilter.Uid)
+            index = UserFilters.findIndex(i => i.Name == actionTypedAddUpdate.UserFilter.Name)
             if (index != -1) {  // it exists
                 UserFilters[index] = actionTypedAddUpdate.UserFilter
             } else {
@@ -50,7 +50,7 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
         case USER_FILTER_DELETE: {
             let actionTypedDelete = (<UserFilterDeleteAction>action)
             UserFilters = [].concat(state.UserFilters)
-            index = UserFilters.findIndex(i => i.Uid == actionTypedDelete.UserFilter.Uid)
+            index = UserFilters.findIndex(i => i.Name == actionTypedDelete.UserFilter.Name)
             UserFilters.splice(index, 1);
             return Object.assign({}, state, { UserFilters: UserFilters })
         }

@@ -8,8 +8,8 @@ export interface IUserFilterStrategy extends IStrategy{
 }
 
 export interface IUserFilter extends IConfigEntity {
-    Uid: string;
-    FriendlyName: string;
+    Name: string;
+  //  FriendlyName: string;
     Description: string;
     DataType: DataType;
     IsExpressionSatisfied?: (valueToCheck: any, blotter: IAdaptableBlotter) => boolean;

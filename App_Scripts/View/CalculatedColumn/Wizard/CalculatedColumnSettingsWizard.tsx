@@ -25,18 +25,19 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
         return <Panel header="Calculated Column Settings" bsStyle="primary">
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="formInlineName">
-                    <Col xs={4}>
+                    <Col xs={3}>
                         <ControlLabel >Column Name</ControlLabel>
                     </Col>
                     <Col xs={8}>
                         <FormGroup controlId="formInlineName" validationState={validationState}>
-                            <FormControl style={{ width: "Auto" }} value={this.state.ColumnName} type="text" placeholder="Enter a name" onChange={(e) => this.handleColumnNameChange(e)} />
+                            <FormControl  value={this.state.ColumnName} type="text" placeholder="Enter a name" onChange={(e) => this.handleColumnNameChange(e)} />
                             <FormControl.Feedback />
                             <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                         </FormGroup>
                     </Col>
-                </FormGroup>
-            </AdaptableBlotterForm>
+                    <Col xs={1}>{' '} </Col>
+              </FormGroup>
+              </AdaptableBlotterForm>
         </Panel>
     }
 
@@ -52,6 +53,8 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
     public canNext(): boolean { return StringExtensions.IsNotNullOrEmpty(this.state.ColumnName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage); }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.ColumnName }
-    public Back(): void { }
+    public Back(): void { 
+        //
+    }
     public StepName = this.props.StepName
 }

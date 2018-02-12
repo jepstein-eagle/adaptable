@@ -21,7 +21,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     constructor(props: UserFilterSettingsWizardProps) {
         super(props)
         this.state = {
-            FilterName: this.props.Data.FriendlyName, ErrorMessage: null
+            FilterName: this.props.Data.Name, ErrorMessage: null
         }
     }
     render() {
@@ -31,16 +31,16 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="filterName">
                     <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
-                    <Col xs={9}>
+                    <Col xs={8}>
                         <FormGroup controlId="formInlineName" validationState={validationState}>
-                            <FormControl style={{ width: "Auto" }} value={this.state.FilterName} type="string" placeholder="Enter filter name"
+                            <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
                                 onChange={(e) => this.onFilterNameChange(e)} />
                             <FormControl.Feedback />
                             <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                         </FormGroup>
                     </Col>
                 </FormGroup>
-
+                <Col xs={1}>{' '} </Col>
             </AdaptableBlotterForm>
         </Panel>
 
@@ -51,7 +51,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         let e = event.target as HTMLInputElement;
         this.setState({
             FilterName: e.value,
-            ErrorMessage: this.props.UserFilters.findIndex(x => x.FriendlyName == e.value && x.ColumnId==this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
+            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId==this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
 
         } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }
@@ -64,7 +64,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.FriendlyName = this.state.FilterName
+        this.props.Data.Name = this.state.FilterName
         this.props.Data.DataType = UserFilterHelper.GetDataTypeForUserFilter(this.props.Data, this.props.Columns)
         this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }

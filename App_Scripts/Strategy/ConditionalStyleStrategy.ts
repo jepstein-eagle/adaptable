@@ -27,12 +27,13 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
+        if (!this.isReadOnlyStrategy()) {
+            this.createMenuItemShowPopup(
                 "Create " + StrategyNames.ConditionalStyleStrategyName,
                 ScreenPopups.ConditionalStylePopup,
                 StrategyGlyphs.ConditionalStyleGlyph,
-                "New|" + columnId)))
+                "New|" + columnId)
+        }
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit

@@ -136,14 +136,14 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
     
     onFinishWizard() {
         let plusMinus = this.state.EditedConfigEntity as IPlusMinusCondition
          this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexConfigEntity, plusMinus);
-        this.state = UIHelper.EmptyConfigState() ;
-    }
+         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;

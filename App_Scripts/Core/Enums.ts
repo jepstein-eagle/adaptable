@@ -5,7 +5,8 @@ export enum DataType {
     Number = "Number",
     Boolean = "Boolean",
     Date = "Date",
-    Object = "Object"
+    Object = "Object",
+    All = "All"
 }
 
 export enum ExpressionMode {
@@ -144,5 +145,11 @@ export enum FontSize {
 export enum FilterFormMode {
     Basic = "Basic",
     Dynamic = "Dynamic"
+}
+
+export enum PanelWidth{
+    Wide="800px",
+    Medium="600px",
+    Narrow ="400px"
 }
 

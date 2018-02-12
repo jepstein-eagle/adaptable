@@ -22,9 +22,9 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 
 interface AdvancedSearchToolbarControlComponentProps extends IToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
-    CurrentAdvancedSearchUid: string;
+    CurrentAdvancedSearchName: string;
     AdvancedSearches: IAdvancedSearch[];
-    onSelectAdvancedSearch: (advancedSearchId: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
+    onSelectAdvancedSearch: (advancedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
 }
@@ -33,15 +33,15 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
         //if there was a selected search and parent unset the column we then clear the component 
         // otherwise it's correctly unselected but the input still have the previsous selected text
-        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentAdvancedSearchUid) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentAdvancedSearchUid)) {
+        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentAdvancedSearchName) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentAdvancedSearchName)) {
             (this.refs.typeahead as any).getInstance().clear()
         }
     }
     render() {
-        let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Uid == this.props.CurrentAdvancedSearchUid);
+        let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
 
-        let currentAdvancedSearchId = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchUid) ?
-            "select" : this.props.CurrentAdvancedSearchUid
+        let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
+            "select" : this.props.CurrentAdvancedSearchName
 
         let sortedAdvancedSearches = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
@@ -60,7 +60,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
                     size={"small"}
                     overrideTooltip="Edit Current Advanced Search"
-                    overrideDisableButton={currentAdvancedSearchId == "select"}
+                    overrideDisableButton={currentSearchName == "select"}
                     ConfigEntity={savedSearch}
                     DisplayMode="Glyph" />
                 {' '}
@@ -72,7 +72,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 <ButtonDelete
                     size={"small"}
                     overrideTooltip="Delete Advanced Search"
-                    overrideDisableButton={currentAdvancedSearchId == "select"}
+                    overrideDisableButton={currentSearchName == "select"}
                     ConfigEntity={savedSearch}
                     DisplayMode="Glyph"
                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
@@ -80,15 +80,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }
 
     onSelectedSearchChanged(selected: IAdvancedSearch[]) {
-        this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Uid : "");
+        this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Name : "");
     }
-
 
 
 }
@@ -96,7 +95,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
-        CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
+        CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
     };
@@ -104,11 +103,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectAdvancedSearch: (advancedSearchId: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchId)),
+        onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, isReadOnly))
     };
 }
 

@@ -37,6 +37,8 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return ConditionalStyleGlyph
         case StrategyIds.CustomSortStrategyId:
             return CustomSortGlyph
+        case StrategyIds.ExportStrategyId:
+            return ExportGlyph
         case StrategyIds.FormatColumnStrategyId:
             return FormatColumnGlyph
         case StrategyIds.LayoutStrategyId:

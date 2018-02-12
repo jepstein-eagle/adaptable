@@ -10,8 +10,7 @@ export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeade
     StrategySummary: any
     onNew: () => void
     NewButtonTooltip: string
-    IsReadOnly: boolean
-}
+ }
 
 export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
 
@@ -19,7 +18,7 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
         let summaryItems: any[] = []
         summaryItems.push(<b>{<StrategyProfile StrategyId={this.props.StrategyId} />}</b> )
         summaryItems.push(this.props.StrategySummary );
-        summaryItems.push(<ButtonNew size={"small"} overrideDisableButton={this.props.IsReadOnly} onClick={() => this.props.onNew()} overrideTooltip={"Create " + this.props.NewButtonTooltip} DisplayMode="Glyph" /> )
+        summaryItems.push(<ButtonNew size={"small"}  onClick={() => this.props.onNew()} overrideTooltip={"Create " + this.props.NewButtonTooltip} DisplayMode="Glyph" /> )
         return <SummaryRowItem SummaryItems={summaryItems} />
     }
 }

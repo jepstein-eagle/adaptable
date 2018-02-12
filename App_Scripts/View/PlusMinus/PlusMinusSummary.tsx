@@ -30,8 +30,8 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;  
-  
+        this.state = UIHelper.EmptyConfigState();
+
     }
     render(): any {
         let strategySummaries: any = []
@@ -39,9 +39,8 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.PlusMinusStrategyName}
-            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.PlusMinusStrategyId}
-             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
+            StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
             NewButtonTooltip={"Plus / Minus Rule"}
         />
@@ -54,10 +53,10 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                 let detailRow =
                     <StrategyDetail
                         key={"PM" + index}
-                        IsReadOnly={this.props.IsReadOnly}
                         Item1={"Nudge Value: " + item.DefaultNudge}
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}
+                        showShare={this.props.TeamSharingActivated}
                         EntityName={StrategyNames.PlusMinusStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
@@ -67,7 +66,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
             }
         })
 
-        return <div>
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedConfigEntity &&
@@ -98,18 +97,19 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     }
 
     onCloseWizard() {
-        this.state = UIHelper.EmptyConfigState() ;  }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 
     onFinishWizard() {
-         this.props.onAddUpdatePlusMinus(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition );
-         this.state = UIHelper.EmptyConfigState() ;
-          }
+        this.props.onAddUpdatePlusMinus(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition);
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 
-        // wrappng this so that any becomes [Default Column Nudge Value]
-        private wrapExpressionDescription(expressionDescription: string): string {
-            return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
-        }
-    
+    // wrappng this so that any becomes [Default Column Nudge Value]
+    private wrapExpressionDescription(expressionDescription: string): string {
+        return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
+    }
+
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

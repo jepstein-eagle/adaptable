@@ -132,13 +132,13 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let userFilter = this.state.EditedConfigEntity as IUserFilter
         this.props.onAddUpdateUserFilter(userFilter);
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
 }

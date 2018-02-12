@@ -39,12 +39,13 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
-import { IExportStrategy , IPPDomain} from '../../Strategy/Interface/IExportStrategy'
+import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy'
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
+import { IRange } from '../../Strategy/Interface/IExportStrategy'
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
@@ -55,6 +56,8 @@ import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdap
 import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
+import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
+import { format } from 'util';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -166,14 +169,14 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             //We load the previous saved session. Redux is pretty awesome in its simplicity!
             loadStorage(this.TheStore)
                 .then(
-                () => this.TheStore.dispatch(InitState()),
-                (e) => {
-                    console.error('Failed to load previous adaptable blotter state : ', e);
-                    //for now i'm still initializing the AB even if loading state has failed.... 
-                    //we may revisit that later
-                    this.TheStore.dispatch(InitState())
-                    this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
-                })
+                    () => this.TheStore.dispatch(InitState()),
+                    (e) => {
+                        console.error('Failed to load previous adaptable blotter state : ', e);
+                        //for now i'm still initializing the AB even if loading state has failed.... 
+                        //we may revisit that later
+                        this.TheStore.dispatch(InitState())
+                        this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
+                    })
     }
 }
 
@@ -288,6 +291,16 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             }
                             break;
                         }
+                        case StrategyIds.FormatColumnStrategyId: {
+                            let formatColumn = actionTyped.Entity as IFormatColumn
+                            if (middlewareAPI.getState().FormatColumn.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
+                                overwriteConfirmation = true
+                                importAction = FormatColumnRedux.FormatColumnEdit(formatColumn)
+                            } else {
+                                importAction = FormatColumnRedux.FormatColumnAdd(formatColumn)
+                            }
+                            break;
+                        }
                         case StrategyIds.PlusMinusStrategyId: {
                             let plusMinus = actionTyped.Entity as IPlusMinusCondition
                             importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus)
@@ -296,7 +309,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         case StrategyIds.ShortcutStrategyId: {
                             let shortcut = actionTyped.Entity as IShortcut
                             let shortcuts: IShortcut[]
-                                shortcuts = middlewareAPI.getState().Shortcut.Shortcuts
+                            shortcuts = middlewareAPI.getState().Shortcut.Shortcuts
                             if (shortcuts) {
                                 if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
                                     middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut))
@@ -309,7 +322,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let filter = actionTyped.Entity as IUserFilter
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Uid == filter.Uid)) {
+                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)) {
                                 overwriteConfirmation = true
                             }
                             importAction = UserFilterRedux.UserFilterAddUpdate(filter)
@@ -318,9 +331,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         }
                         case StrategyIds.AdvancedSearchStrategyId: {
                             let search = actionTyped.Entity as IAdvancedSearch
-                            //For now not too worry about that but I think we'll need to check ofr search that have same name
-                            //currently the reducer checks for UID
-                            if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Uid == search.Uid)) {
+                            if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Name == search.Name)) {
                                 overwriteConfirmation = true
                             }
                             importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(search)
@@ -334,6 +345,15 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             } else {
                                 importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
                             }
+                            break;
+                        }
+                        case StrategyIds.ExportStrategyId: {
+                            let range = actionTyped.Entity as IRange
+                            let idx = middlewareAPI.getState().Range.Ranges.findIndex(x => x.Name == range.Name)
+                            if (idx > -1) {
+                                overwriteConfirmation = true
+                            }
+                            importAction = RangeRedux.RangeAddUpdate(idx, range)
                             break;
                         }
                     }

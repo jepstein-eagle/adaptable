@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { IEntitlement } from './Interface/IAdaptableBlotter';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 
-export class MenuReduxActionItem implements IMenuItem {
+export class MenuItemDoReduxAction implements IMenuItem {
 
     constructor(public Label: string,
         public StrategyId: string,

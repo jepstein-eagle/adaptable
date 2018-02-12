@@ -15,12 +15,11 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
 
 
     protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
-                StrategyNames.ColumnInfoStrategyName,
-                ScreenPopups.ColumnInfoPopup,
-                StrategyGlyphs.ColumnInfoGlyph,
-                columnId)))
+       // we always show this item even if its read only as it doesnt do anything
+        this.createMenuItemShowPopup(
+            StrategyNames.ColumnInfoStrategyName,
+            ScreenPopups.ColumnInfoPopup,
+            StrategyGlyphs.ColumnInfoGlyph,
+            columnId)
     }
-
 }

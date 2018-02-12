@@ -112,7 +112,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                             </Col>
                             <Col xs={7}>
                                 <FormGroup controlId="formInlineName" validationState={validationState}>
-                                    <FormControl style={{ width: "Auto" }} type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                                    <FormControl  type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
                                     <FormControl.Feedback />
                                     <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                                 </FormGroup>

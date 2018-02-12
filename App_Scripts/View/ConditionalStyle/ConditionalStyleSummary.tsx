@@ -42,7 +42,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.ConditionalStyleStrategyName}
-            IsReadOnly={this.props.IsReadOnly}
             StrategyId={StrategyIds.ConditionalStyleStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
@@ -56,11 +55,11 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                 let detailRow =
                     <StrategyDetail
                         key={"CS" + index}
-                        IsReadOnly={this.props.IsReadOnly}
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
                         EntityName={StrategyNames.ConditionalStyleStrategyName}
+                        showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
@@ -70,7 +69,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         })
 
 
-        return <div>
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedConfigEntity &&
@@ -100,12 +99,15 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
     }
 
     onCloseWizard() {
-        this.state = UIHelper.EmptyConfigState() ;  }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 
     onFinishWizard() {
         this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IConditionalStyleCondition);
-        this.state = UIHelper.EmptyConfigState() ;  }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 }
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,

@@ -61,7 +61,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
             { Content: "Style", Size: 5 },
-            { Content: "", Size: 4 },
+            { Content: "", Size: 3 },
         ]
         let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
             return <FormatColumnEntityRow

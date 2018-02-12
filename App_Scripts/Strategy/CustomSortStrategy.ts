@@ -11,7 +11,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
+           this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
     }
 
     protected InitState() {
@@ -22,15 +22,18 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         }
     }
 
+    
     protected addColumnMenuItems(columnId: string): void {
-        let label = this.CustomSorts.findIndex(x => x.ColumnId == columnId) > -1 ? "Edit " : "Create "
-        let popupParam = this.CustomSorts.findIndex(x => x.ColumnId == columnId) > -1 ? "Edit|" : "New|"
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
+        if (!this.isReadOnlyStrategy()) {
+            let customSort = this.CustomSorts.findIndex(x => x.ColumnId == columnId);
+            let label = (customSort) ? "Edit " : "Create "
+            let popupParam = (customSort) ? "Edit|" : "New|"
+            this.createMenuItemShowPopup(
                 label + StrategyNames.CustomSortStrategyName,
                 ScreenPopups.CustomSortPopup,
                 StrategyGlyphs.CustomSortGlyph,
-                popupParam + columnId)))
+                popupParam + columnId)
+        }
     }
 
     removeCustomSorts() {

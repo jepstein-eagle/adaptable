@@ -10,24 +10,27 @@ import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import {  EnumExtensions } from '../../Core/Extensions/EnumExtensions'
+import { EnumExtensions } from '../../Core/Extensions/EnumExtensions'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
+import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
+import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { StyleVisualItem } from '../Components/StyleVisualItem'
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
@@ -47,17 +50,17 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         let infoBody: any[] = ["Team Sharing"]
 
         let colItems: IColItem[] = [
-            {Content: "Type", Size: 2}, 
-            {Content: "Audit", Size: 3}, 
-            {Content: "Entity", Size: 6}, 
-            {Content: "", Size: 3}, 
+            { Content: "Type", Size: 2 },
+            { Content: "Audit", Size: 3 },
+            { Content: "Entity", Size: 6 },
+            { Content: "", Size: 3 },
         ]
-         let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
+        let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
             return <li
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
-                      <StrategyProfile StrategyId={x.strategy} />
+                        <StrategyProfile StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
                         {x.user}{' @ '}{x.timestamp.toLocaleString()}
@@ -86,7 +89,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             </ListGroup>
         </PanelWithImage>
     }
-    
+
     getSharedItemDetails(sharedEntity: ISharedEntity) {
         switch (sharedEntity.strategy) {
             case StrategyIds.CustomSortStrategyId: {
@@ -130,11 +133,6 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             case StrategyIds.ConditionalStyleStrategyId: {
                 let cs = sharedEntity.entity as IConditionalStyleCondition
                 let column = this.props.Columns.find(c => c.ColumnId == cs.ColumnId)
-                let backColorForStyle: string = cs.Style.BackColor != undefined ? cs.Style.BackColor : null;
-                let foreColorForStyle: string = cs.Style.ForeColor != undefined ? cs.Style.ForeColor : "black";
-                let fontWeightForStyle: any = cs.Style.FontWeight == FontWeight.Bold ? "bold" : "normal"
-                let fontStyleForStyle: any = cs.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
-                let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(cs.Style.FontSize);
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
                         {cs.ConditionalStyleScope == ConditionalStyleScope.Column ?
@@ -143,9 +141,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         }
                     </Col>
                     <Col md={3} >
-                        <div className={cs.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"} style={{
-                            textAlign: 'center', margin: '2px', padding: '3px', background: backColorForStyle, color: foreColorForStyle, fontWeight: fontWeightForStyle, fontStyle: fontStyleForStyle, fontSize: fontSizeForStyle
-                        }}>Style</div>
+                        <StyleVisualItem Style={cs.Style} />
                     </Col>
                     <Col xs={5}>
                         {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns, this.props.UserFilters)}
@@ -186,7 +182,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns, this.props.UserFilters)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
-                        {filter.FriendlyName}
+                        {filter.Name}
                     </Col>
                     <Col xs={8}>
                         {expressionString}
@@ -217,10 +213,29 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             }
             case StrategyIds.FormatColumnStrategyId: {
-                return "NEED TO DO FORMAT COLUMN"
+                let fc = sharedEntity.entity as IFormatColumn
+                let column = this.props.Columns.find(c => c.ColumnId == fc.ColumnId)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                   <Col xs={4}>{column ? column.FriendlyName : fc.ColumnId + GeneralConstants.MISSING_COLUMN}</Col>
+                      <Col md={8} >
+                        <StyleVisualItem Style={fc.Style} />
+                    </Col>
+                </Row>
+            }
+            case StrategyIds.ExportStrategyId: {
+                let range = sharedEntity.entity as IRange
+                let expressionString = ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns, this.props.UserFilters)
+                return <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={4}>
+                        {range.Name}
+                    </Col>
+                    <Col xs={8}>
+                        {expressionString}
+                    </Col>
+                </Row>
             }
             case StrategyIds.ColumnFilterStrategyId: {
-                return "NEED TO DO  COLUMN FILTER"
+                return "NEED TO DO  COLUMN FILTER" // not sure actually
             }
             default:
                 return "NOT IMPLEMENTED"

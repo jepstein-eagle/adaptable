@@ -82,7 +82,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={panelStyle} infoBody={infoBody}
+        return <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={widePanelStyle} infoBody={infoBody}
             button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
             {this.props.CalculatedColumns.length > 0 &&
@@ -121,8 +121,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
-        this.props.IsExpressionValid("")
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+         this.props.IsExpressionValid("")
     }
 
     onFinishWizard() {
@@ -133,7 +133,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         else {
             this.props.onAddCalculatedColumn(calculatedColumn)
         }
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
 
@@ -159,6 +159,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CalculatedColumnPopup = connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnPopupComponent);
 
-let panelStyle = {
+let widePanelStyle = {
     width: '800px'
 }

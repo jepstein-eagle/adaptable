@@ -41,7 +41,6 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             // title row
             customSortRow = <StrategyHeader
                 key={StrategyNames.CustomSortStrategyName}
-                IsReadOnly={this.props.IsReadOnly}
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
@@ -50,7 +49,6 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         } else {
             customSortRow = <StrategyDetail
             key={StrategyNames.CustomSortStrategyName}
-            IsReadOnly={this.props.IsReadOnly}
             Item1={<StrategyProfile StrategyId={StrategyIds.CustomSortStrategyId}/>}
                 Item2={customSort.CustomSortItems.join(', ')}
                 ConfigEnity={customSort}
@@ -63,8 +61,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 />
         }
 
-        return <div>
-            {customSortRow}
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+             {customSortRow}
 
             {this.state.EditedConfigEntity &&
                 <CustomSortWizard
@@ -91,7 +89,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
     }
 
     onCloseWizard() {
-        this.state = UIHelper.EmptyConfigState() ;  }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+     }
 
     onFinishWizard() {
 
@@ -102,8 +101,10 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         else {
             this.props.onAddCustomSort(customSort);
         }
-        this.state = UIHelper.EmptyConfigState() ;   }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 }
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,

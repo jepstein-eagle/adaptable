@@ -37,7 +37,7 @@ interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupCompone
 class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityState> {
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     render() {
@@ -45,7 +45,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             "Numeric shortcuts update the existing cell value based on a 'calculation'.", <br />, <br />,
             "Date shortcuts replace the contents of the cell with a new date value."]
 
-            let colItems: IColItem[] = [
+        let colItems: IColItem[] = [
             { Content: "Type", Size: 2 },
             { Content: "Key", Size: 1 },
             { Content: "Action", Size: 3 },
@@ -111,13 +111,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let shortcut = this.state.EditedConfigEntity as IShortcut
-       this.props.onAddShortcut(shortcut)
-        this.state = UIHelper.EmptyConfigState() ;
+        this.props.onAddShortcut(shortcut)
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     CreateShortcut() {

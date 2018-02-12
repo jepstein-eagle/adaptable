@@ -46,7 +46,6 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         if (noFormatColumn) {
             formatColumnRow = <StrategyHeader
                 key={StrategyNames.FormatColumnStrategyName}
-                IsReadOnly={this.props.IsReadOnly}
                 StrategyId={StrategyIds.FormatColumnStrategyId}
                 StrategySummary={"No Format Column Set"}
                 onNew={() => this.onNew()}
@@ -55,10 +54,10 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         } else {
             formatColumnRow = <StrategyDetail
                 key={StrategyNames.FormatColumnStrategyName}
-                IsReadOnly={this.props.IsReadOnly}
                 Item1={<StrategyProfile StrategyId={StrategyIds.FormatColumnStrategyId} />}
                 Item2={<StyleVisualItem Style={formatColumn.Style} />}
                 ConfigEnity={formatColumn}
+                showShare={this.props.TeamSharingActivated}
                 EntityName={StrategyNames.FormatColumnStrategyName}
                 onEdit={() => this.onEdit(formatColumn)}
                 onShare={() => this.props.onShare(formatColumn)}
@@ -66,8 +65,9 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 showBold={true}
             />
         }
-        return <div>
-            {formatColumnRow}
+       
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        {formatColumnRow}
 
             {this.state.EditedConfigEntity &&
                 <FormatColumnWizard
@@ -95,7 +95,8 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
      }
 
     onCloseWizard() {
-        this.state = UIHelper.EmptyConfigState() ;  }
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+    }
 
     onFinishWizard() {
         let formatColumn: IFormatColumn = this.state.EditedConfigEntity as IFormatColumn
@@ -104,7 +105,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         } else {
             this.props.onAddFormatColumn(formatColumn)
         }
-        this.state = UIHelper.EmptyConfigState() ;  
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
 }

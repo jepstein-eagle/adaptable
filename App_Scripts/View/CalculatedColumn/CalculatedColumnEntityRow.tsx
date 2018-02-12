@@ -4,6 +4,8 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
+
 
 export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowProps<CalculatedColumnEntityRow>, {}> {
    
@@ -19,8 +21,9 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, calculatedColumn)}
             shareClick={() => this.props.onShare()}
+            showShare={this.props.TeamSharingActivated}
             ConfigEntity={calculatedColumn}
-            EntityName="Calculated Column">
+            EntityName={StrategyNames.CalculatedColumnStrategyName}>
         </EntityListActionButtons>
          colItems[2].Content = buttons
       

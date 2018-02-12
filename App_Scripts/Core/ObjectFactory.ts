@@ -16,7 +16,6 @@ import { IRange } from '../Strategy/Interface/IExportStrategy';
 
 export module ObjectFactory {
 
-
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
     }
@@ -33,9 +32,9 @@ export module ObjectFactory {
             IsPredefined: false
         }
     }
+
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
-            Uid: Helper.generateUid(),
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
@@ -60,8 +59,9 @@ export module ObjectFactory {
 
     export function CreateEmptyUserFilter(): IUserFilter {
         return {
-            Uid: Helper.generateUid(),
-            FriendlyName: "",
+          //  Uid: Helper.generateUid(),
+            Name: "",
+           // FriendlyName: "",
             Description: "",
             DataType: DataType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -104,7 +104,6 @@ export module ObjectFactory {
             IsDynamic: false
         }
     }
-
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;

@@ -17,8 +17,8 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
         var userFilterExpressions = this.props.UserFilterExpressions.map((ne: IUserFilter, index: number) => {
             return <ListGroupItem key={index}
                 onClick={() => this.onClickColum(ne)}
-                active={this.props.SelectedUserFilterExpressions.find(f => f.Uid == ne.Uid)}>
-                {ne.FriendlyName}
+                active={this.props.SelectedUserFilterExpressions.find(f => f.Name == ne.Name)}>
+                {ne.Name}
             </ListGroupItem>
         })
 
@@ -31,7 +31,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
 
     onClickColum(userFilterExpression: IUserFilter) {
         let newArray: IUserFilter[] = [];
-        let existingUserFilterExpression = this.props.SelectedUserFilterExpressions.find(f => f.Uid == userFilterExpression.Uid);
+        let existingUserFilterExpression = this.props.SelectedUserFilterExpressions.find(f => f.Name == userFilterExpression.Name);
         if (existingUserFilterExpression != null) { // it exists
             let index = this.props.SelectedUserFilterExpressions.indexOf(existingUserFilterExpression);
             newArray = [...this.props.SelectedUserFilterExpressions];

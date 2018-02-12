@@ -6,4 +6,5 @@ export interface IStrategy {
     getMenuItems(): IMenuItem[]
     getStrategyEntitlement(): IEntitlement
     InitializeWithRedux(): void
+    
 }

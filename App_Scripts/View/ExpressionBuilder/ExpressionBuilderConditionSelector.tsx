@@ -94,7 +94,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue),
                 SelectedColumnValues: selectedColumnValues,
-                UserFilterExpresions: this.props.UserFilters.map(f => f.Uid),
+                UserFilterExpresions: this.props.UserFilters.map(f => f.Name),
                 SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
                 IsFirstTime: StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)
@@ -238,7 +238,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
     onSelectedUserFilterExpressionsChange(selectedUserFilterExpressions: Array<IUserFilter>) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let selectedUserFilterExpressionUids: string[] = selectedUserFilterExpressions.map(s => s.Uid);
+        let selectedUserFilterExpressionUids: string[] = selectedUserFilterExpressions.map(s => s.Name);
         let colUserFilterExpression = this.props.Expression.UserFilters
         let userFilterExpressionCol = colUserFilterExpression.find(x => x.ColumnName == this.props.SelectedColumnId)
         if (userFilterExpressionCol) {

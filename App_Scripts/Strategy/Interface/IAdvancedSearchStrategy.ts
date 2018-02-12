@@ -6,7 +6,7 @@ export interface IAdvancedSearchStrategy extends IStrategy {
 }
 
 export interface IAdvancedSearch extends IConfigEntity {
-  Uid: string,
+ // Uid: string,
   Name: string,
   Expression: Expression,
 }

@@ -17,20 +17,20 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
+        if (!this.isReadOnlyStrategy()) {
+            this.createMenuItemShowPopup(
                 "Create User Filter",
                 ScreenPopups.UserFilterPopupPopup,
                 StrategyGlyphs.UserFilterGlyph,
-                "New|" + columnId)))
+                "New|" + columnId)
+        }
     }
-
 
     protected InitState() {
         if (this.userFilters != this.GetFilterState()) {
             setTimeout(() => this.blotter.applyColumnFilters(), 5);
             this.userFilters = this.GetFilterState();
-           }
+        }
     }
 
     private GetFilterState(): UserFilterState {

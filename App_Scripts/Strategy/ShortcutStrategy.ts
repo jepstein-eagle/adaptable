@@ -24,7 +24,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyGlyphs.ShortcutGlyph);
-        blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+       blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
 
@@ -35,6 +35,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
+        var test = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
         let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)

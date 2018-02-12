@@ -1,8 +1,10 @@
 import { IRange } from '../../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import {  Panel, FormControl, FormGroup, HelpBlock } from 'react-bootstrap';
+import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
+
 
 export interface RangeNameWizardProps extends AdaptableWizardStepProps<IRange> {
     Ranges: IRange[]
@@ -24,12 +26,17 @@ export class RangeNameWizard extends React.Component<RangeNameWizardProps, Range
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return <Panel header="Enter a Name for the Range" bsStyle="primary">
-            <FormGroup controlId="formInlineName" validationState={validationState}>
-                <FormControl style={{ width: "Auto" }} type="text" placeholder="Enter Range Name" value={this.state.RangeName} onChange={(e) => this.onSaveLayoutNameChanged(e)} />
-                <FormControl.Feedback />
-                <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-            </FormGroup>
+            <AdaptableBlotterForm horizontal>
+                <Col xs={10}>
+                    <FormGroup controlId="formInlineName" validationState={validationState}>
+                        <FormControl type="text" placeholder="Enter Range Name" value={this.state.RangeName} onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                        <FormControl.Feedback />
+                        <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
+                    </FormGroup>
+                </Col>
 
+                <Col xs={2}>{' '} </Col>
+            </AdaptableBlotterForm>
         </Panel>
     }
 
@@ -44,8 +51,9 @@ export class RangeNameWizard extends React.Component<RangeNameWizardProps, Range
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.RangeName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)); }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.Name = this.state.RangeName; }
-    public Back(): void { 
+    public Back(): void {
         //todo
     }
     public StepName = this.props.StepName
 }
+

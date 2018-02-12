@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox } from 'react-bootstrap';
@@ -14,7 +15,9 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
+import { Helper } from '../../Core/Helpers/Helper'
+
 
 interface HomeToolbarComponentProps extends IToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
@@ -23,25 +26,23 @@ interface HomeToolbarComponentProps extends IToolbarStrategyViewPopupProps<HomeT
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
-class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
+interface HomeToolbarControlComponentState {
+    configMenuItems: any[]
+}
 
+class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, HomeToolbarControlComponentState> {
+
+    constructor(props: HomeToolbarComponentProps) {
+        super(props);
+        this.state = { configMenuItems: [] }
+    }
     render() {
 
-        // functions
-        var configMenuItems = this.props.MenuState.MenuItems.filter(x => {
-            let accessLevel = this.props.EntitlementsState.FunctionEntitlements.find(entitlement => entitlement.FunctionName == x.StrategyId)
-            if (accessLevel) {
-                return accessLevel.AccessLevel != "Hidden"
-            }
-            return true;
-        }).map((menuItem: IMenuItem) => {
-            return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
-                <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
-            </MenuItem>
-        });
+       // we only get menus when someone clicks the dropdown
+       // not for performance reasons but because it seems this way you can be sure that the readonly items are correctly done..
 
         // columns
-        var colItems = this.props.Columns.map((col: IColumn, index) => {
+        let colItems = this.props.Columns.map((col: IColumn, index) => {
             return <div style={divStyle} key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
             </div>
@@ -62,8 +63,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 }
             })
         }
-        return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure()}>
-           <Dropdown id="dropdown-cols"  >
+        return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            <Dropdown id="dropdown-cols"  >
                 <Dropdown.Toggle noCaret>
                     <Glyphicon glyph={"list"} />
                 </Dropdown.Toggle>
@@ -71,17 +72,34 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                     {colItems}
                 </Dropdown.Menu>
             </Dropdown>
-             {shortcuts}
-            <Dropdown id="dropdown-functions"  >
+            {shortcuts}
+            <Dropdown id="dropdown-functions" onClick={() => this.onOpen()}  >
                 <Dropdown.Toggle >
                     All
                 </Dropdown.Toggle>
                 <Dropdown.Menu >
-                    {configMenuItems}
+                    {this.state.configMenuItems}
                 </Dropdown.Menu>
             </Dropdown>
-            
+
         </PanelDashboard>
+    }
+
+    onOpen() {
+        if (this.state.configMenuItems.length == 0) {
+            let menuItems = this.props.MenuState.MenuItems.filter(x => {
+                let accessLevel = this.props.EntitlementsState.FunctionEntitlements.find(entitlement => entitlement.FunctionName == x.StrategyId)
+                if (accessLevel) {
+                    return accessLevel.AccessLevel != "Hidden"
+                }
+                return true;
+            }).map((menuItem: IMenuItem) => {
+                return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
+                    <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
+                </MenuItem>
+            });
+            this.setState({ configMenuItems: menuItems })
+        }
     }
 
     onClick(menuItem: IMenuItem) {
@@ -115,8 +133,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
-        onConfigure: () => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup)),
-        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup, isReadOnly)),
+        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
     };
 }
 

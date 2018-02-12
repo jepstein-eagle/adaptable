@@ -71,10 +71,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 let userFilterExpressions = UserFilterHelper.GetUserFilters(this.props.UserFilters, columnUserFilterExpressions.UserFilterUids);
                 if (userFilterExpressions) {
                     columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
-                        return <ListGroupItem key={ne.Uid}>
+                        return <ListGroupItem key={ne.Name}>
                             <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                 <AdaptableBlotterForm inline>
-                                    {ne.FriendlyName}
+                                    {ne.Name}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                         <Button  bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteUserFilterExpression(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
                                     </OverlayTrigger>

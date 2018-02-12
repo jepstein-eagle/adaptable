@@ -99,7 +99,7 @@ export interface QuickSearchState {
 
 export interface AdvancedSearchState {
     AdvancedSearches: Array<IAdvancedSearch>;
-    CurrentAdvancedSearchId: string
+    CurrentAdvancedSearch: string
 }
 
 export interface ColumnFilterState {

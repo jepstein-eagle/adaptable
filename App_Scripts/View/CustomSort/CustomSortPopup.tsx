@@ -109,9 +109,18 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         </PanelWithButton>
     }
 
+  onEdit(customSort: ICustomSort) {
+        //so we dont mutate original object
+        this.setState({ EditedConfigEntity: Helper.cloneObject(customSort), WizardStartIndex: 1 });
+    }
+
+    onNew() {
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCustomSort(), WizardStartIndex: 0 });
+    }
+
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
@@ -122,17 +131,10 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         else {
             this.props.onAddCustomSort(customSort)
         }
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
-    onEdit(customSort: ICustomSort) {
-        //so we dont mutate original object
-        this.setState({ EditedConfigEntity: Helper.cloneObject(customSort), WizardStartIndex: 1 });
-    }
-
-    onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCustomSort(), WizardStartIndex: 0 });
-    }
+    
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

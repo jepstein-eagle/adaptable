@@ -1,6 +1,6 @@
 import { IRange } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Col } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../Core/Enums';
 import { RangeHelper } from '../../Core/Helpers/RangeHelper';
@@ -10,6 +10,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../../Core/Interface/IAdaptableBlotter';
+import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 export interface RangeEntityRowProps extends SharedEntityExpressionRowProps<RangeEntityRow> {
     IsLast: boolean
@@ -39,7 +40,7 @@ export class RangeEntityRow extends React.Component<RangeEntityRowProps, {}> {
         colItems[0].Content = range.Name
         colItems[1].Content = RangeHelper.GetRangeColumnsDescription(range, this.props.Columns)
         colItems[2].Content = RangeHelper.GetRangeExpressionDescription(range, this.props.Columns, this.props.UserFilters)
-        colItems[3].Content = <DropdownButton dropup={this.props.isDropUp}
+        let exportButton = <DropdownButton dropup={this.props.isDropUp}
             bsSize={"small"}
             bsStyle={"default"}
             title={"Export"}
@@ -54,11 +55,18 @@ export class RangeEntityRow extends React.Component<RangeEntityRowProps, {}> {
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, range)}
+            showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
             ConfigEntity={range}
             EntityName="Range" />
-        colItems[4].Content = buttons
 
+        let test = <AdaptableBlotterForm horizontal>
+            <Col>
+                {exportButton}</Col>
+                <Col>{buttons} </Col>
+        </AdaptableBlotterForm>
+            colItems[3].Content = test
+    
         return <ConfigEntityRowItem ColItems={colItems} />
-    }
-}
+            }
+        }

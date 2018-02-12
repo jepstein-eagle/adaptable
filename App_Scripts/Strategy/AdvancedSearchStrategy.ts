@@ -23,9 +23,9 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
            this.AuditFunctionAction(
                 "ApplySearch",
-                StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearchId) ?
-                    "No current Advanced Search" : "Current search Id:" + this.GetAdvancedSearchState().CurrentAdvancedSearchId,
-                this.AdvancedSearchState.AdvancedSearches.find(x => x.Uid == this.GetAdvancedSearchState().CurrentAdvancedSearchId))
+                StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearch) ?
+                    "No current Advanced Search" : "Current search Id:" + this.GetAdvancedSearchState().CurrentAdvancedSearch,
+                this.AdvancedSearchState.AdvancedSearches.find(x => x.Name == this.GetAdvancedSearchState().CurrentAdvancedSearch))
 
             this.blotter.applyColumnFilters()
         }

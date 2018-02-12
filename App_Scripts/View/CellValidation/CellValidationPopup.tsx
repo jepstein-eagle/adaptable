@@ -89,7 +89,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={panelStyle}
+        return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={widePanelStyle}
             button={newButton}
             glyphicon={StrategyGlyphs.CellValidationGlyph}
             infoBody={infoBody}>
@@ -133,12 +133,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         this.props.onAddEditCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 }
 
@@ -163,7 +163,7 @@ export let CellValidationPopup = connect(mapStateToProps, mapDispatchToProps)(Ce
 
 
 
-let panelStyle = {
+let widePanelStyle = {
     width: '800px'
 }
 

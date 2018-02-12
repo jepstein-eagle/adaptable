@@ -11,9 +11,9 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     blotter: blotter,
     apply: function () {
         this.clearColorQuickSearch();
-        let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
+        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
         let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchId)
+        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
             this.buildIndex(this.filterTest);
@@ -30,9 +30,9 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //first we assess AdvancedSearch 
-        let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
-            let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
+        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+            let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
             if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
                 return false;
             }
@@ -102,9 +102,9 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         return true;
     },
     getRowCount: function () {
-        let currentSearchId = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId
+        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
         let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchId)
+        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
             return this.index.length;

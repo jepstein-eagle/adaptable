@@ -26,7 +26,7 @@ import { UIHelper } from '../UIHelper';
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
     Columns: IColumn[];
-    CurrentAdvancedSearchUid: string;
+    CurrentAdvancedSearchName: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction,
@@ -46,7 +46,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             this.onNew()
         }
         if (this.props.PopupParams == "Edit") {
-            let currentAdvancedSearch = this.props.AdvancedSearches.find(as => as.Uid == this.props.CurrentAdvancedSearchUid)
+            let currentAdvancedSearch = this.props.AdvancedSearches.find(as => as.Name == this.props.CurrentAdvancedSearchName)
             if (currentAdvancedSearch) {
                 this.onEdit(currentAdvancedSearch)
             }
@@ -68,7 +68,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             return <AdvancedSearchEntityRow
                 key={index}
                 ColItems={colItems}
-                IsCurrentAdvancedSearch={x.Uid == this.props.CurrentAdvancedSearchUid}
+                IsCurrentAdvancedSearch={x.Name == this.props.CurrentAdvancedSearchName}
                 ConfigEntity={x}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
@@ -77,7 +77,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(x)}
-                onSelect={() => this.props.onSelectAdvancedSearch(x.Uid)}
+                onSelect={() => this.props.onSelectAdvancedSearch(x.Name)}
             >
             </AdvancedSearchEntityRow>
         })
@@ -88,7 +88,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             size={"small"} />
 
         return <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-            button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={panelStyle}>
+            button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={widePanelStyle}>
 
             {advancedSearchRows.length > 0 &&
                 <EntityCollectionView ColItems={colItems} items={advancedSearchRows} />
@@ -141,27 +141,27 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
-        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(advancedSearch);
         this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 0, EditedIndexConfigEntity: 0 })
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
         this.props.onAddUpdateAdvancedSearch(clonedObject);
-        this.props.onSelectAdvancedSearch(clonedObject.Uid);
+        this.props.onSelectAdvancedSearch(clonedObject.Name);
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        CurrentAdvancedSearchUid: state.AdvancedSearch.CurrentAdvancedSearchId,
+        CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters
     };
@@ -177,6 +177,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let AdvancedSearchPopup = connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchPopupComponent);
 
-let panelStyle = {
+let widePanelStyle = {
     width: '800px'
 }

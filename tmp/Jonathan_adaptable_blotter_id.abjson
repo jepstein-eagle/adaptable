@@ -129,7 +129,6 @@
 	"AdvancedSearch": {
 		"AdvancedSearches": [
 			{
-				"Uid": "ebd1bfac-b5de-4a40-ac07-37f1514aec86",
 				"Name": "TestJo",
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [
@@ -149,13 +148,12 @@
 				"IsPredefined": false
 			}
 		],
-		"CurrentAdvancedSearchId": ""
+		"CurrentAdvancedSearch": ""
 	},
 	"Filter": {
 		"UserFilters": [
 			{
-				"Uid": "428e7f6e-eb1f-44c8-b769-a0478397620f",
-				"FriendlyName": "test",
+				"Uid": "Test Counterparty",
 				"Description": "([Counterparty] In (BNP, Deutsche Bank))",
 				"DataType": "String",
 				"Expression": {

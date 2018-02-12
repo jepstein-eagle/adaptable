@@ -29,16 +29,16 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId="searchName">
                     <Col xs={3} componentClass={ControlLabel}>Search Name: </Col>
-                    <Col xs={9}>
+                    <Col xs={8}>
                         <FormGroup controlId="formInlineName" validationState={validationState}>
-                            <FormControl style={{ width: "Auto" }}  value={this.state.AdvancedSearchName} type="string" placeholder="Enter search name"
+                            <FormControl  value={this.state.AdvancedSearchName} type="string" placeholder="Enter search name"
                                 onChange={(e) => this.onAdvancedSearchNameChange(e)} />
                             <FormControl.Feedback />
                             <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                         </FormGroup>
                     </Col>
                 </FormGroup>
-
+                <Col xs={1}>{' '} </Col>
             </AdaptableBlotterForm>
         </Panel>
 
@@ -65,6 +65,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
     }
     public Back(): void {
         // todo
-     }
-     public StepName = this.props.StepName
+    }
+    public StepName = this.props.StepName
 }
+

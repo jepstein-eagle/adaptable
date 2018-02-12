@@ -121,13 +121,13 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let conditionalStyle: IConditionalStyleCondition = this.state.EditedConfigEntity as IConditionalStyleCondition;
         this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, conditionalStyle);
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 }
 

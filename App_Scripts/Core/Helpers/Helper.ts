@@ -1,4 +1,5 @@
 import { SortOrder } from '../../Core/Enums'
+import { StringExtensions } from '../Extensions/StringExtensions'
 
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;
@@ -181,5 +182,19 @@ export module Helper {
         return (items.length == 1) ? "1 " + itemName : items.length + " " + itemName + "s"
     }
 
+    export function IsInputNullOrEmpty(itemToCheck: any){
+        if (typeof (itemToCheck) == "string") {
+            return StringExtensions.IsNullOrEmpty(itemToCheck)
+        } else if (typeof (itemToCheck) == "number") {
+            return StringExtensions.IsNullOrEmpty(itemToCheck.toString())
+        } else if (itemToCheck instanceof (Date)) {
+            return StringExtensions.IsNullOrEmpty(itemToCheck.toString())
+        }
+        return itemToCheck == null
+    }
+
+    export function IsInputNotNullOrEmpty(itemToCheck: any){
+        return !IsInputNullOrEmpty(itemToCheck);
+    }
 }
 

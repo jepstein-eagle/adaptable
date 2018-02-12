@@ -1,4 +1,5 @@
 import * as Redux from 'redux';
+import { IEntitlement } from './IAdaptableBlotter';
 
 export interface IMenuItem {
     Label: string;

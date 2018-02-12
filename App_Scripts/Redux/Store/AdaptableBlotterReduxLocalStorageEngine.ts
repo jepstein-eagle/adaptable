@@ -53,7 +53,7 @@ function FilterPredefinedItems(state: any) {
     // we iterating substate here
     for (let substateName in state) {
         if (state.hasOwnProperty(substateName)) {
-            let substate = state[substateName]
+            let substate = state[substateName]  
             //we look for arrays of entities and will filter predefined Items
             //works only if array is at rootlevel. Will need enhancement if that was to change
             for (let property in substate) {

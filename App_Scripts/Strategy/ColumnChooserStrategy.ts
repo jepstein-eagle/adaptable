@@ -1,4 +1,4 @@
-import { MenuReduxActionItem } from '../Core/MenuItem'
+import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -12,16 +12,15 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup,  StrategyGlyphs.ColumnChooserGlyph);
-    }
-    
-    protected addColumnMenuItems(columnId: string): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(new MenuReduxActionItem(
-                "Hide Column",
-                this.Id,
-                GridRedux.GridHideColumn(columnId),
-                StrategyGlyphs.ColumnChooserGlyph)))
+        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
     }
 
+    protected addColumnMenuItems(columnId: string): void {
+        if (!this.isReadOnlyStrategy()) {
+            this.createMenuItemReduxAction(
+                "Hide Column",
+                StrategyGlyphs.ColumnChooserGlyph,
+                GridRedux.GridHideColumn(columnId))
+        }
+    }
 }

@@ -830,7 +830,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
             }
-            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId);
+            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch);
             let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText);
             //it means that originaldoesExternalFilterPass will be called to we reinit that collection
             return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false);
@@ -840,9 +840,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch 
-            let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId;
-            if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
-                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+            let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+            if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                 if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
                     // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
                     return false;

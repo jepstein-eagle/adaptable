@@ -12,6 +12,7 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 
 export interface CalculatedColumnSummaryProps extends IStrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -29,18 +30,30 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     render(): any {
-        let summaryItems: any[] = []
+       let detailRow;
+
+       let sharing =this.props.TeamSharingActivated;
 
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                summaryItems.push(<b>{StrategyNames.CalculatedColumnStrategyName}</b>);
-                summaryItems.push(item.GetValueFunc);
-                summaryItems.push(<ButtonEdit onClick={() => this.onEdit(index, item)} DisplayMode="Glyph" />);
+                 detailRow =
+                <StrategyDetail
+                    key={"UF" + index}
+                    Item1={StrategyNames.CalculatedColumnStrategyName}
+                    Item2={item.GetValueFunc}
+                    ConfigEnity={item}
+                    showShare={this.props.TeamSharingActivated}
+                    EntityName={StrategyNames.CalculatedColumnStrategyName}
+                    onEdit={() => this.onEdit(index, item)}
+                    onShare={() => this.props.onShare(item)}
+                    onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+                    showBold={true}
+                />   
             }
         })
 
-        return <div>
-            {(summaryItems.length > 0) ? <SummaryRowItem SummaryItems={summaryItems} /> : null}
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+             {detailRow}
 
             {this.state.EditedConfigEntity &&
                 <CalculatedColumnWizard
@@ -61,13 +74,13 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     onCloseWizard() {
-         this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);
         this.props.onEdit(this.state.EditedIndexConfigEntity, calculatedColumn);
-        this.state = UIHelper.EmptyConfigState();
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 }
 

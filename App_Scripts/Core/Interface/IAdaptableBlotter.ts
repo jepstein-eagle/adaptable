@@ -150,7 +150,7 @@ export interface IColItem {
     Content: any;
 }
 
-export interface IEntitlement {
+export interface IEntitlement {//extends IConfigEntity{
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }

@@ -64,8 +64,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Content: "Range", Size: 2 },
             { Content: "Columns", Size: 3 },
             { Content: "Expression", Size: 3 },
-            { Content: "", Size: 2 },
-            { Content: "", Size: 2 },
+            { Content: "", Size: 4 },
         ]
 
         let ranges = this.props.Ranges.map((range: IRange, index) => {
@@ -120,13 +119,13 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onFinishWizard() {
         let range: IRange = this.state.EditedConfigEntity as IRange;
         this.props.onAddUpdateRange(this.state.EditedIndexConfigEntity, range)
-        this.state = UIHelper.EmptyConfigState() ;
+        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onNew() {

@@ -15,18 +15,19 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
         super(StrategyIds.FormatColumnStrategyId, blotter)
         this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
     }
-    
+
     protected addColumnMenuItems(columnId: string): void {
-      let formatExists: boolean = this.FormatColumnState.FormatColumns.findIndex(x => x.ColumnId == columnId) > -1
-        let label = formatExists? "Edit " : "Create "
-        let popupParam = formatExists ? "Edit|" : "New|"
-       
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-            MenuRedux.AddItemColumnContextMenu(this.createMenuItemShowPopup(
+        if (!this.isReadOnlyStrategy()) {
+            let formatExists: boolean = this.FormatColumnState.FormatColumns.findIndex(x => x.ColumnId == columnId) > -1
+            let label = formatExists ? "Edit " : "Create "
+            let popupParam = formatExists ? "Edit|" : "New|"
+
+            this.createMenuItemShowPopup(
                 label + StrategyNames.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnPopup,
-                 StrategyGlyphs.FormatColumnGlyph,
-                popupParam + columnId)))
+                StrategyGlyphs.FormatColumnGlyph,
+                popupParam + columnId)
+        }
     }
 
     protected InitState() {

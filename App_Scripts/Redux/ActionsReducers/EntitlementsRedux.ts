@@ -1,8 +1,8 @@
-import {EntitlementsState} from './Interface/IState';
+import { EntitlementsState } from './Interface/IState';
 import * as Redux from 'redux'
 
 const initialEntitlementsState: EntitlementsState = {
-    FunctionEntitlements: []
+    FunctionEntitlements:[]
 }
 
 export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (state: EntitlementsState = initialEntitlementsState, action: Redux.Action): EntitlementsState => {

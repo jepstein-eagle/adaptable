@@ -35,7 +35,7 @@ export const AdvancedSearchSelect = (SelectedSearchUid: string): AdvancedSearchS
 
 const initialAdvancedSearchState: AdvancedSearchState = {
     AdvancedSearches: [],
-    CurrentAdvancedSearchId: ""
+    CurrentAdvancedSearch: ""
 }
 
 export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state: AdvancedSearchState = initialAdvancedSearchState, action: Redux.Action): AdvancedSearchState => {
@@ -46,24 +46,24 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
         case ADVANCED_SEARCH_ADD_UPDATE:
             let actionTypedAddUpdate = (<AdvancedSearchAddUpdateAction>action)
             advancedSearches = [].concat(state.AdvancedSearches)
-            let currentSearchId = actionTypedAddUpdate.AdvancedSearch.Uid;
-            index = advancedSearches.findIndex(a => a.Uid == currentSearchId)
+            let currentSearchName = actionTypedAddUpdate.AdvancedSearch.Name;
+            index = advancedSearches.findIndex(a => a.Name == currentSearchName)
             if (index != -1) {  // it exists
                 advancedSearches[index] = actionTypedAddUpdate.AdvancedSearch
             } else {
                 advancedSearches.push(actionTypedAddUpdate.AdvancedSearch)
             }
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches})//, CurrentAdvancedSearchId: currentSearchId })
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches})//, CurrentAdvancedSearch: currentSearchName })
 
         case ADVANCED_SEARCH_DELETE:
             let actionTypedDelete = (<AdvancedSearchDeleteAction>action)
             advancedSearches = [].concat(state.AdvancedSearches)
-            index = advancedSearches.findIndex(a => a.Uid == actionTypedDelete.AdvancedSearch.Uid)
+            index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.AdvancedSearch.Name)
             advancedSearches.splice(index, 1);
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearchId: "" })
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: "" })
 
         case ADVANCED_SEARCH_SELECT:
-            return Object.assign({}, state, { CurrentAdvancedSearchId: (<AdvancedSearchSelectAction>action).SelectedSearchUid })
+            return Object.assign({}, state, { CurrentAdvancedSearch: (<AdvancedSearchSelectAction>action).SelectedSearchUid })
 
         default:
             return state

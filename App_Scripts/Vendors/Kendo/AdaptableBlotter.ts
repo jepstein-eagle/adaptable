@@ -610,9 +610,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             operator: (record: any) => {
                 let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
                 //first we assess AdvancedSearch 
-                let currentSearchId = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearchId;
-                if (StringExtensions.IsNotNullOrEmpty(currentSearchId)) {
-                    let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Uid == currentSearchId);
+                let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+                if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                    let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                     if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, record, columns, this)) {
                         return false;
                     }

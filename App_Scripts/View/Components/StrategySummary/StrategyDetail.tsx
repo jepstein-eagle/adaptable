@@ -17,8 +17,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     onDelete: Redux.Action
     showBold?: boolean
     showShare?: boolean
-    IsReadOnly: boolean
-}
+ }
 
 export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
     render(): any {
@@ -34,9 +33,6 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
             showShare={this.props.showShare}
-            overrideDisableEdit={this.props.IsReadOnly}
-            overrideDisableDelete={this.props.IsReadOnly}
-            overrideDisableShare={this.props.IsReadOnly}
             ConfigEntity={this.props.ConfigEnity}
             EntityName={this.props.EntityName} />)
          

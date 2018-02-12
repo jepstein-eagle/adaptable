@@ -168,7 +168,7 @@ export module ExpressionHelper {
             if (returnValue != "") {
                 returnValue += " OR "
             }
-            returnValue += "[" + columnFriendlyName + "] " + userFilter.FriendlyName;
+            returnValue += "[" + columnFriendlyName + "] " + userFilter.Name;
         }
         return returnValue
     }

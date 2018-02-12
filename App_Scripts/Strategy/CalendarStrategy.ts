@@ -10,7 +10,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalendarStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CalendarStrategyName, ScreenPopups.CalendarsPopup, StrategyGlyphs.CalendarGlyph);
+       this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CalendarStrategyName, ScreenPopups.CalendarsPopup, StrategyGlyphs.CalendarGlyph);
     }
    
 }

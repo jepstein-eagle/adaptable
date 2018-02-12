@@ -86,7 +86,7 @@
 			},
 			{
 				"ColumnId": "notional",
-				"DefaultNudge": 1,
+				"DefaultNudge": 1, 
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
