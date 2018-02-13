@@ -4,7 +4,7 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
-import {   IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
+import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -14,9 +14,12 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
     }
-    
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
+    }
+
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
         let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
         let newValues: ICellInfo[] = [];
@@ -33,7 +36,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             })
         }
 
-        this.AuditFunctionAction(    "ApplySmartEdit",
+        this.AuditFunctionAction("ApplySmartEdit",
             "",
             { SmartEditValue: this.GetSmartEditState().SmartEditValue, SmartEditOperation: this.GetSmartEditState().SmartEditOperation, NewValues: newValues })
 
@@ -93,7 +96,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
             }
         }
-        return {ActionReturn : true};
+        return { ActionReturn: true };
 
     }
 

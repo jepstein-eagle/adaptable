@@ -10,7 +10,11 @@ import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.DashboardStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyGlyphs.DashboardGlyph);
+         }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyGlyphs.DashboardGlyph);
     }
+    
 
 }

@@ -12,10 +12,13 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
+        }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
     }
 
-    protected addColumnMenuItems(columnId: string): void {
+    protected addColumnMenuItem(columnId: string): void {
         if (!this.isReadOnlyStrategy()) {
             this.createMenuItemReduxAction(
                 "Hide Column",

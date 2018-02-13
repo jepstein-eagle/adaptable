@@ -10,13 +10,20 @@ import { IMenuItem } from '../Core/Interface/IMenu';;
 export class UserDataManagementStrategy extends AdaptableStrategyBase implements IUserDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserDataManagementStrategyId, blotter)
-        this.menuItemConfig = new MenuItemDoReduxAction("Clean User Data", this.Id, ResetUserData(), "user");
     }
-   
-    public getMenuItems(): IMenuItem[] {
+
+    protected addPopupMenuItem() {
         if ("production" == process.env.NODE_ENV) {
-            return [];
+            return;
         }
-        return [this.menuItemConfig];
+        // wrong at the moment...
+        let test: any = new MenuItemDoReduxAction("Clean User Data", this.Id, ResetUserData(), "user", true, true);
+        //  this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
     }
+
+    protected hasPopupMenu(): boolean{
+        return false;
+    }
+
+
 }

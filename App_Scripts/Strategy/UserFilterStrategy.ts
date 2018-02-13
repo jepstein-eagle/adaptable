@@ -13,17 +13,19 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserFilterStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.UserFilterStrategyName, ScreenPopups.UserFilterPopupPopup, StrategyGlyphs.UserFilterGlyph);
+      }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.UserFilterStrategyName, ScreenPopups.UserFilterPopupPopup, StrategyGlyphs.UserFilterGlyph);
     }
 
-    protected addColumnMenuItems(columnId: string): void {
-        if (!this.isReadOnlyStrategy()) {
-            this.createMenuItemShowPopup(
+    protected addColumnMenuItem(columnId: string): void {
+            this.createMenuItemColumnMenu(
                 "Create User Filter",
                 ScreenPopups.UserFilterPopupPopup,
                 StrategyGlyphs.UserFilterGlyph,
                 "New|" + columnId)
-        }
+        
     }
 
     protected InitState() {

@@ -26,7 +26,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
 // import strategy
-import {  IStrategy } from '../../Strategy/Interface/IStrategy';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
@@ -64,7 +64,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import {  IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
@@ -143,20 +143,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
-            (e) => {
-                console.error('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed.... 
-                //we may revisit that later
-                this.Strategies.forEach(strat => strat.InitializeWithRedux())
-            })
+                (e) => {
+                    console.error('Failed to Init AdaptableBlotterStore : ', e);
+                    //for now i'm still initializing the strategies even if loading state has failed.... 
+                    //we may revisit that later
+                    this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                })
             .then(
-            () => this.initInternalGridLogic(gridOptions, gridContainer),
-            (e) => {
-                console.error('Failed to Init Strategies : ', e);
-                //for now i'm still initializing the grid even if loading state has failed.... 
-                //we may revisit that later
-                this.initInternalGridLogic(gridOptions, gridContainer)
-            }
+                () => this.initInternalGridLogic(gridOptions, gridContainer),
+                (e) => {
+                    console.error('Failed to Init Strategies : ', e);
+                    //for now i'm still initializing the grid even if loading state has failed.... 
+                    //we may revisit that later
+                    this.initInternalGridLogic(gridOptions, gridContainer)
+                }
             )
     }
 
@@ -279,8 +279,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
-        this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
-
+        this.Strategies.forEach(x => {
+            let menuItem = x.getPopupMenuItem()
+            if (menuItem != null) {
+                menuItems.push(menuItem);
+            }
+        })
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 

@@ -606,9 +606,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case INIT_STATE:
                 case RESET_STATE: {
                     let returnAction = next(action);
-                    //we create all the menus
-                    adaptableBlotter.createMenu();
-                    //we set the column list from the datasource
+                     //we set the column list from the datasource
                     adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     let currentLayout = "Default"
@@ -633,6 +631,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     }
                     //load either saved layout or default one
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+
+                    adaptableBlotter.createMenu();
+                   
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
                     AdaptableDashboardViewFactory.forEach((control, strategyId) => {
@@ -640,6 +641,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
                         }
                     })
+
                     adaptableBlotter.InitAuditService()
                     return returnAction;
                 }

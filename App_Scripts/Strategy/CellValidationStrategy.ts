@@ -11,17 +11,19 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
-       this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyGlyphs.CellValidationGlyph);
+      }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyGlyphs.CellValidationGlyph);
     }
 
-    protected addColumnMenuItems(columnId: string): void {
-        if (!this.isReadOnlyStrategy()) {
-            this.createMenuItemShowPopup(
+    protected addColumnMenuItem(columnId: string): void {
+            this.createMenuItemColumnMenu(
                 "Create Cell Validation Rule",
                 ScreenPopups.CellValidationPopup,
                 StrategyGlyphs.CellValidationGlyph,
                 "New|" + columnId)
-        }
+      
     }
 }
 

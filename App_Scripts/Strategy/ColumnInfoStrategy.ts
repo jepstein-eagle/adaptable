@@ -10,13 +10,14 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnInfoStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph);
+      }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph);
     }
 
-
-    protected addColumnMenuItems(columnId: string): void {
-       // we always show this item even if its read only as it doesnt do anything
-        this.createMenuItemShowPopup(
+    protected addColumnMenuItem(columnId: string): void {
+        this.createMenuItemColumnMenu(
             StrategyNames.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,
             StrategyGlyphs.ColumnInfoGlyph,

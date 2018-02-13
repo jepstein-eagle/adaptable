@@ -13,9 +13,12 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
+    }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph);
     }
 
     protected InitState() {
@@ -26,15 +29,13 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
         }
     }
 
-    protected addColumnMenuItems(columnId: string): void {
-        if (!this.isReadOnlyStrategy()) {
-            this.createMenuItemShowPopup(
+    protected addColumnMenuItem(columnId: string): void {
+            this.createMenuItemColumnMenu(
                 "Create " + StrategyNames.ConditionalStyleStrategyName,
                 ScreenPopups.ConditionalStylePopup,
                 StrategyGlyphs.ConditionalStyleGlyph,
                 "New|" + columnId)
-        }
-    }
+            }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected abstract handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void;

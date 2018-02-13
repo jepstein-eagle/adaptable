@@ -21,7 +21,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph)
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
@@ -31,15 +30,18 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-    protected addColumnMenuItems(columnId: string): void {
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph)
+    }
+
+    protected addColumnMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
-            if (!this.isReadOnlyStrategy()) {
-                this.createMenuItemShowPopup(
+                this.createMenuItemColumnMenu(
                     "Create Plus/Minus Nudge Rule",
                     ScreenPopups.PlusMinusPopup,
                     StrategyGlyphs.PlusMinusGlyph,
                     "New|" + columnId)
-            }
+            
         }
     }
 

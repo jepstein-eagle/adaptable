@@ -23,10 +23,16 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
     render() {
         let config: string[] = [];
         if(this.props.DashboardShortcutsDashboardControl.ControlConfiguration!=null){
-            config = this.props.DashboardShortcutsDashboardControl.ControlConfiguration
+            this.props.DashboardShortcutsDashboardControl.ControlConfiguration.forEach(x=>{
+                let menuItem = this.props.MenuState.MenuItems.find(m=>m.Label == x)
+                if(menuItem !=null && menuItem.IsVisible){
+                    config.push(x)
+                }
+            })
         }
+        
         return <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
-            <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => config.indexOf(x.Label) == -1).map(x=>x.Label)}
+            <DualListBoxEditor AvailableValues={this.props.MenuState.MenuItems.filter(x => x.IsVisible && config.indexOf(x.Label) == -1).map(x=>x.Label)}
                 SelectedValues={config}
                 HeaderAvailable="Available Function Buttons"
                 HeaderSelected="Visible Function Buttons"

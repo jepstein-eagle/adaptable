@@ -12,7 +12,10 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.QuickSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.QuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyGlyphs.QuickSearchGlyph);
+       }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.QuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyGlyphs.QuickSearchGlyph);
     }
 
     protected InitState() {

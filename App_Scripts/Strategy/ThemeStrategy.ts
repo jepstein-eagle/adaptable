@@ -14,15 +14,18 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ThemeStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
-
-
+       
+        
         // Create the <style> tag
         this.style = document.createElement("style");
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page
         document.head.appendChild(this.style);
+    }
+    
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
     }
 
     protected InitState() {

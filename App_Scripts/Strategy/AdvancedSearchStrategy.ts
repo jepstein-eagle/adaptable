@@ -14,7 +14,10 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyGlyphs.AdvancedSearchGlyph);
+        }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyGlyphs.AdvancedSearchGlyph);
     }
 
     protected InitState() {

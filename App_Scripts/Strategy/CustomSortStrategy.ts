@@ -11,8 +11,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
-           this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
-    }
+         }
 
     protected InitState() {
         if (this.CustomSorts != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
@@ -22,18 +21,20 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         }
     }
 
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
+    }
     
-    protected addColumnMenuItems(columnId: string): void {
-        if (!this.isReadOnlyStrategy()) {
+    protected addColumnMenuItem(columnId: string): void {
             let customSort = this.CustomSorts.findIndex(x => x.ColumnId == columnId);
             let label = (customSort) ? "Edit " : "Create "
             let popupParam = (customSort) ? "Edit|" : "New|"
-            this.createMenuItemShowPopup(
+            this.createMenuItemColumnMenu(
                 label + StrategyNames.CustomSortStrategyName,
                 ScreenPopups.CustomSortPopup,
                 StrategyGlyphs.CustomSortGlyph,
                 popupParam + columnId)
-        }
+        
     }
 
     removeCustomSorts() {

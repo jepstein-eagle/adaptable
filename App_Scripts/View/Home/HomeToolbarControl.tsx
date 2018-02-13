@@ -21,16 +21,12 @@ import { Helper } from '../../Core/Helpers/Helper'
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
-    EntitlementsState: EntitlementsState,
+   // EntitlementsState: EntitlementsState,
     Columns: IColumn[]
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
-interface HomeToolbarControlComponentState {
-    configMenuItems: any[]
-}
-
-class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, HomeToolbarControlComponentState> {
+class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
 
     constructor(props: HomeToolbarComponentProps) {
         super(props);
@@ -38,8 +34,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     }
     render() {
 
-       // we only get menus when someone clicks the dropdown
-       // not for performance reasons but because it seems this way you can be sure that the readonly items are correctly done..
+        let menuItems = this.props.MenuState.MenuItems.filter(x => 
+            x.IsVisible
+           ).map((menuItem: IMenuItem) => {
+            return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
+                <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
+            </MenuItem>
+        });
 
         // columns
         let colItems = this.props.Columns.map((col: IColumn, index) => {
@@ -53,7 +54,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {
-                let menuItem = this.props.MenuState.MenuItems.find(y => y.Label == x)
+                let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.Label == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
                         <Button disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}>
@@ -73,34 +74,19 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 </Dropdown.Menu>
             </Dropdown>
             {shortcuts}
-            <Dropdown id="dropdown-functions" onClick={() => this.onOpen()}  >
+            <Dropdown id="dropdown-functions"   >
                 <Dropdown.Toggle >
                     All
                 </Dropdown.Toggle>
                 <Dropdown.Menu >
-                    {this.state.configMenuItems}
+                    {menuItems}
                 </Dropdown.Menu>
             </Dropdown>
 
         </PanelDashboard>
     }
 
-    onOpen() {
-        if (this.state.configMenuItems.length == 0) {
-            let menuItems = this.props.MenuState.MenuItems.filter(x => {
-                let accessLevel = this.props.EntitlementsState.FunctionEntitlements.find(entitlement => entitlement.FunctionName == x.StrategyId)
-                if (accessLevel) {
-                    return accessLevel.AccessLevel != "Hidden"
-                }
-                return true;
-            }).map((menuItem: IMenuItem) => {
-                return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
-                    <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
-                </MenuItem>
-            });
-            this.setState({ configMenuItems: menuItems })
-        }
-    }
+   
 
     onClick(menuItem: IMenuItem) {
         this.props.onClick(menuItem.Action)
@@ -124,7 +110,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.HomeStrategyId),
         MenuState: state.Menu,
-        EntitlementsState: state.Entitlements,
+      //  EntitlementsState: state.Entitlements,
         Columns: state.Grid.Columns
     };
 }

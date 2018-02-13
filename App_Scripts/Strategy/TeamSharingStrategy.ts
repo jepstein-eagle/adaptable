@@ -9,10 +9,17 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.TeamSharingStrategyId, blotter)
-        if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyGlyphs.TeamSharingGlyph);
-        }
+
     }
+
+    protected addPopupMenuItem() {
+            this.createMenuItemShowPopup(StrategyNames.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyGlyphs.TeamSharingGlyph);
+     }
+
+    protected hasPopupMenu(): boolean{
+        return this.blotter.BlotterOptions.enableRemoteConfigServer;
+    }
+
     protected InitState() {
         //nothing 
     }

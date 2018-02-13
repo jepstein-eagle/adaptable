@@ -3,6 +3,7 @@ import { DashboardState } from './Interface/IState'
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
@@ -63,14 +64,14 @@ export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
 
 const initialDashboardState: DashboardState = {
     DashboardStrategyControls: [
-        { Strategy: StrategyIds.HomeStrategyId, IsVisible: true, ControlConfiguration: ["Dashboard","Smart Edit", "Plus/Minus", "Conditional Style"] },
+        { Strategy: StrategyIds.HomeStrategyId, IsVisible: true, 
+            ControlConfiguration: [StrategyNames.DashboardStrategyName,StrategyNames.SmartEditStrategyName, StrategyNames.PlusMinusStrategyName, StrategyNames.ConditionalStyleStrategyName] },
         { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
         { Strategy: StrategyIds.ExportStrategyId, IsVisible: true },
         { Strategy: StrategyIds.ColumnFilterStrategyId, IsVisible: true },
-        // taking out until I get the control to work properly   { Name: "SmartEdit", IsVisible: true, IsCollapsed: false },
-    ],
+      ],
     DashboardZoom : 1
 }
 

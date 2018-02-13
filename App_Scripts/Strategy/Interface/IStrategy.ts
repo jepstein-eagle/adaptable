@@ -3,7 +3,7 @@ import { IMenuItem } from '../../Core/Interface/IMenu'
 
 export interface IStrategy {
     Id: string
-    getMenuItems(): IMenuItem[]
+    getPopupMenuItem(): IMenuItem
     getStrategyEntitlement(): IEntitlement
     InitializeWithRedux(): void
     

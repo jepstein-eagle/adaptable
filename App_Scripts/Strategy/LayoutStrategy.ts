@@ -12,8 +12,10 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.LayoutStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyGlyphs.LayoutGlyph);
-    }
+       }
  
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyGlyphs.LayoutGlyph);
+    }
 
 }

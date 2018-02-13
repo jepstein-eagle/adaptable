@@ -8,11 +8,12 @@ export class MenuItemDoReduxAction implements IMenuItem {
     constructor(public Label: string,
         public StrategyId: string,
         public Action: Redux.Action,
-        public GlyphIcon: string) {
-        this.IsEnabled = true;
+        public GlyphIcon: string,
+        public IsReadOnly: boolean,
+        public IsVisible: boolean ) {
     }
 
-    public IsEnabled: boolean; 
+    ; 
 }
 
 export class MenuItemShowPopup implements IMenuItem {
@@ -20,15 +21,14 @@ export class MenuItemShowPopup implements IMenuItem {
         public StrategyId: string,
         private ComponentName: string,
         public GlyphIcon: string,
-        private Entitlement: IEntitlement,
-        private PopupParams?: string) {
-        this.IsEnabled = true;
+        public IsReadOnly: boolean,
+        public IsVisible: boolean,
+        private PopupParams?: string,
+      ) {
         this.Action = PopupRedux.PopupShow(
             ComponentName,
-            Entitlement ? Entitlement.AccessLevel == "ReadOnly" : false,
+            this.IsReadOnly,
             this.PopupParams)
     }
-
-    public IsEnabled: boolean;
     public Action: Redux.Action;
 }

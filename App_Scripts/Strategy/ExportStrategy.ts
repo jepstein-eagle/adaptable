@@ -24,8 +24,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
-        this.menuItemConfig = this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportPopup, StrategyGlyphs.ExportGlyph);
        
+        
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             console.log("Excel closed stopping all Live Excel");
             this.RangeState.CurrentLiveRanges.forEach(cle => {
@@ -63,6 +63,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             }
         })
+    }
+
+    protected addPopupMenuItem() {
+        this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportPopup, StrategyGlyphs.ExportGlyph);
     }
 
     private sendNewDataToLiveExcel() {

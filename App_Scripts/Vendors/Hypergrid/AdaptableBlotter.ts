@@ -270,8 +270,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
-        this.Strategies.forEach(x => menuItems.push(...x.getMenuItems()));
-
+        this.Strategies.forEach(x => {
+            let menuItem = x.getPopupMenuItem()
+            if (menuItem != null) {
+                menuItems.push(menuItem);
+            }
+        })
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
