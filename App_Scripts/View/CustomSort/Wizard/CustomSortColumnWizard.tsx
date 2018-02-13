@@ -30,10 +30,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        if (columns.length > 0 && this.state.SelectedColumnId == columns[0].ColumnId) {
-            return;
-        }
-           this.setState({ SelectedColumnId: columns.length> 0 ? columns[0].ColumnId    : "" }, () => this.props.UpdateGoBackState())
+               this.setState({ SelectedColumnId: columns.length> 0 ? columns[0].ColumnId    : "" }, () => this.props.UpdateGoBackState())
     }
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)); }
     public canBack(): boolean { return true; }

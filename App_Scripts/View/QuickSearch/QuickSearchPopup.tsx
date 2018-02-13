@@ -104,7 +104,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
 
         let optionOperators = EnumExtensions.getNames(LeafExpressionOperator).filter
             (name => stringOperators.find(s => s == name) != null).map((stringOperatorName) => {
-                return <option key={stringOperatorName} value={stringOperatorName}>{ExpressionHelper.OperatorToFriendlyString(stringOperatorName as LeafExpressionOperator)}</option>
+                return <option key={stringOperatorName} value={stringOperatorName}>{ExpressionHelper.OperatorToShortFriendlyString(stringOperatorName as LeafExpressionOperator)}</option>
             })
 
         let quickSearchDisplayTypes = EnumExtensions.getNames(QuickSearchDisplayType).map((enumName) => {

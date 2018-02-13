@@ -8,6 +8,7 @@ import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enu
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
+import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -31,7 +32,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     render(): any {
 
         let operatorTypes = this.getAvailableOperators().map((operator: LeafExpressionOperator) => {
-            return <option key={operator} value={operator.toString()}>{this.getTextForLeafOperator(operator)}</option>
+            return <option key={operator} value={operator.toString()}>{ExpressionHelper.OperatorToLongFriendlyString(operator, this.getColumnDataTypeFromState())}</option>
         })
 
         let columnFriendlyName: string = this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName;
@@ -146,59 +147,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         }
     }
 
-    private getTextForLeafOperator(leafExpressionOperator: LeafExpressionOperator): string {
-        switch (leafExpressionOperator) {
-            case LeafExpressionOperator.None:
-                return "Any Edit"
-            case LeafExpressionOperator.Unknown:
-                return "Select Rule Operator"
-            case LeafExpressionOperator.Equals:
-                return "Equals "
-            case LeafExpressionOperator.NotEquals:
-                return "Not Equals "
-            case LeafExpressionOperator.GreaterThan:
-                if (this.getColumnDataTypeFromState() == DataType.Date) {
-                    return "After "
-                } else {
-                    return "Greater Than "
-                }
-            case LeafExpressionOperator.LessThan:
-                if (this.getColumnDataTypeFromState() == DataType.Date) {
-                    return "Before "
-                } else {
-                    return "Less Than "
-                }
-            case LeafExpressionOperator.Between:
-                return " Between "
-            case LeafExpressionOperator.NotBetween:
-                return "Not Between "
-            case LeafExpressionOperator.IsPositive:
-                return "Is Positive ";
-            case LeafExpressionOperator.IsNegative:
-                return "Is Negative ";
-            case LeafExpressionOperator.ValueChange:
-                return "Change In Value Less Than "
-            case LeafExpressionOperator.PercentChange:
-                return "% Change Is Less Than "
-            case LeafExpressionOperator.IsTrue:
-                return "Is True "
-            case LeafExpressionOperator.IsFalse:
-                return "Is False "
-            case LeafExpressionOperator.Contains:
-                return "Contains "
-            case LeafExpressionOperator.NotContains:
-                return "Not Contains "
-            case LeafExpressionOperator.StartsWith:
-                return "Starts With "
-            case LeafExpressionOperator.Regex:
-                return "Matches Expression "
-
-          }
-    }
+    
 
     createCellValidationDescription(CellValidation: ICellValidationRule): string {
 
-        let valueDescription: string = this.getTextForLeafOperator(CellValidation.RangeExpression.Operator);
+        let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(CellValidation.RangeExpression.Operator, this.getColumnDataTypeFromState());
 
         if (!this.operatorRequiresValue(CellValidation.RangeExpression.Operator)) {
             return valueDescription;

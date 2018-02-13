@@ -9,7 +9,7 @@ import { PanelWithButton } from './Components/Panels/PanelWithButton';
 import { IColumnFilter, IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../Core/Helpers/UserFilterHelper';
-import { DataType, SortOrder, DistinctCriteriaPairValue } from '../Core/Enums';
+import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../Core/Enums';
 import { Expression } from '../Core/Expression'
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../Core/Helpers/Helper'
@@ -56,23 +56,38 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
 
-        let newButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
+        let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
+
+        let closeButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
             style={buttonCloseStyle}
             size={"xsmall"}
             overrideTooltip="Close"
             DisplayMode="Glyph" />
 
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={newButton}>
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={closeButton}>
             <ListBoxFilterForm ColumnValues={columnValuePairs}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
                 UserFilters={userFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
                 onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                ColumnValueType={this.props.ColumnValueType}>
+                ColumnValueType={this.props.ColumnValueType}
+                Operators={leafExpressionOperators}>
             </ListBoxFilterForm>
         </PanelWithButton>
     }
+
+    getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
+        switch (dataType) {
+            case DataType.Boolean:
+                return null;
+            case DataType.Number:
+                return [LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
+            default:
+            return [LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
+        }
+    }
+
 
     onClickColumValue(columnValues: string[]) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);

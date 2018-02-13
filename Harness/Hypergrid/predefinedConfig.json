@@ -1,6 +1,6 @@
 {
 	"Entitlements": {
-			"FunctionEntitlements": [
+		"FunctionEntitlements": [
 			{
 				"FunctionName": "CustomSort",
 				"AccessLevel": "Hidden"
@@ -14,10 +14,34 @@
 				"AccessLevel": "Hidden"
 			},
 			{
-				"FunctionName": "QuickSearch",
+				"FunctionName": "AdvancedSearch",
 				"AccessLevel": "ReadOnly"
 			}
 		]
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [
+			{
+				"Name": "TestJo",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "counterparty",
+							"ColumnValues": [
+								"Credit Suisse",
+								"Deutsche Bank",
+								"Goldman Sachs"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilters": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		],
+		"CurrentAdvancedSearch": ""
 	},
 	"SmartEdit": {
 		"SmartEditValue": "12345",

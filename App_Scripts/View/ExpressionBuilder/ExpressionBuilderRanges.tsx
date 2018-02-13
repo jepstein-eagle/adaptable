@@ -18,15 +18,15 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         let rangesElement: JSX.Element[] = null
         if (this.props.DataType == DataType.Number || this.props.DataType == DataType.Date) {
             rangesElement = this.props.Ranges.map((x, index) => {
-                let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThan)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.LessThanOrEqual)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Equals)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.NotEquals)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Between)}</MenuItem>
+                let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToShortFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.LessThan)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.LessThanOrEqual)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Equals)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.NotEquals)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Between)}</MenuItem>
                 </DropdownButton>
                 if (x.Operator == LeafExpressionOperator.Between) {
                     return <AdaptableBlotterForm key={index}>
@@ -81,13 +81,13 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         }
         else if (this.props.DataType == DataType.String) {
             rangesElement = this.props.Ranges.map((x, index) => {
-                let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotContains)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.NotContains)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.StartsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.StartsWith)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Regex)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Regex)}</MenuItem>
+                let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToShortFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotContains)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.NotContains)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.StartsWith)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.StartsWith)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.EndsWith)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.EndsWith)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Regex)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Regex)}</MenuItem>
                 </DropdownButton>
                 return <AdaptableBlotterForm key={index} >
                     <FormGroup controlId={"Range" + index}>

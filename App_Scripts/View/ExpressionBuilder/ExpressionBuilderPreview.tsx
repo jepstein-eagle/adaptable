@@ -95,7 +95,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
                                 <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
-                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                        {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button  bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
                                         </OverlayTrigger>
@@ -107,7 +107,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             return <ListGroupItem key={columnId + index}>
                                 <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
-                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
+                                        {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{y.Operand1}{' '}And{' '}{y.Operand2}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button  bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
                                         </OverlayTrigger>
@@ -121,7 +121,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
                                 <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
-                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                        {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button  bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
                                         </OverlayTrigger>
@@ -133,7 +133,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             return <ListGroupItem key={columnId + index}>
                                 <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
-                                        {ExpressionHelper.OperatorToFriendlyString(y.Operator)}{' '}{y.Operand1}
+                                        {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{y.Operand1}
                                         <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
                                             <Button  bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
                                         </OverlayTrigger>

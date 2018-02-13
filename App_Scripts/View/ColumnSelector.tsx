@@ -12,6 +12,9 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     SelectionMode: SelectionMode
 }
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
+ 
+   
+ 
     componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
         //if there was a selected column and parent unset the column we then clear the component 
         // otherwise it's correctly unselected but the input still have the previsous selected column text
@@ -21,12 +24,17 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         if (propsSelectedColumnIds.length == 0 && nextPropsSelectedColumnIds.length == 0) {
             (this.refs.typeahead as any).getInstance().clear()
         }
+
+    
     }
+   
     render() {
         let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x))
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
         let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
+
+        let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
         return <Typeahead ref="typeahead" emptyLabel={"No Column found with that search"}
             placeholder={placeHolder}
@@ -35,14 +43,14 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
             multiple={this.props.SelectionMode == SelectionMode.Multi}
             clearButton={true}
             selected={selectedColums}
-            onChange={(selected) => { this.onColumnChange(selected) }}
+            onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
             options={sortedColumns}
             disabled={this.props.disabled}
         />
     }
 
-    onColumnChange(selected: IColumn[]) {
-        if (selected.length == 0 && this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0) {
+    onColumnChange(selected: IColumn[], isEmptySelection: boolean) {
+        if (selected.length == 0 && isEmptySelection) {
             return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
         this.props.onColumnChange(selected)

@@ -173,7 +173,7 @@ export module ExpressionHelper {
         return returnValue
     }
 
-    export function OperatorToFriendlyString(operator: LeafExpressionOperator): string {
+    export function OperatorToShortFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {
             case LeafExpressionOperator.Unknown:
                 return "Select"
@@ -204,6 +204,56 @@ export module ExpressionHelper {
         }
     }
 
+    export function OperatorToLongFriendlyString(leafExpressionOperator: LeafExpressionOperator, dataType: DataType): string {
+        switch (leafExpressionOperator) {
+            case LeafExpressionOperator.None:
+                return "Any Edit"
+            case LeafExpressionOperator.Unknown:
+                return "Select Rule Operator"
+            case LeafExpressionOperator.Equals:
+                return "Equals "
+            case LeafExpressionOperator.NotEquals:
+                return "Not Equals "
+            case LeafExpressionOperator.GreaterThan:
+                if (dataType== DataType.Date) {
+                    return "After "
+                } else {
+                    return "Greater Than "
+                }
+            case LeafExpressionOperator.LessThan:
+                if (dataType == DataType.Date) {
+                    return "Before "
+                } else {
+                    return "Less Than "
+                }
+            case LeafExpressionOperator.Between:
+                return " Between "
+            case LeafExpressionOperator.NotBetween:
+                return "Not Between "
+            case LeafExpressionOperator.IsPositive:
+                return "Is Positive ";
+            case LeafExpressionOperator.IsNegative:
+                return "Is Negative ";
+            case LeafExpressionOperator.ValueChange:
+                return "Change In Value Less Than "
+            case LeafExpressionOperator.PercentChange:
+                return "% Change Is Less Than "
+            case LeafExpressionOperator.IsTrue:
+                return "Is True "
+            case LeafExpressionOperator.IsFalse:
+                return "Is False "
+            case LeafExpressionOperator.Contains:
+                return "Contains "
+            case LeafExpressionOperator.NotContains:
+                return "Not Contains "
+            case LeafExpressionOperator.StartsWith:
+                return "Starts With "
+            case LeafExpressionOperator.Regex:
+                return "Matches Expression "
+
+          }
+    }
+
     function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IRangeExpression> }, columnFriendlyName: string): string {
         let returnValue = ""
         for (let range of keyValuePair.Ranges) {
@@ -211,10 +261,10 @@ export module ExpressionHelper {
                 returnValue += " OR "
             }
             if (range.Operator == LeafExpressionOperator.Between) {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1 + " AND " + range.Operand2
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + range.Operand1 + " AND " + range.Operand2
             }
             else {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToFriendlyString(range.Operator) + " " + range.Operand1
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + range.Operand1
             }
         }
         return returnValue

@@ -128,10 +128,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        if (columns.length > 0 && this.state.SelectedColumn == columns[0]) {
-            return;
-        }
-          this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
+            this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
     }
 
     private isStrategyVisible(strategyID: string): boolean {

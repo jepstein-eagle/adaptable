@@ -1,12 +1,13 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator } from '../Core/Enums'
-import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl,  ListGroup,  ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
+import { DistinctCriteriaPairValue, FilterFormMode, LeafExpressionOperator, DataType } from '../Core/Enums'
+import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRangeExpression } from '../Core/Interface/IExpression'
 import { IRawValueDisplayValuePair } from "./Interfaces";
+import * as CalendarConstants from '../Core/Constants/CalendarConstants';
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -17,6 +18,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
     ColumnValueType: DistinctCriteriaPairValue
+    Operators: Array<LeafExpressionOperator>
 }
 
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
@@ -104,31 +106,35 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             value={this.state.FilterValue}
             OnTextChange={(x) => this.onUpdateFilterSearch(x)} />
 
-        let numericAndDateOption = <DropdownButton bsSize={"xsmall"} style={dropDownNumbDateStyle}
-            title={ExpressionHelper.OperatorToFriendlyString(this.state.LeafExpressionOperator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
-            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
-            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
-            <MenuItem onClick={() => this.onLeafExpressionOperatorChange(LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
-        </DropdownButton>
+        // Getting operators for the Advanced Menu
+           let operatorTypes = this.props.Operators.map((operator: LeafExpressionOperator) => {
+            return <option key={operator} value={operator.toString()}>{ExpressionHelper.OperatorToShortFriendlyString(operator)}</option>
+        })
 
-        let test = <AdaptableBlotterForm key={'form'} inline>
-            <FormGroup controlId={"Range"}>
-                {numericAndDateOption}
-                <FormControl value={String(this.state.LeafExpressionOperator)} style={{ width: "50px" }} type="number" placeholder="Number" onChange={(e) => this.onOperand1Edit(e)} />
-
-            </FormGroup>
-        </AdaptableBlotterForm>
-
-        let optionTest = <div>
+        let currentOperator: LeafExpressionOperator = this.state.IRangeExpression != null ? this.state.IRangeExpression.Operator : LeafExpressionOperator.Unknown;
+       let currentOperand1: string = this.state.IRangeExpression != null ? this.state.IRangeExpression.Operand1 : "";
+       let currentOperand2: string = this.state.IRangeExpression != null ? this.state.IRangeExpression.Operand2 : "";
+       
+       let operators =  <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={currentOperator} onChange={(x) => this.onLeafExpressionOperatorChange(x)} >
+                {operatorTypes}
+            </FormControl>
+      
+         let filterFormModeCheckbox = <div>
             <Checkbox style={radioButtonStyle} onChange={(e) => this.onFilterFormModeChanged(e)} checked={this.state.FilterFormMode == FilterFormMode.Dynamic}>Use Advanced</Checkbox>
 
         </div>
 
         return <div>
-
+            {} {/* put filterFormModeCheckbox here when wanting to show advanced screen */}
 
             {this.state.FilterFormMode == FilterFormMode.Dynamic &&
-                test
+               <AdaptableBlotterForm inline>
+               <FormGroup controlId={"Range"}>
+                   {operators}
+                   <FormControl value={currentOperand1} style={{ width: "50px" }} type="number" placeholder="Number" onChange={(e) => this.onOperand1Edit(e)} />
+   
+               </FormGroup>
+           </AdaptableBlotterForm>
             }
             {this.state.FilterFormMode == FilterFormMode.Basic &&
                 <div>
@@ -209,11 +215,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         this.setState({ UiSelectedUserFilters: allArray, UiSelectedColumnValues: this.state.UiSelectedUserFilters, FilterValue: this.state.FilterValue, LeafExpressionOperator: LeafExpressionOperator.Unknown, FilterFormMode: FilterFormMode.Basic, IRangeExpression: null } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
     }
 
-    private onLeafExpressionOperatorChange(x: LeafExpressionOperator) {
+    private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
         //  let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
         //  let range = this.props.Ranges[index]
         //  rangeCol[index] = Object.assign({}, range, { Operator: x })
-        this.setState({ LeafExpressionOperator: x } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
+        let e = event.target as HTMLInputElement;
+        this.setState({ LeafExpressionOperator: e.value } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
 
     }
 
@@ -230,6 +237,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         let filterFormMode: FilterFormMode = (e.checked) ? FilterFormMode.Dynamic : FilterFormMode.Basic;
         this.setState({ FilterFormMode: filterFormMode } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
     }
+
 }
 
 let divStyle: React.CSSProperties = {
