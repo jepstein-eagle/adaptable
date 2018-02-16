@@ -17,7 +17,8 @@ import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
 import { IRawValueDisplayValuePair } from "./Interfaces";
-
+import { IRangeExpression } from '../Core/Interface/IExpression'
+import { ButtonClear } from "./Components/Buttons/ButtonClear";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -26,7 +27,6 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     ColumnValueType: DistinctCriteriaPairValue,
-    onHideFilterForm: () => ColumnFilterRedux.HideFilterFormAction
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, {}> {
@@ -48,96 +48,109 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         }
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-        let uiSelectedColumnValues: String[]
+        let uiSelectedColumnValues: string[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []
+            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ?
+                existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []
         }
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ? existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
+            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
+                existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
         }
+
+        let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ?
+            existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
+
+        let UiSelectedRangeExpression: IRangeExpression = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
+            existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper.CreateEmptyRnageExpression();
 
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
-        let closeButton = <ButtonClose onClick={() => this.props.onHideFilterForm()}
+        let clearButton = <ButtonClear onClick={() => this.onClearFilter()}
             style={buttonCloseStyle}
             size={"xsmall"}
-            overrideTooltip="Close"
-            DisplayMode="Glyph" />
+            overrideDisableButton={existingColumnFilter == null}
+            overrideTooltip="Clear Filter"
+            DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={closeButton}>
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={clearButton}>
             <ListBoxFilterForm ColumnValues={columnValuePairs}
+                DataType={this.props.CurrentColumn.DataType}
                 UiSelectedColumnValues={uiSelectedColumnValues}
-                UiSelectedUserFilters={existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ? existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []}
+                UiSelectedUserFilters={uiSelectedUserFilters}
+                UiSelectedRange={UiSelectedRangeExpression}
                 UserFilters={userFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
                 onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
                 ColumnValueType={this.props.ColumnValueType}
-                Operators={leafExpressionOperators}>
+                Operators={leafExpressionOperators}
+                onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
             </ListBoxFilterForm>
         </PanelWithButton>
     }
 
     getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
-        switch (dataType) {
-            case DataType.Boolean:
-                return null;
-            case DataType.Number:
-                return [LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
-            default:
-            return [LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
-        }
+        return ExpressionHelper.GetOperatorsForDataType(dataType);
     }
-
 
     onClickColumValue(columnValues: string[]) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+
         let userFilterUids = existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ?
             existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
 
-        let expression: Expression
-        if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilterUids, [])
-        }
-        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
-        }
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
-        //delete if empty
-        if (columnValues.length == 0 && userFilterUids.length == 0) {
-            this.props.onDeleteColumnFilter(columnFilter);
-            return
-        } else {
-            this.props.onAddEditColumnFilter(columnFilter);
-        }
+        let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
+            existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
+
+        this.persistFilter(columnValues, userFilterUids, rangeExpressions);
     }
 
     onClickUserFilter(userFilterUids: string[]) {
-
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
-        if (userFilterUids.find(s => s == "All")) {
-            existingColumnFilter = null;
-            userFilterUids = [];
-        }
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
             existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
 
+        let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
+            existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
+
+        this.persistFilter(columnValues, userFilterUids, rangeExpressions);
+    }
+
+    onSetCustomExpression(rangeExpression: IRangeExpression) {
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+
+        let userFilterUids = existingColumnFilter && existingColumnFilter.Filter.UserFilters.length > 0 ?
+            existingColumnFilter.Filter.UserFilters[0].UserFilterUids : []
+
+        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
+
+        this.persistFilter(columnValues, userFilterUids, [rangeExpression]);
+    }
+
+    persistFilter(columnValues: string[], userFilterUids: string[], rangeExpressions: IRangeExpression[]): void {
         let expression: Expression
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilterUids, [])
+            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilterUids, rangeExpressions)
         }
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, [])
+            expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilterUids, rangeExpressions)
         }
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
+
         //delete if empty
-        if (columnValues.length == 0 && userFilterUids.length == 0) {
+        if (columnValues.length == 0 && userFilterUids.length == 0 && rangeExpressions.length == 0) {
             this.props.onDeleteColumnFilter(columnFilter);
-            return
         } else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
     }
+
+    onClearFilter() {
+        this.persistFilter([], [], [])
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -152,7 +165,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterDelete(columnFilter)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
-        onHideFilterForm: () => dispatch(ColumnFilterRedux.HideFilterForm())
     };
 }
 
@@ -166,9 +178,8 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
 </Provider>;
 
 let panelStyle = {
-    width: '130px'
+    width: '175px'
 }
-
 
 let buttonCloseStyle = {
     margin: '0px',

@@ -209,13 +209,13 @@ export module ExpressionHelper {
             case LeafExpressionOperator.None:
                 return "Any Edit"
             case LeafExpressionOperator.Unknown:
-                return "Select Rule Operator"
+                return "Select Operator "
             case LeafExpressionOperator.Equals:
                 return "Equals "
             case LeafExpressionOperator.NotEquals:
                 return "Not Equals "
             case LeafExpressionOperator.GreaterThan:
-                if (dataType== DataType.Date) {
+                if (dataType == DataType.Date) {
                     return "After "
                 } else {
                     return "Greater Than "
@@ -225,6 +225,18 @@ export module ExpressionHelper {
                     return "Before "
                 } else {
                     return "Less Than "
+                }
+            case LeafExpressionOperator.GreaterThanOrEqual:
+                if (dataType == DataType.Date) {
+                    return "After or On "
+                } else {
+                    return "Greater Than or Equals "
+                }
+            case LeafExpressionOperator.LessThanOrEqual:
+                if (dataType == DataType.Date) {
+                    return "Before or On "
+                } else {
+                    return "Less Than or Equals "
                 }
             case LeafExpressionOperator.Between:
                 return " Between "
@@ -251,7 +263,35 @@ export module ExpressionHelper {
             case LeafExpressionOperator.Regex:
                 return "Matches Expression "
 
-          }
+        }
+    }
+
+    export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
+        switch (dataType) {
+            case DataType.Boolean:
+                return null;
+            case DataType.Number:
+            case DataType.Date:
+                return [
+                    LeafExpressionOperator.Unknown,
+                    LeafExpressionOperator.GreaterThan,
+                    LeafExpressionOperator.GreaterThanOrEqual,
+                    LeafExpressionOperator.LessThan,
+                    LeafExpressionOperator.LessThanOrEqual,
+                    LeafExpressionOperator.Equals,
+                    LeafExpressionOperator.NotEquals,
+                    LeafExpressionOperator.Between];
+            case DataType.String:
+                return [
+                    LeafExpressionOperator.Unknown,
+                    LeafExpressionOperator.Contains,
+                    LeafExpressionOperator.StartsWith,
+                    LeafExpressionOperator.Equals,
+                    LeafExpressionOperator.NotEquals,
+                    LeafExpressionOperator.Regex];
+            default:
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
+        }
     }
 
     function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IRangeExpression> }, columnFriendlyName: string): string {
@@ -330,6 +370,9 @@ export module ExpressionHelper {
         return new Expression([], [], [], [])
     }
 
+    export function CreateEmptyRnageExpression(): IRangeExpression {
+        return {Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: ""}
+    }
 
     export function GetRangeEvaluation(rangeExpression: IRangeExpression, newValue: any, initialValue: any, column: IColumn): IRangeEvaluation {
         let rangeEvaluation: IRangeEvaluation = {

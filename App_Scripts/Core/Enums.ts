@@ -142,10 +142,6 @@ export enum FontSize {
     XLarge = "XLarge"
 }
 
-export enum FilterFormMode {
-    Basic = "Basic",
-    Dynamic = "Dynamic"
-}
 
 export enum PanelWidth{
     Wide="800px",

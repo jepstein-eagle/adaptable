@@ -26,7 +26,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
     
     protected addColumnMenuItem(columnId: string): void {
-            let customSort = this.CustomSorts.findIndex(x => x.ColumnId == columnId);
+            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
             let label = (customSort) ? "Edit " : "Create "
             let popupParam = (customSort) ? "Edit|" : "New|"
             this.createMenuItemColumnMenu(
