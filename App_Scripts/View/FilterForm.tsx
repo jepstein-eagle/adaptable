@@ -17,7 +17,7 @@ import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
 import { IRawValueDisplayValuePair } from "./Interfaces";
-import { IRangeExpression } from '../Core/Interface/IExpression'
+import { IRange } from '../Core/Interface/IExpression'
 import { ButtonClear } from "./Components/Buttons/ButtonClear";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
@@ -51,18 +51,18 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let uiSelectedColumnValues: string[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnValues : []
+                existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnRawValues : []
         }
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
+                existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
         }
 
         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.UserFilterExpressions.length > 0 ?
             existingColumnFilter.Filter.UserFilterExpressions[0].UserFilters : []
 
-        let UiSelectedRangeExpression: IRangeExpression = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
-            existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper.CreateEmptyRnageExpression();
+        let UiSelectedRangeExpression: IRange = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
+            existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper.CreateEmptyRangeExpression();
 
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
@@ -109,7 +109,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
+            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
 
         let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
@@ -117,19 +117,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         this.persistFilter(columnValues, userFilters, rangeExpressions);
     }
 
-    onSetCustomExpression(rangeExpression: IRangeExpression) {
+    onSetCustomExpression(rangeExpression: IRange) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.UserFilterExpressions.length > 0 ?
             existingColumnFilter.Filter.UserFilterExpressions[0].UserFilters : []
 
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnValues : []
+            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
 
         this.persistFilter(columnValues, userFilters, [rangeExpression]);
     }
 
-    persistFilter(columnValues: string[], userFilters: string[], rangeExpressions: IRangeExpression[]): void {
+    persistFilter(columnValues: string[], userFilters: string[], rangeExpressions: IRange[]): void {
         let expression: Expression
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], columnValues, userFilters, rangeExpressions)

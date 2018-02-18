@@ -1,6 +1,6 @@
 import { LeafExpressionOperator, DataType } from '../Enums'
 
-export interface IRangeExpression {
+export interface IRange {
     Operator: LeafExpressionOperator;
     Operand1: string;
     Operand2: string;

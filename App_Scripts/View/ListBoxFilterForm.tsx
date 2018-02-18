@@ -5,7 +5,7 @@ import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
-import { IRangeExpression } from '../Core/Interface/IExpression'
+import { IRange } from '../Core/Interface/IExpression'
 import { IRawValueDisplayValuePair } from "./Interfaces";
 import * as CalendarConstants from '../Core/Constants/CalendarConstants';
 
@@ -14,10 +14,10 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     UserFilters: Array<IRawValueDisplayValuePair>
     UiSelectedColumnValues: Array<string>
     UiSelectedUserFilters: Array<string>
-    UiSelectedRange: IRangeExpression
+    UiSelectedRange: IRange
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
-    onCustomRangeExpressionChange: (rangeExpression: IRangeExpression) => void
+    onCustomRangeExpressionChange: (rangeExpression: IRange) => void
     ColumnValueType: DistinctCriteriaPairValue
     Operators: Array<LeafExpressionOperator>
     DataType: DataType
@@ -26,7 +26,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
     UiSelectedColumnValues: Array<string>
     UiSelectedUserFilters: Array<string>
-    UiSelectedRange: IRangeExpression
+    UiSelectedRange: IRange
     FilterValue: string
 }
 
@@ -233,19 +233,19 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRangeExpression = { Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = { Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand1Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRangeExpression = { Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = { Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand2Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRangeExpression = { Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
+        let newRange: IRange = { Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 

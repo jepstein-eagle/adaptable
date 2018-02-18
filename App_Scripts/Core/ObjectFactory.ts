@@ -45,7 +45,7 @@ export module ObjectFactory {
         return {
             CellValidationMode: CellValidationMode.StopEdit,
             ColumnId: "",
-            RangeExpression: {
+            Range: {
                 Operator: LeafExpressionOperator.None,
                 Operand1: "",
                 Operand2: ""

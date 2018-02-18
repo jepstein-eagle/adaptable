@@ -61,9 +61,9 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     DeleteColumnValue(columnId: string, value: any) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let columnValues = this.state.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == columnId)
-        let index = columnValues.ColumnValues.indexOf(value)
-        columnValues.ColumnValues.splice(index, 1)
-        if (columnValues.ColumnValues.length == 0) {
+        let index = columnValues.ColumnDisplayValues.indexOf(value)
+        columnValues.ColumnDisplayValues.splice(index, 1)
+        if (columnValues.ColumnDisplayValues.length == 0) {
             let columnValuesIndex = this.state.Expression.ColumnDisplayValuesExpressions.findIndex(x => x.ColumnName == columnId)
             this.state.Expression.ColumnDisplayValuesExpressions.splice(columnValuesIndex, 1)
         }

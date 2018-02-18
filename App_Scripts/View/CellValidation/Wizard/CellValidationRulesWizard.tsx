@@ -3,7 +3,7 @@ import { Radio, FormGroup, FormControl,  Col, Panel,  HelpBlock } from 'react-bo
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { IRangeExpression } from '../../../Core/Interface/IExpression';
+import { IRange } from '../../../Core/Interface/IExpression';
 import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
@@ -23,9 +23,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     constructor(props: CellValidationRulesWizardProps) {
         super(props)
         this.state = {
-            Operator: this.props.Data.RangeExpression.Operator,
-            Operand1: this.props.Data.RangeExpression.Operand1,
-            Operand2: this.props.Data.RangeExpression.Operand2,
+            Operator: this.props.Data.Range.Operator,
+            Operand1: this.props.Data.Range.Operand1,
+            Operand2: this.props.Data.Range.Operand2,
         }
     }
 
@@ -151,26 +151,26 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     createCellValidationDescription(CellValidation: ICellValidationRule): string {
 
-        let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(CellValidation.RangeExpression.Operator, this.getColumnDataTypeFromState());
+        let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(CellValidation.Range.Operator, this.getColumnDataTypeFromState());
 
-        if (!this.operatorRequiresValue(CellValidation.RangeExpression.Operator)) {
+        if (!this.operatorRequiresValue(CellValidation.Range.Operator)) {
             return valueDescription;
         }
         let dataType: DataType = this.props.Columns.find(c => c.ColumnId == CellValidation.ColumnId).DataType;
         let operand1Text: string = (dataType == DataType.Boolean || dataType == DataType.Number) ?
-            CellValidation.RangeExpression.Operand1 :
-            "'" + CellValidation.RangeExpression.Operand1 + "'"
+            CellValidation.Range.Operand1 :
+            "'" + CellValidation.Range.Operand1 + "'"
 
         valueDescription = valueDescription + operand1Text;
 
-        if (CellValidation.RangeExpression.Operator == LeafExpressionOperator.PercentChange) {
+        if (CellValidation.Range.Operator == LeafExpressionOperator.PercentChange) {
             valueDescription = valueDescription + '%';
         }
 
-        if (StringExtensions.IsNotNullOrEmpty(CellValidation.RangeExpression.Operand2)) {
+        if (StringExtensions.IsNotNullOrEmpty(CellValidation.Range.Operand2)) {
             let operand2Text: string = (dataType == DataType.Number) ?
-                " and " + CellValidation.RangeExpression.Operand2 :
-                " and '" + CellValidation.RangeExpression.Operand2 + "'";
+                " and " + CellValidation.Range.Operand2 :
+                " and '" + CellValidation.Range.Operand2 + "'";
             valueDescription = valueDescription + operand2Text;
         }
         return valueDescription;
@@ -197,12 +197,12 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        var rangeExpression: IRangeExpression = {
+        var rangeExpression: IRange = {
             Operator: this.state.Operator,
             Operand1: this.state.Operand1,
             Operand2: this.state.Operand2
         }
-        this.props.Data.RangeExpression = rangeExpression;
+        this.props.Data.Range = rangeExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
     }
 

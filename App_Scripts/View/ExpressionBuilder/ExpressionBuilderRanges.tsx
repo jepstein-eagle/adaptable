@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DataType } from '../../Core/Enums'
-import { IRangeExpression } from '../../Core/Interface/IExpression'
+import { IRange } from '../../Core/Interface/IExpression'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -9,8 +9,8 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     DataType: DataType
-    Ranges: Array<IRangeExpression>
-    onRangesChange: (Ranges: Array<IRangeExpression>) => void
+    Ranges: Array<IRange>
+    onRangesChange: (Ranges: Array<IRange>) => void
 }
 
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesProps, {}> {
@@ -124,7 +124,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     }
 
     private onLeafExpressionOperatorChange(index: number, x: LeafExpressionOperator) {
-        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operator: x })
         this.props.onRangesChange(rangeCol)
@@ -132,7 +132,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
     private onOperand1Edit(index: number, x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
-        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operand1: e.value })
         this.props.onRangesChange(rangeCol)
@@ -140,7 +140,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
     private onOperand2Edit(index: number, x: React.FormEvent<any>) {
         let e = x.target as HTMLInputElement;
-        let rangeCol: Array<IRangeExpression> = [].concat(this.props.Ranges)
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operand2: e.value })
         this.props.onRangesChange(rangeCol)

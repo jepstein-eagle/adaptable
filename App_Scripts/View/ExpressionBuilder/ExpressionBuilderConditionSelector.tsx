@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IRangeExpression } from '../../Core/Interface/IExpression'
+import { IRange } from '../../Core/Interface/IExpression'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
@@ -34,7 +34,7 @@ export interface ExpressionBuilderConditionSelectorState {
     SelectedColumnValues: Array<any>
     UserFilterExpresions: Array<string>
     SelectedUserFilterExpresions: Array<string>
-    SelectedColumnRanges: Array<IRangeExpression>
+    SelectedColumnRanges: Array<IRange>
 }
 
 export class ExpressionBuilderConditionSelector extends React.Component<ExpressionBuilderConditionSelectorProps, ExpressionBuilderConditionSelectorState> {
@@ -64,12 +64,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         else {
             let selectedColumnValues: Array<any>
             let selectedColumnUserFilterExpressions: Array<string>
-            let selectedColumnRanges: Array<IRangeExpression>
+            let selectedColumnRanges: Array<IRange>
 
             // get column values
             let keyValuePair = theProps.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
             if (keyValuePair) {
-                selectedColumnValues = keyValuePair.ColumnValues
+                selectedColumnValues = keyValuePair.ColumnDisplayValues
             }
             else {
                 selectedColumnValues = []
@@ -197,7 +197,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.setState({ IsFirstTime: false } as ExpressionBuilderConditionSelectorState, () => this.props.onSelectedColumnChange(""))
     }
 
-    onSelectedColumnRangesChange(selectedRanges: Array<IRangeExpression>) {
+    onSelectedColumnRangesChange(selectedRanges: Array<IRange>) {
 
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let colRangesExpression = this.props.Expression.RangeExpressions
@@ -227,11 +227,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 colValuesExpression.splice(keyValuePairIndex, 1)
             }
             else {
-                valuesCol.ColumnValues = selectedColumnValues
+                valuesCol.ColumnDisplayValues = selectedColumnValues
             }
         }
         else {
-            colValuesExpression.push({ ColumnName: this.props.SelectedColumnId, ColumnValues: selectedColumnValues })
+            colValuesExpression.push({ ColumnName: this.props.SelectedColumnId, ColumnDisplayValues: selectedColumnValues })
         }
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnDisplayValuesExpressions: colValuesExpression }))
         this.setState({ SelectedColumnValues: selectedColumnValues } as ExpressionBuilderConditionSelectorState)

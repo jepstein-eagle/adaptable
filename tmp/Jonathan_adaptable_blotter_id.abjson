@@ -99,7 +99,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "country",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"Belgium",
 								"Egypt"
 							]
@@ -131,7 +131,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "counterparty",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"Credit Suisse",
 								"Deutsche Bank",
 								"Goldman Sachs"

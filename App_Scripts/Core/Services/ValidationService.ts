@@ -81,10 +81,10 @@ export class ValidationService implements IValidationService {
     // changing this so that it now checks the opposite!
     private IsCellValidationRuleBroken(cellValidationRule: ICellValidationRule, dataChangedEvent: IDataChangingEvent, columns: IColumn[]): boolean {
         // if its none then validation fails immediately
-        if (cellValidationRule.RangeExpression.Operator == LeafExpressionOperator.None) {
+        if (cellValidationRule.Range.Operator == LeafExpressionOperator.None) {
             return true;
         }
-        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.RangeExpression, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent),columns.find(c => c.ColumnId == dataChangedEvent.ColumnId))
+        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent),columns.find(c => c.ColumnId == dataChangedEvent.ColumnId))
         return ExpressionHelper.TestRangeEvaluation(rangeEvaluation)
     }
 

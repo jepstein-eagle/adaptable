@@ -100,7 +100,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "bloombergBid",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"13.5883"
 							]
 						}
@@ -161,7 +161,7 @@
 					"UserFilterExpressions": [
 						{
 							"ColumnName": "bloombergBid",
-							"UserFilterExpressions": [
+							"UserFilters": [
 								"NumericBlanks"
 							]
 						}
@@ -176,7 +176,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "counterparty",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"BNP",
 								"Credit Suisse",
 								"Deutsche Bank"
@@ -202,7 +202,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "currency",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"CAD",
 								"EUR",
 								"USD"
@@ -224,7 +224,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "ask",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"12.5612",
 								"12.9991"
 							]
@@ -409,7 +409,7 @@
 					"ColumnDisplayValuesExpressions": [
 						{
 							"ColumnName": "counterparty",
-							"ColumnValues": [
+							"ColumnDisplayValues": [
 								"BNP",
 								"Credit Suisse"
 							]
