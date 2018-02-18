@@ -33,7 +33,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     }
 
     render() {
-        let infoBody: any[] = ["Column Filters are Column Queries that can be named and re-used.", <br />, <br />]
+        let infoBody: any[] = ["Column Filters are set using the filter dropdown in the column header menu.", <br />, <br />,
+        "This popup allows you to see which columns have filters applied with an option to clear them."]
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },

@@ -18,11 +18,11 @@ export module ReportHelper {
     export function GetReportColumnsDescription(Report: IReport, cols: IColumn[]): string {
         switch (Report.ReportColumnScope) {
             case ReportColumnScope.AllColumns:
-                return "All Columns";
+                return "[All Columns]";
             case ReportColumnScope.VisibleColumns:
-                return "Visible Columns";
+                return "[Visible Columns]";
             case ReportColumnScope.SelectedColumns:
-                return "Selected Columns";
+                return "[Selected Columns]";
             case ReportColumnScope.BespokeColumns:
                 return Report.Columns.map(c =>
                     cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
@@ -32,11 +32,11 @@ export module ReportHelper {
     export function GetReportExpressionDescription(Report: IReport, cols: IColumn[], userFilters: IUserFilter[]): string {
         if (IsSystemReport(Report)) {
             if (Report.Name == ALL_DATA_REPORT) {
-                return "All Blotter Data";
+                return "[All Blotter Data]";
             } else if (Report.Name == VISIBLE_DATA_REPORT) {
-                return "All Visible Data";
+                return "[All Visible Data]";
             } else if (Report.Name == SELECTED_CELLS_REPORT) {
-                return "Selected Cells Data";
+                return "[Selected Cells Data]";
             }
         }
         return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols, userFilters)

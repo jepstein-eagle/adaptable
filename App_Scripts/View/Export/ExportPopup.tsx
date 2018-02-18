@@ -61,9 +61,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let colItems: IColItem[] = [
             { Content: "Report", Size: 2 },
-            { Content: "Columns", Size: 3 },
-            { Content: "Expression", Size: 3 },
-            { Content: "", Size: 1 },
+            { Content: "Columns", Size: 2 },
+            { Content: "Query", Size: 3 },
+            { Content: "", Size: 2 },
             { Content: "", Size: 3 },
         ]
 
