@@ -41,7 +41,7 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
                 </Col>
                 <Col xs={12} style={radioMarginStyle}>
                     <AdaptableBlotterForm inline>
-                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Column(s) </Radio>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Column </Radio>
                         {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>

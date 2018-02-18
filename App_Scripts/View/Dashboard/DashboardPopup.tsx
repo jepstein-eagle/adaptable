@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { FormControl, ControlLabel,  Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
+import { FormControl, Row, Col, ControlLabel, Button, ListGroup, Glyphicon, Label } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -58,26 +58,37 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 //we want to prevent people from hiding the Functions dropdown
                 //      visibleButton = null
             }
-
-            let colItems: IColItem[] = []
-            colItems.push({
-                Size: 3, Content:
-                    <span> <Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
-                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</span>
-            });
-            colItems.push({
-                Size: 2, Content: visibleButton
-            });
-            colItems.push({
-                Size: 6, Content: <span style={previewStyle}>{dashboardElememt}</span>
-            });
-            return <ConfigEntityRowItem key={i} ColItems={colItems} />
+            /*
+                        let colItems: IColItem[] = []
+                        colItems.push({
+                            Size: 3, Content:
+                                <span> <Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
+                                    onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</span>
+                        });
+                        colItems.push({
+                            Size: 2, Content: visibleButton
+                        });
+                        colItems.push({
+                            Size: 6, Content: <span style={previewStyle}>{dashboardElememt}</span>
+                        });
+                        */
+            return <li key={"DashboardControl" + i}
+                className="list-group-item">
+                <Row style={{ display: "flex", alignItems: "center" }}>
+                    <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
+                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}
+                    </Col>
+                    <Col xs={2}>{visibleButton}</Col>
+                    <Col xs={6} style={previewStyle}>{dashboardElememt}
+                    </Col>
+                </Row>
+            </li>
         })
 
         let colItems: IColItem[] = [
-            {Content: "Control", Size: 3}, 
-            {Content: "Show/Hide", Size: 2}, 
-            {Content: "Preview", Size: 7}, 
+            { Content: "Control", Size: 3 },
+            { Content: "Show/Hide", Size: 2 },
+            { Content: "Preview", Size: 7 },
         ]
         return (
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} style={panelStyle}>
@@ -94,7 +105,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                     onDragLeave={(event) => this.DragLeave(event)}>
                     {radioDashboardControls}
                 </ListGroup>
-               
+
             </PanelWithImage>
         );
     }
@@ -113,7 +124,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         }
     }
 
-      onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
+    onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
         this.props.onChangeControlVisibility(dashboardControl.Strategy, visible);
     }
 
