@@ -59,7 +59,7 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -70,15 +70,12 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
 			}
 		]
-	},
-	"Export": {
-		"IPPDomainsPages": []
 	},
 	"FlashingCell": {
 		"FlashingColumns": []
@@ -109,7 +106,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -142,55 +139,13 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
 			}
 		],
 		"CurrentAdvancedSearch": ""
-	},
-	"Filter": {
-		"UserFilters": [
-			{
-				"Uid": "Test Counterparty",
-				"Description": "([Counterparty] In (BNP, Deutsche Bank))",
-				"DataType": "String",
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [
-						{
-							"ColumnName": "counterparty",
-							"ColumnValues": [
-								"BNP",
-								"Deutsche Bank"
-							]
-						}
-					],
-					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			}
-		],
-		"ColumnFilters": [
-			{
-				"ColumnId": "counterparty",
-				"Filter": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilters": [
-						{
-							"ColumnName": "counterparty",
-							"UserFilterUids": [
-								"428e7f6e-eb1f-44c8-b769-a0478397620f"
-							]
-						}
-					],
-					"RangeExpressions": []
-				}
-			}
-		]
 	},
 	"Theme": {
 		"CurrentTheme": "Default"
@@ -209,7 +164,7 @@
 				"OtherExpression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"Description": "No Changes Allowed",
@@ -330,9 +285,10 @@
 		],
 		"EditedCalculatedColumnInvalidErrorMsg": null
 	},
-	"Range": {
-		"Ranges": [],
-		"CurrentRange": "",
+	"Export": {
+		"IPPDomainsPages": [],
+		"Reports": [],
+		"CurrentReport": "",
 		"ErrorMsg": ""
 	},
 	"FormatColumn": {

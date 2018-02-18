@@ -1,13 +1,13 @@
 import * as React from "react";
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
-import { RangeColumnsWizard } from './RangeColumnsWizard'
-import { RangeExpressionWizard } from './RangeExpressionWizard'
-import { RangeNameWizard } from './RangeNameWizard'
-import { IRange } from '../../../Strategy/Interface/IExportStrategy';
+import { ReportColumnsWizard } from './ReportColumnsWizard'
+import { ReportExpressionWizard } from './ReportExpressionWizard'
+import { ReportNameWizard } from './ReportNameWizard'
+import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
-export class RangeWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<RangeWizard>, {}> {
+export class ReportWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<ReportWizard>, {}> {
 
     render() {
         let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name"]
@@ -15,14 +15,14 @@ export class RangeWizard extends React.Component<IConfigEntityExpressionAdaptabl
         FriendlyName={StrategyNames.ExportStrategyName}
         StepNames={stepNames}
       Steps={[
-            <RangeColumnsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-            <RangeExpressionWizard StepName={stepNames[1]} Columns={this.props.Columns}
+            <ReportColumnsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+            <ReportExpressionWizard StepName={stepNames[1]} Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 SelectedColumnId={null}
                 getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-            <RangeNameWizard StepName={stepNames[2]} Ranges={this.props.ConfigEntities as IRange[]} />,
+            <ReportNameWizard StepName={stepNames[2]} Reports={this.props.ConfigEntities as IReport[]} />,
         ]}
-            Data={this.props.EditedConfigEntity as IRange}
+            Data={this.props.EditedConfigEntity as IReport}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.onCloseWizard()}
             onFinish={() => this.props.onFinishWizard()} />

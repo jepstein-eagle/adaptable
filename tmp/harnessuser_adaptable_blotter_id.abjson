@@ -51,7 +51,7 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -62,17 +62,14 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
 			}
 		]
 	},
-	"Export": {
-		"IPPDomainsPages": []
-	},
-	"FlashingCell": {
+		"FlashingCell": {
 		"FlashingColumns": [
 			{
 				"IsLive": true,
@@ -109,7 +106,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -127,10 +124,10 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [
+					"UserFilterExpressions": [
 						{
 							"ColumnName": "ask",
-							"UserFilterUids": [
+							"UserFilterExpressions": [
 								"Zero",
 								"NumericNonBlanks"
 							]
@@ -161,10 +158,10 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [
+					"UserFilterExpressions": [
 						{
 							"ColumnName": "bloombergBid",
-							"UserFilterUids": [
+							"UserFilterExpressions": [
 								"NumericBlanks"
 							]
 						}
@@ -187,7 +184,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -213,7 +210,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false,
@@ -234,7 +231,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false,
@@ -262,7 +259,7 @@
 				"OtherExpression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"Description": "Starts With 'jjj'",
@@ -280,7 +277,7 @@
 				"OtherExpression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"Description": "Not Equals 45",
@@ -403,8 +400,9 @@
 		],
 		"EditedCalculatedColumnInvalidErrorMsg": null
 	},
-	"Range": {
-		"Ranges": [
+	"Export": {
+		"IPPDomainsPages": [],
+		"Reports": [
 			{
 				"Name": "ff",
 				"Expression": {
@@ -418,16 +416,16 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"Columns": [],
-				"RangeColumnScope": 0,
-				"RangeRowScope": 3,
+				"ReportColumnScope": 0,
+				"ReportRowScope": 3,
 				"IsPredefined": false
 			}
 		],
-		"CurrentRange": "ff",
+		"CurrentReport": "ff",
 		"ErrorMsg": ""
 	},
 	"FormatColumn": {

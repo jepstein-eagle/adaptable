@@ -24,7 +24,7 @@ import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditiona
 import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
-import { IRange } from '../../Strategy/Interface/IExportStrategy';
+import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { StrategyProfile } from '../Components/StrategyProfile';
@@ -223,7 +223,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             }
             case StrategyIds.ExportStrategyId: {
-                let range = sharedEntity.entity as IRange
+                let range = sharedEntity.entity as IReport
                 let expressionString = ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns, this.props.UserFilters)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>

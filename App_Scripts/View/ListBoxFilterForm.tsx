@@ -8,7 +8,6 @@ import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRangeExpression } from '../Core/Interface/IExpression'
 import { IRawValueDisplayValuePair } from "./Interfaces";
 import * as CalendarConstants from '../Core/Constants/CalendarConstants';
-import { IRange } from "../Strategy/Interface/IExportStrategy";
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
     ColumnValues: Array<IRawValueDisplayValuePair>

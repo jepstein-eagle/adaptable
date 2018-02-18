@@ -5,16 +5,15 @@ import { Well } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
 import { ExportDestination} from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { IRange, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
+import { IReport, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Core/Helpers/Helper';
-import { RangeEntityRow } from './RangeEntityRow'
-import { RangeWizard } from './Wizard/RangeWizard'
+import { ReportEntityRow } from './ReportEntityRow'
+import { ReportWizard } from './Wizard/ReportWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -27,12 +26,12 @@ import { IColItem } from "../Interfaces";
 import { UIHelper } from '../UIHelper';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
-    Ranges: IRange[],
-    LiveRanges: ILiveRange[];
-    CurrentRange: string,
+    Reports: IReport[],
+    LiveReports: ILiveReport[];
+    CurrentReport: string,
     onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
-    onAddUpdateRange: (index: number, Range: IRange) => RangeRedux.RangeAddUpdateAction;
-    onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => RangeRedux.RangeStopLiveAction;
+    onAddUpdateReport: (index: number, Report: IReport) => ExportRedux.ReportAddUpdateAction;
+    onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
     onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
@@ -50,62 +49,63 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             this.onNew()
         }
         if (this.props.PopupParams == "Edit") {
-            let selectedRange: IRange = this.props.Ranges.find(a => a.Name == this.props.CurrentRange);
-            let selectedRangeIndex = this.props.Ranges.findIndex(a => a.Name == this.props.CurrentRange);
-            this.onEdit(selectedRangeIndex, selectedRange)
+            let selectedReport: IReport = this.props.Reports.find(a => a.Name == this.props.CurrentReport);
+            let selectedReportIndex = this.props.Reports.findIndex(a => a.Name == this.props.CurrentReport);
+            this.onEdit(selectedReportIndex, selectedReport)
         }
     }
 
     render() {
 
-        let infoBody: any[] = ["Export works by sending 'ranges' to specified location.", <br />, <br />, "You can use an existing Range or create one of your own..", <br />, <br />]
+        let infoBody: any[] = ["Export works by sending 'Reports' to specified location.", <br />, <br />, "You can use an existing Report or create one of your own..", <br />, <br />]
 
         let colItems: IColItem[] = [
-            { Content: "Range", Size: 2 },
+            { Content: "Report", Size: 2 },
             { Content: "Columns", Size: 3 },
             { Content: "Expression", Size: 3 },
-            { Content: "", Size: 4 },
+            { Content: "", Size: 1 },
+            { Content: "", Size: 3 },
         ]
 
-        let ranges = this.props.Ranges.map((range: IRange, index) => {
-            return <RangeEntityRow
-                ConfigEntity={range}
+        let Reports = this.props.Reports.map((Report: IReport, index) => {
+            return <ReportEntityRow
+                ConfigEntity={Report}
                 key={index}
                 ColItems={colItems}
                 Index={index}
                 Columns={this.props.Columns}
-                IsLast={index == this.props.Ranges.length - 1}
+                IsLast={index == this.props.Reports.length - 1}
                 UserFilters={this.props.UserFilters}
-                LiveRanges={this.props.LiveRanges}
-                onShare={() => this.props.onShare(range)}
+                LiveReports={this.props.LiveReports}
+                onShare={() => this.props.onShare(Report)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onExport={(exportDestination) => this.onApplyExport(range.Name, exportDestination)}
-                onRangeStopLive={(exportDestination) => this.props.onRangeStopLive(range.Name, exportDestination)}
-                onEdit={(index, range) => this.onEdit(index, range as IRange)}
-                onDeleteConfirm={RangeRedux.RangeDelete(index)}
+                onExport={(exportDestination) => this.onApplyExport(Report.Name, exportDestination)}
+                onReportStopLive={(exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination)}
+                onEdit={(index, Report) => this.onEdit(index, Report as IReport)}
+                onDeleteConfirm={ExportRedux.ReportDelete(index)}
                 isDropUp={index > 1} />
         });
 
         let newButton = <ButtonNew onClick={() => this.onNew()}
-            overrideTooltip="Create Range"
+            overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
         return (
             <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
 
-                {ranges.length > 0 &&
-                    <EntityCollectionView ColItems={colItems} items={ranges} />
+                {Reports.length > 0 &&
+                    <EntityCollectionView ColItems={colItems} items={Reports} />
                 }
 
-                {ranges.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new Range.  A range is named group of columns and Unique values..</Well>
+                {Reports.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</Well>
                 }
 
                 {this.state.EditedConfigEntity &&
-                    <RangeWizard
-                        EditedConfigEntity={this.state.EditedConfigEntity as IRange}
-                        ConfigEntities={this.props.Ranges}
+                    <ReportWizard
+                        EditedConfigEntity={this.state.EditedConfigEntity as IReport}
+                        ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -123,30 +123,30 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     }
 
     onFinishWizard() {
-        let range: IRange = this.state.EditedConfigEntity as IRange;
-        this.props.onAddUpdateRange(this.state.EditedIndexConfigEntity, range)
+        let Report: IReport = this.state.EditedConfigEntity as IReport;
+        this.props.onAddUpdateReport(this.state.EditedIndexConfigEntity, Report)
         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyRange(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 })
+        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 })
     }
 
-    onEdit(index: number, rangeToEdit: IRange) {
-        let clonedRangeToEdit = Helper.cloneObject(rangeToEdit)
-        this.setState({ EditedConfigEntity: clonedRangeToEdit, WizardStartIndex: 0, EditedIndexConfigEntity: index })
+    onEdit(index: number, ReportToEdit: IReport) {
+        let clonedReportToEdit = Helper.cloneObject(ReportToEdit)
+        this.setState({ EditedConfigEntity: clonedReportToEdit, WizardStartIndex: 0, EditedIndexConfigEntity: index })
     }
 
-    onApplyExport(range: string, exportDestination: ExportDestination) {
-        this.props.onApplyExport(range, exportDestination);
+    onApplyExport(Report: string, exportDestination: ExportDestination) {
+        this.props.onApplyExport(Report, exportDestination);
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Ranges: state.Range.Ranges,
-        CurrentRange: state.Range.CurrentRange,
-        LiveRanges: state.Range.CurrentLiveRanges,
+        Reports: state.Export.Reports,
+        CurrentReport: state.Export.CurrentReport,
+        LiveReports: state.Export.CurrentLiveReports,
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
     };
@@ -155,8 +155,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
-        onAddUpdateRange: (Index: number, Range: IRange) => dispatch(RangeRedux.RangeAddUpdate(Index, Range)),
-        onRangeStopLive: (range: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(RangeRedux.RangeStopLive(range, exportDestination)),
+        onAddUpdateReport: (Index: number, Report: IReport) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
+        onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
     };
 }

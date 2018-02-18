@@ -67,7 +67,7 @@ export enum ConditionalStyleScope {
     Row = "Row"
 }
 
-export enum RangeColumnScope {
+export enum ReportColumnScope {
     AllColumns,
     VisibleColumns,
     SelectedColumns,
@@ -75,7 +75,7 @@ export enum RangeColumnScope {
 }
 
 
-export enum RangeRowScope {
+export enum ReportRowScope {
     AllRows,
     VisibleRows,
     SelectedRows,

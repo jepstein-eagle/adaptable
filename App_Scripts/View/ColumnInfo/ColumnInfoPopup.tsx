@@ -55,8 +55,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let infoBody: any[] = ["Displays information about a column in the grid - which entities it has attached."]
 
         let colItems: IColItem[] = [
-            { Content: "Function", Size: 2 },
-            { Content: "Summary", Size: 7 },
+            { Content: "Function", Size: 3 },
+            { Content: "Summary", Size: 6 },
             { Content: "", Size: 3 },
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null

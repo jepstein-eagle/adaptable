@@ -8,8 +8,7 @@ import { Button, Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import * as RangeRedux from '../../Redux/ActionsReducers/RangeRedux'
-import { IPPDomain, ILiveRange } from "../../Strategy/Interface/IExportStrategy";
+import { IPPDomain, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExportDestination } from "../../Core/Enums";
 
@@ -18,7 +17,7 @@ interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushP
     onApplyExport: (value: string, folder: string, page: string) => ExportRedux.ExportApplyAction;
     onCancel: () => PopupRedux.PopupHideAction
     ErrorMsg: string
-    LiveRanges: ILiveRange[];
+    LiveReports: ILiveReport[];
 }
 
 interface IPushPullDomainPageSelectorInternalState {
@@ -41,7 +40,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
                     value={x.Name} ><Glyphicon glyph="folder-open" ></Glyphicon>{' '}{x.Name}</ListGroupItem>)
                 x.Pages.forEach((page: string) => {
                     itemsElements.push(<ListGroupItem key={page} style={{ paddingLeft: '30px' }}
-                        disabled={this.props.LiveRanges.findIndex(x => x.WorkbookName == page) > -1}
+                        disabled={this.props.LiveReports.findIndex(x => x.WorkbookName == page) > -1}
                         onClick={() => { this.SelectPage(page) }} active={this.state.SelectedPage == page}
                         value={page} ><Glyphicon glyph="cloud-download" ></Glyphicon>{' '}{page}</ListGroupItem>)
                 })
@@ -82,15 +81,15 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         IPPDomainsPages: state.Export.IPPDomainsPages,
-        ErrorMsg: state.Range.ErrorMsg,
-        LiveRanges: state.Range.CurrentLiveRanges,
+        ErrorMsg: state.Export.ErrorMsg,
+        LiveReports: state.Export.CurrentLiveReports,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
-        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(RangeRedux.RangeSetErrorMsg("")) }
+        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
     };
 }
 

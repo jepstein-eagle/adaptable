@@ -1,15 +1,13 @@
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
-import { IRange } from '../../../Strategy/Interface/IExportStrategy';
+import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../Interfaces';
 
-
-
-export class RangeExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: ExpressionWizardProps<IRange>) {
+export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+    constructor(private props2: ExpressionWizardProps<IReport>) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

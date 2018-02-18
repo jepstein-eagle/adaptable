@@ -76,9 +76,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             }
 
             // get user filter expressions
-            let userFilterExpressions = theProps.Expression.UserFilters.find(x => x.ColumnName == theProps.SelectedColumnId)
+            let userFilterExpressions = theProps.Expression.UserFilterExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
             if (userFilterExpressions) {
-                selectedColumnUserFilterExpressions = userFilterExpressions.UserFilterUids;
+                selectedColumnUserFilterExpressions = userFilterExpressions.UserFilters;
             }
             else {
                 selectedColumnUserFilterExpressions = []
@@ -240,7 +240,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     onSelectedUserFilterExpressionsChange(selectedUserFilterExpressions: Array<IUserFilter>) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
         let selectedUserFilterExpressionUids: string[] = selectedUserFilterExpressions.map(s => s.Name);
-        let colUserFilterExpression = this.props.Expression.UserFilters
+        let colUserFilterExpression = this.props.Expression.UserFilterExpressions
         let userFilterExpressionCol = colUserFilterExpression.find(x => x.ColumnName == this.props.SelectedColumnId)
         if (userFilterExpressionCol) {
             if (selectedUserFilterExpressions.length == 0) {
@@ -248,11 +248,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 colUserFilterExpression.splice(keyValuePairIndex, 1)
             }
             else {
-                userFilterExpressionCol.UserFilterUids = selectedUserFilterExpressionUids
+                userFilterExpressionCol.UserFilters = selectedUserFilterExpressionUids
             }
         }
         else {
-            colUserFilterExpression.push({ ColumnName: this.props.SelectedColumnId, UserFilterUids: selectedUserFilterExpressionUids })
+            colUserFilterExpression.push({ ColumnName: this.props.SelectedColumnId, UserFilters: selectedUserFilterExpressionUids })
         }
 
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { UserFilters: colUserFilterExpression }))

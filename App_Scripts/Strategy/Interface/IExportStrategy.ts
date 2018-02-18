@@ -1,21 +1,21 @@
 import {IStrategy} from './IStrategy';
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
-import { RangeColumnScope, RangeRowScope, ExportDestination } from '../../Core/Enums';
+import { ReportColumnScope, ReportRowScope, ExportDestination } from '../../Core/Enums';
 
 
 
-export interface IRange extends IConfigEntity {
+export interface IReport extends IConfigEntity {
   Name: string;
-  RangeColumnScope: RangeColumnScope
-  RangeRowScope: RangeRowScope
+  ReportColumnScope: ReportColumnScope
+  ReportRowScope: ReportRowScope
   Columns: string[]
   Expression: Expression
 }
 
-export interface ILiveRange {
+export interface ILiveReport {
   WorkbookName: string,
-  Range: string,
+  Report: string,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 }
 

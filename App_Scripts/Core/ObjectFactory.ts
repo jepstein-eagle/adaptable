@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { RangeColumnScope, RangeRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
+import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
@@ -12,7 +12,7 @@ import { ICustomSort } from '../Strategy/Interface/ICustomSortStrategy';
 import { IPlusMinusCondition } from '../Strategy/Interface/IPlusMinusStrategy';
 import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
 import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
-import { IRange } from '../Strategy/Interface/IExportStrategy';
+import { IReport } from '../Strategy/Interface/IExportStrategy';
 
 export module ObjectFactory {
 
@@ -69,13 +69,13 @@ export module ObjectFactory {
         };
     }
 
-    export function CreateEmptyRange(): IRange {
+    export function CreateEmptyReport(): IReport {
         return {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
             Columns: [],
-            RangeColumnScope: RangeColumnScope.AllColumns,
-            RangeRowScope: RangeRowScope.ExpressionRows,
+            ReportColumnScope: ReportColumnScope.AllColumns,
+            ReportRowScope: ReportRowScope.ExpressionRows,
             IsPredefined: false
         };
     }

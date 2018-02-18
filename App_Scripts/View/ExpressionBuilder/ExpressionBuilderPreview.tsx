@@ -65,10 +65,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
             // Next do the user filter expressions
 
-            let columnUserFilterExpressions = this.props.Expression.UserFilters.find(ne => ne.ColumnName == columnId)
+            let columnUserFilterExpressions = this.props.Expression.UserFilterExpressions.find(ne => ne.ColumnName == columnId)
             let columnUserFilterExpressionsListgroupItems: JSX.Element[]
             if (columnUserFilterExpressions) {
-                let userFilterExpressions = UserFilterHelper.GetUserFilters(this.props.UserFilters, columnUserFilterExpressions.UserFilterUids);
+                let userFilterExpressions = UserFilterHelper.GetUserFilters(this.props.UserFilters, columnUserFilterExpressions.UserFilters);
                 if (userFilterExpressions) {
                     columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
                         return <ListGroupItem key={ne.Name}>

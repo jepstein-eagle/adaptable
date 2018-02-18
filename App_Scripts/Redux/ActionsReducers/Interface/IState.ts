@@ -4,7 +4,7 @@ import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrateg
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
-import { IRange, ILiveRange, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
+import { IReport, ILiveReport, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
@@ -63,15 +63,12 @@ export interface ShortcutState {
     Shortcuts: Array<IShortcut>;
 }
 
-export interface RangeState {
-    CurrentRange: string;
-    CurrentLiveRanges: ILiveRange[];
-    Ranges: Array<IRange>;
-    ErrorMsg: string;
-}
-
 export interface ExportState {
     IPPDomainsPages: IPPDomain[]
+    CurrentReport: string;
+    CurrentLiveReports: ILiveReport[];
+    Reports: Array<IReport>;
+    ErrorMsg: string;
 }
 
 

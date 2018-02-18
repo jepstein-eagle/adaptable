@@ -32,7 +32,6 @@ import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
-import * as RangeRedux from '../ActionsReducers/RangeRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -45,7 +44,7 @@ import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStr
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy'
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
-import { IRange } from '../../Strategy/Interface/IExportStrategy'
+import { IReport } from '../../Strategy/Interface/IExportStrategy'
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
@@ -81,8 +80,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Dashboard: DashboardRedux.DashboardReducer,
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-    Range: RangeRedux.RangeReducer,
-    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+     UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer
 });
@@ -135,7 +133,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Range", "CurrentLiveRanges"], ["SmartEdit", "Preview"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "Preview"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -348,12 +346,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             break;
                         }
                         case StrategyIds.ExportStrategyId: {
-                            let range = actionTyped.Entity as IRange
-                            let idx = middlewareAPI.getState().Range.Ranges.findIndex(x => x.Name == range.Name)
+                            let report = actionTyped.Entity as IReport
+                            let idx = middlewareAPI.getState().Export.Reports.findIndex(x => x.Name == report.Name)
                             if (idx > -1) {
                                 overwriteConfirmation = true
                             }
-                            importAction = RangeRedux.RangeAddUpdate(idx, range)
+                            importAction = ExportRedux.ReportAddUpdate(idx, report)
                             break;
                         }
                     }
@@ -550,23 +548,23 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let exportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportApplyAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Range))
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((err: any) => {
-                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(err))
+                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, actionTyped.Range))
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-                        exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
+                        exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
                         middlewareAPI.dispatch(PopupRedux.PopupHide());
                     }
                     else {
-                        exportStrategy.Export(actionTyped.Range, actionTyped.ExportDestination);
+                        exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
                         middlewareAPI.dispatch(PopupRedux.PopupHide());
                     }
                     return next(action);
@@ -575,27 +573,27 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case ExportRedux.IPP_LOGIN: {
                     let actionTyped = <ExportRedux.IPPLoginAction>action;
                     iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
-                        let range = middlewareAPI.getState().Popup.ActionConfigurationPopup.Params
+                        let report = middlewareAPI.getState().Popup.ActionConfigurationPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
-                        middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                        middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(""))
+                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((error: any) => {
-                            middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(error))
+                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, range))
+                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, report))
                     }).catch((error: string) => {
                         console.error("Login failed", error);
-                        middlewareAPI.dispatch(RangeRedux.RangeSetErrorMsg(error))
+                        middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
                     })
                     return next(action);
                 }
-                case RangeRedux.RANGE_STOP_LIVE: {
-                    let actionTyped = (<RangeRedux.RangeStopLiveAction>action)
+                case ExportRedux.REPORT_STOP_LIVE: {
+                    let actionTyped = (<ExportRedux.ReportStopLiveAction>action)
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-                        let currentLiveRanges = middlewareAPI.getState().Range.CurrentLiveRanges
-                        let lre = currentLiveRanges.find(x => x.Range == actionTyped.Range && x.ExportDestination == actionTyped.ExportDestination)
+                        let currentLiveReports = middlewareAPI.getState().Export.CurrentLiveReports
+                        let lre = currentLiveReports.find(x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination)
                         iPushPullHelper.UnloadPage(lre.WorkbookName)
                     }
                     return next(action);

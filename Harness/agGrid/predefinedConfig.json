@@ -79,7 +79,7 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -90,7 +90,7 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilters": [],
+					"UserFilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false

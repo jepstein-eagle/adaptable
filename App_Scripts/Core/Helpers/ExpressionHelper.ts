@@ -14,11 +14,11 @@ export module ExpressionHelper {
     export function CreateSingleColumnExpression(columnName: string,
         ColumnDisplayValues: Array<string>,
         ColumnRawalues: Array<any>,
-        UserFilterUids: Array<string>,
+        UserFilters: Array<string>,
         Ranges: Array<IRangeExpression>) {
         return new Expression(ColumnDisplayValues && ColumnDisplayValues.length > 0 ? [{ ColumnName: columnName, ColumnValues: ColumnDisplayValues }] : [],
             ColumnRawalues && ColumnRawalues.length > 0 ? [{ ColumnName: columnName, ColumnValues: ColumnRawalues }] : [],
-            UserFilterUids && UserFilterUids.length > 0 ? [{ ColumnName: columnName, UserFilterUids: UserFilterUids }] : [],
+            UserFilters && UserFilters.length > 0 ? [{ ColumnName: columnName, UserFilters: UserFilters }] : [],
             Ranges && Ranges.length > 0 ? [{ ColumnName: columnName, Ranges: Ranges }] : []
         )
     }
@@ -58,12 +58,12 @@ export module ExpressionHelper {
             }
 
             // User Filters
-            let columnUserFilters = Expression.UserFilters.find(x => x.ColumnName == columnId)
+            let columnUserFilters = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
             if (columnUserFilters) {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids), columnFriendlyName)
+                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilters), columnFriendlyName)
             }
 
             // Column Ranges
@@ -116,9 +116,9 @@ export module ExpressionHelper {
 
             // Check for user filter expressions if column fails
             if (!isColumnSatisfied) {
-                let columnUserFilters = Expression.UserFilters.find(x => x.ColumnName == columnId)
+                let columnUserFilters = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
                 if (columnUserFilters) {
-                    let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilterUids);
+                    let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilters);
                     for (let userFilter of filteredUserFilters) {
                         // System userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
                         if (UserFilterHelper.IsSystemUserFilter(userFilter)) {
@@ -314,14 +314,14 @@ export module ExpressionHelper {
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
         return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName)
             .concat(Expression.ColumnRawValuesExpressions.map(x => x.ColumnName))
-            .concat(Expression.UserFilters.map(x => x.ColumnName))
+            .concat(Expression.UserFilterExpressions.map(x => x.ColumnName))
             .concat(Expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
         return Expression.ColumnDisplayValuesExpressions.length == 0
             && Expression.ColumnRawValuesExpressions.length == 0
-            && Expression.UserFilters.length == 0
+            && Expression.UserFilterExpressions.length == 0
             && Expression.RangeExpressions.length == 0
     }
 

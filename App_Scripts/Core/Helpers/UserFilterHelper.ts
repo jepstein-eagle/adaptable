@@ -40,8 +40,8 @@ export module UserFilterHelper {
         return false
     }
 
-    export function GetUserFilters(UserFilters: IUserFilter[], userFilterUids: string[]): IUserFilter[] {
-        return UserFilters.filter(f => userFilterUids.find(uid => uid == f.Name) != null)
+    export function GetUserFilters(UserFilters: IUserFilter[], userFilters: string[]): IUserFilter[] {
+        return UserFilters.filter(f => userFilters.find(u => u == f.Name) != null)
     }
 
     export function ShowUserFilterForColumn(UserFilters: IUserFilter[], expressionUid: string, column: IColumn): boolean {
@@ -58,8 +58,8 @@ export module UserFilterHelper {
         }
 
         // see if there are any user filter expressions and then get the first only
-        if (userFilter.Expression.UserFilters != null && userFilter.Expression.UserFilters.length > 0) {
-            return userFilter.Expression.UserFilters[0].ColumnName == column.ColumnId;
+        if (userFilter.Expression.UserFilterExpressions != null && userFilter.Expression.UserFilterExpressions.length > 0) {
+            return userFilter.Expression.UserFilterExpressions[0].ColumnName == column.ColumnId;
         }
 
         // see if there are any ranges and then get the first only
@@ -98,8 +98,8 @@ export module UserFilterHelper {
         }
 
         // see if there are any user filter expressionss and then get the first only
-        if (userFilter.Expression.UserFilters != null && userFilter.Expression.UserFilters.length > 0) {
-            return userFilter.Expression.UserFilters[0].ColumnName;
+        if (userFilter.Expression.UserFilterExpressions != null && userFilter.Expression.UserFilterExpressions.length > 0) {
+            return userFilter.Expression.UserFilterExpressions[0].ColumnName;
         }
 
         // see if there are any ranges and then get the first only
