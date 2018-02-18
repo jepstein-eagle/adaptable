@@ -11,6 +11,6 @@ AdaptableBlotter.JS is fully data agnostic and can work with any data set you pr
 
 The Adaptable Blotter is free for development use, but a paid-for annual end user licence is required for commerical use. (This covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions).  We also offer a free Community Licence for students in full time education, charities and open-source projects.  Please see the LICENSE.md file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
 
-Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.  And a full list of features can be found at: https://tinyurl.com/ychndpef.  For all enquriies please email the Adaptable Tools Support Team at support@adaptabletools.com.
+Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.  A list of features can be found at: https://tinyurl.com/ychndpef.  For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 
 [![Build Status](https://travis-ci.org/jonathannaim/adaptableblotter.svg?branch=master)](https://travis-ci.org/jonathannaim/adaptableblotter)
