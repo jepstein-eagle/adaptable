@@ -30,7 +30,7 @@ export module Helper {
         return JSON.parse(JSON.stringify(obj))
     }
 
-
+/*
     export function generateUid(): string {
         var d = new Date().getTime();
         if (window.performance && typeof window.performance.now === "function") {
@@ -44,6 +44,7 @@ export module Helper {
             });
         return uuid;
     }
+*/
 
     export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
         let newValues = [].concat(values)

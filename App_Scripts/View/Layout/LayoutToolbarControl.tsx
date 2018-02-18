@@ -15,6 +15,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
+import { ButtonUndo } from '../Components/Buttons/ButtonUndo';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -71,6 +72,13 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                  overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
                     DisplayMode="Glyph" />
                 {' '}
+                <ButtonUndo onClick={() => this.onUndo()}
+                    size={"small"}
+                    overrideTooltip="Undo Layout Changes"
+                    overrideDisableButton={!isLayoutModified}
+                    ConfigEntity={layoutEntity}
+                    DisplayMode="Glyph" />
+                {' '}
                 <ButtonDelete
                   size={"small"} 
                   overrideTooltip="Delete Layout"
@@ -99,6 +107,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             ConfirmAction: LayoutRedux.LayoutAdd(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
         }
         this.props.onShowPrompt(prompt)
+    }
+
+    private onUndo() {
+        this.props.onLoadLayout(this.props.CurrentLayout);
     }
 
     private onSelectionChanged(event: React.FormEvent<any>) {

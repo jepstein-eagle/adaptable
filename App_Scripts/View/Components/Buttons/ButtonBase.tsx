@@ -15,6 +15,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     //Override normal Text i.e. Edit
     overrideText?: string
     DisplayMode: "Glyph" | "Text" | "Glyph+Text"
+    transformGlyph?: boolean
 }
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -32,7 +33,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         bsStyle: "",
         bsSize: null,
         glyph: "",
-        DisplayMode: "Glyph+Text"
+        DisplayMode: "Glyph+Text",
+        transformGlyph: false
     };
     render() {
         let isDisabled: boolean
@@ -52,8 +54,12 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         }
         let content: React.ReactElement<any>
         if (this.props.DisplayMode == "Glyph") {
+            if (this.props.transformGlyph) {
+            content = <Glyphicon glyph={this.props.glyph} style={{"transform": "scale(-1, 1)"}} />
+        }else{
             content = <Glyphicon glyph={this.props.glyph} />
         }
+    }
         else if (this.props.DisplayMode == "Text") {
             content = <span>{text}</span>
         }

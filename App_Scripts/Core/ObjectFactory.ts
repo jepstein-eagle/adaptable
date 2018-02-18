@@ -59,9 +59,7 @@ export module ObjectFactory {
 
     export function CreateEmptyUserFilter(): IUserFilter {
         return {
-          //  Uid: Helper.generateUid(),
-            Name: "",
-           // FriendlyName: "",
+           Name: "",
             Description: "",
             DataType: DataType.String,
             Expression: ExpressionHelper.CreateEmptyExpression(),
