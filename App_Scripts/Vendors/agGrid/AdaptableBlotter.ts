@@ -327,29 +327,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getSelectedCells(): ISelectedCells {
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
         let selected = this.gridOptions.api.getRangeSelections();
-        //we iterate for each ranges
-        selected.forEach((rangeSelection, index) => {
-            for (let column of rangeSelection.columns) {
-                let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
-                let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
-                for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-                    let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
-                    //if the selected cells are from a group cell we don't return it
-                    //that's a design choice as this is used only when editing and you cant edit those cells
-                    if (!rowNode.group) {
-                        let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
-                        let value = this.gridOptions.api.getValue(column, rowNode)
-                        let valueArray = selectionMap.get(primaryKey);
-                        if (valueArray == undefined) {
-                            valueArray = []
-                            selectionMap.set(primaryKey, valueArray);
+        if (selected) {
+            //we iterate for each ranges
+            selected.forEach((rangeSelection, index) => {
+                for (let column of rangeSelection.columns) {
+                    let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                    let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                    for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
+                        let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
+                        //if the selected cells are from a group cell we don't return it
+                        //that's a design choice as this is used only when editing and you cant edit those cells
+                        if (!rowNode.group) {
+                            let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
+                            let value = this.gridOptions.api.getValue(column, rowNode)
+                            let valueArray = selectionMap.get(primaryKey);
+                            if (valueArray == undefined) {
+                                valueArray = []
+                                selectionMap.set(primaryKey, valueArray);
+                            }
+                            valueArray.push({ columnID: column.getColId(), value: value });
                         }
-                        valueArray.push({ columnID: column.getColId(), value: value });
                     }
                 }
-            }
-        });
-
+            });
+        }
         return {
             Selection: selectionMap
         };
