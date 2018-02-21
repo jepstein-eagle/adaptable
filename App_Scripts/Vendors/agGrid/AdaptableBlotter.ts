@@ -81,6 +81,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/Interfaces';
+import { AboutStrategy } from '../../Strategy/AboutStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -114,7 +115,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
+       this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
@@ -256,6 +258,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
     }
+    
     public hideFilterFormPopup: Function
     public hideFilterForm() {
         if (this.hideFilterFormPopup) {

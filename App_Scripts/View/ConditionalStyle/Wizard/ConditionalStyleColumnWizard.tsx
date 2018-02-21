@@ -35,13 +35,13 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
         return <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
                 <Col xs={12} style={radioMarginStyle}>
                     <AdaptableBlotterForm inline>
-                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}>{' '} Whole Row </Radio>
+                        <Radio value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} Whole Row </Radio>
                         {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Conditional Style: Whole Row"} bodyText={["The conditional style will be applied to alls cells in each matching row."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} style={radioMarginStyle}>
                     <AdaptableBlotterForm inline>
-                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}> Column </Radio>
+                        <Radio value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} Column </Radio>
                         {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>

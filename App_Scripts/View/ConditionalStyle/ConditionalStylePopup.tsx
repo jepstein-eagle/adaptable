@@ -61,9 +61,9 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             "Styles include selection of fore and back colours, and font properties."]
 
             let colItems: IColItem[] = [
-            { Content: "Where Applied", Size: 3 },
+            { Content: "Target", Size: 3 },
             { Content: "Style", Size: 2 },
-            { Content: "Description", Size: 4 },
+            { Content: "Query", Size: 4 },
             { Content: "", Size: 3 },
         ]
         let conditionalStyleConditions = this.props.ConditionalStyles.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {

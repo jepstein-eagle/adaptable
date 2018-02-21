@@ -1,5 +1,6 @@
 import * as StrategyIds from './StrategyIds';
 
+export const AboutStrategyName: string = "About"
 export const AdvancedSearchStrategyName: string = "Advanced Search"
 export const CalculatedColumnStrategyName: string = "Calculated Column"
 export const CalendarStrategyName: string = "Calendar"

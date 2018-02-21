@@ -1,4 +1,5 @@
 
+export const AboutStrategyId: string = "AboutStrategy"
 export const AdvancedSearchStrategyId: string = "AdvancedSearch"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"

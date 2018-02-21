@@ -1,5 +1,6 @@
 import * as StrategyIds from './StrategyIds';
 
+export const AboutGlyph: string = "info-sign"
 export const AdvancedSearchGlyph: string = "search"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"

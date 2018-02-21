@@ -1,4 +1,37 @@
 ﻿/// <reference path="trade.d.ts" />
+
+export interface IBond {
+    tradeId: number;
+    buySell: string;
+    currency: string;
+    tradedAt: number;
+    isin: string;
+    counterparty: string;
+    ticker: string;
+    coupon: number;
+    trader: string;
+    tradeDate: Date;
+    effectiveDate: Date;
+    lastUpdated: Date;
+ }
+
+export interface IFX {
+    tradeId: number;
+    dealType: string;
+    baseCurrency: string;
+    baseAmount: number;
+    secondaryCurrency: string;
+    secondaryAmount: number;
+    rate: number;
+    pnL: number;
+    counterparty: string;
+    trader: string;
+    tradeDate: Date;
+    effectiveDate: Date;
+    lastUpdated: Date;
+   
+}
+
 export class DataGenerator {
 
     getTrades(): ITrade[] {
@@ -7,6 +40,22 @@ export class DataGenerator {
             trades.push(this.createTrade(i));
         }
         return trades;
+    }
+
+    getBonds(): IBond[] {
+        let bonds: IBond[] = [];
+        for (let i = 1; i < 30; i++) {
+            bonds.push(this.createBond(i));
+        }
+        return bonds;
+    }
+
+    getFX(): IFX[] {
+        let fxs: IFX[] = [];
+        for (let i = 1; i < 30; i++) {
+            fxs.push(this.createFX(i));
+        }
+        return fxs;
     }
 
     private _numericCols: string[] = ["price", "bid", "ask"];
@@ -86,6 +135,58 @@ export class DataGenerator {
         }, 100)
     }
 
+    createBond(i: number): IBond {
+        let tradedAt = this.getMeaningfulDoubleInRange(0, 2);
+        let coupon = this.roundTo4Dp(this.getMeaningfulDouble() * this.getRandomItem(this.getBidOfferSpreads()));
+        let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+        let bond =
+            {
+                "tradeId": i,
+                "notional": this.getRandomItem(this.getNotionals()),
+                "buySell": this.getRandomItem(this.getBuySell()),
+                "currency": this.getRandomItem(this.getCurrencies()),
+                "tradedAt": tradedAt,
+                "isin": this.getIsin(i),
+                "counterparty": this.getRandomItem(this.getCounterparties()),
+                "ticker": this.getTicker(i),
+                "coupon": coupon,
+                "trader": this.getRandomItem(this.getNames()),
+                "tradeDate": tradeDate,
+                "effectiveDate": this.addDays(tradeDate, 3),
+                "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+            };
+        return bond;
+    }
+
+    createFX(i: number): IFX {
+        let baseAmount = this.getRandomItem(this.getNotionals())
+        let rate = this.getMeaningfulDoubleInRange(0, 2);
+        let secondaryAmount = baseAmount * rate;
+        let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+        let baseCurrency = this.getRandomItem(this.getCurrencies());
+        let fx =
+            {
+                "tradeId": i,
+                "notional": this.getRandomItem(this.getNotionals()),
+                "dealType": this.getRandomItem(this.getDealType()),
+                "baseCurrency": baseCurrency,
+                "baseAmount": baseAmount,
+                "secondaryCurrency": this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
+                "secondaryAmount": secondaryAmount,
+                "rate": rate,
+                "pnL": this.getMeaningfulDoubleInRange(3, 40),
+                "counterparty": this.getRandomItem(this.getCounterparties()),
+                "trader": this.getRandomItem(this.getNames()),
+                "tradeDate": tradeDate,
+                "effectiveDate": this.addDays(tradeDate, 3),
+                "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+            };
+        return fx;
+    }
+
+
+
+
     createTrade(i: number): ITrade {
         let price = this.getMeaningfulDouble();
         let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
@@ -118,23 +219,23 @@ export class DataGenerator {
                 "bookingGuid": this.generateUuid(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames()),
-              /*
-                "bid2": bid,
-                "ask2": ask,
-                "bidOfferSpread2": bidOfferSpread,
-                "isLive2": this.generateRandomBool(),
-                "moodysRating2": moodyRating,
-                "fitchRating2": this.getRatingFromMoodyRating(moodyRating),
-                "sandpRating2": this.getRatingFromMoodyRating(moodyRating),
-                "tradeDate2": tradeDate,
-                "settlementDate2": this.addDays(tradeDate, 3),
-                "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
-                "bloombergBid2": this.roundTo4Dp(bid - 0.01),
-                "percentChange2": this.generateRandomNullableDouble(),
-                "bookingGuid2": this.generateUuid(),
-                "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
-                "lastUpdatedBy2": this.getRandomItem(this.getNames())
-                */
+                /*
+                  "bid2": bid,
+                  "ask2": ask,
+                  "bidOfferSpread2": bidOfferSpread,
+                  "isLive2": this.generateRandomBool(),
+                  "moodysRating2": moodyRating,
+                  "fitchRating2": this.getRatingFromMoodyRating(moodyRating),
+                  "sandpRating2": this.getRatingFromMoodyRating(moodyRating),
+                  "tradeDate2": tradeDate,
+                  "settlementDate2": this.addDays(tradeDate, 3),
+                  "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
+                  "bloombergBid2": this.roundTo4Dp(bid - 0.01),
+                  "percentChange2": this.generateRandomNullableDouble(),
+                  "bookingGuid2": this.generateUuid(),
+                  "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
+                  "lastUpdatedBy2": this.getRandomItem(this.getNames())
+                  */
             };
         return trade;
     }
@@ -254,6 +355,37 @@ export class DataGenerator {
         return currencies[this.generateRandomInt(0, currencies.length - 1)];
     }
 
+    protected getIsin(index: number): string {
+        let isins: string[] = ["US046353AB45", "FR0010326975", "XS0133582147", "XS0097283096", "XS0253989635", "FR0010828095", "XS0315528850", "XS0173501379", "XS0297700006", "XS0630204351", "FR0010967216", "XS0323411016", "FR0010185975", "USF7061BAN04", "DE000A1MA9V5", "DE000DB5S5U8", "XS1000918018", "US822582AC66", "XS0097283096", "FR0011043124", "DE000A0TKUU3", "XS0469026453", "XS0133582147", "XS0493098486", "FR0010394478", "XS0369461644", "S780641AH94", "XS0369461644", "XS0909769407", "XS0741004062", "XS0783934911"]
+        return isins[index];
+    }
+
+    protected getTicker(index: number): string {
+        let tickers: string[] = ["AZN", "BOUY", "BYLAN", "KONIPHI", "SIEM", "LADBRK", "RNTKIL", "WENL", "PSON", "BAB", "DANONE", "STAN-Bank", "LOUISDR", "AF-AirFrance", "PERNOD", "RDSPLC", "DB", "BRITEL-BritTel", "DAMLR", "VLOF", "HEI", "TATELN", "SESG", "BAB", "SIEM", "CARR", "KPN", "SIEM", "LBTG-UPC", "TECHGH", "WENL", "CPGLN"]
+        return tickers[index];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public getRandomItem(ary: any[] | kendo.data.ObservableArray, max?: number): any {
         if (max) {
             return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];
@@ -317,6 +449,26 @@ export class DataGenerator {
             "ZAR"
         ];
         return currencies;
+    }
+
+    protected getCurrenciesOtherThanOne(currency: string): string[] {
+        return this.getCurrencies().filter(c => c == currency);
+    }
+
+    protected getBuySell(): string[] {
+        let buySell = [
+            "Buy",
+            "Sell"
+        ];
+        return buySell;
+    }
+    protected getDealType(): string[] {
+        let dealType = [
+            "Swap",
+            "Spot",
+            "Forward"
+        ];
+        return dealType;
     }
 
     protected getCountries(): string[] {
@@ -452,4 +604,5 @@ export class DataGenerator {
         ];
         return names;
     }
+
 }

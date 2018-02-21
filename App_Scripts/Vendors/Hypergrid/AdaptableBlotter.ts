@@ -32,6 +32,7 @@ import { FlashingCellsHypergridStrategy } from '../../Strategy/FlashingCellsHype
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
 import { ConditionalStyleHypergridStrategy } from '../../Strategy/ConditionalStyleHypergridStrategy'
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy'
+import { AboutStrategy } from '../../Strategy/AboutStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { FormatColumnHypergridStrategy } from '../../Strategy/FormatColumnHypergridStrategy'
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
@@ -120,6 +121,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
+        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))

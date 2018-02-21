@@ -24,6 +24,7 @@ import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { HomeToolbarControl } from './Home/HomeToolbarControl'
 import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
+import { AboutPopup } from './About/AboutPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
@@ -55,7 +56,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector : IPushPullDomainPageSelector,
   TeamSharingPopup : TeamSharingPopup,
-  ColumnFilterPopup: ColumnFilterPopup
+  ColumnFilterPopup: ColumnFilterPopup,
+  AboutPopup: AboutPopup,
 }
 
 //here we put the dashboard control for each strategy

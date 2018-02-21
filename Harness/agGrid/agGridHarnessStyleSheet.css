@@ -2,6 +2,26 @@
 height: 100%
 }
 
-#grid{
+#bondDeskHeadGrid{
     height: 80%
+}
+
+#bondTraderGrid{
+    height: 80%
+}
+
+#fxGrid{
+    height: 80%
+}
+
+#BondDeskHead{
+    height: 900px
+}
+
+#BondTrader{
+    height: 900px
+}
+
+#FXTrader{
+    height: 900px
 }

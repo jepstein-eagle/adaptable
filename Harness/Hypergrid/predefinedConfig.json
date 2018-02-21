@@ -88,7 +88,7 @@
 				"ShortcutKey": "W",
 				"ShortcutResult": "Previous Work Day",
 				"DataType": "Date",
-				"ShortcutAction": "Multiply",
+				"ShortcutAction": "Replace",
 				"IsPredefined": true,
 				"IsDynamic": true
 			}

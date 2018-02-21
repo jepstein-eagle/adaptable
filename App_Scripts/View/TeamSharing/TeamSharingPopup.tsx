@@ -50,10 +50,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         let infoBody: any[] = ["Team Sharing"]
 
         let colItems: IColItem[] = [
-            { Content: "Type", Size: 2 },
+            { Content: "Function", Size: 2 },
             { Content: "Audit", Size: 3 },
-            { Content: "Entity", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Details", Size: 6 },
+            { Content: "", Size: 1 },
         ]
         let sharedItems = this.props.Entities.sort((a, b) => { return a.strategy < b.strategy ? -1 : 1 }).map((x, index) => {
             return <li
@@ -63,7 +63,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         <StrategyProfile StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
-                        {x.user}{' @ '}{x.timestamp.toLocaleString()}
+                        {x.user}{<br/>}{x.timestamp.toLocaleString()}
                     </Col>
                     <Col xs={6} style={{ fontSize: 'small' }}>
                         <Panel bsStyle="primary" className="small-padding-panel">
