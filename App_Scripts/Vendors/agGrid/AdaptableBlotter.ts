@@ -116,7 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
-       this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
@@ -258,7 +258,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
     }
-    
+
     public hideFilterFormPopup: Function
     public hideFilterForm() {
         if (this.hideFilterFormPopup) {
@@ -937,6 +937,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         });
     }
+
+    public getRowInfo(): any {
+        return this.gridOptions.api.getModel().getRowCount()
+     }
+    
+    public getColumnInfo(): any {
+        return this.gridOptions.columnApi.getAllColumns().length;
+   }
 }
 
 

@@ -8,6 +8,7 @@ import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRange } from '../Core/Interface/IExpression'
 import { IRawValueDisplayValuePair } from "./Interfaces";
 import * as CalendarConstants from '../Core/Constants/CalendarConstants';
+import { UIHelper } from "./UIHelper";
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
     ColumnValues: Array<IRawValueDisplayValuePair>
@@ -129,37 +130,17 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     getOperand1FormControl(): any {
         if (this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown) {
-            return <FormControl value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={this.getTypeString()} placeholder={"Enter " + this.getPlaceHolder()} onChange={(e) => this.onOperand1Edit(e)} />
+            return <FormControl value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(e)} />
         }
     }
 
     getOperand2FormControl(): any {
         if (this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between) {
-            return <FormControl  value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={this.getTypeString()} placeholder={"Enter " + this.getPlaceHolder()} onChange={(e) => this.onOperand2Edit(e)} />
+            return <FormControl  value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
         }
     }
 
-    getTypeString() {
-        switch (this.props.DataType) {
-            case DataType.String:
-                return "string"
-            case DataType.Number:
-                return "number"
-            case DataType.Date:
-                return "date"
-        }
-    }
-
-    getPlaceHolder() {
-        switch (this.props.DataType) {
-            case DataType.String:
-                return "Value"
-            case DataType.Number:
-                return "Number"
-            case DataType.Date:
-                return "Date"
-        }
-    }
+    
     onUpdateFilterSearch(filterSearch: string) {
         this.setState({ FilterValue: filterSearch } as ListBoxFilterFormState);
     }

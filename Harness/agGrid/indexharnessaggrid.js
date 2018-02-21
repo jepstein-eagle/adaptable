@@ -56,6 +56,8 @@ function InitBlotter() {
     var bonds = dataGen.getBonds();
     var fxs = dataGen.getFX();
 
+    let useConfigServer = false; // set it here so can change it for all grids in one place
+
 
     var bondDeskHeadGridOptions = {
         columnDefs: getSchema(bonds),
@@ -75,7 +77,7 @@ function InitBlotter() {
         userName: "Head of Bond Desk",
         blotterId: "Bond Full Blotter",
         enableAuditLog: false,
-        enableRemoteConfigServer: true,
+        enableRemoteConfigServer: useConfigServer,
         predefinedConfigUrl: "",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -101,7 +103,7 @@ function InitBlotter() {
         userName: "Bond Trader",
         blotterId: "Bond Trade Blotter",
         enableAuditLog: false,
-        enableRemoteConfigServer: true,
+        enableRemoteConfigServer: useConfigServer,
         predefinedConfigUrl: "",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -127,7 +129,7 @@ function InitBlotter() {
         userName: "FX User",
         blotterId: "FX Blotter",
         enableAuditLog: false,
-        enableRemoteConfigServer: true,
+        enableRemoteConfigServer: useConfigServer,
         predefinedConfigUrl: "",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

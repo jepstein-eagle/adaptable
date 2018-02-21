@@ -48,7 +48,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Int
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode} from '../../Core/Enums'
+import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -163,20 +163,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
-            (e) => {
-                console.error('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed.... 
-                //we may revisit that later
-                this.Strategies.forEach(strat => strat.InitializeWithRedux())
-            })
+                (e) => {
+                    console.error('Failed to Init AdaptableBlotterStore : ', e);
+                    //for now i'm still initializing the strategies even if loading state has failed.... 
+                    //we may revisit that later
+                    this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                })
             .then(
-            () => this.initInternalGridLogic(grid),
-            (e) => {
-                console.error('Failed to Init Strategies : ', e);
-                //for now i'm still initializing the grid even if loading state has failed.... 
-                //we may revisit that later
-                this.initInternalGridLogic(grid)
-            })
+                () => this.initInternalGridLogic(grid),
+                (e) => {
+                    console.error('Failed to Init Strategies : ', e);
+                    //for now i'm still initializing the grid even if loading state has failed.... 
+                    //we may revisit that later
+                    this.initInternalGridLogic(grid)
+                })
     }
 
     public InitAuditService() {
@@ -946,7 +946,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
-               // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
@@ -1124,6 +1124,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
+    }
+
+
+    public getRowInfo(): any {
+        return this.grid.behavior.dataModel.dataSource.getRowCount()
+    }
+
+    public getColumnInfo(): any {
+        return this.grid.behavior.getActiveColumns().length + this.grid.behavior.getHiddenColumns().length
     }
 }
 

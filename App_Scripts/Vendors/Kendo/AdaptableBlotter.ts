@@ -8,14 +8,14 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-import {  IStrategy } from '../../Strategy/Interface/IStrategy';
-import {  IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
+import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
-import {  IValidationService } from '../../Core/Services/Interface/IValidationService'
+import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { StyleService } from '../../Core/Services/StyleService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
@@ -46,7 +46,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
-import {IAdaptableBlotter,  IAdaptableStrategyCollection,  ISelectedCells,  IColumn,  IAdaptableBlotterOptions} from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -73,7 +73,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ValidationService: IValidationService
 
     public StyleService: StyleService
-   // public ThemeService: ThemeService
+    // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
@@ -89,14 +89,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
-       // this.ThemeService = new ThemeService(this);
+        // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
         this.Strategies = new Map<string, IStrategy>();
-        
+
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-       // this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        // this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
@@ -131,20 +131,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
-            (e) => {
-                console.error('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed.... 
-                //we may revisit that later
-                this.Strategies.forEach(strat => strat.InitializeWithRedux())
-            })
+                (e) => {
+                    console.error('Failed to Init AdaptableBlotterStore : ', e);
+                    //for now i'm still initializing the strategies even if loading state has failed.... 
+                    //we may revisit that later
+                    this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                })
             .then(
-            () => this.initInternalGridLogic(grid),
-            (e) => {
-                console.error('Failed to Init Strategies : ', e);
-                //for now i'm still initializing the grid even if loading state has failed.... 
-                //we may revisit that later
-                this.initInternalGridLogic(grid)
-            })
+                () => this.initInternalGridLogic(grid),
+                (e) => {
+                    console.error('Failed to Init Strategies : ', e);
+                    //for now i'm still initializing the grid even if loading state has failed.... 
+                    //we may revisit that later
+                    this.initInternalGridLogic(grid)
+                })
     }
 
     public InitAuditService() {
@@ -694,7 +694,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
     public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
-// todo
+        // todo
     }
     public getFirstRecord(): any {
         return null;
@@ -705,48 +705,48 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
- //TEMPORARY : JO
- public getIPPStyle(): IPPStyle {
-    let headerFirstCol: HTMLElement = document.querySelectorAll(".k-header").item(0) as HTMLElement
-    let header: HTMLElement = document.querySelector(".k-grid-header") as HTMLElement
-    let headerColStyle = window.getComputedStyle(header, null)
-    let firstRow: HTMLElement = document.querySelector("tbody[role='rowgroup']").firstElementChild as HTMLElement
-    let firstRowStyle = window.getComputedStyle(firstRow, null)
-    let secondRow: HTMLElement = document.querySelector(".k-alt") as HTMLElement
-    let secondRowStyle = window.getComputedStyle(secondRow, null)
-    return {
-        Header: {
-            headerColor: new Color(headerColStyle.color).toHex(),
-            headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
-            headerFontFamily: headerColStyle.fontFamily,
-            headerFontSize: headerColStyle.fontSize,
-            headerFontStyle: headerColStyle.fontStyle,
-            headerFontWeight: headerColStyle.fontWeight,
-            height: Number(headerColStyle.height.replace("px","")),
-            Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
-                let headerColumn: HTMLElement = document.querySelector(".k-header[data-field='" + col.ColumnId + "']") as HTMLElement
-                let headerColumnStyle = window.getComputedStyle(headerColumn||headerFirstCol, null)
-                return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
-            })
-        },
-        Row: {
-            color: new Color(firstRowStyle.color).toHex(),
-            backColor: new Color(firstRowStyle.backgroundColor).toHex(),
-            altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
-            fontFamily: firstRowStyle.fontFamily,
-            fontSize: firstRowStyle.fontSize,
-            fontStyle: firstRowStyle.fontStyle,
-            fontWeight: firstRowStyle.fontWeight,
-            height: Number(firstRowStyle.height.replace("px","")),
-            Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map((col,index) => {
-                let cellElement: HTMLElement = firstRow.children.item(index + 1) as HTMLElement
-                let headerColumnStyle = window.getComputedStyle(cellElement||firstRow, null)
-                return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px","")), textAlign: headerColumnStyle.textAlign }
-            })
-        },
+    //TEMPORARY : JO
+    public getIPPStyle(): IPPStyle {
+        let headerFirstCol: HTMLElement = document.querySelectorAll(".k-header").item(0) as HTMLElement
+        let header: HTMLElement = document.querySelector(".k-grid-header") as HTMLElement
+        let headerColStyle = window.getComputedStyle(header, null)
+        let firstRow: HTMLElement = document.querySelector("tbody[role='rowgroup']").firstElementChild as HTMLElement
+        let firstRowStyle = window.getComputedStyle(firstRow, null)
+        let secondRow: HTMLElement = document.querySelector(".k-alt") as HTMLElement
+        let secondRowStyle = window.getComputedStyle(secondRow, null)
+        return {
+            Header: {
+                headerColor: new Color(headerColStyle.color).toHex(),
+                headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
+                headerFontFamily: headerColStyle.fontFamily,
+                headerFontSize: headerColStyle.fontSize,
+                headerFontStyle: headerColStyle.fontStyle,
+                headerFontWeight: headerColStyle.fontWeight,
+                height: Number(headerColStyle.height.replace("px", "")),
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                    let headerColumn: HTMLElement = document.querySelector(".k-header[data-field='" + col.ColumnId + "']") as HTMLElement
+                    let headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
+                })
+            },
+            Row: {
+                color: new Color(firstRowStyle.color).toHex(),
+                backColor: new Color(firstRowStyle.backgroundColor).toHex(),
+                altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
+                fontFamily: firstRowStyle.fontFamily,
+                fontSize: firstRowStyle.fontSize,
+                fontStyle: firstRowStyle.fontStyle,
+                fontWeight: firstRowStyle.fontWeight,
+                height: Number(firstRowStyle.height.replace("px", "")),
+                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map((col, index) => {
+                    let cellElement: HTMLElement = firstRow.children.item(index + 1) as HTMLElement
+                    let headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null)
+                    return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
+                })
+            },
 
+        }
     }
-}
 
 
     private GetGridState(): GridState {
@@ -835,6 +835,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
+    }
+
+
+    public getRowInfo(): any {
+        return 1
+    }
+    public getColumnInfo(): any {
+        return 1
     }
 }
 

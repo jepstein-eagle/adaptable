@@ -77,6 +77,10 @@ export interface IAdaptableBlotter {
     applyColumnFilters(): void
     //TEMPORARY : JO
     getIPPStyle(): IPPStyle
+
+    // info
+    getRowInfo(): any
+    getColumnInfo(): any
 }
 
 

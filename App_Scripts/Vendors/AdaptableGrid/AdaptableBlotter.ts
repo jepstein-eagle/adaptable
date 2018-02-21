@@ -7,7 +7,7 @@ import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-import {  IStrategy } from '../../Strategy/Interface/IStrategy';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
@@ -55,7 +55,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public ValidationService: IValidationService
     public StyleService: StyleService
-  //  public ThemeService: ThemeService
+    //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
@@ -72,7 +72,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
-     //   this.ThemeService = new ThemeService(this)
+        //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
 
@@ -494,5 +494,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //TEMPORARY : JO
     public getIPPStyle(): any {
         return null
+    }
+
+
+    public getRowInfo(): any {
+        return 1
+    }
+    public getColumnInfo(): any {
+        return 1
     }
 }

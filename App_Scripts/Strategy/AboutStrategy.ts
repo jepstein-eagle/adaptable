@@ -38,11 +38,18 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
             output += "|"
         }
         if (options.enableRemoteConfigServer != undefined) {
-            output += "Remote Configuration Set:"
-            output += (options.enableRemoteConfigServer) ? "True" : "False"
+            output += "Remote Configuration:"
+            output += (options.enableRemoteConfigServer) ? "On" : "Off"
             output += "|"
         }
+             output += "Rows:"
+            output += this.blotter.getRowInfo()
+            output += "|"
 
+             output += "Columns:"
+            output += this.blotter.getColumnInfo()
+            output += "|"
+       
 
         return output.slice(0, -1);;
     }
