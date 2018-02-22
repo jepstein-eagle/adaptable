@@ -10,7 +10,7 @@ import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
 import {  ICellInfo } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { DataType } from '../Core/Enums'
-import { ShortcutAction, CellValidationMode } from '../Core/Enums'
+import { MathOperation, CellValidationMode } from '../Core/Enums'
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
@@ -55,10 +55,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
                         if (this.blotter.gridHasCurrentEditValue()) {
                             currentCellValue = this.blotter.getCurrentCellEditValue()
-                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutAction);
+                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation);
                         } else {
                             currentCellValue = activeCell.Value;
-                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutAction);
+                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation);
                         }
                     }
                     break;
@@ -113,20 +113,20 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         }
     }
 
-    private CalculateShortcut(first: any, second: any, shortcutAction: ShortcutAction): number {
+    private CalculateShortcut(first: any, second: any, shortcutOperation: MathOperation): number {
         let firstNumber: number = Number(first);
         let secondNumber: number = Number(second);
 
-        switch (shortcutAction) {
-            case ShortcutAction.Add:
+        switch (shortcutOperation) {
+            case MathOperation.Add:
                 return firstNumber + secondNumber;
-            case ShortcutAction.Subtract:
+            case MathOperation.Subtract:
                 return (firstNumber - secondNumber);
-            case ShortcutAction.Multiply:
+            case MathOperation.Multiply:
                 return (firstNumber * secondNumber);
-            case ShortcutAction.Divide:
+            case MathOperation.Divide:
                 return (firstNumber / secondNumber);
-            case ShortcutAction.Replace:
+            case MathOperation.Replace:
                 return secondNumber;
         }
     }

@@ -2,7 +2,7 @@ import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { DataType } from '../../Core/Enums'
-import { ShortcutAction } from '../../Core/Enums'
+import { MathOperation } from '../../Core/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
@@ -12,9 +12,9 @@ import { IColItem } from "../Interfaces";
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;
-    onChangeOperation: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => void;
+    onChangeOperation: (shortcut: IShortcut, NewShortcutOperation: MathOperation) => void;
     AvailableKeys: Array<string>;
-    AvailableActions: Array<ShortcutAction>
+    AvailableActions: Array<MathOperation>
 }
 
 export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {}> {
@@ -41,11 +41,11 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 "Replace Cell"
                 :
                 shortcut.IsPredefined ?
-                    ShortcutAction[shortcut.ShortcutAction] :
-                    <FormControl componentClass="select" value={shortcut.ShortcutAction} onChange={(x) => this.onActionChange(x)} >
+                MathOperation[shortcut.ShortcutOperation] :
+                    <FormControl componentClass="select" value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
                         {
-                            this.props.AvailableActions.map((shortcutAction: ShortcutAction) => {
-                                return <option key={ShortcutAction[shortcutAction]} value={shortcutAction}>{ShortcutAction[shortcutAction]}</option>
+                            this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
+                                return <option key={MathOperation[shortcutOperation]} value={shortcutOperation}>{MathOperation[shortcutOperation]}</option>
                             })
                         }
                     </FormControl>
@@ -85,7 +85,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
 
     onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeOperation(this.props.ConfigEntity as IShortcut, e.value as ShortcutAction);
+        this.props.onChangeOperation(this.props.ConfigEntity as IShortcut, e.value as MathOperation);
     }
 
 

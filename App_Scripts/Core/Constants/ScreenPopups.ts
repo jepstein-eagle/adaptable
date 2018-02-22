@@ -1,4 +1,6 @@
+export const AboutPopup :string = "AboutPopup"
 export const AdvancedSearchPopup :string = "AdvancedSearchPopup"
+export const BulkUpdatePopup :string = "BulkUpdatePopup"
 export const QuickSearchPopup :string = "QuickSearchPopup"
 export const HomeButtonsPopup :string = "HomeButtonsPopup"
 export const LayoutPopup :string = "LayoutPopup"
@@ -20,5 +22,5 @@ export const ShortcutPopup :string = "ShortcutPopup"
 export const SmartEditPopup :string = "SmartEditPopup"
 export const TeamSharingPopup :string = "TeamSharingPopup"
 export const ThemePopup :string = "ThemePopup"
-export const AboutPopup :string = "AboutPopup"
+
 

@@ -2,6 +2,7 @@ import * as StrategyIds from './StrategyIds';
 
 export const AboutGlyph: string = "info-sign"
 export const AdvancedSearchGlyph: string = "search"
+export const BulkUpdateGlyph: string = "list"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
 export const CellValidationGlyph: string = "flag"
@@ -26,8 +27,12 @@ export const UserFilterGlyph: string = "user"
 
 export function getGhyphiconForStrategy(strategyID: string) {
     switch (strategyID) {
+        case StrategyIds.AboutStrategyId:
+            return AboutGlyph
         case StrategyIds.AdvancedSearchStrategyId:
             return AdvancedSearchGlyph
+        case StrategyIds.BulkUpdateStrategyId:
+            return BulkUpdateGlyph
         case StrategyIds.CalculatedColumnStrategyId:
             return CalculatedColumnGlyph
         case StrategyIds.CellValidationStrategyId:

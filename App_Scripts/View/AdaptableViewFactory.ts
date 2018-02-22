@@ -31,6 +31,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as React from "react";
 import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
+import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortPopup: CustomSortPopup,
@@ -58,6 +59,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   TeamSharingPopup : TeamSharingPopup,
   ColumnFilterPopup: ColumnFilterPopup,
   AboutPopup: AboutPopup,
+  BulkUpdatePopup: BulkUpdatePopup,
 }
 
 //here we put the dashboard control for each strategy

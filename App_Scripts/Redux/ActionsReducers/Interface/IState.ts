@@ -1,4 +1,4 @@
-import { SmartEditOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { MathOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
@@ -47,7 +47,7 @@ export interface PopupState {
 
 export interface SmartEditState {
     SmartEditValue: string
-    SmartEditOperation: SmartEditOperation
+    SmartEditOperation: MathOperation
     Preview: ISmartEditPreview
 }
 

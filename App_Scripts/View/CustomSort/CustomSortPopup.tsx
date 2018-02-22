@@ -23,7 +23,7 @@ import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../Interfaces";
-import { UIHelper } from '../UIHelper';
+                                                                                                                import { UIHelper } from '../UIHelper';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -144,7 +144,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
+
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),

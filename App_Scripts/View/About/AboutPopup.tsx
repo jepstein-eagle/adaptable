@@ -7,6 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
@@ -16,8 +17,8 @@ import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
 
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
-    MenuState: MenuState,
-    EntitlementsState: EntitlementsState
+  //  MenuState: MenuState,
+   // EntitlementsState: EntitlementsState
 }
 
 interface KeyValuePair {
@@ -63,7 +64,7 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
             return <ConfigEntityRowItem key={index} ColItems={rowColItems} />
         })
 
-        return <PanelWithImage header="About" bsStyle="primary" glyphicon={"info-sign"}>
+        return <PanelWithImage header={StrategyNames.AboutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.AboutGlyph}>
             <PanelWithRow ColItems={colItems} bsStyle="info" />
             {aboutItems}
         </PanelWithImage>
@@ -75,8 +76,8 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        MenuState: state.Menu,
-        EntitlementsState: state.Entitlements
+    //    MenuState: state.Menu,
+      //  EntitlementsState: state.Entitlements
     };
 }
 

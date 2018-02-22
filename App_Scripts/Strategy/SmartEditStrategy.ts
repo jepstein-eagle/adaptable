@@ -3,7 +3,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { SmartEditOperation, DataType, CellValidationMode } from '../Core/Enums'
+import { MathOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
@@ -100,7 +100,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     }
 
-    public BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreview {
+    public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): ISmartEditPreview {
         let selectedCells = this.blotter.getSelectedCells();
         let previewResults: ISmartEditPreviewResult[] = [];
         let columnId: string;
@@ -113,13 +113,19 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let newValue: number;
                 switch (smartEditOperation) {
-                    case SmartEditOperation.Add:
+                    case MathOperation.Add:
                         newValue = Number(columnValuePair.value) + smartEditValue
                         break;
-                    case SmartEditOperation.Multiply:
-                        newValue = Number(columnValuePair.value) * smartEditValue
+                    case MathOperation.Subtract:
+                        newValue = Number(columnValuePair.value) - smartEditValue
                         break;
-                    case SmartEditOperation.Replace:
+                    case MathOperation.Multiply:
+                        newValue = Number(columnValuePair.value) + smartEditValue
+                        break;
+                    case MathOperation.Divide:
+                        newValue = Number(columnValuePair.value) / smartEditValue
+                        break;
+                    case MathOperation.Replace:
                         newValue = smartEditValue
                         break;
                 }

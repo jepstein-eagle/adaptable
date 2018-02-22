@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, ShortcutAction, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
+import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
@@ -97,7 +97,7 @@ export module ObjectFactory {
             ShortcutKey: null,
             ShortcutResult: null,
             DataType: DataType.Number,
-            ShortcutAction: ShortcutAction.Multiply,
+            ShortcutOperation: MathOperation.Multiply,
             IsPredefined: false,
             IsDynamic: false
         }

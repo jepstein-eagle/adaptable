@@ -1,6 +1,6 @@
 import {  IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
-import { SmartEditOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Core/Enums';
 import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
 
 
@@ -18,7 +18,7 @@ export interface ISmartEditPreviewResult {
 
 export interface ISmartEditStrategy extends IStrategy {
     CheckCorrectCellSelection():IStrategyActionReturn<boolean>;
-    BuildPreviewValues(smartEditValue: number, smartEditOperation: SmartEditOperation): ISmartEditPreview;
+    BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): ISmartEditPreview;
     ApplySmartEdit(bypassCellValidationWarnings : boolean): void;
 }
 

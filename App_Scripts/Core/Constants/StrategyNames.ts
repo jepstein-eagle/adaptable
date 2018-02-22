@@ -2,6 +2,7 @@ import * as StrategyIds from './StrategyIds';
 
 export const AboutStrategyName: string = "About"
 export const AdvancedSearchStrategyName: string = "Advanced Search"
+export const BulkUpdateStrategyName: string = "Bulk Update"
 export const CalculatedColumnStrategyName: string = "Calculated Column"
 export const CalendarStrategyName: string = "Calendar"
 export const CellValidationStrategyName: string = "Cell Validation"
@@ -27,8 +28,12 @@ export const UserFilterStrategyName: string = "User Filter"
 
 export function getNameForStrategy(strategyID: string) {
     switch (strategyID) {
+        case StrategyIds.AboutStrategyId:
+            return AboutStrategyName
         case StrategyIds.AdvancedSearchStrategyId:
             return AdvancedSearchStrategyName
+        case StrategyIds.BulkUpdateStrategyId:
+            return BulkUpdateStrategyName
         case StrategyIds.CalculatedColumnStrategyId:
             return CalculatedColumnStrategyName
         case StrategyIds.CalendarStrategyId:

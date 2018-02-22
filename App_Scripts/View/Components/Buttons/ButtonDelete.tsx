@@ -54,7 +54,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         ConfirmationTitle: ownProps.ConfirmationTitle
     };
 }
-// Which action creators does it want to receive by props?
+
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onConfirmWarning: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),

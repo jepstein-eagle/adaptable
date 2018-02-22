@@ -2,7 +2,7 @@ import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import { Radio, Panel, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { DataType, PopoverType, ShortcutAction } from '../../../Core/Enums';
+import { DataType, PopoverType, MathOperation } from '../../../Core/Enums';
 import {  EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
@@ -18,7 +18,7 @@ export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IS
 export interface ShortcutSettingsWizardState {
     ShortcutKey: string;
     ShortcutResult: any;
-    ShortcutAction: ShortcutAction;
+    ShortcutOperation: MathOperation;
     IsDynamic: boolean
 }
 
@@ -34,13 +34,13 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.state = {
             ShortcutKey: this.props.Data.ShortcutKey,
             ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult,
-            ShortcutAction: this.props.Data.ShortcutAction,
+            ShortcutOperation: this.props.Data.ShortcutOperation,
             IsDynamic: this.props.Data.IsDynamic
         }
     }
 
-    onClickShortcutAction(shortcutAction: ShortcutAction) {
-        this.setState({ ShortcutAction: shortcutAction, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+    onClickShortcutOperation(shortcutOperation: MathOperation) {
+        this.setState({ ShortcutOperation: shortcutOperation, ShortcutResult: this.state.ShortcutResult } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     render() {
@@ -59,12 +59,12 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         })
 
         // sort out actions
-        let optionActions = EnumExtensions.getNames(ShortcutAction).filter
-            (name => name != ShortcutAction.Replace).map((enumName) => {
+        let optionActions = EnumExtensions.getNames(MathOperation).filter
+            (name => name != MathOperation.Replace).map((enumName) => {
                 return <option key={enumName} value={enumName}>{enumName}</option>
             })
 
-        let currentActionValue = this.state.ShortcutAction;
+        let currentActionValue = this.state.ShortcutOperation;
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
         let currentDynamicResult = this.state.ShortcutResult != "" ? this.state.ShortcutResult : "select"
 
@@ -94,7 +94,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                             </Col>
                             <Col xs={7}>
                                 <AdaptableBlotterForm inline >
-                                    <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutActionChanged(x)} >
+                                    <FormControl componentClass="select" placeholder="select" value={currentActionValue} onChange={(x) => this.onShortcutOperationChanged(x)} >
                                         {optionActions}
                                     </FormControl>
                                     {' '}<AdaptablePopover headerText={"Shortcut: Operation"}
@@ -191,9 +191,9 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     }
 
 
-    private onShortcutActionChanged(event: React.FormEvent<any>) {
+    private onShortcutOperationChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ShortcutAction: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ShortcutOperation: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onDynamicResultChanged(event: React.FormEvent<any>) {
@@ -219,7 +219,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ShortcutResult = this.state.ShortcutResult;
-        this.props.Data.ShortcutAction = this.state.ShortcutAction;
+        this.props.Data.ShortcutOperation = this.state.ShortcutOperation;
         this.props.Data.ShortcutKey = this.state.ShortcutKey;
         this.props.Data.IsDynamic = this.state.IsDynamic;
     }

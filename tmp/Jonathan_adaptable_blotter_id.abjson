@@ -36,7 +36,7 @@
 				"ShortcutKey": "O",
 				"ShortcutResult": "1000000",
 				"DataType": "Number",
-				"ShortcutAction": "Add",
+				"ShortcutOperation": "Add",
 				"IsPredefined": false,
 				"IsDynamic": false
 			},
@@ -44,7 +44,7 @@
 				"ShortcutKey": "W",
 				"ShortcutResult": "Previous Work Day",
 				"DataType": "Date",
-				"ShortcutAction": "Multiply",
+				"ShortcutOperation": "Multiply",
 				"IsPredefined": false,
 				"IsDynamic": true
 			}

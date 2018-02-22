@@ -1,11 +1,11 @@
 import {  IStrategy } from './IStrategy';
-import { DataType ,ShortcutAction } from '../../Core/Enums';
+import { DataType ,MathOperation } from '../../Core/Enums';
 import { IConfigEntity , ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 
 export interface IShortcut extends IConfigEntity{
     ShortcutKey: string;
     ShortcutResult: any;
-    ShortcutAction: ShortcutAction
+    ShortcutOperation: MathOperation
     DataType: DataType;
     IsDynamic: boolean
 }

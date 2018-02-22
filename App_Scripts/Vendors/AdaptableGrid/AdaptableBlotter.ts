@@ -45,6 +45,8 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/Interfaces';
+import { AboutStrategy } from '../../Strategy/AboutStrategy';
+import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -79,6 +81,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
+        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
+        this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))

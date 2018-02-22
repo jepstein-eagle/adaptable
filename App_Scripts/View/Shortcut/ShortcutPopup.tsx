@@ -12,7 +12,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
-import { ShortcutAction } from '../../Core/Enums'
+import { MathOperation } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
 import { ShortcutWizard } from './Wizard/ShortcutWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -27,7 +27,7 @@ import { UIHelper } from '../UIHelper';
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
     onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction
     onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => ShortcutRedux.ShortcutChangeKeyAction
-    onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => ShortcutRedux.ShortcutChangeOperationAction
+    onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutOperation: MathOperation) => ShortcutRedux.ShortcutChangeOperationAction
     onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
 
     Shortcuts: Array<IShortcut>,
@@ -48,12 +48,12 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let colItems: IColItem[] = [
             { Content: "Type", Size: 2 },
             { Content: "Key", Size: 1 },
-            { Content: "Action", Size: 3 },
+            { Content: "Operation", Size: 3 },
             { Content: "Value", Size: 3 },
             { Content: "", Size: 3 },
         ]
 
-        const shortcutActionList: Array<ShortcutAction> = [ShortcutAction.Add, ShortcutAction.Subtract, ShortcutAction.Multiply, ShortcutAction.Divide];
+        const shortcutOperationList: Array<MathOperation> = [MathOperation.Add, MathOperation.Subtract, MathOperation.Multiply, MathOperation.Divide];
 
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
@@ -61,7 +61,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                 Index={index}
                 onEdit={null}
                 ColItems={colItems}
-                AvailableActions={shortcutActionList}
+                AvailableActions={shortcutOperationList}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
@@ -137,12 +137,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
         onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
-        onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutAction: ShortcutAction) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewShortcutAction)),
+        onChangeOperationShortcut: (shortcut: IShortcut, NewshortcutOperation: MathOperation) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewshortcutOperation)),
         onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
         onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ShortcutStrategyId))
     };

@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup,  Glyphicon } from 'react-bootstrap';
+import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { SmartEditOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
+import { MathOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Strategy/Interface/ISmartEditStrategy'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -19,15 +19,16 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
-    SmartEditOperation: SmartEditOperation;
+    SmartEditOperation: MathOperation;
     Preview: ISmartEditPreview;
     Columns: IColumn[];
     UserFilters: IUserFilter[];
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
-    onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => SmartEditRedux.SmartEditChangeOperationAction;
+    onSmartEditOperationChange: (SmartEditOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -113,16 +114,19 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         else if (globalHasValidationPrevent) {
             globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nThese updates will be ignored.";
         }
+
+        let operationMenuItems = EnumExtensions.getNames(MathOperation).map((mathOperation: MathOperation, index) => {
+            return <MenuItem eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
+        })
+        
         return (
             <div >
                 <PanelWithImage header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
-                                <DropdownButton title={SmartEditOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
-                                    <MenuItem eventKey="1" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Add)}>{SmartEditOperation.Add}</MenuItem>
-                                    <MenuItem eventKey="2" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Multiply)}>{SmartEditOperation.Multiply}</MenuItem>
-                                    <MenuItem eventKey="3" onClick={() => this.props.onSmartEditOperationChange(SmartEditOperation.Replace)}>{SmartEditOperation.Replace}</MenuItem>
+                                <DropdownButton title={MathOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
+                                    {operationMenuItems}
                                 </DropdownButton>
                                 <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
@@ -208,7 +212,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
-        onSmartEditOperationChange: (SmartEditOperation: SmartEditOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
+        onSmartEditOperationChange: (SmartEditOperation: MathOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
         onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),

@@ -82,6 +82,7 @@ import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/Interfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
+import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
@@ -117,6 +118,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))

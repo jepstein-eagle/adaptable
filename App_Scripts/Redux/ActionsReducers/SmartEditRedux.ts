@@ -1,6 +1,6 @@
 import { SmartEditState } from './Interface/IState';
 import { ISmartEditPreview } from '../../Strategy/Interface/ISmartEditStrategy';
-import { SmartEditOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Core/Enums';
 import * as Redux from 'redux'
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
@@ -19,7 +19,7 @@ export interface SmartEditChangeValueAction extends Redux.Action {
 }
 
 export interface SmartEditChangeOperationAction extends Redux.Action {
-    SmartEditOperation: SmartEditOperation
+    SmartEditOperation: MathOperation
 }
 
 export interface SmartEditCheckCellSelectionAction extends Redux.Action {
@@ -42,7 +42,7 @@ export const SmartEditChangeValue = (value: string): SmartEditChangeValueAction 
     value
 })
 
-export const SmartEditChangeOperation = (SmartEditOperation: SmartEditOperation): SmartEditChangeOperationAction => ({
+export const SmartEditChangeOperation = (SmartEditOperation: MathOperation): SmartEditChangeOperationAction => ({
     type: SMARTEDIT_CHANGE_OPERATION,
     SmartEditOperation
 })
@@ -62,7 +62,7 @@ export const SmartEditSetPreview = (Preview: ISmartEditPreview): SmartEditSetPre
 
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: "1",
-    SmartEditOperation: SmartEditOperation.Add,
+    SmartEditOperation: MathOperation.Add,
     Preview: null
 }
 

@@ -1,6 +1,7 @@
 
-export const AboutStrategyId: string = "AboutStrategy"
+export const AboutStrategyId: string = "About"
 export const AdvancedSearchStrategyId: string = "AdvancedSearch"
+export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"
 export const CellValidationStrategyId: string = "CellValidation"

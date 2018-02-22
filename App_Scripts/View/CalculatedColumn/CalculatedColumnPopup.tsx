@@ -147,7 +147,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-// Which action creators does it want to receive by props?
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),

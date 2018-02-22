@@ -1,7 +1,7 @@
 import { ShortcutState } from './Interface/IState';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
-import { ShortcutAction } from '../../Core/Enums';
+import { MathOperation } from '../../Core/Enums';
 import * as Redux from 'redux'
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
@@ -33,7 +33,7 @@ export interface ShortcutChangeKeyAction extends Redux.Action {
 
 export interface ShortcutChangeOperationAction extends Redux.Action {
     Shortcut: IShortcut,
-    NewShortcutAction: ShortcutAction
+    NewShortcutOperation: MathOperation
 }
 
 export interface ShortcutChangeResultAction extends Redux.Action {
@@ -61,10 +61,10 @@ export const ShortcutChangeKey = (Shortcut: IShortcut, NewShortcutKey: string): 
     NewShortcutKey
 })
 
-export const ShortcutChangeOperation = (Shortcut: IShortcut, NewShortcutAction: ShortcutAction): ShortcutChangeOperationAction => ({
+export const ShortcutChangeOperation = (Shortcut: IShortcut, NewShortcutOperation: MathOperation): ShortcutChangeOperationAction => ({
     type: SHORTCUT_CHANGE_OPERATION,
     Shortcut,
-    NewShortcutAction
+    NewShortcutOperation
 })
 
 export const ShortcutChangeResult = (Shortcut: IShortcut, NewShortcutResult: any): ShortcutChangeResultAction => ({
@@ -105,7 +105,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             let shortcut = actionTyped.Shortcut
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.indexOf(shortcut)
-            shortcuts[index] = Object.assign({}, shortcut, { ShortcutAction: actionTyped.NewShortcutAction })
+            shortcuts[index] = Object.assign({}, shortcut, { ShortcutOperation: actionTyped.NewShortcutOperation })
             return Object.assign({}, state, {
                 Shortcuts: shortcuts
             });

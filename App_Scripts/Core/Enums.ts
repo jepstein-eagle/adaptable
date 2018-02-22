@@ -47,20 +47,16 @@ export enum PopoverType {
     Error = "Error"
 }
 
-// Enums used in Strategies
-export enum SmartEditOperation {
-    Add = "Add",
-    Multiply = "Multiply",
-    Replace = "Replace"
-}
-
-export enum ShortcutAction {
+export enum MathOperation {
     Add = "Add",
     Subtract = "Subtract",
     Multiply = "Multiply",
     Divide = "Divide",
     Replace = "Replace"
 }
+
+// Enums used in Strategies
+
 
 export enum ConditionalStyleScope {
     Column = "Column",
