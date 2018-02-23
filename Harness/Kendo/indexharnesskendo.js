@@ -86,7 +86,7 @@ messages: {
     adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(grid, container,         {
             primaryKey: "tradeId",
             userName: "harnessuser",
-            enableAuditLog: true,
+            enableAuditLog: false,
             enableRemoteConfigServer: false,
             iPushPullConfig: {
                 api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

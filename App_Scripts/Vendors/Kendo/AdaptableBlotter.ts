@@ -18,6 +18,7 @@ import { IAuditService } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { StyleService } from '../../Core/Services/StyleService'
+import { ValidationService } from '../../Core/Services/ValidationService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
@@ -92,6 +93,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
+        this.ValidationService = new ValidationService(this);
+       
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
