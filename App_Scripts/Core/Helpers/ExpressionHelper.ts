@@ -252,9 +252,9 @@ export module ExpressionHelper {
             case LeafExpressionOperator.IsNegative:
                 return "Is Negative ";
             case LeafExpressionOperator.ValueChange:
-                return "Change In Value Less Than "
+                return "Change In Value Greater Than "
             case LeafExpressionOperator.PercentChange:
-                return "% Change Is Less Than "
+                return "% Change Is Greater Than "
             case LeafExpressionOperator.IsTrue:
                 return "Is True "
             case LeafExpressionOperator.IsFalse:
@@ -433,11 +433,11 @@ export module ExpressionHelper {
             case LeafExpressionOperator.PercentChange:
                 let oldPercentValue: any = rangeEvaluation.initialValue;
                 let percentChange: number = Math.abs(100 - Math.abs(rangeEvaluation.newValue * 100 / oldPercentValue))
-                return percentChange < Number(rangeEvaluation.operand1);
+                return percentChange > Number(rangeEvaluation.operand1);
             case LeafExpressionOperator.ValueChange:
                 let oldChangeValue: any = rangeEvaluation.initialValue;
                 let changeInValue: number = Math.abs(rangeEvaluation.newValue - oldChangeValue);
-                return changeInValue < Number(rangeEvaluation.operand1);
+                return changeInValue > Number(rangeEvaluation.operand1);
             case LeafExpressionOperator.Between:
                 return (rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
             case LeafExpressionOperator.NotBetween:

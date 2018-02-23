@@ -12,6 +12,7 @@ import filter from 'redux-storage-decorator-filter'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
+import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
 import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
@@ -37,6 +38,7 @@ import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
+import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
 import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
@@ -62,6 +64,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
+    BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
     Shortcut: ShortcutRedux.ShortcutReducer,
     Grid: GridRedux.GridReducer,
@@ -80,7 +83,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Dashboard: DashboardRedux.DashboardReducer,
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-     UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer
 });
@@ -133,7 +136,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "Preview"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"], ["BulkUpdate", "BulkUpdateValue"], ["BulkUpdate", "PreviewInfo"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -489,6 +492,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     return next(action);
                 }
 
+                /*  *********
+                SMART EDIT ACTIONS
+                ************ */
                 case SmartEditRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
                     let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
@@ -507,8 +513,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     return returnAction;
                 }
 
-
-                //here we have all actions that triggers a refresh of the SmartEditPreview
+                // Here we have all actions that triggers a refresh of the SmartEditPreview
                 case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
                 case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
                 case SmartEditRedux.SMARTEDIT_FETCH_PREVIEW: {
@@ -530,6 +535,52 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
+
+
+                /*  *********
+                BULK UPDATE ACTIONS
+                ************ */
+                case BulkUpdateRedux.BulkUpdate_CHECK_CELL_SELECTION: {
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    let state = middlewareAPI.getState();
+                    let returnAction = next(action);
+                    let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
+
+                    if (apiReturn.Error) {
+                        //We close the BulkUpdatePopup
+                        middlewareAPI.dispatch(PopupRedux.PopupHide());
+                        //We show the Error Popup
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                    } else {
+                        let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
+                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiPreviewReturn));
+                    }
+                    return returnAction;
+                }
+
+                // Here we have all actions that triggers a refresh of the BulkUpdatePreview
+                case BulkUpdateRedux.BulkUpdate_CHANGE_VALUE:
+                case BulkUpdateRedux.BulkUpdate_FETCH_PREVIEW: {
+                    //all our logic needs to be executed AFTER the main reducers 
+                    //so our state is up to date which allow us not to care about the data within each different action
+                    let returnAction = next(action);
+
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    let state = middlewareAPI.getState();
+
+                    let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
+                    middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiReturn));
+                    return returnAction;
+                }
+
+                case BulkUpdateRedux.BulkUpdate_APPLY: {
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    BulkUpdateStrategy.ApplyBulkUpdate((<BulkUpdateRedux.BulkUpdateApplyAction>action).bypassCellValidationWarnings);
+                    middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    return next(action);
+                }
+
+
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
                     let plusMinusStrategy = <IPlusMinusStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
                     let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
@@ -604,7 +655,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case INIT_STATE:
                 case RESET_STATE: {
                     let returnAction = next(action);
-                     //we set the column list from the datasource
+                    //we set the column list from the datasource
                     adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     let currentLayout = "Default"
@@ -631,7 +682,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
 
                     adaptableBlotter.createMenu();
-                   
+
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
                     AdaptableDashboardViewFactory.forEach((control, strategyId) => {

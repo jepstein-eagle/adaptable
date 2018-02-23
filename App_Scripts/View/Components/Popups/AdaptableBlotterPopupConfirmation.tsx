@@ -23,7 +23,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
         return this.props.ShowPopup && <SweetAlert
             type={this.props.ShowCommentBox ? "input" : "warning"}
             showCancel
-            confirmBtnBsStyle="danger"
+            confirmBtnBsStyle="primary"
             confirmBtnText={this.props.ConfirmText}
             cancelBtnBsStyle="default"
             cancelBtnText={this.props.CancelText}

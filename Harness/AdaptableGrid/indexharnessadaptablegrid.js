@@ -71,10 +71,6 @@ function InitBlotter() {
         ];
     }
 
-/*
- { field: "percentChange", title: "Percent Change", type: 'num' },
- */
-
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblottergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",

@@ -1,24 +1,11 @@
-import {  IStrategy } from './IStrategy';
+import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
 import { MathOperation } from '../../Core/Enums';
-import { ICellValidationRule } from '../Interface/ICellValidationStrategy';
-
-
-export interface ISmartEditPreview {
-    ColumnId: string,
-    PreviewResults: ISmartEditPreviewResult[]
-}
-
-export interface ISmartEditPreviewResult {
-    Id: any,
-    InitialValue: number,
-    ComputedValue: number,
-    ValidationRules: ICellValidationRule[]
-}
+import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
 
 export interface ISmartEditStrategy extends IStrategy {
-    CheckCorrectCellSelection():IStrategyActionReturn<boolean>;
-    BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): ISmartEditPreview;
-    ApplySmartEdit(bypassCellValidationWarnings : boolean): void;
+    CheckCorrectCellSelection(): IStrategyActionReturn<boolean>;
+    BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): IPreviewInfo;
+    ApplySmartEdit(bypassCellValidationWarnings: boolean): void;
 }
 

@@ -67,6 +67,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+    public  GridName : string = "Kendo Telerik"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 

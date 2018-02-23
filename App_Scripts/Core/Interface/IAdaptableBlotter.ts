@@ -13,6 +13,7 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/Interfaces';
 
 export interface IAdaptableBlotter {
+    GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;
     BlotterOptions: IAdaptableBlotterOptions
     Strategies: IAdaptableStrategyCollection

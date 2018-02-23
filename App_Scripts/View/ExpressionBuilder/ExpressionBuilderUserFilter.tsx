@@ -15,7 +15,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
     render(): any {
 
         var userFilterExpressions = this.props.UserFilterExpressions.map((ne: IUserFilter, index: number) => {
-            return <ListGroupItem key={index}
+            return <ListGroupItem key={index} 
                 onClick={() => this.onClickColum(ne)}
                 active={this.props.SelectedUserFilterExpressions.find(f => f.Name == ne.Name)}>
                 {ne.Name}

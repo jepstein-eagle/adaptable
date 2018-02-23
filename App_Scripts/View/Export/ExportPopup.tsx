@@ -57,7 +57,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     render() {
 
-        let infoBody: any[] = ["Export works by sending 'Reports' to specified location.", <br />, <br />, "You can use an existing Report or create one of your own..", <br />, <br />]
+        let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
         let colItems: IColItem[] = [
             { Content: "Report", Size: 2 },

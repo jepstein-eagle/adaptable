@@ -1,7 +1,7 @@
 import { SmartEditState } from './Interface/IState';
-import { ISmartEditPreview } from '../../Strategy/Interface/ISmartEditStrategy';
 import { MathOperation } from '../../Core/Enums';
 import * as Redux from 'redux'
+import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
@@ -29,7 +29,7 @@ export interface SmartEditFetchPreviewAction extends Redux.Action {
 }
 
 export interface SmartEditSetPreviewAction extends Redux.Action {
-    Preview: ISmartEditPreview
+    PreviewInfo: IPreviewInfo
 }
 
 export const SmartEditApply = (bypassCellValidationWarnings: boolean): SmartEditApplyAction => ({
@@ -55,22 +55,22 @@ export const SmartEditFetchPreview = (): SmartEditFetchPreviewAction => ({
     type: SMARTEDIT_FETCH_PREVIEW
 })
 
-export const SmartEditSetPreview = (Preview: ISmartEditPreview): SmartEditSetPreviewAction => ({
+export const SmartEditSetPreview = (PreviewInfo: IPreviewInfo): SmartEditSetPreviewAction => ({
     type: SMARTEDIT_SET_PREVIEW,
-    Preview
+    PreviewInfo
 })
 
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: "1",
     SmartEditOperation: MathOperation.Add,
-    Preview: null
+    PreviewInfo: null
 }
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
     switch (action.type) {
         case SMARTEDIT_APPLY:
             //we apply logic in the middleware since it's an API call
-            return Object.assign({}, state, { Preview: null })
+            return Object.assign({}, state, { PreviewInfo: null })
         case SMARTEDIT_CHANGE_VALUE:
             return Object.assign({}, state, { SmartEditValue: (<SmartEditChangeValueAction>action).value })
         case SMARTEDIT_CHANGE_OPERATION:
@@ -80,7 +80,7 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEdit
         case SMARTEDIT_CHECK_CELL_SELECTION:
             return state
         case SMARTEDIT_SET_PREVIEW:
-            return Object.assign({}, state, { Preview: (<SmartEditSetPreviewAction>action).Preview })
+            return Object.assign({}, state, { PreviewInfo: (<SmartEditSetPreviewAction>action).PreviewInfo })
         default:
             return state
     }

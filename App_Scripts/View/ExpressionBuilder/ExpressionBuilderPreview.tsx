@@ -17,7 +17,8 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 // since html cannot render a button within a button.
 // https://github.com/react-bootstrap/react-bootstrap/issues/1445
 // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
+// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks bad
+// JW - 22/2/18: Ive added an underline to the column name.  Not perfect solution but think it makes it more obvious its clickable
 
 export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression
@@ -153,7 +154,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     key={columnId + "header"}
                     ref={columnId}
                     onClick={() => this.props.onSelectedColumnChange(columnId)} >
-                    {columnFriendlyName}
+                    <u>{columnFriendlyName}</u>
                 </Button>
                 <ListGroup>
                     {columnValuesListgroupItems}

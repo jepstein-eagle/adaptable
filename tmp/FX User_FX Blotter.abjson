@@ -7,7 +7,16 @@
 		"CustomSorts": []
 	},
 	"Shortcut": {
-		"Shortcuts": []
+		"Shortcuts": [
+			{
+				"ShortcutKey": "M",
+				"ShortcutResult": "1000000",
+				"DataType": "Number",
+				"ShortcutOperation": "Multiply",
+				"IsPredefined": false,
+				"IsDynamic": false
+			}
+		]
 	},
 	"PlusMinus": {
 		"DefaultNudge": 1,
@@ -63,10 +72,10 @@
 					"tradeId",
 					"notional",
 					"dealType",
-					"baseCurrency",
+					"baseCcy",
 					"baseAmount",
-					"secondaryCurrency",
-					"secondaryAmount",
+					"secondCcy",
+					"secondAmount",
 					"rate",
 					"pnL",
 					"counterparty",
@@ -87,8 +96,6 @@
 				"IsVisible": true,
 				"ControlConfiguration": [
 					"Dashboard",
-					"Smart Edit",
-					"Plus Minus",
 					"Conditional Style",
 					"Team Sharing"
 				]
@@ -107,7 +114,7 @@
 			},
 			{
 				"Strategy": "Export",
-				"IsVisible": true
+				"IsVisible": false
 			},
 			{
 				"Strategy": "ColumnFilter",

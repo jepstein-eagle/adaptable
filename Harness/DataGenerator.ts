@@ -12,16 +12,17 @@ export interface IBond {
     trader: string;
     tradeDate: Date;
     effectiveDate: Date;
+    maturityDate: Date;
     lastUpdated: Date;
  }
 
 export interface IFX {
     tradeId: number;
     dealType: string;
-    baseCurrency: string;
+    baseCcy: string;
     baseAmount: number;
-    secondaryCurrency: string;
-    secondaryAmount: number;
+    secondCcy: string;
+    secondAmount: number;
     rate: number;
     pnL: number;
     counterparty: string;
@@ -44,7 +45,7 @@ export class DataGenerator {
 
     getBonds(): IBond[] {
         let bonds: IBond[] = [];
-        for (let i = 1; i < 30; i++) {
+        for (let i = 1; i < 35; i++) {
             bonds.push(this.createBond(i));
         }
         return bonds;
@@ -52,7 +53,7 @@ export class DataGenerator {
 
     getFX(): IFX[] {
         let fxs: IFX[] = [];
-        for (let i = 1; i < 30; i++) {
+        for (let i = 1; i < 35; i++) {
             fxs.push(this.createFX(i));
         }
         return fxs;
@@ -153,6 +154,7 @@ export class DataGenerator {
                 "trader": this.getRandomItem(this.getNames()),
                 "tradeDate": tradeDate,
                 "effectiveDate": this.addDays(tradeDate, 3),
+                "maturityDate": this.addDays(tradeDate, 245),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
             };
         return bond;
@@ -161,7 +163,7 @@ export class DataGenerator {
     createFX(i: number): IFX {
         let baseAmount = this.getRandomItem(this.getNotionals())
         let rate = this.getMeaningfulDoubleInRange(0, 2);
-        let secondaryAmount = baseAmount * rate;
+        let secondaryAmount = this.removeDecimalPoints( baseAmount * rate);
         let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         let baseCurrency = this.getRandomItem(this.getCurrencies());
         let fx =
@@ -169,10 +171,10 @@ export class DataGenerator {
                 "tradeId": i,
                 "notional": this.getRandomItem(this.getNotionals()),
                 "dealType": this.getRandomItem(this.getDealType()),
-                "baseCurrency": baseCurrency,
+                "baseCcy": baseCurrency,
                 "baseAmount": baseAmount,
-                "secondaryCurrency": this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
-                "secondaryAmount": secondaryAmount,
+                "secondCcy": this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
+                "secondAmount": secondaryAmount,
                 "rate": rate,
                 "pnL": this.getMeaningfulDoubleInRange(3, 40),
                 "counterparty": this.getRandomItem(this.getCounterparties()),
@@ -304,6 +306,10 @@ export class DataGenerator {
         return this.roundTo4Dp(this.generateRandomInt(-150, 150) + this.generateRandomDouble());
     }
 
+    protected removeDecimalPoints(val: number): number {
+        return Math.round(val * 1) / 1;
+    }
+
     protected roundTo4Dp(val: number): number {
         return Math.round(val * 10000) / 10000;
     }
@@ -356,12 +362,12 @@ export class DataGenerator {
     }
 
     protected getIsin(index: number): string {
-        let isins: string[] = ["US046353AB45", "FR0010326975", "XS0133582147", "XS0097283096", "XS0253989635", "FR0010828095", "XS0315528850", "XS0173501379", "XS0297700006", "XS0630204351", "FR0010967216", "XS0323411016", "FR0010185975", "USF7061BAN04", "DE000A1MA9V5", "DE000DB5S5U8", "XS1000918018", "US822582AC66", "XS0097283096", "FR0011043124", "DE000A0TKUU3", "XS0469026453", "XS0133582147", "XS0493098486", "FR0010394478", "XS0369461644", "S780641AH94", "XS0369461644", "XS0909769407", "XS0741004062", "XS0783934911"]
+        let isins: string[] = ["US046353AB45", "FR0010326975", "XS0133582147", "XS0097283096", "XS0253989635", "FR0010828095", "XS0315528850", "XS0173501379", "XS0297700006", "XS0630204351", "FR0010967216", "XS0323411016", "FR0010185975", "USF7061BAN04", "DE000A1MA9V5", "DE000DB5S5U8", "XS1000918018", "US822582AC66", "XS0097283096", "FR0011043124", "DE000A0TKUU3", "XS0469026453", "XS0133582147", "XS0493098486", "FR0010394478", "XS0369461644", "S780641AH94", "XS0369461644", "XS0909769407", "XS0741004062", "XS0783934911", "XS0133582147", "XS0097283096", "XS0253989635", "FR0010828095", "XS0315528850", "XS0173501379"]
         return isins[index];
     }
 
     protected getTicker(index: number): string {
-        let tickers: string[] = ["AZN", "BOUY", "BYLAN", "KONIPHI", "SIEM", "LADBRK", "RNTKIL", "WENL", "PSON", "BAB", "DANONE", "STAN-Bank", "LOUISDR", "AF-AirFrance", "PERNOD", "RDSPLC", "DB", "BRITEL-BritTel", "DAMLR", "VLOF", "HEI", "TATELN", "SESG", "BAB", "SIEM", "CARR", "KPN", "SIEM", "LBTG-UPC", "TECHGH", "WENL", "CPGLN"]
+        let tickers: string[] = ["AZN", "BOUY", "BYLAN", "KONIPHI", "SIEM", "LADBRK", "RNTKIL", "WENL", "PSON", "BAB", "DANONE", "STAN-Bank", "LOUISDR", "AF-AirFrance", "PERNOD", "RDSPLC", "DB", "BRITEL-BritTel", "DAMLR", "VLOF", "HEI", "TATELN", "SESG", "BAB", "SIEM", "CARR", "KPN", "SIEM", "LBTG-UPC", "TECHGH", "WENL", "CPGLN", "KONIPHI", "SIEM", "LADBRK", "RNTKIL", "WENL", "PSON", "BAB",]
         return tickers[index];
     }
 

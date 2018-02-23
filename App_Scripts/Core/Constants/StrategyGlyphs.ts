@@ -2,7 +2,7 @@ import * as StrategyIds from './StrategyIds';
 
 export const AboutGlyph: string = "info-sign"
 export const AdvancedSearchGlyph: string = "search"
-export const BulkUpdateGlyph: string = "list"
+export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
 export const CellValidationGlyph: string = "flag"

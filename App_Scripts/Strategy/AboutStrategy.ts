@@ -22,7 +22,11 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
         let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
         let output: string = ""
 
-        if (options.blotterId != undefined) {
+            output += "Vendor Grid:"
+            output += this.blotter.GridName
+            output += "|"
+      
+            if (options.blotterId != undefined) {
             output += "Blotter Id:"
             output += options.blotterId
             output += "|"

@@ -86,7 +86,8 @@ const getFilterIcon = (state: boolean) => {
 }
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-    public Strategies: IAdaptableStrategyCollection
+    public  GridName : string = "Hypergrid"
+  public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService

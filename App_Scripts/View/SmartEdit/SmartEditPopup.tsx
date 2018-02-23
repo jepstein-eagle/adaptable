@@ -8,7 +8,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { MathOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
-import { ISmartEditPreview, ISmartEditPreviewResult } from '../../Strategy/Interface/ISmartEditStrategy'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
@@ -20,11 +19,12 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
     SmartEditOperation: MathOperation;
-    Preview: ISmartEditPreview;
+    PreviewInfo: IPreviewInfo;
     Columns: IColumn[];
     UserFilters: IUserFilter[];
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
@@ -49,23 +49,20 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     render() {
         let infoBody: any[] = ["Click ", <i><b>Apply to Grid</b></i>,
             " button to update all selected cells with the values showing in the Preview Results grid.", <br />, <br />,
-            "3 operations are available to update the selected cells with the inputted value:", <br />,
-            <strong>Add</strong>, " the value to selected cells", <br />,
-            <strong>Multiply</strong>, " selected cells by the value", <br />,
-            <strong>Replace</strong>, " selected cells with the value (i.e. Bulk Update)", <br />, <br />,
+            "This value will be calculated based on the Maths operation selected in the dropdown", <br />, <br />,
             "Smart Edits that break Cell Validation Rules will be flagged and prevented."]
 
         let col: IColumn
-        if (this.props.Preview) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.Preview.ColumnId)
+        if (this.props.PreviewInfo) {
+            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
         }
 
-        let previewHeader: string = this.props.Preview != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
+        let previewHeader: string = this.props.PreviewInfo != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
         let globalHasValidationPrevent = false
         let globalHasValidationWarning = false
         let globalHasOnlyValidationPrevent = true
-        if (this.props.Preview && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
-            var previewItems = this.props.Preview.PreviewResults.map((previewResult: ISmartEditPreviewResult) => {
+        if (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
+            var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult) => {
                 let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
                 let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.StopEdit).length > 0
                 let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.WarnUser).length > 0
@@ -115,10 +112,10 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
             globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nThese updates will be ignored.";
         }
 
-        let operationMenuItems = EnumExtensions.getNames(MathOperation).map((mathOperation: MathOperation, index) => {
-            return <MenuItem eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
+        let operationMenuItems = EnumExtensions.getNames(MathOperation).filter(e => e != MathOperation.Replace).map((mathOperation: MathOperation, index) => {
+            return <MenuItem key={index} eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
         })
-        
+
         return (
             <div >
                 <PanelWithImage header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
@@ -128,7 +125,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
                                 <DropdownButton title={MathOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
                                     {operationMenuItems}
                                 </DropdownButton>
-                                <FormControl value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
+                                <FormControl  value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
                         </FormGroup>
                         {' '}
@@ -203,7 +200,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
-        Preview: state.SmartEdit.Preview,
+        PreviewInfo: state.SmartEdit.PreviewInfo,
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters
     };

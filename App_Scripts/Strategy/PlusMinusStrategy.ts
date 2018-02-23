@@ -55,6 +55,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
             }
+           
+        let popup =    this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ActionConfigurationPopup
+           
+           
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let selectedCell = this.blotter.getSelectedCells()
 

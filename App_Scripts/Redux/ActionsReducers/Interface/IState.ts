@@ -1,6 +1,5 @@
 import { MathOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
-import { ISmartEditPreview } from '../../../Strategy/Interface/ISmartEditStrategy'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
@@ -20,6 +19,7 @@ import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidation
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Strategy/Interface/IDashboardStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
+import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 
 
 export interface PlusMinusState {
@@ -48,7 +48,12 @@ export interface PopupState {
 export interface SmartEditState {
     SmartEditValue: string
     SmartEditOperation: MathOperation
-    Preview: ISmartEditPreview
+    PreviewInfo: IPreviewInfo
+}
+
+export interface BulkUpdateState {
+    BulkUpdateValue: string
+    PreviewInfo: IPreviewInfo
 }
 
 export interface CustomSortState {

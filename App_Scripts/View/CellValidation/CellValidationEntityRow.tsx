@@ -25,7 +25,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         let cellValidation: ICellValidationRule = this.props.ConfigEntity as ICellValidationRule;
 
         let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
-            return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}><div style={{ fontSize: "small" }}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</div></option>
+            return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
         })
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);

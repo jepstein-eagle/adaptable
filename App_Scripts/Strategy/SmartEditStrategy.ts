@@ -6,10 +6,11 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy, ISmartEditPreview, ISmartEditPreviewResult } from '../Strategy/Interface/ISmartEditStrategy'
+import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
+import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -21,7 +22,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
-        let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.Preview
+        let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.PreviewInfo
         let newValues: ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of thePreview.PreviewResults) {
@@ -100,17 +101,13 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     }
 
-    public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): ISmartEditPreview {
+    public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): IPreviewInfo {
         let selectedCells = this.blotter.getSelectedCells();
-        let previewResults: ISmartEditPreviewResult[] = [];
+        let previewResults: IPreviewResult[] = [];
         let columnId: string;
 
         for (let pair of selectedCells.Selection) {
-
-
             for (var columnValuePair of pair[1]) {
-
-
                 let newValue: number;
                 switch (smartEditOperation) {
                     case MathOperation.Add:
@@ -120,15 +117,12 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                         newValue = Number(columnValuePair.value) - smartEditValue
                         break;
                     case MathOperation.Multiply:
-                        newValue = Number(columnValuePair.value) + smartEditValue
+                        newValue = Number(columnValuePair.value) * smartEditValue
                         break;
                     case MathOperation.Divide:
                         newValue = Number(columnValuePair.value) / smartEditValue
                         break;
-                    case MathOperation.Replace:
-                        newValue = smartEditValue
-                        break;
-                }
+                  }
                 //avoid the 0.0000000000x 
                 newValue = parseFloat(newValue.toFixed(12))
 
@@ -149,10 +143,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         }
 
         return {
-
             ColumnId: columnId,
             PreviewResults: previewResults
-
         }
     }
 

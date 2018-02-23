@@ -85,6 +85,7 @@ import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+    public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
@@ -942,11 +943,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRowInfo(): any {
         return this.gridOptions.api.getModel().getRowCount()
-     }
-    
+    }
+
     public getColumnInfo(): any {
         return this.gridOptions.columnApi.getAllColumns().length;
-   }
+    }
 }
 
 

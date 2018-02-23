@@ -37,7 +37,7 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
                 <Col xs={2} style={radioMarginStyle}>
                     <AdaptableBlotterForm inline>
                         <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} All </Radio>
-                        {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be exported, visible or not."]} popoverType={PopoverType.Info} /></span>
+                        {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={3} style={radioMarginStyle}>

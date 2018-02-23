@@ -26,7 +26,35 @@
 		"CurrentCalendar": "United States"
 	},
 	"ConditionalStyle": {
-		"ConditionalStyleConditions": []
+		"ConditionalStyleConditions": [
+			{
+				"ColumnId": "",
+				"Style": {
+					"BackColor": "#800080",
+					"ForeColor": "#ffffcc",
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "currency",
+							"ColumnDisplayValues": [
+								"EUR",
+								"GBP",
+								"USD"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilterExpressions": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
 	},
 	"QuickSearch": {
 		"QuickSearchDefaultBackColor": "#FFFFCC",
@@ -40,7 +68,30 @@
 		}
 	},
 	"AdvancedSearch": {
-		"AdvancedSearches": [],
+		"AdvancedSearches": [
+			{
+				"Name": "counterparties",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "counterparty",
+							"ColumnDisplayValues": [
+								"BNP",
+								"Deutsche Bank",
+								"JP Morgan",
+								"Nomura",
+								"Rabobank",
+								"RBS"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilterExpressions": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		],
 		"CurrentAdvancedSearch": ""
 	},
 	"UserFilter": {
@@ -72,6 +123,7 @@
 					"trader",
 					"tradeDate",
 					"effectiveDate",
+					"maturityDate",
 					"lastUpdated"
 				],
 				"Name": "Default",
@@ -86,8 +138,6 @@
 				"IsVisible": true,
 				"ControlConfiguration": [
 					"Dashboard",
-					"Smart Edit",
-					"Plus Minus",
 					"Conditional Style",
 					"Team Sharing"
 				]
@@ -106,7 +156,7 @@
 			},
 			{
 				"Strategy": "Export",
-				"IsVisible": true
+				"IsVisible": false
 			},
 			{
 				"Strategy": "ColumnFilter",
