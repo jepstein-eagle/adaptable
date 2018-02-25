@@ -8,7 +8,7 @@ import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
-  ComponentClassName: string;
+  ComponentName: string;
   IsReadOnly: boolean
   onHide?: Function;
   AdaptableBlotter: IAdaptableBlotter;
@@ -18,8 +18,8 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
 
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
   render() {
-    if (this.props.ComponentClassName) {
-      var bodyElement: any = AdaptableViewFactory[this.props.ComponentClassName];
+    if (this.props.ComponentName) {
+      var bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,

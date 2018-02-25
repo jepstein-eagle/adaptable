@@ -19,7 +19,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState,
     AdaptableBlotter: IAdaptableBlotter;
-    showPopup: (ComponentClassName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
+    showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
     onCloseErrorPopup: () => PopupRedux.PopupHideErrorAction;
     onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
@@ -69,7 +69,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
                 {/*  The main model window where action and configuration screens are 'hosted' */}
                 <AdaptableBlotterPopup showModal={this.props.PopupState.ActionConfigurationPopup.ShowPopup}
-                    ComponentClassName={this.props.PopupState.ActionConfigurationPopup.ComponentClassName}
+                    ComponentName={this.props.PopupState.ActionConfigurationPopup.ComponentName}
                     onHide={this.props.onClosePopup}
                     IsReadOnly={this.props.PopupState.ActionConfigurationPopup.IsReadOnly}
                     AdaptableBlotter={this.props.AdaptableBlotter}
@@ -101,7 +101,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
-        showPopup: (componentClassName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShow(componentClassName, isReadOnly, params)),
+        showPopup: (componentName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShow(componentName, isReadOnly, params)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }

@@ -19,7 +19,7 @@ export const POPUP_CONFIRMATION = 'POPUP_CONFIRMATION';
 export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 
 export interface PopupShowAction extends Redux.Action {
-    ComponentClassName: string,
+    ComponentName: string,
     IsReadOnly: boolean,
     Params?: string
 }
@@ -52,9 +52,9 @@ export interface PopupShowConfirmationAction extends Redux.Action { Confirmation
 
 export interface PopupClearParamAction extends Redux.Action { }
 
-export const PopupShow = (ComponentClassName: string, IsReadOnly?: boolean, Params?: string): PopupShowAction => ({
+export const PopupShow = (ComponentName: string, IsReadOnly?: boolean, Params?: string): PopupShowAction => ({
     type: POPUP_SHOW,
-    ComponentClassName,
+    ComponentName,
     IsReadOnly,
     Params
 })
@@ -125,7 +125,7 @@ export const PopupClearParam = (): PopupClearParamAction => ({
 const initialPopupState: PopupState = {
     ActionConfigurationPopup: {
         ShowPopup: false,
-        ComponentClassName: "",
+        ComponentName: "",
         IsReadOnly: false,
         Params: null
     },
@@ -164,11 +164,11 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
     switch (action.type) {
         case POPUP_SHOW: {
             let actionTypedShowPopup = (<PopupShowAction>action)
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentClassName: actionTypedShowPopup.ComponentClassName, Params: actionTypedShowPopup.Params }
+            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params }
             return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
         }
         case POPUP_HIDE: {
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: false, IsReadOnly: false, ComponentClassName: "", Params: null }
+            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: false, IsReadOnly: false, ComponentName: "", Params: null }
             return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
         }
         case POPUP_HIDE_ERROR: {
@@ -262,7 +262,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }
         case POPUP_CLEAR_PARAM: {
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: state.ActionConfigurationPopup.ShowPopup, IsReadOnly: state.ActionConfigurationPopup.IsReadOnly, ComponentClassName: state.ActionConfigurationPopup.ComponentClassName, Params: null }
+            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: state.ActionConfigurationPopup.ShowPopup, IsReadOnly: state.ActionConfigurationPopup.IsReadOnly, ComponentName: state.ActionConfigurationPopup.ComponentName, Params: null }
             return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
         }
         default:

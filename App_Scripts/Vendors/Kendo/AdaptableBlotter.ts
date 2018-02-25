@@ -847,10 +847,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getRowInfo(): any {
-        return 1
+        return this.grid.dataSource.data().length;
     }
     public getColumnInfo(): any {
-        return 1
+        return this.grid.columns.length;
     }
 }
 

@@ -74,15 +74,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         }
         return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {aboutButton}
-            <Dropdown id="dropdown-cols"  >
-                <Dropdown.Toggle noCaret>
-                    <Glyphicon glyph={"list"} />
-                </Dropdown.Toggle>
-                <Dropdown.Menu >
-                    {colItems}
-                </Dropdown.Menu>
-            </Dropdown>
-            {shortcuts}
+              {shortcuts}
             <Dropdown id="dropdown-functions"   >
                 <Dropdown.Toggle >
                     All
@@ -91,7 +83,15 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                     {menuItems}
                 </Dropdown.Menu>
             </Dropdown>
-
+            <Dropdown id="dropdown-cols"  >
+                <Dropdown.Toggle >
+                    <Glyphicon glyph={"list"} />
+                </Dropdown.Toggle>
+                <Dropdown.Menu >
+                    {colItems}
+                </Dropdown.Menu>
+            </Dropdown>
+         
         </PanelDashboard>
     }
 

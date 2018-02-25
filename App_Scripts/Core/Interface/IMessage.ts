@@ -35,7 +35,7 @@ export interface IUIPrompt {
 
 export interface IScreenPopup {
     ShowPopup: boolean;
-    ComponentClassName: string;
+    ComponentName: string;
     IsReadOnly: boolean
     Params: string
 }
