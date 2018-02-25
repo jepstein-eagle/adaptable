@@ -60,7 +60,7 @@ function notionalCellRenderer(params) {
 }
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades();
+    var trades = dataGen.getBonds();
 
     // let the grid know which columns and what data to use
     var gridOptions = {
@@ -81,7 +81,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "new user",
         enableAuditLog: false,
-        enableRemoteConfigServer: true,
+        enableRemoteConfigServer: false,
         predefinedConfigUrl:"",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

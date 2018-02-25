@@ -125,7 +125,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
                                 <DropdownButton title={MathOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
                                     {operationMenuItems}
                                 </DropdownButton>
-                                <FormControl  value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
+                                <FormControl onKeyPress={(e)=>this.onKeyPress(e)} value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
                         </FormGroup>
                         {' '}
@@ -149,6 +149,13 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
                 </Panel>
             </div>
         );
+    }
+
+    private onKeyPress(e: React.KeyboardEvent<any>): any {
+
+        // do someting
+       // let s: any = e.target;
+        //let x: any = s.key;
     }
 
     private onSmartEditValueChange(event: React.FormEvent<any>) {

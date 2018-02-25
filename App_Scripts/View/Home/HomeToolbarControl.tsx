@@ -49,15 +49,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             </div>
         });
 
-        // about button
-        let aboutMenuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == StrategyIds.AboutStrategyId)
-        let aboutButton = aboutMenuItem ? <OverlayTrigger key={aboutMenuItem.Label} overlay={<Tooltip id="tooltipButton" > {aboutMenuItem.Label}</Tooltip >}>
-            <Button bsSize={"small"} disabled={this.props.IsReadOnly} onClick={() => this.onClick(aboutMenuItem)}>
-                <Glyphicon glyph={aboutMenuItem.GlyphIcon} />
-            </Button>
-        </OverlayTrigger > : null
-
-        // shortcuts
+         // shortcuts
         let shortcutsArray: string[] = this.props.DashboardControl.ControlConfiguration
         let shortcuts: any
         if (shortcutsArray) {
@@ -91,8 +83,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 {menuItems}
             </DropdownButton>
 
-            {aboutButton}
-            {shortcuts}
+             {shortcuts}
             <DropdownButton bsStyle={"default"}
                 bsSize={"small"}
                 title={colsGlyph}

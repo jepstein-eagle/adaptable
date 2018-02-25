@@ -37,7 +37,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
-        var test = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
         let isReadOnly = this.blotter.isColumnReadonly(activeCell.ColumnId)

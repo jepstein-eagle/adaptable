@@ -35,6 +35,7 @@ interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupCom
 
 class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, {}> {
 
+    
     constructor() {
         super();
         this.state = { isShowingError: false, errorText: "" }

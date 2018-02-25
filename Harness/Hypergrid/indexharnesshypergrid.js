@@ -103,7 +103,7 @@ function InitBlotter() {
         userName: "jonathan",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        predefinedConfigUrl: "" ,  //predefinedConfig.json",
+        predefinedConfigUrl: "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
