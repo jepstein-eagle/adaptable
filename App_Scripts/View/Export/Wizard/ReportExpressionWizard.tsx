@@ -4,7 +4,7 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IReport>) {

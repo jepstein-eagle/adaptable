@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ICalendarEntry } from '../../Strategy/Interface/ICalendarStrategy';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;

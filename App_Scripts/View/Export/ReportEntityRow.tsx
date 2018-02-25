@@ -9,7 +9,7 @@ import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {

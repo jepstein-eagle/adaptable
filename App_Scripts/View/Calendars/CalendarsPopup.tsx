@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { ListGroup } from 'react-bootstrap';
 import { Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
 import { CalendarsEntryRow } from './CalendarsEntryRow'

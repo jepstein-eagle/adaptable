@@ -16,7 +16,7 @@ import { Helper } from '../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
-import { IRawValueDisplayValuePair } from "./Interfaces";
+import { IRawValueDisplayValuePair } from "./UIInterfaces";
 import { IRange } from '../Core/Interface/IExpression'
 import { ButtonClear } from "./Components/Buttons/ButtonClear";
 

@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } 
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 

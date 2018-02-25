@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox } from 'react-bootstrap';
+import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -50,9 +50,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         });
 
         // about button
-        let aboutMenuItem = this.props.MenuState.MenuItems.find(m=>m.StrategyId== StrategyIds.AboutStrategyId)
-        let aboutButton = aboutMenuItem? <OverlayTrigger key={aboutMenuItem.Label} overlay={<Tooltip id="tooltipButton" > {aboutMenuItem.Label}</Tooltip >}>
-            <Button disabled={this.props.IsReadOnly} onClick={() => this.onClick(aboutMenuItem)}>
+        let aboutMenuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == StrategyIds.AboutStrategyId)
+        let aboutButton = aboutMenuItem ? <OverlayTrigger key={aboutMenuItem.Label} overlay={<Tooltip id="tooltipButton" > {aboutMenuItem.Label}</Tooltip >}>
+            <Button bsSize={"small"} disabled={this.props.IsReadOnly} onClick={() => this.onClick(aboutMenuItem)}>
                 <Glyphicon glyph={aboutMenuItem.GlyphIcon} />
             </Button>
         </OverlayTrigger > : null
@@ -65,33 +65,41 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.Label == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
-                        <Button disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}>
+                        <Button bsSize={"small"} disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}>
                             <Glyphicon glyph={menuItem.GlyphIcon} />
                         </Button>
                     </OverlayTrigger >
                 }
             })
         }
+
+        const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
+            <Glyphicon glyph={"cog"} />
+        </OverlayTrigger>
+        const colsGlyph: any = <OverlayTrigger key={"colsOverlay"} overlay={<Tooltip id="colsTooltipButton" > {"Columns"}</Tooltip >}>
+            <Glyphicon glyph={"list"} />
+        </OverlayTrigger>
+
+
         return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+
+            <SplitButton bsStyle={"default"}
+                bsSize={"small"}
+                title={functionsGlyph}
+                key={"dropdown-functions"}
+                id={"dropdown-functions"}>
+                {menuItems}
+            </SplitButton>
+
             {aboutButton}
-              {shortcuts}
-            <Dropdown id="dropdown-functions"   >
-                <Dropdown.Toggle >
-                    All
-                </Dropdown.Toggle>
-                <Dropdown.Menu >
-                    {menuItems}
-                </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown id="dropdown-cols"  >
-                <Dropdown.Toggle >
-                    <Glyphicon glyph={"list"} />
-                </Dropdown.Toggle>
-                <Dropdown.Menu >
-                    {colItems}
-                </Dropdown.Menu>
-            </Dropdown>
-         
+            {shortcuts}
+            <SplitButton bsStyle={"default"}
+                bsSize={"small"}
+                title={colsGlyph}
+                key={"dropdown-cols"}
+                id={"dropdown-cols"}>
+                {colItems}
+            </SplitButton>
         </PanelDashboard>
     }
 
@@ -101,7 +109,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onClick(menuItem.Action)
     }
 
-      onSetColumnVisibility(event: React.FormEvent<any>) {
+    onSetColumnVisibility(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let changedColumnn: IColumn = this.props.Columns.find(c => c.ColumnId == e.value);
 
@@ -129,7 +137,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup, isReadOnly)),
-         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
+        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
     };
 }
 

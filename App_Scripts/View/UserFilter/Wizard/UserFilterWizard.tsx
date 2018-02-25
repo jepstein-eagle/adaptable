@@ -8,7 +8,7 @@ import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterWizard> {

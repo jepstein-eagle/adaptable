@@ -20,7 +20,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {

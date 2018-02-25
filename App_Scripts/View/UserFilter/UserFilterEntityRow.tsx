@@ -6,7 +6,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
 

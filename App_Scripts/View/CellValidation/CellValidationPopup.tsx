@@ -22,7 +22,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 
 

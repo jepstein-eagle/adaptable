@@ -7,7 +7,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;

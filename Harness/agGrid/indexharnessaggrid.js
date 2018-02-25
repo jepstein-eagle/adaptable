@@ -1,7 +1,17 @@
+function ThemeChange(blotter, container) {
 
-var bondDeskHeadBlotter
-var bondTraderBlotter
-var fxBlotter
+    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
+        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
+        if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+             container.className = "ag-dark";
+         }
+        else {
+              container.className = "ag-blue";
+         }
+    }
+}
+var themeName = ""
+var adaptableblotter
 
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
@@ -24,7 +34,7 @@ function getSchema(data) {
                 schema.push({ headerName: capitalize(p), field: p });
             }
             else if (p === 'price') {
-                schema.push({ headerName: capitalize(p), field: p, filter: 'text', cellRenderer: 'animateShowChange' });
+                schema.push({ headerName: capitalize(p), field: p, filter: 'text' });
             }
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
@@ -48,100 +58,41 @@ function notionalCellRenderer(params) {
         return null;
     }
 }
-
-
-
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var bonds = dataGen.getBonds();
-    var fxs = dataGen.getFX();
+    var trades = dataGen.getTrades();
 
-    let useConfigServer = false; // set it here so can change it for all grids in one place
-
-
-    var bondDeskHeadGridOptions = {
-        columnDefs: getSchema(bonds),
-        rowData: bonds,
+    // let the grid know which columns and what data to use
+    var gridOptions = {
+        columnDefs: getSchema(trades),
+        rowData: trades,
         enableSorting: true,
         enableGrouping: true,
         enableRangeSelection: true,
         enableFilter: true
     };
+    var eGridDiv = document.getElementById('grid');
+    var grid = new agGrid.Grid(eGridDiv, gridOptions);
+    dataGen.startTickingDataagGrid(gridOptions);
 
-    var bondDeskHeadGridDiv = document.getElementById('bondDeskHeadGrid');
-    var bondDeskHeadGrid = new agGrid.Grid(bondDeskHeadGridDiv, bondDeskHeadGridOptions);
-    var bondDeskHeadContainer = document.getElementById('bondDeskHeadContainer');
-    var bondDeskHeadGridcontainer = document.getElementById('bondDeskHeadGrid');
-    bondDeskHeadBlotter = new adaptableblotteraggrid.AdaptableBlotter(bondDeskHeadGridOptions, bondDeskHeadContainer, bondDeskHeadGridcontainer, {
+    var container = document.getElementById('content');
+    var gridcontainer = document.getElementById('grid');
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
-        userName: "Head of Bond Desk",
-        blotterId: "Bond Full Blotter",
+        userName: "harnessuser",
         enableAuditLog: false,
-        enableRemoteConfigServer: useConfigServer,
-        predefinedConfigUrl: "",// "predefinedConfig.json",
+        enableRemoteConfigServer: false,
+        predefinedConfigUrl:"",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
     });
 
-    var bondTraderGridOptions = {
-        columnDefs: getSchema(bonds),
-        rowData: bonds,
-        enableSorting: true,
-        enableGrouping: true,
-        enableRangeSelection: true,
-        enableFilter: true
-    };
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
+// to run config server its:
+//  "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan
 
-    var bondTraderGridDiv = document.getElementById('bondTraderGrid');
-    var bondTraderGrid = new agGrid.Grid(bondTraderGridDiv, bondTraderGridOptions);
-    var bondTraderContainer = document.getElementById('bondTraderContainer');
-    var bondTraderGridcontainer = document.getElementById('bondTraderGrid');
-    bondTraderBlotter = new adaptableblotteraggrid.AdaptableBlotter(bondTraderGridOptions, bondTraderContainer, bondTraderGridcontainer, {
-        primaryKey: "tradeId",
-        userName: "Bond Trader",
-        blotterId: "Bond Trade Blotter",
-        enableAuditLog: false,
-        enableRemoteConfigServer: useConfigServer,
-        predefinedConfigUrl: "",// "predefinedConfig.json",
-        iPushPullConfig: {
-            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        }
-    });
-
-
-    var fxGridOptions = {
-        columnDefs: getSchema(fxs),
-        rowData: fxs,
-        enableSorting: true,
-        enableGrouping: true,
-        enableRangeSelection: true,
-        enableFilter: true
-    };
-    var fxGridDiv = document.getElementById('fxGrid');
-    var fxGrid = new agGrid.Grid(fxGridDiv, fxGridOptions);
-    var fxContainer = document.getElementById('fxContainer');
-    var fxGridcontainer = document.getElementById('fxGrid');
-    fxBlotter = new adaptableblotteraggrid.AdaptableBlotter(fxGridOptions, fxContainer, fxGridcontainer, {
-        primaryKey: "tradeId",
-        userName: "FX User",
-        blotterId: "FX Blotter",
-        enableAuditLog: false,
-        enableRemoteConfigServer: useConfigServer,
-        predefinedConfigUrl: "",// "predefinedConfig.json",
-        iPushPullConfig: {
-            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        }
-    });
-
-
-    // to run config server its:
-    //  "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan
-
-    // to kill all processes:
-    // killall node
+// to kill all processes:
+// killall node
 }
-

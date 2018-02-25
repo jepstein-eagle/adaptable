@@ -15,7 +15,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     Columns: IColumn[]

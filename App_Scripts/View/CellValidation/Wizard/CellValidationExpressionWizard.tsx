@@ -4,7 +4,7 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 export class CellValidationExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

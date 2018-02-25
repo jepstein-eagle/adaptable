@@ -12,7 +12,7 @@ import { CellValidationMode } from '../../Core/Enums'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {

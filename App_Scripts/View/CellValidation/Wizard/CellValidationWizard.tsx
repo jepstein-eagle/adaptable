@@ -10,7 +10,7 @@ import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWiza
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export interface CellValidationWizardProps extends React.ClassAttributes<CellValidationWizard> {
     EditedCellValidation: ICellValidationRule

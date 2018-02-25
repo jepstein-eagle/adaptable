@@ -4,7 +4,7 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 

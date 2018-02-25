@@ -12,7 +12,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import { ConfigEntityRowItem } from "../Components/ConfigEntityRowItem";
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
 

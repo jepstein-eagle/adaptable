@@ -393,7 +393,7 @@ export module ExpressionHelper {
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
                     rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
                 }
-                rangeEvaluation.newValue = initialValue.setHours(0, 0, 0, 0)
+                rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0)
                 break
             case DataType.Number:
                 rangeEvaluation.operand1 = Number(rangeExpression.Operand1)

@@ -1,27 +1,7 @@
 ﻿html, body {
-height: 100%
-}
-
-#bondDeskHeadGrid{
-    height: 95%
-}
-
-#bondTraderGrid{
-    height: 95%
-}
-
-#fxGrid{
-    height: 95%
-}
-
-#BondDeskHead{
-    height: 1200px
-}
-
-#BondTrader{
-    height: 1200px
-}
-
-#FXTrader{
-    height: 1200px
-}
+    height: 100%
+    }
+    
+    #grid{
+        height: 100%
+    }

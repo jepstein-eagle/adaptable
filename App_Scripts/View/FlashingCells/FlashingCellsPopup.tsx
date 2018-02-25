@@ -16,7 +16,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingColumns: Array<IFlashingColumn>,

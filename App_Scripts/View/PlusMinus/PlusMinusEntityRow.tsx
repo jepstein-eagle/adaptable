@@ -8,7 +8,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn

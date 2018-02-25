@@ -22,7 +22,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 

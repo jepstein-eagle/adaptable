@@ -8,7 +8,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
-import { IRawValueDisplayValuePair } from "../Interfaces";
+import { IRawValueDisplayValuePair } from "../UIInterfaces";
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     Columns: Array<IColumn>

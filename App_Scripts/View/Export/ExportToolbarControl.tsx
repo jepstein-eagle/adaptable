@@ -2,7 +2,7 @@
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead'
-import {  DropdownButton,  MenuItem } from 'react-bootstrap';
+import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -35,7 +35,7 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     Reports: IReport[];
     CurrentReport: string;
     LiveReports: ILiveReport[];
- }
+}
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
     componentWillReceiveProps(nextProps: ExportToolbarControlComponentProps, nextContext: any) {
@@ -75,10 +75,15 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
 
-
+        const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
+            <Glyphicon glyph={"export"} />
+        </OverlayTrigger>
+        
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Typeahead className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Reports found with that search"}
+                <Typeahead
+                    bsSize={"small"}
+                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Reports found with that search"}
                     placeholder={"Select a Report"}
                     labelKey={"Name"}
                     filterBy={["Name"]}
@@ -88,36 +93,35 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     options={sortedReports}
                 />
                 {' '}
-                {currentReportId != "select" &&
-                    <DropdownButton bsStyle="default" title="Export" id="exportDropdown" disabled={currentReportId == "select"} >
-                        {csvMenuItem}
-                        {clipboardMenuItem}
-                        {
-                            OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
-                        }
-                        {
-                            iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
-                        }
-                    </DropdownButton>
-                }
+                <SplitButton bsSize="small" bsStyle="default" title={exportGlyph} id="exportDropdown" disabled={currentReportId == "select"} >
+                    {csvMenuItem}
+                    {clipboardMenuItem}
+                    {
+                        OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                    }
+                    {
+                        iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
+                    }
+                </SplitButton>
+
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditReport()}
-               size={"small"} 
-               overrideTooltip="Edit Report"
-               overrideDisableButton={savedReport==null || savedReport.IsPredefined}
+                    size={"small"}
+                    overrideTooltip="Edit Report"
+                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
                     ConfigEntity={savedReport}
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.props.onNewReport()}
-                size={"small"} 
-                overrideTooltip="Create New Report"
+                    size={"small"}
+                    overrideTooltip="Create New Report"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                 size={"small"} 
-                 overrideTooltip="Delete Report"
-                 overrideDisableButton={savedReport==null || savedReport.IsPredefined}
-                 ConfigEntity={savedReport}
+                    size={"small"}
+                    overrideTooltip="Delete Report"
+                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
+                    ConfigEntity={savedReport}
                     DisplayMode="Glyph"
                     ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?"}
@@ -125,7 +129,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }
@@ -133,7 +137,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
     onSelectedReportChanged(selected: IReport[]) {
         this.props.onSelectReport(selected.length > 0 ? selected[0].Name : "");
     }
- 
+
 
 }
 

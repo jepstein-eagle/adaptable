@@ -20,7 +20,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {

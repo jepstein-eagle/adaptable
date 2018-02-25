@@ -8,7 +8,7 @@ import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWizard> {

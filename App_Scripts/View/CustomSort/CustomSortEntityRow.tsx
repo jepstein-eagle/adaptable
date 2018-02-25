@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { ConfigEntityRowItem } from '../../Components/ConfigEntityRowItem';
-import { IColItem } from "../../Interfaces";
+import { IColItem } from "../../UIInterfaces";
 
 // Very simple wrapper around a ConfigEntityRowItem which knows that it will always receive items and will always want
 // to make them size of 3, 6, 3 respectively.

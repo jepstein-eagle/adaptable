@@ -10,7 +10,7 @@ import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStr
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
-import { IRawValueDisplayValuePair } from '../../View/Interfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 
 export interface IAdaptableBlotter {
     GridName: string

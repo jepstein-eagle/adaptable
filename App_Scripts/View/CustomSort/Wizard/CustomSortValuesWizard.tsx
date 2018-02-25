@@ -5,7 +5,7 @@ import { DualListBoxEditor } from '../../DualListBoxEditor'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { IRawValueDisplayValuePair } from "../../Interfaces";
+import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>

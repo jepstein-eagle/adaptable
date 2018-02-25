@@ -10,7 +10,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem, } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 

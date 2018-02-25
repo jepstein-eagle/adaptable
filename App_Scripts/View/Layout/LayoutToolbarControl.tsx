@@ -54,7 +54,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <FormControl componentClass="select" placeholder="select"
+                <FormControl componentClass="select" placeholder="select" bsSize={"small"}
                     value={this.props.CurrentLayout}
                     onChange={(x) => this.onSelectionChanged(x)} >
                     {availableLayouts}

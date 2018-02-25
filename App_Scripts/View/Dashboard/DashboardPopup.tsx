@@ -16,7 +16,7 @@ import { Helper } from '../../Core/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {

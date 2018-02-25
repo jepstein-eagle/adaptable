@@ -12,6 +12,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
         return <ButtonGroup>
             <FormControl
                autoFocus = {this.props.autoFocus}
+               bsSize={"small"}
                style={this.props.style}
                 type="text"
                 placeholder={this.props.placeholder}

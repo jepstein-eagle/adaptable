@@ -6,7 +6,7 @@ import { AdaptableBlotterFormControlTextClear } from './Components/Forms/Adaptab
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
 import { IRange } from '../Core/Interface/IExpression'
-import { IRawValueDisplayValuePair } from "./Interfaces";
+import { IRawValueDisplayValuePair } from "./UIInterfaces";
 import * as CalendarConstants from '../Core/Constants/CalendarConstants';
 import { UIHelper } from "./UIHelper";
 
@@ -95,7 +95,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
         let textClear = <AdaptableBlotterFormControlTextClear
             autoFocus={true}
-            type="text"
+            style={searchFilterStyle}
+             type="text"
             placeholder="Search Filters"
             value={this.state.FilterValue}
             bsSize={"small"}
@@ -136,7 +137,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     getOperand2FormControl(): any {
         if (this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between) {
-            return <FormControl  value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
+            return <FormControl  value={String(this.state.UiSelectedRange.Operand2)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
         }
     }
 
@@ -270,6 +271,11 @@ let customRangeStyle = {
     'marginTop': '10px',
     'marginLeft': '15px',
     'width': '160px'
+}
+let searchFilterStyle = {
+    'marginTop': '0px',
+    'marginLeft': '0px',
+    'width': '162px'
 }
 
 let separatorStyle = {

@@ -4,7 +4,7 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {

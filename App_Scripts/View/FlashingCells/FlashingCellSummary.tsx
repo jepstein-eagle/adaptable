@@ -11,7 +11,7 @@ import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCellColumns: IFlashingColumn[]

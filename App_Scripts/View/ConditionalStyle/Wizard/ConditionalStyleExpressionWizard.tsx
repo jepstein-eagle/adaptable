@@ -5,7 +5,7 @@ import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditi
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { IRawValueDisplayValuePair } from '../../Interfaces';
+import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IConditionalStyleCondition>) {

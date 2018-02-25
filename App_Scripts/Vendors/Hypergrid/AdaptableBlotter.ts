@@ -62,7 +62,7 @@ import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStr
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../../View/Interfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 
 //icon to indicate toggle state

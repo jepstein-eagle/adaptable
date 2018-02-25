@@ -6,7 +6,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 export class FormatColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FormatColumnEntityRow>, {}> {
 

@@ -4,7 +4,7 @@ import { Checkbox, FormControl } from 'react-bootstrap';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {

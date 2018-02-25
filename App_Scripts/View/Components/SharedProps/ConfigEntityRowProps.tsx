@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { IColumn , IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
-import { IColItem } from "../../Interfaces";
+import { IColItem } from "../../UIInterfaces";
 
 
 // base props

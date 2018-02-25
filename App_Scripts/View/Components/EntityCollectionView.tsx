@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ListGroup } from 'react-bootstrap';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 
 
 export interface EntityCollectionViewProps extends React.ClassAttributes<EntityCollectionView> {

@@ -22,7 +22,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {

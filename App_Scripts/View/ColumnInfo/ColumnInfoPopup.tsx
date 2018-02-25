@@ -22,7 +22,7 @@ import { DataType, SelectionMode } from '../../Core/Enums'
 import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
-import { IColItem } from "../Interfaces";
+import { IColItem } from "../UIInterfaces";
 import { IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
