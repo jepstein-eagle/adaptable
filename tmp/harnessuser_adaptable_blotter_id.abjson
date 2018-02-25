@@ -1,0 +1,215 @@
+{
+	"SmartEdit": {
+		"SmartEditValue": "1",
+		"SmartEditOperation": "Add"
+	},
+	"BulkUpdate": {},
+	"CustomSort": {
+		"CustomSorts": []
+	},
+	"Shortcut": {
+		"Shortcuts": []
+	},
+	"PlusMinus": {
+		"DefaultNudge": 1,
+		"PlusMinusConditions": [
+			{
+				"ColumnId": "percentChange",
+				"DefaultNudge": 15,
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilterExpressions": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
+	},
+	"Export": {
+		"IPPDomainsPages": [],
+		"Reports": [],
+		"CurrentReport": "",
+		"ErrorMsg": ""
+	},
+	"FlashingCell": {
+		"FlashingColumns": []
+	},
+	"Calendars": {
+		"CurrentCalendar": "United States"
+	},
+	"ConditionalStyle": {
+		"ConditionalStyleConditions": [
+			{
+				"ColumnId": "",
+				"Style": {
+					"BackColor": "#ffffcc",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "currency",
+							"ColumnDisplayValues": [
+								"EUR"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"UserFilterExpressions": [],
+					"RangeExpressions": []
+				},
+				"IsPredefined": false
+			}
+		]
+	},
+	"QuickSearch": {
+		"QuickSearchDefaultBackColor": "#FFFFCC",
+		"QuickSearchDefaultForeColor": "#000000",
+		"QuickSearchText": "",
+		"QuickSearchOperator": "Contains",
+		"QuickSearchDisplayType": "HighlightCell",
+		"QuickSearchStyle": {
+			"BackColor": "#FFFFCC",
+			"ForeColor": "#000000"
+		}
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [
+			{
+				"Name": "Trades",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [],
+					"ColumnRawValuesExpressions": [],
+					"UserFilterExpressions": [
+						{
+							"ColumnName": "changeOnYear",
+							"UserFilters": [
+								"Positive",
+								"Negative"
+							]
+						}
+					],
+					"RangeExpressions": [],
+					"UserFilters": [
+						{
+							"ColumnName": "changeOnYear",
+							"UserFilters": [
+								"Positive",
+								"Negative"
+							]
+						}
+					]
+				},
+				"IsPredefined": false
+			}
+		],
+		"CurrentAdvancedSearch": "Trades"
+	},
+	"UserFilter": {
+		"UserFilters": []
+	},
+	"ColumnFilter": {
+		"ColumnFilters": []
+	},
+	"Theme": {
+		"CurrentTheme": "Default"
+	},
+	"CellValidation": {
+		"CellValidations": []
+	},
+	"Layout": {
+		"CurrentLayout": "Default",
+		"AvailableLayouts": [
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"currency",
+					"country",
+					"changeOnYear",
+					"price",
+					"bid",
+					"ask",
+					"bidOfferSpread",
+					"isLive",
+					"moodysRating",
+					"fitchRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"bloombergAsk",
+					"bloombergBid",
+					"percentChange",
+					"bookingGuid",
+					"lastUpdated",
+					"lastUpdatedBy"
+				],
+				"Name": "Default",
+				"IsPredefined": false
+			}
+		]
+	},
+	"Dashboard": {
+		"DashboardStrategyControls": [
+			{
+				"Strategy": "Home",
+				"IsVisible": true,
+				"ControlConfiguration": [
+					"Dashboard",
+					"Smart Edit",
+					"Plus Minus",
+					"Conditional Style",
+					"Team Sharing"
+				]
+			},
+			{
+				"Strategy": "AdvancedSearch",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "QuickSearch",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "Layout",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "Export",
+				"IsVisible": true
+			},
+			{
+				"Strategy": "ColumnFilter",
+				"IsVisible": false
+			}
+		],
+		"DashboardZoom": 1
+	},
+	"CalculatedColumn": {
+		"CalculatedColumns": [],
+		"EditedCalculatedColumnInvalidErrorMsg": ""
+	},
+	"FormatColumn": {
+		"FormatColumns": [
+			{
+				"ColumnId": "tradeId",
+				"Style": {
+					"BackColor": "#ebebeb",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				},
+				"IsPredefined": false
+			}
+		]
+	},
+	"AdaptableStoreVersion": 0
+}

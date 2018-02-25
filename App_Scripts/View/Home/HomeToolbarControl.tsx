@@ -83,23 +83,23 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
-            <SplitButton bsStyle={"default"}
+            <DropdownButton bsStyle={"default"}
                 bsSize={"small"}
                 title={functionsGlyph}
                 key={"dropdown-functions"}
                 id={"dropdown-functions"}>
                 {menuItems}
-            </SplitButton>
+            </DropdownButton>
 
             {aboutButton}
             {shortcuts}
-            <SplitButton bsStyle={"default"}
+            <DropdownButton bsStyle={"default"}
                 bsSize={"small"}
                 title={colsGlyph}
                 key={"dropdown-cols"}
                 id={"dropdown-cols"}>
                 {colItems}
-            </SplitButton>
+            </DropdownButton>
         </PanelDashboard>
     }
 

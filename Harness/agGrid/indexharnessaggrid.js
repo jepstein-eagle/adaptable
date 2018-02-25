@@ -79,9 +79,9 @@ function InitBlotter() {
     var gridcontainer = document.getElementById('grid');
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
-        userName: "harnessuser",
+        userName: "new user",
         enableAuditLog: false,
-        enableRemoteConfigServer: false,
+        enableRemoteConfigServer: true,
         predefinedConfigUrl:"",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

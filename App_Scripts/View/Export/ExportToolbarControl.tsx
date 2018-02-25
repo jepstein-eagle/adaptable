@@ -93,7 +93,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     options={sortedReports}
                 />
                 {' '}
-                <SplitButton bsSize="small" bsStyle="default" title={exportGlyph} id="exportDropdown" disabled={currentReportId == "select"} >
+                <DropdownButton bsSize="small" bsStyle="default" title={exportGlyph} id="exportDropdown" disabled={currentReportId == "select"} >
                     {csvMenuItem}
                     {clipboardMenuItem}
                     {
@@ -102,7 +102,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     {
                         iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
                     }
-                </SplitButton>
+                </DropdownButton>
 
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditReport()}
