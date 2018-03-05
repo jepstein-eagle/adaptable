@@ -17,7 +17,7 @@ import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
 import { ButtonClose } from './Components/Buttons/ButtonClose';
 import { IRawValueDisplayValuePair } from "./UIInterfaces";
-import { IRange } from '../Core/Interface/IExpression'
+import { IRange } from '../Core/Interface/IRange'
 import { ButtonClear } from "./Components/Buttons/ButtonClear";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

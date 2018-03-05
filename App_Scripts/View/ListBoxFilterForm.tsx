@@ -5,7 +5,7 @@ import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from './AdaptableBlotterForm'
-import { IRange } from '../Core/Interface/IExpression'
+import { IRange } from '../Core/Interface/IRange'
 import { IRawValueDisplayValuePair } from "./UIInterfaces";
 import * as CalendarConstants from '../Core/Constants/CalendarConstants';
 import { UIHelper } from "./UIHelper";

@@ -3,7 +3,7 @@ import { Radio, FormGroup, FormControl,  Col, Panel,  HelpBlock } from 'react-bo
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { IRange } from '../../../Core/Interface/IExpression';
+import { IRange } from '../../../Core/Interface/IRange';
 import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'

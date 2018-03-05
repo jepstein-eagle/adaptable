@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IRange } from '../../Core/Interface/IExpression'
+import { IRange } from '../../Core/Interface/IRange'
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IAdaptableBlotter';

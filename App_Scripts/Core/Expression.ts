@@ -1,4 +1,4 @@
-import { IRange } from './Interface/IExpression';
+import { IRange } from './Interface/IRange';
 
 export class Expression {
     constructor(

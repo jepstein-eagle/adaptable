@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DataType } from '../../Core/Enums'
-import { IRange } from '../../Core/Interface/IExpression'
+import { IRange } from '../../Core/Interface/IRange'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'

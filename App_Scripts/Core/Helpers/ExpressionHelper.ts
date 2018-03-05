@@ -1,6 +1,6 @@
 import { Expression } from '../Expression'
 import { UserFilterHelper } from '../Helpers/UserFilterHelper'
-import { IRange, IRangeEvaluation } from '../Interface/IExpression';
+import { IRange, IRangeEvaluation } from '../Interface/IRange';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
