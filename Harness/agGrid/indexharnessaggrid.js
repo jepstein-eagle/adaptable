@@ -81,7 +81,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "new user",
         enableAuditLog: false,
-        enableRemoteConfigServer: true,
+        enableRemoteConfigServer: false,
         predefinedConfigUrl:"",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
