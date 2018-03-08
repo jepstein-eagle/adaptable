@@ -25,11 +25,11 @@ module.exports = {
     externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
-        "ag-grid": "agGrid",
-        "ag-grid/main": "agGrid",
-        "ag-grid/dist/lib/entities/colDef": "agGrid",
-        "ag-grid/dist/lib/entities/gridOptions": "agGrid",
-        "ag-grid/dist/lib/gridApi": "agGrid",
+        "ag-grid": "ag-grid",
+        "ag-grid/main": "ag-grid",
+        "ag-grid/dist/lib/entities/colDef": "ag-grid",
+        "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
+        "ag-grid/dist/lib/gridApi": "ag-grid",
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
