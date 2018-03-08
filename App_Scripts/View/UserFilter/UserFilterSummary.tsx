@@ -94,7 +94,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     onCloseWizard() {
-        this.props.onClearPopupParams()
+       // this.props.onClearPopupParams()
         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
     }
 
