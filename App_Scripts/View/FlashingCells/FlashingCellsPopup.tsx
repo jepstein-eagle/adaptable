@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'

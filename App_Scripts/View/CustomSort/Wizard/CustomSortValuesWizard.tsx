@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DualListBoxEditor } from '../../DualListBoxEditor'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';

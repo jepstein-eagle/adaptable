@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { DualListBoxEditor } from './../DualListBoxEditor'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';

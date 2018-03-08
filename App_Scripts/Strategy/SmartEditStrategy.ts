@@ -5,12 +5,14 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType, CellValidationMode } from '../Core/Enums'
 import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
-import { IAdaptableBlotter, IColumn, ICellInfo } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
+import { ICellInfo } from '../Core/Interface/Interfaces';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {

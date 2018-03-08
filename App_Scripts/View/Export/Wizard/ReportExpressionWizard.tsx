@@ -1,4 +1,4 @@
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IReport } from '../../../Strategy/Interface/IExportStrategy';

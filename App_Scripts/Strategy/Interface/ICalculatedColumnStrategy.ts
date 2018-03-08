@@ -1,4 +1,4 @@
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 export interface ICalculatedColumn extends IAdaptableBlotterObject {
     ColumnId: string;

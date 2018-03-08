@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter'
+import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';

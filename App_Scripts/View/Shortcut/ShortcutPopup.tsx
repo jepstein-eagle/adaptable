@@ -10,7 +10,6 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { DataType } from '../../Core/Enums'
 import { MathOperation } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
@@ -22,6 +21,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

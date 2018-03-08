@@ -3,8 +3,10 @@ import { Expression } from '../Expression'
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
 import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import { ReportColumnScope, ReportRowScope } from '../Enums'
-import { IAdaptableBlotter, IColumn, ISelectedCells } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IColumn } from '../Interface/IColumn';
+import { ISelectedCells } from '../Interface/Interfaces';
 export module ReportHelper {
 
     export const ALL_DATA_REPORT = 'All Data'

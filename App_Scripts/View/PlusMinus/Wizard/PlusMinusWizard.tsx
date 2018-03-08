@@ -1,6 +1,6 @@
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'

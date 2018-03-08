@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -25,6 +25,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyleCondition>,

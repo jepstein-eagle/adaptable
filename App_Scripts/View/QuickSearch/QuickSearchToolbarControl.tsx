@@ -15,7 +15,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import {  IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;

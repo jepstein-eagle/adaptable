@@ -11,7 +11,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { CustomSortEntityRow } from './CustomSortEntityRow'
@@ -24,6 +24,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
                                                                                                                 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction

@@ -10,7 +10,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
+import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {

@@ -10,7 +10,6 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem, } from '../../Core/Interface/IMenu';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
@@ -49,7 +48,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { FilterFormReact } from '../../View/FilterForm';
@@ -64,6 +63,9 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { IColumn } from '../../Core/Interface/IColumn';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

@@ -1,5 +1,5 @@
 import {  IStrategy } from './IStrategy';
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface IFlashingColumn extends IAdaptableBlotterObject {
     IsLive: boolean,

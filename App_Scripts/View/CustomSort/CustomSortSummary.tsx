@@ -16,8 +16,8 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]

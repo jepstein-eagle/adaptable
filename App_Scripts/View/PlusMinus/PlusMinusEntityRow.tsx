@@ -3,7 +3,7 @@ import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';

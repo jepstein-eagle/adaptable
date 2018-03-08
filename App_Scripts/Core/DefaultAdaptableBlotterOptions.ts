@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterOptions } from "./Interface/IAdaptableBlotterOptions";
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableAuditLog: false,

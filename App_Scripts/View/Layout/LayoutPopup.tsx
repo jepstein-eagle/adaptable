@@ -11,13 +11,14 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
+import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[],

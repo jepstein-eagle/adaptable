@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void

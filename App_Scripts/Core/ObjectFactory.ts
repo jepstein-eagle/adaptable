@@ -5,7 +5,7 @@ import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrate
 import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IShortcut } from '../Strategy/Interface/IShortcutStrategy';
 import { ICustomSort } from '../Strategy/Interface/ICustomSortStrategy';
@@ -13,6 +13,7 @@ import { IPlusMinusCondition } from '../Strategy/Interface/IPlusMinusStrategy';
 import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
 import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
 import { IReport } from '../Strategy/Interface/IExportStrategy';
+import { IColumn } from './Interface/IColumn';
 
 export module ObjectFactory {
 

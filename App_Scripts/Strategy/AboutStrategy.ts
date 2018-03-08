@@ -4,8 +4,9 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
+import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotterOptions';
 
 
 export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {

@@ -1,4 +1,3 @@
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';

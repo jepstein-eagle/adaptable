@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { PopoverType } from '../../../Core/Enums';

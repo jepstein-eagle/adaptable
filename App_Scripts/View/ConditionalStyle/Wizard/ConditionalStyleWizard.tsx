@@ -1,6 +1,6 @@
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ConditionalStyleSettingsWizard } from './ConditionalStyleSettingsWizard'
 import { ConditionalStyleColumnWizard } from './ConditionalStyleColumnWizard'

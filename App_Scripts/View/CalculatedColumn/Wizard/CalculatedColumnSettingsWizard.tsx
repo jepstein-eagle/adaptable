@@ -1,10 +1,10 @@
 import * as React from "react";
 import {  Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '.././../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
 import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
+import { IColumn } from "../../../Core/Interface/IColumn";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {

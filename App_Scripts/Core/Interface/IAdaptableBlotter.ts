@@ -1,6 +1,6 @@
 import { DataType, DistinctCriteriaPairValue } from '../Enums'
 import {  IStrategy } from '../../Strategy/Interface/IStrategy'
-import {  ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
+import {  ICellInfo, IAdaptableStrategyCollection, ISelectedCells } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -11,6 +11,8 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IAdaptableBlotterOptions } from './IAdaptableBlotterOptions';
+import { IColumn } from './IColumn';
 
 export interface IAdaptableBlotter {
     GridName: string
@@ -88,56 +90,3 @@ export interface IAdaptableBlotter {
     getColumnInfo(): any
 }
 
-
-
-export interface ISelectedCells {
-    //map of UUID with their associated values/columns
-    Selection: Map<any, { columnID: string, value: any }[]>
-}
-
-export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
-}
-
-export interface IColumn {
-    ColumnId: string,
-    FriendlyName: string
-    DataType: DataType
-    Visible: boolean,
-    Index: number
-}
-
-export interface IAdaptableBlotterOptions {
-    enableAuditLog?: boolean,
-    enableRemoteConfigServer?: boolean,
-    userName?: string,
-    primaryKey?: string,
-    blotterId?: string,
-    predefinedConfigUrl?: string,
-    maxColumnValueItemsDisplayed: number
-    iPushPullConfig?: {
-        api_url?: string;
-        ws_url?: string;
-        api_key: string;
-        api_secret: string;
-        transport?: string;
-        storage_prefix?: string;
-    }
-}
-
-export interface IAdaptableBlotterObject{
-    IsPredefined: boolean
-}
-
-
-
-export interface IEntitlement {//extends IAdaptableBlotterObject{
-    FunctionName: string;
-    AccessLevel: "ReadOnly" | "Hidden" | "Default";
-}
-
-
-export interface ICellInfo {
-    Id: any,
-    ColumnId: string,
-    Value: any
-}

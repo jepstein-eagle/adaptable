@@ -2,7 +2,7 @@ import {  IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
 import { ConditionalStyleScope } from '../../Core/Enums';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface IConditionalStyleStrategy extends IStrategy {
 }

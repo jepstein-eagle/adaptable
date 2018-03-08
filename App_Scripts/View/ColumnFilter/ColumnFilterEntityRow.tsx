@@ -1,7 +1,7 @@
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import * as React from "react";
 import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';

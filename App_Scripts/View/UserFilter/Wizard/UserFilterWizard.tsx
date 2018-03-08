@@ -1,6 +1,6 @@
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'; 
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionMode } from '../../../Core/Enums'
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'

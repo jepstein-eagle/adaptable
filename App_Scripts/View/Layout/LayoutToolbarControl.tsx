@@ -5,7 +5,7 @@ import { FormControl } from 'react-bootstrap';
 import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'

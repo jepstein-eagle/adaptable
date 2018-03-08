@@ -16,8 +16,8 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     DefaultNudgeValue: number,

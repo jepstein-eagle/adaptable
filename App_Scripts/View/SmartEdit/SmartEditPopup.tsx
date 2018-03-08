@@ -11,7 +11,7 @@ import { MathOperation, CellValidationMode, PopoverType } from '../../Core/Enums
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';

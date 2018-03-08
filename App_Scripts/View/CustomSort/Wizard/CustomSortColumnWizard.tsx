@@ -2,7 +2,7 @@ import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../ColumnSelector';

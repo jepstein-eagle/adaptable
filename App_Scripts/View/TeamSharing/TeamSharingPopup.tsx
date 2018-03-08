@@ -6,7 +6,7 @@ import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, To
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -31,6 +31,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {

@@ -12,12 +12,12 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]

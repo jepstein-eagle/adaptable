@@ -15,7 +15,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
-import { IColumn, IEntitlement } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper'
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {

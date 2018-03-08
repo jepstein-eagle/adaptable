@@ -1,6 +1,6 @@
 import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { FormatColumnColumnWizard } from './FormatColumnColumnWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'

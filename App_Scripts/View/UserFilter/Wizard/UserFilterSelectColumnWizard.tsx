@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';

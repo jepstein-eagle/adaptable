@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -21,6 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { IColItem } from "../UIInterfaces";
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {

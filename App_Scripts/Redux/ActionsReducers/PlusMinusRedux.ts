@@ -1,7 +1,7 @@
 import { PlusMinusState } from './Interface/IState';
 import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import * as Redux from 'redux'
+import { ICellInfo } from '../../Core/Interface/Interfaces';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
 export const PLUSMINUS_SET_DEFAULT_NUDGE = 'PLUSMINUS_SET_DEFAULT_NUDGE';

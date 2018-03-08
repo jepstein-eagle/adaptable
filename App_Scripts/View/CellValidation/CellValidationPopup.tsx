@@ -5,7 +5,7 @@ import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
@@ -24,6 +24,7 @@ import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
+import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {

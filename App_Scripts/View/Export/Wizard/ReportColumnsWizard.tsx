@@ -3,7 +3,7 @@ import * as React from "react";
 import {  Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { DualListBoxEditor } from './../../DualListBoxEditor'
 import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';

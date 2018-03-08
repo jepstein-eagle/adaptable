@@ -6,7 +6,6 @@ import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
 import { IReport, ILiveReport, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
 import { IFlashingColumn } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { IColumn, IEntitlement } from '../../../Core/Interface/IAdaptableBlotter'
 import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
@@ -20,6 +19,8 @@ import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { IDashboardStrategyControlConfiguration } from '../../../Strategy/Interface/IDashboardStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
+import { IColumn } from '../../../Core/Interface/IColumn';
+import { IEntitlement } from '../../../Core/Interface/Interfaces';
 
 
 export interface PlusMinusState {

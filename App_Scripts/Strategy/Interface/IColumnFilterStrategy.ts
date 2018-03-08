@@ -1,7 +1,8 @@
 import { IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
-import { IAdaptableBlotter, IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
+import { IColumn } from '../../Core/Interface/IColumn';
 
 
 export interface IColumnFilterStrategy extends IStrategy{

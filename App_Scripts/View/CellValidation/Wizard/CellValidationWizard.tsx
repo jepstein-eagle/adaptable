@@ -1,6 +1,6 @@
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CellValidationActionWizard } from './CellValidationActionWizard'
 import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard'

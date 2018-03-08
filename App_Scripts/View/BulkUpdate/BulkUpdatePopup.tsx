@@ -11,7 +11,6 @@ import { MathOperation, CellValidationMode, PopoverType, DataType } from '../../
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
@@ -21,6 +20,7 @@ import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { UIHelper } from "../UIHelper";
+import { IColumn } from "../../Core/Interface/IColumn";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;

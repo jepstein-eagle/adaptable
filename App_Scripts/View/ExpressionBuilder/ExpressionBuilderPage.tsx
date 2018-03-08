@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
-import { IColumn } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { Expression } from '../../Core/Expression';

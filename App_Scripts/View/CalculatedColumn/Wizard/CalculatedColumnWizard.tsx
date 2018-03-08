@@ -1,6 +1,6 @@
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'

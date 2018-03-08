@@ -1,6 +1,5 @@
 import { IMenuItem } from '../Core/Interface/IMenu';
 import * as Redux from 'redux';
-import { IEntitlement } from './Interface/IAdaptableBlotter';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 
 export class MenuItemDoReduxAction implements IMenuItem {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Radio, Col, Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, SelectionMode, PopoverType } from '../../../Core/Enums';

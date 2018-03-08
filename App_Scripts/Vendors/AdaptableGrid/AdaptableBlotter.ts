@@ -9,7 +9,6 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../../Core/Interface/IMenu';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
@@ -40,13 +39,16 @@ import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { IColumn } from '../../Core/Interface/IColumn';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

@@ -1,13 +1,14 @@
 
 import { IDataChangingEvent } from './Interface/IAuditService';
 import { IValidationService } from './Interface/IValidationService';
-import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { CellValidationMode, LeafExpressionOperator } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IRangeEvaluation } from '../Interface/IRange';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as StrategyIds from '../Constants/StrategyIds'
+import { IColumn } from '../Interface/IColumn';
 
 export class ValidationService implements IValidationService {
 

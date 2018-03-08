@@ -11,7 +11,6 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { IMenuItem } from '../../Core/Interface/IMenu';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService } from '../../Core/Services/Interface/IAuditService'
@@ -47,7 +46,7 @@ import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -65,6 +64,9 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { IColumn } from '../../Core/Interface/IColumn';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

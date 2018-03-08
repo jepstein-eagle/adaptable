@@ -3,7 +3,6 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -22,6 +21,8 @@ import { EntityCollectionView } from '../Components/EntityCollectionView';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
+import { IColumn } from "../../Core/Interface/IColumn";
+import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];

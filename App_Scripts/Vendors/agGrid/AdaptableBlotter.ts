@@ -29,7 +29,6 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants'
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
-import { ICellInfo } from '../../Core/Interface/IAdaptableBlotter';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -64,7 +63,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
-import { IAdaptableBlotter, IAdaptableStrategyCollection, ISelectedCells, IColumn, IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
@@ -83,6 +82,9 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { IColumn } from '../../Core/Interface/IColumn';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   

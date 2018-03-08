@@ -2,7 +2,7 @@ import * as React from "react";
 import { Helper } from '../Core/Helpers/Helper'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { Typeahead } from 'react-bootstrap-typeahead'
-import { IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../Core/Interface/IColumn';
 import { SortOrder, SelectionMode } from '../Core/Enums';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {

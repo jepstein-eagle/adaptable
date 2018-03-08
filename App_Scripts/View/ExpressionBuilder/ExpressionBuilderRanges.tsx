@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ColumnSelector } from "../ColumnSelector";
-import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
+import { IColumn } from "../../Core/Interface/IColumn";
 import { UIHelper } from "../UIHelper";
 
 export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {

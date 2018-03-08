@@ -2,8 +2,8 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { EntityListActionButtons } from '../../Components/Buttons/EntityListActionButtons';
-import { IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlotter';
 import { SummaryRowItem } from './SummaryRowItem';
+import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
     
 
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {

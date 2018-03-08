@@ -1,6 +1,6 @@
 import {  IStrategy } from './IStrategy';
 import { Expression } from '../../Core/Expression';
-import { IAdaptableBlotterObject, ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
+import { ICellInfo, IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface IPlusMinusStrategy extends IStrategy {
     ApplyPlusMinus(keyEventString: string, newValues: ICellInfo[]): void

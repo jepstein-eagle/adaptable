@@ -1,6 +1,6 @@
 import {  IStrategy } from './IStrategy';
 import { DataType ,MathOperation } from '../../Core/Enums';
-import { IAdaptableBlotterObject , ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject, ICellInfo } from '../../Core/Interface/Interfaces';
 
 export interface IShortcut extends IAdaptableBlotterObject{
     ShortcutKey: string;

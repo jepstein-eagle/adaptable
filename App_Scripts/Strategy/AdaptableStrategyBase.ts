@@ -1,10 +1,11 @@
-import { IAdaptableBlotter, IEntitlement } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IStrategy, } from '../Strategy/Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Core/MenuItem';
 import { IEnterpriseCache } from 'ag-grid';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { IEntitlement } from '../Core/Interface/Interfaces';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean

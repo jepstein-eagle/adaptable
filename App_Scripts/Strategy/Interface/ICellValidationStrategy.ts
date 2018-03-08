@@ -2,7 +2,7 @@ import { IStrategy } from './IStrategy';
 import { CellValidationMode } from '../../Core/Enums';
 import { IRange } from '../../Core/Interface/IRange';
 import { Expression } from '../../Core/Expression'
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 export interface ICellValidationStrategy extends IStrategy {
 }
 

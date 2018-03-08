@@ -1,7 +1,7 @@
 import {IStrategy} from './IStrategy';
-import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
 import { ReportColumnScope, ReportRowScope, ExportDestination } from '../../Core/Enums';
+import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 
 

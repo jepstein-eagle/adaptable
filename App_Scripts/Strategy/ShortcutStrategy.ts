@@ -7,14 +7,15 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
-import {  ICellInfo } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { DataType } from '../Core/Enums'
 import { MathOperation, CellValidationMode } from '../Core/Enums'
-import { IAdaptableBlotter, IColumn } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
+import { ICellInfo } from '../Core/Interface/Interfaces';
+import { IColumn } from '../Core/Interface/IColumn';
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {

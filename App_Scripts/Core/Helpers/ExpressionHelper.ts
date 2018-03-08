@@ -6,8 +6,9 @@ import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotter, IColumn } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import { IColumn } from '../Interface/IColumn';
 
 
 export module ExpressionHelper {
