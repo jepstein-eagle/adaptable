@@ -280,7 +280,9 @@
 								{
 									"Operand1": "1000000",
 									"Operand2": "",
-									"Operator": "GreaterThan"
+									"Operator": "GreaterThan",
+									"IsOperand1Column": "false",
+									"IsOperand2Column": "false"
 								}
 							]
 						}
@@ -341,7 +343,9 @@
 								{
 									"Operand1": "MetricsSolver",
 									"Operand2": "",
-									"Operator": "Contains"
+									"Operator": "Contains",
+									"IsOperand1Column": "false",
+									"IsOperand2Column": "false"
 								}
 							]
 						}
@@ -389,7 +393,9 @@
 				"Range": {
 					"Operator": "GreaterThan",
 					"Operand1": "10000000",
-					"Operand2": ""
+					"Operand2": "",
+					"IsOperand1Column": "false",
+					"IsOperand2Column": "false"
 				},
 				"HasExpression": false,
 				"OtherExpression": {
