@@ -40,8 +40,8 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
 // props for a wizard that wraps a config entity (without an expression)
 export interface IAdaptableBlotterObjectAdaptableWizardProps<View> extends IAdaptableWizardProps<View> {
     ConfigEntities: IAdaptableBlotterObject[]
-    EditedConfigEntity: IAdaptableBlotterObject
-}
+    EditedAdaptableBlotterObject: IAdaptableBlotterObject
+ }
 
 // props for a wizard that wraps a config entity that contans an Expression
 export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {

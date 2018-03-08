@@ -102,9 +102,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                     <Well bsSize="small">Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</Well>
                 }
 
-                {this.state.EditedConfigEntity &&
+                {this.state.EditedAdaptableBlotterObject &&
                     <ReportWizard
-                        EditedConfigEntity={this.state.EditedConfigEntity as IReport}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
                         ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -119,22 +119,22 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let Report: IReport = this.state.EditedConfigEntity as IReport;
-        this.props.onAddUpdateReport(this.state.EditedIndexConfigEntity, Report)
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let Report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
+        this.props.onAddUpdateReport(this.state.EditedAdaptableBlotterObjectIndex, Report)
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
     onEdit(index: number, ReportToEdit: IReport) {
         let clonedReportToEdit = Helper.cloneObject(ReportToEdit)
-        this.setState({ EditedConfigEntity: clonedReportToEdit, WizardStartIndex: 0, EditedIndexConfigEntity: index })
+        this.setState({ EditedAdaptableBlotterObject: clonedReportToEdit, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index })
     }
 
     onApplyExport(Report: string, exportDestination: ExportDestination) {

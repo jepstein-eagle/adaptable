@@ -55,9 +55,9 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
              {detailRow}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <CalculatedColumnWizard
-                    EditedCalculatedColumn={this.state.EditedConfigEntity as ICalculatedColumn}
+                    EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     Columns={this.props.Columns}
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
@@ -70,17 +70,17 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     onEdit(index: number, calculatedColumn: ICalculatedColumn) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(calculatedColumn), WizardStartIndex: 1, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(calculatedColumn), WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);
-        this.props.onEdit(this.state.EditedIndexConfigEntity, calculatedColumn);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        this.props.onEdit(this.state.EditedAdaptableBlotterObjectIndex, calculatedColumn);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 }
 

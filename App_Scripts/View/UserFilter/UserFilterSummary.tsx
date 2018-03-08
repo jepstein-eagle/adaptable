@@ -68,9 +68,9 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
              {strategySummaries}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <UserFilterWizard
-                    EditedUserFilter={this.state.EditedConfigEntity as IUserFilter}
+                    EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
@@ -86,21 +86,21 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     onNew() {
         let configEntity: IUserFilter = ObjectFactory.CreateEmptyUserFilter()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, UserFilter: IUserFilter) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(UserFilter), WizardStartIndex: 1, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(UserFilter), WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
-         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let userFilter = this.state.EditedConfigEntity as IUserFilter
-        this.props.onAddUpdateUserFilter(this.state.EditedIndexConfigEntity, userFilter );
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
+        this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter );
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
 }

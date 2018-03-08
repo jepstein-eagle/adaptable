@@ -22,7 +22,7 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
                 getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
             <ReportNameWizard StepName={stepNames[2]} Reports={this.props.ConfigEntities as IReport[]} />,
         ]}
-            Data={this.props.EditedConfigEntity as IReport}
+            Data={this.props.EditedAdaptableBlotterObject as IReport}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.onCloseWizard()}
             onFinish={() => this.props.onFinishWizard()} />

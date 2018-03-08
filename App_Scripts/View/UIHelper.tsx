@@ -5,7 +5,7 @@ import { DataType } from '../Core/Enums';
 export module UIHelper {
     export function EmptyConfigState(): EditableConfigEntityState {
         return {
-            EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1,
+            EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         }
     }
 

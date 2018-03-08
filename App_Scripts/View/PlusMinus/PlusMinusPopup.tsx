@@ -48,7 +48,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let plusMinus = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
                 plusMinus.ColumnId = arrayParams[1]
-                this.setState({ EditedConfigEntity: plusMinus, EditedIndexConfigEntity: -1, WizardStartIndex: 1 });
+                this.setState({ EditedAdaptableBlotterObject: plusMinus, EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 1 });
             }
         }
     }
@@ -108,10 +108,10 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
 
                 <PlusMinusWizard
-                    EditedPlusMinusCondition={this.state.EditedConfigEntity as IPlusMinusCondition}
+                    EditedPlusMinusCondition={this.state.EditedAdaptableBlotterObject as IPlusMinusCondition}
                     PlusMinusConditions={this.props.PlusMinusConditions}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
@@ -127,22 +127,22 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
 
     createColumnNudgeValue() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
     onEdit(index: number, condition: IPlusMinusCondition) {
         let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConfigEntity: clonedObject, EditedIndexConfigEntity: index, WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     
     onFinishWizard() {
-        let plusMinus = this.state.EditedConfigEntity as IPlusMinusCondition
-         this.props.onAddColumnDefaultNudgeValue(this.state.EditedIndexConfigEntity, plusMinus);
-         this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusCondition
+         this.props.onAddColumnDefaultNudgeValue(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
+         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
      }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {

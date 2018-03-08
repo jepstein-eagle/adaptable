@@ -50,7 +50,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 let _editedConditionalStyle: IConditionalStyleCondition = ObjectFactory.CreateEmptyConditionalStyle();
                 _editedConditionalStyle.ColumnId = arrayParams[1]
                 _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column
-                this.setState({ EditedConfigEntity: _editedConditionalStyle, WizardStartIndex: 1 });
+                this.setState({ EditedAdaptableBlotterObject: _editedConditionalStyle, WizardStartIndex: 1 });
             }
         }
     }
@@ -95,9 +95,9 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 <EntityCollectionView ColItems={colItems} items={conditionalStyleConditions} />
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
                 <ConditionalStyleWizard
-                    EditedConditionalStyleCondition={this.state.EditedConfigEntity as IConditionalStyleCondition}
+                    EditedConditionalStyleCondition={this.state.EditedAdaptableBlotterObject as IConditionalStyleCondition}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
@@ -111,23 +111,23 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyConditionalStyle(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyConditionalStyle(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, condition: IConditionalStyleCondition) {
         let clonedObject: IConditionalStyleCondition = Helper.cloneObject(condition);
-        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 0, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let conditionalStyle: IConditionalStyleCondition = this.state.EditedConfigEntity as IConditionalStyleCondition;
-        this.props.onAddUpdateConditionalStyle(this.state.EditedIndexConfigEntity, conditionalStyle);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let conditionalStyle: IConditionalStyleCondition = this.state.EditedAdaptableBlotterObject as IConditionalStyleCondition;
+        this.props.onAddUpdateConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, conditionalStyle);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 }
 

@@ -55,8 +55,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
 
         let selectedColumnId: string = "";
-        if (this.state.EditedConfigEntity != null) {
-            let filter: IUserFilter = this.state.EditedConfigEntity as IUserFilter
+        if (this.state.EditedAdaptableBlotterObject != null) {
+            let filter: IUserFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
             let editedColumn: string = filter.ColumnId;
             if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
                 selectedColumnId = editedColumn;
@@ -106,9 +106,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                     Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).</Well>
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
                 <UserFilterWizard
-                    EditedUserFilter={this.state.EditedConfigEntity as IUserFilter}
+                    EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     WizardStartIndex={this.state.WizardStartIndex}
@@ -122,23 +122,23 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
     }
 
     onEdit(userFilter: IUserFilter) {
         let clonedObject: IUserFilter = Helper.cloneObject(userFilter);
-        this.setState({ EditedConfigEntity: Helper.cloneObject(clonedObject), WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(clonedObject), WizardStartIndex: 1 });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let userFilter = this.state.EditedConfigEntity as IUserFilter
+        let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
         this.props.onAddUpdateUserFilter(userFilter);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
 }

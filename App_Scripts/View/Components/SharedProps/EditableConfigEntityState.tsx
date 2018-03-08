@@ -3,8 +3,8 @@ import { IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlott
 /// <reference path="../../typings/.d.ts" />
 
 export interface EditableConfigEntityState {
-    EditedConfigEntity: IAdaptableBlotterObject
+    EditedAdaptableBlotterObject: IAdaptableBlotterObject
     WizardStartIndex: number
-    EditedIndexConfigEntity: number
+    EditedAdaptableBlotterObjectIndex: number
 }
 

@@ -47,7 +47,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let cellValitdation = ObjectFactory.CreateEmptyCellValidation()
                 cellValitdation.ColumnId = arrayParams[1]
-                this.setState({ EditedConfigEntity: cellValitdation, EditedIndexConfigEntity: -1, WizardStartIndex: 1 });
+                this.setState({ EditedAdaptableBlotterObject: cellValitdation, EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 1 });
             }
         }
     }
@@ -104,9 +104,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                 </Well>
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
                 <CellValidationWizard
-                    EditedCellValidation={this.state.EditedConfigEntity as ICellValidationRule}
+                    EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -120,11 +120,11 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     }
 
     createCellValidation() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCellValidation(), EditedIndexConfigEntity: -1, WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCellValidation(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(CellValidation), EditedIndexConfigEntity: index, WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation), EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
 
     onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
@@ -133,12 +133,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        this.props.onAddEditCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.props.onAddEditCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ICellValidationRule);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 }
 

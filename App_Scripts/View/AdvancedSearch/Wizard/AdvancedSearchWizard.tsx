@@ -23,7 +23,7 @@ export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjec
                 <AdvancedSearchSettingsWizard StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />
 
             ]}
-            Data={this.props.EditedConfigEntity as IAdvancedSearch}
+            Data={this.props.EditedAdaptableBlotterObject as IAdvancedSearch}
             StepStartIndex={this.props.WizardStartIndex}
             onHide={() => this.props.onCloseWizard()}
             onFinish={() => this.props.onFinishWizard()} />

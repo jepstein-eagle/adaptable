@@ -94,10 +94,10 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             }
 
             {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
 
                 <CalculatedColumnWizard
-                    EditedCalculatedColumn={this.state.EditedConfigEntity as ICalculatedColumn}
+                    EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     Columns={this.props.Columns}
                     GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
@@ -111,29 +111,29 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, customColumn: ICalculatedColumn) {
         let clonedObject = Helper.cloneObject(customColumn);
-        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 1, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
          this.props.IsExpressionValid("")
     }
 
     onFinishWizard() {
-        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedConfigEntity);  
-        if (this.state.EditedIndexConfigEntity != -1) {
-            this.props.onEditCalculatedColumn(this.state.EditedIndexConfigEntity, calculatedColumn)
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);  
+        if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+            this.props.onEditCalculatedColumn(this.state.EditedAdaptableBlotterObjectIndex, calculatedColumn)
         }
         else {
             this.props.onAddCalculatedColumn(calculatedColumn)
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
 

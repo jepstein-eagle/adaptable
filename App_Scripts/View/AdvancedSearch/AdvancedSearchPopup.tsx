@@ -100,9 +100,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                 </Well>
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
                 <AdvancedSearchWizard
-                    EditedConfigEntity={this.state.EditedConfigEntity}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                     ConfigEntities={this.props.AdvancedSearches}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
@@ -137,22 +137,22 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onNew() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedIndexConfigEntity: 0 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
         let clonedObject: IAdvancedSearch = Helper.cloneObject(advancedSearch);
-        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 0, EditedIndexConfigEntity: 0 })
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
     }
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedConfigEntity);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
         this.props.onAddUpdateAdvancedSearch(clonedObject);
         this.props.onSelectAdvancedSearch(clonedObject.Name);
     }

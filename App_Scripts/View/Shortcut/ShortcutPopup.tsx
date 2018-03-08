@@ -77,7 +77,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        let shortcut: IShortcut = this.state.EditedConfigEntity as IShortcut
+        let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
             button={newButton}
@@ -92,7 +92,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                 <Well bsSize="small">Click 'New' to add a new Shortcut.</Well>
             }
 
-            {this.state.EditedConfigEntity != null &&
+            {this.state.EditedAdaptableBlotterObject != null &&
                 <ShortcutWizard
                     EditedShortcut={shortcut}
                     DateKeysAvailable={shortcut.ShortcutKey ?
@@ -111,17 +111,17 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
     onCloseWizard() {
         this.props.onClearPopupParams()
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let shortcut = this.state.EditedConfigEntity as IShortcut
+        let shortcut = this.state.EditedAdaptableBlotterObject as IShortcut
         this.props.onAddShortcut(shortcut)
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     CreateShortcut() {
-        this.setState({ EditedConfigEntity: ObjectFactory.CreateEmptyShortcut(), WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyShortcut(), WizardStartIndex: 0 });
     }
 
     getAvailableKeys(shortcut: IShortcut): string[] {

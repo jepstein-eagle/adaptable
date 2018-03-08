@@ -69,9 +69,9 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
             {strategySummaries}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <PlusMinusWizard
-                    EditedPlusMinusCondition={this.state.EditedConfigEntity as IPlusMinusCondition}
+                    EditedPlusMinusCondition={this.state.EditedAdaptableBlotterObject as IPlusMinusCondition}
                     PlusMinusConditions={this.props.PlusMinusConditions}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
@@ -89,20 +89,20 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     onNew() {
         let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, PlusMinus: IPlusMinusCondition) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        this.props.onAddUpdatePlusMinus(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as IPlusMinusCondition);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.props.onAddUpdatePlusMinus(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPlusMinusCondition);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     // wrappng this so that any becomes [Default Column Nudge Value]

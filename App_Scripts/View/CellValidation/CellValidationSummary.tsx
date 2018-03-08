@@ -67,9 +67,9 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
             {strategySummaries}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <CellValidationWizard
-                    EditedCellValidation={this.state.EditedConfigEntity as ICellValidationRule}
+                    EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -84,20 +84,20 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     onNew() {
         let configEntity: ICellValidationRule = ObjectFactory.CreateEmptyCellValidation()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, CellValidation: ICellValidationRule) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(CellValidation), WizardStartIndex: 1, EditedIndexConfigEntity: index });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation), WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        this.props.onAddUpdateCellValidation(this.state.EditedIndexConfigEntity, this.state.EditedConfigEntity as ICellValidationRule);
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.props.onAddUpdateCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ICellValidationRule);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

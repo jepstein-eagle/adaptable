@@ -69,9 +69,9 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
         {formatColumnRow}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <FormatColumnWizard
-                    EditedFormatColumn={this.state.EditedConfigEntity as IFormatColumn}
+                    EditedFormatColumn={this.state.EditedAdaptableBlotterObject as IFormatColumn}
                     Columns={this.props.Columns}
                     FormatColumns={this.props.FormatColumns}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
@@ -86,26 +86,26 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
     onNew() {
         let configEntity: IFormatColumn = ObjectFactory.CreateEmptyFormatColumn()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1, EditedIndexConfigEntity: -1 });
+        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(formatColumn: IFormatColumn) {
         let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
-        this.setState({ EditedConfigEntity: clonedObject, WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
      }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
-        let formatColumn: IFormatColumn = this.state.EditedConfigEntity as IFormatColumn
+        let formatColumn: IFormatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
         if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
             this.props.onEditFormatColumn(formatColumn)
         } else {
             this.props.onAddFormatColumn(formatColumn)
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
 }

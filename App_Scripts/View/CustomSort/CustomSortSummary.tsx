@@ -64,9 +64,9 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
              {customSortRow}
 
-            {this.state.EditedConfigEntity &&
+            {this.state.EditedAdaptableBlotterObject &&
                 <CustomSortWizard
-                    EditedCustomSort={this.state.EditedConfigEntity as ICustomSort}
+                    EditedCustomSort={this.state.EditedAdaptableBlotterObject as ICustomSort}
                     CustomSorts={this.props.CustomSorts}
                     Columns={this.props.Columns}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -81,27 +81,27 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
     onNew() {
         let configEntity: ICustomSort = ObjectFactory.CreateEmptyCustomSort()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedConfigEntity: configEntity, WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1 });
     }
 
     onEdit(customSort: ICustomSort) {
-        this.setState({ EditedConfigEntity: Helper.cloneObject(customSort), WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
 
     onCloseWizard() {
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
      }
 
     onFinishWizard() {
 
-        let customSort: ICustomSort = this.state.EditedConfigEntity as ICustomSort;
+        let customSort: ICustomSort = this.state.EditedAdaptableBlotterObject as ICustomSort;
         if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
             this.props.onEditCustomSort(customSort);
         }
         else {
             this.props.onAddCustomSort(customSort);
         }
-        this.setState({ EditedConfigEntity: null, WizardStartIndex: 0, EditedIndexConfigEntity: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 }
 
