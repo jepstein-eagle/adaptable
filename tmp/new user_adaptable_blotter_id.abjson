@@ -28,46 +28,7 @@
 		]
 	},
 	"PlusMinus": {
-		"DefaultNudge": 1,
-		"PlusMinusConditions": [
-			{
-				"ColumnId": "coupon",
-				"DefaultNudge": 10,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			},
-			{
-				"ColumnId": "coupon",
-				"DefaultNudge": 100,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [
-						{
-							"ColumnName": "counterparty",
-							"UserFilters": [
-								"my counterparites"
-							]
-						}
-					],
-					"RangeExpressions": [],
-					"UserFilters": [
-						{
-							"ColumnName": "counterparty",
-							"UserFilters": [
-								"my counterparites"
-							]
-						}
-					]
-				},
-				"IsPredefined": false
-			}
-		]
+		"DefaultNudge": 100
 	},
 	"Export": {
 		"IPPDomainsPages": [

@@ -25,10 +25,10 @@ export module ObjectFactory {
         return { ColumnId: "", GetValueFunc: "", IsPredefined: false }
     }
 
-    export function CreateEmptyPlusMinusCondition(defaultNudgeValue: number): IPlusMinusCondition {
+    export function CreateEmptyPlusMinusCondition(): IPlusMinusCondition {
         return {
             ColumnId: "",
-            DefaultNudge: defaultNudgeValue,
+            DefaultNudge: 1,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }

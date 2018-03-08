@@ -24,7 +24,7 @@ import { IEntitlement } from '../../../Core/Interface/Interfaces';
 
 
 export interface PlusMinusState {
-    DefaultNudge: number
+  //  DefaultNudge: number
     PlusMinusConditions: IPlusMinusCondition[]
 }
 

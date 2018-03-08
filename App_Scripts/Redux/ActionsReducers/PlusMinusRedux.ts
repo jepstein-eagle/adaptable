@@ -4,7 +4,6 @@ import * as Redux from 'redux'
 import { ICellInfo } from '../../Core/Interface/Interfaces';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
-export const PLUSMINUS_SET_DEFAULT_NUDGE = 'PLUSMINUS_SET_DEFAULT_NUDGE';
 export const PLUSMINUS_ADD_UPDATE_CONDITION = 'PLUSMINUS_ADD_UPDATE_CONDITION';
 export const PLUSMINUS_EDIT_CONDITION = 'PLUSMINUS_EDIT_CONDITION';
 export const PLUSMINUS_DELETE_CONDITION = 'PLUSMINUS_DELETE_CONDITION';
@@ -12,10 +11,6 @@ export const PLUSMINUS_DELETE_CONDITION = 'PLUSMINUS_DELETE_CONDITION';
 export interface PlusMinusApplyAction extends Redux.Action {
     CellInfos: ICellInfo[],
     KeyEventString: string,
-}
-
-export interface PlusMinusSetDefaultNudgeAction extends Redux.Action {
-    value: number
 }
 
 export interface PlusMinusAddUpdateConditionAction extends Redux.Action {
@@ -38,11 +33,6 @@ export const PlusMinusApply = (CellInfos: ICellInfo[], KeyEventString: string): 
     KeyEventString,
 })
 
-export const PlusMinusSetDefaultNudge = (value: number): PlusMinusSetDefaultNudgeAction => ({
-    type: PLUSMINUS_SET_DEFAULT_NUDGE,
-    value
-})
-
 export const PlusMinusAddUpdateCondition = (Index: number, PlusMinusCondition: IPlusMinusCondition): PlusMinusAddUpdateConditionAction => ({
     type: PLUSMINUS_ADD_UPDATE_CONDITION,
     Index,
@@ -61,7 +51,6 @@ export const PlusMinusDeleteCondition = (Index: number): PlusMinusDeleteConditio
 })
 
 const initialPlusMinusState: PlusMinusState = {
-    DefaultNudge: 1,
     PlusMinusConditions: []
 }
 
@@ -71,10 +60,7 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinus
             //we apply logic in the middleware since it's an API call
             return Object.assign({}, state)
 
-        case PLUSMINUS_SET_DEFAULT_NUDGE:
-            return Object.assign({}, state, { DefaultNudge: (<PlusMinusSetDefaultNudgeAction>action).value })
-
-        case PLUSMINUS_ADD_UPDATE_CONDITION: {
+         case PLUSMINUS_ADD_UPDATE_CONDITION: {
             let actionTyped = (<PlusMinusAddUpdateConditionAction>action)
             let newCol: IPlusMinusCondition[] = [].concat(state.PlusMinusConditions)
             if (actionTyped.Index == -1) {

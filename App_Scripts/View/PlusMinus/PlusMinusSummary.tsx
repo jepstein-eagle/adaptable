@@ -20,8 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
-    DefaultNudgeValue: number,
-    PlusMinusConditions: IPlusMinusCondition[]
+     PlusMinusConditions: IPlusMinusCondition[]
     onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -87,7 +86,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
 
     onNew() {
-        let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition(this.props.DefaultNudgeValue)
+        let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
         this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
@@ -114,7 +113,6 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        DefaultNudgeValue: state.PlusMinus.DefaultNudge,
         PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
         UserFilters: state.UserFilter.UserFilters,
     };

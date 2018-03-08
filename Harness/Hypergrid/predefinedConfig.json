@@ -10,7 +10,7 @@
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "ConditionalStyle",
+				"FunctionName": "PlusMinus",
 				"AccessLevel": "Hidden"
 			},
 			{
@@ -45,7 +45,7 @@
 	},
 	"SmartEdit": {
 		"SmartEditValue": "12345",
-		"SmartEditOperation": "Replace"
+		"SmartEditOperation": "Multiply"
 	},
 	"Calendars": {
 		"CurrentCalendar": "Germany"

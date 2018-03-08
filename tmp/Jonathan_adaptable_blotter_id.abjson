@@ -51,31 +51,7 @@
 		]
 	},
 	"PlusMinus": {
-		"DefaultNudge": 1000,
-		"PlusMinusConditions": [
-			{
-				"ColumnId": "notional",
-				"DefaultNudge": 1,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			},
-			{
-				"ColumnId": "notional",
-				"DefaultNudge": 1,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			}
-		]
+		"DefaultNudge": 876
 	},
 	"FlashingCell": {
 		"FlashingColumns": []

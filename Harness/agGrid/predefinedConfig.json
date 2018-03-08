@@ -21,7 +21,7 @@
 	},
 	"SmartEdit": {
 		"SmartEditValue": "12345",
-		"SmartEditOperation": "Replace"
+		"SmartEditOperation": "Multiply"
 	},
 	"Calendars": {
 		"CurrentCalendar": "Germany"
@@ -71,30 +71,6 @@
 		]
 	},
 	"PlusMinus": {
-		"DefaultNudge": 1000,
-		"PlusMinusConditions": [
-			{
-				"ColumnId": "notional",
-				"DefaultNudge": 1,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			},
-			{
-				"ColumnId": "notional",
-				"DefaultNudge": 1, 
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			}
-		]
+		"DefaultNudge": 234
 	}
 }

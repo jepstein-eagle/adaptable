@@ -10,7 +10,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
 import { DataType, CellValidationMode } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
-import { IAdaptableBlotter} from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
@@ -38,16 +38,17 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     protected addColumnMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
-                this.createMenuItemColumnMenu(
-                    "Create Plus/Minus Nudge Rule",
-                    ScreenPopups.PlusMinusPopup,
-                    StrategyGlyphs.PlusMinusGlyph,
-                    "New|" + columnId)
-            
+            this.createMenuItemColumnMenu(
+                "Create Plus/Minus Nudge Rule",
+                ScreenPopups.PlusMinusPopup,
+                StrategyGlyphs.PlusMinusGlyph,
+                "New|" + columnId)
+
         }
     }
 
     //we know for Kendo we receive a JQueryKeyEventObject
+    // changing the logic here - you now have to explicity register the column as having plus minus
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
@@ -57,10 +58,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
             }
-           
-        let popup =    this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ActionConfigurationPopup
-           
-           
+
+            let popup = this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ActionConfigurationPopup
+
+
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let selectedCell = this.blotter.getSelectedCells()
 
@@ -77,6 +78,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                             columnValuePair.value = parseFloat(columnValuePair.value)
                         }
                         let newValue: ICellInfo;
+
                         //we try to find a condition with an expression for that column that matches the record
                         let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
                         for (let columnNudge of columnNudgesWithExpression) {
@@ -90,11 +92,12 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                             if (columnNudge) {
                                 newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
                             }
-                            //we havent found a condition so we use the general nudge
+                            //we havent found a condition so we return - this will allow a minus to be entered into the column
                             else {
-                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (this.PlusMinusState.DefaultNudge * side) })
+                                return;
                             }
                         }
+
                         //avoid the 0.0000000000x  
                         newValue.Value = parseFloat(newValue.Value.toFixed(12))
 
@@ -122,6 +125,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     }
                 }
             }
+
 
             //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
             keyEvent.preventDefault()
