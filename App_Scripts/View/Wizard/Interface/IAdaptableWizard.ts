@@ -1,4 +1,4 @@
-import { IConfigEntity } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotterObject } from "../../../Core/Interface/IAdaptableBlotter";
 import { IColumn } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
@@ -38,13 +38,13 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
 }
 
 // props for a wizard that wraps a config entity (without an expression)
-export interface IConfigEntityAdaptableWizardProps<View> extends IAdaptableWizardProps<View> {
-    ConfigEntities: IConfigEntity[]
-    EditedConfigEntity: IConfigEntity
+export interface IAdaptableBlotterObjectAdaptableWizardProps<View> extends IAdaptableWizardProps<View> {
+    ConfigEntities: IAdaptableBlotterObject[]
+    EditedConfigEntity: IAdaptableBlotterObject
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
-export interface IConfigEntityExpressionAdaptableWizardProps<View> extends IConfigEntityAdaptableWizardProps<View> {
+export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>

@@ -1,4 +1,4 @@
-import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { TeamSharingState } from './Interface/IState';
 import * as Redux from 'redux'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
@@ -9,7 +9,7 @@ export const TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
 export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 
 export interface TeamSharingShareAction extends Redux.Action {
-    Entity: IConfigEntity
+    Entity: IAdaptableBlotterObject
     Strategy: string
 }
 
@@ -18,14 +18,14 @@ export interface TeamSharingSetAction extends Redux.Action {
 }
 
 export interface TeamSharingImportItemAction extends Redux.Action {
-    Entity: IConfigEntity,
+    Entity: IAdaptableBlotterObject,
     Strategy: string
 }
 
 export interface TeamSharingGetAction extends Redux.Action {
 }
 
-export const TeamSharingShare = (Entity: IConfigEntity, Strategy: string): TeamSharingShareAction => ({
+export const TeamSharingShare = (Entity: IAdaptableBlotterObject, Strategy: string): TeamSharingShareAction => ({
     type: TEAMSHARING_SHARE,
     Entity,
     Strategy
@@ -36,7 +36,7 @@ export const TeamSharingSet = (Entities: ISharedEntity[]): TeamSharingSetAction 
     Entities
 })
 
-export const TeamSharingImportItem = (Entity: IConfigEntity, Strategy: string): TeamSharingImportItemAction => ({
+export const TeamSharingImportItem = (Entity: IAdaptableBlotterObject, Strategy: string): TeamSharingImportItemAction => ({
     type: TEAMSHARING_IMPORT_ITEM,
     Entity,
     Strategy

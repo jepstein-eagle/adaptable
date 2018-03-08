@@ -1,17 +1,17 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
-import { IColumn , IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn , IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { IColItem } from "../../UIInterfaces";
 
 
 // base props
 export interface BaseEntityRowProps<View> extends React.ClassAttributes<View> {
-    ConfigEntity: IConfigEntity
+    ConfigEntity: IAdaptableBlotterObject
     onDeleteConfirm: Redux.Action;
     Index: number
-    onEdit: (index: number, configEntity: IConfigEntity) => void;
+    onEdit: (index: number, configEntity: IAdaptableBlotterObject) => void;
     ColItems: IColItem[]
 }
 

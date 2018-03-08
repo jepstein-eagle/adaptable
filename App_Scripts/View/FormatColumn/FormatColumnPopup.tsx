@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -29,7 +29,7 @@ interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopu
     PredefinedColorChoices: string[],
     onAddFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
 class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps, EditableConfigEntityState> {
@@ -145,7 +145,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
         onEditFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
     };
 }
 

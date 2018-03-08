@@ -7,7 +7,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { ExportDestination} from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IReport, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -34,7 +34,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
     UserFilters: IUserFilter[]
     Columns: Array<IColumn>
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
@@ -157,7 +157,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateReport: (Index: number, Report: IReport) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
         onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
     };
 }
 

@@ -1,12 +1,12 @@
 import {IStrategy} from './IStrategy';
-import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
 
 export interface ITeamSharingStrategy extends IStrategy{
     
 }
 
 export interface ISharedEntity{
-    entity: IConfigEntity,
+    entity: IAdaptableBlotterObject,
     strategy: string,
     timestamp: Date
     user: string,

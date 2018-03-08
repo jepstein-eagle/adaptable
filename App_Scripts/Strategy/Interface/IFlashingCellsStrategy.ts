@@ -1,7 +1,7 @@
 import {  IStrategy } from './IStrategy';
-import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
 
-export interface IFlashingColumn extends IConfigEntity {
+export interface IFlashingColumn extends IAdaptableBlotterObject {
     IsLive: boolean,
     ColumnName: string;
     FlashingCellDuration: number;

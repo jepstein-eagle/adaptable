@@ -1,11 +1,11 @@
 import {  IStrategy } from './IStrategy';
 import { IStyle } from '../../Core/Interface/IStyle';
-import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
 
 export interface IFormatColumnStrategy extends IStrategy {
 }
 
-export interface IFormatColumn extends IConfigEntity {
+export interface IFormatColumn extends IAdaptableBlotterObject {
     ColumnId: string
     Style: IStyle
 }

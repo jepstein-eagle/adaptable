@@ -9,7 +9,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
@@ -28,7 +28,7 @@ interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupCom
     UserFilters: IUserFilter[]
     Columns: IColumn[],
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
 
@@ -153,7 +153,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }
 

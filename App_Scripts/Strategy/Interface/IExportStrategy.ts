@@ -1,11 +1,11 @@
 import {IStrategy} from './IStrategy';
-import { IConfigEntity } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter'
 import { Expression } from '../../Core/Expression';
 import { ReportColumnScope, ReportRowScope, ExportDestination } from '../../Core/Enums';
 
 
 
-export interface IReport extends IConfigEntity {
+export interface IReport extends IAdaptableBlotterObject {
   Name: string;
   ReportColumnScope: ReportColumnScope
   ReportRowScope: ReportRowScope

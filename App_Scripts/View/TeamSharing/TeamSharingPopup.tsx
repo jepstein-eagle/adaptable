@@ -6,7 +6,7 @@ import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, To
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -38,7 +38,7 @@ interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupC
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
     onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction
-    onImportItem: (entity: IConfigEntity, strategy: string) => TeamSharingRedux.TeamSharingImportItemAction
+    onImportItem: (entity: IAdaptableBlotterObject, strategy: string) => TeamSharingRedux.TeamSharingImportItemAction
 }
 
 class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {}> {
@@ -254,7 +254,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
-        onImportItem: (entity: IConfigEntity, strategy: string) => dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy))
+        onImportItem: (entity: IAdaptableBlotterObject, strategy: string) => dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy))
     };
 }
 

@@ -83,7 +83,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, columnBlotterList: IColumn[], userFilters: IUserFilter[], blotter: IAdaptableBlotter): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, getOtherColumnValue: (columnName: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -125,7 +125,7 @@ export module ExpressionHelper {
                             let valueToCheck: any = getColumnValue(columnId);
                             isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);
                         } else {
-                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, columnBlotterList, userFilters, blotter);
+                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, getOtherColumnValue, columnBlotterList, userFilters, blotter);
                         }
                         if (isColumnSatisfied) {
                             break;
@@ -141,7 +141,7 @@ export module ExpressionHelper {
                     let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnName)
 
                     for (let range of columnRanges.Ranges) {
-                        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnName), null, column)
+                        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnName), null, column, blotter, getOtherColumnValue)
 
                         isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
                         if (isColumnSatisfied) {
@@ -354,6 +354,7 @@ export module ExpressionHelper {
             Expression,
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
+            blotter.getDisplayValueFunction(identifierValue),
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
@@ -365,6 +366,7 @@ export module ExpressionHelper {
             Expression,
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),
+            blotter.getDisplayValueFunctionFromRecord(record),
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
@@ -376,10 +378,10 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyRangeExpression(): IRange {
-        return {Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: ""}
+        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", IsOperand1Column: false, IsOperand2Column: false }
     }
 
-    export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn): IRangeEvaluation {
+    export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnName: string) => any, ): IRangeEvaluation {
         let rangeEvaluation: IRangeEvaluation = {
             operand1: rangeExpression.Operand1,
             operand2: rangeExpression.Operand2,
@@ -389,16 +391,32 @@ export module ExpressionHelper {
         }
         switch (column.DataType) {
             case DataType.Date:
-                rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1)
-                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
-                    rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
+                if (rangeExpression.IsOperand1Column) {
+                    rangeEvaluation.operand1 = Date.parse(getOtherColumnValue(rangeExpression.Operand1))
+                } else {
+                    rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1)
+                }
+                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
+                    if (rangeExpression.IsOperand2Column) {
+                        rangeEvaluation.operand2 = Date.parse(getOtherColumnValue(rangeExpression.Operand2))
+                    } else {
+                        rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
+                    }
                 }
                 rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0)
                 break
             case DataType.Number:
-                rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
-                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {
-                    rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
+                if (rangeExpression.IsOperand1Column) {
+                    rangeEvaluation.operand1 = getOtherColumnValue(rangeExpression.Operand1);
+                } else {
+                    rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
+                }
+                if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
+                    if (rangeExpression.IsOperand2Column) {
+                        rangeEvaluation.operand2 = getOtherColumnValue(rangeExpression.Operand2);
+                    } else {
+                        rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
+                    }
                 }
                 rangeEvaluation.newValue = newValue;
                 break
@@ -407,9 +425,12 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
-                rangeEvaluation.operand1 = rangeExpression.Operand1.toLowerCase();
-                rangeEvaluation.operand2 = rangeExpression.Operand2.toLowerCase();
-                rangeEvaluation.newValue = newValue.toLowerCase();
+                rangeEvaluation.operand1 = rangeExpression.IsOperand1Column ?
+                    getOtherColumnValue(rangeExpression.Operand1) :
+                    rangeExpression.Operand1.toLowerCase()
+                rangeEvaluation.operand2 = rangeExpression.IsOperand2Column ?
+                    getOtherColumnValue(rangeExpression.Operand2) :
+                    rangeExpression.Operand2.toLowerCase();
                 break;
         }
         return rangeEvaluation;

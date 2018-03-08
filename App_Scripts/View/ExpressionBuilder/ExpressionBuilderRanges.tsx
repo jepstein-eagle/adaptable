@@ -1,15 +1,19 @@
 import * as React from "react";
-import { DataType } from '../../Core/Enums'
+import { DataType, SelectionMode } from '../../Core/Enums'
 import { IRange } from '../../Core/Interface/IRange'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { DropdownButton, MenuItem, InputGroup,  FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
+import { ColumnSelector } from "../ColumnSelector";
+import { IColumn } from "../../Core/Interface/IAdaptableBlotter";
+import { UIHelper } from "../UIHelper";
 
 export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     DataType: DataType
     Ranges: Array<IRange>
+    Columns: Array<IColumn>
     onRangesChange: (Ranges: Array<IRange>) => void
 }
 
@@ -17,71 +21,76 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     render() {
         let rangesElement: JSX.Element[] = null
         if (this.props.DataType == DataType.Number || this.props.DataType == DataType.Date) {
-            rangesElement = this.props.Ranges.map((x, index) => {
-                let numericAndDateOption = <DropdownButton style={dropDownNumbDateStyle} title={ExpressionHelper.OperatorToShortFriendlyString(x.Operator)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.GreaterThan)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.GreaterThanOrEqual)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.LessThan)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.LessThanOrEqual)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Equals)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.NotEquals)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Between)}</MenuItem>
+            rangesElement = this.props.Ranges.map((range, index) => {
+                let numericAndDateOption = <DropdownButton bsSize="small" style={dropDownStyle} title={ExpressionHelper.OperatorToLongFriendlyString(range.Operator, this.props.DataType)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Unknown, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThan, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThanOrEqual, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThan, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThanOrEqual, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Equals, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.NotEquals, this.props.DataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Between, this.props.DataType)}</MenuItem>
                 </DropdownButton>
-                if (x.Operator == LeafExpressionOperator.Between) {
-                    return <AdaptableBlotterForm key={index}>
-                        <FormGroup controlId={"Range1" + index}>
-                            <InputGroup>
-                                {numericAndDateOption}
-                                {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Enter Number" onChange={(e) => this.onOperand1Edit(index, e)} />
-                                }
-                                {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Enter Date" onChange={(e) => this.onOperand1Edit(index, e)} />
-                                }
-                                <InputGroup.Button>
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                        <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
-                                    </OverlayTrigger>
-                                </InputGroup.Button>
-                            </InputGroup>
-                            <InputGroup style={betweenAddOnStyle}>
-                                <InputGroup.Addon>And</InputGroup.Addon>
-                                {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand2)} type="number" placeholder="Enter Number" onChange={(e) => this.onOperand2Edit(index, e)} />
-                                }
-                                {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand2)} type="date" placeholder="Enter Date" onChange={(e) => this.onOperand2Edit(index, e)} />
-                                }
-                            </InputGroup>
-                        </FormGroup>
-                    </AdaptableBlotterForm>
-                }
-                else {
-                    return <AdaptableBlotterForm key={index}>
+
+                return <Panel style={panelStyle} key={index} bsStyle="primary" className="small-padding-panel">
+                    <AdaptableBlotterForm horizontal key={index}>
                         <FormGroup controlId={"Range" + index}>
+
                             <InputGroup>
                                 {numericAndDateOption}
-                                {this.props.DataType == DataType.Number &&
-                                    <FormControl value={String(x.Operand1)} type="number" placeholder="Number" onChange={(e) => this.onOperand1Edit(index, e)} />
-                                }
-                                {this.props.DataType == DataType.Date &&
-                                    <FormControl value={String(x.Operand1)} type="date" placeholder="Date" onChange={(e) => this.onOperand1Edit(index, e)} />
-                                }
                                 <InputGroup.Button>
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                        <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
+                                        <Button style={deleteButtonStyle} bsSize="small" onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
                                     </OverlayTrigger>
                                 </InputGroup.Button>
                             </InputGroup>
+
+                            {range.IsOperand1Column ?
+                                <div style={textBoxStyle}>
+                                    <ColumnSelector SelectedColumnIds={[range.Operand1]}
+                                        ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                        onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
+                                        SelectionMode={SelectionMode.Single} />
+                                </div> :
+                                <div>
+                                    {this.getOperand1FormControl(index, range)}
+                                </div>
+                            }
+                            <div style={checkBoxDivStyle}>
+                                <Radio style={valueCheckBoxStyle} inline value="Value" checked={range.IsOperand1Column == false} onChange={(e) => this.onIsOperand1ColumnChanged(index, e)}>Value</Radio>
+                                <Radio style={columnCheckBoxStyle} inline value="Column" checked={range.IsOperand1Column == true} onChange={(e) => this.onIsOperand1ColumnChanged(index, e)}>Other Column</Radio>
+                            </div>
+
+                            {range.Operator == LeafExpressionOperator.Between &&
+                                <div style={betweenDivStyle}>
+                                    {range.IsOperand2Column ?
+                                        <div style={textBoxStyle}>
+                                            <ColumnSelector SelectedColumnIds={[range.Operand2]}
+                                                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                                onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
+                                                SelectionMode={SelectionMode.Single} />
+                                        </div> :
+                                        <div>
+                                            {this.getOperand2FormControl(index, range)}
+                                        </div>
+                                    }
+                                    <div style={checkBoxDivStyle}>
+                                        <Radio style={valueCheckBoxStyle} inline value="Value" checked={range.IsOperand2Column == false} onChange={(e) => this.onIsOperand2ColumnChanged(index, e)}>Value</Radio>
+                                        <Radio style={columnCheckBoxStyle} inline value="Column" checked={range.IsOperand2Column == true} onChange={(e) => this.onIsOperand2ColumnChanged(index, e)}>Other Column</Radio>
+                                    </div>
+                                </div>
+                            }
+
                         </FormGroup>
                     </AdaptableBlotterForm>
-                }
+                </Panel>
+
             })
         }
         else if (this.props.DataType == DataType.String) {
-            rangesElement = this.props.Ranges.map((x, index) => {
-                let stringOption = <DropdownButton style={dropDownStringStyle} title={ExpressionHelper.OperatorToShortFriendlyString(x.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
+            rangesElement = this.props.Ranges.map((range, index) => {
+                let stringOption = <DropdownButton bsSize="small" style={dropDownStyle} title={ExpressionHelper.OperatorToShortFriendlyString(range.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Contains)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Contains)}</MenuItem>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotContains)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.NotContains)}</MenuItem>
@@ -93,13 +102,30 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <FormGroup controlId={"Range" + index}>
                         <InputGroup>
                             {stringOption}
-                            <FormControl value={String(x.Operand1)} type="string" placeholder="Value" onChange={(e) => this.onOperand1Edit(index, e)} />
                             <InputGroup.Button>
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                                    <Button onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
+                                    <Button style={deleteButtonStyle} bsSize="small" onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
                                 </OverlayTrigger>
                             </InputGroup.Button>
                         </InputGroup>
+                        {range.IsOperand1Column ?
+                            <div style={textBoxStyle}>
+                                <ColumnSelector SelectedColumnIds={[range.Operand1]}
+                                    ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                    onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
+                                    SelectionMode={SelectionMode.Single} />
+                            </div> :
+                            <div>
+                                {this.getOperand1FormControl(index, range)}
+                            </div>
+                        }
+                        <div style={checkBoxDivStyle}>
+                            <Radio style={valueCheckBoxStyle} inline value="FreeStyle" checked={range.IsOperand1Column == false} onChange={(e) => this.onIsOperand1ColumnChanged(index, e)}>Value</Radio>
+                            <Radio style={columnCheckBoxStyle} inline value="Column" checked={range.IsOperand1Column == true} onChange={(e) => this.onIsOperand1ColumnChanged(index, e)}>Other Column</Radio>
+                        </div>
+
+
+
                     </FormGroup>
                 </AdaptableBlotterForm>
             })
@@ -114,13 +140,21 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         </PanelWithButton>
     }
 
+    getOperand1FormControl(index: number, range: IRange): any {
+        return <FormControl style={textBoxStyle} value={String(range.Operand1)} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(index, e)} />
+    }
+
+    getOperand2FormControl(index: number, range: IRange): any {
+        return <FormControl style={textBoxStyle} value={String(range.Operand2)} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(index, e)} />
+    }
+
     onRangeDelete(index: number) {
         let newCol = [].concat(this.props.Ranges)
         newCol.splice(index, 1)
         this.props.onRangesChange(newCol)
     }
     private addRange() {
-        this.props.onRangesChange([].concat(this.props.Ranges, { Operand1: "", Operand2: "", Operator: LeafExpressionOperator.Unknown }))
+        this.props.onRangesChange([].concat(this.props.Ranges, { Operand1: "", IsOperand1Column: false, Operand2: "", IsOperand2Column: false, Operator: LeafExpressionOperator.Unknown }))
     }
 
     private onLeafExpressionOperatorChange(index: number, x: LeafExpressionOperator) {
@@ -145,6 +179,38 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         rangeCol[index] = Object.assign({}, range, { Operand2: e.value })
         this.props.onRangesChange(rangeCol)
     }
+
+    private onIsOperand1ColumnChanged(index: number, x: React.FormEvent<any>) {
+        let e = x.target as HTMLInputElement;
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
+        let range = this.props.Ranges[index]
+        rangeCol[index] = Object.assign({}, range, { IsOperand1Column: e.value == "Column", Operand1: "" })
+        this.props.onRangesChange(rangeCol)
+    }
+
+    private onIsOperand2ColumnChanged(index: number, x: React.FormEvent<any>) {
+        let e = x.target as HTMLInputElement;
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
+        let range = this.props.Ranges[index]
+        rangeCol[index] = Object.assign({}, range, { IsOperand2Column: e.value == "Column", Operand2: "" })
+        this.props.onRangesChange(rangeCol)
+    }
+
+    private onColumnOperand1SelectedChanged(index: number, columns: IColumn[]) {
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
+        let range = this.props.Ranges[index]
+        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
+        rangeCol[index] = Object.assign({}, range, { Operand1: selectedColumn })
+        this.props.onRangesChange(rangeCol)
+    }
+
+    private onColumnOperand2SelectedChanged(index: number, columns: IColumn[]) {
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
+        let range = this.props.Ranges[index]
+        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
+        rangeCol[index] = Object.assign({}, range, { Operand2: selectedColumn })
+        this.props.onRangesChange(rangeCol)
+    }
 }
 
 let divStyle: React.CSSProperties = {
@@ -154,12 +220,52 @@ let divStyle: React.CSSProperties = {
     'marginBottom': '0'
 }
 
-let dropDownNumbDateStyle = {
-    'width': '92px'
+let betweenDivStyle: React.CSSProperties = {
+    'marginTop': '10'
 }
 
-let dropDownStringStyle = {
-    'width': '102px'
+
+let dropDownStyle = {
+    'width': '180px',
+    'marginLeft': '20px',
+    'marginTop': '10px',
+}
+
+let checkBoxDivStyle = {
+    'width': '170px',
+    'marginLeft': '45px',
+    'marginBottom': '0px',
+    'marginTop': '8px',
+    'padding': '0px'
+}
+let valueCheckBoxStyle = {
+    'width': '60px',
+    'marginBottom': '0px',
+    'marginTop': '0px',
+    'padding': '0px',
+}
+let columnCheckBoxStyle = {
+    'width': '90px',
+    'marginBottom': '0px',
+    'marginTop': '0px',
+    'padding': '0px',
+}
+
+let textBoxStyle = {
+    'width': '213px',
+    'marginLeft': '20px'
+}
+let deleteButtonStyle = {
+    'marginTop': '10px',
+    'marginRight': '30px'
+}
+
+
+
+let panelStyle = {
+    'margin': '5px',
+    'padding': '0px',
+
 }
 
 let betweenAddOnStyle = { marginLeft: '41px' }

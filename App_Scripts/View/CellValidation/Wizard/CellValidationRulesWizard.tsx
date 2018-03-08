@@ -200,7 +200,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         var rangeExpression: IRange = {
             Operator: this.state.Operator,
             Operand1: this.state.Operand1,
-            Operand2: this.state.Operand2
+            Operand2: this.state.Operand2,
+            IsOperand1Column: false,
+            IsOperand2Column: false
         }
         this.props.Data.Range = rangeExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);

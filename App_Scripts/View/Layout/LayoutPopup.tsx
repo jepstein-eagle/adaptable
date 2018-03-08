@@ -11,7 +11,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
-import { IColumn, IConfigEntity } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn, IAdaptableBlotterObject } from '../../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
@@ -25,7 +25,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
     Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
-    onShare: (entity: IConfigEntity) => TeamSharingRedux.TeamSharingShareAction,
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
 
 interface LayoutPopupState {
@@ -164,7 +164,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
-        onShare: (entity: IConfigEntity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };
 }
 

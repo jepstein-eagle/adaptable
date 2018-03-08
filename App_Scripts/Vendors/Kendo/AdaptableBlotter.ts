@@ -852,5 +852,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnInfo(): any {
         return this.grid.columns.length;
     }
+
+    public getDisplayValueFunction(id: any): (columnName: string) => any{
+        return (columnName: string) => { return this.getDisplayValue(id, columnName) }
+        }
+    
+       public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any{
+            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName) }
+        }
 }
 

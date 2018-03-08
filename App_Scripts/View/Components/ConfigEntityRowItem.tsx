@@ -1,13 +1,11 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { Col, Row } from 'react-bootstrap';
-
 import { IColItem } from "../UIInterfaces";
-
 
 export interface ConfigEntityRowItemProps extends React.ClassAttributes<ConfigEntityRowItem> {
     ColItems: IColItem[]
-}
+}   
 
 export class ConfigEntityRowItem extends React.Component<ConfigEntityRowItemProps, {}> {
     render(): any {

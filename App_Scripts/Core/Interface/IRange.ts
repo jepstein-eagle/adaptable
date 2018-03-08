@@ -4,6 +4,8 @@ export interface IRange {
     Operator: LeafExpressionOperator;
     Operand1: string;
     Operand2: string;
+    IsOperand1Column: boolean
+    IsOperand2Column: boolean
 }
 
 export interface IRangeEvaluation {

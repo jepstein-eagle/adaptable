@@ -60,7 +60,7 @@ function notionalCellRenderer(params) {
 }
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getBonds();
+    var trades = dataGen.getTrades();
 
     // let the grid know which columns and what data to use
     var gridOptions = {
@@ -79,8 +79,8 @@ function InitBlotter() {
     var gridcontainer = document.getElementById('grid');
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
-        userName: "new user",
-        enableAuditLog: false,
+        userName: "demo user",
+        enableAuditLog: true,
         enableRemoteConfigServer: false,
         predefinedConfigUrl:"",// "predefinedConfig.json",
         iPushPullConfig: {

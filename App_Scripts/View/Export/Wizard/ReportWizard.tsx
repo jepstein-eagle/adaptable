@@ -4,10 +4,10 @@ import { ReportColumnsWizard } from './ReportColumnsWizard'
 import { ReportExpressionWizard } from './ReportExpressionWizard'
 import { ReportNameWizard } from './ReportNameWizard'
 import { IReport } from '../../../Strategy/Interface/IExportStrategy';
-import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
-export class ReportWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<ReportWizard>, {}> {
+export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
 
     render() {
         let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name"]

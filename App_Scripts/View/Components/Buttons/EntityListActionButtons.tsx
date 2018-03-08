@@ -4,7 +4,7 @@ import { ButtonToolbar } from 'react-bootstrap';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
-import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlotter';
 
 export interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
@@ -18,7 +18,7 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     overrideTooltipEdit?: string
     overrideTooltipDelete?: string
     overrideTooltipShare?: string
-    ConfigEntity?: IConfigEntity
+    ConfigEntity?: IAdaptableBlotterObject
     ConfirmDeleteAction: Redux.Action
     EntityName: string
 }

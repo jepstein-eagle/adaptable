@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType } from '../Core/Enums'
-import { MenuItem, Checkbox, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
+import { MenuItem,  DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
@@ -215,19 +215,19 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = { Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = {IsOperand1Column: false, IsOperand2Column:false, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand1Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = { Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = {IsOperand1Column: false, IsOperand2Column: false, Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand2Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = { Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
+        let newRange: IRange = {IsOperand1Column: false, IsOperand2Column: false, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 

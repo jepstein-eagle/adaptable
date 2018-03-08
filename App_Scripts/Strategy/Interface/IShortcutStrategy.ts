@@ -1,8 +1,8 @@
 import {  IStrategy } from './IStrategy';
 import { DataType ,MathOperation } from '../../Core/Enums';
-import { IConfigEntity , ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotterObject , ICellInfo } from '../../Core/Interface/IAdaptableBlotter'
 
-export interface IShortcut extends IConfigEntity{
+export interface IShortcut extends IAdaptableBlotterObject{
     ShortcutKey: string;
     ShortcutResult: any;
     ShortcutOperation: MathOperation

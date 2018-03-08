@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { EntityListActionButtons } from '../../Components/Buttons/EntityListActionButtons';
-import { IConfigEntity } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotterObject } from '../../../Core/Interface/IAdaptableBlotter';
 import { SummaryRowItem } from './SummaryRowItem';
     
 
@@ -10,7 +10,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     key: string
     Item1: any
     Item2: any
-    ConfigEnity: IConfigEntity
+    ConfigEnity: IAdaptableBlotterObject
     EntityName: string
     onEdit: () => void
     onShare: () => void

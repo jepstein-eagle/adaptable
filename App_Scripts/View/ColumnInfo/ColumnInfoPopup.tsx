@@ -52,7 +52,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     render() {
-        let infoBody: any[] = ["Displays information about a column in the grid - which entities it has attached."]
+        let infoBody: any[] = ["Displays information about a column in the grid - which Adaptable Blotter Objects it has attached."]
 
         let colItems: IColItem[] = [
             { Content: "Function", Size: 3 },

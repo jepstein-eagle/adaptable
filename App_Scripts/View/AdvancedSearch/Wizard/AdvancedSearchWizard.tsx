@@ -3,10 +3,10 @@ import * as React from "react";
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
-import { IConfigEntityExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 
-export class AdvancedSearchWizard extends React.Component<IConfigEntityExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
+export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
 
     render() {
         let stepNames: string[] = ["Build Query", "Create Name"]

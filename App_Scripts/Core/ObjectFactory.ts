@@ -48,7 +48,9 @@ export module ObjectFactory {
             Range: {
                 Operator: LeafExpressionOperator.None,
                 Operand1: "",
-                Operand2: ""
+                Operand2: "",
+                IsOperand1Column: false,
+                IsOperand2Column: false,
             },
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),

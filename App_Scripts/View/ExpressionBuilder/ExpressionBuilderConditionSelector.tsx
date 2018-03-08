@@ -184,6 +184,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                 <ExpressionBuilderRanges
                                     DataType={selectedColumnDataType}
                                     Ranges={this.state.SelectedColumnRanges}
+                                    Columns={this.props.ColumnsList}
                                     onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
                                 </ExpressionBuilderRanges>
                             </Col>

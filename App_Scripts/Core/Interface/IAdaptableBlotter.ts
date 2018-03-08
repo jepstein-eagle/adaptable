@@ -54,6 +54,10 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
 
+    // not too sure
+    getDisplayValueFunction(id: any):(columnName: string)=>any
+    getDisplayValueFunctionFromRecord(id: any):(columnName: string)=>any
+
     // editing related
     setValue(cellInfo: ICellInfo): void
     setValueBatch(batchValues: ICellInfo[]): void
@@ -120,13 +124,13 @@ export interface IAdaptableBlotterOptions {
     }
 }
 
-export interface IConfigEntity {
+export interface IAdaptableBlotterObject{
     IsPredefined: boolean
 }
 
 
 
-export interface IEntitlement {//extends IConfigEntity{
+export interface IEntitlement {//extends IAdaptableBlotterObject{
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }
