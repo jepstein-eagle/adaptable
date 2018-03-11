@@ -2,6 +2,7 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
 import { AuditLogTrigger } from '../Enums';
+import { IDataChangedEvent } from './Interface/IAuditService';
 // import * as SockJS from 'sockjs-client'
 
 export class AuditLogService {
@@ -18,70 +19,74 @@ export class AuditLogService {
         }
     }
 
-    public AddEditCellAuditLog(primarykey: string, columnId: string, oldValue: any, newValue: any) {
-        if (typeof oldValue == "string" && typeof newValue == "string") {
+    public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]) {
+        dataChangedEvents.forEach(dce => { this.AddEditCellAuditLog(dce) })
+    }
+
+    public AddEditCellAuditLog(dataChangedEvent: IDataChangedEvent) {
+        if (typeof dataChangedEvent.OldValue == "string" && typeof dataChangedEvent.NewValue == "string") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
                 adaptableblotter_editcell: {
-                    primarykey: String(primarykey),
+                    primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
-                    column_id: columnId,
-                    old_value_string: oldValue,
-                    new_value_string: newValue
+                    column_id: dataChangedEvent.ColumnId,
+                    old_value_string: dataChangedEvent.OldValue,
+                    new_value_string: dataChangedEvent.NewValue
                 }
             });
         }
-        else if (typeof oldValue == "number" && typeof newValue == "number") {
+        else if (typeof dataChangedEvent.OldValue == "number" && typeof dataChangedEvent.NewValue == "number") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
                 adaptableblotter_editcell: {
-                    primarykey: String(primarykey),
+                    primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
-                    column_id: columnId,
-                    old_value_string: String(oldValue),
-                    new_value_string: String(newValue),
-                    old_value_numeric: oldValue,
-                    new_value_numeric: newValue
+                    column_id: dataChangedEvent.ColumnId,
+                    old_value_string: String(dataChangedEvent.OldValue),
+                    new_value_string: String(dataChangedEvent.NewValue),
+                    old_value_numeric: dataChangedEvent.OldValue,
+                    new_value_numeric: dataChangedEvent.NewValue
                 }
             });
         }
-        else if (typeof oldValue == "boolean" && typeof newValue == "boolean") {
+        else if (typeof dataChangedEvent.OldValue == "boolean" && typeof dataChangedEvent.NewValue == "boolean") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
                 adaptableblotter_editcell: {
-                    primarykey: String(primarykey),
+                    primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
-                    column_id: columnId,
-                    old_value_string: String(oldValue),
-                    new_value_string: String(newValue),
-                    old_value_boolean: oldValue,
-                    new_value_boolean: newValue
+                    column_id: dataChangedEvent.ColumnId,
+                    old_value_string: String(dataChangedEvent.OldValue),
+                    new_value_string: String(dataChangedEvent.NewValue),
+                    old_value_boolean: dataChangedEvent.OldValue,
+                    new_value_boolean: dataChangedEvent.NewValue
                 }
             });
         }
-        else if (oldValue instanceof Date && newValue instanceof Date) {
+        else if (dataChangedEvent.OldValue instanceof Date && dataChangedEvent.NewValue instanceof Date) {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
                 adaptableblotter_editcell: {
-                    primarykey: String(primarykey),
+                    primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
-                    column_id: columnId,
-                    old_value_string: String(oldValue),
-                    new_value_string: String(newValue),
-                    old_value_date: oldValue,
-                    new_value_date: newValue
+                    column_id: dataChangedEvent.ColumnId,
+                    old_value_string: String(dataChangedEvent.OldValue),
+                    new_value_string: String(dataChangedEvent.NewValue),
+                    old_value_date: dataChangedEvent.OldValue,
+                    new_value_date: dataChangedEvent.NewValue
                 }
             });
         }
@@ -92,11 +97,11 @@ export class AuditLogService {
                 adaptableblotter_username: this.blotter.BlotterOptions.userName,
                 adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
                 adaptableblotter_editcell: {
-                    primarykey: String(primarykey),
+                    primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
-                    column_id: columnId,
-                    old_value_string: String(oldValue),
-                    new_value_string: String(newValue)
+                    column_id: dataChangedEvent.ColumnId,
+                    old_value_string: String(dataChangedEvent.OldValue),
+                    new_value_string: String(dataChangedEvent.NewValue)
                 }
             });
         }

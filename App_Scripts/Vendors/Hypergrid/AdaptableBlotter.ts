@@ -12,7 +12,7 @@ import { IMenuItem, } from '../../Core/Interface/IMenu';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
-import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
@@ -88,8 +88,8 @@ const getFilterIcon = (state: boolean) => {
 }
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-    public  GridName : string = "Hypergrid"
-  public Strategies: IAdaptableStrategyCollection
+    public GridName: string = "Hypergrid"
+    public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
@@ -468,9 +468,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
 
-        this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
-            cellInfo.ColumnId,
-            oldValue, cellInfo.Value)
+        let dataChangedEvent: IDataChangedEvent =
+            {
+                OldValue: oldValue,
+                NewValue: cellInfo.Value,
+                ColumnId: cellInfo.ColumnId,
+                IdentifierValue: cellInfo.Id,
+                Timestamp: null,
+                Record: null
+            }
+        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
@@ -478,16 +485,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setValueBatch(batchValues: ICellInfo[]): void {
         //no need to have a batch mode so far.... we'll see in the future performance
+        let dataChangedEvents: IDataChangedEvent[] = []
         for (let element of batchValues) {
             let row = this.grid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
-            this.AuditLogService.AddEditCellAuditLog(element.Id,
-                element.ColumnId,
-                oldValue, element.Value)
+
+            let dataChangedEvent: IDataChangedEvent =
+                {
+                    OldValue: oldValue,
+                    NewValue: element.Value,
+                    ColumnId: element.ColumnId,
+                    IdentifierValue: element.Id,
+                    Timestamp: null,
+                    Record: null
+                }
+            dataChangedEvents.push(dataChangedEvent);
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
+        this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
     }
 
     public cancelEdit() {
@@ -946,10 +963,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         grid.addEventListener("fin-before-cell-edit", (event: any) => {
-            let dataChangedEvent: IDataChangingEvent;
+            let dataChangingEvent: IDataChangingEvent;
             let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
-            dataChangedEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
-            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
+            dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
+            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
                 // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
@@ -967,9 +984,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                     });
                     let cellInfo: ICellInfo = {
-                        Id: dataChangedEvent.IdentifierValue,
-                        ColumnId: dataChangedEvent.ColumnId,
-                        Value: dataChangedEvent.NewValue
+                        Id: dataChangingEvent.IdentifierValue,
+                        ColumnId: dataChangingEvent.ColumnId,
+                        Value: dataChangingEvent.NewValue
                     };
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel Edit",
@@ -977,7 +994,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]),
+                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangingEvent.ColumnId]),
                         ShowCommentBox: true
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
@@ -986,7 +1003,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             else {
-                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, (row)[dataChangedEvent.ColumnId], dataChangedEvent.NewValue);
+                let dataChangedEvent: IDataChangedEvent =
+                    {
+                        OldValue: (row)[dataChangingEvent.ColumnId],
+                        NewValue: dataChangingEvent.NewValue,
+                        ColumnId: dataChangingEvent.ColumnId,
+                        IdentifierValue: dataChangingEvent.IdentifierValue,
+                        Timestamp: null,
+                        Record: null
+                    }
             }
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
@@ -1140,13 +1165,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.grid.behavior.getActiveColumns().length + this.grid.behavior.getHiddenColumns().length
     }
 
-    public getDisplayValueFunction(id: any): (columnName: string) => any{
+    public getDisplayValueFunction(id: any): (columnName: string) => any {
         return (columnName: string) => { return this.getDisplayValue(id, columnName) }
-        }
-    
-       public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any{
-            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName) }
-        }
+    }
+
+    public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any {
+        return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName) }
+    }
 }
 
 export interface CellStyleHypergrid {

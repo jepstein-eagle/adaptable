@@ -14,7 +14,7 @@ import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRe
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import { IAuditService } from '../../Core/Services/Interface/IAuditService'
+import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
@@ -87,7 +87,7 @@ import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter
 import { IColumn } from '../../Core/Interface/IColumn';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-  
+
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -277,12 +277,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
-                this.gridOptions.columnApi.setColumnVisible(col, true)
+                this.gridOptions.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-            this.gridOptions.columnApi.moveColumn(col, index);
+            this.gridOptions.columnApi.moveColumn(col, index, "api") // not sure if this right - there is a new parametr of columneventtype here...
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.gridOptions.columnApi.setColumnVisible(col, false)
+            this.gridOptions.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
     }
 
@@ -413,9 +413,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
-                this.AuditLogService.AddEditCellAuditLog(cellInfo.Id,
-                    cellInfo.ColumnId,
-                    oldValue, cellInfo.Value)
+                // this seems to loop unnecessarily... ????
+
+                let dataChangedEvent: IDataChangedEvent =
+                    {
+                        OldValue: oldValue,
+                        NewValue: cellInfo.Value,
+                        ColumnId: cellInfo.ColumnId,
+                        IdentifierValue: cellInfo.Id,
+                        Timestamp: null,
+                        Record: null
+                    }
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         })
         this.applyColumnFilters();
@@ -424,16 +433,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValueBatch(batchValues: ICellInfo[]): void {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+
+        // using new method... (JW, 11/3/18)
+        var itemsToUpdate: any[] = [];
+        var dataChangedEvents: IDataChangedEvent[] = []
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
-                rowNode.setDataValue(value.ColumnId, value.Value)
-                this.AuditLogService.AddEditCellAuditLog(value.Id,
-                    value.ColumnId,
-                    oldValue, value.Value)
+
+                var data: any = rowNode.data;
+                data[value.ColumnId] = value.Value;
+                itemsToUpdate.push(data);
+
+                //  rowNode.setDataValue(value.ColumnId, value.Value)
+                dataChangedEvents.push(
+                    {
+                        OldValue: oldValue,
+                        NewValue: value.Value,
+                        ColumnId: value.ColumnId,
+                        IdentifierValue: value.Id,
+                        Timestamp: null,
+                        Record: null
+                    })
             }
         })
+        var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
+        this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+
         this.applyColumnFilters();
     }
 
@@ -763,9 +790,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
-                let dataChangedEvent: IDataChangingEvent;
-                dataChangedEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
-                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
+                let dataChangingEvent: IDataChangingEvent;
+                dataChangingEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
+                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
                 if (failedRules.length > 0) {
                     let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                     // first see if its an error = should only be one item in array if so
@@ -783,9 +810,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                         });
                         let cellInfo: ICellInfo = {
-                            Id: dataChangedEvent.IdentifierValue,
-                            ColumnId: dataChangedEvent.ColumnId,
-                            Value: dataChangedEvent.NewValue
+                            Id: dataChangingEvent.IdentifierValue,
+                            ColumnId: dataChangingEvent.ColumnId,
+                            Value: dataChangingEvent.NewValue
                         };
                         let confirmation: IUIConfirmation = {
                             CancelText: "Cancel Edit",
@@ -804,7 +831,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
                 if (!whatToReturn) {
                     //no failed validation so we raise the edit auditlog
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, this.gridOptions.api.getValue(params.column.getColId(), params.node), dataChangedEvent.NewValue);
+                    let dataChangedEvent: IDataChangedEvent =
+                        {
+                            OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                            NewValue: dataChangingEvent.NewValue,
+                            ColumnId: dataChangingEvent.ColumnId,
+                            IdentifierValue: dataChangingEvent.IdentifierValue,
+                            Timestamp: null,
+                            Record: null
+                        }
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 return whatToReturn;
             };
@@ -952,15 +988,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.gridOptions.columnApi.getAllColumns().length;
     }
 
-   public getDisplayValueFunction(id: any): (columnName: string) => any{
-    return (columnName: string) => { return this.getDisplayValue(id, columnName) }
+    public getDisplayValueFunction(id: any): (columnName: string) => any {
+        return (columnName: string) => { return this.getDisplayValue(id, columnName) }
     }
 
-   public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any{
+    public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any {
         return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName) }
     }
 
-   
+
 }
 
 
