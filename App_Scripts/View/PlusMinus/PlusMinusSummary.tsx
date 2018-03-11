@@ -104,8 +104,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
-    // wrappng this so that any becomes [Default Column Nudge Value]
-    private wrapExpressionDescription(expressionDescription: string): string {
+     wrapExpressionDescription(expressionDescription: string): string {
         return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
     }
 

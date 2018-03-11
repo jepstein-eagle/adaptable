@@ -55,7 +55,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
     render() {
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />, 
-        "Plus/Minus 'Nudge' Rules can be set for any numeric column, with option to set whether a nudge is always applied or only when a particular condition is met."]
+        "Plus/Minus 'Nudge' Rules can be set for any numeric column, with option to specify whether a nudge is always applied or only when a particular condition is met."]
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
