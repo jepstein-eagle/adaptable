@@ -69,7 +69,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         ]
         let conditionalStyleConditions = this.props.ConditionalStyles.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
             return <ConditionalStyleEntityRow
-                ConfigEntity={conditionalStyleCondition}
+            AdaptableBlotterObject={conditionalStyleCondition}
                 ColItems={colItems}
                 key={"CS" + index}
                 Index={index}

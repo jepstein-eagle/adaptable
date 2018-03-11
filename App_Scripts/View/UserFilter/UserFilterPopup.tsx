@@ -78,7 +78,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
             return <UserFilterEntityRow
-                ConfigEntity={userFilter}
+            AdaptableBlotterObject={userFilter}
                 ColItems={colItems}
                 key={"CS" + index}
                 Index={index}

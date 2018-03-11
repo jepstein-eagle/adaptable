@@ -15,7 +15,7 @@ import { IColItem } from "../UIInterfaces";
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 
     render(): any {
-        let conditionalStyleCondition: IConditionalStyleCondition = this.props.ConfigEntity as IConditionalStyleCondition;
+        let conditionalStyleCondition: IConditionalStyleCondition = this.props.AdaptableBlotterObject as IConditionalStyleCondition;
 
         // let isDisabled = conditionalStyleCondition.IsPredefined
         let column = this.props.Columns.find(x => x.ColumnId == conditionalStyleCondition.ColumnId)

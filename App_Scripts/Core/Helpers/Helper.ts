@@ -30,21 +30,21 @@ export module Helper {
         return JSON.parse(JSON.stringify(obj))
     }
 
-/*
-    export function generateUid(): string {
-        var d = new Date().getTime();
-        if (window.performance && typeof window.performance.now === "function") {
-            d += performance.now(); //use high-precision timer if available
+    /*
+        export function generateUid(): string {
+            var d = new Date().getTime();
+            if (window.performance && typeof window.performance.now === "function") {
+                d += performance.now(); //use high-precision timer if available
+            }
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                c => {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+            return uuid;
         }
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-            c => {
-                var r = (d + Math.random() * 16) % 16 | 0;
-                d = Math.floor(d / 16);
-                return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-            });
-        return uuid;
-    }
-*/
+    */
 
     export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
         let newValues = [].concat(values)
@@ -67,6 +67,15 @@ export module Helper {
             return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
         }
     }
+    export function sortArray(values: any[], sortOrder: SortOrder = SortOrder.Ascending): any[] {
+        let newValues = [].concat(values)
+        let direction = 1
+        if (sortOrder == SortOrder.Descending) {
+            direction = -1
+        }
+        return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
+    }
+
 
     export function groupBy(array: Array<any>, prop: string): Array<any> {
         return array.reduce((acc, item) => {
@@ -183,7 +192,7 @@ export module Helper {
         return (items.length == 1) ? "1 " + itemName : items.length + " " + itemName + "s"
     }
 
-    export function IsInputNullOrEmpty(itemToCheck: any){
+    export function IsInputNullOrEmpty(itemToCheck: any) {
         if (typeof (itemToCheck) == "string") {
             return StringExtensions.IsNullOrEmpty(itemToCheck)
         } else if (typeof (itemToCheck) == "number") {
@@ -194,7 +203,7 @@ export module Helper {
         return itemToCheck == null
     }
 
-    export function IsInputNotNullOrEmpty(itemToCheck: any){
+    export function IsInputNotNullOrEmpty(itemToCheck: any) {
         return !IsInputNullOrEmpty(itemToCheck);
     }
 }

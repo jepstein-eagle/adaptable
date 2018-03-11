@@ -68,7 +68,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
             return <PlusMinusEntityRow
                 ColItems={colItems}
-                ConfigEntity={x}
+                AdaptableBlotterObject={x}
                 key={index}
                 Index={index}
                 UserFilters={this.props.UserFilters}

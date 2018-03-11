@@ -70,7 +70,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {
             return <ReportEntityRow
-                ConfigEntity={Report}
+            AdaptableBlotterObject={Report}
                 key={index}
                 ColItems={colItems}
                 Index={index}

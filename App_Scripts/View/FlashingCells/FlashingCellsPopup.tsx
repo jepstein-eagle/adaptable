@@ -61,7 +61,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn,index) => {
             return <FlashingCellEntityRow
-                ConfigEntity={flashingColumn}
+            AdaptableBlotterObject={flashingColumn}
                 key={flashingColumn.ColumnName}
                 Index={index}
                 Columns={this.props.Columns}

@@ -70,7 +70,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                 key={index}
                 ColItems={colItems}
                 IsCurrentAdvancedSearch={x.Name == this.props.CurrentAdvancedSearchName}
-                ConfigEntity={x}
+                AdaptableBlotterObject={x}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}

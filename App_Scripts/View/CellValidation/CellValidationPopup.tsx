@@ -71,7 +71,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             return <CellValidationEntityRow
                 key={index}
                 ColItems={colItems}
-                ConfigEntity={x}
+                AdaptableBlotterObject={x}
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}

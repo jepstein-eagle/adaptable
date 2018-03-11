@@ -11,7 +11,7 @@ import { IColItem } from "../UIInterfaces";
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
 
     render(): any {
-        let userFilter: IUserFilter = this.props.ConfigEntity as IUserFilter;
+        let userFilter: IUserFilter = this.props.AdaptableBlotterObject as IUserFilter;
 
        // let isDisabled = userFilter.IsPredefined
 

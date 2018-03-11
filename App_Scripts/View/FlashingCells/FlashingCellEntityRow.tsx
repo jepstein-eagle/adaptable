@@ -18,7 +18,7 @@ export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowPro
 
 export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRowProps, {}> {
     render(): any {
-        let flashingColumn: IFlashingColumn = this.props.ConfigEntity as IFlashingColumn;
+        let flashingColumn: IFlashingColumn = this.props.AdaptableBlotterObject as IFlashingColumn;
 
         //we could have the typeahead combobox with freetext and the correct items in the list
         //but I don't think we should allow users to enter a value....
@@ -51,17 +51,17 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
 
     onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeFlashingDuration(this.props.ConfigEntity as IFlashingColumn, Number.parseInt(e.value));
+        this.props.onChangeFlashingDuration(this.props.AdaptableBlotterObject as IFlashingColumn, Number.parseInt(e.value));
     }
 
     onDownColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeDownColorFlashingColumn(this.props.ConfigEntity as IFlashingColumn, e.value);
+        this.props.onChangeDownColorFlashingColumn(this.props.AdaptableBlotterObject as IFlashingColumn, e.value);
     }
 
     onUpColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeUpColorFlashingColumn(this.props.ConfigEntity as IFlashingColumn, e.value);
+        this.props.onChangeUpColorFlashingColumn(this.props.AdaptableBlotterObject as IFlashingColumn, e.value);
     }
 
     getFriendlyFlashingDuration(duration: number) {

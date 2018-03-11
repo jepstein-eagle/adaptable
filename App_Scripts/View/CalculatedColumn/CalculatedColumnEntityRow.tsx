@@ -10,7 +10,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowProps<CalculatedColumnEntityRow>, {}> {
    
     render(): any {
-        let calculatedColumn: ICalculatedColumn = this.props.ConfigEntity as ICalculatedColumn;
+        let calculatedColumn: ICalculatedColumn = this.props.AdaptableBlotterObject as ICalculatedColumn;
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 

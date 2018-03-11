@@ -20,7 +20,7 @@ export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEnt
 export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {}> {
     render(): any {
 
-        let shortcut: IShortcut = this.props.ConfigEntity as IShortcut;
+        let shortcut: IShortcut = this.props.AdaptableBlotterObject as IShortcut;
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
         colItems[0].Content = shortcut.DataType == DataType.Date ? "Date" : "Numeric"
@@ -75,17 +75,17 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
 
     onResultChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeResult(this.props.ConfigEntity as IShortcut, e.value);
+        this.props.onChangeResult(this.props.AdaptableBlotterObject as IShortcut, e.value);
     }
 
     onKeySelectChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeKey(this.props.ConfigEntity as IShortcut, e.value);
+        this.props.onChangeKey(this.props.AdaptableBlotterObject as IShortcut, e.value);
     }
 
     onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeOperation(this.props.ConfigEntity as IShortcut, e.value as MathOperation);
+        this.props.onChangeOperation(this.props.AdaptableBlotterObject as IShortcut, e.value as MathOperation);
     }
 
 

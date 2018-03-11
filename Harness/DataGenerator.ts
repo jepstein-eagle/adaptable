@@ -194,7 +194,7 @@ export class DataGenerator {
         let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
         let ask = this.roundTo4Dp(price + bidOfferSpread / 2);
         let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
-        let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+        let tradeDate = this.generateRandomDate(-1000, 1000);
         let moodyRating = this.getRandomItem(this.getMoodysRatings())
         let trade =
             {

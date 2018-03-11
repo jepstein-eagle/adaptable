@@ -17,7 +17,7 @@ export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
     render(): any {
-        let x: IPlusMinusCondition = this.props.ConfigEntity as IPlusMinusCondition
+        let x: IPlusMinusCondition = this.props.AdaptableBlotterObject as IPlusMinusCondition
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
         colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : x.ColumnId + GeneralConstants.MISSING_COLUMN

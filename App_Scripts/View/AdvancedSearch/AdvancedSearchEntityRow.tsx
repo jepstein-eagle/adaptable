@@ -16,7 +16,7 @@ export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends S
 export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>, {}> {
 
     render(): any {
-        let advancedSearch: IAdvancedSearch = this.props.ConfigEntity as IAdvancedSearch;
+        let advancedSearch: IAdvancedSearch = this.props.AdaptableBlotterObject as IAdvancedSearch;
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 

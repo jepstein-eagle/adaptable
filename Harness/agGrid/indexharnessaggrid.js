@@ -1,17 +1,103 @@
+
 function ThemeChange(blotter, container) {
 
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
         if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
-             container.className = "ag-dark";
-         }
+            container.className = "ag-dark";
+        }
         else {
-              container.className = "ag-blue";
-         }
+            container.className = "ag-blue";
+        }
     }
 }
 var themeName = ""
 var adaptableblotter
+
+
+var currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+});
+
+function currencyRendereragGrid(params) {
+    try {
+        if (params.value) {
+            return currencyFormatter.format(params.value)
+        } else {
+            return null;
+        }
+    }
+    catch (ex) {
+        console.error("Error formatting the currency for value: " + params.value + " and node : ", params.node)
+    }
+}
+
+var shortDateFormatter = new Intl.DateTimeFormat('en-GB');
+function shortDateFormatteragGrid(params) {
+    try {
+        if (params.value) {
+            return shortDateFormatter.format(params.value)
+        } else {
+            return null;
+        }
+    }
+    catch (ex) {
+        console.error("Error formatting the date for value: " + params.value + " and node : ", params.node)
+    }
+}
+
+function boolParseragGrid(params) {
+    try {
+        return `<input type='checkbox'   ${params.value ? 'checked' : ''} />`;
+    }
+    catch (ex) {
+        console.error("Error parsing the date value: " + params.newValue + " and node : ", params.node)
+    }
+}
+
+function numberToBool(params) {
+    if (params.value === 0) {
+        return 'false';
+    } else {
+        return 'true';
+    }
+}
+
+function dateParseragGrid(params) {
+    try {
+        return stringToDate(params.newValue, "dd/mm/yyyy", "/");
+    }
+    catch (ex) {
+        console.error("Error parsing the date value: " + params.newValue + " and node : ", params.node)
+    }
+}
+
+
+
+function stringToDate(date, format, delimiter) {
+    var formatLowerCase = format.toLowerCase();
+    var formatItems = formatLowerCase.split(delimiter);
+    var dateItems = date.split(delimiter);
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(parseInt(dateItems[yearIndex]), month, parseInt(dateItems[dayIndex]));
+    return formatedDate;
+}
+
+var decimalPlaceRendereragGrid = (minDigits, maxDigits) => function (params) {
+    if (params.value) {
+        var decimalPlaceFormatter = new Intl.NumberFormat('en-GB', {
+            minimumFractionDigits: minDigits,
+            maximumFractionDigits: maxDigits
+        });
+        return decimalPlaceFormatter.format(params.value)
+    }
+}
 
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
@@ -38,8 +124,9 @@ function getSchema(data) {
             }
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
-            }
-            else {
+            } else if (p.includes("Date")) {
+                schema.push({ headerName: capitalize(p), field: p, false: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
+            } else {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text' });
             }
         }
@@ -70,7 +157,7 @@ function InitBlotter() {
         enableGrouping: true,
         enableRangeSelection: true,
         enableFilter: true,
-        rowGroupPanelShow:true,
+        rowGroupPanelShow: true,
         toolPanelSuppressRowGroups: false
     };
     var eGridDiv = document.getElementById('grid');
@@ -92,9 +179,9 @@ function InitBlotter() {
     });
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
-// to run config server its:
-//  "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan
+    // to run config server its:
+    //  "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan
 
-// to kill all processes:
-// killall node
+    // to kill all processes:
+    // killall node
 }

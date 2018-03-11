@@ -11,9 +11,8 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     onColumnChange: (SelectedColumns: IColumn[]) => void
     SelectionMode: SelectionMode
 }
+
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
- 
-   
  
     componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
         //if there was a selected column and parent unset the column we then clear the component 
@@ -24,8 +23,6 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         if (propsSelectedColumnIds.length == 0 && nextPropsSelectedColumnIds.length == 0) {
             (this.refs.typeahead as any).getInstance().clear()
         }
-
-    
     }
    
     render() {

@@ -72,7 +72,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                 ColItems={colItems}
                 onShare={() => this.props.onShare(calculatedColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                ConfigEntity={calculatedColumn} key={calculatedColumn.ColumnId}
+                AdaptableBlotterObject={calculatedColumn} key={calculatedColumn.ColumnId}
                 onEdit={(index, calculatedColumn) => this.onEdit(index, calculatedColumn as ICalculatedColumn)}
                 onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)}
             />

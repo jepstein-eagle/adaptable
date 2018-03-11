@@ -11,7 +11,7 @@ import { IColItem } from "../UIInterfaces";
 export class FormatColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FormatColumnEntityRow>, {}> {
 
     render(): any {
-        let formatColumn = this.props.ConfigEntity as IFormatColumn;
+        let formatColumn = this.props.AdaptableBlotterObject as IFormatColumn;
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 

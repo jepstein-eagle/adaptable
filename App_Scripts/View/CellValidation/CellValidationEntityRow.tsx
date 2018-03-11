@@ -22,7 +22,7 @@ export interface CellValidationEntityRowProps extends SharedEntityExpressionRowP
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
     render(): any {
-        let cellValidation: ICellValidationRule = this.props.ConfigEntity as ICellValidationRule;
+        let cellValidation: ICellValidationRule = this.props.AdaptableBlotterObject as ICellValidationRule;
 
         let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((enumName) => {
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>

@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon } from 'react-bootstrap';
+import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon, Checkbox } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -21,6 +21,7 @@ import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
+import { ColumnValueSelector } from "../ColumnValueSelector";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -33,12 +34,18 @@ interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupCom
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
 
-class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, {}> {
+export interface BulkUpdatePopupState {
+    isShowingError: boolean,
+    errorText: string,
+    useDropdown: boolean;
+}
 
-    
+class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, BulkUpdatePopupState> {
+
+
     constructor() {
         super();
-        this.state = { isShowingError: false, errorText: "" }
+        this.state = { isShowingError: false, errorText: "", useDropdown: false }
     }
 
     public componentDidMount() {
@@ -119,12 +126,24 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, {}>
                     <div>
                         <PanelWithImage header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
                             <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
-                                <FormControl style={{ width: "300" }} value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
-                                {' '}
-                                <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
-                                    disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
-                                    onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
-                                {' '}
+                                <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.useDropdown}>Use Dropdown</Checkbox>
+                                <div>
+                                    {this.state.useDropdown ?
+                                        <ColumnValueSelector SelectedColumnValue={this.props.BulkUpdateValue}
+                                            SelectedColumn={col}
+                                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                                            onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                                        />
+                                        :
+                                        <FormControl style={{ width: "300" }} value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
+                                    }
+                                    {' '}
+                                    <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
+                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
+                                        onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                    {' '}
+                                </div>
+
                                 {(globalHasValidationWarning) &&
                                     <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
                                 {(!globalHasValidationWarning && globalHasValidationPrevent) &&
@@ -148,9 +167,17 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, {}>
         );
     }
 
+    private onColumnValueSelectedChanged(selectedColumnValue: any) {
+        this.props.onBulkUpdateValueChange(selectedColumnValue[0]);
+    }
+
+    private onOtherExpressionOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ useDropdown: e.checked } as BulkUpdatePopupState)
+    }
+
     private onBulkUpdateValueChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
-        
         this.props.onBulkUpdateValueChange(e.value);
     }
 

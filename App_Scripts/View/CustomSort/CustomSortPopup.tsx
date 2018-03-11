@@ -70,7 +70,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             return <CustomSortEntityRow
                 ColItems={colItems}
-                ConfigEntity={customSort}
+                AdaptableBlotterObject={customSort}
                 key={customSort.ColumnId}
                 Index={index}
                 onEdit={(index, customSort) => this.onEdit(customSort as ICustomSort)}

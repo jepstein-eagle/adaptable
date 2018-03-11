@@ -57,7 +57,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
-                ConfigEntity={shortcut} key={"ns" + index}
+            AdaptableBlotterObject={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
                 ColItems={colItems}

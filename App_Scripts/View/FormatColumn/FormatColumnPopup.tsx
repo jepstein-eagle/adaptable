@@ -68,7 +68,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             return <FormatColumnEntityRow
                 key={index}
                 ColItems={colItems}
-                ConfigEntity={formatColumn}
+                AdaptableBlotterObject={formatColumn}
                 Columns={this.props.Columns}
                 UserFilters={null}
                 Index={index}

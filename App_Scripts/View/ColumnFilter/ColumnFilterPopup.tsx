@@ -46,7 +46,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             return <ColumnFilterEntityRow
                 key={index}
                 ColItems={colItems}
-                ConfigEntity={null}
+                AdaptableBlotterObject={null}
                 ColumnFilter={columnFilter}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}

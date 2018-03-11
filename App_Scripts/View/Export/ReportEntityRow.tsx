@@ -22,7 +22,7 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     render(): any {
-        let report: IReport = this.props.ConfigEntity as IReport;
+        let report: IReport = this.props.AdaptableBlotterObject as IReport;
         let csvMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={"csv"}>{"Export to CSV"}</MenuItem>
         let clipboardMenuItem: any = <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={"clipboard"}> {"Export to Clipboard"}</MenuItem>
         let openfinExcelMenuItem = (this.props.LiveReports.find(x => x.Report == report.Name)) ?
