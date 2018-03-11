@@ -125,7 +125,7 @@ function getSchema(data) {
             else if (p === 'notional') {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
             } else if (p.includes("Date")) {
-                schema.push({ headerName: capitalize(p), field: p, false: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
+                schema.push({ headerName: capitalize(p), field: p, editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
             } else {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text' });
             }

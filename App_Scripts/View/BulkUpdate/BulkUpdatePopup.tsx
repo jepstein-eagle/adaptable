@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon, Checkbox } from 'react-bootstrap';
+import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon, Checkbox, Col, Row } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -126,23 +126,32 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                     <div>
                         <PanelWithImage header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
                             <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
-                                <Checkbox onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.useDropdown}>Use Dropdown</Checkbox>
-                                <div>
-                                    {this.state.useDropdown ?
-                                        <ColumnValueSelector SelectedColumnValue={this.props.BulkUpdateValue}
-                                            SelectedColumn={col}
-                                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                                            onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
-                                        />
-                                        :
-                                        <FormControl style={{ width: "300" }} value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
-                                    }
-                                    {' '}
-                                    <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
-                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
-                                        onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
-                                    {' '}
-                                </div>
+                            <FormGroup controlId="formInlineKey">
+                                <Row>
+                                    <Col xs={12}>
+                                        <Checkbox style={checkboxStyle} onChange={(e) => this.onUseColumnValuesChanged(e)} checked={this.state.useDropdown}>{' '}Use Dropdown</Checkbox>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={7}>
+                                        {this.state.useDropdown ?
+                                            <ColumnValueSelector SelectedColumnValue={this.props.BulkUpdateValue}
+                                                SelectedColumn={col}
+                                                getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                                                onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                                            />
+                                            :
+                                            <FormControl value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
+                                        }
+                                    </Col>
+                                    <Col xs={5}>
+                                        <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
+                                            disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
+                                            onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                    </Col>
+                                </Row>
+                                </FormGroup>
+                                {' '}
 
                                 {(globalHasValidationWarning) &&
                                     <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
@@ -168,12 +177,13 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     }
 
     private onColumnValueSelectedChanged(selectedColumnValue: any) {
-        this.props.onBulkUpdateValueChange(selectedColumnValue[0]);
+        this.props.onBulkUpdateValueChange(selectedColumnValue);
     }
 
-    private onOtherExpressionOptionChanged(event: React.FormEvent<any>) {
+    private onUseColumnValuesChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ useDropdown: e.checked } as BulkUpdatePopupState)
+        this.props.onBulkUpdateValueChange("");
     }
 
     private onBulkUpdateValueChange(event: React.FormEvent<any>) {
@@ -244,5 +254,9 @@ export let BulkUpdatePopup = connect(mapStateToProps, mapDispatchToProps)(BulkUp
 var divStyle: React.CSSProperties = {
     overflowY: 'auto',
     maxHeight: '400px'
+};
+
+var checkboxStyle: React.CSSProperties = {
+    padding:'5px'
 };
 

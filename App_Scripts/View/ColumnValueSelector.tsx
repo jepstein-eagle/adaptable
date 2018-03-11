@@ -22,36 +22,48 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
     }
 
     render() {
-        let columnDisplayValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-        let columnValues: any[] = []
-        if(this.props.SelectedColumn.DataType == DataType.Number || this.props.SelectedColumn.DataType == DataType.Date){
-            columnDisplayValuePairs.forEach(c => {
-                columnValues.push(c.RawValue)
-            })
-        }else{
-            columnDisplayValuePairs.forEach(c => {
-                columnValues.push(c.DisplayValue)
-            })
+        let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+        let selectedValue: any;
+
+        if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
+            selectedValue = "";
+        } else {
+            let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
+            selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
         }
-        let sortedColumnValues = Helper.sortArray(columnValues)
+        let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "DisplayValue")
 
         return <Typeahead ref="typeahead"
             emptyLabel={"Value not found in column"}
             placeholder={"Select a column value"}
-            labelKey={"ColumnValue"}
+            labelKey={"DisplayValue"}
+            filterBy={["DisplayValue"]}
+            multiple={false}
             clearButton={true}
-            selected={[this.props.SelectedColumnValue]}
+            selected={[selectedValue]}
             onChange={(selected) => { this.onColumnChange(selected) }}
             options={sortedColumnValues}
             disabled={this.props.disabled}
+            allowNew={true}
+            newSelectionPrefix={"new: "}
         />
+
     }
 
-    onColumnChange(selected: any) {
-        if (selected.length == 0 && this.props.SelectedColumnValue=="") {
+    onColumnChange(selected: any[]) {
+        if (selected.length == 0 && this.props.SelectedColumnValue == "") {
             return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
-        this.props.onColumnValueChange(selected)
+        if (selected.length == 0) {
+            this.props.onColumnValueChange("")
+        } else {
+            if (selected[0].customOption) {
+                this.props.onColumnValueChange(selected[0].DisplayValue)
+            } else {
+                let pair: IRawValueDisplayValuePair = selected[0];
+                this.props.onColumnValueChange(pair.RawValue)
+            }
+        }
     }
 
 }
