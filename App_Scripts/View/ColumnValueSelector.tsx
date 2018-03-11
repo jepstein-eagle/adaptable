@@ -34,8 +34,8 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "DisplayValue")
 
         return <Typeahead ref="typeahead"
-            emptyLabel={"Value not found in column"}
-            placeholder={"Select a column value"}
+            emptyLabel={""}
+            placeholder={"Select existing column value or enter free text"}
             labelKey={"DisplayValue"}
             filterBy={["DisplayValue"]}
             multiple={false}
@@ -45,7 +45,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             options={sortedColumnValues}
             disabled={this.props.disabled}
             allowNew={true}
-            newSelectionPrefix={"new: "}
+            newSelectionPrefix={"new value: "}
         />
 
     }
