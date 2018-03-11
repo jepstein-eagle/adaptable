@@ -30,8 +30,7 @@ module.exports = {
         "ag-grid/dist/lib/entities/colDef": "ag-grid",
         "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
         "ag-grid/dist/lib/gridApi": "ag-grid",
-        "ag-grid/dist/lib/events": "ag-grid",
-        "ag-grid/dist/lib/eventKeys": "ag-grid",
+
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
