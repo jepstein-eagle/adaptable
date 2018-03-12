@@ -71,7 +71,7 @@ const initialDashboardState: DashboardState = {
         { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
         { Strategy: StrategyIds.ExportStrategyId, IsVisible: true },
         { Strategy: StrategyIds.ColumnFilterStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.BulkUpdateStrategyId, IsVisible: true },
+       // { Strategy: StrategyIds.BulkUpdateStrategyId, IsVisible: true },  // commenting out until I can figure out how it should work!
       ],
     DashboardZoom : 1
 }
