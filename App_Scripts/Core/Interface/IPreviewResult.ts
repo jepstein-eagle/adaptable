@@ -3,7 +3,14 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 
 export interface IPreviewInfo {
     ColumnId: string,
-    PreviewResults: IPreviewResult[]
+    PreviewResults: IPreviewResult[],
+    PreviewValidationSummary: IPreviewValidationSummary
+}
+
+export interface IPreviewValidationSummary {
+    HasValidationPrevent: boolean
+    HasValidationWarning: boolean
+    HasOnlyValidationPrevent: boolean
 }
 
 export interface IPreviewResult {

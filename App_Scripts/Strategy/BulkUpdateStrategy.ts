@@ -13,6 +13,7 @@ import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -86,7 +87,6 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                         ErrorMsg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection."
                     }
                 }
-
             }
         }
         return { ActionReturn: true };
@@ -127,16 +127,17 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
-                previewResults.push({ Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules })
+                let previewResult: IPreviewResult = { Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules }
+               
+                previewResults.push(previewResult)
                 columnId = columnValuePair.columnID;
             }
         }
 
         return {
-
             ColumnId: columnId,
-            PreviewResults: previewResults
-
+            PreviewResults: previewResults,
+            PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults)
         }
     }
 

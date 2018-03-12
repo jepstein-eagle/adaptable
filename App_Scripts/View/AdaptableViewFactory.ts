@@ -13,6 +13,7 @@ import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarContr
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
+import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl'
 import { UserFilterPopup } from './UserFilter/UserFilterPopup'
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup'
 import { ThemePopup } from './Theme/ThemePopup'
@@ -69,7 +70,8 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyIds.HomeStrategyId, HomeToolbarControl],
-  [StrategyIds.ExportStrategyId, ExportToolbarControl]
+  [StrategyIds.ExportStrategyId, ExportToolbarControl],
+  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
 ]);
 
 export interface IAdaptableViewFactory {

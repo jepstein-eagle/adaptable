@@ -22,6 +22,9 @@ import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResul
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { ColumnValueSelector } from "../ColumnValueSelector";
+import { isNumber, isDate } from "util";
+import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
+import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -64,67 +67,45 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
         }
 
-        let previewHeader: string = this.props.PreviewInfo != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
-        let globalHasValidationPrevent = false
-        let globalHasValidationWarning = false
-        let globalHasOnlyValidationPrevent = true
-        if (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
-            var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult) => {
-                let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.StopEdit).length > 0
-                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.WarnUser).length > 0
-                globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
-                globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
-                if (!hasValidationErrors || localHasValidationWarning) {
-                    globalHasOnlyValidationPrevent = false;
+        let hasDataTypeError = false;
+        let dataTypeErrorMessage = ""
+        if (col && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
+            // check that the update value is a number for a numeric column
+            if (col.DataType == DataType.Number) {
+                let numericValue = (this.props.BulkUpdateValue);
+                if (isNumber(numericValue) == false) {
+                    hasDataTypeError = true;
+                    dataTypeErrorMessage = "This column only accepts numbers"
                 }
-
-                return <tr key={previewResult.Id}>
-                    <td>{previewResult.InitialValue}</td>
-                    <td>{previewResult.ComputedValue}</td>
-                    {hasValidationErrors ?
-                        <td>
-                            {localHasValidationPrevent == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
-                            }
-                            {localHasValidationWarning == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
-                            }
-                        </td>
-                        :
-                        <td> <Glyphicon glyph="ok" /> </td>
-                    }
-                </tr>
-            });
-            var header = <thead>
-                <tr>
-                    <th>Initial Value</th>
-                    <th>New Value</th>
-                    <th>Is Valid Edit</th>
-                </tr>
-            </thead>;
+            } else if (col.DataType == DataType.Date) {
+                if (isDate(this.props.BulkUpdateValue) == false) {
+                    hasDataTypeError = true;
+                    dataTypeErrorMessage = "This column only accepts dates"
+                }
+            }
         }
 
-        let globalValidationMessage: string = ""
-        if (globalHasOnlyValidationPrevent) {
-            globalValidationMessage = "All Cell Validations have failed (see Preview for details)."
-        }
-        else if (globalHasValidationPrevent && globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm the updates which are set to 'warning' before they will be applied; those which are set to 'prevent' will be ignored."
-        }
-        else if (globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm these updates before they will be applied.";
-        }
-        else if (globalHasValidationPrevent) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nThese updates will be ignored.";
-        }
+        let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.BulkUpdateValue);
+        
+        let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
+
+        let previewPanel = showPanel ?
+            <PreviewResultsPanel
+                UpdateValue={this.props.BulkUpdateValue}
+                PreviewInfo={this.props.PreviewInfo}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SelectedColumn={col}
+                ShowPanel={showPanel}
+            /> :
+            null
 
         return (
             <div >
                 {col &&
                     <div>
                         <PanelWithImage header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
-                            <AdaptableBlotterForm onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
+                            <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
                                 <FormGroup controlId="formInlineKey">
                                     {col.DataType == DataType.Date ?
                                         <div>
@@ -146,9 +127,9 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                     }
                                                 </Col>
                                                 <Col xs={3}>
-                                                    <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
-                                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
-                                                        onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                                    <Button bsStyle={this.getButtonStyle()}
+                                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent}
+                                                        onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
                                                 </Col>
                                             </Row>
                                         </div> :
@@ -161,13 +142,15 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
                                             </Col>
                                             <Col xs={4}>
-                                                <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
-                                                    disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || globalHasOnlyValidationPrevent}
-                                                    onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                            <Button bsStyle={this.getButtonStyle()}
+                                                disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
+                                                    onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
                                                 {' '}
-                                                {(globalHasValidationWarning) &&
+                                                {(hasDataTypeError) &&
+                                                    <AdaptablePopover headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} popoverType={PopoverType.Error} />}
+                                                {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
                                                     <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
-                                                {(!globalHasValidationWarning && globalHasValidationPrevent) &&
+                                                {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
                                                     <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
                                             </Col>
                                         </Row>
@@ -175,16 +158,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                 </FormGroup>
                             </AdaptableBlotterForm>
                         </PanelWithImage>
-                        {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage) &&
-                            <Panel header={previewHeader} bsStyle="info" style={divStyle}>
-                                <Table >
-                                    {header}
-                                    <tbody>
-                                        {previewItems}
-                                    </tbody>
-                                </Table>
-                            </Panel>
-                        }
+                        {previewPanel}
                     </div>
                 }
             </div>
@@ -207,17 +181,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         this.props.onBulkUpdateValueChange(e.value);
     }
 
-    private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
-        let returnString: string[] = []
-        for (let CellValidation of CellValidations) {
-            let expressionDescription: string = (CellValidation.HasExpression) ?
-                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
-                "";
-            returnString.push(CellValidation.Description + expressionDescription)
-        }
-
-        return returnString.join("\n");
-    }
 
     private onApplyBulkUpdate(): void {
         this.props.onApplyBulkUpdate()
@@ -236,12 +199,14 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         this.props.onConfirmWarningCellValidation(confirmation)
     }
 
-    private getButtonStyle(globalHasOnlyValidationPrevent: boolean, globalHasValidationPrevent: boolean, globalHasValidationWarning: boolean): string {
-        if (globalHasOnlyValidationPrevent) {
-            return "default";
-        }
-        if (globalHasValidationWarning || globalHasValidationPrevent) {
-            return "warning";
+    private getButtonStyle(): string {
+        if (this.props.PreviewInfo) {
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
+                return "default";
+            }
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
+                return "warning";
+            }
         }
         return "success";
     }

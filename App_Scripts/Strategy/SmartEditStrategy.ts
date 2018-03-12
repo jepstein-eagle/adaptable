@@ -13,6 +13,7 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -124,7 +125,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     case MathOperation.Divide:
                         newValue = Number(columnValuePair.value) / smartEditValue
                         break;
-                  }
+                }
                 //avoid the 0.0000000000x 
                 newValue = parseFloat(newValue.toFixed(12))
 
@@ -139,14 +140,16 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
-                previewResults.push({ Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules })
+                let previewResult: IPreviewResult = { Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules }
+                      previewResults.push(previewResult)
                 columnId = columnValuePair.columnID;
             }
         }
 
         return {
             ColumnId: columnId,
-            PreviewResults: previewResults
+            PreviewResults: previewResults,
+            PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults)       
         }
     }
 

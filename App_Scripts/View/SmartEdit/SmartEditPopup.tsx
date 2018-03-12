@@ -20,6 +20,8 @@ import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
+import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -57,60 +59,21 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
             col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
         }
 
-        let previewHeader: string = this.props.PreviewInfo != null ? "Preview Results: " + (col ? col.FriendlyName : "") : "";
-        let globalHasValidationPrevent = false
-        let globalHasValidationWarning = false
-        let globalHasOnlyValidationPrevent = true
-        if (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)) {
-            var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult) => {
-                let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-                let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.StopEdit).length > 0
-                let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.WarnUser).length > 0
-                globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
-                globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
-                if (!hasValidationErrors || localHasValidationWarning) {
-                    globalHasOnlyValidationPrevent = false;
-                }
 
-                return <tr key={previewResult.Id}>
-                    <td>{previewResult.InitialValue}</td>
-                    <td>{previewResult.ComputedValue}</td>
-                    {hasValidationErrors ?
-                        <td>
-                            {localHasValidationPrevent == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
-                            }
-                            {localHasValidationWarning == true &&
-                                <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
-                            }
-                        </td>
-                        :
-                        <td> <Glyphicon glyph="ok" /> </td>
-                    }
-                </tr>
-            });
-            var header = <thead>
-                <tr>
-                    <th>Initial Value</th>
-                    <th>Computed Value</th>
-                    <th>Is Valid Edit</th>
-                </tr>
-            </thead>;
-        }
+        let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.SmartEditValue);
 
-        let globalValidationMessage: string
-        if (globalHasOnlyValidationPrevent) {
-            globalValidationMessage = "All Cell Validations have failed (see Preview for details)."
-        }
-        else if (globalHasValidationPrevent && globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm the updates which are set to 'warning' before they will be applied; those which are set to 'prevent' will be ignored."
-        }
-        else if (globalHasValidationWarning) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nYou will be asked to confirm these updates before they will be applied.";
-        }
-        else if (globalHasValidationPrevent) {
-            globalValidationMessage = "Some Cell Validations have failed (see Preview for details).\nThese updates will be ignored.";
-        }
+        let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue)
+
+        let previewPanel = showPanel ?
+            <PreviewResultsPanel
+                UpdateValue={this.props.SmartEditValue}
+                PreviewInfo={this.props.PreviewInfo}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SelectedColumn={col}
+                ShowPanel={showPanel}
+            /> :
+            null
 
         let operationMenuItems = EnumExtensions.getNames(MathOperation).filter(e => e != MathOperation.Replace).map((mathOperation: MathOperation, index) => {
             return <MenuItem key={index} eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
@@ -119,34 +82,27 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         return (
             <div >
                 <PanelWithImage header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
-                    <AdaptableBlotterForm inline onSubmit={() => globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
+                    <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
                                 <DropdownButton title={MathOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
                                     {operationMenuItems}
                                 </DropdownButton>
-                                <FormControl onKeyPress={(e)=>this.onKeyPress(e)} value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
+                                <FormControl onKeyPress={(e) => this.onKeyPress(e)} value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                             </InputGroup>
                         </FormGroup>
                         {' '}
-                        <Button bsStyle={this.getButtonStyle(globalHasOnlyValidationPrevent, globalHasValidationPrevent, globalHasValidationWarning)}
-                            disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || globalHasOnlyValidationPrevent}
-                            onClick={() => { globalHasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
+                        <Button bsStyle={this.getButtonStyle()}
+                            disabled={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
+                            onClick={() => { this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
                         {' '}
-                        {(globalHasValidationWarning) &&
+                        {(this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
                             <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
-                        {(!globalHasValidationWarning && globalHasValidationPrevent) &&
+                        {(this.props.PreviewInfo && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
                             <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
                     </AdaptableBlotterForm>
                 </PanelWithImage>
-                <Panel header={previewHeader} bsStyle="info" style={divStyle}>
-                    <Table >
-                        {header}
-                        <tbody>
-                            {previewItems}
-                        </tbody>
-                    </Table>
-                </Panel>
+                {previewPanel}
             </div>
         );
     }
@@ -154,7 +110,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     private onKeyPress(e: React.KeyboardEvent<any>): any {
 
         // do someting
-       // let s: any = e.target;
+        // let s: any = e.target;
         //let x: any = s.key;
     }
 
@@ -192,12 +148,14 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         this.props.onConfirmWarningCellValidation(confirmation)
     }
 
-    private getButtonStyle(globalHasOnlyValidationPrevent: boolean, globalHasValidationPrevent: boolean, globalHasValidationWarning: boolean): string {
-        if (globalHasOnlyValidationPrevent) {
-            return "default";
-        }
-        if (globalHasValidationWarning || globalHasValidationPrevent) {
-            return "warning";
+    private getButtonStyle(): string {
+        if (this.props.PreviewInfo) {
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
+                return "default";
+            }
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
+                return "warning";
+            }
         }
         return "success";
     }
