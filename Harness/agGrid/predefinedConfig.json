@@ -69,8 +69,5 @@
 				"IsDynamic": true
 			}
 		]
-	},
-	"PlusMinus": {
-		"DefaultNudge": 234
 	}
 }
