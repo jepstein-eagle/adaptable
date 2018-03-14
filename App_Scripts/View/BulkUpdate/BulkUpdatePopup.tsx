@@ -70,23 +70,17 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         let hasDataTypeError = false;
         let dataTypeErrorMessage = ""
         if (col && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
-            // check that the update value is a number for a numeric column
+            // check that the update value is a number for a numeric column.  not issue for dates as we dont allow free text
             if (col.DataType == DataType.Number) {
-                let numericValue = (this.props.BulkUpdateValue);
-                if (isNumber(numericValue) == false) {
+                if (isNaN(Number(this.props.BulkUpdateValue))) {
                     hasDataTypeError = true;
                     dataTypeErrorMessage = "This column only accepts numbers"
-                }
-            } else if (col.DataType == DataType.Date) {
-                if (isDate(this.props.BulkUpdateValue) == false) {
-                    hasDataTypeError = true;
-                    dataTypeErrorMessage = "This column only accepts dates"
                 }
             }
         }
 
         let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.BulkUpdateValue);
-        
+
         let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
 
         let previewPanel = showPanel ?
@@ -121,7 +115,8 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                             SelectedColumnValue={this.props.BulkUpdateValue}
                                                             SelectedColumn={col}
                                                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                                                            onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
+                                                            onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                                                            AllowNew={false} />
                                                         :
                                                         <FormControl value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
                                                     }
@@ -142,8 +137,8 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
                                             </Col>
                                             <Col xs={4}>
-                                            <Button bsStyle={this.getButtonStyle()}
-                                                disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
+                                                <Button bsStyle={this.getButtonStyle()}
+                                                    disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
                                                     onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
                                                 {' '}
                                                 {(hasDataTypeError) &&
@@ -164,6 +159,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             </div>
 
         );
+
     }
 
     private onColumnValueSelectedChanged(selectedColumnValue: any) {

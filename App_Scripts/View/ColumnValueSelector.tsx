@@ -11,6 +11,7 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
     SelectedColumnValue: string
     onColumnValueChange: (columnvalue: any) => void
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    AllowNew?: boolean // defaults to true if not provided
 
 }
 export class ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
@@ -33,9 +34,15 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         }
         let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "DisplayValue")
 
+        let allowNew =(this.props.AllowNew)? this.props.AllowNew: true;
+        let placeholderText = "Select existing column value"
+        if(!allowNew){
+            placeholderText+= " or enter free text"
+        }
+
         return <Typeahead ref="typeahead"
             emptyLabel={""}
-            placeholder={"Select existing column value or enter free text"}
+            placeholder={placeholderText}
             labelKey={"DisplayValue"}
             filterBy={["DisplayValue"]}
             multiple={false}
@@ -44,7 +51,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             onChange={(selected) => { this.onColumnChange(selected) }}
             options={sortedColumnValues}
             disabled={this.props.disabled}
-            allowNew={true}
+            allowNew={allowNew}
             newSelectionPrefix={"new value: "}
         />
 

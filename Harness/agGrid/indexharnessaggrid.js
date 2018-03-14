@@ -179,9 +179,4 @@ function InitBlotter() {
     });
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
-    // to run config server its:
-    //  "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan
-
-    // to kill all processes:
-    // killall node
 }
