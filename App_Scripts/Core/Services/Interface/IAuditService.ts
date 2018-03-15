@@ -22,8 +22,9 @@ export interface IDataChangedInfo {
 }
 
 export interface IAuditService {
+    CreateAuditChangedEvent(dataChangedEvent: IDataChangedEvent): void;
     CreateAuditEvent(identifierValue: any, NewValue: any, ColumnName: string, record: any): void;
     OnDataSourceChanged(): IEvent<IAuditService, IDataChangedEvent>;
-    Init(initialData : any) : void
+    Init(initialData: any): void
     getExistingDataValue(dataChangingEvent: IDataChangingEvent): any
 }

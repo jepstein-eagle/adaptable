@@ -21,7 +21,7 @@ export class AuditService implements IAuditService {
         let colummns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         for (let record of initialData) {
             for (let prop in record) {
-                if (record.hasOwnProperty(prop) && colummns.find(x=>x.ColumnId == prop)) {
+                if (record.hasOwnProperty(prop) && colummns.find(x => x.ColumnId == prop)) {
                     let primaryKey = record[this.blotter.BlotterOptions.primaryKey]
                     var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: record[prop], ColumnId: prop, IdentifierValue: primaryKey, Timestamp: Date.now(), Record: record };
                     this.InitAddDataValuesToList(dataChangedEvent);
@@ -32,18 +32,22 @@ export class AuditService implements IAuditService {
 
     //slightly optimized version of the AddDataValuesToList so we don't check for data already present
     private InitAddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
-       let myList = this.getDataEventsForColumn(dataChangedEvent.ColumnId);
-let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
+        let myList = this.getDataEventsForColumn(dataChangedEvent.ColumnId);
+        let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
         myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
     }
 
 
-    public CreateAuditEvent(identifierValue: any, newValue: any, columnId: string, record: any): void {
-        var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };
+    public CreateAuditChangedEvent(dataChangedEvent: IDataChangedEvent): void {
         this.AddDataValuesToList(dataChangedEvent);
         if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
             this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
         }
+    }
+
+    public CreateAuditEvent(identifierValue: any, newValue: any, columnId: string, record: any): void {
+        var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };
+        this.CreateAuditChangedEvent(dataChangedEvent);
     }
 
     private AddDataValuesToList(dataChangedEvent: IDataChangedEvent) {
@@ -57,7 +61,7 @@ let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, N
             localdatachangedInfo.NewValue = dataChangedEvent.NewValue
             localdatachangedInfo.Timestamp = dataChangedEvent.Timestamp
         }
-        else { 
+        else {
             let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, NewValue: dataChangedEvent.NewValue, Timestamp: dataChangedEvent.Timestamp };
             myList.set(dataChangedEvent.IdentifierValue, datechangedInfo)
         }
@@ -73,8 +77,8 @@ let datechangedInfo: IDataChangedInfo = { OldValue: dataChangedEvent.OldValue, N
     }
 
     private getDataEventsForColumn(columnId: string): Map<any, IDataChangedInfo> {
-       
-       // first check the list exists
+
+        // first check the list exists
         if (this._columnDataValueList.size == 0) {
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             columns.forEach(c => {

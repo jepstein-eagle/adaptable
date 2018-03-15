@@ -441,26 +441,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
+
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
                 data[value.ColumnId] = value.Value;
                 itemsToUpdate.push(data);
 
-                //  rowNode.setDataValue(value.ColumnId, value.Value)
-                dataChangedEvents.push(
-                    {
-                        OldValue: oldValue,
-                        NewValue: value.Value,
-                        ColumnId: value.ColumnId,
-                        IdentifierValue: value.Id,
-                        Timestamp: null,
-                        Record: null
-                    })
+                //   rowNode.setDataValue(value.ColumnId, value.Value)
+
+                //    var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
+
+
+                let dataChangedEvent: IDataChangedEvent = {
+                    OldValue: oldValue,
+                    NewValue: value.Value,
+                    ColumnId: value.ColumnId,
+                    IdentifierValue: value.Id,
+                    Timestamp: null,
+                    Record: null
+                }
+           //     this.AuditService.CreateAuditChangedEvent(dataChangedEvent);
+
+             //   this.AuditLogService.AddEditCellAuditLog(dataChangedEvent)
+
+                dataChangedEvents.push(dataChangedEvent)
             }
         })
         var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+        dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
+
 
         this.applyColumnFilters();
     }
@@ -871,6 +882,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 });
             }
         });
+
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent;
         gridOptions.isExternalFilterPresent = () => {
