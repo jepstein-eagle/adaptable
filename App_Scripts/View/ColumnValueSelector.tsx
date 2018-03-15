@@ -36,7 +36,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
 
         let allowNew =(this.props.AllowNew)? this.props.AllowNew: true;
         let placeholderText = "Select existing column value"
-        if(!allowNew){
+        if(allowNew){
             placeholderText+= " or enter free text"
         }
 
