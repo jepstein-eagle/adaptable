@@ -76,7 +76,7 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinus
             let newCol: IPlusMinusCondition[] = [].concat(state.PlusMinusConditions)
             let actionTyped = (<PlusMinusEditConditionAction>action)
             let oldCondition = newCol[actionTyped.Index]
-            newCol[actionTyped.Index] = Object.assign({}, oldCondition, { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, DefaultNudge: actionTyped.ColumnDefaultNudge.DefaultNudge })
+            newCol[actionTyped.Index] = Object.assign({}, oldCondition, { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, NudgeValue: actionTyped.ColumnDefaultNudge.DefaultNudge })
             return Object.assign({}, state, { PlusMinusConditions: newCol })
         }
 

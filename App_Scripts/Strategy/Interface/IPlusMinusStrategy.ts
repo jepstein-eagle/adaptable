@@ -8,6 +8,7 @@ export interface IPlusMinusStrategy extends IStrategy {
 
 export interface IPlusMinusCondition extends IAdaptableBlotterObject{
     ColumnId: string
-    DefaultNudge: number
+    IsDefaultNudge: boolean
+    NudgeValue: number
     Expression: Expression
 }

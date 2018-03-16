@@ -157,7 +157,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         {column ? column.FriendlyName : plusMinus.ColumnId + GeneralConstants.MISSING_COLUMN}
                     </Col>
                     <Col xs={3}>
-                        {plusMinus.DefaultNudge.toString()}
+                        {plusMinus.NudgeValue.toString()}
                     </Col>
                     <Col xs={5}>
                         {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns, this.props.UserFilters)}

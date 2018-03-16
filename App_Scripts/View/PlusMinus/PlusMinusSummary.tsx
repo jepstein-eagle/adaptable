@@ -52,7 +52,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                 let detailRow =
                     <StrategyDetail
                         key={"PM" + index}
-                        Item1={"Nudge Value: " + item.DefaultNudge}
+                        Item1={"Nudge Value: " + item.NudgeValue}
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}

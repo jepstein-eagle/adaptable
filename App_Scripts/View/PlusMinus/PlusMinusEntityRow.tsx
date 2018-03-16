@@ -21,8 +21,8 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
         colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : x.ColumnId + GeneralConstants.MISSING_COLUMN
-        colItems[1].Content = <FormControl value={x.DefaultNudge.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)} />
-        colItems[2].Content = this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(x.Expression, this.props.Columns, this.props.UserFilters))
+        colItems[1].Content = <FormControl value={x.NudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)} />
+        colItems[2].Content = this.wrapExpressionDescription(x)
 
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -40,8 +40,8 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     }
 
 
-    private wrapExpressionDescription(expressionDescription: string): string {
-        return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
+    private wrapExpressionDescription(plusMinusCondition: IPlusMinusCondition): string {
+        return (plusMinusCondition.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(plusMinusCondition.Expression, this.props.Columns, this.props.UserFilters);
     }
 }
 

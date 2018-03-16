@@ -80,17 +80,17 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let newValue: ICellInfo;
 
                         //we try to find a condition with an expression for that column that matches the record
-                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && x.Expression != null)
+                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && !x.IsDefaultNudge)
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
-                                newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.DefaultNudge * side) }
+                                newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) }
                             }
                         }
                         //we havent found any Condition with an Expression so we look for a general one for the column
                         if (!newValue) {
-                            let columnNudge = this.PlusMinusState.PlusMinusConditions.find(x => x.ColumnId == columnValuePair.columnID && x.Expression == null)
+                            let columnNudge = this.PlusMinusState.PlusMinusConditions.find(x => x.ColumnId == columnValuePair.columnID && x.IsDefaultNudge)
                             if (columnNudge) {
-                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.DefaultNudge * side) })
+                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) })
                             }
                             //we havent found a condition so we return - this will allow a minus to be entered into the column
                             else {

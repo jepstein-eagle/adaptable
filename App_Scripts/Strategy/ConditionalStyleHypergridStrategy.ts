@@ -23,8 +23,8 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         }
 
         this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
+          
             if (dataChangedEvent.Record) {
-                // if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                 if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
                         theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })

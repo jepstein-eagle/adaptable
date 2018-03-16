@@ -28,7 +28,8 @@ export module ObjectFactory {
     export function CreateEmptyPlusMinusCondition(): IPlusMinusCondition {
         return {
             ColumnId: "",
-            DefaultNudge: 1,
+            IsDefaultNudge: false,
+            NudgeValue: 1,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
         }
