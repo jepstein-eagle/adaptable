@@ -63,7 +63,7 @@ export const DashboardSetIsMinimised = (IsMinimised: boolean): DashboardSetIsMin
 })
 
 const initialDashboardState: DashboardState = {
-    DashboardFunctionToolbars: [StrategyIds.AdvancedSearchStrategyId],
+    DashboardFunctionToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
     DashboardFunctionButtons: [StrategyNames.AboutStrategyName, StrategyNames.DashboardStrategyName, StrategyNames.SmartEditStrategyName, StrategyNames.ColumnChooserStrategyName, StrategyNames.ConditionalStyleStrategyName, StrategyNames.TeamSharingStrategyName],
     DashboardZoom: 1,
     IsDashboardMinimised: false

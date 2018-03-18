@@ -36,9 +36,11 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             <Label bsStyle={this.props.panelStyle} style={{ verticalAlign: "middle", margin: "0px", padding: "0px" }} >
                 {this.props.showMinimiseButton &&
                     <span>
-                        <Button bsSize={"xs"} bsStyle={this.props.panelStyle} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()}>
+                     <OverlayTrigger overlay={<Tooltip id="tooltipShowClose">Hide Toolbars</Tooltip>}>
+                   <Button bsSize={"xs"} bsStyle={this.props.panelStyle} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()}>
                             <Glyphicon glyph={'chevron-up'} />
                         </Button>
+                        </OverlayTrigger>
                         {' '}{' '}
                     </span>
                 }

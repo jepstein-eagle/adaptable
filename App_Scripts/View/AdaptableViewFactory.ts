@@ -70,7 +70,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
-  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+ // [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory=  new Map<string, React.ComponentClass<any>>([
