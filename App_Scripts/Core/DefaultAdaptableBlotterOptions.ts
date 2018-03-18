@@ -1,10 +1,11 @@
 import { IAdaptableBlotterOptions } from "./Interface/IAdaptableBlotterOptions";
+import * as GeneralConstants from './Constants/GeneralConstants'
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableAuditLog: false,
     enableRemoteConfigServer: false,
-    userName: "anonymous",
-    blotterId: "adaptable_blotter_id",
+    userName: GeneralConstants.USER_NAME,
+    blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfigUrl: "",
     maxColumnValueItemsDisplayed: 5000
 }

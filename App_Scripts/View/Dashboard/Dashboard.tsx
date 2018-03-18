@@ -1,25 +1,35 @@
 ﻿import * as React from "react";
 import { connect } from 'react-redux';
 import * as Redux from "redux";
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Panel, Button, Glyphicon, OverlayTrigger, ButtonToolbar, Tooltip } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-
+import { DefaultAdaptableBlotterOptions } from "../../Core/DefaultAdaptableBlotterOptions";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState
+    BlotterName: string
     onClick: (action: Redux.Action) => Redux.Action
 }
 
-class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
+export interface DashboardComponentState {
+    ShowOpen: boolean
+}
+
+class DashboardComponent extends React.Component<DashboardComponentProps, DashboardComponentState> {
     constructor() {
         super()
+
+        this.state = { ShowOpen: true }
     }
     render() {
+        let blotterName: string = (this.props.BlotterName == GeneralConstants.USER_NAME) ? "Blotter Toolbar" : this.props.BlotterName;
+        let showBlotterName: string = "show " + blotterName;
         let visibleDashboardControls = this.props.DashboardState.DashboardStrategyControls.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
@@ -28,7 +38,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
                 let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
-                return <Nav key={control.Strategy} style={{ marginRight: "5px", marginTop:"3px", marginBottom: "3px" }} >
+                return <Nav key={control.Strategy} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
                 </Nav>
             }
@@ -36,9 +46,34 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 console.error("Cannot find Dashboard Control for " + control.Strategy)
             }
         })
-        return <Navbar fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
-                {visibleDashboardElements}
-        </Navbar>
+
+        let hideButton = <Nav style={hideButtonStyle}>
+            <ButtonToolbar>
+                <OverlayTrigger overlay={<Tooltip id="tooltipHideButton">Hide Toolbar</Tooltip>}>
+                    <Button bsSize={"xsmall"} bsStyle={"primary"} onClick={() => this.setState({ ShowOpen: !this.state.ShowOpen } as DashboardComponentState)}>
+                        <Glyphicon glyph={"chevron-up"} />
+                    </Button>
+                </OverlayTrigger>
+            </ButtonToolbar>
+        </Nav>
+
+        return <div style={divStyle}>
+            {this.state.ShowOpen ?
+
+                <Navbar fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
+
+                    {visibleDashboardElements}
+                    {hideButton}
+                </Navbar> :
+                <ButtonToolbar bsSize={"small"} bsStyle={"primary"} style={closedButtonStyle} >
+                    <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
+                        <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.setState({ ShowOpen: !this.state.ShowOpen } as DashboardComponentState)}>
+                            {blotterName} <Glyphicon glyph={"chevron-down"} />
+                        </Button>
+                    </OverlayTrigger>
+                </ButtonToolbar>
+            }
+        </div>
     }
 }
 
@@ -56,3 +91,19 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);
+
+let closedButtonStyle = {
+    margin: '0px',
+    padding: '0px'
+}
+
+let hideButtonStyle = {
+    margin: '3px',
+}
+
+let divStyle = {
+    margin: '0px',
+}
+let testdivStyle = {
+    topMargin: '10px',
+}
