@@ -12,10 +12,10 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode } from '../../Core/Enums'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ColumnSelector } from '../ColumnSelector';
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
+import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>

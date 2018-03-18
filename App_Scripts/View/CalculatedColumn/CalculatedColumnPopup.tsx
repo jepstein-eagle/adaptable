@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  Well } from 'react-bootstrap';
+import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -19,7 +19,7 @@ import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStr
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
@@ -39,7 +39,7 @@ interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedCo
 class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, EditableConfigEntityState> {
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     componentDidMount() {
@@ -83,32 +83,34 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={widePanelStyle} infoBody={infoBody}
-            button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
+        return <div className="adaptable_blotter_style_popup_calculatedcolumn">
+            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={widePanelStyle} infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
-            {this.props.CalculatedColumns.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={calculatedColumns} />
-            }
+                {this.props.CalculatedColumns.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={calculatedColumns} />
+                }
 
-            {this.props.CalculatedColumns.length == 0 &&
-                <Well bsSize="small">Click 'New' to create a new Calculated Column.</Well>
-            }
+                {this.props.CalculatedColumns.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create a new Calculated Column.</Well>
+                }
 
-            {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-            {this.state.EditedAdaptableBlotterObject &&
+                {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
+                {this.state.EditedAdaptableBlotterObject &&
 
-                <CalculatedColumnWizard
-                    EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
-                    Columns={this.props.Columns}
-                    GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
-                    IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
+                    <CalculatedColumnWizard
+                        EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                        Columns={this.props.Columns}
+                        GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
+                        IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
 
-            }
-        </PanelWithButton>
+                }
+            </PanelWithButton>
+        </div>
     }
 
     onNew() {
@@ -123,11 +125,11 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     onCloseWizard() {
         this.props.onClearPopupParams()
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-         this.props.IsExpressionValid("")
+        this.props.IsExpressionValid("")
     }
 
     onFinishWizard() {
-        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);  
+        let calculatedColumn: ICalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
             this.props.onEditCalculatedColumn(this.state.EditedAdaptableBlotterObjectIndex, calculatedColumn)
         }

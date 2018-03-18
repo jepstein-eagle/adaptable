@@ -213,41 +213,6 @@
 			}
 		]
 	},
-	"Dashboard": {
-		"DashboardStrategyControls": [
-			{
-				"Strategy": "Functions",
-				"IsVisible": true,
-				"ControlConfiguration": [
-					"Dashboard",
-					"Smart Edit",
-					"Plus/Minus",
-					"Conditional Style"
-				]
-			},
-			{
-				"Strategy": "AdvancedSearch",
-				"IsVisible": false
-			},
-			{
-				"Strategy": "QuickSearch",
-				"IsVisible": false
-			},
-			{
-				"Strategy": "Layout",
-				"IsVisible": false
-			},
-			{
-				"Strategy": "Filter",
-				"IsVisible": true
-			},
-			{
-				"Strategy": "Export",
-				"IsVisible": true
-			}
-		],
-		"DashboardZoom": 1
-	},
 	"CalculatedColumn": {
 		"CalculatedColumns": [
 			{

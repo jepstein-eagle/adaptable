@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as ReactDataMenu from 'react-data-menu';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IContextMenu } from '../Core/Interface/IMenu';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IContextMenu } from '../../../Core/Interface/IMenu';
+import * as MenuRedux from '../../../Redux/ActionsReducers/MenuRedux'
 import { ContextMenuCustomRenderer } from './ContextMenuCustomRenderer'
 
 interface ContextMenuComponentProps extends React.ClassAttributes<ContextMenuComponent> {
@@ -50,7 +50,9 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
             'ContextMenuCustomRenderer': ContextMenuCustomRenderer
         }
 
-        return this.props.ContextMenu.IsVisible && <ReactDataMenu.Menu.default items={allItems} renderers={renderers} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
+        return this.props.ContextMenu.IsVisible && <div className="adaptable_blotter_style_contextmenu" >
+            <ReactDataMenu.Menu.default items={allItems} renderers={renderers} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
+        </div>
     }
 
     onMenuClose() {

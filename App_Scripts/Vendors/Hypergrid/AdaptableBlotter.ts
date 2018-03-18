@@ -51,12 +51,10 @@ import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode } fr
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
-import { FilterFormReact } from '../../View/FilterForm';
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
@@ -66,6 +64,8 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
+import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
+import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

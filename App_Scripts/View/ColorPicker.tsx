@@ -12,7 +12,7 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
         let ABcolorChoices = <datalist id={'ABcolorChoices'}>
             {ABcolorChoicesOptions}
         </datalist>
-        return <div>
+        return <div className="adaptable_blotter_style_colorpicker" >
             <FormControl {...restProps} type="color" style={{ width: '70px' }} list='ABcolorChoices' />
             {ABcolorChoices}
         </div>

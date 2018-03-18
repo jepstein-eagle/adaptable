@@ -3,7 +3,7 @@ import { Panel, FormGroup,  FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
-import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
+import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
 export interface CalculatedColumnExpressionWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
     IsExpressionValid: (expression: string) => void

@@ -7,7 +7,6 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -63,9 +62,11 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return  <div className="adaptable_blotter_style_dashboard_columnfilter">
+        <PanelDashboard headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
+        </div>
     }
 
 
@@ -74,8 +75,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ColumnFilterStrategyId),
-        UserFilters: state.UserFilter.UserFilters,
+         UserFilters: state.UserFilter.UserFilters,
         Columns: state.Grid.Columns,
         ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
@@ -84,7 +84,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.ColumnFilterPopup, isReadOnly))
     };
 }

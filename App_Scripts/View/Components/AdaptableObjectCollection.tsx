@@ -5,13 +5,13 @@ import { ListGroup } from 'react-bootstrap';
 import { IColItem } from "../UIInterfaces";
 
 
-export interface EntityCollectionViewProps extends React.ClassAttributes<EntityCollectionView> {
+export interface AdaptableObjectCollectionProps extends React.ClassAttributes<AdaptableObjectCollection> {
     ColItems:   IColItem[]
     items: any[]
     bsStyle?: string
 }
 
-export class EntityCollectionView extends React.Component<EntityCollectionViewProps, {}> {
+export class AdaptableObjectCollection extends React.Component<AdaptableObjectCollectionProps, {}> {
     render(): any {
 
         let bsStyle: string = (this.props.bsStyle )? this.props.bsStyle: "info"

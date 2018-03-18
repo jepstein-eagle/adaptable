@@ -79,7 +79,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             </li>
         })
-        return <PanelWithImage header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
+        return <div className="adaptable_blotter_style_popup_teamsharing">
+        <PanelWithImage header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
             bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
             {this.props.Entities.length == 0 ?
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
@@ -89,6 +90,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 {sharedItems}
             </ListGroup>
         </PanelWithImage>
+        </div>
     }
 
     getSharedItemDetails(sharedEntity: ISharedEntity) {

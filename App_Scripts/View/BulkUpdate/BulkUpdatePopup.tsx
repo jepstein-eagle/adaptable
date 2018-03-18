@@ -16,15 +16,15 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { ColumnValueSelector } from "../ColumnValueSelector";
 import { isNumber, isDate } from "util";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
+import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -95,9 +95,9 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             null
 
         return (
-            <div >
+            <div className="adaptable_blotter_style_popup_bulkupdate">
                 {col &&
-                    <div>
+                      <div>
                         <PanelWithImage header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
                             <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
                                 <FormGroup controlId="formInlineKey">

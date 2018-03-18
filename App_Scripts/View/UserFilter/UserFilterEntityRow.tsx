@@ -4,7 +4,7 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 
@@ -28,6 +28,6 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyNames.UserFilterStrategyName} />
       
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 }

@@ -685,11 +685,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
 
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
-                    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
-                        if (!middlewareAPI.getState().Dashboard.DashboardStrategyControls.find(x => x.Strategy == strategyId)) {
-                            middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
-                        }
-                    })
+                //    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
+                //        if (!middlewareAPI.getState().Dashboard.DashboardFunctionToolbars.find(x => x == strategyId)) {
+                      //      middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
+                //        }
+                //    })
 
                     adaptableBlotter.InitAuditService()
                     return returnAction;

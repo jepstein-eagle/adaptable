@@ -1,7 +1,7 @@
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -28,7 +28,7 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
          colItems[2].Content = buttons
       
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
 
 
     }

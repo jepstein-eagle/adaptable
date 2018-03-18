@@ -17,7 +17,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
@@ -88,11 +88,12 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
+        return <div className="adaptable_blotter_style_popup_advancedsearch">
+        <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
             button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={widePanelStyle}>
 
             {advancedSearchRows.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={advancedSearchRows} />
+                <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />
             }
 
             {advancedSearchRows.length == 0 &&
@@ -114,6 +115,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             }
 
         </PanelWithButton>
+        </div>
 
         {/* Search details screen - showing contents of current selected search (only visible if there is one) 
                 {selectedAdvancedSearch != null &&

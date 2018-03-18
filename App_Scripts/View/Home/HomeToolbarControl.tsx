@@ -8,8 +8,7 @@ import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRe
 import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+import { MenuState, EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
@@ -20,9 +19,11 @@ import { Helper } from '../../Core/Helpers/Helper'
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
-    // EntitlementsState: EntitlementsState,
-    Columns: IColumn[]
+    DashboardState: DashboardState,
+    Columns: IColumn[],
+    HeaderText: string,
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
+    onSetDashboardMinimised: (isMinimised: boolean) => DashboardRedux.DashboardSetIsMinimisedAction
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -31,6 +32,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         super(props);
         this.state = { configMenuItems: [] }
     }
+
     render() {
 
         // dropdown menu items
@@ -49,8 +51,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             </div>
         });
 
-         // shortcuts
-        let shortcutsArray: string[] = this.props.DashboardControl.ControlConfiguration
+        // shortcuts
+        let shortcutsArray: string[] = this.props.DashboardState.DashboardFunctionButtons
         let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {
@@ -72,29 +74,30 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             <Glyphicon glyph={"list"} />
         </OverlayTrigger>
 
+        return <div className="adaptable_blotter_style_dashboard_home">
+            <PanelDashboard showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardMinimised(true)}
+                headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph}
+                onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
-        return <PanelDashboard headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+                <DropdownButton bsStyle={"default"}
+                    bsSize={"small"}
+                    title={functionsGlyph}
+                    key={"dropdown-functions"}
+                    id={"dropdown-functions"}>
+                    {menuItems}
+                </DropdownButton>
 
-            <DropdownButton bsStyle={"default"}
-                bsSize={"small"}
-                title={functionsGlyph}
-                key={"dropdown-functions"}
-                id={"dropdown-functions"}>
-                {menuItems}
-            </DropdownButton>
-
-             {shortcuts}
-            <DropdownButton bsStyle={"default"}
-                bsSize={"small"}
-                title={colsGlyph}
-                key={"dropdown-cols"}
-                id={"dropdown-cols"}>
-                {colItems}
-            </DropdownButton>
-        </PanelDashboard>
+                {shortcuts}
+                <DropdownButton bsStyle={"default"}
+                    bsSize={"small"}
+                    title={colsGlyph}
+                    key={"dropdown-cols"}
+                    id={"dropdown-cols"}>
+                    {colItems}
+                </DropdownButton>
+            </PanelDashboard>
+        </div>
     }
-
-
 
     onClick(menuItem: IMenuItem) {
         this.props.onClick(menuItem.Action)
@@ -116,9 +119,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.HomeStrategyId),
         MenuState: state.Menu,
-        //  EntitlementsState: state.Entitlements,
+        DashboardState: state.Dashboard,
         Columns: state.Grid.Columns
     };
 }
@@ -126,13 +128,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup, isReadOnly)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
+        onSetDashboardMinimised: (isMinimised: boolean) => dispatch(DashboardRedux.DashboardSetIsMinimised(isMinimised)),
     };
 }
 
-export let HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);
+export const HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);
 
 let divStyle: React.CSSProperties = {
     'marginLeft': '5px',

@@ -2,7 +2,6 @@
 
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
-import { FilterFormReact } from '../../View/FilterForm';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -55,7 +54,6 @@ import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { ContextMenuReact } from '../../View/ContextMenu'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
@@ -67,6 +65,8 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
+import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
+import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

@@ -1,14 +1,15 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType } from '../Core/Enums'
+import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType } from '../../../Core/Enums'
 import { MenuItem,  DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { AdaptableBlotterFormControlTextClear } from './Components/Forms/AdaptableBlotterFormControlTextClear';
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
-import { AdaptableBlotterForm } from './AdaptableBlotterForm'
-import { IRange } from '../Core/Interface/IRange'
-import { IRawValueDisplayValuePair } from "./UIInterfaces";
-import * as CalendarConstants from '../Core/Constants/CalendarConstants';
-import { UIHelper } from "./UIHelper";
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
+import { IRange } from '../../../Core/Interface/IRange'
+import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
+import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
+import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
+import { UIHelper } from "../../UIHelper";
+
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
     ColumnValues: Array<IRawValueDisplayValuePair>

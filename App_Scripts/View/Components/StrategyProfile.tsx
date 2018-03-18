@@ -12,7 +12,7 @@ export interface StrategyProfileProps extends React.ClassAttributes<StrategyProf
 
 export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
     render(): any {
-        return <div>
+        return <div className="adaptable_blotter_style_strategyprofile">
             <Glyphicon glyph={StrategyGlyphs.getGhyphiconForStrategy(this.props.StrategyId)} />{' '}
             {StrategyNames.getNameForStrategy(this.props.StrategyId)}
         </div>

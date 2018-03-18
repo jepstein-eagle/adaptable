@@ -12,7 +12,7 @@ export interface WizardLegendProps extends React.ClassAttributes<WizardLegend> {
 export class WizardLegend extends React.Component<WizardLegendProps, {}> {
     render(): any {
         let count: number = this.props.StepNames.length - 1;
-        let test: any = this.props.StepNames.map((s, index) => {
+        let stepNames: any = this.props.StepNames.map((s, index) => {
             let style: string = (s == this.props.ActiveStepName) ? "primary" : "default";
            
             let lastStep: boolean = (index == count);
@@ -24,7 +24,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
             </span>
         })
 
-        return <div >{this.props.FriendlyName} : {test}</div>
+        return <div className="adaptable_blotter_style_wizard_legend">{this.props.FriendlyName} : {stepNames}</div>
     }
 }
 

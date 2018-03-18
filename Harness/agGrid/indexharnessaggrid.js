@@ -169,7 +169,7 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
         userName: "demo user",
-        blotterId: "harness demo",
+        blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "", // "predefinedConfig.json",

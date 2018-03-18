@@ -4,8 +4,8 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { PopoverType } from '../../../Core/Enums';
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
+import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
 export interface CellValidationSelectQueryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -29,7 +29,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
 
     render(): any {
 
-        return <div>
+        return <div className="adaptable_blotter_style_wizard_cellvalidation_selectquery">
             <Panel header="Cell Validation Query" bsStyle="primary">
 
                 <AdaptableBlotterForm inline >

@@ -6,7 +6,7 @@ import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
+import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
@@ -27,23 +27,24 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     render() {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
-        return <Panel header="Filter Settings" bsStyle="primary">
-            <AdaptableBlotterForm horizontal>
-                <FormGroup controlId="filterName">
-                    <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
-                    <Col xs={8}>
-                        <FormGroup controlId="formInlineName" validationState={validationState}>
-                            <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
-                                onChange={(e) => this.onFilterNameChange(e)} />
-                            <FormControl.Feedback />
-                            <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                        </FormGroup>
-                    </Col>
-                </FormGroup>
-                <Col xs={1}>{' '} </Col>
-            </AdaptableBlotterForm>
-        </Panel>
-
+        return <div className="adaptable_blotter_style_wizard_userfilter_settings">
+            <Panel header="Filter Settings" bsStyle="primary">
+                <AdaptableBlotterForm horizontal>
+                    <FormGroup controlId="filterName">
+                        <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
+                        <Col xs={8}>
+                            <FormGroup controlId="formInlineName" validationState={validationState}>
+                                <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
+                                    onChange={(e) => this.onFilterNameChange(e)} />
+                                <FormControl.Feedback />
+                                <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
+                            </FormGroup>
+                        </Col>
+                    </FormGroup>
+                    <Col xs={1}>{' '} </Col>
+                </AdaptableBlotterForm>
+            </Panel>
+        </div>
     }
 
 
@@ -51,7 +52,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         let e = event.target as HTMLInputElement;
         this.setState({
             FilterName: e.value,
-            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId==this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
+            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
 
         } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }

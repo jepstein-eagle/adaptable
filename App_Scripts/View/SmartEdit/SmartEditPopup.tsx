@@ -17,11 +17,11 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -80,7 +80,8 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         })
 
         return (
-            <div >
+             <div className="adaptable_blotter_style_popup_smartedit">
+          
                 <PanelWithImage header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">

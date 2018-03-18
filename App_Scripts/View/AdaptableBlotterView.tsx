@@ -35,7 +35,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
         return (
-            <div className="adaptable_blotter_style" >
+            <div className="adaptable_blotter_style_base" >
                 <Dashboard BlotterName={this.props.AdaptableBlotter.BlotterOptions.blotterId} />
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}

@@ -10,20 +10,22 @@ export interface AdaptableBlotterPopupWarningProps extends React.ClassAttributes
 
 export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlotterPopupWarningProps, {}> {
     render() {
-        return this.props.ShowPopup && <SweetAlert 
-        warning 
-        confirmBtnBsStyle="warning" title="Warning" onConfirm={() => this.props.onClose()} >
-            <p>
-                {this.props.Msg.split("\n").map(function (item, index) {
-                    return (
-                        <span key={index}>
-                            {item}
-                            <br />
-                        </span>
-                    )
-                })}
-            </p>
-        </SweetAlert>
+        return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_warning">
+            <SweetAlert
+                warning
+                confirmBtnBsStyle="warning" title="Warning" onConfirm={() => this.props.onClose()} >
+                <p>
+                    {this.props.Msg.split("\n").map(function (item, index) {
+                        return (
+                            <span key={index}>
+                                {item}
+                                <br />
+                            </span>
+                        )
+                    })}
+                </p>
+            </SweetAlert>
+        </div>
     }
 
 }

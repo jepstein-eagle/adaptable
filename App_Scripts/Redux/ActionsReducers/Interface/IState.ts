@@ -16,7 +16,6 @@ import { IColumnFilter } from '../../../Strategy/Interface/IColumnFilterStrategy
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
-import { IDashboardStrategyControlConfiguration } from '../../../Strategy/Interface/IDashboardStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
@@ -128,8 +127,10 @@ export interface LayoutState {
 }
 
 export interface DashboardState {
-    DashboardStrategyControls: IDashboardStrategyControlConfiguration[],
-    DashboardZoom: number
+    DashboardFunctionToolbars: string[]
+    DashboardFunctionButtons: string[]
+    DashboardZoom: number,
+    IsDashboardMinimised: boolean
 }
 
 export interface CalculatedColumnState {

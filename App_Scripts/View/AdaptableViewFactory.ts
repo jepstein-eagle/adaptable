@@ -56,8 +56,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   HomeButtonsPopup: HomeButtonsPopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   IPushPullLogin: IPushPullLogin,
-  IPushPullDomainPageSelector : IPushPullDomainPageSelector,
-  TeamSharingPopup : TeamSharingPopup,
+  IPushPullDomainPageSelector: IPushPullDomainPageSelector,
+  TeamSharingPopup: TeamSharingPopup,
   ColumnFilterPopup: ColumnFilterPopup,
   AboutPopup: AboutPopup,
   BulkUpdatePopup: BulkUpdatePopup,
@@ -65,13 +65,16 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
+   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
-  [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
-  [StrategyIds.HomeStrategyId, HomeToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
   [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+]);
+
+export const AdaptableDashboardPermanentToolbarFactory=  new Map<string, React.ComponentClass<any>>([
+  [StrategyIds.HomeStrategyId, HomeToolbarControl],
 ]);
 
 export interface IAdaptableViewFactory {

@@ -9,7 +9,6 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -24,7 +23,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IUserFilter } from "../../Strategy/Interface/IUserFilterStrategy";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
-import { ColumnValueSelector } from "../ColumnValueSelector";
+import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -47,23 +46,23 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     }
 
     public componentDidMount() {
-      //  this.props.onBulkUpdateCheckSelectedCells();
-     //   this.props.onBulkUpdateValueChange("");
+        //  this.props.onBulkUpdateCheckSelectedCells();
+        //   this.props.onBulkUpdateValueChange("");
     }
 
     render() {
-      
-       
+
+
         let col: IColumn
-       // if (this.props.PreviewInfo) {
+        // if (this.props.PreviewInfo) {
         //    col = this.props.Columns.find(c => c.ColumnId == "counterparty") // hardcoding until can get it from selected cells!
-       // }
+        // }
 
         // missing datatype validation for time being
 
-    //    let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.BulkUpdateValue);
+        //    let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.BulkUpdateValue);
 
-    //    let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
+        //    let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
 
         // we dont want to show the panel in the form but will need to appear in a popup....
 
@@ -73,19 +72,21 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         // 2.  listen to selectd cells changed (which might fix 1)
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-            {col &&
-            <ColumnValueSelector
-                                                    SelectedColumnValue={this.props.BulkUpdateValue}
-                                                    SelectedColumn={col}
-                                                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                                                    onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
-            }
-       </div>
+                {col &&
+                    <ColumnValueSelector
+                        SelectedColumnValue={this.props.BulkUpdateValue}
+                        SelectedColumn={col}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
+                }
+            </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-            {content}
-        </PanelDashboard>
+        return <div className="adaptable_blotter_style_dashboard_bulkupdate">
+            <PanelDashboard headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+                {content}
+            </PanelDashboard>
+        </div>
     }
 
     private onColumnValueSelectedChanged(selectedColumnValue: any) {
@@ -97,7 +98,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.BulkUpdateStrategyId),
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         PreviewInfo: state.BulkUpdate.PreviewInfo,
         Columns: state.Grid.Columns,
@@ -111,7 +111,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onBulkUpdateCheckSelectedCells: () => dispatch(BulkUpdateRedux.BulkUpdateCheckCellSelection()),
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.BulkUpdatePopup, isReadOnly))
     };
 }

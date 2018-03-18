@@ -7,10 +7,9 @@ import { ReportHelper } from '../../Core/Helpers/ReportHelper';
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean
@@ -65,6 +64,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
         colItems[4].Content = buttons
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 }

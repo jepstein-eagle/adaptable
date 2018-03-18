@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Helper } from '../Core/Helpers/Helper'
+import { Helper } from '../../../Core/Helpers/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup } from 'react-bootstrap';
-import { SortOrder } from '../Core/Enums'
+import { SortOrder } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {

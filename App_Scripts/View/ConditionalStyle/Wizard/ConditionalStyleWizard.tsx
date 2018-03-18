@@ -26,24 +26,26 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
 
     render() {
         let stepNames: string[] = ["Select Target", "Create Style", "Build Query"]
-        return <AdaptableWizard
-            FriendlyName={StrategyNames.ConditionalStyleStrategyName}
-            StepNames={stepNames}
-            Steps={[
-                <ConditionalStyleColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
-                <ConditionalStyleExpressionWizard
-                    StepName={stepNames[2]}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    SelectedColumnId={null}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                />
-            ]}
-            Data={this.props.EditedConditionalStyleCondition}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
+        return <div className="adaptable_blotter_style_wizard_conditionalstyle">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.ConditionalStyleStrategyName}
+                StepNames={stepNames}
+                Steps={[
+                    <ConditionalStyleColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
+                    <ConditionalStyleExpressionWizard
+                        StepName={stepNames[2]}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SelectedColumnId={null}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                    />
+                ]}
+                Data={this.props.EditedConditionalStyleCondition}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.closeWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 }
 

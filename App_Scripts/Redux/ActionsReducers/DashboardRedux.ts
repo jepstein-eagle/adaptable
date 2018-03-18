@@ -1,19 +1,17 @@
 import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
-const DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM = 'DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM';
-const DASHBOARD_SET_CONFIGURATION_ITEM = 'DASHBOARD_SET_CONFIGURATION_ITEM';
+const DASHBOARD_SET_FUNCTION_BUTTONS_ITEM = 'DASHBOARD_SET_FUNCTION_BUTTONS_ITEM';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
+const DASHBOARD_SET_IS_MINIMISED = 'DASHBOARD_SET_IS_MINIMISED';
 
 export interface DashboardChangeControlVisibilityAction extends Redux.Action {
     StrategyId: string;
-    IsVisible: boolean
 }
 
 export interface DashboardMoveItemAction extends Redux.Action {
@@ -25,19 +23,21 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
     StrategyId: string;
 }
 
-export interface DashboardSetConfigurationItemAction extends Redux.Action {
-    StrategyId: string;
-    NewConfig : any
+export interface DashboardSetFunctionButtonsAction extends Redux.Action {
+    StrategyIds: string[];
 }
 
 export interface DashboardSetZoomAction extends Redux.Action {
     Zoom: Number
 }
 
-export const ChangeVisibilityDashboardControl = (StrategyId: string, IsVisible: boolean): DashboardChangeControlVisibilityAction => ({
+export interface DashboardSetIsMinimisedAction extends Redux.Action {
+    IsMinimised: boolean
+}
+
+export const ChangeVisibilityDashboardControl = (StrategyId: string): DashboardChangeControlVisibilityAction => ({
     type: DASHBOARD_CHANGE_CONTROL_VISIBILITY,
-    StrategyId,
-    IsVisible
+    StrategyId
 })
 
 export const DashboardMoveItem = (StrategyId: string, NewIndex: number): DashboardMoveItemAction => ({
@@ -46,15 +46,10 @@ export const DashboardMoveItem = (StrategyId: string, NewIndex: number): Dashboa
     NewIndex
 })
 
-export const DashboardCreateDefaultConfigurationItem = (StrategyId: string): DashboardCreateDefaultConfigurationItemAction => ({
-    type: DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM,
-    StrategyId
-})
+export const DashboardSetFunctionButtons = (StrategyIds: string[]): DashboardSetFunctionButtonsAction => ({
+    type: DASHBOARD_SET_FUNCTION_BUTTONS_ITEM,
+    StrategyIds,
 
-export const DashboardSetConfigurationItem = (StrategyId: string, NewConfig: any): DashboardSetConfigurationItemAction => ({
-    type: DASHBOARD_SET_CONFIGURATION_ITEM,
-    StrategyId,
-    NewConfig
 })
 
 export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
@@ -62,61 +57,55 @@ export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
     Zoom
 })
 
+export const DashboardSetIsMinimised = (IsMinimised: boolean): DashboardSetIsMinimisedAction => ({
+    type: DASHBOARD_SET_IS_MINIMISED,
+    IsMinimised
+})
+
 const initialDashboardState: DashboardState = {
-    DashboardStrategyControls: [
-        { Strategy: StrategyIds.HomeStrategyId, IsVisible: true, 
-            ControlConfiguration: [StrategyNames.AboutStrategyName, StrategyNames.DashboardStrategyName,StrategyNames.SmartEditStrategyName, StrategyNames.ColumnChooserStrategyName, StrategyNames.ConditionalStyleStrategyName, StrategyNames.TeamSharingStrategyName] },
-        { Strategy: StrategyIds.AdvancedSearchStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.QuickSearchStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.LayoutStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.ExportStrategyId, IsVisible: true },
-        { Strategy: StrategyIds.ColumnFilterStrategyId, IsVisible: true },
-       // { Strategy: StrategyIds.BulkUpdateStrategyId, IsVisible: true },  // commenting out until I can figure out how it should work!
-      ],
-    DashboardZoom : 1
+    DashboardFunctionToolbars: [StrategyIds.AdvancedSearchStrategyId],
+    DashboardFunctionButtons: [StrategyNames.AboutStrategyName, StrategyNames.DashboardStrategyName, StrategyNames.SmartEditStrategyName, StrategyNames.ColumnChooserStrategyName, StrategyNames.ConditionalStyleStrategyName, StrategyNames.TeamSharingStrategyName],
+    DashboardZoom: 1,
+    IsDashboardMinimised: false
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
     let index: number;
-    let dashboardControls: IDashboardStrategyControlConfiguration[]
-    let dashboardControl: IDashboardStrategyControlConfiguration
+    let dashboardControls: string[]
+    let dashboardControl: string
 
     switch (action.type) {
         case DASHBOARD_CHANGE_CONTROL_VISIBILITY: {
             let actionTypedVisibility = <DashboardChangeControlVisibilityAction>action;
-            dashboardControls = [].concat(state.DashboardStrategyControls);
-            index = dashboardControls.findIndex(a => a.Strategy == actionTypedVisibility.StrategyId)
-            dashboardControl = dashboardControls[index]
-            dashboardControls[index] = Object.assign({}, dashboardControl, { IsVisible: actionTypedVisibility.IsVisible })
-            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+            dashboardControls = [].concat(state.DashboardFunctionToolbars);
+            index = dashboardControls.findIndex(a => a == actionTypedVisibility.StrategyId)
+
+            if (index < 0) {  // doesnt exist so add it
+                dashboardControls.push(actionTypedVisibility.StrategyId)
+            } else {  // exists so delete it
+                dashboardControls.splice(index, 1)
+            }
+            return Object.assign({}, state, { DashboardFunctionToolbars: dashboardControls });
         }
         case DASHBOARD_MOVE_ITEM: {
             let actionTyped = <DashboardMoveItemAction>action;
-            dashboardControls = [].concat(state.DashboardStrategyControls);
-            index = dashboardControls.findIndex(a => a.Strategy == actionTyped.StrategyId)
+            dashboardControls = [].concat(state.DashboardFunctionToolbars);
+            index = dashboardControls.findIndex(a => a == actionTyped.StrategyId)
             Helper.moveArray(dashboardControls, index, actionTyped.NewIndex)
-            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+            return Object.assign({}, state, { DashboardFunctionToolbars: dashboardControls });
         }
-         case DASHBOARD_CREATE_DEFAULT_CONFIGURATION_ITEM: {
-            let actionTyped = <DashboardCreateDefaultConfigurationItemAction>action;
-            dashboardControls = [].concat(state.DashboardStrategyControls);
-            dashboardControls.push({
-                Strategy : actionTyped.StrategyId,
-                IsVisible: false 
-            })
-            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
-        }
-        case DASHBOARD_SET_CONFIGURATION_ITEM: {
-            let actionTyped = <DashboardSetConfigurationItemAction>action;
-            dashboardControls = [].concat(state.DashboardStrategyControls);
-            index = dashboardControls.findIndex(a => a.Strategy == actionTyped.StrategyId)
-            dashboardControl = dashboardControls[index]
-            dashboardControls[index] = Object.assign({}, dashboardControl, { ControlConfiguration: actionTyped.NewConfig })
-            return Object.assign({}, state, { DashboardStrategyControls: dashboardControls });
+        case DASHBOARD_SET_FUNCTION_BUTTONS_ITEM: {
+            let actionTyped = <DashboardSetFunctionButtonsAction>action;
+            let dashboardFunctionButtons = actionTyped.StrategyIds
+              return Object.assign({}, state, { DashboardFunctionButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {
             let actionTyped = <DashboardSetZoomAction>action;
             return Object.assign({}, state, { DashboardZoom: actionTyped.Zoom });
+        }
+        case DASHBOARD_SET_IS_MINIMISED: {
+            let actionTyped = <DashboardSetIsMinimisedAction>action;
+            return Object.assign({}, state, { IsDashboardMinimised: actionTyped.IsMinimised });
         }
         default:
             return state

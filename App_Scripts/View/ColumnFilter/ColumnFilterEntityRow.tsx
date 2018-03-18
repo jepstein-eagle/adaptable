@@ -1,6 +1,6 @@
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import * as React from "react";
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
@@ -23,7 +23,7 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
             size={"small"}
             overrideDisableButton={this.props.ColumnFilter == null} />
          
-        return <ConfigEntityRowItem ColItems={colItems} key={this.props.Index} />
+        return <AdaptableObjectRow ColItems={colItems} key={this.props.Index} />
 
 
 

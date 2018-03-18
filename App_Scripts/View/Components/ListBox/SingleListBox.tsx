@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Helper } from '../Core/Helpers/Helper'
-import { SortOrder, SelectionMode } from '../Core/Enums'
+import { Helper } from '../../../Core/Helpers/Helper'
+import { SortOrder, SelectionMode } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, ListGroup,  ListGroupProps } from 'react-bootstrap';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>

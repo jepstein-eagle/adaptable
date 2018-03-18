@@ -11,12 +11,12 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
     QuickSearchDefaultBackColor: string;
@@ -111,8 +111,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
             return <option key={enumName} value={enumName}>{this.getTextForQuickSearchDisplayType(enumName as QuickSearchDisplayType)}</option>
         })
 
-        return (
-            <span >
+           return <div className="adaptable_blotter_style_popup_quicksearch">
                 <PanelWithImage header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
                     <AdaptableBlotterForm inline>
                         <Panel header={"Search For"} bsStyle="info" >
@@ -188,8 +187,8 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                         </Panel>
                     </AdaptableBlotterForm>
                 </PanelWithImage>
-            </span>
-        );
+            </div>
+       
     }
 
     private getTextForQuickSearchDisplayType(quickSearchDisplayType: QuickSearchDisplayType): string {

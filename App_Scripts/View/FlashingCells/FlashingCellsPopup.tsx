@@ -12,11 +12,11 @@ import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helpers/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingColumns: Array<IFlashingColumn>,
@@ -90,11 +90,13 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             </FormGroup>
         </AdaptableBlotterForm>;
 
-        return <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+return <div className="adaptable_blotter_style_popup_flashingcells">
+<PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
             {setAllOption}
-                <EntityCollectionView ColItems={colItems} items={allFlashingColumns} />
+                <AdaptableObjectCollection ColItems={colItems} items={allFlashingColumns} />
            
         </PanelWithImage>
+        </div>
     }
 }
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DualListBoxEditor } from '../../DualListBoxEditor'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>
@@ -25,23 +25,25 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
             SelectedValues: this.props.Data.CustomSortItems,
             IsEdit: this.props.Data.CustomSortItems.length > 0
         }
-      //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
+        //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
 
     render(): any {
-      let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
-        let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.",<br/>,<br/>, "Use the buttons on the right of the box to order items in the list as required.", <br/>,<br/>,"The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
+        let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
+        let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
 
-        return <PanelWithInfo header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
-            <DualListBoxEditor AvailableValues={this.state.ColumnValues}
-                SelectedValues={this.state.SelectedValues}
-                HeaderAvailable="Column Values"
-                HeaderSelected="Custom Sort Order"
-                DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-                ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
-        </PanelWithInfo>
+        return <div className="adaptable_blotter_style_wizard_customsort_values">
+            <PanelWithInfo header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
+                <DualListBoxEditor AvailableValues={this.state.ColumnValues}
+                    SelectedValues={this.state.SelectedValues}
+                    HeaderAvailable="Column Values"
+                    HeaderSelected="Custom Sort Order"
+                    DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                    SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+                    ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                    onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+            </PanelWithInfo>
+        </div>
     }
     OnSelectedValuesChange(newValues: Array<string>) {
         this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () => this.props.UpdateGoBackState())

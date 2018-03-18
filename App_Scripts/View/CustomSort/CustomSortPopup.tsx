@@ -19,11 +19,11 @@ import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
-                                                                                                                import { UIHelper } from '../UIHelper';
+import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
@@ -37,7 +37,7 @@ interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupCom
 class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, EditableConfigEntityState> {
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     componentDidMount() {
@@ -85,32 +85,34 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} style={panelStyle} infoBody={infoBody}
-            button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
+        return <div className="adaptable_blotter_style_popup_customsort">
+            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} style={panelStyle} infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
-            {customSorts.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={customSorts} />
-            }
+                {customSorts.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={customSorts} />
+                }
 
-            {customSorts.length == 0 &&
-                <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
-            }
+                {customSorts.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject &&
-                <CustomSortWizard
-                    EditedCustomSort={this.state.EditedAdaptableBlotterObject as ICustomSort}
-                    CustomSorts={this.props.CustomSorts}
-                    Columns={this.props.Columns}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                {this.state.EditedAdaptableBlotterObject &&
+                    <CustomSortWizard
+                        EditedCustomSort={this.state.EditedAdaptableBlotterObject as ICustomSort}
+                        CustomSorts={this.props.CustomSorts}
+                        Columns={this.props.Columns}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
+        </div>
     }
 
-  onEdit(customSort: ICustomSort) {
+    onEdit(customSort: ICustomSort) {
         //so we dont mutate original object
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(customSort), WizardStartIndex: 1 });
     }
@@ -135,7 +137,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
-    
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

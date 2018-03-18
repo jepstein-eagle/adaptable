@@ -20,19 +20,21 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
 
     render() {
         let stepNames: string[] = ["Create Column", "Write Expression"]
-        return <AdaptableWizard 
-        FriendlyName={StrategyNames.CalculatedColumnStrategyName}
-        StepNames={stepNames}
-      Steps={[
-            <CalculatedColumnSettingsWizard  StepName={stepNames[0]} Columns={this.props.Columns} />,
-            <CalculatedColumnExpressionWizard  StepName={stepNames[1]} 
-                GetErrorMessage={this.props.GetErrorMessage}
-                IsExpressionValid={this.props.IsExpressionValid} />,
-        ]}
-            Data={this.props.EditedCalculatedColumn}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
+        return <div className="adaptable_blotter_style_wizard_calculatedcolumn">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.CalculatedColumnStrategyName}
+                StepNames={stepNames}
+                Steps={[
+                    <CalculatedColumnSettingsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <CalculatedColumnExpressionWizard StepName={stepNames[1]}
+                        GetErrorMessage={this.props.GetErrorMessage}
+                        IsExpressionValid={this.props.IsExpressionValid} />,
+                ]}
+                Data={this.props.EditedCalculatedColumn}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.closeWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 
 }

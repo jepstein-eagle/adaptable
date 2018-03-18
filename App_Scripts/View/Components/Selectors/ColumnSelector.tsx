@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Helper } from '../Core/Helpers/Helper'
-import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { Typeahead } from 'react-bootstrap-typeahead'
-import { IColumn } from '../Core/Interface/IColumn';
-import { SortOrder, SelectionMode } from '../Core/Enums';
+import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { SelectionMode, SortOrder } from "../../../Core/Enums";
+import { IColumn } from "../../../Core/Interface/IColumn";
+import { Helper } from "../../../Core/Helpers/Helper";
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]

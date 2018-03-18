@@ -5,7 +5,7 @@ import { Well } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { ExportDestination} from '../../Core/Enums'
+import { ExportDestination } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
@@ -42,7 +42,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     componentDidMount() {
@@ -70,7 +70,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {
             return <ReportEntityRow
-            AdaptableBlotterObject={Report}
+                AdaptableBlotterObject={Report}
                 key={index}
                 ColItems={colItems}
                 Index={index}
@@ -92,11 +92,11 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return (
+        return <div className="adaptable_blotter_style_popup_export">
             <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
 
                 {Reports.length > 0 &&
-                    <EntityCollectionView ColItems={colItems} items={Reports} />
+                    <AdaptableObjectCollection ColItems={colItems} items={Reports} />
                 }
 
                 {Reports.length == 0 &&
@@ -115,7 +115,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         onFinishWizard={() => this.onFinishWizard()} />
                 }
             </PanelWithButton>
-        );
+        </div>
     }
 
     onCloseWizard() {

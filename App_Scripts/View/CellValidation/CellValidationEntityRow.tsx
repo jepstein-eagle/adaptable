@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -47,7 +47,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             EntityName={StrategyNames.CellValidationStrategyName} />
 
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 
     setExpressionDescription(CellValidation: ICellValidationRule): string {

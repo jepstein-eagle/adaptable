@@ -5,7 +5,8 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
-import { ColumnSelector } from '../../ColumnSelector';
+import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
+
 
 export interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -24,12 +25,14 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
 
     render(): any {
 
-        return <Panel header="Select a Column" bsStyle="primary">
+        return <div className="adaptable_blotter_style_wizard_cellvalidation_selectcolumn">
+        <Panel header="Select a Column" bsStyle="primary">
             <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single} />
         </Panel>
+        </div>
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ButtonToolbar, Button,  Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { ICalendar } from '../../Strategy/Interface/ICalendarStrategy';
-import { ConfigEntityRowItem, } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
@@ -28,7 +28,7 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
                     </OverlayTrigger>
                 </ButtonToolbar>
         });
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 }
 

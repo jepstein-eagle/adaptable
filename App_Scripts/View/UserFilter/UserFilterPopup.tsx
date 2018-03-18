@@ -20,7 +20,7 @@ import { UserFilterEntityRow } from './UserFilterEntityRow';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
@@ -78,7 +78,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
             return <UserFilterEntityRow
-            AdaptableBlotterObject={userFilter}
+                AdaptableBlotterObject={userFilter}
                 ColItems={colItems}
                 key={"CS" + index}
                 Index={index}
@@ -95,31 +95,33 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
-            button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
+        return <div className="adaptable_blotter_style_popup_userfilter">
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
+                button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
-            {UserFilterItems.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={UserFilterItems} />
-            }
+                {UserFilterItems.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={UserFilterItems} />
+                }
 
-            {UserFilterItems.length == 0 &&
-                <Well bsSize="small">Click 'New' to start creating user filters.<p />
-                    Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).</Well>
-            }
+                {UserFilterItems.length == 0 &&
+                    <Well bsSize="small">Click 'New' to start creating user filters.<p />
+                        Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).</Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <UserFilterWizard
-                    EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    SelectedColumnId={selectedColumnId}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <UserFilterWizard
+                        EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        SelectedColumnId={selectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
+        </div>
     }
 
     onNew() {

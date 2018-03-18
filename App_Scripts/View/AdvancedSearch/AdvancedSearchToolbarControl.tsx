@@ -10,7 +10,6 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -47,9 +46,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <Typeahead 
-                bsSize="small"
-                className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                <Typeahead
+                    bsSize="small"
+                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
                     placeholder={"Select a Search"}
                     labelKey={"Name"}
                     filterBy={["Name"]}
@@ -82,9 +81,11 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-            {content}
-        </PanelDashboard>
+        return <div className="adaptable_blotter_style_dashboard_advancedsearch">
+            <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+                {content}
+            </PanelDashboard>
+        </div>
     }
 
     onSelectedSearchChanged(selected: IAdvancedSearch[]) {
@@ -96,10 +97,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        AdvancedSearchDashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.AdvancedSearchStrategyId),
+        AdvancedSearchDashboardControl: state.Dashboard.DashboardFunctionToolbars.find(d => d == StrategyIds.AdvancedSearchStrategyId),
     };
 }
 
@@ -108,7 +108,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
         onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "New")),
         onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, isReadOnly))
     };
 }

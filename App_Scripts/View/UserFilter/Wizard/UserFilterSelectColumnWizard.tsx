@@ -5,8 +5,8 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
-import { ColumnSelector } from '../../ColumnSelector';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {
@@ -26,18 +26,20 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     render(): any {
 
-       // let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
+        // let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
 
-        return <Panel header="Select a Column" bsStyle="primary">
-            <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
-                ColumnList={this.props.Columns}
-                onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                SelectionMode={SelectionMode.Single} />
-        </Panel>
+        return <div className="adaptable_blotter_style_wizard_userfilter_column">
+            <Panel header="Select a Column" bsStyle="primary">
+                <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
+                    ColumnList={this.props.Columns}
+                    onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                    SelectionMode={SelectionMode.Single} />
+            </Panel>
+        </div>
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-          this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as UserFilterSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as UserFilterSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

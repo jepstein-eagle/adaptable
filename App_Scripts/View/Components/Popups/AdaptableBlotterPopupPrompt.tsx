@@ -14,16 +14,18 @@ export interface AdaptableBlotterPopupPromptProps extends React.ClassAttributes<
 
 export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotterPopupPromptProps, {}> {
     render() {
-        return this.props.ShowPopup && <SweetAlert
-            input
-            showCancel
-            placeholder={this.props.Msg}
-            confirmBtnBsStyle="primary"
-            cancelBtnBsStyle="default"
-            title={this.props.Title}
-            onConfirm={(inputValue: any) => this.props.onConfirm(inputValue)}
-            onCancel={() => this.props.onClose()}
-        >
-        </SweetAlert>
+        return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_prompt">
+            <SweetAlert
+                input
+                showCancel
+                placeholder={this.props.Msg}
+                confirmBtnBsStyle="primary"
+                cancelBtnBsStyle="default"
+                title={this.props.Title}
+                onConfirm={(inputValue: any) => this.props.onConfirm(inputValue)}
+                onCancel={() => this.props.onClose()}
+            >
+            </SweetAlert>
+        </div>
     }
 }

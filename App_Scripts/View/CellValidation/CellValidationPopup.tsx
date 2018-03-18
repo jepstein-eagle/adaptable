@@ -19,7 +19,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
@@ -90,34 +90,36 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={widePanelStyle}
-            button={newButton}
-            glyphicon={StrategyGlyphs.CellValidationGlyph}
-            infoBody={infoBody}>
-            {CellValidationItems.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={CellValidationItems} />
-            }
+        return <div className="adaptable_blotter_style_popup_cellvalidation">
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={widePanelStyle}
+                button={newButton}
+                glyphicon={StrategyGlyphs.CellValidationGlyph}
+                infoBody={infoBody}>
+                {CellValidationItems.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={CellValidationItems} />
+                }
 
-            {CellValidationItems.length == 0 &&
-                <Well bsSize="small">
-                    <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
-                    <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
-                </Well>
-            }
+                {CellValidationItems.length == 0 &&
+                    <Well bsSize="small">
+                        <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
+                        <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
+                    </Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <CellValidationWizard
-                    EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <CellValidationWizard
+                        EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
 
-        </PanelWithButton>
+            </PanelWithButton>
+        </div>
     }
 
     createCellValidation() {

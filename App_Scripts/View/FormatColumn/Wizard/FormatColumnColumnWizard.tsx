@@ -1,10 +1,10 @@
 import * as React from "react";
-import {  Col, Panel } from 'react-bootstrap';
+import { Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
-import {  SelectionMode } from '../../../Core/Enums';
-import { ColumnSelector } from '../../ColumnSelector';
+import { SelectionMode } from '../../../Core/Enums';
+import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
 export interface FormatColumnColumnWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
@@ -26,19 +26,21 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
 
     render(): any {
 
-        return <Panel header="Choose a column to format" bsStyle="primary">
+        return <div className="adaptable_blotter_style_wizard_formatcolumn_column">
+            <Panel header="Choose a column to format" bsStyle="primary">
 
-            <Col xs={12} style={radioMarginStyle}>
-                <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
-                    ColumnList={this.props.Columns}
-                    onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                    SelectionMode={SelectionMode.Single} />
-            </Col>
-        </Panel>
+                <Col xs={12} style={radioMarginStyle}>
+                    <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
+                        ColumnList={this.props.Columns}
+                        onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                        SelectionMode={SelectionMode.Single} />
+                </Col>
+            </Panel>
+        </div>
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-          this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as FormatColumnColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as FormatColumnColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
@@ -50,7 +52,7 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
         this.props.Data.ColumnId = this.state.ColumnId;
     }
 
-    public Back(): void { 
+    public Back(): void {
         //todo
     }
     public StepName = this.props.StepName

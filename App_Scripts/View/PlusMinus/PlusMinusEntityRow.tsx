@@ -2,7 +2,7 @@ import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy
 import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -35,7 +35,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         </EntityListActionButtons>
         colItems[3].Content = buttons
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
 
     }
 

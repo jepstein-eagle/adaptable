@@ -19,13 +19,13 @@ import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary'
 import { DataType, SelectionMode } from '../../Core/Enums'
-import { ColumnSelector } from '../ColumnSelector';
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { AdaptableBlotterForm } from "../AdaptableBlotterForm";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -97,38 +97,40 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
         }
 
-        return <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
+        return <div className="adaptable_blotter_style_popup_columninfo">
+            <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
-            {this.state.ShowSelector &&
-                <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="searchName">
-                        <Row>
-                            <Col xs={2} componentClass={ControlLabel}>Column: </Col>
+                {this.state.ShowSelector &&
+                    <AdaptableBlotterForm horizontal>
+                        <FormGroup controlId="searchName">
+                            <Row>
+                                <Col xs={2} componentClass={ControlLabel}>Column: </Col>
 
-                            <Col xs={8} >
-                                <ColumnSelector SelectedColumnIds={[selectedColumnId]}
-                                    ColumnList={this.props.Columns}
-                                    onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                                    SelectionMode={SelectionMode.Single} />
-                            </Col>
-                            <Col xs={2}>{' '} </Col>
-                        </Row>
-                    </FormGroup>
+                                <Col xs={8} >
+                                    <ColumnSelector SelectedColumnIds={[selectedColumnId]}
+                                        ColumnList={this.props.Columns}
+                                        onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                                        SelectionMode={SelectionMode.Single} />
+                                </Col>
+                                <Col xs={2}>{' '} </Col>
+                            </Row>
+                        </FormGroup>
 
-                </AdaptableBlotterForm>
+                    </AdaptableBlotterForm>
 
-            }
+                }
 
-            {this.state.SelectedColumn &&
-                <div style={divMarginStyle}>
-                    <EntityCollectionView ColItems={colItems} items={summaries} />
-                </div>
-            }
-        </PanelWithImage>
+                {this.state.SelectedColumn &&
+                    <div style={divMarginStyle}>
+                        <AdaptableObjectCollection ColItems={colItems} items={summaries} />
+                    </div>
+                }
+            </PanelWithImage>
+        </div>
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-            this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
+        this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null })
     }
 
     private isStrategyVisible(strategyID: string): boolean {

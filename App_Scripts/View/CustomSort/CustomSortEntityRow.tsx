@@ -2,7 +2,7 @@ import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
@@ -28,7 +28,7 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
             EntityName="Custom Sort">
         </EntityListActionButtons>
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 
 }

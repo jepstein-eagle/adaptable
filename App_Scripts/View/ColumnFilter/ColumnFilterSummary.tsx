@@ -27,7 +27,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;  
+        this.state = UIHelper.EmptyConfigState();
     }
 
     render(): any {
@@ -42,7 +42,10 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
             <ButtonClear size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
-        return <SummaryRowItem SummaryItems={summaryItems} />
+
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <SummaryRowItem SummaryItems={summaryItems} />
+        </div>
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

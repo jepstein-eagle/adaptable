@@ -27,21 +27,22 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
 
     render() {
         let stepNames: string[] = ["Select Column", "Settings", "Build Query"]
-        return <AdaptableWizard
-            FriendlyName={StrategyNames.PlusMinusStrategyName}
-            StepNames={stepNames}
-            Steps={
-                [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
-                <PlusMinusSettingsWizard StepName={stepNames[1]} />,
-                <PlusMinusExpressionWizard StepName={stepNames[2]} Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    SelectedColumnId={this.props.SelectedColumnId}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-            Data={this.props.EditedPlusMinusCondition}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.onFinishWizard()} >
-        </AdaptableWizard>
+        return <div className="adaptable_blotter_style_wizard_plusminus">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.PlusMinusStrategyName}
+                StepNames={stepNames}
+                Steps={
+                    [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
+                    <PlusMinusSettingsWizard StepName={stepNames[1]} />,
+                    <PlusMinusExpressionWizard StepName={stepNames[2]} Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SelectedColumnId={this.props.SelectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
+                Data={this.props.EditedPlusMinusCondition}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.closeWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 
 }

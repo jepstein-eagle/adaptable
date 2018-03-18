@@ -19,17 +19,19 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     render() {
         let stepNames: string[] = ["Column Type", "Settings"]
 
-        return <AdaptableWizard
-            FriendlyName={StrategyNames.ShortcutStrategyName}
-            StepNames={stepNames}
-            Steps={[
-                <ShortcutTypeWizard StepName={stepNames[0]} />,
-                <ShortcutSettingsWizard StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
-            ]}
-            Data={this.props.EditedShortcut}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
+        return <div className="adaptable_blotter_style_wizard_shortcut">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.ShortcutStrategyName}
+                StepNames={stepNames}
+                Steps={[
+                    <ShortcutTypeWizard StepName={stepNames[0]} />,
+                    <ShortcutSettingsWizard StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
+                ]}
+                Data={this.props.EditedShortcut}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.closeWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 
 }

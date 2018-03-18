@@ -1,10 +1,10 @@
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from "react";
-import { Radio, Panel,  Col } from 'react-bootstrap';
+import { Radio, Panel, Col } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { DataType } from '../../../Core/Enums';
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
+import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
@@ -24,19 +24,21 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
 
     render() {
 
-        return <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
+        return <div className="adaptable_blotter_style_wizard_shortcut_type">
+            <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
 
-            <AdaptableBlotterForm inline>
-                <Col xs={12} style={radioMarginStyle}>
-                    <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
-                </Col>
-                <Col xs={12} style={radioMarginStyle}>
-                    <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
-                </Col>
-                <Col xs={12} style={radioMarginStyle}>
-                </Col>
-            </AdaptableBlotterForm>
-        </Panel>
+                <AdaptableBlotterForm inline>
+                    <Col xs={12} style={radioMarginStyle}>
+                        <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
+                    </Col>
+                    <Col xs={12} style={radioMarginStyle}>
+                        <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
+                    </Col>
+                    <Col xs={12} style={radioMarginStyle}>
+                    </Col>
+                </AdaptableBlotterForm>
+            </Panel>
+        </div>
     }
 
     private onColumTypeChanged(event: React.FormEvent<any>) {

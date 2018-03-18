@@ -20,18 +20,20 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
 
     render() {
         let stepNames: string[] = ["Select Column", "Create Style"]
-        return <AdaptableWizard 
-        FriendlyName={StrategyNames.FormatColumnStrategyName}
-        StepNames={stepNames}
-        Steps={
-            [
-                <FormatColumnColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                <FormatColumnStyleWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />
-            ]}
-            Data={this.props.EditedFormatColumn}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.closeWizard()}
-            onFinish={() => this.props.onFinishWizard()} ></AdaptableWizard>
+        return <div className="adaptable_blotter_style_wizard_formatcolumn">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.FormatColumnStrategyName}
+                StepNames={stepNames}
+                Steps={
+                    [
+                        <FormatColumnColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
+                        <FormatColumnStyleWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />
+                    ]}
+                Data={this.props.EditedFormatColumn}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.closeWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 }
 

@@ -1,9 +1,9 @@
 import { IFilterComp, IDoesFilterPassParams, IFilterParams } from "ag-grid"
 import * as ReactDOM from "react-dom";
-import { FilterFormReact } from '../../View/FilterForm';
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from '../../Vendors/agGrid/AdaptableBlotter'
 import { DistinctCriteriaPairValue } from '../../Core/Enums'
+import { FilterFormReact } from "../../View/Components/FilterForm/FilterForm";
 
 export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
     return <any>class FilterWrapper implements IFilterComp {

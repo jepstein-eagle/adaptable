@@ -1,13 +1,13 @@
 import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import {  Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
+import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { DualListBoxEditor } from './../../DualListBoxEditor'
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, PopoverType } from '../../../Core/Enums';
+import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
 
 export interface ReportColumnsWizardProps extends AdaptableWizardStepProps<IReport> {
     Columns: Array<IColumn>
@@ -29,7 +29,7 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
         }
     }
     render() {
-        return <div>
+        return <div className="adaptable_blotter_style_wizard_export_reportcolumns">
             <Panel header="Select Columns for the Report" bsStyle="primary">
                 <Col xs={2} style={radioMarginStyle}>
                     <ControlLabel>Columns:</ControlLabel>
@@ -94,7 +94,7 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
         this.props.Data.Columns = this.state.SelectedColumnValues.map(c =>
             this.props.Columns.find(col => col.FriendlyName == c).ColumnId)
     }
-    public Back(): void { 
+    public Back(): void {
         //todo
     }
     public StepName = this.props.StepName

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
-import { AdaptableBlotterForm } from './../../AdaptableBlotterForm'
 import { AdaptablePopover } from './../../AdaptablePopover';
 import { PopoverType } from '../../../Core/Enums';
+import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 
 export interface PanelWithImageProps extends PanelProps {
     glyphicon?: string

@@ -20,28 +20,30 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
             {this.props.Title}
         </span> : this.props.Title
         let msgSplit = this.props.Msg.split("\n")
-        return this.props.ShowPopup && <SweetAlert
-            type={this.props.ShowCommentBox ? "input" : "warning"}
-            showCancel
-            confirmBtnBsStyle="primary"
-            confirmBtnText={this.props.ConfirmText}
-            cancelBtnBsStyle="default"
-            cancelBtnText={this.props.CancelText}
-            title={title}
-            placeholder={"Please enter a comment to confirm"}
-            onConfirm={(inputValue: string) => this.props.onConfirm(inputValue)}
-            onCancel={() => this.props.onCancel()} >
-            <p>
-                {msgSplit.map(function (item, index) {
-                    return (
-                        <span key={index}>
-                            {item}
-                            {index != msgSplit.length - 1 && <br />}
-                        </span>
-                    )
-                })}
-            </p>
-        </SweetAlert>
+        return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_confirmation">
+            <SweetAlert
+                type={this.props.ShowCommentBox ? "input" : "warning"}
+                showCancel
+                confirmBtnBsStyle="primary"
+                confirmBtnText={this.props.ConfirmText}
+                cancelBtnBsStyle="default"
+                cancelBtnText={this.props.CancelText}
+                title={title}
+                placeholder={"Please enter a comment to confirm"}
+                onConfirm={(inputValue: string) => this.props.onConfirm(inputValue)}
+                onCancel={() => this.props.onCancel()} >
+                <p>
+                    {msgSplit.map(function (item, index) {
+                        return (
+                            <span key={index}>
+                                {item}
+                                {index != msgSplit.length - 1 && <br />}
+                            </span>
+                        )
+                    })}
+                </p>
+            </SweetAlert>
+        </div>
     }
 
 }

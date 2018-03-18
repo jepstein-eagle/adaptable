@@ -7,24 +7,23 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { AdaptableDashboardViewFactory } from '../AdaptableViewFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Helper } from '../../Core/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
-    DashboardControls: Array<IDashboardStrategyControlConfiguration>;
+    DashboardControls: Array<string>;
     DashboardZoom: Number;
-    onChangeControlVisibility: (ControlName: string, IsVisible: boolean) => DashboardRedux.DashboardChangeControlVisibilityAction
+    onChangeControlVisibility: (strategyName: string) => DashboardRedux.DashboardChangeControlVisibilityAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
-    onMoveControl: (controlName: string, NewIndex: number) => DashboardRedux.DashboardMoveItemAction
+    onMoveControl: (strategyName: string, newIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
 interface DashboardPopupState {
     CurrentDashboardPopup: string;
@@ -43,54 +42,40 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     }
     render() {
 
-        let radioDashboardControls = this.props.DashboardControls.map((x, i) => {
-            let dashboardControl = AdaptableDashboardViewFactory.get(x.Strategy);
-            if (!dashboardControl) {
-                console.error("Unknown Dashboard control <" + x.Strategy + "> from the user config", x)
-                return null
-            }
-            // let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control.Strategy && x.AccessLevel == "ReadOnly") > -1
+        let radioDashboardControls: any[] = []
+        AdaptableDashboardViewFactory.forEach((dashboardControl, strategyId) => {
+
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
-            let visibleButton = x.IsVisible ?
-                <Button onClick={() => this.onDashboardControlVisibilityChanged(x, false)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
-                : <Button onClick={() => this.onDashboardControlVisibilityChanged(x, true)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
-            if (x.Strategy == StrategyIds.HomeStrategyId) {
-                //we want to prevent people from hiding the Functions dropdown
-                //      visibleButton = null
-            }
-            /*
-                        let colItems: IColItem[] = []
-                        colItems.push({
-                            Size: 3, Content:
-                                <span> <Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
-                                    onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}</span>
-                        });
-                        colItems.push({
-                            Size: 2, Content: visibleButton
-                        });
-                        colItems.push({
-                            Size: 6, Content: <span style={previewStyle}>{dashboardElememt}</span>
-                        });
-                        */
-            return <li key={"DashboardControl" + i}
+            // let visibleCheck: boolean = this.props.DashboardControls.find(dc=>dc==strategyId)!= null;
+            let visibleButton = this.props.DashboardControls.find(dc => dc == strategyId) != null ?
+                <Button disabled={strategyId==StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
+                : <Button onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
+           
+                
+
+            let radioDashboardControl: any = <li key={"DashboardControl" + strategyId}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, x)}
-                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x.Strategy)}
+                    <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, strategyId)}
+                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(strategyId)}
                     </Col>
                     <Col xs={2}>{visibleButton}</Col>
                     <Col xs={6} style={previewStyle}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
+
+            radioDashboardControls.push(radioDashboardControl)
+
         })
+
 
         let colItems: IColItem[] = [
             { Content: "Control", Size: 3 },
             { Content: "Show/Hide", Size: 2 },
             { Content: "Preview", Size: 7 },
         ]
-        return (
+        return <div className="adaptable_blotter_style_popup_dashboard">
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} style={panelStyle}>
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
@@ -107,7 +92,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 </ListGroup>
 
             </PanelWithImage>
-        );
+        </div>
+
     }
     private onSetFactorChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
@@ -124,13 +110,13 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         }
     }
 
-    onDashboardControlVisibilityChanged(dashboardControl: IDashboardStrategyControlConfiguration, visible: boolean) {
-        this.props.onChangeControlVisibility(dashboardControl.Strategy, visible);
+    onDashboardControlVisibilityChanged(dashboardControl: string) {
+        this.props.onChangeControlVisibility(dashboardControl);
     }
 
     private draggedHTMLElement: HTMLElement;
-    private draggedElement: IDashboardStrategyControlConfiguration;
-    DragStart(e: React.DragEvent<any>, controlElement: IDashboardStrategyControlConfiguration) {
+    private draggedElement: string;
+    DragStart(e: React.DragEvent<any>, controlElement: string) {
         //we want the listgroupitem
         this.draggedHTMLElement = (e.currentTarget as HTMLElement).parentElement.parentElement.parentElement;
         //Typescript definition is missing this method as of 12/04/17 so I'm casting to any
@@ -149,7 +135,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 }
                 //We remove our awesome placeholder
                 this.draggedHTMLElement.parentNode.removeChild(this.placeholder);
-                this.props.onMoveControl(this.draggedElement.Strategy, to)
+                this.props.onMoveControl(this.draggedElement, to)
             }
             this.draggedHTMLElement = null;
             this.draggedElement = null;
@@ -190,14 +176,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControls: state.Dashboard.DashboardStrategyControls,
+        DashboardControls: state.Dashboard.DashboardFunctionToolbars,
         DashboardZoom: state.Dashboard.DashboardZoom,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onChangeControlVisibility: (controlName: string, isVisible: boolean) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName, isVisible)),
+        onChangeControlVisibility: (controlName: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName)),
         onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
         onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };

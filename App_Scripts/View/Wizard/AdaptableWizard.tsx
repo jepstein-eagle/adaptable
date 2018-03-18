@@ -52,7 +52,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
     render() {
             return (
-            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style">
+            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_wizard_base">
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />

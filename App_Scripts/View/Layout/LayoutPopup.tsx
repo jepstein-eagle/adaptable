@@ -6,7 +6,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock} from 'react-bootstrap';
+import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -14,11 +14,11 @@ import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[],
@@ -46,7 +46,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
     render() {
         let infoBody: any[] = ["Use layouts to create and manage multiple named, sets of ordered columns", <br />, <br />, "To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)", <br />, <br />, "To create a new layout, enter a name in the 'Save As New Layout' textbox."]
         let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
-        
+
         let optionLayouts = this.props.Layouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
                 if (Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
@@ -63,7 +63,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
-        return (
+        return <div className="adaptable_blotter_style_popup_layout">
             <PanelWithImage header={StrategyNames.LayoutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.LayoutGlyph} infoBody={infoBody}>
 
                 <Panel header="Load Layout" bsStyle="info">
@@ -87,7 +87,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                                     ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
                                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                                     ConfirmationTitle={"Delete Layout"} />
-                                    {' '}
+                                {' '}
                                 {this.props.TeamSharingActivated && <ButtonShare onClick={() => this.props.onShare(layoutEntity)}
                                     overrideTooltip="Share Layout"
                                     overrideDisableButton={this.props.CurrentLayout == "Default"}
@@ -113,7 +113,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                             </Col>
                             <Col xs={7}>
                                 <FormGroup controlId="formInlineName" validationState={validationState}>
-                                    <FormControl  type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                                    <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
                                     <FormControl.Feedback />
                                     <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                                 </FormGroup>
@@ -129,7 +129,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                 </Panel>
 
             </PanelWithImage>
-        );
+        </div>
     }
 
     private onLayoutSelectionChanged(event: React.FormEvent<any>) {

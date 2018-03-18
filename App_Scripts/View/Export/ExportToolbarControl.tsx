@@ -11,7 +11,7 @@ import { IReport } from '../../Strategy/Interface/IExportStrategy'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
+//import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -78,7 +78,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
             <Glyphicon glyph={"export"} />
         </OverlayTrigger>
-        
+
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <Typeahead
@@ -129,9 +129,11 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={() => this.props.onClose(this.props.DashboardControl)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-            {content}
-        </PanelDashboard>
+        return <div className="adaptable_blotter_style_dashboard_export">
+            <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+                {content}
+            </PanelDashboard>
+        </div>
     }
 
     onSelectedReportChanged(selected: IReport[]) {
@@ -147,8 +149,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Reports: state.Export.Reports,
         Columns: state.Grid.Columns,
         LiveReports: state.Export.CurrentLiveReports,
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.ExportStrategyId),
-    };
+      };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
@@ -158,7 +159,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
         onNewReport: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "New")),
         onEditReport: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "Edit")),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, isReadOnly))
     };
 }

@@ -20,14 +20,14 @@ export interface FormatColumnStyleWizardState {
 
 export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWizardProps, FormatColumnStyleWizardState> implements AdaptableWizardStep {
 
-    
+
     constructor(props: FormatColumnStyleWizardProps) {
         super(props)
         this.mapStyle(this.props.Data.Style)
     }
 
     render() {
-       return <div>
+        return <div className="adaptable_blotter_style_wizard_formatcolumn_style">
             <StyleComponent
                 PredefinedColorChoices={this.props.PredefinedColorChoices}
                 Style={this.props.Data.Style}
@@ -36,7 +36,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
         </div>
     }
 
-    
+
     public canNext(): boolean {
         return this.state.BackColor != null || this.state.ForeColor != null || this.state.FontWeight != FontWeight.Normal || this.state.FontStyle != FontStyle.Normal || this.state.FontSize != null;
     }
@@ -49,7 +49,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
         this.props.Data.Style.FontSize = this.state.FontSize;
     }
     public Back(): void { }
-   
+
     private onUpdateStyle(style: IStyle) {
         this.mapStyle(style);
         this.props.UpdateGoBackState();

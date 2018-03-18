@@ -14,7 +14,7 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
@@ -58,11 +58,12 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         })
 
-        return <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
+        return  <div className="adaptable_blotter_style_popup_columnfilter">
+        <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
             button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
             {columnFilterItems.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={columnFilterItems} />
+                <AdaptableObjectCollection ColItems={colItems} items={columnFilterItems} />
             }
 
             {columnFilterItems.length == 0 &&
@@ -70,6 +71,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             }
 
         </PanelWithButton>
+        </div>
     }
 }
 

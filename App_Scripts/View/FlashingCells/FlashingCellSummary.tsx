@@ -9,7 +9,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 
@@ -30,7 +30,10 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         colItems.push({ Size: 3, Content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
-        return <ConfigEntityRowItem ColItems={colItems} />
+        
+        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <AdaptableObjectRow ColItems={colItems} />
+        </div>
     }
 
     onFlashingSelectedChanged(flashingColumn: IFlashingColumn) {

@@ -1,7 +1,7 @@
 import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as React from "react";
 import { Checkbox, FormControl } from 'react-bootstrap';
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
@@ -45,7 +45,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         </FormControl>
         colItems[3].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
         colItems[4].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
-        return <ConfigEntityRowItem ColItems={colItems}
+        return <AdaptableObjectRow ColItems={colItems}
         />
     }
 

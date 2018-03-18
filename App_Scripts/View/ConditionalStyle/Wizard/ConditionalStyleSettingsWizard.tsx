@@ -26,7 +26,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     }
 
     render() {
-        return <div>
+        return <div className="adaptable_blotter_style_wizard_conditionalstyle_settings">
              <StyleComponent
                  PredefinedColorChoices={this.props.PredefinedColorChoices}
                  Style={this.props.Data.Style}

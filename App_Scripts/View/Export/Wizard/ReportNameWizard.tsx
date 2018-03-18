@@ -3,8 +3,7 @@ import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from "../../AdaptableBlotterForm";
-
+import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
 export interface ReportNameWizardProps extends AdaptableWizardStepProps<IReport> {
     Reports: IReport[]
@@ -25,19 +24,21 @@ export class ReportNameWizard extends React.Component<ReportNameWizardProps, Rep
     render(): any {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
-        return <Panel header="Enter a Name for the Report" bsStyle="primary">
-            <AdaptableBlotterForm horizontal>
-                <Col xs={10}>
-                    <FormGroup controlId="formInlineName" validationState={validationState}>
-                        <FormControl type="text" placeholder="Enter Report Name" value={this.state.ReportName} onChange={(e) => this.onSaveLayoutNameChanged(e)} />
-                        <FormControl.Feedback />
-                        <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                    </FormGroup>
-                </Col>
+        return <div className="adaptable_blotter_style_wizard_export_reportname">
+            <Panel header="Enter a Name for the Report" bsStyle="primary">
+                <AdaptableBlotterForm horizontal>
+                    <Col xs={10}>
+                        <FormGroup controlId="formInlineName" validationState={validationState}>
+                            <FormControl type="text" placeholder="Enter Report Name" value={this.state.ReportName} onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                            <FormControl.Feedback />
+                            <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
+                        </FormGroup>
+                    </Col>
 
-                <Col xs={2}>{' '} </Col>
-            </AdaptableBlotterForm>
-        </Panel>
+                    <Col xs={2}>{' '} </Col>
+                </AdaptableBlotterForm>
+            </Panel>
+        </div>
     }
 
     private onSaveLayoutNameChanged(event: React.FormEvent<any>) {

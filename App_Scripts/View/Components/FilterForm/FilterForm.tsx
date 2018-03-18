@@ -1,24 +1,23 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
-import { ColumnFilterState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../Core/Interface/IColumn';
-import { PanelWithButton } from './Components/Panels/PanelWithButton';
-import { IColumnFilter, IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../Core/Helpers/UserFilterHelper';
-import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../Core/Enums';
-import { Expression } from '../Core/Expression'
-import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
-import { Helper } from '../Core/Helpers/Helper'
+import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
+import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
+import { ColumnFilterState, UserFilterState } from '../../../Redux/ActionsReducers/Interface/IState';
+import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumnFilter, IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';
+import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
-import { StrategyViewPopupProps } from './Components/SharedProps/StrategyViewPopupProps'
-import { ButtonClose } from './Components/Buttons/ButtonClose';
-import { IRawValueDisplayValuePair } from "./UIInterfaces";
-import { IRange } from '../Core/Interface/IRange'
-import { ButtonClear } from "./Components/Buttons/ButtonClear";
+import { IRange } from '../../../Core/Interface/IRange'
+import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
+import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { PanelWithButton } from "../Panels/PanelWithButton";
+import { ButtonClear } from "../Buttons/ButtonClear";
+import { Expression } from "../../../Core/Expression";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;

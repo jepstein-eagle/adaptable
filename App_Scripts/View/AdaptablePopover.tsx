@@ -6,7 +6,7 @@ import { PopoverType } from '../Core/Enums';
 
 /*
 Very basic - for now! - info box that allows us to show Error where required.
-2 params:
+3 params:
 1. HeaderText - if not supplied then no header appears
 2. BodyText - the main message (sent not as a string but as an array so it can include html elements)
 3. PopoverType - Info, Warning or Error (matching the bootstrap types)

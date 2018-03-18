@@ -5,10 +5,10 @@ import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
-import { ColumnSelector } from "../ColumnSelector";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { UIHelper } from "../UIHelper";
+import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
     DataType: DataType

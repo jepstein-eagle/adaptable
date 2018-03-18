@@ -4,7 +4,7 @@ import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { ConfigEntityRowItem } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 
@@ -25,6 +25,6 @@ export class FormatColumnEntityRow extends React.Component<SharedEntityExpressio
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyNames.FormatColumnStrategyName} />
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 }

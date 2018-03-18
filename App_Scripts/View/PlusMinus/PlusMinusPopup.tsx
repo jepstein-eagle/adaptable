@@ -17,12 +17,11 @@ import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
@@ -82,19 +81,20 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 onDeleteConfirm={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                 Column={column}
                 onColumnDefaultNudgeValueChange={(index, event) => this.onColumnDefaultNudgeValueChange(index, event)} />
-        })
+        })  
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" style={panelStyle}
+            return <div className="adaptable_blotter_style_popup_plusminus">
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" style={panelStyle}
             button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
             infoBody={infoBody}>
 
             {plusMinusConditions.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={plusMinusConditions} />
+                <AdaptableObjectCollection ColItems={colItems} items={plusMinusConditions} />
             }
 
             {plusMinusConditions.length == 0 &&
@@ -116,6 +116,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 />
             }
         </PanelWithButton>
+        </div>
     }
 
 

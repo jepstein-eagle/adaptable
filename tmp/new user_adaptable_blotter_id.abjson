@@ -414,43 +414,6 @@
 			}
 		]
 	},
-	"Dashboard": {
-		"DashboardStrategyControls": [
-			{
-				"Strategy": "Home",
-				"IsVisible": true,
-				"ControlConfiguration": [
-					"Dashboard",
-					"Smart Edit",
-					"Plus Minus",
-					"Conditional Style",
-					"Team Sharing",
-					"Bulk Update"
-				]
-			},
-			{
-				"Strategy": "AdvancedSearch",
-				"IsVisible": true
-			},
-			{
-				"Strategy": "QuickSearch",
-				"IsVisible": false
-			},
-			{
-				"Strategy": "Layout",
-				"IsVisible": false
-			},
-			{
-				"Strategy": "Export",
-				"IsVisible": true
-			},
-			{
-				"Strategy": "ColumnFilter",
-				"IsVisible": true
-			}
-		],
-		"DashboardZoom": 1
-	},
 	"CalculatedColumn": {
 		"CalculatedColumns": [],
 		"EditedCalculatedColumnInvalidErrorMsg": ""

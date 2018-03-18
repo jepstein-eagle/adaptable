@@ -10,9 +10,9 @@ import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
-import { AdaptableBlotterForm } from '../AdaptableBlotterForm'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IRange } from "../../Core/Interface/IRange";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.

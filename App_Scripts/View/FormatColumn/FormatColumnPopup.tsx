@@ -19,7 +19,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
@@ -37,7 +37,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 
     constructor() {
         super();
-        this.state = { EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex:0 }
+        this.state = { EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 }
     }
 
     componentDidMount() {
@@ -83,30 +83,32 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
-            button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
+        return <div className="adaptable_blotter_style_popup_formatcolumn">
+            <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
+                button={newButton}
+                bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
-            {this.props.FormatColumns.length == 0 &&
-                <Well bsSize="small">Click 'New' to create a new column format.</Well>
-            }
+                {this.props.FormatColumns.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create a new column format.</Well>
+                }
 
-            {FormatColumns.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={FormatColumns} />
-            }
+                {FormatColumns.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={FormatColumns} />
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <FormatColumnWizard
-                    EditedFormatColumn={this.state.EditedAdaptableBlotterObject as IFormatColumn}
-                    PredefinedColorChoices={this.props.PredefinedColorChoices}
-                    Columns={this.props.Columns.filter(x => !this.props.FormatColumns.find(y => y.ColumnId == x.ColumnId))}
-                    FormatColumns={this.props.FormatColumns}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <FormatColumnWizard
+                        EditedFormatColumn={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                        PredefinedColorChoices={this.props.PredefinedColorChoices}
+                        Columns={this.props.Columns.filter(x => !this.props.FormatColumns.find(y => y.ColumnId == x.ColumnId))}
+                        FormatColumns={this.props.FormatColumns}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
+        </div>
     }
 
     onNew() {
@@ -124,7 +126,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
     }
 
     onFinishWizard() {
-       let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
+        let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
         if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
             this.props.onEditFormatColumn(formatColumn)
         } else {

@@ -6,9 +6,9 @@ import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidation
 import { IRange } from '../../../Core/Interface/IRange';
 import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -41,7 +41,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
        
         let helpText : string = "Decide whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
 
-        return <div>
+        return <div className="adaptable_blotter_style_wizard_cellvalidation_rules">
             <Panel header={validationRuleHeader} bsStyle="primary">
 
                 <AdaptableBlotterForm >

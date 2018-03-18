@@ -4,8 +4,8 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { CellValidationMode, PopoverType } from '../../../Core/Enums';
-import { AdaptableBlotterForm } from '../../AdaptableBlotterForm'
 import { AdaptablePopover } from '../../AdaptablePopover';
+import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -24,8 +24,8 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
 
     render(): any {
 
-        return <div>
-            <Panel header="Action When Validation Fails" bsStyle="primary">
+        return <div className="adaptable_blotter_style_wizard_cellvalidation_action">
+           <Panel header="Action When Validation Fails" bsStyle="primary">
 
                 <AdaptableBlotterForm inline>
                     <Col xs={12}>

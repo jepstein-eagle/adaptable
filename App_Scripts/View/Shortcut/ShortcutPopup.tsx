@@ -18,7 +18,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
@@ -57,7 +57,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
-            AdaptableBlotterObject={shortcut} key={"ns" + index}
+                AdaptableBlotterObject={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
                 ColItems={colItems}
@@ -79,34 +79,36 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
-        return <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
-            button={newButton}
-            bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ShortcutGlyph}
-            infoBody={infoBody}>
+        return <div className="adaptable_blotter_style_popup_shortcut">
+            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
+                button={newButton}
+                bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ShortcutGlyph}
+                infoBody={infoBody}>
 
-            {shortcuts.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={shortcuts} />
-            }
+                {shortcuts.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={shortcuts} />
+                }
 
-            {shortcuts.length == 0 &&
-                <Well bsSize="small">Click 'New' to add a new Shortcut.</Well>
-            }
+                {shortcuts.length == 0 &&
+                    <Well bsSize="small">Click 'New' to add a new Shortcut.</Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <ShortcutWizard
-                    EditedShortcut={shortcut}
-                    DateKeysAvailable={shortcut.ShortcutKey ?
-                        keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-                        : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
-                    NumericKeysAvailable={shortcut.ShortcutKey ?
-                        keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-                        : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <ShortcutWizard
+                        EditedShortcut={shortcut}
+                        DateKeysAvailable={shortcut.ShortcutKey ?
+                            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
+                        NumericKeysAvailable={shortcut.ShortcutKey ?
+                            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
+        </div>
     }
 
     onCloseWizard() {

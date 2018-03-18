@@ -10,23 +10,25 @@ export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjec
 
     render() {
         let stepNames: string[] = ["Build Query", "Create Name"]
-        return <AdaptableWizard
-            FriendlyName={StrategyNames.AdvancedSearchStrategyName}
-            StepNames={stepNames}
-            Steps={[
-                <AdvancedSearchExpressionWizard
-                    Columns={this.props.Columns}
-                    StepName={stepNames[0]}
-                    UserFilters={this.props.UserFilters}
-                    SelectedColumnId={null}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
-                <AdvancedSearchSettingsWizard StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />
+        return <div className="adaptable_blotter_style_wizard_advancedsearch">
+            <AdaptableWizard
+                FriendlyName={StrategyNames.AdvancedSearchStrategyName}
+                StepNames={stepNames}
+                Steps={[
+                    <AdvancedSearchExpressionWizard
+                        Columns={this.props.Columns}
+                        StepName={stepNames[0]}
+                        UserFilters={this.props.UserFilters}
+                        SelectedColumnId={null}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+                    <AdvancedSearchSettingsWizard StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />
 
-            ]}
-            Data={this.props.EditedAdaptableBlotterObject as IAdvancedSearch}
-            StepStartIndex={this.props.WizardStartIndex}
-            onHide={() => this.props.onCloseWizard()}
-            onFinish={() => this.props.onFinishWizard()} />
+                ]}
+                Data={this.props.EditedAdaptableBlotterObject as IAdvancedSearch}
+                StepStartIndex={this.props.WizardStartIndex}
+                onHide={() => this.props.onCloseWizard()}
+                onFinish={() => this.props.onFinishWizard()} />
+        </div>
     }
 
 }

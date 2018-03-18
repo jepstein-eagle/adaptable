@@ -10,7 +10,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import {  Well } from 'react-bootstrap';
+import { Well } from 'react-bootstrap';
 import { ConditionalStyleScope } from '../../Core/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
@@ -20,7 +20,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { EntityCollectionView } from '../Components/EntityCollectionView';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
@@ -41,7 +41,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;
+        this.state = UIHelper.EmptyConfigState();
     }
 
     componentDidMount() {
@@ -61,7 +61,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
 
-            let colItems: IColItem[] = [
+        let colItems: IColItem[] = [
             { Content: "Target", Size: 3 },
             { Content: "Style", Size: 2 },
             { Content: "Query", Size: 4 },
@@ -69,7 +69,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         ]
         let conditionalStyleConditions = this.props.ConditionalStyles.map((conditionalStyleCondition: IConditionalStyleCondition, index) => {
             return <ConditionalStyleEntityRow
-            AdaptableBlotterObject={conditionalStyleCondition}
+                AdaptableBlotterObject={conditionalStyleCondition}
                 ColItems={colItems}
                 key={"CS" + index}
                 Index={index}
@@ -86,29 +86,31 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+        return <div className="adaptable_blotter_style_popup_conditionalstyle">
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
-            {this.props.ConditionalStyles.length == 0 &&
-                <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
-            }
+                {this.props.ConditionalStyles.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
+                }
 
-            {conditionalStyleConditions.length > 0 &&
-                <EntityCollectionView ColItems={colItems} items={conditionalStyleConditions} />
-            }
+                {conditionalStyleConditions.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={conditionalStyleConditions} />
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <ConditionalStyleWizard
-                    EditedConditionalStyleCondition={this.state.EditedAdaptableBlotterObject as IConditionalStyleCondition}
-                    PredefinedColorChoices={this.props.PredefinedColorChoices}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <ConditionalStyleWizard
+                        EditedConditionalStyleCondition={this.state.EditedAdaptableBlotterObject as IConditionalStyleCondition}
+                        PredefinedColorChoices={this.props.PredefinedColorChoices}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        closeWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
+        </div>
     }
 
     onNew() {

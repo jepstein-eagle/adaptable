@@ -2,7 +2,6 @@
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { FormControl } from 'react-bootstrap';
-import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -30,7 +29,7 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     Columns: IColumn[],
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
- }
+}
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
@@ -61,15 +60,15 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 </FormControl>
                 {' '}
                 <ButtonSave onClick={() => this.onSave()}
-                size={"small"} 
-                overrideTooltip="Save Changes to Current Layout"
+                    size={"small"}
+                    overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonNew onClick={() => this.onNew()}
-                 size={"small"} 
-                 overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
+                    size={"small"}
+                    overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonUndo onClick={() => this.onUndo()}
@@ -80,8 +79,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                  size={"small"} 
-                  overrideTooltip="Delete Layout"
+                    size={"small"}
+                    overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph"
@@ -91,9 +90,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={ ()=> this.props.onClose(this.props.DashboardControl)} onConfigure={()=>this.props.onConfigure(this.props.IsReadOnly)}>
-            {content}
-        </PanelDashboard>
+        return <div className="adaptable_blotter_style_dashboard_layout">
+            <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+                {content}
+            </PanelDashboard>
+        </div>
     }
 
     private onSave() {
@@ -125,7 +126,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
         Columns: state.Grid.Columns,
-        DashboardControl: state.Dashboard.DashboardStrategyControls.find(d => d.Strategy == StrategyIds.LayoutStrategyId),
     };
 }
 
@@ -134,7 +134,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.LayoutSave(columns, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onClose: (dashboardControl: IDashboardStrategyControlConfiguration) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl.Strategy, false)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, isReadonly))
     };
 }

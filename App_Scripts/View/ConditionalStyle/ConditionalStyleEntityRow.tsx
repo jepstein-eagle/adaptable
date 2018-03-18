@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { ConfigEntityRowItem, } from '../Components/ConfigEntityRowItem';
+import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
@@ -39,6 +39,6 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
             EntityName={StrategyNames.ConditionalStyleStrategyName} />
         colItems[3].Content = buttons;
 
-        return <ConfigEntityRowItem ColItems={colItems} />
+        return <AdaptableObjectRow ColItems={colItems} />
     }
 }
