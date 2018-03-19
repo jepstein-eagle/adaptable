@@ -24,7 +24,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
-  
+
 
     render() {
         let blotterName: string = (this.props.BlotterName == GeneralConstants.USER_NAME) ? "Blotter " : this.props.BlotterName;
@@ -52,7 +52,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         </Nav>
 
 
-        return <div className="adaptable_blotter_style_dashboard_base" style={divStyle}>
+        return <div className="adaptable_blotter_style_base" style={divStyle}>
             {this.props.DashboardState.IsDashboardMinimised ?
 
                 <ButtonToolbar bsSize={"small"} bsStyle={"primary"} style={closedButtonStyle} >
@@ -63,8 +63,10 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     </OverlayTrigger>
                 </ButtonToolbar> :
                 <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
-                    {homeToolbarElement}
-                    {visibleDashboardElements}
+                    <div className="adaptable_blotter_style_dashboard_base" style={divStyle}>
+                        {homeToolbarElement}
+                        {visibleDashboardElements}
+                    </div>
                 </Navbar>
 
             }

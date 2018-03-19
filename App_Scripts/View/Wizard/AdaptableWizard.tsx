@@ -52,16 +52,16 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
     render() {
             return (
-            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_wizard_base">
-                <Modal.Header closeButton>
+            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base">
+                <Modal.Header closeButton className="adaptable_blotter_style_wizard_base">
                     <Modal.Title>
                         <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
                         </Modal.Title>
                 </Modal.Header>
-                <Modal.Body >
+                <Modal.Body className="adaptable_blotter_style_wizard_base" >
                     {this.state.ActiveState}
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className="adaptable_blotter_style_wizard_base">
                     <Button style={buttonLeftStyle} onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
                     <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
                     <Button bsStyle="primary" disabled={!this.ActiveStep.canNext()} onClick={() => this.handleClickNext()}>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"} /></Button>

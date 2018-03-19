@@ -32,14 +32,16 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     }
     //TODO: There is a CSS style in our App that makes the popup to autosize. Need to check how to do it directly from code
     return (
-      <Modal show={this.props.showModal} onHide={this.props.onHide} className="adaptable_blotter_style_popup_base"  >
+      <Modal show={this.props.showModal} onHide={this.props.onHide} className="adaptable_blotter_style_base"  >
         {/*<Modal.Header closeButton>
             <Modal.Title>{}</Modal.Title>
           </Modal.Header>*/}
-        <Modal.Body style={divStyle} className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-          {body}
+        <Modal.Body style={divStyle} className="adaptable_blotter_style_popup_base">
+          <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            {body}
+          </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={divStyle} className="adaptable_blotter_style_popup_base">
           <Button onClick={() => this.props.onHide()}>Close</Button>
         </Modal.Footer>
       </Modal>
