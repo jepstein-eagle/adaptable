@@ -115,10 +115,10 @@ function getSchema(data) {
     var schema = []
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text' });
-    schema.push({ headerName: "notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
     schema.push({ headerName: "DeskId", field: "deskId", filter: 'text' });
     schema.push({ headerName: "Counterparty", field: "counterparty", filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Country", field: "country", filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Country", field: "country", filter: 'text',rowGroup: true, enableRowGroup: true, hide: true });
     schema.push({ headerName: "Currency", field: "currency", filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", filter: 'text' });
 
@@ -169,13 +169,16 @@ function InitBlotter() {
         rowData: trades,
         enableSorting: true,
         enableRangeSelection: true,
-        animateRows: true,
+        groupMultiAutoColumn: false,
+        groupUseEntireRow: false,
+        ßanimateRows: true,
         enableFilter: true,
         enableColResize: true
     };
 
 
-
+   
+   
     var eGridDiv = document.getElementById('grid');
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
     dataGen.startTickingDataagGrid(gridOptions);
