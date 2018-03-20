@@ -4,10 +4,12 @@ function ThemeChange(blotter, container) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
         if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
-            container.className = "ag-dark";
+            container.className = "ag-theme-dark";
+        } else if (themeName == "flatyle") {
+            container.className = "ag-theme-balham";
         }
         else {
-            container.className = "ag-blue";
+            container.className = "ag-theme-blue";
         }
     }
 }
@@ -119,11 +121,18 @@ function getSchema(data) {
             if (p === 'ask' || p === 'bid' || p === 'bloombergAsk' || p === 'bloombergBid') {
                 schema.push({ headerName: capitalize(p), field: p });
             }
+            else if (p === 'isLive') {
+                schema.push({ headerName: capitalize(p), field: p, filter: 'text' });
+            }
+            // grouped columns
+            else if (p === 'counterparty' || p === 'country' || p === 'currency' || p === 'lastUpdatedBy') {
+                schema.push({ headerName: capitalize(p), field: p, filter: 'text', enableRowGroup: true });
+            }
             else if (p === 'price') {
                 schema.push({ headerName: capitalize(p), field: p, filter: 'text' });
             }
-            else if (p === 'notional') {
-                schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer });
+            else if (p === 'notional') {  // has own render and is groupable
+                schema.push({ headerName: capitalize(p), field: p, editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
             } else if (p.includes("Date")) {
                 schema.push({ headerName: capitalize(p), field: p, editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
             } else {
@@ -154,12 +163,14 @@ function InitBlotter() {
         columnDefs: getSchema(trades),
         rowData: trades,
         enableSorting: true,
-        enableGrouping: true,
         enableRangeSelection: true,
+        animateRows: true,
         enableFilter: true,
-        rowGroupPanelShow: true,
-        toolPanelSuppressRowGroups: false
+
     };
+
+
+
     var eGridDiv = document.getElementById('grid');
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
     dataGen.startTickingDataagGrid(gridOptions);
@@ -170,7 +181,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
-        enableAuditLog: true,
+        enableAuditLog: false,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "", // "predefinedConfig.json",
         iPushPullConfig: {
