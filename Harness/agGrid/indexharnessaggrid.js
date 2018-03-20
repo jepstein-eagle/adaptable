@@ -171,7 +171,7 @@ function InitBlotter() {
         enableRangeSelection: true,
         groupMultiAutoColumn: false,
         groupUseEntireRow: false,
-        ßanimateRows: true,
+        animateRows: true,
         enableFilter: true,
         enableColResize: true
     };
