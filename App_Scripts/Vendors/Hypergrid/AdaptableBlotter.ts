@@ -342,10 +342,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
      
-    // let test = this.grid.selectionModel.getSelectedColumns()
-    // let column = this.grid.behavior.getActiveColumns()[test]
-
-        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
         var selected: Array<any> = this.grid.selectionModel.getSelections();
         for (let rectangle of selected) {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....

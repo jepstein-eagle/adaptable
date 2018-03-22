@@ -209,11 +209,6 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         }
     }
 
-    onClickAllItem() {
-        this.setState({ UiSelectedUserFilters: ["All"] } as ListBoxFilterFormState, () => this.raiseOnChangeUserFilter())
-    }
-
-
     private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let newRange: IRange = {IsOperand1Column: false, IsOperand2Column:false, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
