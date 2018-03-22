@@ -271,19 +271,19 @@ let radioButtonStyle: React.CSSProperties = {
 let customRangeStyle = {
     'marginTop': '10px',
     'marginLeft': '15px',
-    'width': '160px'
+    'width': '220px'
 }
 let searchFilterStyle = {
     'marginTop': '0px',
     'marginLeft': '0px',
-    'width': '162px'
+    'width': '220px'
 }
 
 let separatorStyle = {
     'marginTop': '10px',
     'marginBottom': '0px',
     'marginLeft': '15px',
-    'width': '160px',
+    'width': '220px',
     'textAlign': 'center'
 }
 

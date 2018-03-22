@@ -86,7 +86,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
                 : <PanelWithRow ColItems={colItems} bsStyle="info" />
             }
-            <ListGroup style={divStyle}>
+            <ListGroup className="adaptableblotter_modal_small_action_panel">
                 {sharedItems}
             </ListGroup>
         </PanelWithImage>
@@ -263,10 +263,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let TeamSharingPopup = connect(mapStateToProps, mapDispatchToProps)(TeamSharingPopupComponent);
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
+
 
 //make the screen a little bit more reactive instead of having a static width
 let panelStyle = {

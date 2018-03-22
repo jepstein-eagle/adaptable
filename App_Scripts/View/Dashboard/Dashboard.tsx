@@ -11,23 +11,23 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { HomeToolbarControl } from '../Home/HomeToolbarControl'
+import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState
-    BlotterName: string
+    AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action
     onSetDashboardMinimised: (isMinimised: boolean) => DashboardRedux.DashboardSetIsMinimisedAction
-
 }
-
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
-
     render() {
-        let blotterName: string = (this.props.BlotterName == GeneralConstants.USER_NAME) ? "Blotter " : this.props.BlotterName;
+
+      let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Toolbars"
         let visibleDashboardControls = this.props.DashboardState.DashboardFunctionToolbars//.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
@@ -36,7 +36,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             let dashboardControl = AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1
-                let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: isReadOnly });
+                let dashboardElememt = React.createElement(dashboardControl, { AdaptableBlotter: this.props.AdaptableBlotter, IsReadOnly: isReadOnly });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
                 </Nav>
@@ -48,28 +48,31 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-            {React.createElement(homeToolbar)}
+            {React.createElement(homeToolbar, {AdaptableBlotter: this.props.AdaptableBlotter})}
         </Nav>
 
 
-        return <div className="adaptable_blotter_style_base" style={divStyle}>
-            {this.props.DashboardState.IsDashboardMinimised ?
+        return <div className="adaptable_blotter_style_base">
+            <div className="no_margin_style">
+                {this.props.DashboardState.IsDashboardMinimised ?
 
-                <ButtonToolbar bsSize={"small"} bsStyle={"primary"} style={closedButtonStyle} >
-                    <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
-                        <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardMinimised(false)}>
-                            {blotterName} <Glyphicon glyph={"chevron-down"} />
-                        </Button>
-                    </OverlayTrigger>
-                </ButtonToolbar> :
-                <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
-                    <div className="adaptable_blotter_style_dashboard_base" style={divStyle}>
-                        {homeToolbarElement}
-                        {visibleDashboardElements}
-                    </div>
-                </Navbar>
-
-            }
+                    <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="no_padding_no_margin_style" >
+                        <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
+                            <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardMinimised(false)}>
+                                {blotterName} <Glyphicon glyph={"chevron-down"} />
+                            </Button>
+                        </OverlayTrigger>
+                    </ButtonToolbar> :
+                    <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
+                        <div className="adaptable_blotter_style_dashboard_base" >
+                            <div className="no_margin_style">
+                                {homeToolbarElement}
+                                {visibleDashboardElements}
+                            </div>
+                        </div>
+                    </Navbar>
+                }
+            </div>
         </div>
     }
 
@@ -93,19 +96,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);
 
-let closedButtonStyle = {
-    margin: '0px',
-    padding: '0px'
-}
-
-let hideButtonStyle = {
-    margin: '3px',
-    verticalAlign: "top"
-}
-
-let divStyle = {
-    margin: '0px',
-}
-let testdivStyle = {
-    topMargin: '10px',
-}

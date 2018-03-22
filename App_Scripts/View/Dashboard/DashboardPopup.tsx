@@ -60,7 +60,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(strategyId)}
                     </Col>
                     <Col xs={2}>{visibleButton}</Col>
-                    <Col xs={6} style={previewStyle}>{dashboardElememt}
+                    <Col xs={6} style={{zoom:0.75}}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
@@ -76,7 +76,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             { Content: "Preview", Size: 7 },
         ]
         return <div className="adaptable_blotter_style_popup_dashboard">
-            <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} style={panelStyle}>
+            <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} className="adaptableblotter_modal_large_action_panel">
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
                     {' '}
@@ -85,7 +85,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 {' '}
                 <div><br /></div>
                 <PanelWithRow ColItems={colItems} bsStyle="info" />
-                <ListGroup style={divStyle} onDragEnter={(event) => this.DragEnter(event)}
+                <ListGroup className="preview_panel" onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}
                     onDragLeave={(event) => this.DragLeave(event)}>
                     {radioDashboardControls}
@@ -190,17 +190,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let DashboardPopup = connect(mapStateToProps, mapDispatchToProps)(DashboardPopupComponent);
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
-
-let panelStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    width: '900px'
-}
-
-let previewStyle = {
-    zoom: 0.75
-}

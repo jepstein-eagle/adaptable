@@ -79,6 +79,47 @@ button.placeholder:before {
 	font-size: 14px;
 }
 
+/*Styling for our main modal windows*/
+.adaptableblotter_modal_main_panel{
+  width: 800px;
+}
+
+adaptableblotter_modal_popup_style {
+  max-height: 600px;
+  min-width: 600px;
+};
+
+.adaptableblotter_modal_small_action_panel{
+  width: 400px;
+  overflow: auto;
+}
+
+.adaptableblotter_modal_medium_action_panel{
+  width: 800px;
+  overflow: auto;
+}
+
+.adaptableblotter_modal_large_action_panel{
+  width: 1200px;
+  overflow: auto;
+}
+
+.adaptaleblotter_object_list_item{
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 300px;
+}
+
+.adaptableblotter_left_modal_button {
+  float: left;
+  margin-right: 5px
+}
+
+.adaptableblotter_right_modal_button {
+  float: right;
+  margin-left: 5px
+}
+
 /*How we manage readonly controls*/
 .adaptable_blotter_readonly button,
 .adaptable_blotter_readonly .adaptable_blotter_div_like_button,
@@ -95,6 +136,16 @@ button.placeholder:before {
 .scale-3x{font-size: 3em;}
 .scale-4x{font-size: 4em;}
 .scale-5x{font-size: 5em;}
+
+/*******************************************
+Home Toolbar Column Dropdown
+********************************************/
+
+
+.home_toolbar_column_list{
+  margin-left: 5px;
+  padding: 2px;
+}
 
 /*******************************************
 Context Menu Styles
@@ -378,3 +429,64 @@ Searchable DropDown Styles
 /*******************************************
 End Searchable DropDown Styles
 ********************************************/
+
+.preview_panel{
+  overflow-y: auto;
+  max-height: 400px;
+}
+.no_padding_style {
+  padding: 0px;
+}
+.small_padding_style {
+  padding: 2px;
+}
+.medium_padding_style {
+  padding: 5px;
+}
+.large_padding_style {
+  padding: 10px;
+}
+
+.no_margin_style {
+  margin: 0px;
+}
+
+.small_margin_style {
+  margin: 2px;
+}
+
+.medium_margin_style {
+  margin: 5px;
+}
+
+.large_margin_style {
+  margin: 10px;
+}
+
+.no_padding_no_margin_style {
+  margin: 0px;
+  padding: 0px;
+}
+
+.no_padding_small_margin_style {
+  margin: 2px;
+  padding: 0px;
+}
+
+.no_padding_medium_margin_style {
+  margin: 5px;
+  padding: 0px;
+}
+
+.no_padding_large_margin_style {
+  margin: 10px;
+  padding: 0px;
+}
+
+.large_right_margin_style {
+  margin-right: 10px;
+}
+
+.adaptableblotter_info_button {
+  margin-left: 3px
+}

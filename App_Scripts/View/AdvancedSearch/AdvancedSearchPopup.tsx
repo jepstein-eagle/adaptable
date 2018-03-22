@@ -34,8 +34,6 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
     UserFilters: IUserFilter[]
 }
 
-
-
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
@@ -90,7 +88,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         return <div className="adaptable_blotter_style_popup_advancedsearch">
         <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-            button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} style={widePanelStyle}>
+            button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_panel" >
 
             {advancedSearchRows.length > 0 &&
                 <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />
@@ -180,6 +178,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let AdvancedSearchPopup = connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchPopupComponent);
 
-let widePanelStyle = {
-    width: '800px'
-}

@@ -28,13 +28,13 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
             <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
 
                 <AdaptableBlotterForm inline>
-                    <Col xs={12} style={radioMarginStyle}>
+                    <Col xs={12} className="medium_margin_style">
                         <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
                     </Col>
-                    <Col xs={12} style={radioMarginStyle}>
+                    <Col xs={12} className="medium_margin_style">
                         <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
                     </Col>
-                    <Col xs={12} style={radioMarginStyle}>
+                    <Col xs={12} className="medium_margin_style">
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>
@@ -61,8 +61,3 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     public StepName = this.props.StepName
 }
 
-
-
-let radioMarginStyle = {
-    margin: '5px'
-}

@@ -46,13 +46,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     render() {
 
         // sort out keys
-        var keyList: Array<string>
-        if (this.props.Data.DataType == DataType.Number) {
-            keyList = this.props.NumericKeysAvailable
-        }
-        else if (this.props.Data.DataType == DataType.Date) {
-            keyList = this.props.DateKeysAvailable
-        }
+        let keyList: string[] = (this.props.Data.DataType == DataType.Number) ? this.props.NumericKeysAvailable : this.props.DateKeysAvailable
 
         let optionKeys = keyList.map(x => {
             return <option value={x} key={x}>{x}</option>
@@ -130,7 +124,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <Col xs={3}>
                                         <ControlLabel>Date Type:</ControlLabel>
                                     </Col>
-                                    <Col xs={5} style={radioMarginStyle}>
+                                    <Col xs={5} className="medium_margin_style">
                                         <Radio inline value="custom" checked={this.state.IsDynamic == false} onChange={(e) => this.onDynamicSelectChanged(e)}>Custom</Radio>
                                         <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
                                         {' '}<AdaptablePopover headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
@@ -231,6 +225,4 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
 
 
 
-let radioMarginStyle = {
-    margin: '5px'
-}
+

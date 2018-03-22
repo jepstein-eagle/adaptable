@@ -19,7 +19,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
   render() {
     if (this.props.ComponentName) {
-      var bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
+      let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
@@ -36,20 +36,20 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         {/*<Modal.Header closeButton>
             <Modal.Title>{}</Modal.Title>
           </Modal.Header>*/}
-        <Modal.Body style={divStyle} className="adaptable_blotter_style_popup_base">
-          <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-            {body}
+        <Modal.Body className="adaptable_blotter_style_popup_base">
+
+          <div className="adaptableblotter_modal_popup_style">
+            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+              {body}
+            </div>
           </div>
         </Modal.Body>
-        <Modal.Footer style={divStyle} className="adaptable_blotter_style_popup_base">
-          <Button onClick={() => this.props.onHide()}>Close</Button>
+        <Modal.Footer className="adaptable_blotter_style_popup_base">
+          <div className="adaptableblotter_modal_popup_style">
+            <Button onClick={() => this.props.onHide()}>Close</Button>
+          </div>
         </Modal.Footer>
       </Modal>
     );
   }
 }
-
-var divStyle = {
-  maxHeight: '600px',
-  minWidth: '600px'
-};

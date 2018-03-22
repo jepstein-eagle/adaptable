@@ -96,7 +96,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_userfilter">
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
                 button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&
@@ -161,8 +161,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let UserFilterPopup = connect(mapStateToProps, mapDispatchToProps)(UserFilterPopupComponent);
-
-
-let panelStyle = {
-    width: '800px'
-}

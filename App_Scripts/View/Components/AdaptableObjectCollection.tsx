@@ -17,16 +17,11 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
         let bsStyle: string = (this.props.bsStyle )? this.props.bsStyle: "info"
         return <div>
             <PanelWithRow ColItems={this.props.ColItems} bsStyle={bsStyle} />
-            <ListGroup style={listGroupStyle}>
+            <ListGroup className="adaptaleblotter_object_list_item">
                 {this.props.items}
             </ListGroup>
         </div>
     }
 }
 
-let listGroupStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    minHeight: '80px',
-    maxHeight: '300px'
-};
 

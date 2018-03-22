@@ -42,10 +42,10 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let colItems: IColItem[] = [
             { Content: "Live", Size: 1 },
-            {Content: "Column", Size:4}, 
-            {Content: "Flash Duration", Size: 3}, 
-            {Content: "Up Colour", Size: 2}, 
-            {Content: "Down Colour", Size: 2}, 
+            { Content: "Column", Size: 4 },
+            { Content: "Flash Duration", Size: 3 },
+            { Content: "Up Colour", Size: 2 },
+            { Content: "Down Colour", Size: 2 },
         ]
 
         let allPotentialFlashingColumns: IFlashingColumn[] = [];
@@ -59,9 +59,9 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             }
         })
 
-        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn,index) => {
+        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn, index) => {
             return <FlashingCellEntityRow
-            AdaptableBlotterObject={flashingColumn}
+                AdaptableBlotterObject={flashingColumn}
                 key={flashingColumn.ColumnName}
                 Index={index}
                 Columns={this.props.Columns}
@@ -77,25 +77,25 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
                 onShare={null}
                 onEdit={null}
                 onDeleteConfirm={null}
-                  >
+            >
             </FlashingCellEntityRow>
         });
 
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
-                <Col xs={12} style={topCheckBoxStyle}>
+                <Col xs={12} className="medium_margin_style">
                     <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns.filter(x => x.IsPredefined == false))}
                         checked={allPotentialFlashingColumns.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
 
-return <div className="adaptable_blotter_style_popup_flashingcells">
-<PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
-            {setAllOption}
+        return <div className="adaptable_blotter_style_popup_flashingcells">
+            <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+                {setAllOption}
                 <AdaptableObjectCollection ColItems={colItems} items={allFlashingColumns} />
-           
-        </PanelWithImage>
+
+            </PanelWithImage>
         </div>
     }
 }
@@ -120,11 +120,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FlashingCellsPopup = connect(mapStateToProps, mapDispatchToProps)(FlashingCellsPopupComponent);
 
-let panelStyle = {
-    width: '800px'
-}
 
-
-let topCheckBoxStyle = {
-    'margin': '7px'
-}

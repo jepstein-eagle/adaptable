@@ -98,7 +98,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         }
 
         return <div className="adaptable_blotter_style_popup_columninfo">
-            <PanelWithImage header={headerText} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
+            <PanelWithImage header={headerText} bsStyle="primary" className="adaptableblotter_modal_main_panel"  glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
                 {this.state.ShowSelector &&
                     <AdaptableBlotterForm horizontal>
@@ -121,7 +121,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                 }
 
                 {this.state.SelectedColumn &&
-                    <div style={divMarginStyle}>
+                    <div className="medium_margin_style">
                         <AdaptableObjectCollection ColItems={colItems} items={summaries} />
                     </div>
                 }
@@ -160,14 +160,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ColumnInfoPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnInfoPopupComponent);
 
-let panelStyle = {
-    width: '800px'
-}
-
-let divMarginStyle = {
-    marginTop: '10px'
-}
-
-let radioMarginStyle = {
-    margin: '5px'
-}

@@ -74,8 +74,8 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
         return <PanelWithImage header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
 
-            <PanelWithRow ColItems={allCalenderColItems} bsStyle="info" />
-            <ListGroup style={divStyle}>
+            <PanelWithRow ColItems={allCalenderColItems} bsStyle="info" className="preview_panel" />
+            <ListGroup >
                 {allCalendars}
             </ListGroup>
 
@@ -90,7 +90,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
                       {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button style={buttonFloatRightStyle} onClick={() => this.closeInformationModal()}>Close</Button>
+                        <Button className="adaptableblotter_right_modal_button" onClick={() => this.closeInformationModal()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             }
@@ -130,13 +130,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CalendarsPopup = connect(mapStateToProps, mapDispatchToProps)(CalendarsPopupComponent);
 
-
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}
-
-let buttonFloatRightStyle = {
-    float: 'right'
-};

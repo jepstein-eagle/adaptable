@@ -15,9 +15,9 @@ import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterP
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
-    MenuState: MenuState;
-    DashboardState: DashboardState
-    EntitlementsState: EntitlementsState,
+  //  MenuState: MenuState;
+  //  DashboardState: DashboardState
+   // EntitlementsState: EntitlementsState,
     AdaptableBlotter: IAdaptableBlotter;
     showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
@@ -36,7 +36,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
         return (
             <div className="adaptable_blotter_style_base" >
-                <Dashboard BlotterName={this.props.AdaptableBlotter.BlotterOptions.blotterId} />
+                <Dashboard AdaptableBlotter={this.props.AdaptableBlotter}  />
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
                     onClose={this.props.onCloseErrorPopup}
@@ -83,10 +83,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        MenuState: state.Menu,
+     //   MenuState: state.Menu,
         PopupState: state.Popup,
-        DashboardState: state.Dashboard,
-        EntitlementsState: state.Entitlements,
+     //   DashboardState: state.Dashboard,
+     //   EntitlementsState: state.Entitlements,
         AdaptableBlotter: ownProps.Blotter,
     };
 }

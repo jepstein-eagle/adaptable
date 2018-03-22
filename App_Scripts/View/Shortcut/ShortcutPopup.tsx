@@ -80,9 +80,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className="adaptable_blotter_style_popup_shortcut">
-            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName}
+            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptableblotter_modal_main_panel"
                 button={newButton}
-                bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ShortcutGlyph}
+                bsStyle="primary"  glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&
@@ -151,11 +151,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ShortcutPopup = connect(mapStateToProps, mapDispatchToProps)(ShortcutPopupComponent);
 
-let panelStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    width: '800px'
-}
-
 const keys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-
-

@@ -16,6 +16,8 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper'
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
@@ -46,7 +48,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // columns
         let colItems = this.props.Columns.map((col: IColumn, index) => {
-            return <div style={divStyle} key={index}>
+            return <div className="home_toolbar_column_list" key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
             </div>
         });
@@ -67,8 +69,11 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             })
         }
 
+        let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
+     
         const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
-            <Glyphicon glyph={"cog"} />
+            <Glyphicon glyph={"home"} />
         </OverlayTrigger>
         const colsGlyph: any = <OverlayTrigger key={"colsOverlay"} overlay={<Tooltip id="colsTooltipButton" > {"Columns"}</Tooltip >}>
             <Glyphicon glyph={"list"} />
@@ -76,7 +81,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         return <div className="adaptable_blotter_style_dashboard_home">
             <PanelDashboard showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardMinimised(true)}
-                headerText={StrategyIds.HomeStrategyId} glyphicon={StrategyGlyphs.FunctionsGlyph}
+                headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
                 onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
                 <DropdownButton bsStyle={"default"}
@@ -137,7 +142,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export const HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);
 
-let divStyle: React.CSSProperties = {
-    'marginLeft': '5px',
-    'padding': '2px'
-}

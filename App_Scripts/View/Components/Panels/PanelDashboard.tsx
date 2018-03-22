@@ -12,6 +12,7 @@ export interface PanelDashboardProps extends PanelProps {
     showCloseButton?: boolean
     showConfigureButton?: boolean
     showMinimiseButton?: boolean
+    showGlyphIcon?: boolean
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -27,24 +28,27 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         glyphicon: "home",
         onClose: null,
         onConfigure: null,
-        onMinimise: null
+        onMinimise: null,
+        showGlyphIcon: true
 
     };
     render() {
-       
+
         let header = <span>
             <Label bsStyle={this.props.panelStyle} style={{ verticalAlign: "middle", margin: "0px", padding: "0px" }} >
                 {this.props.showMinimiseButton &&
                     <span>
-                     <OverlayTrigger overlay={<Tooltip id="tooltipShowClose">Hide Toolbars</Tooltip>}>
-                   <Button bsSize={"xs"} bsStyle={this.props.panelStyle} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()}>
-                            <Glyphicon glyph={'chevron-up'} />
-                        </Button>
+                        <OverlayTrigger overlay={<Tooltip id="tooltipShowClose">Hide Toolbars</Tooltip>}>
+                            <Button bsSize={"xs"} bsStyle={this.props.panelStyle} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()}>
+                                <Glyphicon glyph={'chevron-up'} />
+                            </Button>
                         </OverlayTrigger>
                         {' '}{' '}
                     </span>
                 }
-                <Glyphicon glyph={this.props.glyphicon} />
+                {this.props.showGlyphIcon &&
+                    <Glyphicon glyph={this.props.glyphicon} />
+                }
                 {' '}
                 {this.props.headerText}
             </Label>

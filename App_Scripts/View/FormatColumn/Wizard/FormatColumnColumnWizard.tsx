@@ -29,7 +29,7 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
         return <div className="adaptable_blotter_style_wizard_formatcolumn_column">
             <Panel header="Choose a column to format" bsStyle="primary">
 
-                <Col xs={12} style={radioMarginStyle}>
+                <Col xs={12} className="medium_margin_style">
                     <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                         ColumnList={this.props.Columns}
                         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
@@ -58,8 +58,3 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
     public StepName = this.props.StepName
 }
 
-
-
-let radioMarginStyle = {
-    margin: '5px'
-}

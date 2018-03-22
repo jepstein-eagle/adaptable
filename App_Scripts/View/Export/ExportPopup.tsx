@@ -93,7 +93,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_export">
-            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} style={panelStyle}>
+            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} className="adaptableblotter_modal_main_panel">
 
                 {Reports.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={Reports} />
@@ -165,7 +165,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 export let ExportPopup = connect(mapStateToProps, mapDispatchToProps)(ExportPopupComponent);
 
 
-let panelStyle = {
-    width: '800px',
-}
 

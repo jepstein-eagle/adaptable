@@ -428,10 +428,10 @@ export module ExpressionHelper {
             case DataType.String:
                 rangeEvaluation.operand1 = rangeExpression.IsOperand1Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
-                    rangeExpression.Operand1.toLowerCase()
+                    rangeExpression.Operand1;//.toLowerCase() - not sure what to do about case but this is currently breaking...
                 rangeEvaluation.operand2 = rangeExpression.IsOperand2Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
-                    rangeExpression.Operand2.toLowerCase();
+                    rangeExpression.Operand2;//.toLowerCase();
                 break;
         }
         return rangeEvaluation;

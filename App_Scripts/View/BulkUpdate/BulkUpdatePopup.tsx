@@ -105,7 +105,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                         <div>
                                             <Row>
                                                 <Col xs={12}>
-                                                    <Checkbox style={checkboxStyle} onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Use Column Values Selector</Checkbox>
+                                                    <Checkbox className="medium_margin_style" onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Use Column Values Selector</Checkbox>
                                                 </Col>
                                             </Row>
                                             <Row>
@@ -227,13 +227,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let BulkUpdatePopup = connect(mapStateToProps, mapDispatchToProps)(BulkUpdatePopupComponent);
-
-var divStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    maxHeight: '400px'
-};
-
-var checkboxStyle: React.CSSProperties = {
-    padding: '5px'
-};
 

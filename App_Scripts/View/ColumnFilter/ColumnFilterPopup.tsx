@@ -59,7 +59,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         })
 
         return  <div className="adaptable_blotter_style_popup_columnfilter">
-        <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" style={panelStyle} infoBody={infoBody}
+        <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
             button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
             {columnFilterItems.length > 0 &&
@@ -91,8 +91,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ColumnFilterPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnFilterPopupComponent);
-
-
-let panelStyle = {
-    width: '800px'
-}

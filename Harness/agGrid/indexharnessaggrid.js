@@ -116,11 +116,11 @@ function getSchema(data) {
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text' });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
-    schema.push({ headerName: "DeskId", field: "deskId", filter: 'text' });
-    schema.push({ headerName: "Counterparty", field: "counterparty", filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Country", field: "country", filter: 'text',rowGroup: true, enableRowGroup: true, hide: true });
-    schema.push({ headerName: "Currency", field: "currency", filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Change On Year", field: "changeOnYear", filter: 'text' });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' });
+    schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text',enableRowGroup: true, hide: true });
+    schema.push({ headerName: "Currency", field: "currency", editable: true, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
 
     schema.push({
         headerName: "Pricing",

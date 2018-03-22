@@ -184,8 +184,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let SmartEditPopup = connect(mapStateToProps, mapDispatchToProps)(SmartEditPopupComponent);
 
-var divStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    maxHeight: '400px'
-};
-

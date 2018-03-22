@@ -26,14 +26,10 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
                 {optionColumns}
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={header} bsSize={"small"} className={className} style={panelWithRowStyle} bsStyle={this.props.bsStyle}>
+        return <Panel header={header} bsSize={"small"} className="no_padding_no_margin_style"  bsStyle={this.props.bsStyle}>
             {this.props.children}
         </Panel>;
     }
 
 }
 
-let panelWithRowStyle = {
-    margin: '0px',
-    padding: '0px'
-}

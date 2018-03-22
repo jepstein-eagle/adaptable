@@ -62,7 +62,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     {this.state.ActiveState}
                 </Modal.Body>
                 <Modal.Footer className="adaptable_blotter_style_wizard_base">
-                    <Button style={buttonLeftStyle} onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
+                    <Button className="adaptableblotter_left_modal_button" onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
                     <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
                     <Button bsStyle="primary" disabled={!this.ActiveStep.canNext()} onClick={() => this.handleClickNext()}>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"} /></Button>
                 </Modal.Footer>
@@ -129,6 +129,3 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 }
 
-var buttonLeftStyle = {
-    float: 'left'
-};

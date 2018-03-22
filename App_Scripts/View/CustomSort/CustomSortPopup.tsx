@@ -86,7 +86,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_customsort">
-            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} style={panelStyle} infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} className="adaptableblotter_modal_main_panel" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
                 {customSorts.length > 0 &&
@@ -158,7 +158,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let CustomSortPopup = connect(mapStateToProps, mapDispatchToProps)(CustomSortPopupComponent);
-
-let panelStyle = {
-    width: '800px'
-}

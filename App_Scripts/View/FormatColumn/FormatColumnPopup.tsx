@@ -86,7 +86,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         return <div className="adaptable_blotter_style_popup_formatcolumn">
             <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
                 button={newButton}
-                bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
+                bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
                 {this.props.FormatColumns.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new column format.</Well>
@@ -154,7 +154,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FormatColumnPopup = connect(mapStateToProps, mapDispatchToProps)(FormatColumnPopupComponent);
 
-let panelStyle = {
-    width: '800px'
-}
 

@@ -84,7 +84,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_calculatedcolumn">
-            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} style={widePanelStyle} infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptableblotter_modal_main_panel" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&
@@ -161,6 +161,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CalculatedColumnPopup = connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnPopupComponent);
 
-let widePanelStyle = {
-    width: '800px'
-}

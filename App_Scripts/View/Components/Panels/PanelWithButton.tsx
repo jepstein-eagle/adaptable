@@ -37,7 +37,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
 
                 <Col xs={9}>
                     {this.props.glyphicon != null &&
-                        <Glyphicon glyph={this.props.glyphicon} style={glyphBigRightMarginStyle} />
+                        <Glyphicon glyph={this.props.glyphicon} className="large_right_margin_style" />
                     }
                     {this.props.headerText}
                     {' '}
@@ -65,7 +65,4 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
     }
 }
 
-let glyphBigRightMarginStyle = {
-    marginRight: '10px',
-    padding: '0px'
-}
+

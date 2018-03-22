@@ -33,7 +33,8 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Between, this.props.DataType)}</MenuItem>
                 </DropdownButton>
 
-                return <Panel style={panelStyle} key={index} bsStyle="primary" className="small-padding-panel">
+                return <Panel key={index} bsStyle="primary" className="small-padding-panel">
+                <div className="no_padding_medium_margin_style">
                     <AdaptableBlotterForm horizontal key={index}>
                         <FormGroup controlId={"Range" + index}>
 
@@ -84,6 +85,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
                         </FormGroup>
                     </AdaptableBlotterForm>
+                    </div>
                 </Panel>
 
             })
@@ -262,10 +264,5 @@ let deleteButtonStyle = {
 
 
 
-let panelStyle = {
-    'margin': '5px',
-    'padding': '0px',
-
-}
 
 let betweenAddOnStyle = { marginLeft: '41px' }

@@ -31,25 +31,25 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
     render() {
         return <div className="adaptable_blotter_style_wizard_export_reportcolumns">
             <Panel header="Select Columns for the Report" bsStyle="primary">
-                <Col xs={2} style={radioMarginStyle}>
+                <Col xs={2} className="medium_margin_style">
                     <ControlLabel>Columns:</ControlLabel>
                 </Col>
-                <Col xs={2} style={radioMarginStyle}>
+                <Col xs={2} className="medium_margin_style">
                     <AdaptableBlotterForm inline>
                         <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} All </Radio>
-                        {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
+                        {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover  headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
-                <Col xs={3} style={radioMarginStyle}>
+                <Col xs={3} className="medium_margin_style">
                     <AdaptableBlotterForm inline>
                         <Radio value="Visible" checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} Visible </Radio>
-                        {' '} <span style={helpButtonStyle} > <AdaptablePopover headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]} popoverType={PopoverType.Info} /></span>
+                        {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
-                <Col xs={3} style={radioMarginStyle}>
+                <Col xs={3} className="medium_margin_style">
                     <AdaptableBlotterForm inline>
                         <Radio value="Bespoke" checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}Bespoke </Radio>
-                        {' '} <span style={helpButtonStyle} ><AdaptablePopover headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen below will be exported (visible or not)."]} popoverType={PopoverType.Info} /></span>
+                        {' '} <span className="adaptableblotter_info_button" ><AdaptablePopover headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen below will be exported (visible or not)."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
                 </Col>
             </Panel>
@@ -101,11 +101,5 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
 }
 
 
-let radioMarginStyle = {
-    margin: '5px'
-}
 
-let helpButtonStyle = {
-    'marginLeft': '3px'
-}
 

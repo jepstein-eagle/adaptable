@@ -89,7 +89,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             size={"small"} />
 
             return <div className="adaptable_blotter_style_popup_plusminus">
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" style={panelStyle}
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel"
             button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
             infoBody={infoBody}>
 
@@ -196,7 +196,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let PlusMinusPopup = connect(mapStateToProps, mapDispatchToProps)(PlusMinusPopupComponent);
-
-let panelStyle = {
-    width: '800px'
-}

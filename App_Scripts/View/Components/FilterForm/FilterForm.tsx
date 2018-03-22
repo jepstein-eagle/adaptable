@@ -66,7 +66,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
         let clearButton = <ButtonClear onClick={() => this.onClearFilter()}
-            style={buttonCloseStyle}
             size={"xsmall"}
             overrideDisableButton={existingColumnFilter == null}
             overrideTooltip="Clear Filter"
@@ -177,10 +176,5 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
 </Provider>;
 
 let panelStyle = {
-    width: '175px'
-}
-
-let buttonCloseStyle = {
-    margin: '0px',
-    padding: '0px'
+    width: '235px'
 }

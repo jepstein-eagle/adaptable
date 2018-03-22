@@ -91,7 +91,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_cellvalidation">
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" style={widePanelStyle}
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel"
                 button={newButton}
                 glyphicon={StrategyGlyphs.CellValidationGlyph}
                 infoBody={infoBody}>
@@ -163,9 +163,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let CellValidationPopup = connect(mapStateToProps, mapDispatchToProps)(CellValidationPopupComponent);
 
-
-
-let widePanelStyle = {
-    width: '800px'
-}
 

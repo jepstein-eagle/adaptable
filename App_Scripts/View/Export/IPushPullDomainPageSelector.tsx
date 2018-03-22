@@ -56,12 +56,12 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
 
             {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle="danger">
                 Error getting iPushPull Pages : {this.props.ErrorMsg}
-            </Alert> : <ListGroup fill style={divStyle}>
+            </Alert> : <ListGroup fill className="preview_panel">
                     {itemsElements}
                 </ListGroup>}
-            <Button style={buttonRightStyle} onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+            <Button className="adaptableblotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
             <Button disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
-                style={buttonRightStyle} bsStyle="primary"
+                className="adaptableblotter_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onApplyExport(this.props.PopupParams, this.state.SelectedFolder, this.state.SelectedPage) }}>
                 <Glyphicon glyph="user" /> Select</Button>
         </PanelWithButton>
@@ -95,13 +95,5 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let IPushPullDomainPageSelector = connect(mapStateToProps, mapDispatchToProps)(IPushPullDomainPageSelectorComponent);
 
-var buttonRightStyle = {
-    float: 'right',
-    marginLeft: '5px'
-};
 
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'maxHeight': '300px'
-}

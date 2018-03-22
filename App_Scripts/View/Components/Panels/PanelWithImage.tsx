@@ -23,7 +23,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         let headerRow = <AdaptableBlotterForm inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
                 <Col xs={12}>
-                    {<Glyphicon glyph={this.props.glyphicon} style={marginRightStyle} />}
+                    {<Glyphicon glyph={this.props.glyphicon} className="large_right_margin_style" />}
                     {this.props.header}
                      {' '}
                     {this.props.infoBody != null &&
@@ -40,9 +40,4 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         </Panel>;
     }
 
-}
-
-let marginRightStyle = {
-    marginRight: '10px',
-    padding: '0px'
 }

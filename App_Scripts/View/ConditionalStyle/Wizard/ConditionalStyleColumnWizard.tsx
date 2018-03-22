@@ -33,18 +33,18 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
         return <div className="adaptable_blotter_style_wizard_conditionalstyle_column">
             <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
                 <AdaptableBlotterForm inline>
-                    <Col xs={12} style={radioMarginStyle}>
+                    <Col xs={12} className="large_margin_style">
 
                         <Radio inline value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}>Whole Row</Radio>
                         {' '} {' '}<AdaptablePopover headerText={"Conditional Style: Whole Row"} bodyText={["The conditional style will be applied to alls cells in each matching row."]} popoverType={PopoverType.Info} />
                     </Col>
-                    <Col xs={12} style={radioMarginStyle}>
+                    <Col xs={12} className="large_margin_style">
                         <Radio inline value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}>Column</Radio>
                         {' '} {' '}<AdaptablePopover headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} />
 
                     </Col>
                 </AdaptableBlotterForm>
-                <Col xs={12} style={radioMarginStyle}>
+                <Col xs={12} className="large_margin_style">
                     {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
                         <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                             ColumnList={this.props.Columns}
@@ -93,7 +93,4 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
     public StepName = this.props.StepName
 }
 
-let radioMarginStyle = {
-    margin: '10px'
-}
 

@@ -37,9 +37,9 @@ class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPush
                 <FormControl type="password" onChange={(e) => this.onPasswordChange(e)} />
                 <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
             </FormGroup>
-             <Button style={buttonRightStyle} onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+             <Button className="adaptableblotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
               <Button disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
-                style={buttonRightStyle} bsStyle="primary"
+                className="adaptableblotter_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onLogin(this.state.Login, this.state.Password) }}><Glyphicon glyph="user" /> Login</Button>
     
         </PanelWithButton>
@@ -70,8 +70,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let IPushPullLogin = connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);
-
-var buttonRightStyle = {
-    float: 'right',
-    marginLeft: '5px'
-};

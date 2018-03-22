@@ -323,7 +323,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
             //if the selected cell is from a group cell we don't return it
             //that's a design choice as this is used only when editing and you cant edit those cells
-            if (!rowNode.group) {
+            if (rowNode && !rowNode.group) {
                 return {
                     ColumnId: activeCell.column.getColId(),
                     Id: this.getPrimaryKeyValueFromRecord(rowNode),

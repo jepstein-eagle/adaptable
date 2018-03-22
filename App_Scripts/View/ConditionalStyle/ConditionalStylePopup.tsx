@@ -87,7 +87,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_conditionalstyle">
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" style={panelStyle} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
@@ -152,7 +152,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ConditionalStylePopup = connect(mapStateToProps, mapDispatchToProps)(ConditionalStyleConfigComponent);
 
-let panelStyle = {
-    width: '800px'
-}
 

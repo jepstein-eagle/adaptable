@@ -27,7 +27,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
             </Popover>);
 
         return <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
-            <Label bsSize="large" bsStyle={this.getStyle()} style={glyphPaddingStyle}>
+            <Label bsSize="large" bsStyle={this.getStyle()} className="medium_padding_style">
                 <Glyphicon glyph={this.getGlyphName()}   />
             </Label>
         </OverlayTrigger>
@@ -59,7 +59,3 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
       }
 }
 
-let glyphPaddingStyle = {
-    padding: '5px',
-   
-};

@@ -150,7 +150,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
 
             return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? "adaptable_blotter_readonly" : ""}>
-                <Button block style={panelHeaderStyle}
+                <Button block className="no_margin_style"
                     bsStyle="success"
                     key={columnId + "header"}
                     ref={columnId}
@@ -216,6 +216,3 @@ let divStyle: React.CSSProperties = {
     'height': '490px'
 }
 
-let panelHeaderStyle: React.CSSProperties = {
-    marginBottom: '0px'
-}

@@ -48,18 +48,18 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     <Col xs={12}>
                         <HelpBlock>{helpText}</HelpBlock>
                     </Col>
-                    <Col xs={12} style={divStyle}>
+                    <Col xs={12} className="large_margin_style">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
                         {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
                     </Col>
-                    <Col xs={12} style={divStyle}>
+                    <Col xs={12} className="large_margin_style">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
                         {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 
                 { /* if not None operator then show operator dropdown */}
-                <FormGroup style={divStyle}>
+                <FormGroup className="large_margin_style">
                     <Col xs={1}></Col>
                     <Col xs={6}>
                         <FormControl disabled={this.checkOperator(LeafExpressionOperator.None)} componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >
@@ -197,7 +197,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        var rangeExpression: IRange = {
+        let rangeExpression: IRange = {
             Operator: this.state.Operator,
             Operand1: this.state.Operand1,
             Operand2: this.state.Operand2,
@@ -208,12 +208,9 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
     }
 
-    public Back(): void { }
+    public Back(): void { 
+        //todo
+    }
     public StepName = this.props.StepName
-}
-
-
-let divStyle = {
-    margin: '10px'
 }
 

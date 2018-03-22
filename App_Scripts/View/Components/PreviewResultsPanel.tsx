@@ -55,7 +55,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
 
         return <div className="adaptable_blotter_style_previewresults">
             {this.props.ShowPanel &&
-                <Panel header={previewHeader} bsStyle="info" style={divStyle}>
+                <Panel header={previewHeader} bsStyle="info" className="preview_panel">
                     <Table >
                         {header}
                         <tbody>
@@ -81,7 +81,3 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
 }
 
 
-var divStyle: React.CSSProperties = {
-    overflowY: 'auto',
-    maxHeight: '400px'
-};
