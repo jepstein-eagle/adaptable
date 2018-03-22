@@ -116,7 +116,7 @@ function getSchema(data) {
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text' });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' , enableRowGroup: true});
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text',enableRowGroup: true, hide: true });
     schema.push({ headerName: "Currency", field: "currency", editable: true, filter: 'text', enableRowGroup: true });
@@ -126,7 +126,7 @@ function getSchema(data) {
         headerName: "Pricing",
         children: [
             { headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell'},
-            { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell'},
+            { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true},
             { headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell'},
             { headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell'},
             { headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell'},

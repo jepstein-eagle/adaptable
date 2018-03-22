@@ -408,18 +408,18 @@ export module ExpressionHelper {
                 break
             case DataType.Number:
                 if (rangeExpression.IsOperand1Column) {
-                    rangeEvaluation.operand1 = getOtherColumnValue(rangeExpression.Operand1);
+                    rangeEvaluation.operand1 = Number( getOtherColumnValue(rangeExpression.Operand1));
                 } else {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
                     if (rangeExpression.IsOperand2Column) {
-                        rangeEvaluation.operand2 = getOtherColumnValue(rangeExpression.Operand2);
+                        rangeEvaluation.operand2 = Number( getOtherColumnValue(rangeExpression.Operand2));
                     } else {
                         rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
                     }
                 }
-                rangeEvaluation.newValue = newValue;
+                rangeEvaluation.newValue = Number(newValue);
                 break
             case DataType.Boolean:
                 rangeEvaluation.newValue = newValue;
