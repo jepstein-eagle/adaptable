@@ -506,6 +506,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+
+
+
+
+
     public selectCells(cells: ICellInfo[]): void {
         // todo?
     }
@@ -1001,13 +1006,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.gridOptions.columnApi.getAllColumns().length;
     }
 
-    public getDisplayValueFunction(id: any): (columnName: string) => any {
-        return (columnName: string) => { return this.getDisplayValue(id, columnName) }
-    }
-
-    public getDisplayValueFunctionFromRecord(record: any): (columnName: string) => any {
-        return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName) }
-    }
+  
 
 
 }

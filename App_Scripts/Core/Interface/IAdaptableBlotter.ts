@@ -56,9 +56,6 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
 
-    // not too sure
-    getDisplayValueFunction(id: any):(columnName: string)=>any
-    getDisplayValueFunctionFromRecord(id: any):(columnName: string)=>any
 
     // editing related
     setValue(cellInfo: ICellInfo): void

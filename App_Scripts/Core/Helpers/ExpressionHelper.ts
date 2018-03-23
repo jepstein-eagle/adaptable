@@ -353,9 +353,9 @@ export module ExpressionHelper {
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,
-            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),
-            blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"),
-            blotter.getDisplayValueFunction(identifierValue),
+            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // this value
+            blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
+            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),  // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
@@ -365,9 +365,9 @@ export module ExpressionHelper {
     export function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),
-            blotter.getDisplayValueFunctionFromRecord(record),
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter
@@ -408,7 +408,8 @@ export module ExpressionHelper {
                 break
             case DataType.Number:
                 if (rangeExpression.IsOperand1Column) {
-                    rangeEvaluation.operand1 = Number( getOtherColumnValue(rangeExpression.Operand1));
+                    let otherValue =getOtherColumnValue(rangeExpression.Operand1);
+                    rangeEvaluation.operand1 = Number( otherValue);
                 } else {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
