@@ -7,24 +7,24 @@ import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
+import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
-    FlashingCellColumns: IFlashingColumn[]
-    onSelectFlashingColumn: (flashingCell: IFlashingColumn) => FlashingCellRedux.FlashingCellSelectAction,
+    FlashingCells: IFlashingCell[]
+    onSelectFlashingCell: (flashingCell: IFlashingCell) => FlashingCellRedux.FlashingCellSelectAction,
 }
 
 export class FlashingCellSummaryComponent extends React.Component<FlashingCellSummaryProps, EditableConfigEntityState> {
     render(): any {
-        let flashingColumn: IFlashingColumn = this.props.FlashingCellColumns.find(fc => fc.ColumnName == this.props.SummarisedColumn.ColumnId);
+        let flashingCell: IFlashingCell = this.props.FlashingCells.find(fc => fc.ColumnName == this.props.SummarisedColumn.ColumnId);
 
-        let showFlashingButton = (!flashingColumn || !flashingColumn.IsLive) ?
-            <Button onClick={() => this.onFlashingSelectedChanged(flashingColumn)} bsStyle="info" bsSize="small">Flashing Off</Button>
-            : <Button onClick={() => this.onFlashingSelectedChanged(flashingColumn)} bsStyle="success" bsSize="small">Flashing On</Button>
+        let showFlashingButton = (!flashingCell || !flashingCell.IsLive) ?
+            <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="info" bsSize="small">Flashing Off</Button>
+            : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="success" bsSize="small">Flashing On</Button>
 
         let colItems: IColItem[] = []
         colItems.push({ Size: 3, Content: <b>{StrategyNames.FlashingCellsStrategyName}</b> });
@@ -36,27 +36,27 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         </div>
     }
 
-    onFlashingSelectedChanged(flashingColumn: IFlashingColumn) {
-        let existingfc = this.props.FlashingCellColumns.find(e => e.ColumnName == this.props.SummarisedColumn.ColumnId)
+    onFlashingSelectedChanged(flashingCell: IFlashingCell) {
+        let existingfc = this.props.FlashingCells.find(e => e.ColumnName == this.props.SummarisedColumn.ColumnId)
         if (!existingfc) {
             let col: IColumn = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
-            existingfc = ObjectFactory.CreateDefaultFlashingColumn(col);
-            this.props.onSelectFlashingColumn(existingfc)
+            existingfc = ObjectFactory.CreateDefaultFlashingCell(col);
+            this.props.onSelectFlashingCell(existingfc)
         }
-        this.props.onSelectFlashingColumn(existingfc)
+        this.props.onSelectFlashingCell(existingfc)
     }
 
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FlashingCellColumns: state.FlashingCell.FlashingColumns,
+        FlashingCellColumns: state.FlashingCell.FlashingCells,
         Columns: state.Grid.Columns
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectFlashingColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellRedux.FlashingCellSelect(flashingCell)),
+        onSelectFlashingCell: (flashingCell: IFlashingCell) => dispatch(FlashingCellRedux.FlashingCellSelect(flashingCell)),
     };
 }
 

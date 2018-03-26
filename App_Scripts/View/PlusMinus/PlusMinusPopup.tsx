@@ -13,9 +13,9 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
@@ -31,9 +31,10 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
     DefaultNudgeValue: number,
     Columns: IColumn[],
     UserFilters: IUserFilter[],
-    PlusMinusConditions: IPlusMinusCondition[]
+    SystemFilters: ISystemFilter[],
+    PlusMinusRules: IPlusMinusRule[]
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditConditionAction
-    onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
+    onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusRule) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -48,7 +49,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
-                let plusMinus = ObjectFactory.CreateEmptyPlusMinusCondition()
+                let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule()
                 plusMinus.ColumnId = arrayParams[1]
                 this.setState({ EditedAdaptableBlotterObject: plusMinus, EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 1 });
             }
@@ -65,7 +66,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             { Content: "Row Condition", Size: 4 },
             { Content: "", Size: 3 },
         ]
-        let plusMinusConditions = this.props.PlusMinusConditions.map((x, index) => {
+        let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
 
             return <PlusMinusEntityRow
@@ -75,7 +76,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 Index={index}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
-                onEdit={(index, customSort) => this.onEdit(index, x as IPlusMinusCondition)}
+                onEdit={(index, customSort) => this.onEdit(index, x as IPlusMinusRule)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onShare={() => this.props.onShare(x)}
                 onDeleteConfirm={PlusMinusRedux.PlusMinusDeleteCondition(index)}
@@ -93,21 +94,21 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
             infoBody={infoBody}>
 
-            {plusMinusConditions.length > 0 &&
-                <AdaptableObjectCollection ColItems={colItems} items={plusMinusConditions} />
+            {PlusMinusRules.length > 0 &&
+                <AdaptableObjectCollection ColItems={colItems} items={PlusMinusRules} />
             }
 
-            {plusMinusConditions.length == 0 &&
+            {PlusMinusRules.length == 0 &&
                 <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
             }
 
             {this.state.EditedAdaptableBlotterObject != null &&
 
                 <PlusMinusWizard
-                    EditedPlusMinusCondition={this.state.EditedAdaptableBlotterObject as IPlusMinusCondition}
-                    PlusMinusConditions={this.props.PlusMinusConditions}
+                    EditedPlusMinusRule={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     WizardStartIndex={this.state.WizardStartIndex}
                     SelectedColumnId={null}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -121,10 +122,10 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
 
     createColumnNudgeValue() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPlusMinusCondition(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPlusMinusRule(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
-    onEdit(index: number, condition: IPlusMinusCondition) {
-        let clonedObject: IPlusMinusCondition = Helper.cloneObject(condition);
+    onEdit(index: number, condition: IPlusMinusRule) {
+        let clonedObject: IPlusMinusRule = Helper.cloneObject(condition);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
 
@@ -134,20 +135,20 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
     }
 
     onFinishWizard() {
-        let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusCondition
+        let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule
         this.onAddColumnDefaultNudgeValue(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: this.props.PlusMinusConditions[index].ColumnId, DefaultNudge: parseFloat(e.value) });
+        this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: this.props.PlusMinusRules[index].ColumnId, DefaultNudge: parseFloat(e.value) });
     }
 
-    onAddColumnDefaultNudgeValue(index: number, plusMinus: IPlusMinusCondition) {
+    onAddColumnDefaultNudgeValue(index: number, plusMinus: IPlusMinusRule) {
         // check if its a default nudge value that there is not one already set for that column
         if (plusMinus.IsDefaultNudge) {
-            let existingIndex: number = this.props.PlusMinusConditions.findIndex(p => p.ColumnId == plusMinus.ColumnId && p.IsDefaultNudge);
+            let existingIndex: number = this.props.PlusMinusRules.findIndex(p => p.ColumnId == plusMinus.ColumnId && p.IsDefaultNudge);
             if (existingIndex > -1) {
                 if (existingIndex == index) { // editing the existing default nudge so just do an edit
                     this.props.onEditColumnDefaultNudgeValue(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue });
@@ -162,7 +163,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         }
     }
 
-    private onConfirmWarningCellValidation(index: number, plusMinus: IPlusMinusCondition) {
+    private onConfirmWarningCellValidation(index: number, plusMinus: IPlusMinusRule) {
         let confirmation: IUIConfirmation = {
             CancelText: "Cancel Edit",
             ConfirmationTitle: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
@@ -180,16 +181,17 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
+        PlusMinusRules: state.PlusMinus.PlusMinusRules,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => dispatch(PlusMinusRedux.PlusMinusEditCondition(Index, ColumnDefaultNudge)),
-        onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge)),
+        onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusRule) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
     };

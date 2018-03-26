@@ -1,4 +1,4 @@
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -17,7 +17,7 @@ export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
     render(): any {
-        let x: IPlusMinusCondition = this.props.AdaptableBlotterObject as IPlusMinusCondition
+        let x: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
         colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : x.ColumnId + GeneralConstants.MISSING_COLUMN
@@ -31,7 +31,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={false}
             ConfigEntity={x}
-            EntityName="P">
+            EntityName="Plus/Minus">
         </EntityListActionButtons>
         colItems[3].Content = buttons
 
@@ -40,8 +40,8 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     }
 
 
-    private wrapExpressionDescription(plusMinusCondition: IPlusMinusCondition): string {
-        return (plusMinusCondition.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(plusMinusCondition.Expression, this.props.Columns, this.props.UserFilters);
+    private wrapExpressionDescription(PlusMinusRule: IPlusMinusRule): string {
+        return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns, this.props.UserFilters);
     }
 }
 

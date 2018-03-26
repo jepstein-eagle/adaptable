@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IRange } from '../../Core/Interface/IRange'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
@@ -9,7 +9,7 @@ import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { Well, FormGroup, ControlLabel, Row, Col } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
+import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode } from '../../Core/Enums'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -25,6 +25,7 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
     onSelectedColumnChange: (ColumnName: string) => void
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     UserFilters: IUserFilter[]
+    SystemFilters: ISystemFilter[]
     SelectedColumnId: string
 }
 
@@ -32,8 +33,8 @@ export interface ExpressionBuilderConditionSelectorState {
     IsFirstTime: boolean
     ColumnValues: Array<any>
     SelectedColumnValues: Array<any>
-    UserFilterExpresions: Array<string>
-    SelectedUserFilterExpresions: Array<string>
+    AllFilterExpresions: Array<string>
+    SelectedFilterExpressions: Array<string>
     SelectedColumnRanges: Array<IRange>
 }
 
@@ -53,8 +54,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: [],
                 SelectedColumnValues: [],
-                UserFilterExpresions: [],
-                SelectedUserFilterExpresions: [],
+                AllFilterExpresions: [],
+                SelectedFilterExpressions: [],
                 SelectedColumnRanges: [],
                 IsFirstTime: StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)
                     && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
@@ -63,8 +64,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         }
         else {
             let selectedColumnValues: Array<any>
-            let selectedColumnUserFilterExpressions: Array<string>
-            let selectedColumnRanges: Array<IRange>
+            let selectedColumnFilterExpressions: Array<string>
+             let selectedColumnRanges: Array<IRange>
 
             // get column values
             let keyValuePair = theProps.Expression.ColumnDisplayValuesExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
@@ -75,14 +76,26 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 selectedColumnValues = []
             }
 
-            // get user filter expressions
-            let userFilterExpressions = theProps.Expression.UserFilterExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
-            if (userFilterExpressions) {
-                selectedColumnUserFilterExpressions = userFilterExpressions.UserFilters;
+            // get  filter expressions
+            let filterExpressions = theProps.Expression.FilterExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
+            selectedColumnFilterExpressions = []
+            if (filterExpressions) {
+                filterExpressions.Filters.forEach((fe: string) => {
+                    // if its a userfilter add it to that list
+                    let userFilter: IUserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
+                    if (userFilter) {
+                        selectedColumnFilterExpressions.push(fe);
+                    }
+                    // if it is a system filter add it ot that list
+                    let systemFilter: ISystemFilter = this.props.SystemFilters.find(sf => sf.Name == fe);
+                    if (systemFilter) {
+                        selectedColumnFilterExpressions.push(fe);
+                    }
+                })
             }
-            else {
-                selectedColumnUserFilterExpressions = []
-            }
+
+        let combinedFilterExpressions: string[]=this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf=>sf.Name));
+               
 
             // get ranges
             let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
@@ -95,9 +108,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             return {
                 ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue),
                 SelectedColumnValues: selectedColumnValues,
-                UserFilterExpresions: this.props.UserFilters.map(f => f.Name),
-                SelectedUserFilterExpresions: selectedColumnUserFilterExpressions,
-                SelectedColumnRanges: selectedColumnRanges,
+                AllFilterExpresions: combinedFilterExpressions,
+                SelectedFilterExpressions: selectedColumnFilterExpressions,
+                  SelectedColumnRanges: selectedColumnRanges,
                 IsFirstTime: StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)
                     && ExpressionHelper.IsExpressionEmpty(theProps.Expression)
                     && (this.state ? this.state.IsFirstTime : true)
@@ -110,9 +123,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumnDataType: DataType = column ? column.DataType : null
         let selectedColumn: IColumn = column;
 
-        let availableExpressionIds: string[] = column ? this.state.UserFilterExpresions.filter(f => UserFilterHelper.ShowUserFilterForColumn(this.props.UserFilters, f, selectedColumn)) : [];
+        // get filter names
+        // first system ones
+        let availableFilterNames: string[] = []
+        FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf: ISystemFilter) => {
+            availableFilterNames.push(sf.Name)
+        })
+        FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf: IUserFilter) => {
+            availableFilterNames.push(uf.Name)
+        })
 
-        let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedUserFilterExpresions.length > 0;
+       
+
+        let hasConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedFilterExpressions.length > 0;
         let addConditionButtonDisabled: boolean = !this.state.IsFirstTime && !hasConditions || (this.props.ExpressionMode == ExpressionMode.SingleColumn && !ExpressionHelper.IsExpressionEmpty(this.props.Expression));
         let columnDropdownDisabled: boolean = (this.props.ExpressionMode == ExpressionMode.SingleColumn && StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId)) || !addConditionButtonDisabled;
 
@@ -174,9 +197,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         }
                         <Col xs={4}>
                             <ExpressionBuilderUserFilter
-                                UserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, availableExpressionIds)}
-                                SelectedUserFilterExpressions={UserFilterHelper.GetUserFilters(this.props.UserFilters, this.state.SelectedUserFilterExpresions)}
-                                onUserFilterExpressionChange={(selectedValues) => this.onSelectedUserFilterExpressionsChange(selectedValues)} >
+                                AvailableFilterNames={availableFilterNames}
+                                SelectedFilterNames={this.state.SelectedFilterExpressions}
+                                onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
                             </ExpressionBuilderUserFilter>
                         </Col>
                         {selectedColumn.DataType != DataType.Boolean &&
@@ -238,26 +261,25 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.setState({ SelectedColumnValues: selectedColumnValues } as ExpressionBuilderConditionSelectorState)
     }
 
-    onSelectedUserFilterExpressionsChange(selectedUserFilterExpressions: Array<IUserFilter>) {
-        //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let selectedUserFilterExpressionUids: string[] = selectedUserFilterExpressions.map(s => s.Name);
-        let colUserFilterExpression = this.props.Expression.UserFilterExpressions
+    onSelectedFiltersChanged(selectedFilters: Array<string>) {
+ //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let colUserFilterExpression = this.props.Expression.FilterExpressions
         let userFilterExpressionCol = colUserFilterExpression.find(x => x.ColumnName == this.props.SelectedColumnId)
         if (userFilterExpressionCol) {
-            if (selectedUserFilterExpressions.length == 0) {
+            if (selectedFilters.length == 0) {
                 let keyValuePairIndex = colUserFilterExpression.findIndex(x => x.ColumnName == this.props.SelectedColumnId)
                 colUserFilterExpression.splice(keyValuePairIndex, 1)
             }
             else {
-                userFilterExpressionCol.UserFilters = selectedUserFilterExpressionUids
+                userFilterExpressionCol.Filters = selectedFilters
             }
         }
         else {
-            colUserFilterExpression.push({ ColumnName: this.props.SelectedColumnId, UserFilters: selectedUserFilterExpressionUids })
+            colUserFilterExpression.push({ ColumnName: this.props.SelectedColumnId, Filters: selectedFilters })
         }
 
-        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { UserFilters: colUserFilterExpression }))
-        this.setState({ SelectedUserFilterExpresions: selectedUserFilterExpressionUids } as ExpressionBuilderConditionSelectorState)
+        this.props.onExpressionChange(Object.assign({}, this.props.Expression, { FilterExpressions: colUserFilterExpression }))
+        this.setState({ SelectedFilterExpressions: selectedFilters } as ExpressionBuilderConditionSelectorState)
     }
 
     private onColumnSelectChange(columns: IColumn[]) {

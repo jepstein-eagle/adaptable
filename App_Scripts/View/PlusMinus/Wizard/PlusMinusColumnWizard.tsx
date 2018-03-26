@@ -1,4 +1,4 @@
-import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
@@ -7,7 +7,7 @@ import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 
-export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusCondition> {
+export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: Array<IColumn>
 }
 

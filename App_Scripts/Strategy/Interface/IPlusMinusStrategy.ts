@@ -6,7 +6,7 @@ export interface IPlusMinusStrategy extends IStrategy {
     ApplyPlusMinus(keyEventString: string, newValues: ICellInfo[]): void
 }
 
-export interface IPlusMinusCondition extends IAdaptableBlotterObject{
+export interface IPlusMinusRule extends IAdaptableBlotterObject{
     ColumnId: string
     IsDefaultNudge: boolean
     NudgeValue: number

@@ -1,6 +1,6 @@
 {
 	"Entitlements": {
-			"FunctionEntitlements": [
+		"FunctionEntitlements": [
 			{
 				"FunctionName": "CustomSort",
 				"AccessLevel": "Hidden"
@@ -10,7 +10,7 @@
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "ConditionalStyle",
+				"FunctionName": "Theme",
 				"AccessLevel": "Hidden"
 			},
 			{
@@ -23,8 +23,8 @@
 		"SmartEditValue": "12345",
 		"SmartEditOperation": "Multiply"
 	},
-	"Calendars": {
-		"CurrentCalendar": "Germany"
+	"Calendar": {
+		"CurrentCalendar": "Singapore"
 	},
 	"CustomSort": {
 		"CustomSorts": [
@@ -67,6 +67,18 @@
 				"ShortcutOperation": "Multiply",
 				"IsPredefined": true,
 				"IsDynamic": true
+			}
+		]
+	},
+	"Theme": {
+		"PredefinedThemes": [
+			{
+				"Name": "Hello World",
+				"Location": "Hello location"
+			},
+			{
+				"Name": "Goodbye World",
+				"Location": "Goodbye location"
 			}
 		]
 	}

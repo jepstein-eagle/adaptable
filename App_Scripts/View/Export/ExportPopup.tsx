@@ -8,7 +8,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { ExportDestination } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IReport, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -33,7 +33,8 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onAddUpdateReport: (index: number, Report: IReport) => ExportRedux.ReportAddUpdateAction;
     onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
-    UserFilters: IUserFilter[]
+    UserFilters: IUserFilter[],
+    SystemFilters: ISystemFilter[],
     Columns: Array<IColumn>
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -109,6 +110,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
@@ -150,6 +152,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         LiveReports: state.Export.CurrentLiveReports,
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
     };
 }
 

@@ -1,5 +1,6 @@
 import { SortOrder } from '../../Core/Enums'
 import { StringExtensions } from '../Extensions/StringExtensions'
+import * as fs from 'fs'
 
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;
@@ -30,23 +31,7 @@ export module Helper {
         return JSON.parse(JSON.stringify(obj))
     }
 
-    /*
-        export function generateUid(): string {
-            var d = new Date().getTime();
-            if (window.performance && typeof window.performance.now === "function") {
-                d += performance.now(); //use high-precision timer if available
-            }
-            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-                c => {
-                    var r = (d + Math.random() * 16) % 16 | 0;
-                    d = Math.floor(d / 16);
-                    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-                });
-            return uuid;
-        }
-    */
-
-    export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
+       export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
         let newValues = [].concat(values)
         let direction = 1
         if (sortOrder == SortOrder.Descending) {
@@ -205,6 +190,12 @@ export module Helper {
 
     export function IsInputNotNullOrEmpty(itemToCheck: any) {
         return !IsInputNullOrEmpty(itemToCheck);
+    }
+
+    export function ReadFileContents(fileName: string): string{
+     // let contents: string = fs.readFileSync(fileName, { encoding: 'utf8' })
+       return fileName;
+         
     }
 }
 

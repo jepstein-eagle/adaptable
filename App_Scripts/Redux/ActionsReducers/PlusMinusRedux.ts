@@ -1,5 +1,5 @@
 import { PlusMinusState } from './Interface/IState';
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as Redux from 'redux'
 import { ICellInfo } from '../../Core/Interface/Interfaces';
 
@@ -15,7 +15,7 @@ export interface PlusMinusApplyAction extends Redux.Action {
 
 export interface PlusMinusAddUpdateConditionAction extends Redux.Action {
     Index: number,
-    PlusMinusCondition: IPlusMinusCondition
+    PlusMinusRule: IPlusMinusRule
 }
 
 export interface PlusMinusEditConditionAction extends Redux.Action {
@@ -33,10 +33,10 @@ export const PlusMinusApply = (CellInfos: ICellInfo[], KeyEventString: string): 
     KeyEventString,
 })
 
-export const PlusMinusAddUpdateCondition = (Index: number, PlusMinusCondition: IPlusMinusCondition): PlusMinusAddUpdateConditionAction => ({
+export const PlusMinusAddUpdateCondition = (Index: number, PlusMinusRule: IPlusMinusRule): PlusMinusAddUpdateConditionAction => ({
     type: PLUSMINUS_ADD_UPDATE_CONDITION,
     Index,
-    PlusMinusCondition
+    PlusMinusRule
 })
 
 export const PlusMinusEditCondition = (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }): PlusMinusEditConditionAction => ({
@@ -51,7 +51,7 @@ export const PlusMinusDeleteCondition = (Index: number): PlusMinusDeleteConditio
 })
 
 const initialPlusMinusState: PlusMinusState = {
-    PlusMinusConditions: []
+    PlusMinusRules: []
 }
 
 export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinusState = initialPlusMinusState, action: Redux.Action): PlusMinusState => {
@@ -62,28 +62,28 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinus
 
          case PLUSMINUS_ADD_UPDATE_CONDITION: {
             let actionTyped = (<PlusMinusAddUpdateConditionAction>action)
-            let newCol: IPlusMinusCondition[] = [].concat(state.PlusMinusConditions)
+            let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules)
             if (actionTyped.Index == -1) {
-                newCol.push(actionTyped.PlusMinusCondition)
+                plusMinusRules.push(actionTyped.PlusMinusRule)
             }
             else {
-                newCol[actionTyped.Index] = actionTyped.PlusMinusCondition
+                plusMinusRules[actionTyped.Index] = actionTyped.PlusMinusRule
             }
-            return Object.assign({}, state, { PlusMinusConditions: newCol })
+            return Object.assign({}, state, { PlusMinusRules: plusMinusRules })
         }
 
         case PLUSMINUS_EDIT_CONDITION: {
-            let newCol: IPlusMinusCondition[] = [].concat(state.PlusMinusConditions)
+            let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules)
             let actionTyped = (<PlusMinusEditConditionAction>action)
-            let oldCondition = newCol[actionTyped.Index]
-            newCol[actionTyped.Index] = Object.assign({}, oldCondition, { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, NudgeValue: actionTyped.ColumnDefaultNudge.DefaultNudge })
-            return Object.assign({}, state, { PlusMinusConditions: newCol })
+            let oldCondition = plusMinusRules[actionTyped.Index]
+            plusMinusRules[actionTyped.Index] = Object.assign({}, oldCondition, { ColumnId: actionTyped.ColumnDefaultNudge.ColumnId, NudgeValue: actionTyped.ColumnDefaultNudge.DefaultNudge })
+            return Object.assign({}, state, { PlusMinusRules: plusMinusRules })
         }
 
         case PLUSMINUS_DELETE_CONDITION: {
-            let newCol: IPlusMinusCondition[] = [].concat(state.PlusMinusConditions)
-            newCol.splice((<PlusMinusDeleteConditionAction>action).Index, 1)
-            return Object.assign({}, state, { PlusMinusConditions: newCol })
+            let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules)
+            plusMinusRules.splice((<PlusMinusDeleteConditionAction>action).Index, 1)
+            return Object.assign({}, state, { PlusMinusRules: plusMinusRules })
         }
         default:
             return state

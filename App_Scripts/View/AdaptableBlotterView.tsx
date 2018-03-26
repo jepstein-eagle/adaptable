@@ -15,9 +15,9 @@ import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterP
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
-  //  MenuState: MenuState;
-  //  DashboardState: DashboardState
-   // EntitlementsState: EntitlementsState,
+    //  MenuState: MenuState;
+    //  DashboardState: DashboardState
+    // EntitlementsState: EntitlementsState,
     AdaptableBlotter: IAdaptableBlotter;
     showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
@@ -36,7 +36,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
         return (
             <div className="adaptable_blotter_style_base" >
-                <Dashboard AdaptableBlotter={this.props.AdaptableBlotter}  />
+                <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
                     onClose={this.props.onCloseErrorPopup}
@@ -67,14 +67,14 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onConfirm={this.props.onConfirmConfirmationPopup}
                     ShowCommentBox={this.props.PopupState.ConfirmationPopup.ShowCommentBox} />
 
-                {/*  The main model window where action and configuration screens are 'hosted' */}
-                <AdaptableBlotterPopup showModal={this.props.PopupState.ActionConfigurationPopup.ShowPopup}
-                    ComponentName={this.props.PopupState.ActionConfigurationPopup.ComponentName}
+                {/*  The main model window where function screens are 'hosted' */}
+                <AdaptableBlotterPopup showModal={this.props.PopupState.ScreenPopup.ShowPopup}
+                    ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
                     onHide={this.props.onClosePopup}
-                    IsReadOnly={this.props.PopupState.ActionConfigurationPopup.IsReadOnly}
+                    IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
                     AdaptableBlotter={this.props.AdaptableBlotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
-                    PopupParams={this.props.PopupState.ActionConfigurationPopup.Params} />
+                    PopupParams={this.props.PopupState.ScreenPopup.Params} />
             </div>
 
         );
@@ -83,10 +83,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-     //   MenuState: state.Menu,
         PopupState: state.Popup,
-     //   DashboardState: state.Dashboard,
-     //   EntitlementsState: state.Entitlements,
         AdaptableBlotter: ownProps.Blotter,
     };
 }

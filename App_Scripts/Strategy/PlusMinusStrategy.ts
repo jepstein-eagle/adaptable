@@ -59,7 +59,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 side = -1
             }
 
-            let popup = this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ActionConfigurationPopup
+            let popup = this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ScreenPopup
 
 
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -80,7 +80,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let newValue: ICellInfo;
 
                         //we try to find a condition with an expression for that column that matches the record
-                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusConditions.filter(x => x.ColumnId == columnValuePair.columnID && !x.IsDefaultNudge)
+                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(x => x.ColumnId == columnValuePair.columnID && !x.IsDefaultNudge)
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
                                 newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) }
@@ -88,7 +88,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         }
                         //we havent found any Condition with an Expression so we look for a general one for the column
                         if (!newValue) {
-                            let columnNudge = this.PlusMinusState.PlusMinusConditions.find(x => x.ColumnId == columnValuePair.columnID && x.IsDefaultNudge)
+                            let columnNudge = this.PlusMinusState.PlusMinusRules.find(x => x.ColumnId == columnValuePair.columnID && x.IsDefaultNudge)
                             if (columnNudge) {
                                 newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) })
                             }

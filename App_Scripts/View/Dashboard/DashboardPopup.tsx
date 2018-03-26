@@ -19,8 +19,8 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
-    DashboardControls: Array<string>;
-    DashboardZoom: Number;
+    FunctionToolbars: Array<string>;
+    Zoom: Number;
     onChangeControlVisibility: (strategyName: string) => DashboardRedux.DashboardChangeControlVisibilityAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
     onMoveControl: (strategyName: string, newIndex: number) => DashboardRedux.DashboardMoveItemAction
@@ -38,7 +38,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         this.placeholder.className = "placeholder"
         this.placeholder.classList.add("list-group-item")
         this.placeholder.type = "button"
-        this.state = { CurrentDashboardPopup: "", EditedZoomFactor: props.DashboardZoom }
+        this.state = { CurrentDashboardPopup: "", EditedZoomFactor: props.Zoom }
     }
     render() {
 
@@ -47,7 +47,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
 
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
             // let visibleCheck: boolean = this.props.DashboardControls.find(dc=>dc==strategyId)!= null;
-            let visibleButton = this.props.DashboardControls.find(dc => dc == strategyId) != null ?
+            let visibleButton = this.props.FunctionToolbars.find(dc => dc == strategyId) != null ?
                 <Button disabled={strategyId==StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
            
@@ -129,7 +129,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             let indexOfPlaceHolder = Array.from(this.draggedHTMLElement.parentNode.childNodes).indexOf(this.placeholder)
             if (indexOfPlaceHolder > -1) {
                 let to = indexOfPlaceHolder
-                let from = this.props.DashboardControls.indexOf(this.draggedElement);
+                let from = this.props.FunctionToolbars.indexOf(this.draggedElement);
                 if (from < to) {
                     to = Math.max(to - 1, 0)
                 }
@@ -176,8 +176,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        DashboardControls: state.Dashboard.DashboardFunctionToolbars,
-        DashboardZoom: state.Dashboard.DashboardZoom,
+        FunctionToolbars: state.Dashboard.FunctionToolbars,
+       Zoom: state.Dashboard.Zoom,
     };
 }
 

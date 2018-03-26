@@ -123,7 +123,7 @@ export const PopupClearParam = (): PopupClearParamAction => ({
 })
 
 const initialPopupState: PopupState = {
-    ActionConfigurationPopup: {
+    ScreenPopup: {
         ShowPopup: false,
         ComponentName: "",
         IsReadOnly: false,
@@ -164,12 +164,12 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
     switch (action.type) {
         case POPUP_SHOW: {
             let actionTypedShowPopup = (<PopupShowAction>action)
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params }
-            return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
+            let newScreenPopup: IScreenPopup = { ShowPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params }
+            return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
         case POPUP_HIDE: {
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: false, IsReadOnly: false, ComponentName: "", Params: null }
-            return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
+            let newScreenPopup: IScreenPopup = { ShowPopup: false, IsReadOnly: false, ComponentName: "", Params: null }
+            return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
         case POPUP_HIDE_ERROR: {
             let newErrorPopup: IErrorPopup = { ShowErrorPopup: false, ErrorMsg: "" }
@@ -262,8 +262,8 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
         }
         case POPUP_CLEAR_PARAM: {
-            let newActionConfigurationPopup: IScreenPopup = { ShowPopup: state.ActionConfigurationPopup.ShowPopup, IsReadOnly: state.ActionConfigurationPopup.IsReadOnly, ComponentName: state.ActionConfigurationPopup.ComponentName, Params: null }
-            return Object.assign({}, state, { ActionConfigurationPopup: newActionConfigurationPopup })
+            let newScreenPopup: IScreenPopup = { ShowPopup: state.ScreenPopup.ShowPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null }
+            return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
         default:
             return state

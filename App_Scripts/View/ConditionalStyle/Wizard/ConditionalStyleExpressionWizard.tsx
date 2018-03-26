@@ -1,14 +1,14 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: ExpressionWizardProps<IConditionalStyleCondition>) {
+    constructor(private props2: ExpressionWizardProps<IConditionalStyle>) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

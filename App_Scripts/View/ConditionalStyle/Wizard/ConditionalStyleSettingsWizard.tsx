@@ -1,12 +1,12 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 
 
-export interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyleCondition> {
+export interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     PredefinedColorChoices: string[]
 }
 
@@ -60,7 +60,9 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
         this.props.Data.Style.FontStyle = this.state.FontStyle;
         this.props.Data.Style.FontSize = this.state.FontSize;
     }
-    public Back(): void { }
+    public Back(): void {
+        // todod
+     }
     public StepName = this.props.StepName
 }
 

@@ -45,11 +45,11 @@ export class StyleService {
             });
 
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-            this.ConditionalStyleState.ConditionalStyleConditions.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
+                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
-            this.ConditionalStyleState.ConditionalStyleConditions.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column).forEach((element, index) => {
+                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
 
 
@@ -57,7 +57,7 @@ export class StyleService {
             this.addCSSRule("." + StyleConstants.QUICK_SEARCH_STYLE, 'background-color: ' + this.QuickSearchState.QuickSearchStyle.BackColor + ' !important;color: ' + this.QuickSearchState.QuickSearchStyle.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.QuickSearchStyle.FontWeight + ' !important;font-style: ' + this.QuickSearchState.QuickSearchStyle.FontStyle + ' !important;' + (this.QuickSearchState.QuickSearchStyle.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.QuickSearchStyle.FontSize) + ' !important') : ''))
 
             //we define last Flash since it has the highest priority
-            this.FlashingCellState.FlashingColumns.forEach((element, index) => {
+            this.FlashingCellState.FlashingCells.forEach((element, index) => {
                 this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpBackColor + ' !important')
                 this.addCSSRule("." + StyleConstants.FLASH_DOWN_STYLE + index, 'background-color: ' + element.DownBackColor + ' !important')
             });

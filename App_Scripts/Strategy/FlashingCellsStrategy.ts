@@ -6,7 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { DataType } from '../Core/Enums';
@@ -29,7 +29,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     protected addColumnMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
-                let flashingCell = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == columnId)
+                let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnName == columnId)
                 if (flashingCell && flashingCell.IsLive) {
                     this.createMenuItemReduxAction(
                         "Turn Flashing Cell Off",
@@ -40,7 +40,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                 else {
                     if (!flashingCell) {
                         let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
-                        flashingCell = ObjectFactory.CreateDefaultFlashingColumn(column)
+                        flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
                     }
                     this.createMenuItemReduxAction(
                         "Turn Flashing Cell On",
@@ -59,13 +59,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     }
 
     protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
-        let flashingColumn: IFlashingColumn = this.FlashingCellState.FlashingColumns.find(f => f.ColumnName == DataChangedEvent.ColumnId);
-        let flashingColumnIndex = this.FlashingCellState.FlashingColumns.indexOf(flashingColumn)
-        if (flashingColumn != null && flashingColumn.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingColumn, flashingColumnIndex);
+        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnName == DataChangedEvent.ColumnId);
+        let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell)
+        if (flashingCell != null && flashingCell.IsLive) {
+            this.FlashCell(DataChangedEvent, flashingCell, flashingCellIndex);
         }
     }
 
-    protected abstract FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void;
+    protected abstract FlashCell(dataChangedEvent: IDataChangedEvent, flashingCell: IFlashingCell, index: number): void;
 
 }

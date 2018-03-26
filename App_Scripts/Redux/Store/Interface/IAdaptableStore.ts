@@ -13,11 +13,12 @@ export interface AdaptableBlotterState {
     ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
     Export: AdaptableBlotterStates.ExportState;
     FlashingCell: AdaptableBlotterStates.FlashingCellState;
-    Calendars: AdaptableBlotterStates.CalendarState;
+    Calendar: AdaptableBlotterStates.CalendarState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
     UserFilter: AdaptableBlotterStates.UserFilterState;
+    SystemFilter: AdaptableBlotterStates.SystemFilterState;
     Theme: AdaptableBlotterStates.ThemeState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Layout: AdaptableBlotterStates.LayoutState;

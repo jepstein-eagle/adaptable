@@ -1,4 +1,4 @@
-import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
+import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as React from "react";
 import { Checkbox, FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -10,15 +10,15 @@ import { IColItem } from "../UIInterfaces";
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
     FlashingCellDurations: any[]
     PredefinedColorChoices: string[];
-    onSelect: (flashingColumn: IFlashingColumn) => void;
-    onChangeFlashingDuration: (flashingColumn: IFlashingColumn, NewFlashDuration: number) => void;
-    onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => void;
-    onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => void;
+    onSelect: (flashingCell: IFlashingCell) => void;
+    onChangeFlashingDuration: (flashingCell: IFlashingCell, NewFlashDuration: number) => void;
+    onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => void;
+    onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => void;
 }
 
 export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRowProps, {}> {
     render(): any {
-        let flashingColumn: IFlashingColumn = this.props.AdaptableBlotterObject as IFlashingColumn;
+        let flashingCell: IFlashingCell = this.props.AdaptableBlotterObject as IFlashingCell;
 
         //we could have the typeahead combobox with freetext and the correct items in the list
         //but I don't think we should allow users to enter a value....
@@ -26,42 +26,42 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
             return <option key={flashingCellDuration} value={flashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCellDuration)}</option>
         })
-        if (!this.props.FlashingCellDurations.find(x => x == flashingColumn.FlashingCellDuration)) {
-            durations.push(<option key={flashingColumn.FlashingCellDuration} value={flashingColumn.FlashingCellDuration}>{this.getFriendlyFlashingDuration(flashingColumn.FlashingCellDuration)}</option>)
+        if (!this.props.FlashingCellDurations.find(x => x == flashingCell.FlashingCellDuration)) {
+            durations.push(<option key={flashingCell.FlashingCellDuration} value={flashingCell.FlashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration)}</option>)
         }
 
-        let isDisabled = flashingColumn.IsPredefined
-        let column = this.props.Columns.find(f => f.ColumnId == flashingColumn.ColumnName)
+        let isDisabled = flashingCell.IsPredefined
+        let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnName)
         if (!column) {
             return null
         }
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-        colItems[0].Content = <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(flashingColumn)} checked={flashingColumn.IsLive}></Checkbox>
+        colItems[0].Content = <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(flashingCell)} checked={flashingCell.IsLive}></Checkbox>
         colItems[1].Content = column.FriendlyName
-        colItems[2].Content = <FormControl disabled={isDisabled} componentClass="select" value={flashingColumn.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
+        colItems[2].Content = <FormControl disabled={isDisabled} componentClass="select" value={flashingCell.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
             {durations}
         </FormControl>
-        colItems[3].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingColumn.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
-        colItems[4].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingColumn.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+        colItems[3].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingCell.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
+        colItems[4].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
         return <AdaptableObjectRow ColItems={colItems}
         />
     }
 
     onActionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeFlashingDuration(this.props.AdaptableBlotterObject as IFlashingColumn, Number.parseInt(e.value));
+        this.props.onChangeFlashingDuration(this.props.AdaptableBlotterObject as IFlashingCell, Number.parseInt(e.value));
     }
 
     onDownColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeDownColorFlashingColumn(this.props.AdaptableBlotterObject as IFlashingColumn, e.value);
+        this.props.onChangeDownColorFlashingCell(this.props.AdaptableBlotterObject as IFlashingCell, e.value);
     }
 
     onUpColorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onChangeUpColorFlashingColumn(this.props.AdaptableBlotterObject as IFlashingColumn, e.value);
+        this.props.onChangeUpColorFlashingCell(this.props.AdaptableBlotterObject as IFlashingCell, e.value);
     }
 
     getFriendlyFlashingDuration(duration: number) {

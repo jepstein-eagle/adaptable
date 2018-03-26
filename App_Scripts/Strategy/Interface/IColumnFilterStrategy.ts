@@ -14,12 +14,6 @@ export interface IColumnFilter  {
     Filter: Expression
 }
 
-export interface IColumnFilterItem {
-    RawValue: string
-    DisplayValue: string
-    Index: number
-}
-
 export interface IColumnFilterContext {
     Column: IColumn,
     Blotter: IAdaptableBlotter,

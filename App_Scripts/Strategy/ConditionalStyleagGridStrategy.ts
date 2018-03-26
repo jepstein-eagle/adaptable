@@ -15,7 +15,7 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
         //we refresh all columns that need to be refreshed
         //this method needs to be optimised and probably cached as well. Will do when doing perf monitor
         let listOfColumns: Array<string> = []
-        this.ConditionalStyleState.ConditionalStyleConditions.forEach(x => {
+        this.ConditionalStyleState.ConditionalStyles.forEach(x => {
             let colList = ExpressionHelper.GetColumnListFromExpression(x.Expression)
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
@@ -44,11 +44,11 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
         let theBlotter = this.blotter as AdaptableBlotter
 
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
 
             for (let column of columns) {
                 let cellClassRules: any = {};
-                this.ConditionalStyleState.ConditionalStyleConditions.forEach((cs, index) => {
+                this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
                     if (cs.ConditionalStyleScope == ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
                         cellClassRules[StyleConstants.CONDITIONAL_STYLE_STYLE + index] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)

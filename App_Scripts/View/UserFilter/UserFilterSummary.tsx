@@ -73,6 +73,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                     EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
@@ -108,6 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
     };
 }
 

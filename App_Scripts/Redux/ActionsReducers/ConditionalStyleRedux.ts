@@ -1,5 +1,5 @@
 import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as Redux from 'redux'
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
@@ -7,48 +7,48 @@ export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 
 export interface ConditionalStyleAddUpdateAction extends Redux.Action {
     Index: number
-    conditionalStyleCondition: IConditionalStyleCondition
+    conditionalStyle: IConditionalStyle
 }
 
-export const ConditionalStyleAddUpdate = (Index: number, conditionalStyleCondition: IConditionalStyleCondition): ConditionalStyleAddUpdateAction => ({
+export const ConditionalStyleAddUpdate = (Index: number, conditionalStyle: IConditionalStyle): ConditionalStyleAddUpdateAction => ({
     type: CONDITIONAL_STYLE_ADD_UPDATE,
     Index,
-    conditionalStyleCondition
+    conditionalStyle
 })
 
 export interface ConditionalStyleDeleteAction extends Redux.Action {
     Index: number
-    conditionalStyleCondition: IConditionalStyleCondition
+    conditionalStyle: IConditionalStyle
 }
 
-export const ConditionalStyleDelete = (Index: number,conditionalStyleCondition: IConditionalStyleCondition): ConditionalStyleDeleteAction => ({
+export const ConditionalStyleDelete = (Index: number,conditionalStyle: IConditionalStyle): ConditionalStyleDeleteAction => ({
     type: CONDITIONAL_STYLE_DELETE,
     Index,
-    conditionalStyleCondition
+    conditionalStyle
 })
 
 const initialConditionalStyleState: ConditionalStyleState = {
-    ConditionalStyleConditions: []
+    ConditionalStyles: []
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialConditionalStyleState, action: Redux.Action): ConditionalStyleState => {
-    let conditions: IConditionalStyleCondition[]
+    let conditions: IConditionalStyle[]
 
     switch (action.type) {
         case CONDITIONAL_STYLE_ADD_UPDATE:
             let actionTypedAddUpdate = (<ConditionalStyleAddUpdateAction>action)
-            conditions = [].concat(state.ConditionalStyleConditions)
+            conditions = [].concat(state.ConditionalStyles)
             if (actionTypedAddUpdate.Index != -1) {  // it exists
-                conditions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.conditionalStyleCondition
+                conditions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.conditionalStyle
             } else {
-                conditions.push(actionTypedAddUpdate.conditionalStyleCondition)
+                conditions.push(actionTypedAddUpdate.conditionalStyle)
             }
-            return Object.assign({}, state, { ConditionalStyleConditions: conditions })
+            return Object.assign({}, state, { ConditionalStyles: conditions })
         case CONDITIONAL_STYLE_DELETE:
             let actionTypedDelete = (<ConditionalStyleDeleteAction>action)
-            conditions = [].concat(state.ConditionalStyleConditions)
+            conditions = [].concat(state.ConditionalStyles)
             conditions.splice(actionTypedDelete.Index, 1);
-            return Object.assign({}, state, { ConditionalStyleConditions: conditions })
+            return Object.assign({}, state, { ConditionalStyles: conditions })
         default:
             return state
     }

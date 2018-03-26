@@ -57,14 +57,14 @@ export const CalculatedColumnSetErrorMessage = (ErrorMsg: string): CalculatedCol
 
 const initialCalculatedColumnState: CalculatedColumnState = {
     CalculatedColumns: [],
-    EditedCalculatedColumnInvalidErrorMsg : ""
+    CalculatedColumnErrorMessage : ""
 }
 
 export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (state: CalculatedColumnState = initialCalculatedColumnState, action: Redux.Action): CalculatedColumnState => {
     switch (action.type) {
         case CALCULATEDCOLUMN_SET_ERROR_MSG:{
             return Object.assign({}, state, {
-                EditedCalculatedColumnInvalidErrorMsg: (<CalculatedColumnSetErrorMessageAction>action).ErrorMsg
+                CalculatedColumnErrorMessage: (<CalculatedColumnSetErrorMessageAction>action).ErrorMsg
             });
         }
         case CALCULATEDCOLUMN_ADD: {

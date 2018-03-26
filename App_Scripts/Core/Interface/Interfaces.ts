@@ -26,7 +26,7 @@ export interface IAdaptableBlotterObject{
 
 
 
-export interface IEntitlement {//extends IAdaptableBlotterObject{
+export interface IEntitlement { 
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }

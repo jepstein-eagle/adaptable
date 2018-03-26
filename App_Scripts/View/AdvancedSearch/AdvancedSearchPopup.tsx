@@ -12,7 +12,7 @@ import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -32,6 +32,7 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
     UserFilters: IUserFilter[]
+    SystemFilters: ISystemFilter[]
 }
 
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
@@ -106,6 +107,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                     ConfigEntities={this.props.AdvancedSearches}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
@@ -115,25 +117,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         </PanelWithButton>
         </div>
 
-        {/* Search details screen - showing contents of current selected search (only visible if there is one) 
-                {selectedAdvancedSearch != null &&
-
-                    <PanelWithInfo bsStyle="primary" bsSize="small" header="Search Details" infoBody={detailsInfoBody} >
-                        <div style={previewDivStyle}>
-                            <ExpressionBuilderPreview Expression={selectedAdvancedSearch.Expression}
-                                UserFilters={this.props.UserFilters}
-                                onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                                SelectedColumnId={this.state.SelectedColumnId}
-                                ColumnsList={this.props.Columns}
-                                DeleteColumnValue={(columnId: string, value: any) => this.onDeleteColumnValue(columnId, value)}
-                                DeleteUserFilterExpression={(columnId: string, index: number) => this.onDeleteUserFilterExpression(columnId, index)}
-                                DeleteRange={(columnId: string, index: number) => this.onDeleteRange(columnId, index)}
-                                ShowPanel={false}
-                                ReadOnlyMode={selectedAdvancedSearch.IsPredefined}>
-                            </ExpressionBuilderPreview>
-                        </div>
-                    </PanelWithInfo>
-*/}
+      
 
     }
 
@@ -164,7 +148,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 

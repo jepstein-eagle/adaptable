@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IFlashingColumn } from '../../Strategy/Interface/IFlashingCellsStrategy';
+import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
@@ -19,14 +19,14 @@ import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
-    FlashingColumns: Array<IFlashingColumn>,
+    FlashingCells: Array<IFlashingCell>,
     Columns: IColumn[],
     PredefinedColorChoices: string[],
-    onSelectColumn: (flashingCell: IFlashingColumn) => FlashingCellsRedux.FlashingCellSelectAction,
-    onSelectAllColumns: (numericColumns: IFlashingColumn[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
-    onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
-    onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => FlashingCellsRedux.FlashingCellChangeDownColorAction
-    onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => FlashingCellsRedux.FlashingCellChangeUpColorAction
+    onSelectColumn: (flashingCell: IFlashingCell) => FlashingCellsRedux.FlashingCellSelectAction,
+    onSelectAllColumns: (numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
+    onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
+    onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => FlashingCellsRedux.FlashingCellChangeDownColorAction
+    onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => FlashingCellsRedux.FlashingCellChangeUpColorAction
 
 }
 
@@ -48,31 +48,31 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             { Content: "Down Colour", Size: 2 },
         ]
 
-        let allPotentialFlashingColumns: IFlashingColumn[] = [];
+        let allPotentialFlashingCells: IFlashingCell[] = [];
         numericColumns.forEach(nc => {
-            let existingfc = this.props.FlashingColumns.find(e => e.ColumnName == nc.ColumnId)
+            let existingfc = this.props.FlashingCells.find(e => e.ColumnName == nc.ColumnId)
             if (!existingfc) {
-                allPotentialFlashingColumns.push(ObjectFactory.CreateDefaultFlashingColumn(nc))
+                allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc))
             }
             else {
-                allPotentialFlashingColumns.push(existingfc);
+                allPotentialFlashingCells.push(existingfc);
             }
         })
 
-        let allFlashingColumns = allPotentialFlashingColumns.map((flashingColumn: IFlashingColumn, index) => {
+        let allFlashingCells = allPotentialFlashingCells.map((flashingcell: IFlashingCell, index) => {
             return <FlashingCellEntityRow
-                AdaptableBlotterObject={flashingColumn}
-                key={flashingColumn.ColumnName}
+                AdaptableBlotterObject={flashingcell}
+                key={flashingcell.ColumnName}
                 Index={index}
                 Columns={this.props.Columns}
                 UserFilters={null}
                 ColItems={colItems}
                 FlashingCellDurations={flashingCellDurations}
                 PredefinedColorChoices={this.props.PredefinedColorChoices}
-                onSelect={(flashingColumn) => this.props.onSelectColumn(flashingColumn)}
-                onChangeFlashingDuration={(flashingColumn, newFlashDuration) => this.props.onChangeFlashDurationFlashingColumn(flashingColumn, newFlashDuration)}
-                onChangeDownColorFlashingColumn={(flashingColumn, DownColor) => this.props.onChangeDownColorFlashingColumn(flashingColumn, DownColor)}
-                onChangeUpColorFlashingColumn={(flashingColumn, UpColor) => this.props.onChangeUpColorFlashingColumn(flashingColumn, UpColor)}
+                onSelect={(flashingcell) => this.props.onSelectColumn(flashingcell)}
+                onChangeFlashingDuration={(flashingcell, newFlashDuration) => this.props.onChangeFlashDuration(flashingcell, newFlashDuration)}
+                onChangeDownColorFlashingCell={(flashingcell, DownColor) => this.props.onChangeDownColorFlashingCell(flashingcell, DownColor)}
+                onChangeUpColorFlashingCell={(flashingcell, UpColor) => this.props.onChangeUpColorFlashingCell(flashingcell, UpColor)}
                 TeamSharingActivated={false}
                 onShare={null}
                 onEdit={null}
@@ -84,8 +84,8 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} className="medium_margin_style">
-                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingColumns.filter(x => x.IsPredefined == false))}
-                        checked={allPotentialFlashingColumns.every(f => f.IsLive)} > All Columns </Checkbox>
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingCells.filter(x => x.IsPredefined == false))}
+                        checked={allPotentialFlashingCells.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
@@ -93,7 +93,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         return <div className="adaptable_blotter_style_popup_flashingcells">
             <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
                 {setAllOption}
-                <AdaptableObjectCollection ColItems={colItems} items={allFlashingColumns} />
+                <AdaptableObjectCollection ColItems={colItems} items={allFlashingCells} />
 
             </PanelWithImage>
         </div>
@@ -102,7 +102,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FlashingColumns: state.FlashingCell.FlashingColumns,
+        FlashingCells: state.FlashingCell.FlashingCells,
         Columns: state.Grid.Columns,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
@@ -110,11 +110,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectColumn: (flashingCell: IFlashingColumn) => dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),
-        onSelectAllColumns: (numericColumns: IFlashingColumn[]) => dispatch(FlashingCellsRedux.FlashingCellSelectAll(numericColumns)),
-        onChangeFlashDurationFlashingColumn: (flashingCell: IFlashingColumn, newFlashDuration: number) => dispatch(FlashingCellsRedux.FlashingCellChangeDuration(flashingCell, newFlashDuration)),
-        onChangeDownColorFlashingColumn: (flashingCell: IFlashingColumn, DownColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeDownColor(flashingCell, DownColor)),
-        onChangeUpColorFlashingColumn: (flashingCell: IFlashingColumn, UpColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeUpColor(flashingCell, UpColor))
+        onSelectColumn: (flashingCell: IFlashingCell) => dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),
+        onSelectAllColumns: (numericColumns: IFlashingCell[]) => dispatch(FlashingCellsRedux.FlashingCellSelectAll(numericColumns)),
+        onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => dispatch(FlashingCellsRedux.FlashingCellChangeDuration(flashingCell, newFlashDuration)),
+        onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeDownColor(flashingCell, DownColor)),
+        onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeUpColor(flashingCell, UpColor))
     };
 }
 

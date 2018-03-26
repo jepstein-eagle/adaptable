@@ -1,4 +1,4 @@
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
@@ -20,8 +20,8 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
-     PlusMinusConditions: IPlusMinusCondition[]
-    onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
+     PlusMinusRules: IPlusMinusRule[]
+    onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -39,7 +39,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         let titleRow = <StrategyHeader
             key={StrategyNames.PlusMinusStrategyName}
             StrategyId={StrategyIds.PlusMinusStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusConditions.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
+            StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
             NewButtonTooltip={"Plus / Minus Rule"}
         />
@@ -47,7 +47,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         strategySummaries.push(titleRow);
 
         // existing items
-        this.props.PlusMinusConditions.map((item, index) => {
+        this.props.PlusMinusRules.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
                     <StrategyDetail
@@ -70,11 +70,11 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
             {this.state.EditedAdaptableBlotterObject &&
                 <PlusMinusWizard
-                    EditedPlusMinusCondition={this.state.EditedAdaptableBlotterObject as IPlusMinusCondition}
-                    PlusMinusConditions={this.props.PlusMinusConditions}
+                    EditedPlusMinusRule={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
                     UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     closeWizard={() => this.onCloseWizard()}
@@ -86,12 +86,12 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
 
     onNew() {
-        let configEntity: IPlusMinusCondition = ObjectFactory.CreateEmptyPlusMinusCondition()
+        let configEntity: IPlusMinusRule = ObjectFactory.CreateEmptyPlusMinusRule()
         configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
         this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit(index: number, PlusMinus: IPlusMinusCondition) {
+    onEdit(index: number, PlusMinus: IPlusMinusRule) {
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(PlusMinus), WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
@@ -100,7 +100,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     }
 
     onFinishWizard() {
-        this.props.onAddUpdatePlusMinus(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPlusMinusCondition);
+        this.props.onAddUpdatePlusMinus(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPlusMinusRule);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
@@ -112,14 +112,15 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        PlusMinusConditions: state.PlusMinus.PlusMinusConditions,
+        PlusMinusRules: state.PlusMinus.PlusMinusRules,
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusCondition) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
+        onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusRule) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
     };

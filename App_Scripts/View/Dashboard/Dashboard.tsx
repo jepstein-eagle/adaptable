@@ -29,7 +29,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Toolbars"
-        let visibleDashboardControls = this.props.DashboardState.DashboardFunctionToolbars//.filter(dc => dc.IsVisible);
+        let visibleDashboardControls = this.props.DashboardState.FunctionToolbars//.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else
@@ -54,7 +54,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         return <div className="adaptable_blotter_style_base">
             <div className="no_margin_style">
-                {this.props.DashboardState.IsDashboardMinimised ?
+                {this.props.DashboardState.IsMinimised ?
 
                     <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="no_padding_no_margin_style" >
                         <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
@@ -63,7 +63,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                             </Button>
                         </OverlayTrigger>
                     </ButtonToolbar> :
-                    <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.DashboardZoom }}>
+                    <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
                         <div className="adaptable_blotter_style_dashboard_base" >
                             <div className="no_margin_style">
                                 {homeToolbarElement}

@@ -16,7 +16,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationMode } from '../../Core/Enums'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -31,6 +31,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
     CellValidations: ICellValidationRule[];
     Columns: Array<IColumn>,
     UserFilters: IUserFilter[]
+    SystemFilters: ISystemFilter[]
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -111,6 +112,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                         EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         closeWizard={() => this.onCloseWizard()}
@@ -149,6 +151,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         CellValidations: state.CellValidation.CellValidations
     };
 }

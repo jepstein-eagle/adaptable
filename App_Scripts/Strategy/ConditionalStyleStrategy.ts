@@ -42,7 +42,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
 
     // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
     private handleGridDataBound(blotter: IAdaptableBlotter) {
-        if (this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+        if (this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyles.length > 0) {
             this.InitStyles();
         }
     }

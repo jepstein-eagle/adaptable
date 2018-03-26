@@ -11,8 +11,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
@@ -27,6 +26,7 @@ import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     UserFilters: IUserFilter[]
+    SystemFilters: ISystemFilter[]
     Columns: IColumn[],
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -76,7 +76,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             { Content: "", Size: 3 },
         ]
 
-        let UserFilterItems = this.props.UserFilters.filter(f => !UserFilterHelper.IsSystemUserFilter(f)).map((userFilter, index) => {
+        let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
             return <UserFilterEntityRow
                 AdaptableBlotterObject={userFilter}
                 ColItems={colItems}
@@ -86,7 +86,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
-                onEdit={(index, conditionalStyleCondition) => this.onEdit(userFilter as IUserFilter)}
+                onEdit={(index, userFilter) => this.onEdit(userFilter as IUserFilter)}
                 onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)} />
         });
 
@@ -113,6 +113,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                         EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         WizardStartIndex={this.state.WizardStartIndex}
                         SelectedColumnId={selectedColumnId}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -149,6 +150,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         Columns: state.Grid.Columns,
     };
 }

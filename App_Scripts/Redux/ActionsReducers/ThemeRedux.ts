@@ -14,7 +14,8 @@ export const ThemeSelect = (Theme: string): ThemeSelectAction => ({
 
 const initialThemeState: ThemeState = {
     CurrentTheme: "Default",
-    AvailableThemes: StaticThemes
+    SystemThemes: StaticThemes,
+    PredefinedThemes: []
 }
 
 export const ThemeReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {

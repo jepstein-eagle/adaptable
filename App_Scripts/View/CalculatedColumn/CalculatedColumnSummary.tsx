@@ -18,7 +18,7 @@ export interface CalculatedColumnSummaryProps extends StrategySummaryProps<Calcu
     CalculatedColumns: ICalculatedColumn[]
     onEdit: (index: number, calculatedColumn: ICalculatedColumn) => void;
     onDeleteConfirm: Redux.Action;
-    EditedCalculatedColumnInvalidErrorMsg: string
+    CalculatedColumnErrorMessage: string
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
 }
 
@@ -59,7 +59,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                 <CalculatedColumnWizard
                     EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     Columns={this.props.Columns}
-                    GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
+                    GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
                     WizardStartIndex={this.state.WizardStartIndex}
                     closeWizard={() => this.onCloseWizard()}
@@ -87,7 +87,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        EditedCalculatedColumnInvalidErrorMsg: state.CalculatedColumn.EditedCalculatedColumnInvalidErrorMsg
+        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
     };
 }
 

@@ -1,6 +1,6 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingColumn } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy, IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { DataType } from '../Core/Enums'
 import * as StyleConstants from '../Core/Constants/StyleConstants'
@@ -17,7 +17,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
 
     }
 
-    protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingColumn: IFlashingColumn, index: number): void {
+    protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingCell: IFlashingCell, index: number): void {
         // no implementation required
     }
 
@@ -30,8 +30,8 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
             let currentFlashing = this.currentFlashing
 
             columns.forEach(col => {
-                let fc = this.FlashingCellState.FlashingColumns.find(x => x.ColumnName == col.ColumnId && x.IsLive)
-                let index = this.FlashingCellState.FlashingColumns.indexOf(fc)
+                let fc = this.FlashingCellState.FlashingCells.find(x => x.ColumnName == col.ColumnId && x.IsLive)
+                let index = this.FlashingCellState.FlashingCells.indexOf(fc)
                 let cellClassRules: any = {};
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {

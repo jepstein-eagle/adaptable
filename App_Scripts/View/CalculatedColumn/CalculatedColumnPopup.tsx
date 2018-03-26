@@ -30,7 +30,7 @@ interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedCo
     onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnEditAction
     CalculatedColumns: Array<ICalculatedColumn>
     Columns: IColumn[]
-    EditedCalculatedColumnInvalidErrorMsg: string
+    CalculatedColumnErrorMessage: string
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -101,7 +101,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                     <CalculatedColumnWizard
                         EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                         Columns={this.props.Columns}
-                        GetErrorMessage={() => this.props.EditedCalculatedColumnInvalidErrorMsg}
+                        GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
                         IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
                         WizardStartIndex={this.state.WizardStartIndex}
                         closeWizard={() => this.onCloseWizard()}
@@ -146,7 +146,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
         Columns: state.Grid.Columns,
-        EditedCalculatedColumnInvalidErrorMsg: state.CalculatedColumn.EditedCalculatedColumnInvalidErrorMsg
+        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
     };
 }
 

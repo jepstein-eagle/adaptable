@@ -20,9 +20,9 @@ import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStr
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
@@ -134,7 +134,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             }
             case StrategyIds.ConditionalStyleStrategyId: {
-                let cs = sharedEntity.entity as IConditionalStyleCondition
+                let cs = sharedEntity.entity as IConditionalStyle
                 let column = this.props.Columns.find(c => c.ColumnId == cs.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
@@ -152,7 +152,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             }
             case StrategyIds.PlusMinusStrategyId: {
-                let plusMinus = sharedEntity.entity as IPlusMinusCondition
+                let plusMinus = sharedEntity.entity as IPlusMinusRule
                 let column = this.props.Columns.find(c => c.ColumnId == plusMinus.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>

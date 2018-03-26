@@ -1,7 +1,7 @@
 import { Expression } from '../Expression'
-import { UserFilterHelper } from '../Helpers/UserFilterHelper'
+import { FilterHelper } from '../Helpers/FilterHelper'
 import { IRange, IRangeEvaluation } from '../Interface/IRange';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { LeafExpressionOperator } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -19,12 +19,12 @@ export module ExpressionHelper {
         Ranges: Array<IRange>) {
         return new Expression(ColumnDisplayValues && ColumnDisplayValues.length > 0 ? [{ ColumnName: columnName, ColumnDisplayValues: ColumnDisplayValues }] : [],
             ColumnRawValues && ColumnRawValues.length > 0 ? [{ ColumnName: columnName, ColumnRawValues: ColumnRawValues }] : [],
-            UserFilters && UserFilters.length > 0 ? [{ ColumnName: columnName, UserFilters: UserFilters }] : [],
+            UserFilters && UserFilters.length > 0 ? [{ ColumnName: columnName, Filters: UserFilters }] : [],
             Ranges && Ranges.length > 0 ? [{ ColumnName: columnName, Ranges: Ranges }] : []
         )
     }
 
-    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, userFilters: IUserFilter[]): string {
+    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string {
         let returnValue = ""
         if (IsExpressionEmpty(Expression)) {
             return "Any";
@@ -59,12 +59,12 @@ export module ExpressionHelper {
             }
 
             // User Filters
-            let columnUserFilters = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
+            let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnName == columnId)
             if (columnUserFilters) {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += ColumnUserFiltersKeyPairToString(UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilters), columnFriendlyName)
+                columnToString += ColumnUserFiltersKeyPairToString(columnUserFilters.Filters, columnFriendlyName)
             }
 
             // Column Ranges
@@ -84,7 +84,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, getOtherColumnValue: (columnName: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], blotter: IAdaptableBlotter): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, getOtherColumnValue: (columnName: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: ISystemFilter[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -115,23 +115,31 @@ export module ExpressionHelper {
                 }
             }
 
-            // Check for user filter expressions if column fails
+            // Check for filter expressions if column fails
             if (!isColumnSatisfied) {
-                let columnUserFilters = Expression.UserFilterExpressions.find(x => x.ColumnName == columnId)
-                if (columnUserFilters) {
-                    let filteredUserFilters: IUserFilter[] = UserFilterHelper.GetUserFilters(userFilters, columnUserFilters.UserFilters);
+                let columnFilters = Expression.FilterExpressions.find(x => x.ColumnName == columnId)
+                if (columnFilters) {
+                    // first evaluate any user filters
+                    let filteredUserFilters: IUserFilter[] = FilterHelper.GetUserFilters(userFilters, columnFilters.Filters);
                     for (let userFilter of filteredUserFilters) {
-                        // System userfilters have a method which we evaluate to get the value; created NamedValueExpressions simply contain an Expression which we evaluate normally
-                        if (UserFilterHelper.IsSystemUserFilter(userFilter)) {
-                            let valueToCheck: any = getColumnValue(columnId);
-                            isColumnSatisfied = userFilter.IsExpressionSatisfied(valueToCheck, blotter);
-                        } else {
-                            isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, getOtherColumnValue, columnBlotterList, userFilters, blotter);
-                        }
+                        isColumnSatisfied = IsSatisfied(userFilter.Expression, getColumnValue, getDisplayColumnValue, getOtherColumnValue, columnBlotterList, userFilters, systemFilters, blotter);
                         if (isColumnSatisfied) {
                             break;
                         }
                     }
+
+                    // then evaluate any system filters
+                    if (!isColumnSatisfied) {
+                        let filteredSystemFilters: ISystemFilter[] = FilterHelper.GetSystemFilters(systemFilters, columnFilters.Filters);
+                        for (let systemFilter of filteredSystemFilters) {
+                            let valueToCheck: any = getColumnValue(columnId);
+                            isColumnSatisfied = systemFilter.IsExpressionSatisfied(valueToCheck, blotter);
+                            if (isColumnSatisfied) {
+                                break;
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -168,13 +176,13 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnRawValues.join(", ") + ")"
     }
 
-    function ColumnUserFiltersKeyPairToString(userFilters: IUserFilter[], columnFriendlyName: string): string {
+    function ColumnUserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
-            returnValue += "[" + columnFriendlyName + "] " + userFilter.Name;
+            returnValue += "[" + columnFriendlyName + "] " + userFilter;
         }
         return returnValue
     }
@@ -320,14 +328,14 @@ export module ExpressionHelper {
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
         return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName)
             .concat(Expression.ColumnRawValuesExpressions.map(x => x.ColumnName))
-            .concat(Expression.UserFilterExpressions.map(x => x.ColumnName))
+            .concat(Expression.FilterExpressions.map(x => x.ColumnName))
             .concat(Expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
     export function IsExpressionEmpty(Expression: Expression): boolean {
         return Expression.ColumnDisplayValuesExpressions.length == 0
             && Expression.ColumnRawValuesExpressions.length == 0
-            && Expression.UserFilterExpressions.length == 0
+            && Expression.FilterExpressions.length == 0
             && Expression.RangeExpressions.length == 0
     }
 
@@ -358,6 +366,7 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),  // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -370,6 +379,7 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -408,14 +418,14 @@ export module ExpressionHelper {
                 break
             case DataType.Number:
                 if (rangeExpression.IsOperand1Column) {
-                    let otherValue =getOtherColumnValue(rangeExpression.Operand1);
-                    rangeEvaluation.operand1 = Number( otherValue);
+                    let otherValue = getOtherColumnValue(rangeExpression.Operand1);
+                    rangeEvaluation.operand1 = Number(otherValue);
                 } else {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
                     if (rangeExpression.IsOperand2Column) {
-                        rangeEvaluation.operand2 = Number( getOtherColumnValue(rangeExpression.Operand2));
+                        rangeEvaluation.operand2 = Number(getOtherColumnValue(rangeExpression.Operand2));
                     } else {
                         rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
                     }

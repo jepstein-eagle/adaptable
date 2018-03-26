@@ -99,7 +99,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        AdvancedSearchDashboardControl: state.Dashboard.DashboardFunctionToolbars.find(d => d == StrategyIds.AdvancedSearchStrategyId),
     };
 }
 

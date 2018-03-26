@@ -13,9 +13,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
     render(): any {
         let userFilter: IUserFilter = this.props.AdaptableBlotterObject as IUserFilter;
 
-       // let isDisabled = userFilter.IsPredefined
-
-       let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.ColItems);
 
        colItems[0].Content= userFilter.Name
        colItems[1].Content= ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns, this.props.UserFilters)

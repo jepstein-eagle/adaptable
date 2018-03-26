@@ -7,7 +7,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 export interface IConditionalStyleStrategy extends IStrategy {
 }
 
-export interface IConditionalStyleCondition extends IAdaptableBlotterObject {
+export interface IConditionalStyle extends IAdaptableBlotterObject {
     ColumnId: string
     ConditionalStyleScope: ConditionalStyleScope
     Expression: Expression

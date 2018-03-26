@@ -1,47 +1,48 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup } from 'react-bootstrap';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
 
+// this just takes a list of filter names - doesnt care if they are system or user
 export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
-    UserFilterExpressions: Array<IUserFilter>
-    SelectedUserFilterExpressions: Array<IUserFilter>
-    onUserFilterExpressionChange: (SelectedUserFilterExpressions: Array<IUserFilter>) => void
+    AvailableFilterNames: Array<string>
+    SelectedFilterNames: Array<string>
+    onFilterNameChange: (selectedFilterNames: Array<string>) => void
 }
 
 export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuilderUserFilterProps, {}> {
 
     render(): any {
 
-        var userFilterExpressions = this.props.UserFilterExpressions.map((ne: IUserFilter, index: number) => {
+        var userFilterNames = this.props.AvailableFilterNames.map((ne: string, index: number) => {
             return <ListGroupItem key={index} 
                 onClick={() => this.onClickColum(ne)}
-                active={this.props.SelectedUserFilterExpressions.find(f => f.Name == ne.Name)}>
-                {ne.Name}
+                active={this.props.SelectedFilterNames.find(f => f==ne)}>
+                {ne}
             </ListGroupItem>
         })
 
         return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  bsStyle="info">
             <ListGroup style={listGroupStyle}>
-                {userFilterExpressions}
+                {userFilterNames}
             </ListGroup>
         </PanelWithButton>
     }
 
-    onClickColum(userFilterExpression: IUserFilter) {
-        let newArray: IUserFilter[] = [];
-        let existingUserFilterExpression = this.props.SelectedUserFilterExpressions.find(f => f.Name == userFilterExpression.Name);
+    onClickColum(filterName: string) {
+        let newArray: string[] = [];
+        let existingUserFilterExpression = this.props.SelectedFilterNames.find(f => f == filterName);
         if (existingUserFilterExpression != null) { // it exists
-            let index = this.props.SelectedUserFilterExpressions.indexOf(existingUserFilterExpression);
-            newArray = [...this.props.SelectedUserFilterExpressions];
+            let index = this.props.SelectedFilterNames.indexOf(existingUserFilterExpression);
+            newArray = [...this.props.SelectedFilterNames];
             newArray.splice(index, 1);
         }
         else {
-            newArray = [...this.props.SelectedUserFilterExpressions];
-            newArray.push(userFilterExpression)
+            newArray = [...this.props.SelectedFilterNames];
+            newArray.push(filterName)
         }
-        this.props.onUserFilterExpressionChange(newArray);
+        this.props.onFilterNameChange(newArray);
     }
 }
 

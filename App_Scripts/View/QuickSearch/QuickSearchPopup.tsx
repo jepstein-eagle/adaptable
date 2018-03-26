@@ -19,8 +19,8 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
-    QuickSearchDefaultBackColor: string;
-    QuickSearchDefaultForeColor: string;
+    QuickSearchBackColor: string;
+    QuickSearchForeColor: string;
     QuickSearchText: string;
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
@@ -68,7 +68,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     private onUseBackColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.BackColor = (e.checked) ? this.props.QuickSearchDefaultBackColor : null;
+        style.BackColor = (e.checked) ? this.props.QuickSearchBackColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
@@ -76,7 +76,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     private onUseForeColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.ForeColor = (e.checked) ? this.props.QuickSearchDefaultForeColor : null;
+        style.ForeColor = (e.checked) ? this.props.QuickSearchForeColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
@@ -211,8 +211,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
         QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
         QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
-        QuickSearchDefaultBackColor: state.QuickSearch.QuickSearchDefaultBackColor,
-        QuickSearchDefaultForeColor: state.QuickSearch.QuickSearchDefaultForeColor,
+        QuickSearchBackColor: state.QuickSearch.QuickSearchBackColor,
+        QuickSearchForeColor: state.QuickSearch.QuickSearchForeColor,
         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }

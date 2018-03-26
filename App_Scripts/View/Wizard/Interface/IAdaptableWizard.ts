@@ -1,5 +1,5 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IAdaptableBlotterObject } from '../../../Core/Interface/Interfaces';
@@ -22,6 +22,7 @@ export interface AdaptableWizardStepProps<T> {
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     Columns: Array<IColumn>
     UserFilters: IUserFilter[],
+    SystemFilters: ISystemFilter[],
     WizardStartIndex: number
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
@@ -47,5 +48,6 @@ export interface IAdaptableBlotterObjectAdaptableWizardProps<View> extends IAdap
 export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
+    SystemFilters: ISystemFilter[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
    }

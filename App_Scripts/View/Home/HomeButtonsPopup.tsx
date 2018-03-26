@@ -20,7 +20,7 @@ interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButt
 class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponentProps, {}> {
     render() {
         let config: string[] = [];
-        this.props.DashboardState.DashboardFunctionButtons.forEach(x => {
+        this.props.DashboardState.FunctionButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.Label == x)
             if (menuItem != null && menuItem.IsVisible) {
                 config.push(x)

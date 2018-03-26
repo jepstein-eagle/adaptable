@@ -27,6 +27,7 @@ import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
+import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
@@ -43,8 +44,8 @@ import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
 import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
-import { IPlusMinusCondition } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { IConditionalStyleCondition } from '../../Strategy/Interface/IConditionalStyleStrategy'
+import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy'
+import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy'
 import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
 import { IReport } from '../../Strategy/Interface/IExportStrategy'
 import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
@@ -71,11 +72,12 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     Export: ExportRedux.ExportReducer,
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-    Calendars: CalendarRedux.CalendarReducer,
+    Calendar: CalendarRedux.CalendarReducer,
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
+    SystemFilter: SystemFilterRedux.SystemFilterReducer,
     ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
@@ -136,7 +138,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", ["Calendars", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"], ["BulkUpdate", "BulkUpdateValue"], ["BulkUpdate", "PreviewInfo"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -280,7 +282,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             break;
                         }
                         case StrategyIds.ConditionalStyleStrategyId:
-                            importAction = ConditionalStyleRedux.ConditionalStyleAddUpdate(-1, actionTyped.Entity as IConditionalStyleCondition)
+                            importAction = ConditionalStyleRedux.ConditionalStyleAddUpdate(-1, actionTyped.Entity as IConditionalStyle)
                             break;
                         case StrategyIds.CustomSortStrategyId: {
                             let customSort = actionTyped.Entity as ICustomSort
@@ -303,7 +305,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             break;
                         }
                         case StrategyIds.PlusMinusStrategyId: {
-                            let plusMinus = actionTyped.Entity as IPlusMinusCondition
+                            let plusMinus = actionTyped.Entity as IPlusMinusRule
                             importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus)
                             break;
                         }
@@ -624,7 +626,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case ExportRedux.IPP_LOGIN: {
                     let actionTyped = <ExportRedux.IPPLoginAction>action;
                     iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
-                        let report = middlewareAPI.getState().Popup.ActionConfigurationPopup.Params
+                        let report = middlewareAPI.getState().Popup.ScreenPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {

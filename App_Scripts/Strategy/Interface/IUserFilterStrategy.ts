@@ -9,13 +9,16 @@ export interface IUserFilterStrategy extends IStrategy{
 
 export interface IUserFilter extends IAdaptableBlotterObject {
     Name: string;
-  //  FriendlyName: string;
-    Description: string;
+    Expression: Expression;
+    ColumnId: string
+}
+
+export interface ISystemFilter extends IAdaptableBlotterObject {
+    Name: string;
+  //  Description: string;
     DataType: DataType;
     IsExpressionSatisfied?: (valueToCheck: any, blotter: IAdaptableBlotter) => boolean;
-    Expression: Expression;
-    ColumnId?: string
-}
+  }
 
    
 

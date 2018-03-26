@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
-import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
@@ -9,7 +9,7 @@ import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 
 export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(private props2: ExpressionWizardProps<IPlusMinusCondition>) {
+    constructor(private props2: ExpressionWizardProps<IPlusMinusRule>) {
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,

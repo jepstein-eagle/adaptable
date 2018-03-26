@@ -1,6 +1,5 @@
 import { UserFilterState } from './Interface/IState';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import * as Redux from 'redux'
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
@@ -26,7 +25,8 @@ export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteActio
 
 const initialFilterState:
     UserFilterState = {
-        UserFilters: UserFilterHelper.CreateSystemUserFilters()
+       
+        UserFilters: []
     }
 
 export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFilterState = initialFilterState, action: Redux.Action): UserFilterState => {

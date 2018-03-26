@@ -51,8 +51,8 @@ export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction =>
 })
 
 const initialQuickSearchState: QuickSearchState = {
-    QuickSearchDefaultBackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR,
-    QuickSearchDefaultForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
+    QuickSearchBackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR,
+    QuickSearchForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
     QuickSearchText: "",
     QuickSearchOperator: LeafExpressionOperator.Contains,
     QuickSearchDisplayType: QuickSearchDisplayType.HighlightCell,

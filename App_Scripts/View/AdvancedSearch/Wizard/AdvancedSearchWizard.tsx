@@ -19,6 +19,7 @@ export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjec
                         Columns={this.props.Columns}
                         StepName={stepNames[0]}
                         UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         SelectedColumnId={null}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                     <AdvancedSearchSettingsWizard StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />

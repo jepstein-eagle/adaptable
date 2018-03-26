@@ -4,7 +4,6 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../../../Core/Helpers/UserFilterHelper';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
@@ -66,8 +65,6 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
 
     public Next(): void {
         this.props.Data.Name = this.state.FilterName
-        this.props.Data.DataType = UserFilterHelper.GetDataTypeForUserFilter(this.props.Data, this.props.Columns)
-        this.props.Data.Description = ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
     }
     public Back(): void { /* no implementation */ }
     public StepName = this.props.StepName

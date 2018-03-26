@@ -8,7 +8,7 @@ import { CellValidationExpressionWizard } from './CellValidationExpressionWizard
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
@@ -16,6 +16,7 @@ export interface CellValidationWizardProps extends React.ClassAttributes<CellVal
     EditedCellValidation: ICellValidationRule
     Columns: Array<IColumn>
     UserFilters: IUserFilter[],
+   SystemFilters: ISystemFilter[],
     WizardStartIndex: number
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     closeWizard: () => void
@@ -37,6 +38,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
                     <CellValidationSelectQueryWizard StepName={stepNames[3]} Columns={this.props.Columns} />,
                     <CellValidationExpressionWizard StepName={stepNames[4]} Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         SelectedColumnId={null}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                 ]}

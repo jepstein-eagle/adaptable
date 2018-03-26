@@ -6,7 +6,6 @@ export interface IAdvancedSearchStrategy extends IStrategy {
 }
 
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
- // Uid: string,
   Name: string,
   Expression: Expression,
 }

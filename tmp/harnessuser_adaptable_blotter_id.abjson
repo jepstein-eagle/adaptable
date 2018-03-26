@@ -10,22 +10,6 @@
 	"Shortcut": {
 		"Shortcuts": []
 	},
-	"PlusMinus": {
-		"DefaultNudge": 1,
-		"PlusMinusConditions": [
-			{
-				"ColumnId": "percentChange",
-				"DefaultNudge": 15,
-				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
-					"RangeExpressions": []
-				},
-				"IsPredefined": false
-			}
-		]
-	},
 	"Export": {
 		"IPPDomainsPages": [],
 		"Reports": [],
@@ -33,13 +17,13 @@
 		"ErrorMsg": ""
 	},
 	"FlashingCell": {
-		"FlashingColumns": []
+		"FlashingCells": []
 	},
-	"Calendars": {
+	"Calendar": {
 		"CurrentCalendar": "United States"
 	},
 	"ConditionalStyle": {
-		"ConditionalStyleConditions": [
+		"ConditionalStyles": [
 			{
 				"ColumnId": "",
 				"Style": {
@@ -60,7 +44,7 @@
 						}
 					],
 					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [],
+					"FilterExpressions": [],
 					"RangeExpressions": []
 				},
 				"IsPredefined": false
@@ -68,8 +52,8 @@
 		]
 	},
 	"QuickSearch": {
-		"QuickSearchDefaultBackColor": "#FFFFCC",
-		"QuickSearchDefaultForeColor": "#000000",
+		"QuickSearchBackColor": "#FFFFCC",
+		"QuickSearchForeColor": "#000000",
 		"QuickSearchText": "",
 		"QuickSearchOperator": "Contains",
 		"QuickSearchDisplayType": "HighlightCell",
@@ -85,7 +69,7 @@
 				"Expression": {
 					"ColumnDisplayValuesExpressions": [],
 					"ColumnRawValuesExpressions": [],
-					"UserFilterExpressions": [
+					"FilterExpressions": [
 						{
 							"ColumnName": "changeOnYear",
 							"UserFilters": [
@@ -94,16 +78,7 @@
 							]
 						}
 					],
-					"RangeExpressions": [],
-					"UserFilters": [
-						{
-							"ColumnName": "changeOnYear",
-							"UserFilters": [
-								"Positive",
-								"Negative"
-							]
-						}
-					]
+					"RangeExpressions": []
 				},
 				"IsPredefined": false
 			}
@@ -158,7 +133,7 @@
 	},
 	"CalculatedColumn": {
 		"CalculatedColumns": [],
-		"EditedCalculatedColumnInvalidErrorMsg": ""
+		"CalculatedColumnErrorMessage": ""
 	},
 	"FormatColumn": {
 		"FormatColumns": [

@@ -5,7 +5,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { UserFilterHelper } from '../../Core/Helpers/UserFilterHelper';
 import { LeafExpressionOperator } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -67,24 +66,27 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
             // Next do the user filter expressions
 
-            let columnUserFilterExpressions = this.props.Expression.UserFilterExpressions.find(ne => ne.ColumnName == columnId)
+            let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(ne => ne.ColumnName == columnId)
             let columnUserFilterExpressionsListgroupItems: JSX.Element[]
             if (columnUserFilterExpressions) {
-                let userFilterExpressions = UserFilterHelper.GetUserFilters(this.props.UserFilters, columnUserFilterExpressions.UserFilters);
-                if (userFilterExpressions) {
-                    columnUserFilterExpressionsListgroupItems = userFilterExpressions.map((ne, index) => {
-                        return <ListGroupItem key={ne.Name}>
+                    columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
+                        return <ListGroupItem key={filter}>
                             <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                 <AdaptableBlotterForm inline>
-                                    {ne.Name}
+                                    {filter}
                                     <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteUserFilterExpression(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                    </OverlayTrigger>
+                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => {
+                                            this.props.DeleteUserFilterExpression(columnId, index);
+                                            if (!this.props.ShowPanel) { e.stopPropagation(); }
+                                        }}>
+                                            <Glyphicon glyph="remove" />
+                                        </Button>
+                                    </OverlayTrigger>   
                                 </AdaptableBlotterForm>
                             </div>
                         </ListGroupItem>
                     })
-                }
+                
             }
             // Finally do the column ranges
             let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)

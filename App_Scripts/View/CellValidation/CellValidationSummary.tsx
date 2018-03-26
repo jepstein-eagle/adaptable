@@ -72,6 +72,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     closeWizard={() => this.onCloseWizard()}
@@ -105,6 +106,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         CellValidations: state.CellValidation.CellValidations,
         UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 

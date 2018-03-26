@@ -1,4 +1,4 @@
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionMode } from '../../../Core/Enums'
@@ -15,6 +15,7 @@ export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterW
     EditedUserFilter: IUserFilter
     Columns: IColumn[],
     UserFilters: IUserFilter[],
+    SystemFilters: ISystemFilter[],
     WizardStartIndex: number,
     SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
@@ -38,6 +39,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                             StepName={stepNames[1]}
                             Columns={this.props.Columns}
                             UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
                             ExpressionMode={ExpressionMode.SingleColumn}
                             SelectedColumnId={this.props.SelectedColumnId}
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,

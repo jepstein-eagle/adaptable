@@ -16,7 +16,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
+        this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
             let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
 
             if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
@@ -45,15 +45,15 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
 
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
 
-            let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+            let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyles
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
 
             //we add the Index of the column to the list so we do not need to reevaluate every row
-            let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+            let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyles
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
-                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId), collectionIndex: this.ConditionalStyleState.ConditionalStyleConditions.indexOf(cs) }))
+                .map(cs => Object.assign({}, cs, { columnIndex: this.blotter.getColumnIndex(cs.ColumnId), collectionIndex: this.ConditionalStyleState.ConditionalStyles.indexOf(cs) }))
 
             let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
 
@@ -73,7 +73,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
-                        theBlotter.addRowStyle(primaryKey, StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyleConditions.indexOf(rowCS))
+                        theBlotter.addRowStyle(primaryKey, StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyles.indexOf(rowCS))
                         break
                     }
                 }

@@ -2,7 +2,7 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IConditionalStyleCondition } from '../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
@@ -22,7 +22,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
             theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csRow')
         }
 
-        this.ConditionalStyleState.ConditionalStyleConditions.forEach((c, index) => {
+        this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
           
             if (dataChangedEvent.Record) {
                 if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
@@ -54,12 +54,12 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         theBlotter.removeAllCellStyleHypergrid('csRow')
 
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyleConditions.length > 0) {
+        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
 
-            let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+            let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyles
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
 
-            let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyleConditions
+            let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyles
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
                 .map(cs => cs)
 
@@ -70,7 +70,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                 for (let column in columnConditionalStylesGroupedByColumn) {
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
-                        let localCS: IConditionalStyleCondition = columnCS
+                        let localCS: IConditionalStyle = columnCS
                         if (ExpressionHelper.checkForExpressionFromRecord(localCS.Expression, row, columns, this.blotter)) {
                             theBlotter.addCellStyleHypergrid(theBlotter.getPrimaryKeyValueFromRecord(row), localCS.ColumnId, { conditionalStyleColumn: localCS.Style })
                             break

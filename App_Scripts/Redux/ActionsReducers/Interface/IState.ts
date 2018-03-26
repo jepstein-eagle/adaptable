@@ -4,40 +4,38 @@ import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
 import { IReport, ILiveReport, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
-import { IFlashingColumn } from '../../../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCell } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { IPlusMinusCondition } from '../../../Strategy/Interface/IPlusMinusStrategy';
+import {  IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';
-import { IConditionalStyleCondition } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IColumnFilter } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement } from '../../../Core/Interface/Interfaces';
+import { IPredefinedTheme } from '../../../Strategy/Interface/IThemeStrategy';
 
-
-export interface PlusMinusState {
-  //  DefaultNudge: number
-    PlusMinusConditions: IPlusMinusCondition[]
-}
-
+/*
+Created by the system and not part of predefined or user config
+*/
 export interface GridState {
     Columns: IColumn[];
 }
 
 export interface MenuState {
     MenuItems: IMenuItem[];
-    ContextMenu: IContextMenu
+    ContextMenu: IContextMenu;
 }
 
 export interface PopupState {
-    ActionConfigurationPopup: IScreenPopup
+    ScreenPopup: IScreenPopup
     ErrorPopup: IErrorPopup
     WarningPopup: IWarningPopup
     InfoPopup: IInfoPopup
@@ -45,27 +43,57 @@ export interface PopupState {
     PromptPopup: IPromptPopup
 }
 
-export interface SmartEditState {
-    SmartEditValue: string
-    SmartEditOperation: MathOperation
-    PreviewInfo: IPreviewInfo
+export interface TeamSharingState {
+    Activated : boolean
+    SharedEntities: ISharedEntity[]
+}
+
+export interface UIControlConfigState {  // not sure about this one...
+    PredefinedColorChoices: string[];
 }
 
 export interface BulkUpdateState {
-    BulkUpdateValue: string
-    PreviewInfo: IPreviewInfo
+    BulkUpdateValue: string  
+    PreviewInfo: IPreviewInfo 
+}
+
+export interface  SystemFilterState{
+    SystemFilters: ISystemFilter[]
+}
+
+/*
+predefined config only - not editable by users
+*/
+export interface EntitlementsState {
+    FunctionEntitlements: IEntitlement[];
+}
+
+/* 
+predefined and user config
+*/
+export interface DashboardState {
+    FunctionToolbars: string[]
+    FunctionButtons: string[]
+    Zoom: number,
+    IsMinimised: boolean
+}
+
+export interface PlusMinusState {
+    PlusMinusRules: IPlusMinusRule[]
+}
+
+export interface SmartEditState {
+    SmartEditValue: string
+    SmartEditOperation: MathOperation
+    PreviewInfo: IPreviewInfo // not saved with state
 }
 
 export interface CustomSortState {
-    CustomSorts: Array<ICustomSort>;
-}
-
-export interface EntitlementsState {
-    FunctionEntitlements: Array<IEntitlement>;
+    CustomSorts: ICustomSort[];
 }
 
 export interface ShortcutState {
-    Shortcuts: Array<IShortcut>;
+    Shortcuts: IShortcut[];
 }
 
 export interface ExportState {
@@ -76,9 +104,8 @@ export interface ExportState {
     ErrorMsg: string;
 }
 
-
 export interface FlashingCellState {
-    FlashingColumns: Array<IFlashingColumn>
+    FlashingCells: IFlashingCell[]
 }
 
 export interface CalendarState {
@@ -87,12 +114,12 @@ export interface CalendarState {
 }
 
 export interface ConditionalStyleState {
-    ConditionalStyleConditions: Array<IConditionalStyleCondition>;
+    ConditionalStyles: Array<IConditionalStyle>;
 }
 
 export interface QuickSearchState {
-    QuickSearchDefaultBackColor: string
-    QuickSearchDefaultForeColor: string
+    QuickSearchBackColor: string
+    QuickSearchForeColor: string
     QuickSearchText: string
     QuickSearchOperator: LeafExpressionOperator
     QuickSearchDisplayType: QuickSearchDisplayType
@@ -100,25 +127,27 @@ export interface QuickSearchState {
 }
 
 export interface AdvancedSearchState {
-    AdvancedSearches: Array<IAdvancedSearch>;
-    CurrentAdvancedSearch: string
+    AdvancedSearches: IAdvancedSearch[];
+    CurrentAdvancedSearch: string;
 }
 
 export interface ColumnFilterState {
-     ColumnFilters: Array<IColumnFilter>
+     ColumnFilters: IColumnFilter[];
 }
 
 export interface UserFilterState {
-    UserFilters: Array<IUserFilter>;
+    UserFilters: IUserFilter[];
+
 }
 
 export interface ThemeState {
     CurrentTheme: string;
-    AvailableThemes: Array<string>
+    SystemThemes: string[];
+    PredefinedThemes: IPredefinedTheme[];
 }
 
 export interface CellValidationState {
-    CellValidations: Array<ICellValidationRule>
+    CellValidations: ICellValidationRule[]
 }
 
 export interface LayoutState {
@@ -126,27 +155,11 @@ export interface LayoutState {
     AvailableLayouts: ILayout[]
 }
 
-export interface DashboardState {
-    DashboardFunctionToolbars: string[]
-    DashboardFunctionButtons: string[]
-    DashboardZoom: number,
-    IsDashboardMinimised: boolean
-}
-
 export interface CalculatedColumnState {
     CalculatedColumns: ICalculatedColumn[];
-    EditedCalculatedColumnInvalidErrorMsg: string
-}
-
-export interface UIControlConfigState {
-    PredefinedColorChoices: string[];
-}
-
-export interface TeamSharingState {
-    Activated : boolean
-    SharedEntities: ISharedEntity[]
+    CalculatedColumnErrorMessage: string
 }
 
 export interface FormatColumnState {
-    FormatColumns: Array<IFormatColumn>
+    FormatColumns: IFormatColumn[]
 }
