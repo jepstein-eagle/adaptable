@@ -7,5 +7,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfigUrl: "",
-    maxColumnValueItemsDisplayed: 5000
+    maxColumnValueItemsDisplayed: 5000,
+    modalContainer: "Page"
 }

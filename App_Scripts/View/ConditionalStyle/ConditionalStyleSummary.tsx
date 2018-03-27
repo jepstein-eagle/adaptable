@@ -74,14 +74,16 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
             {this.state.EditedAdaptableBlotterObject &&
                 <ConditionalStyleWizard
-                    EditedConditionalStyle={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                    ConfigEntities={null}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }

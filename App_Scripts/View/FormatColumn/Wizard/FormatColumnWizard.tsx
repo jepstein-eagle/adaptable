@@ -5,15 +5,10 @@ import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { FormatColumnColumnWizard } from './FormatColumnColumnWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface FormatColumnWizardProps extends React.ClassAttributes<FormatColumnWizard> {
-    EditedFormatColumn: IFormatColumn
-    Columns: IColumn[],
-    FormatColumns: IFormatColumn[],
+export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
     PredefinedColorChoices: string[],
-    WizardStartIndex: number,
-    closeWizard: () => void
-    onFinishWizard: () => void
 }
 
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
@@ -24,14 +19,15 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
             <AdaptableWizard
                 FriendlyName={StrategyNames.FormatColumnStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={
                     [
                         <FormatColumnColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
                         <FormatColumnStyleWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />
                     ]}
-                Data={this.props.EditedFormatColumn}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
-     PlusMinusRules: IPlusMinusRule[]
+    PlusMinusRules: IPlusMinusRule[]
     onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -70,14 +70,16 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
             {this.state.EditedAdaptableBlotterObject &&
                 <PlusMinusWizard
-                    EditedPlusMinusRule={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                    ConfigEntities={null}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }
@@ -104,7 +106,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
-     wrapExpressionDescription(expressionDescription: string): string {
+    wrapExpressionDescription(expressionDescription: string): string {
         return (expressionDescription == "Any") ? "[Default Column Nudge Value]" : expressionDescription;
     }
 

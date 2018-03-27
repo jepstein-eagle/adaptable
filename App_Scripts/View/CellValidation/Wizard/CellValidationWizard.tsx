@@ -11,17 +11,10 @@ import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface CellValidationWizardProps extends React.ClassAttributes<CellValidationWizard> {
-    EditedCellValidation: ICellValidationRule
-    Columns: Array<IColumn>
-    UserFilters: IUserFilter[],
-   SystemFilters: ISystemFilter[],
-    WizardStartIndex: number
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    closeWizard: () => void
-    onFinishWizard: () => void
-}
+export interface CellValidationWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {
+ }
 
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
 
@@ -31,6 +24,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
             <AdaptableWizard
                 FriendlyName={StrategyNames.CellValidationStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <CellValidationSelectColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
                     <CellValidationActionWizard StepName={stepNames[1]} Columns={this.props.Columns} />,
@@ -42,9 +36,9 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
                         SelectedColumnId={null}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                 ]}
-                Data={this.props.EditedCellValidation}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

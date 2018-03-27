@@ -12,12 +12,10 @@ import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotte
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
+import { UIHelper } from "./UIHelper";
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
-    //  MenuState: MenuState;
-    //  DashboardState: DashboardState
-    // EntitlementsState: EntitlementsState,
     AdaptableBlotter: IAdaptableBlotter;
     showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
@@ -34,6 +32,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+
         return (
             <div className="adaptable_blotter_style_base" >
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
@@ -74,7 +74,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
                     AdaptableBlotter={this.props.AdaptableBlotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
-                    PopupParams={this.props.PopupState.ScreenPopup.Params} />
+                    PopupParams={this.props.PopupState.ScreenPopup.Params}
+                    ModalContainer={modalContainer} />
             </div>
 
         );

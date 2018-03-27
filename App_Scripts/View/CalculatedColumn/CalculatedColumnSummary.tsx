@@ -30,39 +30,44 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     render(): any {
-       let detailRow;
+        let detailRow;
 
-       let sharing =this.props.TeamSharingActivated;
+        let sharing = this.props.TeamSharingActivated;
 
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                 detailRow =
-                <StrategyDetail
-                    key={"UF" + index}
-                    Item1={StrategyNames.CalculatedColumnStrategyName}
-                    Item2={item.GetValueFunc}
-                    ConfigEnity={item}
-                    showShare={this.props.TeamSharingActivated}
-                    EntityName={StrategyNames.CalculatedColumnStrategyName}
-                    onEdit={() => this.onEdit(index, item)}
-                    onShare={() => this.props.onShare(item)}
-                    onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}
-                    showBold={true}
-                />   
+                detailRow =
+                    <StrategyDetail
+                        key={"UF" + index}
+                        Item1={StrategyNames.CalculatedColumnStrategyName}
+                        Item2={item.GetValueFunc}
+                        ConfigEnity={item}
+                        showShare={this.props.TeamSharingActivated}
+                        EntityName={StrategyNames.CalculatedColumnStrategyName}
+                        onEdit={() => this.onEdit(index, item)}
+                        onShare={() => this.props.onShare(item)}
+                        onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+                        showBold={true}
+                    />
             }
         })
 
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-             {detailRow}
+            {detailRow}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CalculatedColumnWizard
-                    EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                    ConfigEntities={this.props.CalculatedColumns}
                     Columns={this.props.Columns}
+                    ModalContainer={this.props.ModalContainer}
+                    UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }

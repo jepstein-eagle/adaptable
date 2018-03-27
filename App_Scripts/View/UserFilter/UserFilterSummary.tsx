@@ -66,18 +66,20 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         })
 
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-             {strategySummaries}
+            {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <UserFilterWizard
-                    EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                    ConfigEntities={null}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }
@@ -95,12 +97,12 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     onCloseWizard() {
-         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     onFinishWizard() {
         let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
-        this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter );
+        this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 

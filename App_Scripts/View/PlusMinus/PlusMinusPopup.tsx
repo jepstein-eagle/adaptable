@@ -79,41 +79,43 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 onDeleteConfirm={PlusMinusRedux.PlusMinusDeleteCondition(index)}
                 Column={column}
                 onColumnDefaultNudgeValueChange={(index, event) => this.onColumnDefaultNudgeValueChange(index, event)} />
-        })  
+        })
 
         let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className="adaptable_blotter_style_popup_plusminus">
+        return <div className="adaptable_blotter_style_popup_plusminus">
             <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel"
-            button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
-            infoBody={infoBody}>
+                button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
+                infoBody={infoBody}>
 
-            {PlusMinusRules.length > 0 &&
-                <AdaptableObjectCollection ColItems={colItems} items={PlusMinusRules} />
-            }
+                {PlusMinusRules.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={PlusMinusRules} />
+                }
 
-            {PlusMinusRules.length == 0 &&
-                <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
-            }
+                {PlusMinusRules.length == 0 &&
+                    <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
+                {this.state.EditedAdaptableBlotterObject != null &&
 
-                <PlusMinusWizard
-                    EditedPlusMinusRule={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    SystemFilters={this.props.SystemFilters}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    SelectedColumnId={null}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    closeWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                />
-            }
-        </PanelWithButton>
+                    <PlusMinusWizard
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                        ConfigEntities={null}
+                        ModalContainer={this.props.ModalContainer}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        SelectedColumnId={null}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        onCloseWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                    />
+                }
+            </PanelWithButton>
         </div>
     }
 
@@ -179,7 +181,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         PlusMinusRules: state.PlusMinus.PlusMinusRules,
-         };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

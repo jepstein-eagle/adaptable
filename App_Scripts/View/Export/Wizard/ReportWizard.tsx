@@ -15,6 +15,7 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
             <AdaptableWizard
                 FriendlyName={StrategyNames.ExportStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <ReportColumnsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
                     <ReportExpressionWizard StepName={stepNames[1]} Columns={this.props.Columns}

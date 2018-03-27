@@ -11,7 +11,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import {  IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
@@ -39,7 +39,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
     render(): any {
 
- let formatColumn: IFormatColumn = this.props.FormatColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
+        let formatColumn: IFormatColumn = this.props.FormatColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noFormatColumn: boolean = formatColumn == null;
 
         let formatColumnRow: any;
@@ -66,18 +66,22 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 showBold={true}
             />
         }
-       
+
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-        {formatColumnRow}
+            {formatColumnRow}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <FormatColumnWizard
-                    EditedFormatColumn={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
-                    FormatColumns={this.props.FormatColumns}
+                    ConfigEntities={this.props.FormatColumns}
+                    UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     PredefinedColorChoices={this.props.PredefinedColorChoices}
+                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }
@@ -93,7 +97,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
     onEdit(formatColumn: IFormatColumn) {
         let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
-     }
+    }
 
     onCloseWizard() {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
@@ -122,7 +126,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
         onEditFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
     };
 }
 

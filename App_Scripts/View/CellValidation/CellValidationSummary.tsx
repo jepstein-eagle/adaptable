@@ -38,7 +38,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.CellValidationStrategyName}
-             StrategyId={StrategyIds.CellValidationStrategyId}
+            StrategyId={StrategyIds.CellValidationStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.CellValidationStrategyName}
@@ -69,13 +69,15 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CellValidationWizard
-                    EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                    ConfigEntities={null}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }

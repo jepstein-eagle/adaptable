@@ -26,7 +26,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
     FormatColumns: Array<IFormatColumn>,
-     PredefinedColorChoices: string[],
+    PredefinedColorChoices: string[],
     onAddFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -97,12 +97,16 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <FormatColumnWizard
-                        EditedFormatColumn={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                        ModalContainer={this.props.ModalContainer}
                         PredefinedColorChoices={this.props.PredefinedColorChoices}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         Columns={this.props.Columns.filter(x => !this.props.FormatColumns.find(y => y.ColumnId == x.ColumnId))}
-                        FormatColumns={this.props.FormatColumns}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        ConfigEntities={this.props.FormatColumns}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }
@@ -138,7 +142,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FormatColumns: state.FormatColumn.FormatColumns,
-         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

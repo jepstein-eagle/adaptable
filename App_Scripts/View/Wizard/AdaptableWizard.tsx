@@ -2,6 +2,8 @@ import * as React from "react";
 import { Button, Modal, Glyphicon } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
+import { UIHelper } from "../UIHelper";
+import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -11,6 +13,7 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
     StepStartIndex?: number
     StepNames?: string[] // feels wrong, wrong, wrong
     FriendlyName?: string
+    ModalContainer: HTMLElement
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -51,12 +54,15 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 
     render() {
-            return (
-            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base">
+     //   let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.BlotterOptions, document);
+
+        return (
+            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base"
+                container={this.props.ModalContainer} >
                 <Modal.Header closeButton className="adaptable_blotter_style_wizard_base">
                     <Modal.Title>
                         <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
-                        </Modal.Title>
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="adaptable_blotter_style_wizard_base" >
                     {this.state.ActiveState}

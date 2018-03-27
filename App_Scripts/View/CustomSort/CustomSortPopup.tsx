@@ -98,12 +98,15 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
                 {this.state.EditedAdaptableBlotterObject &&
                     <CustomSortWizard
-                        EditedCustomSort={this.state.EditedAdaptableBlotterObject as ICustomSort}
-                        CustomSorts={this.props.CustomSorts}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
+                        ConfigEntities={this.props.CustomSorts}
+                        ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }
@@ -142,7 +145,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CustomSorts: state.CustomSort.CustomSorts,
-     };
+    };
 }
 
 

@@ -9,19 +9,12 @@ import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFil
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 
-export interface ConditionalStyleWizardProps extends React.ClassAttributes<ConditionalStyleWizard> {
-    EditedConditionalStyle: IConditionalStyle
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
-    WizardStartIndex: number
-    PredefinedColorChoices: string[],
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    closeWizard: () => void
-    onFinishWizard: () => void
-}
+export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
+      PredefinedColorChoices: string[],
+  }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
@@ -31,6 +24,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             <AdaptableWizard
                 FriendlyName={StrategyNames.ConditionalStyleStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <ConditionalStyleColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
                     <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
@@ -43,9 +37,9 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     />
                 ]}
-                Data={this.props.EditedConditionalStyle}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

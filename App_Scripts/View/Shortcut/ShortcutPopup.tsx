@@ -81,7 +81,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         return <div className="adaptable_blotter_style_popup_shortcut">
             <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptableblotter_modal_main_panel"
                 button={newButton}
-                bsStyle="primary"  glyphicon={StrategyGlyphs.ShortcutGlyph}
+                bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&
@@ -94,7 +94,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ShortcutWizard
-                        EditedShortcut={shortcut}
+                        EditedAdaptableBlotterObject={shortcut}
+                        ConfigEntities={null}
+                        ModalContainer={this.props.ModalContainer}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         DateKeysAvailable={shortcut.ShortcutKey ?
                             keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
                             : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
@@ -102,7 +108,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                             keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
                             : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }

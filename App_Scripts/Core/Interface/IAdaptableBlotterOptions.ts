@@ -6,7 +6,8 @@ export interface IAdaptableBlotterOptions {
     primaryKey?: string,
     blotterId?: string,
     predefinedConfigUrl?: string,
-    maxColumnValueItemsDisplayed: number
+    maxColumnValueItemsDisplayed: number,
+    modalContainer: "Grid" | "Page",
     iPushPullConfig?: {
         api_url?: string;
         ws_url?: string;

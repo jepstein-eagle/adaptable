@@ -4,14 +4,11 @@ import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface ShortcutWizardProps extends React.ClassAttributes<ShortcutWizard> {
-    EditedShortcut: IShortcut
+export interface ShortcutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ShortcutWizard> {
     NumericKeysAvailable: Array<string>
     DateKeysAvailable: Array<string>
-    WizardStartIndex: number
-    closeWizard: () => void
-    onFinishWizard: () => void
 }
 
 export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
@@ -23,13 +20,14 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
             <AdaptableWizard
                 FriendlyName={StrategyNames.ShortcutStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <ShortcutTypeWizard StepName={stepNames[0]} />,
                     <ShortcutSettingsWizard StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
                 ]}
-                Data={this.props.EditedShortcut}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

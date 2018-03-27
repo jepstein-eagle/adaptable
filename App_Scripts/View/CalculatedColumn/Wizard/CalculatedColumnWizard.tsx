@@ -5,16 +5,12 @@ import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface CalculatedColumnWizardProps extends React.ClassAttributes<CalculatedColumnWizard> {
-    EditedCalculatedColumn: ICalculatedColumn
-    Columns: Array<IColumn>
+export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {
     IsExpressionValid: (expression: string) => void
     GetErrorMessage: () => string
-    WizardStartIndex: number
-    closeWizard: () => void
-    onFinishWizard: () => void
-}
+  }
 
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
 
@@ -24,15 +20,16 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
             <AdaptableWizard
                 FriendlyName={StrategyNames.CalculatedColumnStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <CalculatedColumnSettingsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
                     <CalculatedColumnExpressionWizard StepName={stepNames[1]}
                         GetErrorMessage={this.props.GetErrorMessage}
                         IsExpressionValid={this.props.IsExpressionValid} />,
                 ]}
-                Data={this.props.EditedCalculatedColumn}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

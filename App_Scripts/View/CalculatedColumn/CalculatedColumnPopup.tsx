@@ -98,12 +98,17 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                 {this.state.EditedAdaptableBlotterObject &&
 
                     <CalculatedColumnWizard
-                        EditedCalculatedColumn={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                        ConfigEntities={this.props.CalculatedColumns}
                         Columns={this.props.Columns}
+                        ModalContainer={this.props.ModalContainer}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
                         GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
                         IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
 

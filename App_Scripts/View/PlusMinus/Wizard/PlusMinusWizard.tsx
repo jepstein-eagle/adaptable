@@ -9,18 +9,11 @@ import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
 import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 
-export interface PlusMinusWizardProps extends React.ClassAttributes<PlusMinusWizard> {
-    EditedPlusMinusRule: IPlusMinusRule
-    Columns: Array<IColumn>
-    UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
-    WizardStartIndex: number,
+export interface PlusMinusWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {
     SelectedColumnId: string
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    closeWizard: () => void
-    onFinishWizard: () => void
 }
 
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
@@ -31,6 +24,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
             <AdaptableWizard
                 FriendlyName={StrategyNames.PlusMinusStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={
                     [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
                     <PlusMinusSettingsWizard StepName={stepNames[1]} />,
@@ -39,9 +33,9 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
                         SystemFilters={this.props.SystemFilters}
                         SelectedColumnId={this.props.SelectedColumnId}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />]}
-                Data={this.props.EditedPlusMinusRule}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

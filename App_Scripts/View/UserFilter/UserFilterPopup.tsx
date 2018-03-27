@@ -25,7 +25,7 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -107,14 +107,16 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <UserFilterWizard
-                        EditedUserFilter={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                         Columns={this.props.Columns}
+                        ConfigEntities={null}
+                        ModalContainer={this.props.ModalContainer}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         WizardStartIndex={this.state.WizardStartIndex}
                         SelectedColumnId={selectedColumnId}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }
@@ -146,7 +148,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-       };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

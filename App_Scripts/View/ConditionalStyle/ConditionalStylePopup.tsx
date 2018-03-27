@@ -97,14 +97,16 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ConditionalStyleWizard
-                    EditedConditionalStyle={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                        ConfigEntities={null}
+                        ModalContainer={this.props.ModalContainer}
                         PredefinedColorChoices={this.props.PredefinedColorChoices}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }
@@ -136,7 +138,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

@@ -9,19 +9,12 @@ import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 
-export interface UserFilterWizardProps extends React.ClassAttributes<UserFilterWizard> {
-    EditedUserFilter: IUserFilter
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
-    WizardStartIndex: number,
-    SelectedColumnId: string
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    closeWizard: () => void
-    onFinishWizard: () => void
-}
+export interface UserFilterWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<UserFilterWizard> {
+      SelectedColumnId: string
+  }
 
 export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}> {
 
@@ -32,6 +25,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.UserFilterStrategyName}
                 StepNames={stepNames}
+                ModalContainer={this.props.ModalContainer}
                 Steps={
                     [
                         <UserFilterSelectColumnWizard Columns={this.props.Columns} StepName={stepNames[0]} />,
@@ -48,9 +42,9 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                             UserFilters={this.props.UserFilters}
                             Columns={this.props.Columns} />,
                     ]}
-                Data={this.props.EditedUserFilter}
+                Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
-                onHide={() => this.props.closeWizard()}
+                onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()} />
         </div>
     }

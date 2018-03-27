@@ -22,15 +22,15 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
-    onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction   
+    onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
 }
 
 export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, EditableConfigEntityState> {
 
     constructor() {
         super();
-        this.state = UIHelper.EmptyConfigState() ;  
-     }
+        this.state = UIHelper.EmptyConfigState();
+    }
     render(): any {
         let customSort: ICustomSort = this.props.CustomSorts.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noCustomSort: boolean = customSort == null;
@@ -48,8 +48,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             />
         } else {
             customSortRow = <StrategyDetail
-            key={StrategyNames.CustomSortStrategyName}
-            Item1={<StrategyProfile StrategyId={StrategyIds.CustomSortStrategyId}/>}
+                key={StrategyNames.CustomSortStrategyName}
+                Item1={<StrategyProfile StrategyId={StrategyIds.CustomSortStrategyId} />}
                 Item2={customSort.CustomSortItems.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyNames.CustomSortStrategyName}
@@ -58,20 +58,23 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 showShare={this.props.TeamSharingActivated}
                 onDelete={CustomSortRedux.CustomSortDelete(customSort)}
                 showBold={true}
-                />
+            />
         }
 
         return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-             {customSortRow}
+            {customSortRow}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CustomSortWizard
-                    EditedCustomSort={this.state.EditedAdaptableBlotterObject as ICustomSort}
-                    CustomSorts={this.props.CustomSorts}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
+                    ConfigEntities={this.props.CustomSorts}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
-                    closeWizard={() => this.onCloseWizard()}
+                    onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                 />
             }
@@ -90,7 +93,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     onCloseWizard() {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-     }
+    }
 
     onFinishWizard() {
 
@@ -118,7 +121,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CustomSortStrategyId))
- 
+
     };
 }
 

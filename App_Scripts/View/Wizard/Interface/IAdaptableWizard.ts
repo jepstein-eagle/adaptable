@@ -36,6 +36,7 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
     WizardStartIndex: number
     onCloseWizard: () => void
     onFinishWizard: () => void
+    ModalContainer: HTMLElement
 }
 
 // props for a wizard that wraps a config entity (without an expression)

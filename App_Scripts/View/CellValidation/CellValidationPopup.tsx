@@ -106,13 +106,15 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <CellValidationWizard
-                        EditedCellValidation={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                        ConfigEntities={null}
+                        ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
-                        closeWizard={() => this.onCloseWizard()}
+                        onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                     />
                 }
@@ -146,7 +148,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-           CellValidations: state.CellValidation.CellValidations
+        CellValidations: state.CellValidation.CellValidations
     };
 }
 
