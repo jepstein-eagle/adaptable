@@ -25,7 +25,10 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: this.props.AdaptableBlotter ? this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer : false
+        TeamSharingActivated: this.props.AdaptableBlotter ? this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer : false,
+        Columns : this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
+        UserFilters : this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+        SystemFilters : this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters
       }
 
       var body: any = React.createElement(bodyElement, commonProps);

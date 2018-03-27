@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  Well } from 'react-bootstrap';
+import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -19,8 +19,6 @@ import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
-    Columns: IColumn[]
-    UserFilters: IUserFilter[]
     ColumnFilters: IColumnFilter[]
     onDeleteFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -35,7 +33,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     render() {
         let infoBody: any[] = ["Column Filters are set using the filter dropdown in the column header menu.", <br />, <br />,
-        "This popup allows you to see which columns have filters applied with an option to clear them."]
+            "This popup allows you to see which columns have filters applied with an option to clear them."]
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
@@ -58,19 +56,19 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         })
 
-        return  <div className="adaptable_blotter_style_popup_columnfilter">
-        <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
-            button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
+        return <div className="adaptable_blotter_style_popup_columnfilter">
+            <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
+                button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
-            {columnFilterItems.length > 0 &&
-                <AdaptableObjectCollection ColItems={colItems} items={columnFilterItems} />
-            }
+                {columnFilterItems.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={columnFilterItems} />
+                }
 
-            {columnFilterItems.length == 0 &&
-                <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
-            }
+                {columnFilterItems.length == 0 &&
+                    <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
+                }
 
-        </PanelWithButton>
+            </PanelWithButton>
         </div>
     }
 }
@@ -78,8 +76,6 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
     };
 }
 

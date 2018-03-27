@@ -29,9 +29,6 @@ import { IUIConfirmation } from "../../Core/Interface/IMessage";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
     PlusMinusRules: IPlusMinusRule[]
     onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => PlusMinusRedux.PlusMinusEditConditionAction
     onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusRule) => PlusMinusRedux.PlusMinusAddUpdateConditionAction
@@ -182,10 +179,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         PlusMinusRules: state.PlusMinus.PlusMinusRules,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters
-    };
+         };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

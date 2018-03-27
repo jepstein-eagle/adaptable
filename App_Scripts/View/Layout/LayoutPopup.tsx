@@ -23,7 +23,6 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[],
     CurrentLayout: string,
-    Columns: IColumn[]
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
     onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
@@ -157,8 +156,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Layouts: state.Layout.AvailableLayouts,
         CurrentLayout: state.Layout.CurrentLayout,
-        Columns: state.Grid.Columns
-    };
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

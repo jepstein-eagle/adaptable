@@ -29,7 +29,6 @@ interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedCo
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
     onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnEditAction
     CalculatedColumns: Array<ICalculatedColumn>
-    Columns: IColumn[]
     CalculatedColumnErrorMessage: string
     IsExpressionValid: (expression: string) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -145,7 +144,6 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        Columns: state.Grid.Columns,
         CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
     };
 }

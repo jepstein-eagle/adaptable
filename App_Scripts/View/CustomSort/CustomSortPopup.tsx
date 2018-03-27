@@ -30,7 +30,6 @@ interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupCom
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
     onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction
     CustomSorts: Array<ICustomSort>
-    Columns: Array<IColumn>
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -143,8 +142,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CustomSorts: state.CustomSort.CustomSorts,
-        Columns: state.Grid.Columns
-    };
+     };
 }
 
 

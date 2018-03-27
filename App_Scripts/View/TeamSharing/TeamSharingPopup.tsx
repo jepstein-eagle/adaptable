@@ -36,8 +36,6 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
     Entities: Array<ISharedEntity>
-    Columns: Array<IColumn>
-    UserFilters: IUserFilter[]
     onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction
     onImportItem: (entity: IAdaptableBlotterObject, strategy: string) => TeamSharingRedux.TeamSharingImportItemAction
 }
@@ -249,9 +247,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Entities: state.TeamSharing.SharedEntities,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
-    };
+      };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import * as _ from 'lodash'
-import {  connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { LeafExpressionOperator, QuickSearchDisplayType, PopoverType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -44,7 +44,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
         this.state = { EditedQuickSearchText: "", EditedStyle: null }
     }
 
-    debouncedRunQuickSearch = _.debounce(() => this.props.onRunQuickSearch(this.state.EditedQuickSearchText), 250);    
+    debouncedRunQuickSearch = _.debounce(() => this.props.onRunQuickSearch(this.state.EditedQuickSearchText), 250);
 
     public componentDidMount() {
         this.setState({ EditedQuickSearchText: this.props.QuickSearchText, EditedStyle: this.props.QuickSearchStyle });
@@ -111,84 +111,85 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
             return <option key={enumName} value={enumName}>{this.getTextForQuickSearchDisplayType(enumName as QuickSearchDisplayType)}</option>
         })
 
-           return <div className="adaptable_blotter_style_popup_quicksearch">
-                <PanelWithImage header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
-                    <AdaptableBlotterForm inline>
-                        <Panel header={"Search For"} bsStyle="info" >
-                            <AdaptableBlotterFormControlTextClear
-                                type="text"
-                                placeholder="Quick Search Text"
-                                value={this.state.EditedQuickSearchText}
-                                OnTextChange={(x) => this.handleQuickSearchTextChange(x)} />
-                        </Panel>
-                    </AdaptableBlotterForm>
+        return <div className="adaptable_blotter_style_popup_quicksearch">
+            <PanelWithImage header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
+                <AdaptableBlotterForm inline>
+                    <Panel header={"Search For"} bsStyle="info" >
+                        <AdaptableBlotterFormControlTextClear
+                            type="text"
+                            placeholder="Quick Search Text"
+                            value={this.state.EditedQuickSearchText}
+                            OnTextChange={(x) => this.handleQuickSearchTextChange(x)} />
+                    </Panel>
+                </AdaptableBlotterForm>
 
-                    <AdaptableBlotterForm horizontal>
-                        <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
+                <AdaptableBlotterForm horizontal>
+                    <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
-                            <FormGroup controlId="formInlineSearchOperator">
-                                <Col xs={4}>
-                                    <ControlLabel>Operator:</ControlLabel>
-                                </Col>
-                                <Col xs={8}>
-                                    <AdaptableBlotterForm inline >
-                                        <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
-                                            {optionOperators}
-                                        </FormControl>
-                                        {' '}<AdaptablePopover headerText={"Quick Search: Operator"}
-                                            bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
-                                    </AdaptableBlotterForm  >
-                                </Col>
-                            </FormGroup>
+                        <FormGroup controlId="formInlineSearchOperator">
+                            <Col xs={4}>
+                                <ControlLabel>Operator:</ControlLabel>
+                            </Col>
+                            <Col xs={6}>
+                                <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
+                                    {optionOperators}
+                                </FormControl>
+                            </Col>
+                            <Col xs={1}>
+                                <AdaptablePopover headerText={"Quick Search: Operator"}
+                                    bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
 
-                            <FormGroup controlId="formInlineSearchDisplay">
-                                <Col xs={4}>
-                                    <ControlLabel>Behaviour:</ControlLabel>
-                                </Col>
-                                <Col xs={8}>
-                                    <AdaptableBlotterForm inline >
-                                        <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
-                                            {quickSearchDisplayTypes}
-                                        </FormControl>
-                                        {' '}<AdaptablePopover headerText={"Quick Search: Behaviour"}
-                                            bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
-                                            popoverType={PopoverType.Info} />
-                                    </AdaptableBlotterForm  >
-                                </Col>
-                            </FormGroup>
+                            </Col>
+                        </FormGroup>
 
-                            <FormGroup controlId="colorBackStyle">
-                                <Col xs={4} >
-                                    <ControlLabel>Set Back Colour:</ControlLabel>
-                                </Col>
-                                <Col xs={1}>
-                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}></Checkbox>
-                                </Col>
-                                <Col xs={7}>
-                                    {this.props.QuickSearchStyle.BackColor != null &&
-                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
-                                    }
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId="colorForeStyle">
-                                <Col xs={4} >
-                                    <ControlLabel>Set Fore Colour:</ControlLabel>
-                                </Col>
-                                <Col xs={1}>
-                                    <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}></Checkbox>
-                                </Col>
-                                <Col xs={7}>
-                                    {this.props.QuickSearchStyle.ForeColor != null &&
-                                        <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
-                                    }
-                                </Col>
-                            </FormGroup>
+                        <FormGroup controlId="formInlineSearchDisplay">
+                            <Col xs={4}>
+                                <ControlLabel>Behaviour:</ControlLabel>
+                            </Col>
+                            <Col xs={6}>
+                                <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
+                                    {quickSearchDisplayTypes}
+                                </FormControl>
+                            </Col>
+                            <Col xs={1}>
+                                <AdaptablePopover headerText={"Quick Search: Behaviour"}
+                                    bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
+                                    popoverType={PopoverType.Info} />
+                            </Col>
+                        </FormGroup>
 
-                        </Panel>
-                    </AdaptableBlotterForm>
-                </PanelWithImage>
-            </div>
-       
+                        <FormGroup controlId="colorBackStyle">
+                            <Col xs={4} >
+                                <ControlLabel>Set Back Colour:</ControlLabel>
+                            </Col>
+                            <Col xs={1}>
+                                <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}></Checkbox>
+                            </Col>
+                            <Col xs={7}>
+                                {this.props.QuickSearchStyle.BackColor != null &&
+                                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
+                                }
+                            </Col>
+                        </FormGroup>
+                        <FormGroup controlId="colorForeStyle">
+                            <Col xs={4} >
+                                <ControlLabel>Set Fore Colour:</ControlLabel>
+                            </Col>
+                            <Col xs={1}>
+                                <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}></Checkbox>
+                            </Col>
+                            <Col xs={7}>
+                                {this.props.QuickSearchStyle.ForeColor != null &&
+                                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
+                                }
+                            </Col>
+                        </FormGroup>
+
+                    </Panel>
+                </AdaptableBlotterForm>
+            </PanelWithImage>
+        </div>
+
     }
 
     private getTextForQuickSearchDisplayType(quickSearchDisplayType: QuickSearchDisplayType): string {

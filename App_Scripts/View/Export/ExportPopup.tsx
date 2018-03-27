@@ -33,10 +33,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onAddUpdateReport: (index: number, Report: IReport) => ExportRedux.ReportAddUpdateAction;
     onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
-    UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
-    Columns: Array<IColumn>
-    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
+     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
@@ -150,10 +147,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Reports: state.Export.Reports,
         CurrentReport: state.Export.CurrentReport,
         LiveReports: state.Export.CurrentLiveReports,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
-    };
+       };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

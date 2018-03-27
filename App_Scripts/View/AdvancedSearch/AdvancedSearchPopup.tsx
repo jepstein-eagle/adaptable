@@ -26,13 +26,10 @@ import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
-    Columns: IColumn[];
     CurrentAdvancedSearchName: string;
     onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
-    UserFilters: IUserFilter[]
-    SystemFilters: ISystemFilter[]
 }
 
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
@@ -88,36 +85,36 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_advancedsearch">
-        <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-            button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_panel" >
+            <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_panel" >
 
-            {advancedSearchRows.length > 0 &&
-                <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />
-            }
+                {advancedSearchRows.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />
+                }
 
-            {advancedSearchRows.length == 0 &&
-                <Well bsSize="small">
-                    <HelpBlock>Click 'New' to start creating advanced searches.</HelpBlock>
-                </Well>
-            }
+                {advancedSearchRows.length == 0 &&
+                    <Well bsSize="small">
+                        <HelpBlock>Click 'New' to start creating advanced searches.</HelpBlock>
+                    </Well>
+                }
 
-            {this.state.EditedAdaptableBlotterObject != null &&
-                <AdvancedSearchWizard
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
-                    ConfigEntities={this.props.AdvancedSearches}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    SystemFilters={this.props.SystemFilters}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    onCloseWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()} />
-            }
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <AdvancedSearchWizard
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+                        ConfigEntities={this.props.AdvancedSearches}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        onCloseWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()} />
+                }
 
-        </PanelWithButton>
+            </PanelWithButton>
         </div>
 
-      
+
 
     }
 
@@ -147,9 +144,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 

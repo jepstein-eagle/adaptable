@@ -29,9 +29,7 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
     PreviewInfo: IPreviewInfo;
-    Columns: IColumn[];
-    UserFilters: IUserFilter[];
-    onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
+     onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
     onBulkUpdateCheckSelectedCells: () => BulkUpdateRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -212,9 +210,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         PreviewInfo: state.BulkUpdate.PreviewInfo,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
-    };
+       };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

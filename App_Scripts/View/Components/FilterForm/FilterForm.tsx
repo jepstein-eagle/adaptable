@@ -9,7 +9,7 @@ import { IColumnFilter, IColumnFilterContext } from '../../../Strategy/Interface
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { IRange } from '../../../Core/Interface/IRange'
@@ -21,9 +21,10 @@ import { Expression } from "../../../Core/Expression";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
-    ColumnFilterState: ColumnFilterState;
-    UserFilterState: UserFilterState;
-    SystemFilterState: SystemFilterState;
+    Columns: IColumn[],
+    UserFilters: IUserFilter[],
+   SystemFilters: ISystemFilter[],
+   ColumnFilters: IColumnFilter[],
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     ColumnValueType: DistinctCriteriaPairValue,
@@ -34,7 +35,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     render(): any {
 
         // get user filter expressions appropriate for this column
-        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn,  this.props.UserFilterState.UserFilters).map(uf=>uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilterState.SystemFilters).map(sf=>sf.Name))
+        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn,  this.props.UserFilters).map(uf=>uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf=>sf.Name))
         ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
         let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
 
@@ -48,7 +49,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             columnValuePairs = [];
         }
 
-        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: string[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
             uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ?
@@ -94,7 +95,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onClickColumValue(columnValues: string[]) {
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
@@ -106,7 +107,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onClickUserFilter(userFilters: string[]) {
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
             existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
@@ -118,7 +119,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onSetCustomExpression(rangeExpression: IRange) {
-        let existingColumnFilter: IColumnFilter = this.props.ColumnFilterState.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
@@ -156,9 +157,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        ColumnFilterState: state.ColumnFilter,
-        UserFilterState: state.UserFilter,
-        SystemFilterState: state.SystemFilter
+        Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 

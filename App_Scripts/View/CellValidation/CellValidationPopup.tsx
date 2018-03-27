@@ -29,9 +29,6 @@ import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
-    Columns: Array<IColumn>,
-    UserFilters: IUserFilter[]
-    SystemFilters: ISystemFilter[]
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
     onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -149,10 +146,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
-        CellValidations: state.CellValidation.CellValidations
+           CellValidations: state.CellValidation.CellValidations
     };
 }
 

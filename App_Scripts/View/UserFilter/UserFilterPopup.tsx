@@ -25,10 +25,7 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-    UserFilters: IUserFilter[]
-    SystemFilters: ISystemFilter[]
-    Columns: IColumn[],
-    onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -149,10 +146,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
-        Columns: state.Grid.Columns,
-    };
+       };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

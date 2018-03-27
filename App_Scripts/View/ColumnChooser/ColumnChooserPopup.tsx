@@ -12,8 +12,7 @@ import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
-    Columns: Array<IColumn>
-    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
+     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
@@ -44,8 +43,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Columns: state.Grid.Columns
-    };
+     };
 }
 
 

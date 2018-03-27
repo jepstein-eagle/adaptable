@@ -29,7 +29,6 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
-    Columns: Array<IColumn>
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]
 }
@@ -147,7 +146,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Columns: state.Grid.Columns,
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };

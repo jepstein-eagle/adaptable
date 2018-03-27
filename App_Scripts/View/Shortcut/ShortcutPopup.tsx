@@ -29,7 +29,6 @@ interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupCompone
     onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => ShortcutRedux.ShortcutChangeKeyAction
     onChangeOperationShortcut: (shortcut: IShortcut, NewShortcutOperation: MathOperation) => ShortcutRedux.ShortcutChangeOperationAction
     onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => ShortcutRedux.ShortcutChangeResultAction
-
     Shortcuts: Array<IShortcut>,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }

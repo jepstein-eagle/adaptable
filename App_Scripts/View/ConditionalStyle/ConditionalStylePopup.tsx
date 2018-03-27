@@ -29,9 +29,6 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyle>,
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-   SystemFilters: ISystemFilter[],
     PredefinedColorChoices: string[],
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -139,10 +136,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
-        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
     };
 }
 

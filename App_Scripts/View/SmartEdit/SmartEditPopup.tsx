@@ -27,8 +27,6 @@ interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupCompo
     SmartEditValue: string;
     SmartEditOperation: MathOperation;
     PreviewInfo: IPreviewInfo;
-    Columns: IColumn[];
-    UserFilters: IUserFilter[];
     onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
@@ -167,8 +165,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         SmartEditOperation: state.SmartEdit.SmartEditOperation,
         PreviewInfo: state.SmartEdit.PreviewInfo,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
     };
 }
 
