@@ -9,7 +9,7 @@ function ThemeChange(blotter, container) {
             container.className = "ag-theme-balham";
         }
         else {
-            container.className = "ag-theme-blue";
+            container.className = "ag-theme-balham";
         }
     }
 }

@@ -45,7 +45,7 @@ export module FilterHelper {
         let appropriateSystemFilters: ISystemFilter[] = []
         if (column != null) {
             systemFilters.forEach((systemFilter: ISystemFilter) => {
-                if (systemFilter.DataType == DataType.All || systemFilter.DataType == column.DataType) {
+                if ((systemFilter.DataType == DataType.All && column.DataType != DataType.Boolean) || systemFilter.DataType == column.DataType) {
                     appropriateSystemFilters.push(systemFilter)
                 }
             })

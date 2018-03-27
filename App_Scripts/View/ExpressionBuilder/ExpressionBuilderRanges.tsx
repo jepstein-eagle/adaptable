@@ -11,7 +11,7 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 export interface ExpressionBuilderRangesProps extends React.ClassAttributes<ExpressionBuilderRanges> {
-    DataType: DataType
+  SelectedColumn: IColumn
     Ranges: Array<IRange>
     Columns: Array<IColumn>
     onRangesChange: (Ranges: Array<IRange>) => void
@@ -19,18 +19,19 @@ export interface ExpressionBuilderRangesProps extends React.ClassAttributes<Expr
 
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesProps, {}> {
     render() {
+     let selectedColumnDataType = this.props.SelectedColumn.DataType
         let rangesElement: JSX.Element[] = null
-        if (this.props.DataType == DataType.Number || this.props.DataType == DataType.Date) {
+        if (selectedColumnDataType == DataType.Number || selectedColumnDataType == DataType.Date) {
             rangesElement = this.props.Ranges.map((range, index) => {
-                let numericAndDateOption = <DropdownButton bsSize="small" style={dropDownStyle} title={ExpressionHelper.OperatorToLongFriendlyString(range.Operator, this.props.DataType)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Unknown, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThan, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThanOrEqual, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThan, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThanOrEqual, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Equals, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.NotEquals, this.props.DataType)}</MenuItem>
-                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Between, this.props.DataType)}</MenuItem>
+                let numericAndDateOption = <DropdownButton bsSize="small" style={dropDownStyle} title={ExpressionHelper.OperatorToLongFriendlyString(range.Operator, selectedColumnDataType)} id="numericAndDateOption2" componentClass={InputGroup.Button}>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Unknown, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThan, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.GreaterThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.GreaterThanOrEqual, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThan)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThan, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.LessThanOrEqual)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.LessThanOrEqual, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Equals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Equals, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.NotEquals)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.NotEquals, selectedColumnDataType)}</MenuItem>
+                    <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Between)}>{ExpressionHelper.OperatorToLongFriendlyString(LeafExpressionOperator.Between, selectedColumnDataType)}</MenuItem>
                 </DropdownButton>
 
                 return <Panel key={index} bsStyle="primary" className="small-padding-panel">
@@ -50,7 +51,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             {range.IsOperand1Column ?
                                 <div style={textBoxStyle}>
                                     <ColumnSelector SelectedColumnIds={[range.Operand1]}
-                                        ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                        ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType  && c.ColumnId != this.props.SelectedColumn.ColumnId )}
                                         onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
                                         SelectionMode={SelectionMode.Single} />
                                 </div> :
@@ -68,7 +69,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                     {range.IsOperand2Column ?
                                         <div style={textBoxStyle}>
                                             <ColumnSelector SelectedColumnIds={[range.Operand2]}
-                                                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                                ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType)}
                                                 onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
                                                 SelectionMode={SelectionMode.Single} />
                                         </div> :
@@ -90,7 +91,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
             })
         }
-        else if (this.props.DataType == DataType.String) {
+        else if (selectedColumnDataType == DataType.String) {
             rangesElement = this.props.Ranges.map((range, index) => {
                 let stringOption = <DropdownButton bsSize="small" style={dropDownStyle} title={ExpressionHelper.OperatorToShortFriendlyString(range.Operator)} id="stringOption2" componentClass={InputGroup.Button}>
                     <MenuItem onClick={() => this.onLeafExpressionOperatorChange(index, LeafExpressionOperator.Unknown)}>{ExpressionHelper.OperatorToShortFriendlyString(LeafExpressionOperator.Unknown)}</MenuItem>
@@ -113,7 +114,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                         {range.IsOperand1Column ?
                             <div style={textBoxStyle}>
                                 <ColumnSelector SelectedColumnIds={[range.Operand1]}
-                                    ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType)}
+                                    ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType)}
                                     onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
                                     SelectionMode={SelectionMode.Single} />
                             </div> :
@@ -143,11 +144,11 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     }
 
     getOperand1FormControl(index: number, range: IRange): any {
-        return <FormControl style={textBoxStyle} value={String(range.Operand1)} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(index, e)} />
+        return <FormControl style={textBoxStyle} value={String(range.Operand1)} type={UIHelper.getDescriptionForDataType(this.props.SelectedColumn.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.SelectedColumn.DataType)} onChange={(e) => this.onOperand1Edit(index, e)} />
     }
 
     getOperand2FormControl(index: number, range: IRange): any {
-        return <FormControl style={textBoxStyle} value={String(range.Operand2)} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(index, e)} />
+        return <FormControl style={textBoxStyle} value={String(range.Operand2)} type={UIHelper.getDescriptionForDataType(this.props.SelectedColumn.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.SelectedColumn.DataType)} onChange={(e) => this.onOperand2Edit(index, e)} />
     }
 
     onRangeDelete(index: number) {
