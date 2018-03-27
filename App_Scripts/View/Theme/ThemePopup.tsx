@@ -9,11 +9,11 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IPredefinedTheme } from "../../Strategy/Interface/IThemeStrategy";
+import { IUserTheme } from "../../Strategy/Interface/IThemeStrategy";
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
     SystemThemes: Array<string>;
-    PredefinedThemes: Array<IPredefinedTheme>;
+    UserThemes: Array<IUserTheme>;
     CurrentTheme: string;
     SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
 }
@@ -26,8 +26,8 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
         this.props.SystemThemes.forEach(st => {
             availableThemes.push(st);
         })
-        this.props.PredefinedThemes.forEach(pt => {
-            availableThemes.push(pt.Name);
+        this.props.UserThemes.forEach(ut => {
+            availableThemes.push(ut.Name);
         })
 
         let optionThemes = availableThemes.map(x => {
@@ -61,7 +61,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SystemThemes: state.Theme.SystemThemes,
-        PredefinedThemes: state.Theme.PredefinedThemes,
+        UserThemes: state.Theme.UserThemes,
         CurrentTheme: state.Theme.CurrentTheme
     };
 }

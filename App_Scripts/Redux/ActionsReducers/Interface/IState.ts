@@ -20,7 +20,7 @@ import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy'
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement } from '../../../Core/Interface/Interfaces';
-import { IPredefinedTheme } from '../../../Strategy/Interface/IThemeStrategy';
+import { IUserTheme } from '../../../Strategy/Interface/IThemeStrategy';
 
 /*
 Created by the system and not part of predefined or user config
@@ -143,7 +143,7 @@ export interface UserFilterState {
 export interface ThemeState {
     CurrentTheme: string;
     SystemThemes: string[];
-    PredefinedThemes: IPredefinedTheme[];
+    UserThemes: IUserTheme[];
 }
 
 export interface CellValidationState {

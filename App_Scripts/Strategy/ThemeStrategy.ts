@@ -12,17 +12,21 @@ import { Helper } from '../Core/Helpers/Helper';
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState: ThemeState
     private style: HTMLStyleElement
+    private theme: HTMLLinkElement
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ThemeStrategyId, blotter)
 
 
-        // Create the <style> tag
+        // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        // WebKit hack :(
-        this.style.appendChild(document.createTextNode(""));
-        // Add the <style> element to the page
-        document.head.appendChild(this.style);
+        this.style.appendChild(document.createTextNode(""));   // WebKit hack :(
+        document.head.appendChild(this.style);  // Adds the <style> element to the page
+
+        // Create the theme link for predefined themes
+        this.theme = document.createElement("link");
+        this.theme.rel = "stylesheet"
+        document.head.appendChild(this.theme);
     }
 
     protected addPopupMenuItem() {
@@ -32,8 +36,10 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     protected InitState() {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme
+            this.style.innerHTML = ""
+            this.theme.href = ""
             if (this.ThemeState.CurrentTheme == "None") {
-                this.style.innerHTML = ""
+                // do nothing...
             }
             else {
                 let shippedTheme = this.ThemeState.SystemThemes.find(t => t == this.ThemeState.CurrentTheme)
@@ -41,9 +47,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
                 if (shippedTheme) {
                     this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                 } else { // otherwise use the predefined one
-                    let predefinedTheme = this.ThemeState.PredefinedThemes.find(t => t.Name == this.ThemeState.CurrentTheme)
-                    if (predefinedTheme) {
-                        this.style.innerHTML = Helper.ReadFileContents(predefinedTheme.Location);
+                    let userTheme = this.ThemeState.UserThemes.find(t => t.Name == this.ThemeState.CurrentTheme)
+                    if (userTheme) {
+                        this.theme.href = userTheme.Url
                     }
                 }
             }

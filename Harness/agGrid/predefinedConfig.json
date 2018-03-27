@@ -10,7 +10,7 @@
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "Theme",
+				"FunctionName": "AdvancedSearch",
 				"AccessLevel": "Hidden"
 			},
 			{
@@ -71,14 +71,14 @@
 		]
 	},
 	"Theme": {
-		"PredefinedThemes": [
+		"UserThemes": [
 			{
-				"Name": "Hello World",
-				"Location": "Hello location"
+				"Name": "User Slate",
+				"Url": "slate.css"
 			},
 			{
-				"Name": "Goodbye World",
-				"Location": "Goodbye location"
+				"Name": "User Paper",
+				"Url": "paper.css"
 			}
 		]
 	}

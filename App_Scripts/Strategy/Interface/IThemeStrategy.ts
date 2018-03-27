@@ -4,7 +4,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 export interface IThemeStrategy extends IStrategy {
 }
 
-export interface IPredefinedTheme extends IAdaptableBlotterObject {
+export interface IUserTheme extends IAdaptableBlotterObject {
     Name: string;
-    Location: string
+    Url: string
   }
