@@ -113,7 +113,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             && ExpressionHelper.IsExpressionValid(this.state.Expression)
     }
     public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
-    public Next(): void { /*this.props.Data.CustomSortItems = this.state.SelectedValues*/ }
+    public Next(): void { /*this.props.Data.Values = this.state.SelectedValues*/ }
     public Back(): void {
         // todo
     }

@@ -99,7 +99,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>{column ? column.FriendlyName : customSort.ColumnId + GeneralConstants.MISSING_COLUMN}</Col>
                     <Col xs={8} >
-                        {customSort.CustomSortItems.join(', ')}
+                        {customSort.Values.join(', ')}
                     </Col>
                 </Row>
             }

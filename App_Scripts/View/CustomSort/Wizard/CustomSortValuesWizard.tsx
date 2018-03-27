@@ -22,8 +22,8 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
         super(props)
         this.state = {
             ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
-            SelectedValues: this.props.Data.CustomSortItems,
-            IsEdit: this.props.Data.CustomSortItems.length > 0
+            SelectedValues: this.props.Data.Values,
+            IsEdit: this.props.Data.Values.length > 0
         }
         //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
@@ -51,7 +51,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
 
     public canNext(): boolean { return this.state.SelectedValues.length > 0; }
     public canBack(): boolean { return !this.state.IsEdit; }
-    public Next(): void { this.props.Data.CustomSortItems = this.state.SelectedValues }
+    public Next(): void { this.props.Data.Values = this.state.SelectedValues }
     public Back(): void { }
     public StepName = this.props.StepName
 }   

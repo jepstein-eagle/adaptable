@@ -64,9 +64,9 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
             let secondElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(secondElement), customSort.ColumnId)//secondElement[customSort.ColumnId];
             let firstElementValue = firstElement[customSort.ColumnId];
             let secondElementValue = secondElement[customSort.ColumnId];
-            let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);
+            let indexFirstElement = customSort.Values.indexOf(firstElementValueString);
             let containsFirstElement = indexFirstElement >= 0;
-            let indexSecondElement = customSort.CustomSortItems.indexOf(secondElementValueString);
+            let indexSecondElement = customSort.Values.indexOf(secondElementValueString);
             let containsSecondElement = indexSecondElement >= 0;
             //if none of the element are in the list we jsut return normal compare
             if (!containsFirstElement && !containsSecondElement) {

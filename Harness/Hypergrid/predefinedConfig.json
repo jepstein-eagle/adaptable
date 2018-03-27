@@ -54,7 +54,7 @@
 		"CustomSorts": [
 			{
 				"ColumnId": "counterparty",
-				"CustomSortItems": [
+				"Values": [
 					"BNP",
 					"Barcap",
 					"Bank of America",

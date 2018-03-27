@@ -36,9 +36,9 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
                 let secondElement = b[0]
                 let firstElementValueString = formatter?formatter(firstElement):String(firstElement) //firstElement[customSort.ColumnId];
                 let secondElementValueString = formatter?formatter(secondElement):String(secondElement)//secondElement[customSort.ColumnId];
-                let indexFirstElement = customSort.CustomSortItems.indexOf(firstElementValueString);
+                let indexFirstElement = customSort.Values.indexOf(firstElementValueString);
                 let containsFirstElement = indexFirstElement >= 0;
-                let indexSecondElement = customSort.CustomSortItems.indexOf(secondElementValueString);
+                let indexSecondElement = customSort.Values.indexOf(secondElementValueString);
                 let containsSecondElement = indexSecondElement >= 0;
                 //if none of the element are in the list we jsut return normal compare
                 if (!containsFirstElement && !containsSecondElement) {

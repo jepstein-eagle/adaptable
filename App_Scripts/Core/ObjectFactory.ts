@@ -18,7 +18,7 @@ import { IColumn } from './Interface/IColumn';
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: "", CustomSortItems: [], IsPredefined: false }
+        return { ColumnId: "", Values: [], IsPredefined: false }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
