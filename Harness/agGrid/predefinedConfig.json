@@ -71,14 +71,15 @@
 		]
 	},
 	"Theme": {
+		"CurrentTheme": "Company Theme Dark",
 		"UserThemes": [
 			{
-				"Name": "User Slate",
-				"Url": "slate.css"
+				"Name": "Company Theme Light",
+				"Url": "c://Shared/Files/Themes/lighttheme.css"
 			},
 			{
-				"Name": "User Paper",
-				"Url": "paper.css"
+				"Name": "Company Theme Dark",
+				"Url": "c://Shared/Files/Themes/darktheme.css"
 			}
 		]
 	}

@@ -137,7 +137,6 @@ export interface ColumnFilterState {
 
 export interface UserFilterState {
     UserFilters: IUserFilter[];
-
 }
 
 export interface ThemeState {
