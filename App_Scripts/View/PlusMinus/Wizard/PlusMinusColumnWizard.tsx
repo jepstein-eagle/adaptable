@@ -21,22 +21,13 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
         this.state = { SelectedColumnId: this.props.Data.ColumnId }
     }
     render(): any {
-        let isReadOnlyColumn: boolean = false;
-        if (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) {
-            let selectedColumn: IColumn = this.props.Columns.find(c => c.ColumnId == this.state.SelectedColumnId);
-            //  isReadOnlyColumn = selectedColumn.
-        }
         return <div className="adaptable_blotter_style_wizard_plusminus_column">
             <Panel header="Select a Column" bsStyle="primary">
                 <ColumnSelector SelectedColumnIds={[this.state.SelectedColumnId]}
                     ColumnList={this.props.Columns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />
-                {isReadOnlyColumn &&
-                    <div>That column is readonly</div>
-                }
-
-            </Panel>
+               </Panel>
         </div>
     }
 
