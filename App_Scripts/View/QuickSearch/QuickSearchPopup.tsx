@@ -25,7 +25,7 @@ interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupC
     QuickSearchOperator: LeafExpressionOperator;
     QuickSearchDisplayType: QuickSearchDisplayType;
     QuickSearchStyle: IStyle,
-    ColorPalette: string[],
+   
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
@@ -214,7 +214,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
         QuickSearchBackColor: state.QuickSearch.QuickSearchBackColor,
         QuickSearchForeColor: state.QuickSearch.QuickSearchForeColor,
-        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

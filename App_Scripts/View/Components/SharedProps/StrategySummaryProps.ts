@@ -7,9 +7,6 @@ import { IAdaptableBlotterObject } from '../../../Core/Interface/Interfaces';
 
 export interface StrategySummaryProps<View> extends StrategyViewPopupProps<View> {
     IsReadOnly: boolean,
-    Columns: IColumn[]
-    UserFilters: IUserFilter[]
-    SystemFilters: ISystemFilter[]
     SummarisedColumn: IColumn
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
  }

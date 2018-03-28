@@ -157,9 +157,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
         ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }

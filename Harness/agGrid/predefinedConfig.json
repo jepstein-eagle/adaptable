@@ -72,6 +72,7 @@
 	},
 	"Theme": {
 		"CurrentTheme": "Company Theme Dark",
+		"SystemThemes": [],
 		"UserThemes": [
 			{
 				"Name": "Company Theme Light",
@@ -82,12 +83,14 @@
 				"Url": "c://Shared/Files/Themes/darktheme.css"
 			}
 		]
-	}
-	,
+	},
 	"UserInterface": {
 		"ColorPalette": [
 			"#000000",
-			"#ffffff"
+			"#ffffff",
+			"#C0C0C0",
+			"#808080",
+			"#800000"
 		]
 	}
 }

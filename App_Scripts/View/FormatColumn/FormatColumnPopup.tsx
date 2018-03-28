@@ -26,7 +26,6 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
     FormatColumns: Array<IFormatColumn>,
-    ColorPalette: string[],
     onAddFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (formatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -142,7 +141,6 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FormatColumns: state.FormatColumn.FormatColumns,
-        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

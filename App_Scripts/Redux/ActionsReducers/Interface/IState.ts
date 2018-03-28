@@ -48,7 +48,6 @@ export interface TeamSharingState {
     SharedEntities: ISharedEntity[]
 }
 
-
 export interface BulkUpdateState {
     BulkUpdateValue: string  
     PreviewInfo: IPreviewInfo 
@@ -66,13 +65,18 @@ export interface EntitlementsState {
 }
 
 /* 
-predefined and user config
+predefined and user config but not editable by users
 */
-
 
 export interface UserInterfaceState {  
     ColorPalette: string[];
 }
+
+
+/* 
+predefined and user config and editable by users
+*/
+
 export interface DashboardState {
     FunctionToolbars: string[]
     FunctionButtons: string[]

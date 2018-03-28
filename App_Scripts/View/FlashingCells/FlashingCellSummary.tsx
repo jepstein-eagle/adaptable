@@ -49,7 +49,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FlashingCellColumns: state.FlashingCell.FlashingCells,
+        FlashingCells: state.FlashingCell.FlashingCells,
         Columns: state.Grid.Columns
     };
 }

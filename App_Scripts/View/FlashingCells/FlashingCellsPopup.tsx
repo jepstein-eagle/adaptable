@@ -20,7 +20,6 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: Array<IFlashingCell>,
-    ColorPalette: string[],
     onSelectColumn: (flashingCell: IFlashingCell) => FlashingCellsRedux.FlashingCellSelectAction,
     onSelectAllColumns: (numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
     onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
@@ -102,7 +101,6 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FlashingCells: state.FlashingCell.FlashingCells,
-         ColorPalette: state.UserInterface.ColorPalette
     };
 }
 
