@@ -46,7 +46,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     constructor() {
         super();
-        this.state = { isShowingError: false, errorText: "", useSelector: true }
+        this.state = { isShowingError: false, errorText: "", useSelector: false }
     }
 
     public componentDidMount() {
@@ -103,7 +103,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                         <div>
                                             <Row>
                                                 <Col xs={12}>
-                                                    <Checkbox className="medium_margin_style" onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Use Column Values Selector</Checkbox>
+                                                    <Checkbox className="medium_margin_style" onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Select from existing column values</Checkbox>
                                                 </Col>
                                             </Row>
                                             <Row>

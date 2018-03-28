@@ -23,13 +23,10 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
 
         return  <div className="adaptable_blotter_style_popup_columnchooser">
         <PanelWithImage header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
-            <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible)}
+            <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x=>x.FriendlyName)}
                 SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
                 HeaderAvailable="Hidden Columns"
                 HeaderSelected="Visible Columns"
-                DisplayMember="FriendlyName"
-                SortMember="FriendlyName"
-                ValueMember="FriendlyName"
                 onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>
         </PanelWithImage>
         </div>
@@ -37,6 +34,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
 
     private ColumnListChange(columnList: Array<string>) {
         this.props.onNewColumnListOrder(columnList.map(friendlyName => this.props.Columns.find(x => x.FriendlyName == friendlyName)))
+      //  this.setState(this.state)
     }
 }
 

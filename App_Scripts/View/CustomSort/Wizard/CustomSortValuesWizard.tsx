@@ -31,16 +31,13 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     render(): any {
         let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
         let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-
+        let availableValues: any[] = this.state.ColumnValues.map(c => c[DistinctCriteriaPairValue.DisplayValue]);
         return <div className="adaptable_blotter_style_wizard_customsort_values">
             <PanelWithInfo header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
-                <DualListBoxEditor AvailableValues={this.state.ColumnValues}
+                <DualListBoxEditor AvailableValues={availableValues}
                     SelectedValues={this.state.SelectedValues}
                     HeaderAvailable="Column Values"
                     HeaderSelected="Custom Sort Order"
-                    DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                    SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-                    ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
             </PanelWithInfo>
         </div>
@@ -53,10 +50,10 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public canBack(): boolean { return !this.state.IsEdit; }
     public Next(): void { this.props.Data.Values = this.state.SelectedValues }
     public Back(): void { }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

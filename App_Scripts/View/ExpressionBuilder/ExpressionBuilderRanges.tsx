@@ -69,7 +69,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                     {range.IsOperand2Column ?
                                         <div style={textBoxStyle}>
                                             <ColumnSelector SelectedColumnIds={[range.Operand2]}
-                                                ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType)}
+                                                ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType&& c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                                 onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
                                                 SelectionMode={SelectionMode.Single} />
                                         </div> :
@@ -114,7 +114,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                         {range.IsOperand1Column ?
                             <div style={textBoxStyle}>
                                 <ColumnSelector SelectedColumnIds={[range.Operand1]}
-                                    ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType)}
+                                    ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType&& c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                     onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
                                     SelectionMode={SelectionMode.Single} />
                             </div> :
@@ -229,8 +229,8 @@ let betweenDivStyle: React.CSSProperties = {
 
 
 let dropDownStyle = {
-    'width': '180px',
-    'marginLeft': '5px',
+    'width': '178px',
+    'marginLeft': '4px',
     'marginTop': '10px',
 }
 
@@ -255,8 +255,8 @@ let columnCheckBoxStyle = {
 }
 
 let textBoxStyle = {
-    'width': '213px',
-    'marginLeft': '5px',
+    'width': '212px',
+    'marginLeft': '4px',
     'marginTop': '0px'
 }
 let deleteButtonStyle = {

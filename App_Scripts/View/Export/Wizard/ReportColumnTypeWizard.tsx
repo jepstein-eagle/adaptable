@@ -7,10 +7,9 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, PopoverType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
 
 export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<IReport> {
-  }
+}
 export interface ReportColumnsWizardState {
     ReportColumnScope: ReportColumnScope
 }
@@ -19,40 +18,39 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
     constructor(props: ReportColumnTypeWizardProps) {
         super(props);
         this.state = {
-             ReportColumnScope: this.props.Data.ReportColumnScope
+            ReportColumnScope: this.props.Data.ReportColumnScope
         }
     }
     render() {
         return <div className="adaptable_blotter_style_wizard_export_reportcolumns">
             <Panel header="Select Columns for the Report" bsStyle="primary">
-                <Col xs={2} className="medium_margin_style">
-                    <ControlLabel>Columns:</ControlLabel>
-                </Col>
-                <Col xs={2} className="medium_margin_style">
-                    <AdaptableBlotterForm inline>
-                        <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} All </Radio>
-                        {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover  headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
-                    </AdaptableBlotterForm>
-                </Col>
-                <Col xs={3} className="medium_margin_style">
-                    <AdaptableBlotterForm inline>
-                        <Radio value="Visible" checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} Visible </Radio>
-                        {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]} popoverType={PopoverType.Info} /></span>
-                    </AdaptableBlotterForm>
-                </Col>
-                <Col xs={3} className="medium_margin_style">
-                    <AdaptableBlotterForm inline>
-                        <Radio value="Bespoke" checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}Bespoke </Radio>
-                        {' '} <span className="adaptableblotter_info_button" ><AdaptablePopover headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen below will be exported (visible or not)."]} popoverType={PopoverType.Info} /></span>
-                    </AdaptableBlotterForm>
-                </Col>
+                <AdaptableBlotterForm horizontal>
+                    <Col xs={12} className="medium_margin_style">
+                        <AdaptableBlotterForm inline>
+                            <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '}{' '}All Columns in the Data Source</Radio>
+                            {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
+                        </AdaptableBlotterForm>
+                    </Col>
+                    <Col xs={12} className="medium_margin_style">
+                        <AdaptableBlotterForm inline>
+                            <Radio value="Visible" checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} {' '}Visible Columns Only (at time that report is run)</Radio>
+                            {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]} popoverType={PopoverType.Info} /></span>
+                        </AdaptableBlotterForm>
+                    </Col>
+                    <Col xs={12} className="medium_margin_style">
+                        <AdaptableBlotterForm inline>
+                            <Radio value="Bespoke" checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}{' '}Bespoke Columns - selected by you in next step</Radio>
+                            {' '} <span className="adaptableblotter_info_button" ><AdaptablePopover headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen below will be exported (visible or not)."]} popoverType={PopoverType.Info} /></span>
+                        </AdaptableBlotterForm>
+                    </Col>
+                </AdaptableBlotterForm>
             </Panel>
-         </div>
+        </div>
     }
 
 
 
-     private onScopeSelectChanged(event: React.FormEvent<any>) {
+    private onScopeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
 
         if (e.value == "All") {
@@ -66,21 +64,21 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
 
     public canNext(): boolean {
         return (this.state.ReportColumnScope == ReportColumnScope.AllColumns ||
-            this.state.ReportColumnScope == ReportColumnScope.VisibleColumns||
-            this.state.ReportColumnScope == ReportColumnScope.BespokeColumns );
+            this.state.ReportColumnScope == ReportColumnScope.VisibleColumns ||
+            this.state.ReportColumnScope == ReportColumnScope.BespokeColumns);
     }
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
-       
+
     }
     public Back(): void {
         //todo
     }
-    public GetIndexStepIncrement(){
-        return (this.state.ReportColumnScope== ReportColumnScope.BespokeColumns)? 1: 2;
+    public GetIndexStepIncrement() {
+        return (this.state.ReportColumnScope == ReportColumnScope.BespokeColumns) ? 1 : 2;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
 
