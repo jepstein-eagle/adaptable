@@ -25,7 +25,7 @@ export interface AdaptableBlotterState {
     Dashboard: AdaptableBlotterStates.DashboardState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
-    UIControlConfig: AdaptableBlotterStates.UIControlConfigState;
+    UserInterface: AdaptableBlotterStates.UserInterfaceState;
     TeamSharing: AdaptableBlotterStates.TeamSharingState;
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
 }

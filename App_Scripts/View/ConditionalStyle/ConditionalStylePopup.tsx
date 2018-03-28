@@ -29,7 +29,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyle>,
-    PredefinedColorChoices: string[],
+    ColorPalette: string[],
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -100,7 +100,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
-                        PredefinedColorChoices={this.props.PredefinedColorChoices}
+                        ColorPalette={this.props.ColorPalette}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
@@ -138,7 +138,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

@@ -48,9 +48,6 @@ export interface TeamSharingState {
     SharedEntities: ISharedEntity[]
 }
 
-export interface UIControlConfigState {  // not sure about this one...
-    PredefinedColorChoices: string[];
-}
 
 export interface BulkUpdateState {
     BulkUpdateValue: string  
@@ -71,6 +68,11 @@ export interface EntitlementsState {
 /* 
 predefined and user config
 */
+
+
+export interface UserInterfaceState {  
+    ColorPalette: string[];
+}
 export interface DashboardState {
     FunctionToolbars: string[]
     FunctionButtons: string[]

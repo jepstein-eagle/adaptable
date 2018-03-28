@@ -20,7 +20,7 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: Array<IFlashingCell>,
-    PredefinedColorChoices: string[],
+    ColorPalette: string[],
     onSelectColumn: (flashingCell: IFlashingCell) => FlashingCellsRedux.FlashingCellSelectAction,
     onSelectAllColumns: (numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
     onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
@@ -67,7 +67,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
                 UserFilters={null}
                 ColItems={colItems}
                 FlashingCellDurations={flashingCellDurations}
-                PredefinedColorChoices={this.props.PredefinedColorChoices}
+                ColorPalette={this.props.ColorPalette}
                 onSelect={(flashingcell) => this.props.onSelectColumn(flashingcell)}
                 onChangeFlashingDuration={(flashingcell, newFlashDuration) => this.props.onChangeFlashDuration(flashingcell, newFlashDuration)}
                 onChangeDownColorFlashingCell={(flashingcell, DownColor) => this.props.onChangeDownColorFlashingCell(flashingcell, DownColor)}
@@ -102,7 +102,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FlashingCells: state.FlashingCell.FlashingCells,
-         PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+         ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

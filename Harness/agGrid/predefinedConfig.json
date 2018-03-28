@@ -83,4 +83,11 @@
 			}
 		]
 	}
+	,
+	"UserInterface": {
+		"ColorPalette": [
+			"#000000",
+			"#ffffff"
+		]
+	}
 }

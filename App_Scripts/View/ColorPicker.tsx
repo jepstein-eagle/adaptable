@@ -2,13 +2,13 @@ import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 
 export interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
-    PredefinedColorChoices: string[]
+    ColorPalette: string[]
 }
 
 export class ColorPicker extends React.Component<ColorPickerProps, {}> {
     render(): any {
-        const { PredefinedColorChoices, ...restProps } = this.props
-        let ABcolorChoicesOptions = PredefinedColorChoices.map(x => <option key={x}>{x}</option>)
+        const { ColorPalette, ...restProps } = this.props
+        let ABcolorChoicesOptions = ColorPalette.map(x => <option key={x}>{x}</option>)
         let ABcolorChoices = <datalist id={'ABcolorChoices'}>
             {ABcolorChoicesOptions}
         </datalist>

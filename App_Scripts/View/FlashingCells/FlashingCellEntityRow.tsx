@@ -9,7 +9,7 @@ import { IColItem } from "../UIInterfaces";
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
     FlashingCellDurations: any[]
-    PredefinedColorChoices: string[];
+    ColorPalette: string[];
     onSelect: (flashingCell: IFlashingCell) => void;
     onChangeFlashingDuration: (flashingCell: IFlashingCell, NewFlashDuration: number) => void;
     onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => void;
@@ -43,8 +43,8 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         colItems[2].Content = <FormControl disabled={isDisabled} componentClass="select" value={flashingCell.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
             {durations}
         </FormControl>
-        colItems[3].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingCell.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
-        colItems[4].Content = <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+        colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
+        colItems[4].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
         return <AdaptableObjectRow ColItems={colItems}
         />
     }

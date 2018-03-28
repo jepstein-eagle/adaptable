@@ -1,8 +1,8 @@
 import * as Redux from 'redux';
-import { UIControlConfigState } from './Interface/IState'
+import { UserInterfaceState } from './Interface/IState'
 
-const initialUIControlConfigState: UIControlConfigState = {
-    PredefinedColorChoices: [
+const initialUserInterfaceState: UserInterfaceState = {
+    ColorPalette: [
         "#000000", //  {/* black */}
         "#ffffff", //  {/* white */}
         "#C0C0C0", //  {/* light gray */}
@@ -29,7 +29,7 @@ const initialUIControlConfigState: UIControlConfigState = {
     ]
 }
 
-export const UIControlConfigStateReducer: Redux.Reducer<UIControlConfigState> = (state: UIControlConfigState = initialUIControlConfigState, action: Redux.Action): UIControlConfigState => {
+export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {
     switch (action.type) {
         default:
             return state

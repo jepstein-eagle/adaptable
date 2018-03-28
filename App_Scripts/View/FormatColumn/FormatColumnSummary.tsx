@@ -24,7 +24,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
     FormatColumns: IFormatColumn[]
-    PredefinedColorChoices: string[]
+    ColorPalette: string[]
     onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
     onEditFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -78,7 +78,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     ConfigEntities={this.props.FormatColumns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
-                    PredefinedColorChoices={this.props.PredefinedColorChoices}
+                    ColorPalette={this.props.ColorPalette}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
@@ -118,7 +118,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         FormatColumns: state.FormatColumn.FormatColumns,
-        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

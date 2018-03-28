@@ -7,7 +7,7 @@ import { IStyle } from '../../../Core/Interface/IStyle';
 
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
-    PredefinedColorChoices: string[]
+    ColorPalette: string[]
 }
 
 export interface FormatColumnStyleWizardState {
@@ -29,7 +29,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     render() {
         return <div className="adaptable_blotter_style_wizard_formatcolumn_style">
             <StyleComponent
-                PredefinedColorChoices={this.props.PredefinedColorChoices}
+                ColorPalette={this.props.ColorPalette}
                 Style={this.props.Data.Style}
                 UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
             />

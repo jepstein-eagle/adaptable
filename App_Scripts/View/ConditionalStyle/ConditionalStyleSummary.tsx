@@ -24,7 +24,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyle[]
-    PredefinedColorChoices: string[]
+    ColorPalette: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 
 }
@@ -80,7 +80,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
-                    PredefinedColorChoices={this.props.PredefinedColorChoices}
+                    ColorPalette={this.props.ColorPalette}
                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
@@ -117,7 +117,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
-        PredefinedColorChoices: state.UIControlConfig.PredefinedColorChoices
+        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

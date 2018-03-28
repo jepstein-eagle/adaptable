@@ -13,7 +13,7 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
-      PredefinedColorChoices: string[],
+      ColorPalette: string[],
   }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -27,7 +27,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                 ModalContainer={this.props.ModalContainer}
                 Steps={[
                     <ConditionalStyleColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <ConditionalStyleSettingsWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />,
+                    <ConditionalStyleSettingsWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} />,
                     <ConditionalStyleExpressionWizard
                         StepName={stepNames[2]}
                         Columns={this.props.Columns}

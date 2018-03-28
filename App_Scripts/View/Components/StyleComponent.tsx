@@ -9,7 +9,7 @@ import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
-    PredefinedColorChoices: string[],
+    ColorPalette: string[],
     Style: IStyle,
     UpdateStyle: (style: IStyle) => void;
 }
@@ -47,7 +47,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                             </Col>
                             <Col xs={8}>
                                 {this.state.myStyle.BackColor != null &&
-                                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
+                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                                 }
                             </Col>
                         </FormGroup>
@@ -57,7 +57,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                             </Col>
                             <Col xs={8}>
                                 {this.state.myStyle.ForeColor != null &&
-                                    <ColorPicker PredefinedColorChoices={this.props.PredefinedColorChoices} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
+                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                 }
                             </Col>
 

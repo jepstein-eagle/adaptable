@@ -80,7 +80,9 @@ function ForcePredefinedItems(state: any) {
                     if (Array.isArray(substate[property])) {
                         let arrayItems = substate[property]
                         arrayItems.forEach((element: any) => {
+                            if(element.hasOwnProperty("IsPredefined")){
                             element.IsPredefined = true;
+                            }
                         });
                     }
                 }

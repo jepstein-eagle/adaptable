@@ -35,7 +35,7 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
-import * as UIControlConfigRedux from '../ActionsReducers/UIControlConfigRedux'
+import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
@@ -85,7 +85,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Dashboard: DashboardRedux.DashboardReducer,
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-    UIControlConfig: UIControlConfigRedux.UIControlConfigStateReducer,
+    UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer
 });
@@ -138,7 +138,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UIControlConfig", "Popup", "Entitlements", "Menu", "Grid", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....

@@ -8,7 +8,7 @@ import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
-    PredefinedColorChoices: string[],
+    ColorPalette: string[],
 }
 
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
@@ -23,7 +23,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
                 Steps={
                     [
                         <FormatColumnColumnWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                        <FormatColumnStyleWizard StepName={stepNames[1]} PredefinedColorChoices={this.props.PredefinedColorChoices} />
+                        <FormatColumnStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} />
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

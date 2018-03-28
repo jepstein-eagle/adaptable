@@ -7,7 +7,7 @@ import { StyleComponent } from '../../Components/StyleComponent';
 
 
 export interface ConditionalStyleSettingsWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
-    PredefinedColorChoices: string[]
+    ColorPalette: string[]
 }
 
 export interface ConditionalStyleSettingsWizardState {
@@ -28,7 +28,7 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     render() {
         return <div className="adaptable_blotter_style_wizard_conditionalstyle_settings">
              <StyleComponent
-                 PredefinedColorChoices={this.props.PredefinedColorChoices}
+                 ColorPalette={this.props.ColorPalette}
                  Style={this.props.Data.Style}
                  UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
              />
