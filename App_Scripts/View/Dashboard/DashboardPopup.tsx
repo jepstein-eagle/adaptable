@@ -19,7 +19,8 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
-    FunctionToolbars: Array<string>;
+    AvailableToolbars: Array<string>;
+    VisibleToolbars: Array<string>;
     Zoom: Number;
     onChangeControlVisibility: (strategyName: string) => DashboardRedux.DashboardChangeControlVisibilityAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
@@ -42,33 +43,39 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     }
     render() {
 
-        let radioDashboardControls: any[] = []
-        AdaptableDashboardViewFactory.forEach((dashboardControl, strategyId) => {
+        let allToolbars: string[]=[]
+        this.props.VisibleToolbars.forEach(vt=>{
+            allToolbars.push(vt);
+        })
+
+        this.props.AvailableToolbars.forEach(at => {
+            let visibleToolbar = this.props.VisibleToolbars.find(vt=>vt==at)
+            if(!visibleToolbar){
+                allToolbars.push(at);
+            }
+        })
+
+        let radioDashboardControls: any[] = allToolbars.map((x, i) => {
+            let dashboardControl = AdaptableDashboardViewFactory.get(x);
 
             let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
-            // let visibleCheck: boolean = this.props.DashboardControls.find(dc=>dc==strategyId)!= null;
-            let visibleButton = this.props.FunctionToolbars.find(dc => dc == strategyId) != null ?
-                <Button disabled={strategyId==StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
-                : <Button onClick={() => this.onDashboardControlVisibilityChanged(strategyId)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
-           
-                
+            let isVisible: boolean = this.props.VisibleToolbars.find(dc => dc == x) != null
+            let visibleButton = isVisible  ?
+                <Button disabled={x == StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(x)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
+                : <Button onClick={() => this.onDashboardControlVisibilityChanged(x)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
 
-            let radioDashboardControl: any = <li key={"DashboardControl" + strategyId}
+            return <li key={"DashboardControl" + x}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}><Label style={{ cursor: 's-resize' }} draggable onDragStart={(event) => this.DragStart(event, strategyId)}
-                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(strategyId)}
+                    <Col xs={3}><Label  style={{ cursor: 's-resize' }} draggable={isVisible} onDragStart={(event) => this.DragStart(event, x)}
+                        onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x)}
                     </Col>
                     <Col xs={2}>{visibleButton}</Col>
-                    <Col xs={6} style={{zoom:0.75}}>{dashboardElememt}
+                    <Col xs={6} style={{ zoom: 0.75 }}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
-
-            radioDashboardControls.push(radioDashboardControl)
-
         })
-
 
         let colItems: IColItem[] = [
             { Content: "Control", Size: 3 },
@@ -129,7 +136,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             let indexOfPlaceHolder = Array.from(this.draggedHTMLElement.parentNode.childNodes).indexOf(this.placeholder)
             if (indexOfPlaceHolder > -1) {
                 let to = indexOfPlaceHolder
-                let from = this.props.FunctionToolbars.indexOf(this.draggedElement);
+                let from = this.props.AvailableToolbars.indexOf(this.draggedElement);
                 if (from < to) {
                     to = Math.max(to - 1, 0)
                 }
@@ -176,8 +183,9 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        FunctionToolbars: state.Dashboard.FunctionToolbars,
-       Zoom: state.Dashboard.Zoom,
+        AvailableToolbars: state.Dashboard.AvailableToolbars,
+        VisibleToolbars: state.Dashboard.VisibleToolbars,
+        Zoom: state.Dashboard.Zoom,
     };
 }
 

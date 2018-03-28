@@ -29,7 +29,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Toolbars"
-        let visibleDashboardControls = this.props.DashboardState.FunctionToolbars//.filter(dc => dc.IsVisible);
+        let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else

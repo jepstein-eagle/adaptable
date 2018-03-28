@@ -54,7 +54,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         });
 
         // shortcuts
-        let shortcutsArray: string[] = this.props.DashboardState.FunctionButtons
+        let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons
         let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {

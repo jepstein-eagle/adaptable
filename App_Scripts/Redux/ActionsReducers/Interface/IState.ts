@@ -6,7 +6,7 @@ import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
 import { IReport, ILiveReport, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
 import { IFlashingCell } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import {  IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';
 import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
@@ -44,16 +44,16 @@ export interface PopupState {
 }
 
 export interface TeamSharingState {
-    Activated : boolean
+    Activated: boolean
     SharedEntities: ISharedEntity[]
 }
 
 export interface BulkUpdateState {
-    BulkUpdateValue: string  
-    PreviewInfo: IPreviewInfo 
+    BulkUpdateValue: string
+    PreviewInfo: IPreviewInfo
 }
 
-export interface  SystemFilterState{
+export interface SystemFilterState {
     SystemFilters: ISystemFilter[]
 }
 
@@ -68,7 +68,7 @@ export interface EntitlementsState {
 predefined and user config but not editable by users
 */
 
-export interface UserInterfaceState {  
+export interface UserInterfaceState {
     ColorPalette: string[];
 }
 
@@ -78,8 +78,9 @@ predefined and user config and editable by users
 */
 
 export interface DashboardState {
-    FunctionToolbars: string[]
-    FunctionButtons: string[]
+    AvailableToolbars: string[]
+    VisibleToolbars: string[]
+    VisibleButtons: string[]
     Zoom: number,
     IsMinimised: boolean
 }
@@ -138,7 +139,7 @@ export interface AdvancedSearchState {
 }
 
 export interface ColumnFilterState {
-     ColumnFilters: IColumnFilter[];
+    ColumnFilters: IColumnFilter[];
 }
 
 export interface UserFilterState {

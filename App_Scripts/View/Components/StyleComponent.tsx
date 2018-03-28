@@ -42,7 +42,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     </Col>
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="colorBackStyle">
-                            <Col xs={4} >
+                            <Col xs={3} >
                                 <Checkbox inline value="existing" checked={this.state.myStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}>Set Back Colour</Checkbox>
                             </Col>
                             <Col xs={8}>
@@ -52,7 +52,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="colorForeStyle">
-                            <Col xs={4} >
+                            <Col xs={3} >
                                 <Checkbox inline value="existing" checked={this.state.myStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}>Set Fore Colour</Checkbox>
                             </Col>
                             <Col xs={8}>
@@ -79,7 +79,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="fontSize">
-                            <Col xs={4} >
+                            <Col xs={3} >
                                 <Checkbox inline checked={this.state.myStyle.FontSize ? true : false} onChange={(e) => this.onUseFontSizeCheckChange(e)}>Set Font Size</Checkbox>
                             </Col>
                             <Col xs={8}>
