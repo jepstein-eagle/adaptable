@@ -67,6 +67,7 @@ import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
+import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -124,6 +125,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
        // removing theme from kendo until we can get the table issue working properly
        // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
@@ -880,6 +882,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public getColumnInfo(): any {
         return this.grid.columns.length;
+    }
+
+    public selectColumn(columnId: string) {
+        let selectorQuery: JQuery
+
+        let columnIndex = this.getColumnIndex(columnId);
+
+        let rows = this.grid.dataSource.data();
+
+        rows.forEach((row: any) => {
+            var uid = row["uid"];
+            var myrow = this.getRowByRowIdentifier(uid);
+            let cellSelect = this.getCellByColumnIndexAndRow(myrow, columnIndex)
+            if (selectorQuery == null) {
+                selectorQuery = cellSelect
+            }
+            else {
+                selectorQuery = selectorQuery.add(cellSelect)
+            }
+        })
+
+        this.grid.select(selectorQuery);
     }
 
 }

@@ -43,6 +43,7 @@ export interface IAdaptableBlotter {
     getSelectedCells(): ISelectedCells
     getActiveCell(): ICellInfo
     selectCells(cells: ICellInfo[]): void
+    selectColumn(columnId: string):void
 
 
     // column related

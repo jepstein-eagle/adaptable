@@ -470,6 +470,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     adaptableBlotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
+                case GridRedux.GRID_SELECT_COLUMN: {
+                    let actionTyped = <GridRedux.GridSelectColumnAction>action
+                      adaptableBlotter.selectColumn(actionTyped.ColumnId)
+                    return next(action);
+                }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {
                     let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
                     if (promptConfirmationAction) {

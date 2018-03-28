@@ -70,7 +70,7 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 
 //if you add an import from a different folder for aggrid
 //you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, IFilterComp, ColDef } from "ag-grid"
+import { GridOptions, Column, RowNode, ICellEditor, IFilterComp, ColDef, AddRangeSelectionParams } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
@@ -86,6 +86,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
+import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -139,6 +140,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
+        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
@@ -461,9 +463,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-           //     this.AuditService.CreateAuditChangedEvent(dataChangedEvent);
+                //     this.AuditService.CreateAuditChangedEvent(dataChangedEvent);
 
-             //   this.AuditLogService.AddEditCellAuditLog(dataChangedEvent)
+                //   this.AuditLogService.AddEditCellAuditLog(dataChangedEvent)
 
                 dataChangedEvents.push(dataChangedEvent)
             }
@@ -534,6 +536,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
+
         let sortModel = this.gridOptions.api.getSortModel()
         let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
@@ -1006,7 +1009,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.gridOptions.columnApi.getAllColumns().length;
     }
 
-  
+    public selectColumn(columnId: string) {
+        this.gridOptions.api.clearRangeSelection();
+        let rangeSelectionParams: AddRangeSelectionParams = { rowStart: 0, rowEnd: this.gridOptions.api.getDisplayedRowCount(), columnStart: columnId, columnEnd: columnId, floatingStart: "top", floatingEnd: "bottom" }
+        this.gridOptions.api.addRangeSelection(rangeSelectionParams)
+    }
+
 
 
 }

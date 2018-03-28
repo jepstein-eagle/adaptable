@@ -20,6 +20,7 @@ export const LayoutGlyph: string = "th"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const ShortcutGlyph: string = "road"
+export const SelectColumnGlyph: string = "compressed"
 export const SmartEditGlyph: string = "pencil"
 export const TeamSharingGlyph: string = "share"
 export const ThemeGlyph: string = "leaf"
@@ -53,6 +54,8 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return PlusMinusGlyph
         case StrategyIds.ShortcutStrategyId:
             return ShortcutGlyph
+        case StrategyIds.SelectColumnStrategyId:
+            return SelectColumnGlyph
         case StrategyIds.UserFilterStrategyId:
             return UserFilterGlyph;
 

@@ -5,9 +5,9 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumn, ICalculatedColumnStrategy } from "../Strategy/Interface/ICalculatedColumnStrategy";
 
-export class CalculatedColumnStrategy extends AdaptableStrategyBase {
+export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy{
     private CalculatedColumns: ICalculatedColumn[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalculatedColumnStrategyId, blotter)

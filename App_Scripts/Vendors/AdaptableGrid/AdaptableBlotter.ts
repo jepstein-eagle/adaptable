@@ -511,5 +511,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return 1
     }
 
+    public selectColumn(columnId: string){
+        // todo
+    }
   
 }

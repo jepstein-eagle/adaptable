@@ -6,6 +6,8 @@ import { IColumn } from '../../Core/Interface/IColumn';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
+export const GRID_SELECT_COLUMN= 'GRID_SELECT_COLUMN';
+
 
 export interface GridSetColumnsAction extends Redux.Action {
     Columns: IColumn[];
@@ -19,6 +21,11 @@ export interface GridSetValueLikeEditAction extends Redux.Action {
     OldValue: any,
  
 }
+
+export interface GridSelectColumnAction extends Redux.Action {
+    ColumnId: string;
+}
+
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
     type: GRID_SET_COLUMNS,
     Columns
@@ -36,6 +43,10 @@ export const GridSetValueLikeEdit = (CellInfo: ICellInfo, OldValue: any): GridSe
    
 })
 
+export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
+    type: GRID_SELECT_COLUMN,
+    ColumnId
+})
 
 const initialGridState: GridState = {
     Columns: []
