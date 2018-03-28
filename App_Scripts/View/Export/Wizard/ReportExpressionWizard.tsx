@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } 
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue, ReportColumnScope } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
@@ -20,6 +20,10 @@ export class ReportExpressionWizard extends ExpressionBuilderPage implements Ada
     }
     public Back(): void { 
         //todo
+    }
+
+    public GetIndexStepDecrement(){
+        return (this.props2.Data.ReportColumnScope== ReportColumnScope.BespokeColumns)? 1: 2;
     }
     public StepName = this.props.StepName
 }

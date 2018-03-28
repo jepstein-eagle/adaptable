@@ -84,7 +84,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
                 : <PanelWithRow ColItems={colItems} bsStyle="info" />
             }
-            <ListGroup className="adaptableblotter_modal_small_action_panel">
+            <ListGroup >
                 {sharedItems}
             </ListGroup>
         </PanelWithImage>

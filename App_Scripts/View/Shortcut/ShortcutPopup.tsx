@@ -45,11 +45,11 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             "Date shortcuts replace the contents of the cell with a new date value."]
 
         let colItems: IColItem[] = [
-            { Content: "Type", Size: 2 },
-            { Content: "Key", Size: 1 },
+            { Content: "Column", Size: 2 },
+            { Content: "Key", Size: 2 },
             { Content: "Operation", Size: 3 },
             { Content: "Value", Size: 3 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ]
 
         const shortcutOperationList: Array<MathOperation> = [MathOperation.Add, MathOperation.Subtract, MathOperation.Multiply, MathOperation.Divide];
@@ -79,7 +79,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className="adaptable_blotter_style_popup_shortcut">
-            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptableblotter_modal_main_panel"
+            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptableblotter_modal_main_popup"
                 button={newButton}
                 bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>

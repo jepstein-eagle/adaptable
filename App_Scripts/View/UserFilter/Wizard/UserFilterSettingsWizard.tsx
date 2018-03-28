@@ -51,7 +51,9 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         let e = event.target as HTMLInputElement;
         this.setState({
             FilterName: e.value,
-            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ? "A Filter already exists with that name" : null
+            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ? 
+            "A User Filter already exists with that name for column: " + this.props.Columns.find(c=>c.ColumnId==this.props.Data.ColumnId).FriendlyName : 
+            null
 
         } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }
@@ -67,5 +69,11 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         this.props.Data.Name = this.state.FilterName
     }
     public Back(): void { /* no implementation */ }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }

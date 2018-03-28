@@ -55,6 +55,13 @@ export class ReportNameWizard extends React.Component<ReportNameWizardProps, Rep
     public Back(): void {
         //todo
     }
+
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

@@ -50,6 +50,13 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     }
     public Back(): void { }
 
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
+
     private onUpdateStyle(style: IStyle) {
         this.mapStyle(style);
         this.props.UpdateGoBackState();

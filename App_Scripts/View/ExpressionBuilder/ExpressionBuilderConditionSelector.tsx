@@ -150,11 +150,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             bsStyle="primary" style={{ height: '575px' }}>
             <AdaptableBlotterForm horizontal>
                 {this.state.IsFirstTime ?
-                    <Well bsSize="small">Click 'New' to start adding Query Conditions.
+                <Well bsSize="small">Click 'New' to start adding Query Conditions.
                     <p />A Query Condition consists of <br />(i) a Column and <br />(ii) as many Criteria for that Column as you wish to create. <p />
                         <p />Criteria can include a mix of column values, column filters or ranges.<p />
                         {this.props.ExpressionMode == ExpressionMode.SingleColumn ?
-                            "This Query can only contain one Query Condition." : "The Query can contain multiple Query Conditions.  Click the 'New' button each time that a new Query Condition is required."}
+                            "This Query can only contain one Query Condition." : "The Query can contain multiple Query Conditions - click the 'New' button each time that a new Query Condition is required."}
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
@@ -171,7 +171,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                 onColumnChange={columns => this.onColumnSelectChange(columns)}
                                 SelectionMode={SelectionMode.Single} />
                         </Col>
-                    </FormGroup>
+                     </FormGroup>
                 }
             </AdaptableBlotterForm>
 

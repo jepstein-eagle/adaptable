@@ -59,10 +59,10 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             "Styles include selection of fore and back colours, and font properties."]
 
         let colItems: IColItem[] = [
-            { Content: "Target", Size: 3 },
-            { Content: "Style", Size: 2 },
-            { Content: "Query", Size: 4 },
-            { Content: "", Size: 3 },
+            { Content: "Target", Size: 2 },
+            { Content: "Style", Size: 3 },
+            { Content: "Query", Size: 5 },
+            { Content: "", Size: 2 },
         ]
         let conditionalStyles = this.props.ConditionalStyles.map((conditionalStyle: IConditionalStyle, index) => {
             return <ConditionalStyleEntityRow
@@ -84,7 +84,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_conditionalstyle">
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptableblotter_modal_main_popup" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>

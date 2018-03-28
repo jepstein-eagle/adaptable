@@ -15,8 +15,8 @@ export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {
 
         let colItems: IColItem[] = []
         colItems.push({ Size: 3, Content: this.props.SummaryItems[0] })
-        colItems.push({ Size: 6, Content: this.props.SummaryItems[1] });
-        colItems.push({ Size: 3, Content: this.props.SummaryItems[2] })
+        colItems.push({ Size: 7, Content: this.props.SummaryItems[1] });
+        colItems.push({ Size: 2, Content: this.props.SummaryItems[2] })
         return <AdaptableObjectRow ColItems={colItems} />
     }
 }

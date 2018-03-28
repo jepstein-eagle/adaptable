@@ -1,18 +1,20 @@
 import * as React from "react";
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
-import { FormControl, FormControlProps, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { FormControl, FormControlProps, ButtonGroup, Glyphicon, Sizes } from 'react-bootstrap';
 
 export interface AdaptableBlotterFormControlTextClearProps extends FormControlProps {
     OnTextChange: (textValue: string) => void
     autoFocus?: boolean
+    
 }
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<AdaptableBlotterFormControlTextClearProps, {}> {
     render() {
+        let size: any =(this.props.bsSize)? this.props.bsSize: 'small'
         return <ButtonGroup>
             <FormControl
                autoFocus = {this.props.autoFocus}
-               bsSize={"small"}
+               bsSize={this.props.bsSize}
                style={this.props.style}
                 type="text"
                 placeholder={this.props.placeholder}

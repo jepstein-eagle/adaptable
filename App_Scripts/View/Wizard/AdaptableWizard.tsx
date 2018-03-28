@@ -26,13 +26,21 @@ class DummyActiveStep implements AdaptableWizardStep {
     public StepName = ""
     public canNext(): boolean { return false; }
     public canBack(): boolean { return false; }
+    
     public Next(): void {
         // no implementation for this 
     }
     public Back(): void {
         // no implementation for this
     }
-}
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
+
+ }
 
 //Remark : the component doesnt handle the change of props once displayed... It's easy to do but not sure it's needed
 //as in the top component we do the render with a ternary expression so we add/remove the element from the render instead of having a property
@@ -54,7 +62,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 
     render() {
-     //   let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.BlotterOptions, document);
+        //   let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.BlotterOptions, document);
 
         return (
             <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base"
@@ -65,7 +73,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="adaptable_blotter_style_wizard_base" >
-                    {this.state.ActiveState}
+                    <div className="adaptableblotter_modal_main_popup">
+                        {this.state.ActiveState}
+                    </div>
                 </Modal.Body>
                 <Modal.Footer className="adaptable_blotter_style_wizard_base">
                     <Button className="adaptableblotter_left_modal_button" onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
@@ -97,10 +107,11 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     handleClickBack() {
         if (!this.isFirstStep()) {
             if (this.ActiveStep.canBack()) {
+             let decrement=   this.ActiveStep.GetIndexStepDecrement()
                 this.ActiveStep.Back();
-                let BodyElement: any = this.props.Steps[this.state.IndexState - 1];
+                let BodyElement: any = this.props.Steps[this.state.IndexState - decrement ];
                 let newElement = this.cloneWizardStep(BodyElement)
-                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - 1, ForceFinish: false })
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - decrement, ForceFinish: false })
             }
         }
     }
@@ -108,10 +119,11 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     handleClickNext() {
         if (!this.isLastStep()) {
             if (this.ActiveStep.canNext()) {
+                let increment=   this.ActiveStep.GetIndexStepIncrement()
                 this.ActiveStep.Next();
-                let BodyElement: any = this.props.Steps[this.state.IndexState + 1];
+                let BodyElement: any = this.props.Steps[this.state.IndexState + increment];
                 let newElement = this.cloneWizardStep(BodyElement)
-                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + 1, ForceFinish: false })
+                this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + increment, ForceFinish: false })
             }
         }
         else {

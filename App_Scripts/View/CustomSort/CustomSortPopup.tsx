@@ -61,8 +61,8 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
-            { Content: "Sort Order", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Sort Order", Size: 7 },
+            { Content: "", Size: 2 },
         ]
 
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort, index) => {
@@ -85,7 +85,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_customsort">
-            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} className="adaptableblotter_modal_main_panel" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} className="adaptableblotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
                 {customSorts.length > 0 &&

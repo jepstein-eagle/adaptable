@@ -56,5 +56,11 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     public Back(): void { //
     }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }

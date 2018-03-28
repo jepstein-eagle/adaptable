@@ -116,6 +116,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                 <AdaptableBlotterForm inline>
                     <Panel header={"Search For"} bsStyle="info" >
                         <AdaptableBlotterFormControlTextClear
+                        bsSize={"medium"}
                             type="text"
                             placeholder="Quick Search Text"
                             value={this.state.EditedQuickSearchText}
@@ -127,10 +128,10 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                     <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
                         <FormGroup controlId="formInlineSearchOperator">
-                            <Col xs={4}>
+                            <Col xs={2}>
                                 <ControlLabel>Operator:</ControlLabel>
                             </Col>
-                            <Col xs={6}>
+                            <Col xs={5}>
                                 <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                     {optionOperators}
                                 </FormControl>
@@ -143,10 +144,10 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                         </FormGroup>
 
                         <FormGroup controlId="formInlineSearchDisplay">
-                            <Col xs={4}>
+                            <Col xs={2}>
                                 <ControlLabel>Behaviour:</ControlLabel>
                             </Col>
-                            <Col xs={6}>
+                            <Col xs={5 }>
                                 <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
                                     {quickSearchDisplayTypes}
                                 </FormControl>
@@ -159,26 +160,26 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                         </FormGroup>
 
                         <FormGroup controlId="colorBackStyle">
-                            <Col xs={4} >
+                            <Col xs={2} >
                                 <ControlLabel>Set Back Colour:</ControlLabel>
                             </Col>
                             <Col xs={1}>
                                 <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}></Checkbox>
                             </Col>
-                            <Col xs={7}>
+                            <Col xs={5}>
                                 {this.props.QuickSearchStyle.BackColor != null &&
                                     <ColorPicker ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                                 }
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="colorForeStyle">
-                            <Col xs={4} >
+                            <Col xs={2} >
                                 <ControlLabel>Set Fore Colour:</ControlLabel>
                             </Col>
                             <Col xs={1}>
                                 <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}></Checkbox>
                             </Col>
-                            <Col xs={7}>
+                            <Col xs={5}>
                                 {this.props.QuickSearchStyle.ForeColor != null &&
                                     <ColorPicker ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                 }

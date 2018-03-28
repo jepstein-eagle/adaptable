@@ -60,10 +60,10 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let colItems: IColItem[] = [
             { Content: "Report", Size: 2 },
-            { Content: "Columns", Size: 2 },
-            { Content: "Query", Size: 3 },
+            { Content: "Columns", Size: 3 },
+            { Content: "Query Details", Size: 4 },
+            { Content: "", Size: 1 },
             { Content: "", Size: 2 },
-            { Content: "", Size: 3 },
         ]
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {
@@ -91,7 +91,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_export">
-            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} className="adaptableblotter_modal_main_panel">
+            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} className="adaptableblotter_modal_main_popup">
 
                 {Reports.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={Reports} />

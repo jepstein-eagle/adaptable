@@ -59,6 +59,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
             else {
                 return <ListGroupItem key={value}
                     onClick={() => this.onClickItem(x)}
+                    bsSize={"small"}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
             }

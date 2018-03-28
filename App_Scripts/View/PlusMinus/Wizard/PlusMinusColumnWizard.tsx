@@ -38,5 +38,11 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
     public Back(): void { }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }

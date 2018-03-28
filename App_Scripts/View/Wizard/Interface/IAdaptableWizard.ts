@@ -10,6 +10,8 @@ export interface AdaptableWizardStep {
     canBack(): boolean
     Next(): void
     Back(): void
+    GetIndexStepIncrement(): number
+    GetIndexStepDecrement(): number
 }
 
 export interface AdaptableWizardStepProps<T> {

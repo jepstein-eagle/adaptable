@@ -31,34 +31,32 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     render() {
 
         return <div className="adaptable_blotter_style_wizard_query">
-            <Grid>
-                <Row>
-                    <Col xs={9}>
-                        <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
-                            UserFilters={this.props.UserFilters}
-                            SystemFilters={this.props.SystemFilters}
-                            Expression={this.state.Expression}
-                            ExpressionMode={(this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
-                            onExpressionChange={(expression) => this.onChangeExpression(expression)}
-                            onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                            SelectedColumnId={this.state.SelectedColumnId}
-                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
-                        </ExpressionBuilderConditionSelector>
-                    </Col>
-                    <Col xs={3}>
-                        <ExpressionBuilderPreview Expression={this.state.Expression}
-                            UserFilters={this.props.UserFilters}
-                            onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                            SelectedColumnId={this.state.SelectedColumnId}
-                            ColumnsList={this.props.Columns}
-                            DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-                            DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
-                            DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
-                            ShowPanel={true}>
-                        </ExpressionBuilderPreview>
-                    </Col>
-                </Row>
-            </Grid>
+            <Row>
+                <Col xs={9}>
+                    <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        Expression={this.state.Expression}
+                        ExpressionMode={(this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
+                        onExpressionChange={(expression) => this.onChangeExpression(expression)}
+                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                        SelectedColumnId={this.state.SelectedColumnId}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
+                    </ExpressionBuilderConditionSelector>
+                </Col>
+                <Col xs={3}>
+                    <ExpressionBuilderPreview Expression={this.state.Expression}
+                        UserFilters={this.props.UserFilters}
+                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                        SelectedColumnId={this.state.SelectedColumnId}
+                        ColumnsList={this.props.Columns}
+                        DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
+                        DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
+                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+                        ShowPanel={true}>
+                    </ExpressionBuilderPreview>
+                </Col>
+            </Row>
         </div>
     }
 
@@ -116,6 +114,12 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     public Next(): void { /*this.props.Data.Values = this.state.SelectedValues*/ }
     public Back(): void {
         // todo
+    }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
     }
     public StepName = "Build Expression"
 }

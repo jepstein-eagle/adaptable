@@ -39,7 +39,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
        
-        let helpText : string = "Decide whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
+        let helpText : string = "Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
 
         return <div className="adaptable_blotter_style_wizard_cellvalidation_rules">
             <Panel header={validationRuleHeader} bsStyle="primary">
@@ -210,6 +210,13 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
 
     public Back(): void { 
         //todo
+    }
+
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
     }
     public StepName = this.props.StepName
 }

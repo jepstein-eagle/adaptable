@@ -57,8 +57,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let colItems: IColItem[] = [
             { Content: "Live", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Query", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Query", Size: 7 },
+            { Content: "", Size: 2 },
         ]
 
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
@@ -86,7 +86,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         return <div className="adaptable_blotter_style_popup_advancedsearch">
             <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_panel" >
+                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_popup" >
 
                 {advancedSearchRows.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />

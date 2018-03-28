@@ -230,7 +230,7 @@ let betweenDivStyle: React.CSSProperties = {
 
 let dropDownStyle = {
     'width': '180px',
-    'marginLeft': '20px',
+    'marginLeft': '5px',
     'marginTop': '10px',
 }
 
@@ -256,11 +256,12 @@ let columnCheckBoxStyle = {
 
 let textBoxStyle = {
     'width': '213px',
-    'marginLeft': '20px'
+    'marginLeft': '5px',
+    'marginTop': '0px'
 }
 let deleteButtonStyle = {
     'marginTop': '10px',
-    'marginRight': '30px'
+    'marginRight': '20px'
 }
 
 

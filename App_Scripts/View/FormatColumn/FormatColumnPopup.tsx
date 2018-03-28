@@ -59,8 +59,8 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
-            { Content: "Style", Size: 5 },
-            { Content: "", Size: 3 },
+            { Content: "Format Style", Size: 6 },
+            { Content: "", Size: 2 },
         ]
         let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
             return <FormatColumnEntityRow
@@ -84,7 +84,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         return <div className="adaptable_blotter_style_popup_formatcolumn">
             <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
                 button={newButton}
-                bsStyle="primary" className="adaptableblotter_modal_main_panel" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
+                bsStyle="primary" className="adaptableblotter_modal_main_popup" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
                 {this.props.FormatColumns.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new column format.</Well>

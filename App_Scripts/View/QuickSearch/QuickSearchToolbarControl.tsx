@@ -45,6 +45,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <AdaptableBlotterFormControlTextClear
                     style={{ width: "100px" }}
+                    bsSize="small"
                     type="text"
                     placeholder="Search Text"
                     value={this.state.EditedQuickSearchText}

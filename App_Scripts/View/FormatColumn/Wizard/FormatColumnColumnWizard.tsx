@@ -55,6 +55,13 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
     public Back(): void {
         //todo
     }
+
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

@@ -57,7 +57,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         })
 
         return <div className="adaptable_blotter_style_popup_columnfilter">
-            <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" infoBody={infoBody}
                 button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&

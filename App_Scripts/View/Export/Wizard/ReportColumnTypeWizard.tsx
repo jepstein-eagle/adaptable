@@ -9,23 +9,17 @@ import { ReportColumnScope, PopoverType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
 
-export interface ReportColumnsWizardProps extends AdaptableWizardStepProps<IReport> {
-    Columns: Array<IColumn>
-}
+export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<IReport> {
+  }
 export interface ReportColumnsWizardState {
-    AllColumnValues: string[];
-    SelectedColumnValues: string[];
     ReportColumnScope: ReportColumnScope
 }
 
-export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProps, ReportColumnsWizardState> implements AdaptableWizardStep {
-    constructor(props: ReportColumnsWizardProps) {
+export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWizardProps, ReportColumnsWizardState> implements AdaptableWizardStep {
+    constructor(props: ReportColumnTypeWizardProps) {
         super(props);
         this.state = {
-            AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-            SelectedColumnValues: this.props.Data.Columns.map(c =>
-                this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
-            ReportColumnScope: this.props.Data.ReportColumnScope
+             ReportColumnScope: this.props.Data.ReportColumnScope
         }
     }
     render() {
@@ -53,25 +47,12 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
                     </AdaptableBlotterForm>
                 </Col>
             </Panel>
-            {this.state.ReportColumnScope == ReportColumnScope.BespokeColumns &&
-                <Panel>
-                    <DualListBoxEditor AvailableValues={this.state.AllColumnValues}
-                        SelectedValues={this.state.SelectedColumnValues}
-                        HeaderAvailable="Columns"
-                        HeaderSelected="Columns in Report"
-                        onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
-                </Panel>
-            }
-        </div>
+         </div>
     }
 
 
 
-    OnSelectedValuesChange(newValues: Array<string>) {
-        this.setState({ SelectedColumnValues: newValues } as ReportColumnsWizardState, () => this.props.UpdateGoBackState())
-    }
-
-    private onScopeSelectChanged(event: React.FormEvent<any>) {
+     private onScopeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
 
         if (e.value == "All") {
@@ -85,18 +66,24 @@ export class ReportColumnsWizard extends React.Component<ReportColumnsWizardProp
 
     public canNext(): boolean {
         return (this.state.ReportColumnScope == ReportColumnScope.AllColumns ||
-            this.state.ReportColumnScope == ReportColumnScope.VisibleColumns ||
-            this.state.SelectedColumnValues.length > 0);
+            this.state.ReportColumnScope == ReportColumnScope.VisibleColumns||
+            this.state.ReportColumnScope == ReportColumnScope.BespokeColumns );
     }
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
-        this.props.Data.Columns = this.state.SelectedColumnValues.map(c =>
-            this.props.Columns.find(col => col.FriendlyName == c).ColumnId)
+       
     }
     public Back(): void {
         //todo
     }
+    public GetIndexStepIncrement(){
+        return (this.state.ReportColumnScope== ReportColumnScope.BespokeColumns)? 1: 2;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
+
     public StepName = this.props.StepName
 }
 

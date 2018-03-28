@@ -59,9 +59,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         let colItems: IColItem[] = [
             { Content: "Column", Size: 2 },
             { Content: "Disallowed Edit", Size: 2 },
-            { Content: "Expression", Size: 3 },
+            { Content: "Expression", Size: 4 },
             { Content: "If Rule Broken", Size: 2 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ]
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
@@ -89,7 +89,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_cellvalidation">
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel"
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup"
                 button={newButton}
                 glyphicon={StrategyGlyphs.CellValidationGlyph}
                 infoBody={infoBody}>

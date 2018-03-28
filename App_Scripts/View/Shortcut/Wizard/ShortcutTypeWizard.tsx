@@ -1,7 +1,7 @@
 import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from "react";
-import { Radio, Panel, Col } from 'react-bootstrap';
+import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { DataType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
@@ -28,6 +28,12 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
             <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
 
                 <AdaptableBlotterForm inline>
+                    <Col xs={12} >
+                        <HelpBlock>Numeric column shortuts perform a mathematical operation on the current contents of the cell.</HelpBlock>
+                    </Col>
+                    <Col xs={12} >
+                        <HelpBlock>Date shortcuts replace the cell contents with a new Date value.</HelpBlock>
+                    </Col>
                     <Col xs={12} className="medium_margin_style">
                         <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
                     </Col>
@@ -58,6 +64,12 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
         this.props.Data.DataType = this.state.DataType;
     }
     public Back(): void { /* no implementation */ }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

@@ -69,8 +69,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         let colItems: IColItem[] = [
             { Content: "Name", Size: 3 },
-            { Content: "Description", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Description", Size: 7 },
+            { Content: "", Size: 2 },
         ]
 
         let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
@@ -93,7 +93,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_userfilter">
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&

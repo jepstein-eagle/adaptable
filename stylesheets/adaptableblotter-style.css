@@ -79,35 +79,19 @@ button.placeholder:before {
 	font-size: 14px;
 }
 
+
 /*Styling for our main modal windows*/
-.adaptableblotter_modal_main_panel{
-  width: 800px;
+.adaptableblotter_modal_main_popup{
+  width: 1000px;
+  height: 600px;
 }
 
-adaptableblotter_modal_popup_style {
-  max-height: 600px;
-  min-width: 600px;
-};
 
-.adaptableblotter_modal_small_action_panel{
-  width: 400px;
-  overflow: auto;
-}
-
-.adaptableblotter_modal_medium_action_panel{
-  width: 800px;
-  overflow: auto;
-}
-
-.adaptableblotter_modal_large_action_panel{
-  width: 1200px;
-  overflow: auto;
-}
 
 .adaptaleblotter_object_list_item{
   overflow-y: auto;
   min-height: 80px;
-  max-height: 300px;
+  max-height: 470px;
 }
 
 .adaptableblotter_left_modal_button {

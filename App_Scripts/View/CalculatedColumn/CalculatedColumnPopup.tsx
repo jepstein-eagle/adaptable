@@ -58,8 +58,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
 
         let colItems: IColItem[] = [
             { Content: "Column Name", Size: 3 },
-            { Content: "Column Expression", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Column Expression", Size: 7 },
+            { Content: "", Size: 2 },
         ]
 
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
@@ -83,7 +83,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_calculatedcolumn">
-            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptableblotter_modal_main_panel" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptableblotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&

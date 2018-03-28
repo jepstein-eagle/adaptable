@@ -63,6 +63,12 @@ export class ConditionalStyleSettingsWizard extends React.Component<ConditionalS
     public Back(): void {
         // todod
      }
+     public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

@@ -60,8 +60,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
             { Content: "Nudge Value", Size: 2 },
-            { Content: "Row Condition", Size: 4 },
-            { Content: "", Size: 3 },
+            { Content: "Row Condition", Size: 5 },
+            { Content: "", Size: 2 },
         ]
         let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
@@ -87,7 +87,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_plusminus">
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_panel"
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup"
                 button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
                 infoBody={infoBody}>
 

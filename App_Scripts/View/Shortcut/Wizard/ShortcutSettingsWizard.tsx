@@ -212,6 +212,12 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.props.Data.IsDynamic = this.state.IsDynamic;
     }
     public Back(): void { /* no implementation required   */ }
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

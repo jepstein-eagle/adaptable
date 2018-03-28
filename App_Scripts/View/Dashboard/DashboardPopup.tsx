@@ -76,7 +76,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             { Content: "Preview", Size: 7 },
         ]
         return <div className="adaptable_blotter_style_popup_dashboard">
-            <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} className="adaptableblotter_modal_large_action_panel">
+            <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
                     {' '}

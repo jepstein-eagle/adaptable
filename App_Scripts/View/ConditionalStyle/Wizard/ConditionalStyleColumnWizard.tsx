@@ -90,6 +90,13 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
     public Back(): void { // todo
     }
+
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 

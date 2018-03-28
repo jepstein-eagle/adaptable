@@ -55,8 +55,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
         let colItems: IColItem[] = [
             { Content: "Function", Size: 3 },
-            { Content: "Summary", Size: 6 },
-            { Content: "", Size: 3 },
+            { Content: "Summary", Size: 7},
+            { Content: "", Size: 2 },
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
 
@@ -97,7 +97,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         }
 
         return <div className="adaptable_blotter_style_popup_columninfo">
-            <PanelWithImage header={headerText} bsStyle="primary" className="adaptableblotter_modal_main_panel"  glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
+            <PanelWithImage header={headerText} bsStyle="primary"  glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
                 {this.state.ShowSelector &&
                     <AdaptableBlotterForm horizontal>
@@ -120,9 +120,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                 }
 
                 {this.state.SelectedColumn &&
-                    <div className="medium_margin_style">
-                        <AdaptableObjectCollection ColItems={colItems} items={summaries} />
-                    </div>
+                         <AdaptableObjectCollection ColItems={colItems} items={summaries} />
                 }
             </PanelWithImage>
         </div>

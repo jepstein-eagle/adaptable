@@ -155,7 +155,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     <Panel header={this.props.HeaderAvailable} className="no-padding-panel" bsStyle="info">
                         <div>
                             {headerFirstListBox}
-                            <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailable}
+                            <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailableBig}
                                 onDragEnter={(event) => this.DragEnterAvailable(event)}
                                 onDragOver={(event) => this.DragOverAvailable(event)}
                                 onDragLeave={(event) => this.DragLeaveAvailable(event)}>
@@ -178,7 +178,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
                 <Col xs={4} >
                     <Panel header={this.props.HeaderSelected} bsStyle="info">
-                        <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
+                        <ListGroup fill style={listGroupStyleBig} className="SelectedDropZone"
                             onDragEnter={(event) => this.DragEnterSelected(event)}
                             onDragOver={(event) => this.DragOverSelected(event)}
                             onDragLeave={(event) => this.DragLeaveSelected(event)}>
@@ -621,17 +621,32 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 var rowStyle = {
     'minWidth': '800px',
 };
-var listGroupStyleAvailable: React.CSSProperties = {
+
+var listGroupStyleAvailableBig: React.CSSProperties = {
     'overflowY': 'auto',
-    'maxHeight': '261px',
-    'height': '261px',
+    'maxHeight': '411px',
+    'height': '411px',
     'marginBottom': '0'
 };
 
-var listGroupStyle: React.CSSProperties = {
+var listGroupStyleBig: React.CSSProperties = {
     'overflowY': 'auto',
-    'maxHeight': '300px',
-    'height': '300px',
+    'maxHeight': '450px',
+    'height': '450px',
+    'marginBottom': '0'
+};
+
+var listGroupStyleAvailableSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'maxHeight': '311px',
+    'height': '311px',
+    'marginBottom': '0'
+};
+
+var listGroupStyleSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'maxHeight': '350px',
+    'height': '345px',
     'marginBottom': '0'
 };
 

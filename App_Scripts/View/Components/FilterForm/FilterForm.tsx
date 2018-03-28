@@ -158,6 +158,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
         ColumnFilters: state.ColumnFilter.ColumnFilters,
+        Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
     };
 }
 

@@ -66,6 +66,13 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
     }
 
     public Back(): void { }
+
+    public GetIndexStepIncrement(){
+        return 1;
+    }
+    public GetIndexStepDecrement(){
+        return 1;
+    }
     public StepName = this.props.StepName
 }
 
