@@ -120,7 +120,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                 }
 
                 {this.state.SelectedColumn &&
-                         <AdaptableObjectCollection ColItems={colItems} items={summaries} />
+                         <AdaptableObjectCollection ColItems={colItems} items={summaries} reducedPanel={this.state.ShowSelector} />
                 }
             </PanelWithImage>
         </div>

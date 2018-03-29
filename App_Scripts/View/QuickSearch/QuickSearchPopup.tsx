@@ -116,7 +116,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                 <AdaptableBlotterForm inline>
                     <Panel header={"Search For"} bsStyle="info" >
                         <AdaptableBlotterFormControlTextClear
-                        bsSize={"medium"}
+                        bsSize={"lg"}
                             type="text"
                             placeholder="Quick Search Text"
                             value={this.state.EditedQuickSearchText}

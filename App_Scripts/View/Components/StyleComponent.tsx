@@ -38,7 +38,10 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
                 <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
                     <Col xs={12}>
-                        <HelpBlock>Set the fore or back colours - leave unchecked to use the colours from the cell's existing style.</HelpBlock>
+                        <HelpBlock>Set the fore or back colours by ticking the checkbox and selecting a colour from the dropdown.</HelpBlock>
+                    </Col>
+                     <Col xs={12}>
+                        <HelpBlock>Leave unchecked to continue using the colours from the cell's existing style.</HelpBlock>
                     </Col>
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="colorBackStyle">

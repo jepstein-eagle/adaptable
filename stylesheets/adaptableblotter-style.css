@@ -94,6 +94,12 @@ button.placeholder:before {
   max-height: 470px;
 }
 
+.adaptaleblotter_object_list_item_medium{
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 400px;
+}
+
 .adaptableblotter_left_modal_button {
   float: left;
   margin-right: 5px

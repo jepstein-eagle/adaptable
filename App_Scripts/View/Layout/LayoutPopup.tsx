@@ -68,7 +68,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                 <Panel header="Load Layout" bsStyle="info">
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="load">
-                            <Col xs={2} >
+                            <Col xs={12} >
+                                <HelpBlock>
+                                    Select a layout from the dropdown.
+                                </HelpBlock>
+                                <HelpBlock>
+                                    You can delete any layout (except Default).
+                                 </HelpBlock>
+                            </Col>  <Col xs={2} >
                                 <ControlLabel >Current</ControlLabel>
                             </Col>
                             <Col xs={5}>
@@ -102,7 +109,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                         <Row>
                             <Col xs={12} >
                                 <HelpBlock>
-                                    Enter a name and then click 'Save' in order to create a new layout.  The new layout will contain the Blotter's current column visibility and order.
+                                    Enter a name and then click 'Save' in order to create a new layout.
+                                </HelpBlock>
+                                <HelpBlock>
+                                    The new layout will contain the Blotter's current column visibility and order.
                                 </HelpBlock>
                             </Col>
                         </Row>
@@ -110,7 +120,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                             <Col xs={2} >
                                 <ControlLabel >Name</ControlLabel>
                             </Col>
-                            <Col xs={7}>
+                            <Col xs={5}>
                                 <FormGroup controlId="formInlineName" validationState={validationState}>
                                     <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
                                     <FormControl.Feedback />
@@ -118,7 +128,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                                 </FormGroup>
 
                             </Col>
-                            <Col xs={3}>
+                            <Col xs={5}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
                                     overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName) || StringExtensions.IsNotNullOrEmpty(this.state.ErrorMessage)}
                                     DisplayMode="Glyph+Text" />
@@ -156,7 +166,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Layouts: state.Layout.AvailableLayouts,
         CurrentLayout: state.Layout.CurrentLayout,
-     };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

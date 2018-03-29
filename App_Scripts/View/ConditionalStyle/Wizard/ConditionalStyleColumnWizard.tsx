@@ -45,12 +45,10 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
                     </Col>
                 </AdaptableBlotterForm>
                 <Col xs={12} className="large_margin_style">
-                    {this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
-                        <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
-                            ColumnList={this.props.Columns}
-                            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                            SelectionMode={SelectionMode.Single} />
-                    }
+                    <ColumnSelector disabled={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} SelectedColumnIds={[this.state.ColumnId]}
+                        ColumnList={this.props.Columns}
+                        onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                        SelectionMode={SelectionMode.Single} />
                 </Col>
             </Panel>
         </div>
@@ -91,10 +89,10 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
     public Back(): void { // todo
     }
 
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName
