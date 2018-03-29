@@ -31,6 +31,12 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
                     <Col xs={12}>
                         <HelpBlock>Choose what should happen to an edit when cell validation fails.</HelpBlock>
                     </Col>
+                    <Col xs={12}>
+                        <HelpBlock><i>Prevent cell edit</i> ensures that no edits which fail validation will occur.</HelpBlock>
+                    </Col>
+                    <Col xs={12}>
+                    <HelpBlock><i>Show a warning</i> gives you the option to allow the edit after providing a reason (which will be audited).</HelpBlock>
+                   </Col>
                     <Col xs={12} className="large_margin_style">
                         <Radio inline value={CellValidationMode.StopEdit} checked={this.state.CellValidationMode == CellValidationMode.StopEdit} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
                         {' '}{' '}

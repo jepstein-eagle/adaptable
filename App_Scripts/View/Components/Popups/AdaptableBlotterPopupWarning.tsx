@@ -13,7 +13,9 @@ export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlott
         return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_warning">
             <SweetAlert
                 warning
-                confirmBtnBsStyle="warning" title="Warning" onConfirm={() => this.props.onClose()} >
+                confirmBtnBsStyle="warning" title="Warning" bsSize="small"
+                btnSize="sm"
+                onConfirm={() => this.props.onClose()} >
                 <p>
                     {this.props.Msg.split("\n").map(function (item, index) {
                         return (

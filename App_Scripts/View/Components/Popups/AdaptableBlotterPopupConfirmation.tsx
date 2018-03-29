@@ -16,15 +16,18 @@ export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttri
 export class AdaptableBlotterPopupConfirmation extends React.Component<AdaptableBlotterPopupConfirmationProps, {}> {
     render() {
         let title = this.props.ShowCommentBox ? <span>
-            <SweetAlert.WarningIcon />
+            <SweetAlert.WarningIcon  />
             {this.props.Title}
         </span> : this.props.Title
         let msgSplit = this.props.Msg.split("\n")
         return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_confirmation">
             <SweetAlert
                 type={this.props.ShowCommentBox ? "input" : "warning"}
+                btnSize="sm"
                 showCancel
                 confirmBtnBsStyle="primary"
+                confirmBtnBsSize="sm"
+                
                 confirmBtnText={this.props.ConfirmText}
                 cancelBtnBsStyle="default"
                 cancelBtnText={this.props.CancelText}

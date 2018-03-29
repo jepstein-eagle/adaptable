@@ -14,7 +14,7 @@ export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<IC
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
 }
 export interface CustomSortValuesWizardState {
-  //  ColumnValues: any[],
+    ColumnValues: any[],
     SelectedValues: Array<string>
     IsEdit: boolean
 }
@@ -23,7 +23,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
         this.state = {
-        //    ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
+            ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
             SelectedValues: this.props.Data.Values,
             IsEdit: this.props.Data.Values.length > 0
         }
@@ -33,15 +33,17 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     render(): any {
         let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
         let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-        let sortedValues = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue), DistinctCriteriaPairValue.RawValue)
-        let availableValues: any[] = sortedValues.map(c => c[DistinctCriteriaPairValue.DisplayValue]);
+     
         return <div className="adaptable_blotter_style_wizard_customsort_values">
             <PanelWithInfo header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
-                <DualListBoxEditor AvailableValues={availableValues}
+                <DualListBoxEditor AvailableValues={this.state.ColumnValues}
                     SelectedValues={this.state.SelectedValues}
                     HeaderAvailable="Column Values"
                     HeaderSelected="Custom Sort Order"
-                    onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+                    DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                    SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+                    ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
             </PanelWithInfo>
         </div>
     }
