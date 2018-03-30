@@ -19,13 +19,17 @@ import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
 import { IAdaptableBlotterObject, IGridSort } from "../../Core/Interface/Interfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { IColItem } from "../UIInterfaces";
+import { LayoutEntityRow } from "./LayoutEntityRow";
+import { PanelWithButton } from "../Components/Panels/PanelWithButton";
+import { AdaptableObjectCollection } from "../Components/AdaptableObjectCollection";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
     CurrentLayout: string;
     GridSort: IGridSort;
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-    onSaveLayout: (columns: string[],  GgidSort: IGridSort , layoutName: string) => LayoutRedux.LayoutAddAction;
+    onSaveLayout: (columns: string[], GgidSort: IGridSort, layoutName: string) => LayoutRedux.LayoutAddAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -45,75 +49,44 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
 
     render() {
         let infoBody: any[] = ["Use layouts to create and manage multiple named, sets of ordered columns", <br />, <br />, "To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)", <br />, <br />, "To create a new layout, enter a name in the 'Save As New Layout' textbox."]
-        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
 
-        let optionLayouts = this.props.Layouts.map((x, index) => {
-            if (x.Name == this.props.CurrentLayout) {
-                if (Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
-                    return <option value={x.Name} key={index}>{x.Name}</option>
-                }
-                else {
-                    return <option value={x.Name} key={index}>{x.Name + " (Modified)"}</option>
-                }
-            }
-            else {
-                return <option value={x.Name} key={index}>{x.Name}</option>
-            }
+        let colItems: IColItem[] = [
+            { Content: "Current", Size: 1 },
+            { Content: "Name", Size: 2 },
+            { Content: "Description", Size: 7 },
+            { Content: "", Size: 2 },
+        ]
+
+        let layoutRows = this.props.Layouts.map((x, index) => {
+            return <LayoutEntityRow
+                key={index}
+                ColItems={colItems}
+                IsCurrentLayout={x.Name == this.props.CurrentLayout}
+                AdaptableBlotterObject={x}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                Index={index}
+                onEdit={null}
+                onShare={() => this.props.onShare(x)}
+                TeamSharingActivated={this.props.TeamSharingActivated}
+                onDeleteConfirm={LayoutRedux.LayoutDelete(x.Name)}
+                onSelect={() => this.onSelectLayout(x.Name)}
+            >
+            </LayoutEntityRow>
         })
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
-        return <div className="adaptable_blotter_style_popup_layout">
-            <PanelWithImage header={StrategyNames.LayoutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.LayoutGlyph} infoBody={infoBody}>
+        return <div className="adaptable_blotter_style_popup_advancedsearch">
 
-                <Panel header="Load Layout" bsStyle="info">
-                    <AdaptableBlotterForm horizontal>
-                        <FormGroup controlId="load">
-                            <Col xs={12} >
-                                <HelpBlock>
-                                    Select a layout from the dropdown.
-                                </HelpBlock>
-                                <HelpBlock>
-                                    You can delete any layout (except Default).
-                                 </HelpBlock>
-                            </Col>  <Col xs={2} >
-                                <ControlLabel >Current</ControlLabel>
-                            </Col>
-                            <Col xs={5}>
-                                <FormControl componentClass="select" placeholder="select" value={this.props.CurrentLayout}
-                                    onChange={(x) => this.onLayoutSelectionChanged(x)} >
-                                    {optionLayouts}
-                                </FormControl>
-                            </Col>
-                            <Col xs={5}>
-                                <ButtonDelete
-                                    overrideTooltip="Delete Layout"
-                                    overrideDisableButton={this.props.CurrentLayout == "Default"}
-                                    ConfigEntity={layoutEntity}
-                                    DisplayMode="Glyph+Text"
-                                    ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
-                                    ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
-                                    ConfirmationTitle={"Delete Layout"} />
-                                {' '}
-                                {this.props.TeamSharingActivated && <ButtonShare onClick={() => this.props.onShare(layoutEntity)}
-                                    overrideTooltip="Share Layout"
-                                    overrideDisableButton={this.props.CurrentLayout == "Default"}
-                                    ConfigEntity={layoutEntity}
-                                    DisplayMode="Glyph+Text" />}
-                            </Col>
-                        </FormGroup>
-                    </AdaptableBlotterForm>
-                </Panel>
 
-                <Panel header="Save As New Layout" bsStyle="info">
+            <PanelWithImage bsStyle="primary" header={StrategyNames.LayoutStrategyName} infoBody={infoBody}
+                glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptableblotter_modal_main_popup" >
                     <AdaptableBlotterForm horizontal>
                         <Row>
                             <Col xs={12} >
                                 <HelpBlock>
-                                    Enter a name and then click 'Save' in order to create a new layout.
-                                </HelpBlock>
-                                <HelpBlock>
-                                    The new layout will contain the Blotter's current column visibility and order.
+                                    Enter a name and then click 'Save' in order to create a new layout; this will contain the Blotter's current column order and sort.
                                 </HelpBlock>
                             </Col>
                         </Row>
@@ -121,30 +94,27 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
                             <Col xs={2} >
                                 <ControlLabel >Name</ControlLabel>
                             </Col>
-                            <Col xs={5}>
+                            <Col xs={6}>
                                 <FormGroup controlId="formInlineName" validationState={validationState}>
                                     <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
                                     <FormControl.Feedback />
                                     <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                                 </FormGroup>
-
                             </Col>
-                            <Col xs={5}>
+                            <Col xs={4}>
                                 <ButtonSave onClick={() => this.onSaveLayoutClicked()}
                                     overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName) || StringExtensions.IsNotNullOrEmpty(this.state.ErrorMessage)}
                                     DisplayMode="Glyph+Text" />
                             </Col>
                         </Row>
                     </AdaptableBlotterForm>
-                </Panel>
-
+                 <AdaptableObjectCollection ColItems={colItems} items={layoutRows} reducedPanel={true} />
             </PanelWithImage>
         </div>
     }
 
-    private onLayoutSelectionChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onLoadLayout(e.value);
+    private onSelectLayout(layout: string) {
+        this.props.onLoadLayout(layout);
     }
 
     private onSaveLayoutNameChanged(event: React.FormEvent<any>) {

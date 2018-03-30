@@ -61,6 +61,7 @@ import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { format } from 'util';
 import { GridState } from '../ActionsReducers/Interface/IState';
+import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -456,7 +457,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 }
                 case LayoutRedux.LAYOUT_DELETE: {
                     let returnAction = next(action);
-                    middlewareAPI.dispatch(LayoutRedux.LayoutSelect("Default"))
+                    let layoutState = middlewareAPI.getState().Layout;
+                    let currentLayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
+                    if(!currentLayout){ // we have deleted the current layout (allowed) so lets make the layout default
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
+                    }
                     return returnAction;
                 }
                 case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
@@ -671,14 +676,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     //we set the column list from the datasource
                     adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
-                    let currentLayout = "Default"
+                    let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
-                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(gridState.Columns.map(x => x.ColumnId), null, "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(gridState.Columns.map(x => x.ColumnId), null, DEFAULT_LAYOUT));
                     }
                     else {
                         //update default layout with latest columns
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(gridState.Columns.map(x => x.ColumnId), gridState.GridSort, "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(gridState.Columns.map(x => x.ColumnId), gridState.GridSort, DEFAULT_LAYOUT));
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout

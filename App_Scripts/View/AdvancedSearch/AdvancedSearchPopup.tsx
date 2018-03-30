@@ -55,7 +55,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
         let colItems: IColItem[] = [
-            { Content: "Live", Size: 1 },
+            { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
             { Content: "Query", Size: 7 },
             { Content: "", Size: 2 },
@@ -114,13 +114,10 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
             </PanelWithButton>
         </div>
-
-
-
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
     onEdit(advancedSearch: IAdvancedSearch) {
@@ -137,7 +134,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
         this.props.onAddUpdateAdvancedSearch(clonedObject);
-        this.props.onSelectAdvancedSearch(clonedObject.Name);
+        if (this.state.EditedAdaptableBlotterObjectIndex == -1) {// its new so make it the new search
+            this.props.onSelectAdvancedSearch(clonedObject.Name);
+        }
     }
 }
 

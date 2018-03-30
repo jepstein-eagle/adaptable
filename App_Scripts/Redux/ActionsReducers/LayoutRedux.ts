@@ -75,7 +75,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             layouts = [].concat(state.AvailableLayouts)
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
-            return Object.assign({}, state, { CurrentLayout: "", AvailableLayouts: layouts })
+            return Object.assign({}, state, { AvailableLayouts: layouts })
         case LAYOUT_SAVE:
             let actionTypedSave = <LayoutSaveAction>action;
             layouts = [].concat(state.AvailableLayouts);

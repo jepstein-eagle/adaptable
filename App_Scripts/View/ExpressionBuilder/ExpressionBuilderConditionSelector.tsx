@@ -158,7 +158,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     </Well>
                     :
                     <FormGroup controlId="formInlineName">
-                        <Col xs={3}>
+                        <Col xs={5}>
                             {StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId) ?
                                 <ControlLabel>Step 1: Select Column</ControlLabel> :
                                 <div style={{ paddingTop: '7px' }}>Step 1: Select Column</div>
@@ -180,7 +180,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 <div >
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="formInlineCriteria">
-                            <Col xs={3}>
+                            <Col xs={5}>
                                 <ControlLabel>Step 2: Create Criteria</ControlLabel>
                             </Col>
                         </FormGroup>

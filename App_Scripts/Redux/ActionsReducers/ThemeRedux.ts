@@ -1,6 +1,8 @@
 import * as Redux from 'redux';
 import { ThemeState } from './Interface/IState'
 import { StaticThemes } from '../../../themes/index'
+import { DEFAULT_THEME } from "../../Core/Constants/GeneralConstants";
+
 const THEME_SELECT = 'THEME_SELECT';
 
 export interface ThemeSelectAction extends Redux.Action {
@@ -13,7 +15,7 @@ export const ThemeSelect = (Theme: string): ThemeSelectAction => ({
 })
 
 const initialThemeState: ThemeState = {
-    CurrentTheme: "Default",
+    CurrentTheme: DEFAULT_THEME,
     SystemThemes: StaticThemes,
     UserThemes: []
 }

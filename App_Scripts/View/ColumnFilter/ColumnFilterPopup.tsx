@@ -17,6 +17,7 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
@@ -57,8 +58,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         })
 
         return <div className="adaptable_blotter_style_popup_columnfilter">
-            <PanelWithButton headerText={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" infoBody={infoBody}
-                button={null} glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
+            <PanelWithImage header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" infoBody={infoBody}
+                 glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={columnFilterItems} />
@@ -68,7 +69,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                     <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
                 }
 
-            </PanelWithButton>
+            </PanelWithImage>
         </div>
     }
 }
