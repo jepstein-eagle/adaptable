@@ -876,7 +876,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
         gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
-            this.onSortSaved(params)
+            this.onSortChanged(params)
         });
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
@@ -1003,7 +1003,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    private onSortSaved(params: any): void {
+    private onSortChanged(params: any): void {
         let sortModel: any[] = this.gridOptions.api.getSortModel();
         let gridSort: IGridSort;
         if (sortModel != null) {

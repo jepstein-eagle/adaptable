@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
@@ -867,6 +867,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.bind("change", () => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
+        grid.bind("sort", () => {
+           this.onSortChanged()
+        });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
             e.preventDefault();
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
@@ -906,8 +909,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.select(selectorQuery);
     }
 
+    private onSortChanged(): void {
+        let sortModel: any[]=  this.grid.dataSource.sort()
+        let gridSort: IGridSort;
+        if (sortModel != null) {
+            if (sortModel.length > 0) {
+                // for now assuming just single column sorts...
+                let sortObject: any = sortModel[0];
+                
+                gridSort = {Column :sortObject.field, SortOrder : (sortObject.dir == "asc") ? SortOrder.Ascending : SortOrder.Descending}
+             }
+        }
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+    }
+
     public setGridSort(gridSort: IGridSort):void{
-        //todo
+         // get the sort model
+         let sortModel: any[] = []
+         if (gridSort != null) {
+             let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
+             this.grid.dataSource.sort({field: gridSort.Column, dir: sortDescription});
+         }else{
+            this.grid.dataSource.sort({});          
+         }
+        
+       
     }
 
 }
