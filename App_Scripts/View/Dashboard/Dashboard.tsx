@@ -26,7 +26,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
     render() {
 
-      let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let optionsBlotterName: string = this.props.AdaptableBlotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Toolbars"
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
@@ -36,7 +36,14 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             let dashboardControl = AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1
-                let dashboardElememt = React.createElement(dashboardControl, { AdaptableBlotter: this.props.AdaptableBlotter, IsReadOnly: isReadOnly });
+                let dashboardElememt = React.createElement(dashboardControl, {
+                    AdaptableBlotter: this.props.AdaptableBlotter,
+                    IsReadOnly: isReadOnly,
+                    Columns: this.props.Columns,
+                    UserFilters: this.props.UserFilters,
+                    SystemFilters: this.props.SystemFilters,
+                    ColorPalette: this.props.ColorPalette
+                });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
                 </Nav>
@@ -48,9 +55,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-            {React.createElement(homeToolbar, {AdaptableBlotter: this.props.AdaptableBlotter})}
+            {React.createElement(homeToolbar, { AdaptableBlotter: this.props.AdaptableBlotter })}
         </Nav>
-
 
         return <div className="adaptable_blotter_style_base">
             <div className="no_margin_style">
@@ -83,6 +89,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardState: state.Dashboard,
         EntitlementsState: state.Entitlements,
+        // need to get these props so we can 'feed' the toolbars...
+        Columns: state.Grid.Columns,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        ColorPalette: state.UserInterface.ColorPalette
     };
 }
 

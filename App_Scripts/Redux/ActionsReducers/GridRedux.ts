@@ -1,12 +1,13 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { ICellInfo, IGridSort } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
-export const GRID_SELECT_COLUMN= 'GRID_SELECT_COLUMN';
+export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
+export const GRID_SET_SORT = 'GRID_SET_SORT';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -19,11 +20,15 @@ export interface GridHideColumnAction extends Redux.Action {
 export interface GridSetValueLikeEditAction extends Redux.Action {
     CellInfo: ICellInfo,
     OldValue: any,
- 
+
 }
 
 export interface GridSelectColumnAction extends Redux.Action {
     ColumnId: string;
+}
+
+export interface GridSetSortAction extends Redux.Action {
+    GridSort: IGridSort;
 }
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
@@ -38,9 +43,9 @@ export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
 
 export const GridSetValueLikeEdit = (CellInfo: ICellInfo, OldValue: any): GridSetValueLikeEditAction => ({
     type: GRID_SET_VALUE_LIKE_EDIT,
-   CellInfo,
+    CellInfo,
     OldValue,
-   
+
 })
 
 export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
@@ -48,14 +53,22 @@ export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
     ColumnId
 })
 
+export const GridSetSort = (GridSort: IGridSort): GridSetSortAction => ({
+    type: GRID_SET_SORT,
+    GridSort
+})
+
 const initialGridState: GridState = {
-    Columns: []
+    Columns: [],
+    GridSort: null
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
     switch (action.type) {
         case GRID_SET_COLUMNS:
-            return { Columns: [].concat((<GridSetColumnsAction>action).Columns) }
+            return Object.assign({}, state, { Columns: [].concat((<GridSetColumnsAction>action).Columns) })
+        case GRID_SET_SORT:
+            return Object.assign({}, state, { GridSort: (<GridSetSortAction>action).GridSort })
         default:
             return state
     }

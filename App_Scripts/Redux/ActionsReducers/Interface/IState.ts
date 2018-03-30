@@ -19,7 +19,7 @@ import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement } from '../../../Core/Interface/Interfaces';
+import { IEntitlement, IGridSort } from '../../../Core/Interface/Interfaces';
 import { IUserTheme } from '../../../Strategy/Interface/IThemeStrategy';
 
 /*
@@ -27,6 +27,7 @@ Created by the system and not part of predefined or user config
 */
 export interface GridState {
     Columns: IColumn[];
+    GridSort: IGridSort
 }
 
 export interface MenuState {

@@ -21,14 +21,15 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IGridSort } from "../../Core/Interface/Interfaces";
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
-    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
-    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutSaveAction,
-    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction,
-    Columns: IColumn[],
+    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
+    onSaveLayout: (columns: string[],  gridSort: IGridSort, layoutName: string) => LayoutRedux.LayoutSaveAction;
+    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
+    GridSort: IGridSort;
 }
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
@@ -98,14 +99,14 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSave() {
-        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.CurrentLayout);
+        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, this.props.CurrentLayout);
     }
 
     private onNew() {
         let prompt: IUIPrompt = {
             PromptTitle: "Create New Layout",
             PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.LayoutAdd(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), "")
+            ConfirmAction: LayoutRedux.LayoutAdd(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, "")
         }
         this.props.onShowPrompt(prompt)
     }
@@ -125,14 +126,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentLayout: state.Layout.CurrentLayout,
         AvailableLayouts: state.Layout.AvailableLayouts,
-        Columns: state.Grid.Columns,
+        GridSort: state.Grid.GridSort
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (columns: string[], layoutName: string) => dispatch(LayoutRedux.LayoutSave(columns, layoutName)),
+        onSaveLayout: (columns: string[], gridSort: IGridSort, layoutName: string) => dispatch(LayoutRedux.LayoutSave(columns, gridSort, layoutName)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, isReadonly))

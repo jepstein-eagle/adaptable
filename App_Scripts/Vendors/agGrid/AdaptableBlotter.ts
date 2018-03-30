@@ -52,7 +52,6 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 
 // import other items
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
@@ -83,7 +82,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
@@ -876,6 +875,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
+        gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
+            this.onSortSaved(params)
+        });
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
@@ -1001,6 +1003,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
+    private onSortSaved(params: any): void {
+        let sortModel: any[] = this.gridOptions.api.getSortModel();
+        let gridSort: IGridSort;
+        if (sortModel != null) {
+            if (sortModel.length > 0) {
+                // for now assuming just single column sorts...
+                let sortObject: any = sortModel[0];
+                gridSort = {Column :sortObject.colId, SortOrder : (sortObject.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending}
+             }
+        }
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+    }
+
     public getRowInfo(): any {
         return this.gridOptions.api.getModel().getRowCount()
     }
@@ -1010,11 +1025,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectColumn(columnId: string) {
+
         this.gridOptions.api.clearRangeSelection();
-        let rangeSelectionParams: AddRangeSelectionParams = { rowStart: 0, rowEnd: this.gridOptions.api.getDisplayedRowCount(), columnStart: columnId, columnEnd: columnId, floatingStart: "top", floatingEnd: "bottom" }
+        let rangeSelectionParams: AddRangeSelectionParams = { 
+            rowStart: 0, 
+            rowEnd: this.gridOptions.api.getDisplayedRowCount(), 
+            columnStart: columnId, 
+            columnEnd: columnId, 
+            floatingStart: "top", 
+            floatingEnd: "bottom" }
         this.gridOptions.api.addRangeSelection(rangeSelectionParams)
     }
 
+    public setGridSort(gridSort: IGridSort): void {
+        // get the sort model
+        let sortModel: any[] = []
+        if (gridSort != null) {
+            let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
+            sortModel.push({ colId: gridSort.Column, sort: sortDescription })
+        }
+        this.gridOptions.api.setSortModel(sortModel)
+        this.gridOptions.api.onSortChanged();
+    }
 
 
 }

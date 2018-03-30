@@ -6,7 +6,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock } from 'react-bootstrap';
+import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock, Grid } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -17,15 +17,16 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonShare } from "../Components/Buttons/ButtonShare";
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import { IAdaptableBlotterObject, IGridSort } from "../../Core/Interface/Interfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
-    Layouts: ILayout[],
-    CurrentLayout: string,
-    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction
-    onSaveLayout: (columns: string[], layoutName: string) => LayoutRedux.LayoutAddAction,
-    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
+    Layouts: ILayout[];
+    CurrentLayout: string;
+    GridSort: IGridSort;
+    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
+    onSaveLayout: (columns: string[],  GgidSort: IGridSort , layoutName: string) => LayoutRedux.LayoutAddAction;
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 interface LayoutPopupState {
@@ -157,7 +158,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopup
     private onSaveLayoutClicked() {
         let layoutName: string = this.state.NewLayoutName;
         this.setState({ NewLayoutName: "" });
-        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), layoutName);
+        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, layoutName);
         this.setState({ NewLayoutName: "" });
     }
 }
@@ -166,13 +167,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Layouts: state.Layout.AvailableLayouts,
         CurrentLayout: state.Layout.CurrentLayout,
+        GridSort: state.Grid.GridSort
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (Columns: string[], LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, LayoutName)),
+        onSaveLayout: (Columns: string[], GridSort: IGridSort, LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, GridSort, LayoutName)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };
 }

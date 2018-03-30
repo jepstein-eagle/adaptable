@@ -61,7 +61,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
@@ -145,7 +145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-       // this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        // this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
@@ -288,29 +288,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-    public sortColumnGridIndex: number = -1
-    public sortColumnName: string = ""
-    public sortOrder: SortOrder
-    public toggleSort(gridColumnIndex: number) {
-        //Toggle sort one column at a time
-        //we need the index property not the index of the collection
-        let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
-        if (this.sortColumnGridIndex === gridColumnIndexTransposed) {
-            if (this.sortOrder == SortOrder.Descending) {
-                this.sortColumnGridIndex = -1;
-            }
-            else {
-                this.sortOrder = SortOrder.Descending
-            }
-        } else {
-            this.sortOrder = SortOrder.Ascending
-            //we need the index property not the index of the collection
-            //this.sortColumnGridIndex = gridColumnIndex;
-            this.sortColumnGridIndex = gridColumnIndexTransposed;
-            this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
-        }
-        this.grid.behavior.reindex();
-    }
+
 
     public getPrimaryKeyValueFromRecord(record: any): any {
         return record[this.BlotterOptions.primaryKey]
@@ -1145,9 +1123,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         };
         grid.addEventListener('fin-column-sort', (e: any) => {
-            this.toggleSort(e.detail.column);
+            this.onSortSaved(e.detail.column);
             //in case we want multi column
             //keys =  event.detail.keys;
+            //    this.grid.behavior.reindex();
         });
         //We add our sorter pipe last into the existing pipeline
         let currentDataSources = grid.behavior.dataModel.DataSources;
@@ -1175,6 +1154,43 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // not implementing until can work out how to do it!
 
+    }
+
+    public sortColumnGridIndex: number = -1
+    public sortColumnName: string = ""
+    public sortOrder: SortOrder
+    public onSortSaved(gridColumnIndex: number) {
+        //Toggle sort one column at a time
+        //we need the index property not the index of the collection
+        let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
+        if (this.sortColumnGridIndex === gridColumnIndexTransposed) {
+            if (this.sortOrder == SortOrder.Descending) {
+                this.sortColumnGridIndex = -1;
+            }
+            else {
+                this.sortOrder = SortOrder.Descending
+            }
+        } else {
+            this.sortOrder = SortOrder.Ascending
+            //we need the index property not the index of the collection
+            //this.sortColumnGridIndex = gridColumnIndex;
+            this.sortColumnGridIndex = gridColumnIndexTransposed;
+            this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
+        }
+        this.grid.behavior.reindex();
+        let gridSort: IGridSort = { Column: this.sortColumnName, SortOrder: this.sortOrder }
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+    }
+
+    public setGridSort(gridSort: IGridSort): void {
+        if (gridSort != null) {
+            this.sortColumnGridIndex = this.grid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
+            this.sortColumnName = gridSort.Column;
+            this.sortOrder = gridSort.SortOrder;
+        } else {
+            this.sortColumnGridIndex = -1;
+        }
+        this.grid.behavior.reindex();
     }
 
 }

@@ -46,7 +46,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 
@@ -513,6 +513,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public selectColumn(columnId: string){
         // todo
+    }
+
+    public setGridSort(gridSort: IGridSort):void{
+        //todo
     }
   
 }

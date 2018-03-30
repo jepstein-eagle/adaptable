@@ -4,3 +4,4 @@ export interface ICustomSort extends IAdaptableBlotterObject {
     ColumnId: string;
     Values: string[]
 }
+

@@ -147,7 +147,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
-        Columns: state.Grid.Columns,
         LiveReports: state.Export.CurrentLiveReports,
       };
 }

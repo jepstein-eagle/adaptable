@@ -1,10 +1,10 @@
-import { DataType, DistinctCriteriaPairValue } from '../Enums'
-import {  IStrategy } from '../../Strategy/Interface/IStrategy'
+import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Enums'
+import { IStrategy } from '../../Strategy/Interface/IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
-import {  IValidationService} from '../Services/Interface/IValidationService'
+import { IValidationService } from '../Services/Interface/IValidationService'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
@@ -20,20 +20,27 @@ export interface ISelectedCells {
 export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 }
 
-export interface IAdaptableBlotterObject{
+export interface IAdaptableBlotterObject {
     IsPredefined: boolean
 }
 
 
 
-export interface IEntitlement { 
+export interface IEntitlement {
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }
 
 
 export interface ICellInfo {
-    Id: any,
-    ColumnId: string,
-    Value: any
+    Id: any;
+    ColumnId: string;
+    Value: any;
+}
+
+// used in layouts to save which is the current sorted column
+export interface IGridSort {
+    Column: string;
+    SortOrder: SortOrder
+
 }

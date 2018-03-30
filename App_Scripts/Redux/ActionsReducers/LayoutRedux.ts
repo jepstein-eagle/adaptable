@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { InputAction } from '../../Core/Interface/IMessage';
+import { IGridSort } from '../../Core/Interface/Interfaces';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 const LAYOUT_ADD = 'LAYOUT_ADD';
@@ -10,6 +11,7 @@ export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 
 export interface LayoutAddAction extends InputAction {
     Columns: string[],
+    GridSort: IGridSort
 }
 
 export interface LayoutSelectAction extends Redux.Action {
@@ -19,15 +21,17 @@ export interface LayoutSelectAction extends Redux.Action {
 export interface LayoutSaveAction extends Redux.Action {
     LayoutName: string,
     Columns: string[],
+    GridSort: IGridSort
 }
 
 export interface LayoutDeleteAction extends Redux.Action {
     LayoutName: string
 }
 
-export const LayoutAdd = (Columns: string[], InputText: string): LayoutAddAction => ({
+export const LayoutAdd = (Columns: string[], GridSort: IGridSort, InputText: string): LayoutAddAction => ({
     type: LAYOUT_ADD,
     Columns,
+    GridSort,
     InputText
 })
 
@@ -36,9 +40,10 @@ export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
     LayoutName
 })
 
-export const LayoutSave = (Columns: string[], LayoutName: string): LayoutSaveAction => ({
+export const LayoutSave = (Columns: string[],  GridSort: IGridSort, LayoutName: string): LayoutSaveAction => ({
     type: LAYOUT_SAVE,
     Columns,
+    GridSort,
     LayoutName
 })
 
@@ -50,6 +55,7 @@ export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
 const initialLayoutState: LayoutState = {
     CurrentLayout: "",
     AvailableLayouts: [],
+    
 }
 
 export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = initialLayoutState, action: Redux.Action): LayoutState => {
@@ -60,7 +66,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName })
         case LAYOUT_ADD:
             let actionTypedAdd = (<LayoutAddAction>action)
-            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, Name: actionTypedAdd.InputText, IsPredefined: false }
+            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, GridSort: actionTypedAdd.GridSort, Name: actionTypedAdd.InputText, IsPredefined: false }
             layouts = [].concat(state.AvailableLayouts);
             layouts.push(layoutToAdd);
             return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
@@ -74,7 +80,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             let actionTypedSave = <LayoutSaveAction>action;
             layouts = [].concat(state.AvailableLayouts);
             index = layouts.findIndex(a => a.Name == actionTypedSave.LayoutName)
-            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, Name: actionTypedSave.LayoutName, IsPredefined: false }
+            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, GridSort: actionTypedSave.GridSort, Name: actionTypedSave.LayoutName, IsPredefined: false }
             layouts[index] = layoutToSave;
             return Object.assign({}, state, { AvailableLayouts: layouts });
         default:

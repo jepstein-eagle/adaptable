@@ -58,7 +58,15 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         let radioDashboardControls: any[] = allToolbars.map((x, i) => {
             let dashboardControl = AdaptableDashboardViewFactory.get(x);
 
-            let dashboardElememt = React.createElement(dashboardControl, { IsReadOnly: true });
+            let dashboardElememt = React.createElement(dashboardControl, { 
+                AdaptableBlotter: null,
+                IsReadOnly: true,
+                Columns: this.props.Columns,
+                UserFilters: this.props.UserFilters,
+                SystemFilters: this.props.SystemFilters,
+                ModalContainer: this.props.ModalContainer,
+                ColorPalette: this.props.ColorPalette
+            });
             let isVisible: boolean = this.props.VisibleToolbars.find(dc => dc == x) != null
             let visibleButton = isVisible  ?
                 <Button disabled={x == StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(x)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>

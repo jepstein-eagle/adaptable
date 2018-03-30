@@ -75,9 +75,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-         UserFilters: state.UserFilter.UserFilters,
-        Columns: state.Grid.Columns,
-        ColumnFilters: state.ColumnFilter.ColumnFilters,
+           ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 

@@ -20,8 +20,7 @@ interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPop
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
     onShowQuickSearchPopup: () => PopupRedux.PopupShowAction;
     QuickSearchText: string
-    Entitlements: IEntitlement[]
-}
+ }
 
 interface QuickSearchToolbarControlComponentState {
     EditedQuickSearchText: string
@@ -75,8 +74,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        Entitlements: state.Entitlements.FunctionEntitlements
-    };
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

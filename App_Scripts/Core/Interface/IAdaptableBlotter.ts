@@ -1,6 +1,6 @@
 import { DataType, DistinctCriteriaPairValue } from '../Enums'
 import {  IStrategy } from '../../Strategy/Interface/IStrategy'
-import {  ICellInfo, IAdaptableStrategyCollection, ISelectedCells } from '../../Core/Interface/Interfaces'
+import {  ICellInfo, IAdaptableStrategyCollection, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -38,6 +38,7 @@ export interface IAdaptableBlotter {
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
+    setGridSort(gridSort:IGridSort): void
 
     // cell selection
     getSelectedCells(): ISelectedCells
@@ -72,6 +73,7 @@ export interface IAdaptableBlotter {
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
+    
 
     //CalculatedColumn
     deleteCalculatedColumn(calculatedColumnId: string): void

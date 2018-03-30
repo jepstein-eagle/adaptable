@@ -119,7 +119,7 @@ function getSchema(data) {
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' , enableRowGroup: true});
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text',enableRowGroup: true });
-    schema.push({ headerName: "Currency", field: "currency", editable: true, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
 
     schema.push({

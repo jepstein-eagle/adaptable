@@ -60,6 +60,7 @@ import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
 import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { format } from 'util';
+import { GridState } from '../ActionsReducers/Interface/IState';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -344,9 +345,9 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                             let layout = actionTyped.Entity as ILayout
                             if (middlewareAPI.getState().Layout.AvailableLayouts.find(x => x.Name == layout.Name)) {
                                 overwriteConfirmation = true
-                                importAction = LayoutRedux.LayoutSave(layout.Columns, layout.Name)
+                                importAction = LayoutRedux.LayoutSave(layout.Columns, layout.GridSort, layout.Name)
                             } else {
-                                importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.Name)
+                                importAction = LayoutRedux.LayoutAdd(layout.Columns, layout.GridSort, layout.Name)
                             }
                             break;
                         }
@@ -443,8 +444,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.AvailableLayouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
-                        let columns = currentLayout.Columns.map(columnId => middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == columnId));
+                        let gridState: GridState =  middlewareAPI.getState().Grid;
+                        // set columns
+                        let columns = currentLayout.Columns.map(columnId => gridState.Columns.find(x => x.ColumnId == columnId));
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
+                        // set sort 
+                        middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSort))
+                        adaptableBlotter.setGridSort(currentLayout.GridSort);
                     }
                     return returnAction;
                 }
@@ -666,12 +672,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     adaptableBlotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     let currentLayout = "Default"
+                    let gridState: GridState = middlewareAPI.getState().Grid
                     if (middlewareAPI.getState().Layout.AvailableLayouts.length == 0) {
-                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(gridState.Columns.map(x => x.ColumnId), null, "Default"));
                     }
                     else {
                         //update default layout with latest columns
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(middlewareAPI.getState().Grid.Columns.map(x => x.ColumnId), "Default"));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(gridState.Columns.map(x => x.ColumnId), gridState.GridSort, "Default"));
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout
