@@ -25,7 +25,7 @@ import { IGridSort } from "../../Core/Interface/Interfaces";
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-    onSaveLayout: (columns: string[],  gridSort: IGridSort, layoutName: string) => LayoutRedux.LayoutSaveAction;
+    onSaveLayout: (columns: string[], gridSort: IGridSort, layoutName: string) => LayoutRedux.LayoutSaveAction;
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
     AvailableLayouts: ILayout[];
     CurrentLayout: string;
@@ -37,7 +37,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     render(): any {
 
         let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
-        let isLayoutModified = layoutEntity && !Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))
+        let isLayoutModified = this.isLayoutModified(layoutEntity);
         let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
                 if (!isLayoutModified) {
@@ -96,6 +96,19 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 {content}
             </PanelDashboard>
         </div>
+    }
+
+    private isLayoutModified(layoutEntity: ILayout): boolean {
+        if (layoutEntity) {
+
+            if (!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
+                return true;
+            }
+            if(layoutEntity.GridSort != this.props.GridSort){
+                return true;
+            }
+        }
+        return false;
     }
 
     private onSave() {

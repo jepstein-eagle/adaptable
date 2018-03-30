@@ -92,5 +92,20 @@
 			"#808080",
 			"#800000"
 		]
+	},
+	"Dashboard": {
+		"VisibleToolbars": [
+			"AdvancedSearch",
+			"Layout",
+			"QuickSearch"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"QuickSearch",
+			"SmartEdit",
+			"ColumnChooser"
+		],
+		"Zoom": "0.85"
 	}
 }
