@@ -150,6 +150,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let newButton = <ButtonCondition onClick={() => this.onSelectedColumnChanged()}
             overrideTooltip="Add Condition"
+            style={{width:"230px"}}
             DisplayMode="Glyph+Text"
         />
 
@@ -208,9 +209,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
                             {(queryBuildStatus != QueryBuildStatus.FirstSelection && queryBuildStatus != QueryBuildStatus.SecondSelection) &&
                                 <Nav bsStyle="pills" stacked>
-                                    <NavItem eventKey="columnValues">Column Values</NavItem>
-                                    <NavItem eventKey="filters">Filters</NavItem>
-                                    <NavItem eventKey="ranges">Ranges</NavItem>
+                                    <NavItem key="columnValues" eventKey="columnValues">Column Values</NavItem>
+                                    <NavItem key="filters" eventKey="filters">Filters</NavItem>
+                                    <NavItem key="ranges" eventKey="ranges">Ranges</NavItem>
                                 </Nav>
                             }
 

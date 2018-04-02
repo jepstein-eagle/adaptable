@@ -30,17 +30,13 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
                 return <option key={operator} value={operator}>{ExpressionHelper.OperatorToLongFriendlyString(operator, selectedColumnDataType)}</option>
             })
 
-            let optionRangeTypes = EnumExtensions.getNames(RangeOperandType).map((rangeOperandType: RangeOperandType) => {
-                return <option key={index + rangeOperandType} value={rangeOperandType}>{rangeOperandType as RangeOperandType}</option>
-            })
-
             let operationMenuItems = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
                 return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOld(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
             })
 
             let deleteButton = <Button bsSize={"small"} bsStyle={"default"} style={deleteButtonStyle} onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
 
-            return <div className="no_padding_medium_margin_style" style={betweenDivStyle}>
+            return <div className="no_padding_medium_margin_style" style={betweenDivStyle} key={index}>
                 <AdaptableBlotterForm horizontal key={index}>
                     <FormGroup controlId={"Range" + index}>
 
@@ -208,14 +204,14 @@ let dropDownStyle = {
 }
 
 let operandStyle = {
-    'width': '170px',
+    'width': '160px',
     'marginLeft': '0px',
     'marginRight': '2px',
     'marginTop': '0px'
 }
 
 let rangeOperatorStyle = {
-    'width': '70px',
+    'width': '80px',
     'marginLeft': '10px',
     'marginRight': '0px',
     'marginTop': '0px'

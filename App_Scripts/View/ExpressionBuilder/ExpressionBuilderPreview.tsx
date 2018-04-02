@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
-import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, RangeOperandType } from '../../Core/Enums';
@@ -29,6 +29,7 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
     DeleteRange: (ColumnId: string, index: number) => void
     DeleteUserFilterExpression: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
+    DeleteAllColumnExpression:(ColumnId: string)=> void
     ShowPanel: boolean
     ReadOnlyMode?: boolean
 }
@@ -69,24 +70,24 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(ne => ne.ColumnName == columnId)
             let columnUserFilterExpressionsListgroupItems: JSX.Element[]
             if (columnUserFilterExpressions) {
-                    columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
-                        return <ListGroupItem key={filter}>
-                            <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
-                                <AdaptableBlotterForm inline>
-                                    {filter}
-                                    <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                        <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => {
-                                            this.props.DeleteUserFilterExpression(columnId, index);
-                                            if (!this.props.ShowPanel) { e.stopPropagation(); }
-                                        }}>
-                                            <Glyphicon glyph="remove" />
-                                        </Button>
-                                    </OverlayTrigger>   
-                                </AdaptableBlotterForm>
-                            </div>
-                        </ListGroupItem>
-                    })
-                
+                columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
+                    return <ListGroupItem key={filter}>
+                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                            <AdaptableBlotterForm inline>
+                                {filter}
+                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
+                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => {
+                                        this.props.DeleteUserFilterExpression(columnId, index);
+                                        if (!this.props.ShowPanel) { e.stopPropagation(); }
+                                    }}>
+                                        <Glyphicon glyph="remove" />
+                                    </Button>
+                                </OverlayTrigger>
+                            </AdaptableBlotterForm>
+                        </div>
+                    </ListGroupItem>
+                })
+
             }
             // Finally do the column ranges
             let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)
@@ -152,13 +153,34 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
 
             return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? "adaptable_blotter_readonly" : ""}>
-                <Button block className="no_margin_style"
-                    bsStyle="success"
-                    key={columnId + "header"}
-                    ref={columnId}
-                    onClick={() => this.props.onSelectedColumnChange(columnId)} >
-                    <u>{columnFriendlyName}</u>
-                </Button>
+
+                <InputGroup>
+                    <InputGroup.Button>
+                        <Button block className="no_margin_style"
+                             style={{ width: "210px" }}
+                             bsStyle="success"
+                            key={columnId + "header"}
+                            ref={columnId}
+                            onClick={() => this.props.onSelectedColumnChange(columnId)} >
+                            <u>{columnFriendlyName}</u>
+                        </Button>
+                    </InputGroup.Button>
+                    <InputGroup.Button>
+                        <Button block className="no_margin_style"
+                            style={{ width: "40px" }}
+                            bsStyle="success"
+                            key={columnId + "headerx"}
+                            ref={columnId}
+                            onClick={() => this.props.DeleteAllColumnExpression(columnId)} >
+                            <Glyphicon glyph={"trash"} />
+                        </Button>
+                    </InputGroup.Button>
+                </InputGroup>
+
+
+
+
+
                 <ListGroup>
                     {columnValuesListgroupItems}
                     {columnUserFilterExpressionsListgroupItems}
@@ -194,7 +216,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand1Value(range: IRange): string {
-        if (range.Operand1Type==RangeOperandType.Column) {
+        if (range.Operand1Type == RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {
@@ -203,7 +225,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand2Value(range: IRange): string {
-        if (range.Operand2Type==RangeOperandType.Column) {
+        if (range.Operand2Type == RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {

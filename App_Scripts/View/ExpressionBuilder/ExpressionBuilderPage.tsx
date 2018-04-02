@@ -9,6 +9,7 @@ import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
+import { IRange } from "../../Core/Interface/IRange";
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     Columns: Array<IColumn>
@@ -31,7 +32,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     render() {
 
         return <div className="adaptable_blotter_style_wizard_query">
-          
+
             <Row>
                 <Col xs={8}>
                     <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
@@ -54,6 +55,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
                         DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
                         DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+                        DeleteAllColumnExpression={(columnId) => this.DeleteAllColumnExpression(columnId)}
                         ShowPanel={true}>
                     </ExpressionBuilderPreview>
                 </Col>
@@ -99,6 +101,28 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
+    DeleteAllColumnExpression(columnId: string) {
+        //we assume that we manipulate a cloned object. i.e we are not mutating the state
+        let columnValuesIndex: number = this.state.Expression.ColumnDisplayValuesExpressions.findIndex(x => x.ColumnName == columnId)
+        if (columnValuesIndex >= 0) {
+            this.state.Expression.ColumnDisplayValuesExpressions.splice(columnValuesIndex, 1)
+        }
+
+        let columnUserFilterExpressionIndex = this.state.Expression.FilterExpressions.findIndex(x => x.ColumnName == columnId)
+        if (columnUserFilterExpressionIndex >= 0) {
+            this.state.Expression.FilterExpressions.splice(columnUserFilterExpressionIndex, 1)
+        }
+
+        let columnRangesIndex = this.state.Expression.RangeExpressions.findIndex(x => x.ColumnName == columnId)
+        if (columnRangesIndex >= 0) {
+            this.state.Expression.RangeExpressions.splice(columnRangesIndex, 1)
+        }
+
+        let newExpression: Expression = Object.assign({}, this.state.Expression)
+        this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+
+    }
+
     onChangeExpression(newExpression: Expression) {
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
@@ -116,10 +140,10 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     public Back(): void {
         // todo
     }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = "Build Expression"
