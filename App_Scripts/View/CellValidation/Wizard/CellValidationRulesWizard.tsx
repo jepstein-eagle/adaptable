@@ -4,7 +4,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { IRange } from '../../../Core/Interface/IRange';
-import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
+import { DataType, LeafExpressionOperator, PopoverType, RangeOperandType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
@@ -201,8 +201,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operator: this.state.Operator,
             Operand1: this.state.Operand1,
             Operand2: this.state.Operand2,
-            IsOperand1Column: false,
-            IsOperand2Column: false
+            Operand1Type: RangeOperandType.Column,
+            Operand2Type: RangeOperandType.Column
         }
         this.props.Data.Range = rangeExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);

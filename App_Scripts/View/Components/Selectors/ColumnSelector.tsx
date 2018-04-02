@@ -4,12 +4,14 @@ import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { SelectionMode, SortOrder } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { Helper } from "../../../Core/Helpers/Helper";
+import { Sizes } from "react-bootstrap";
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]
     SelectedColumnIds: string[]
     onColumnChange: (SelectedColumns: IColumn[]) => void
     SelectionMode: SelectionMode
+    bsSize?: 'large' | 'lg' | 'small' | 'sm';
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
@@ -31,10 +33,13 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
         let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
 
+        let size: any = (this.props.bsSize)? 'large' : this.props.bsSize;
+
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
         return <Typeahead ref="typeahead" emptyLabel={"No Column found with that search"}
             placeholder={placeHolder}
+            bsSize={size}
             labelKey={"FriendlyName"}
             filterBy={["FriendlyName", "ColumnId"]}
             multiple={this.props.SelectionMode == SelectionMode.Multi}

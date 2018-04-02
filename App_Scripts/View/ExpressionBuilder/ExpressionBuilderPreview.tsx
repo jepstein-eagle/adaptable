@@ -5,7 +5,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { LeafExpressionOperator } from '../../Core/Enums';
+import { LeafExpressionOperator, RangeOperandType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
@@ -52,7 +52,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
                     return <ListGroupItem key={y} >
-                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer', fontSize: 'small' }}>
                             <AdaptableBlotterForm inline>
                                 {y}
                                 <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
@@ -194,7 +194,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand1Value(range: IRange): string {
-        if (range.IsOperand1Column) {
+        if (range.Operand1Type==RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {
@@ -203,7 +203,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand2Value(range: IRange): string {
-        if (range.IsOperand2Column) {
+        if (range.Operand2Type==RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {
@@ -218,3 +218,6 @@ let divStyle: React.CSSProperties = {
     'height': '490px'
 }
 
+var smallFontSizeStyle = {
+    fontSize: 'small'
+};

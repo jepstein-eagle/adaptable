@@ -24,8 +24,8 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
             </ListGroupItem>
         })
 
-        return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  bsStyle="info">
-            <ListGroup style={listGroupStyle}>
+        return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  bsStyle="info" style={divStyle}>
+            <ListGroup >
                 {userFilterNames}
             </ListGroup>
         </PanelWithButton>
@@ -47,8 +47,10 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
     }
 }
 
-var listGroupStyle: React.CSSProperties = {
+let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'maxHeight': '350px',
-    'height': '350px'
-};
+    'overflowX': 'hidden',
+    'height': '475px',
+    'maxHeight': '475px',
+    'marginBottom': '0'
+}

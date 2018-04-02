@@ -82,8 +82,8 @@ button.placeholder:before {
 
 /*Styling for our main modal windows*/
 .adaptableblotter_modal_main_popup{
-  width: 1000px;
-  height: 600px;
+  width: 900px;
+  height: 570px;
 }
 
 
@@ -97,7 +97,7 @@ button.placeholder:before {
 .adaptaleblotter_object_list_item_medium{
   overflow-y: auto;
   min-height: 80px;
-  max-height: 400px;
+  max-height: 390px;
 }
 
 .adaptableblotter_left_modal_button {

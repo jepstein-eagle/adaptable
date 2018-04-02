@@ -31,8 +31,9 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     render() {
 
         return <div className="adaptable_blotter_style_wizard_query">
+          
             <Row>
-                <Col xs={9}>
+                <Col xs={8}>
                     <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
@@ -44,7 +45,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
                     </ExpressionBuilderConditionSelector>
                 </Col>
-                <Col xs={3}>
+                <Col xs={4}>
                     <ExpressionBuilderPreview Expression={this.state.Expression}
                         UserFilters={this.props.UserFilters}
                         onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}

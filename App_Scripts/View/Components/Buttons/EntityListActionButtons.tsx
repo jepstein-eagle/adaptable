@@ -35,17 +35,19 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         EntityName: ""
     };
     render() {
-        return <ButtonToolbar>
+        return <ButtonToolbar bsSize={"small"} style={{margin:"0px", padding:"0px"}}>
             {this.props.showEdit &&
                 <ButtonEdit onClick={() => this.props.editClick()}
-                    overrideDisableButton={this.props.overrideDisableEdit}
+                style={{marginLeft:"0px", marginTop:"2px", marginBottom:"2px",marginRight:"2px"}}
+                overrideDisableButton={this.props.overrideDisableEdit}
                     ConfigEntity={this.props.ConfigEntity}
                     overrideTooltip={this.props.overrideTooltipEdit}
                     DisplayMode="Glyph"
                     size="small" />}
             {this.props.showDelete &&
                 <ButtonDelete
-                    overrideDisableButton={this.props.overrideDisableDelete}
+                style={{marginLeft:"1px", marginTop:"2px", marginBottom:"2px",marginRight:"1px"}}
+                overrideDisableButton={this.props.overrideDisableDelete}
                     ConfigEntity={this.props.ConfigEntity}
                     overrideTooltip={this.props.overrideTooltipDelete}
                     DisplayMode="Glyph"
@@ -53,13 +55,15 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityName + "?"}
                     ConfirmationTitle={"Delete " + this.props.EntityName }
                     size="small" />}
-            {this.props.showShare &&
-                <ButtonShare onClick={() => this.props.shareClick()}
+             {this.props.showShare &&
+                  <ButtonShare onClick={() => this.props.shareClick()}
+                 style={{marginLeft:"2px", marginTop:"2px", marginBottom:"2px",marginRight:"0px"}}
                     overrideDisableButton={this.props.overrideDisableShare}
                     ConfigEntity={this.props.ConfigEntity}
                     overrideTooltip={this.props.overrideTooltipShare}
                     DisplayMode="Glyph" 
-                    size="small"/>}
+                    size="small"/>
+             }
         </ButtonToolbar>;
     }
 }

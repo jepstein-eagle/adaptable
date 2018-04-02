@@ -13,8 +13,8 @@ export interface ExpressionBuilderColumnValuesProps extends React.ClassAttribute
 export class ExpressionBuilderColumnValues extends React.Component<ExpressionBuilderColumnValuesProps, {}> {
 
     render() {
-        return <PanelWithButton headerText={"Values"} className="no-padding-panel"   bsStyle="info">
-            <SingleListBox style={divStyle} Values={this.props.ColumnValues}
+        return <PanelWithButton headerText={"Column Values"} className="no-padding-panel" style={divStyle}  bsStyle="info">
+            <SingleListBox  Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
                 DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                 ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
@@ -28,6 +28,6 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '335px',
+    'height': '475px',
     'marginBottom': '0'
 }

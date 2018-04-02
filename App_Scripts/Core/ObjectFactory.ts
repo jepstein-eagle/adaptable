@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { IConditionalStyle } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle } from '../Core/Enums';
+import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle, RangeOperandType } from '../Core/Enums';
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
@@ -14,6 +14,7 @@ import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
 import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
 import { IReport } from '../Strategy/Interface/IExportStrategy';
 import { IColumn } from './Interface/IColumn';
+import { IRange } from './Interface/IRange';
 
 export module ObjectFactory {
 
@@ -43,6 +44,16 @@ export module ObjectFactory {
         }
     }
 
+    export function CreateEmptyRange(): IRange {
+        return {
+            Operator: LeafExpressionOperator.Unknown,
+            Operand1: "",
+            Operand2: "",
+            Operand1Type: RangeOperandType.Value,
+            Operand2Type: RangeOperandType.Value
+        }
+    }
+
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
             CellValidationMode: CellValidationMode.StopEdit,
@@ -51,8 +62,8 @@ export module ObjectFactory {
                 Operator: LeafExpressionOperator.None,
                 Operand1: "",
                 Operand2: "",
-                IsOperand1Column: false,
-                IsOperand2Column: false,
+                Operand1Type: RangeOperandType.Column,
+                Operand2Type: RangeOperandType.Column,
             },
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),

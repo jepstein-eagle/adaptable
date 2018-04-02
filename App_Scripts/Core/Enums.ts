@@ -105,8 +105,8 @@ export enum AuditLogTrigger {
 }
 
 export enum CellValidationMode {
-   WarnUser="WarnUser",
-   StopEdit="StopEdit"
+    WarnUser = "WarnUser",
+    StopEdit = "StopEdit"
 }
 
 export enum SelectionMode {
@@ -139,9 +139,21 @@ export enum FontSize {
 }
 
 
-export enum PanelWidth{
-    Wide="800px",
-    Medium="600px",
-    Narrow ="400px"
+export enum PanelWidth {
+    Wide = "800px",
+    Medium = "600px",
+    Narrow = "400px"
 }
 
+export enum QueryBuildStatus {
+    FirstSelection,
+    SecondSelection,
+    ColumnSelected,
+    SingleColumnConditionsAdded,
+    MultiColumnConditionsAdded
+}
+
+export enum RangeOperandType {
+    Value = "Val",
+    Column= "Col",
+}

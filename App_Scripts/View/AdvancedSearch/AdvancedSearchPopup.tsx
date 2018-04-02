@@ -57,8 +57,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Query", Size: 7 },
-            { Content: "", Size: 2 },
+            { Content: "Query", Size: 6 },
+            { Content: "", Size: 3 },
         ]
 
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
