@@ -104,10 +104,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             if (!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
                 return true;
             }
-            if (layoutEntity.GridSort != null && this.props.GridSort != null) {
-                if (!Helper.areObjectsEqual(layoutEntity.GridSort, this.props.GridSort)) {
-                    return true;
-                }
+            if (!Helper.areObjectsEqual(layoutEntity.GridSort, this.props.GridSort)) {
+                return true;
             }
         }
         return false;

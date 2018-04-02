@@ -55,7 +55,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
         let colItems: IColItem[] = [
             { Content: "Function", Size: 3 },
-            { Content: "Summary", Size: 7},
+            { Content: "Summary", Size: 7 },
             { Content: "", Size: 2 },
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
@@ -78,13 +78,15 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         if (this.isStrategyVisible(StrategyIds.ColumnFilterStrategyId)) {
             summaries.push(<ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.ColumnFilterStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         }
-        if (this.isStrategyVisible(StrategyIds.PlusMinusStrategyId)) {
-            summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
-        }
+
         if (this.isStrategyVisible(StrategyIds.FormatColumnStrategyId)) {
             summaries.push(<FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
         }
         if (this.state.SelectedColumn) {
+
+            if (this.isStrategyVisible(StrategyIds.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
+                summaries.push(<PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId)} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />)
+            }
 
             if (this.isStrategyVisible(StrategyIds.FlashingCellsStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
                 summaries.push(<FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} IsReadOnly={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId)} SummarisedColumn={this.state.SelectedColumn} />)
@@ -97,7 +99,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         }
 
         return <div className="adaptable_blotter_style_popup_columninfo">
-            <PanelWithImage header={headerText} bsStyle="primary"  glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
+            <PanelWithImage header={headerText} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
 
                 {this.state.ShowSelector &&
                     <AdaptableBlotterForm horizontal>
@@ -120,7 +122,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                 }
 
                 {this.state.SelectedColumn &&
-                         <AdaptableObjectCollection ColItems={colItems} items={summaries} reducedPanel={this.state.ShowSelector} />
+                    <AdaptableObjectCollection ColItems={colItems} items={summaries} reducedPanel={this.state.ShowSelector} />
                 }
             </PanelWithImage>
         </div>

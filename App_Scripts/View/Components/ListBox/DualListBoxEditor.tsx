@@ -438,7 +438,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
             this.setState({
                 SelectedValues: newSelectedArray,
-                AvailableValues: newAvailableValues
+                AvailableValues: newAvailableValues,
+                UiSelectedSelectedValues: [],
+                UiSelectedAvailableValues: [],
             } as DualListBoxEditorState
                 , () => this.raiseOnChange());
         }
@@ -493,7 +495,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             // Update state
             this.setState({
                 SelectedValues: newSelectedArray,
-                AvailableValues: newAvailableValues
+                AvailableValues: newAvailableValues,
+                UiSelectedSelectedValues: [],
+                UiSelectedAvailableValues: [],
             } as DualListBoxEditorState
                 , () => this.raiseOnChange());
         }

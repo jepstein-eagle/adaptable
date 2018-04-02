@@ -91,13 +91,13 @@ button.placeholder:before {
 .adaptaleblotter_object_list_item{
   overflow-y: auto;
   min-height: 80px;
-  max-height: 470px;
+  max-height: 430px;
 }
 
 .adaptaleblotter_object_list_item_medium{
   overflow-y: auto;
   min-height: 80px;
-  max-height: 390px;
+  max-height: 350px;
 }
 
 .adaptableblotter_left_modal_button {

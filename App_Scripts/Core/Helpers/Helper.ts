@@ -200,6 +200,19 @@ export module Helper {
 
 
     export function areObjectsEqual(obj1: any, obj2: any) {
+        // if both are null return true
+        if (obj1 == null && obj2 == null) {
+            return true;
+        }
+
+        if (obj1 != null && obj2 == null) {
+            return false;
+        }
+
+        if (obj1 == null && obj2 != null) {
+            return false;
+        }
+
         //Loop through properties in object 1
         for (var p in obj1) {
             //Check property exists on both objects
