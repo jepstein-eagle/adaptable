@@ -370,15 +370,21 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newSelectedArray.splice(from, 1);
                 newAvailableValues = [...this.state.AvailableValues];
                 if (this.props.ValueMember) {
-                    let originalItem = this.props.AvailableValues.find(y => y[this.props.ValueMember] == this.draggedElement)
+                    let originalItem = this.state.AllValues.find(y => y[this.props.ValueMember] == this.draggedElement)
                     if (originalItem) {
-                        newAvailableValues.splice(to, 0, originalItem)
+                        let checkForExistig: any = newAvailableValues.find(x => x == originalItem)
+                        if (!checkForExistig) {
+                            newAvailableValues.splice(to, 0, originalItem)
+                        }
                     }
                 }
                 else {
-                    let originalItem = this.props.AvailableValues.find(y => y == this.draggedElement)
+                    let originalItem = this.state.AllValues.find(y => y == this.draggedElement)
                     if (originalItem) {
-                        newAvailableValues.splice(to, 0, originalItem)
+                        let checkForExistig: any = newAvailableValues.find(x => x == originalItem)
+                        if (!checkForExistig) {
+                            newAvailableValues.splice(to, 0, originalItem)
+                        }
                     }
                 }
             }
@@ -387,15 +393,21 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newSelectedArray.splice(from, 1);
                 newAvailableValues = [...this.state.AvailableValues];
                 if (this.props.ValueMember) {
-                    let originalItem = this.props.AvailableValues.find(y => y[this.props.ValueMember] == this.draggedElement)
+                    let originalItem = this.state.AllValues.find(y => y[this.props.ValueMember] == this.draggedElement)
                     if (originalItem) {
-                        newAvailableValues.push(originalItem)
+                        let checkForExistig: any = newAvailableValues.find(x => x == originalItem)
+                        if (!checkForExistig) {
+                            newAvailableValues.push(originalItem)
+                        }
                     }
                 }
                 else {
-                    let originalItem = this.props.AvailableValues.find(y => y == this.draggedElement)
+                    let originalItem = this.state.AllValues.find(y => y == this.draggedElement)
                     if (originalItem) {
-                        newAvailableValues.push(originalItem)
+                        let checkForExistig: any = newAvailableValues.find(x => x == originalItem)
+                        if (!checkForExistig) {
+                            newAvailableValues.push(originalItem)
+                        }
                     }
                 }
             }
