@@ -68,8 +68,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         }
 
         let colItems: IColItem[] = [
-            { Content: "Name", Size: 3 },
-            { Content: "Description", Size: 7 },
+            { Content: "Name", Size: 2 },
+            { Content: "Column", Size: 2 },
+            { Content: "Description", Size: 6 },
             { Content: "", Size: 2 },
         ]
 
