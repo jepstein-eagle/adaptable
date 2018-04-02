@@ -154,6 +154,6 @@ export enum QueryBuildStatus {
 }
 
 export enum RangeOperandType {
-    Value = "Val",
-    Column= "Col",
+    Value = "Value",
+    Column= "Column",
 }

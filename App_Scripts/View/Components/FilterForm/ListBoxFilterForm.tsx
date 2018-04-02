@@ -211,19 +211,19 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Column, Operand2Type:RangeOperandType.Column, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type:RangeOperandType.Value, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand1Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Column, Operand2Type: RangeOperandType.Column, Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
+        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value, Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
     private onOperand2Edit(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Column, Operand2Type: RangeOperandType.Column, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
+        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
